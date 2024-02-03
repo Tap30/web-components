@@ -6,6 +6,10 @@
   },
   "devDependencies": {
     "@web/dev-server": "^0.4.2",
+    "tslib": "^2.6.2",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "lit": "^3.1.2"
   }
 }

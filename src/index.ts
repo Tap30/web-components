@@ -1,7 +1,11 @@
-export type IUser = {
-  name: string;
-};
+import { LitElement, html } from "lit";
+import { customElement } from "lit/decorators.js";
 
-export const user: IUser = {
-  name: "majid",
-};
+import "./modal";
+
+@customElement("app-root")
+export class AppRoot extends LitElement {
+  render() {
+    return html`<tap-modal></tap-modal>`;
+  }
+}
