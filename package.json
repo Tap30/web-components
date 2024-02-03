@@ -1,0 +1,11 @@
+{
+  "name": "@tapsi/web-components",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "tsc --watch --preserveWatchOutput & web-dev-server --node-resolve --open --watch"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.4.2",
+    "typescript": "^5.3.3"
+  }
+}
