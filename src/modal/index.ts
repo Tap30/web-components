@@ -1,11 +1,10 @@
-import { LitElement, html } from "lit";
 import { customElement } from "lit/decorators.js";
+import { Modal } from "./modal";
+import styles from "./modal.style";
 
 @customElement("tap-modal")
-export class TapModal extends LitElement {
-  render() {
-    return html`<p>TapModal</p>`;
-  }
+export class TapModal extends Modal {
+  static readonly styles = [styles];
 }
 
 declare global {
