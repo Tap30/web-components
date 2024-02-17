@@ -1,0 +1,83 @@
+/* --tap-sys-typography-[type]-[size]-[property] */
+:root {
+  --tap-sys-font-family: "Vazirmatn", sans-serif;
+
+  /* body */
+  --tap-sys-typography-body-xs-font: var(--tap-sys-font-family);
+  --tap-sys-typography-body-xs-size: 12px;
+  --tap-sys-typography-body-xs-height: 20px;
+  --tap-sys-typography-body-xs-weight: 400;
+
+  --tap-sys-typography-body-sm-font: var(--tap-sys-font-family);
+  --tap-sys-typography-body-sm-size: 14px;
+  --tap-sys-typography-body-sm-height: 24px;
+  --tap-sys-typography-body-sm-weight: 400;
+
+  --tap-sys-typography-body-md-font: var(--tap-sys-font-family);
+  --tap-sys-typography-body-md-size: 16px;
+  --tap-sys-typography-body-md-height: 28px;
+  --tap-sys-typography-body-md-weight: 400;
+
+  --tap-sys-typography-body-lg-font: var(--tap-sys-font-family);
+  --tap-sys-typography-body-lg-size: 18px;
+  --tap-sys-typography-body-lg-height: 32px;
+  --tap-sys-typography-body-lg-weight: 400;
+
+  /* label */
+  --tap-sys-typography-label-xs-font: var(--tap-sys-font-family);
+  --tap-sys-typography-label-xs-size: 12px;
+  --tap-sys-typography-label-xs-height: 24px;
+  --tap-sys-typography-label-xs-weight: 500;
+
+  --tap-sys-typography-label-sm-font: var(--tap-sys-font-family);
+  --tap-sys-typography-label-sm-size: 14px;
+  --tap-sys-typography-label-sm-height: 24px;
+  --tap-sys-typography-label-sm-weight: 500;
+
+  --tap-sys-typography-label-md-font: var(--tap-sys-font-family);
+  --tap-sys-typography-label-md-size: 16px;
+  --tap-sys-typography-label-md-height: 28px;
+  --tap-sys-typography-label-md-weight: 500;
+
+  --tap-sys-typography-label-lg-font: var(--tap-sys-font-family);
+  --tap-sys-typography-label-lg-size: 18px;
+  --tap-sys-typography-label-lg-height: 32px;
+  --tap-sys-typography-label-lg-weight: 500;
+
+  /* headline */
+  --tap-sys-typography-headline-xs-font: var(--tap-sys-font-family);
+  --tap-sys-typography-headline-xs-size: 16px;
+  --tap-sys-typography-headline-xs-height: 24px;
+  --tap-sys-typography-headline-xs-weight: 600;
+
+  --tap-sys-typography-headline-sm-font: var(--tap-sys-font-family);
+  --tap-sys-typography-headline-sm-size: 20px;
+  --tap-sys-typography-headline-sm-height: 30px;
+  --tap-sys-typography-headline-sm-weight: 600;
+
+  --tap-sys-typography-headline-md-font: var(--tap-sys-font-family);
+  --tap-sys-typography-headline-md-size: 24px;
+  --tap-sys-typography-headline-md-height: 36px;
+  --tap-sys-typography-headline-md-weight: 600;
+
+  --tap-sys-typography-headline-lg-font: var(--tap-sys-font-family);
+  --tap-sys-typography-headline-lg-size: 28px;
+  --tap-sys-typography-headline-lg-height: 42px;
+  --tap-sys-typography-headline-lg-weight: 600;
+
+  /* display */
+  --tap-sys-typography-display-sm-font: var(--tap-sys-font-family);
+  --tap-sys-typography-display-sm-size: 32px;
+  --tap-sys-typography-display-sm-height: 48px;
+  --tap-sys-typography-display-sm-weight: 600;
+
+  --tap-sys-typography-display-md-font: var(--tap-sys-font-family);
+  --tap-sys-typography-display-md-size: 40px;
+  --tap-sys-typography-display-md-height: 60px;
+  --tap-sys-typography-display-md-weight: 600;
+
+  --tap-sys-typography-display-lg-font: var(--tap-sys-font-family);
+  --tap-sys-typography-display-lg-size: 48px;
+  --tap-sys-typography-display-lg-height: 72px;
+  --tap-sys-typography-display-lg-weight: 600;
+}
