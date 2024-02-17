@@ -1,12 +1,12 @@
 #### Roadmap
 
-###### Q4 1403
+###### Q4 1402
 
 - [ ] Bootstrap the project
   - [ ] Setup development server
   - [ ] Setup test runner
   - [ ] Setup linter and formatter
-- [ ] Add them and tokens
+- [ ] Add theme and tokens
 - [ ] Implement components
   - [ ] Button
   - [ ] Input
