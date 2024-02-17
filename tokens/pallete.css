@@ -1,0 +1,81 @@
+:root {
+  --tap-palette-black: #000000;
+  --tap-palette-white: #ffffff;
+
+  --tap-palette-gray-900: #141414;
+  --tap-palette-gray-800: #1f1f1f;
+  --tap-palette-gray-700: #323333;
+  --tap-palette-gray-600: #535454;
+  --tap-palette-gray-500: #747575;
+  --tap-palette-gray-400: #b1b2b2;
+  --tap-palette-gray-300: #cacccc;
+  --tap-palette-gray-200: #e1e3e3;
+  --tap-palette-gray-100: #eaeded;
+  --tap-palette-gray-50: #f5f7f7;
+
+  --tap-palette-orange-900: #422e28;
+  --tap-palette-orange-800: #000000;
+  --tap-palette-orange-700: #662a14;
+  --tap-palette-orange-600: #a64221;
+  --tap-palette-orange-500: #e55c2e;
+  --tap-palette-orange-400: #ff7140;
+  --tap-palette-orange-300: #ff8c61;
+  --tap-palette-orange-200: #ffac8a;
+  --tap-palette-orange-100: #ffd5c2;
+  --tap-palette-orange-50: #fff0e9;
+
+  --tap-palette-blue-900: #262f40;
+  --tap-palette-blue-800: #000000;
+  --tap-palette-blue-700: #143166;
+  --tap-palette-blue-600: #174291;
+  --tap-palette-blue-500: #1e54b7;
+  --tap-palette-blue-400: #276ef1;
+  --tap-palette-blue-300: #5b91f5;
+  --tap-palette-blue-200: #a0bff8;
+  --tap-palette-blue-100: #d4e2fc;
+  --tap-palette-blue-50: #eff3fe;
+
+  --tap-palette-green-900: #24332c;
+  --tap-palette-green-800: #000000;
+  --tap-palette-green-700: #10462d;
+  --tap-palette-green-600: #03582f;
+  --tap-palette-green-500: #03703c;
+  --tap-palette-green-400: #048848;
+  --tap-palette-green-300: #06c167;
+  --tap-palette-green-200: #66d19e;
+  --tap-palette-green-100: #addec9;
+  --tap-palette-green-50: #e6f2ed;
+
+  --tap-palette-yellow-900: #332e24;
+  --tap-palette-yellow-800: #000000;
+  --tap-palette-yellow-700: #674d1b;
+  --tap-palette-yellow-600: #996f00;
+  --tap-palette-yellow-500: #e49e15;
+  --tap-palette-yellow-400: #ffc043;
+  --tap-palette-yellow-300: #ffcf70;
+  --tap-palette-yellow-200: #ffe3ac;
+  --tap-palette-yellow-100: #fff2d9;
+  --tap-palette-yellow-50: #fffaf0;
+
+  --tap-palette-red-900: #402926;
+  --tap-palette-red-800: #000000;
+  --tap-palette-red-700: #5a0a00;
+  --tap-palette-red-600: #870f00;
+  --tap-palette-red-500: #ab1300;
+  --tap-palette-red-400: #e11900;
+  --tap-palette-red-300: #e85c4a;
+  --tap-palette-red-200: #f1998e;
+  --tap-palette-red-100: #fed7d2;
+  --tap-palette-red-50: #ffefed;
+
+  --tap-palette-purple-900: #402926;
+  --tap-palette-purple-800: #000000;
+  --tap-palette-purple-700: #5a0a00;
+  --tap-palette-purple-600: #870f00;
+  --tap-palette-purple-500: #ab1300;
+  --tap-palette-purple-400: #e11900;
+  --tap-palette-purple-300: #e85c4a;
+  --tap-palette-purple-200: #f1998e;
+  --tap-palette-purple-100: #fed7d2;
+  --tap-palette-purple-50: #ffefed;
+}
