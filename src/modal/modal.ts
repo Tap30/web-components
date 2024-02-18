@@ -115,7 +115,7 @@ export class Modal extends LitElement implements HTMLDialogElement {
           aria-labelledby=""
           aria-describedby=""
         >
-          <slot> majid </slot>
+          <slot> </slot>
         </div>
       </section>
     `;
