@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module">
-      import "./dist/index.js";
-    </script>
   </head>
   <body>
-    <app-root></app-root>
+    <div id="root"></div>
+    <script type="module">
+      import { html, render } from "lit";
+      render(html` <div>hello</div> `, document.querySelector("#root"));
+    </script>
   </body>
 </html>
