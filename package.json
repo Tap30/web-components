@@ -2,7 +2,7 @@
   "name": "@tapsi/web-components",
   "version": "0.0.0",
   "scripts": {
-    "dev": "tsc --watch --preserveWatchOutput & web-dev-server --node-resolve --open --watch"
+    "dev": "tsc --watch --preserveWatchOutput & wds"
   },
   "devDependencies": {
     "@web/dev-server": "^0.4.2",
