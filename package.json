@@ -1,11 +1,21 @@
 {
   "name": "@tapsi/web-components",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "tsc --watch --preserveWatchOutput & wds"
+    "dev": "tsc --watch --preserveWatchOutput & wds",
+    "storybook": "storybook dev -p 3001"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.6.16",
+    "@storybook/addon-links": "^7.6.16",
+    "@storybook/blocks": "^7.6.16",
+    "@storybook/web-components": "^7.6.16",
+    "@storybook/web-components-vite": "^7.6.16",
     "@web/dev-server": "^0.4.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.6.16",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   },
