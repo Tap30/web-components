@@ -1,4 +1,4 @@
-import { LitElement, PropertyValues, html } from "lit";
+import { LitElement, PropertyValues, html, nothing } from "lit";
 import { property, query } from "lit/decorators.js";
 
 export class Modal extends LitElement implements HTMLDialogElement {
@@ -111,9 +111,9 @@ export class Modal extends LitElement implements HTMLDialogElement {
           tabindex="0"
           role="dialog"
           aria-modal="true"
-          aria-label=""
-          aria-labelledby=""
-          aria-describedby=""
+          aria-label=${nothing}
+          aria-labelledby=${nothing}
+          aria-describedby=${nothing}
         >
           <slot> </slot>
         </div>
