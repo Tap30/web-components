@@ -22,6 +22,8 @@ export class Button extends LitElement {
 
   @property() label?: string;
 
+  @property({ reflect: true }) size: "small" | "medium" | "large" = "medium";
+
   constructor() {
     super();
     this.internals = this.attachInternals();
@@ -49,12 +51,12 @@ export class Button extends LitElement {
         type="${ifDefined(this.type)}"
         name=${ifDefined(this.name)}
         value=${ifDefined(this.value)}
-        aria-disabled=${this.disabled}
         aria-label="${ifDefined(this.label)}"
+        aria-disabled=${this.disabled}
         aria-labelledby=${nothing}
         aria-describedby=${nothing}
       >
-        <slot ></slot>
+        <slot></slot>
       </button>
     `;
   }
