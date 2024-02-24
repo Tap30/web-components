@@ -44,12 +44,16 @@ export default css`
     border-radius: 999px;
   }
 
+  .cover {
+    display: none;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
   :host([size="small"]) .button {
     padding: 0 var(--tap-sys-spacing-5);
     height: var(--tap-sys-spacing-9);
-  }
-
-  :host([size="small"]) .label {
     line-height: var(--tap-sys-typography-label-sm-height);
     font-size: var(--tap-sys-typography-label-sm-size);
     font-weight: var(--tap-sys-typography-label-sm-weight);
@@ -58,9 +62,6 @@ export default css`
   :host([size="medium"]) .button {
     padding: 0 var(--tap-sys-spacing-6);
     height: var(--tap-sys-spacing-10);
-  }
-
-  :host([size="medium"]) .label {
     line-height: var(--tap-sys-typography-label-sm-height);
     font-size: var(--tap-sys-typography-label-sm-size);
     font-weight: var(--tap-sys-typography-label-sm-weight);
@@ -68,14 +69,20 @@ export default css`
 
   :host([size="large"]) .button {
     padding: 0 var(--tap-sys-spacing-8);
-    height: var(
-      --tap-sys-spacing-11
-    ); // FIXME: height of the large button is 52px but we dont have 52px in our tokens
-  }
-
-  :host([size="large"]) .label {
+    /* FIXME: height of the large button is 52px but we dont have 52px in our tokens */
+    height: var(--tap-sys-spacing-11);
     line-height: var(--tap-sys-typography-label-lg-height);
     font-size: var(--tap-sys-typography-label-lg-size);
     font-weight: var(--tap-sys-typography-label-lg-weight);
+  }
+
+  :host([variant="primary"]) .button {
+    background-color: var(--tap-sys-color-surface-inverse-primary);
+    color: var(--tap-sys-color-content-on-inverse);
+  }
+
+  :host([variant="primary"]) .button:active .cover {
+    display: inline;
+    background-color: var(--tap-sys-color-surface-overlay-light);
   }
 `;

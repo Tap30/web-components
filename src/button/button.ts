@@ -24,6 +24,14 @@ export class Button extends LitElement {
 
   @property({ reflect: true }) size: "small" | "medium" | "large" = "medium";
 
+  @property({ reflect: true }) variant:
+    | "primary"
+    | "ghost"
+    | "naked"
+    | "elevated"
+    | "destructive"
+    | "brand" = "primary";
+
   constructor() {
     super();
     this.internals = this.attachInternals();
@@ -56,6 +64,7 @@ export class Button extends LitElement {
         aria-labelledby=${nothing}
         aria-describedby=${nothing}
       >
+        <span class="cover"></span>
         <slot></slot>
       </button>
     `;
