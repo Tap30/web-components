@@ -1,6 +1,7 @@
 import type { Preview } from "@storybook/web-components";
 
-import "../tokens/index.css";
+import "../styles/font.css";
+import "../styles/theme.css";
 
 const preview: Preview = {};
 
