@@ -43,6 +43,7 @@ export class Button extends LitElement {
         id="button"
         class="button"
         role="button"
+        part="button"
         @click=${this.handleClick}
         ?disabled="${this.disabled}"
         type="${ifDefined(this.type)}"
@@ -51,11 +52,9 @@ export class Button extends LitElement {
         aria-disabled=${this.disabled}
         aria-label="${ifDefined(this.label)}"
         aria-labelledby=${nothing}
-        aria-describedby{nothing}
+        aria-describedby=${nothing}
       >
-        <slot name="prefix" part="prefix"></slot>
-        <slot part="label"></slot>
-        <slot name="suffix" part="suffix"></slot>
+        <slot ></slot>
       </button>
     `;
   }
