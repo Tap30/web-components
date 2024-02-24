@@ -22,6 +22,8 @@ export class Button extends LitElement {
 
   @property() label?: string;
 
+  @property({ type: Boolean, reflect: true }) loading = false;
+
   @property({ reflect: true }) size: "small" | "medium" | "large" = "medium";
 
   @property({ reflect: true }) variant:
@@ -65,7 +67,8 @@ export class Button extends LitElement {
         aria-describedby=${nothing}
       >
         <span class="cover"></span>
-        <slot></slot>
+        <!-- TODO: add spinner -->
+        ${this.loading ? html`<span>loading</span>` : html`<slot></slot>`}
       </button>
     `;
   }
