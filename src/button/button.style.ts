@@ -56,6 +56,21 @@ export default css`
     display: inline;
   }
 
+  :host([disabled]) {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  :host([disabled]) .cover {
+    display: inline;
+    /* FIXME: we need to define a overlay color for disabled since color-mix is not well supported */
+    background-color: color-mix(
+      in srgb,
+      var(--tap-sys-color-surface-disabled),
+      transparent 50%
+    );
+  }
+
   :host([size="small"]) .button {
     padding: 0 var(--tap-sys-spacing-5);
     height: var(--tap-sys-spacing-9);
