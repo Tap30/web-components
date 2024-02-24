@@ -49,6 +49,11 @@ export default css`
     position: absolute;
     inset: 0;
     border-radius: inherit;
+    background-color: var(--tap-sys-color-surface-overlay-light);
+  }
+
+  .button:active .cover {
+    display: inline;
   }
 
   :host([size="small"]) .button {
@@ -81,8 +86,30 @@ export default css`
     color: var(--tap-sys-color-content-on-inverse);
   }
 
-  :host([variant="primary"]) .button:active .cover {
-    display: inline;
-    background-color: var(--tap-sys-color-surface-overlay-light);
+  :host([variant="ghost"]) .button {
+    background-color: var(--tap-sys-color-surface-tertiary);
+    color: var(--tap-sys-color-content-primary);
+  }
+
+  :host([variant="naked"]) .button {
+    background-color: transparent;
+    color: var(--tap-sys-color-content-primary);
+  }
+
+  :host([variant="elevated"]) .button {
+    background-color: var(--tap-sys-color-surface-primary);
+    color: var(--tap-sys-color-content-primary);
+    /* FIXME: we dont have shadow tokens yet  */
+    box-shadow: 0px 4px 16px 0px #0000001a;
+  }
+
+  :host([variant="destructive"]) .button {
+    background-color: var(--tap-sys-color-surface-negative-light);
+    color: var(--tap-sys-color-content-negative);
+  }
+
+  :host([variant="brand"]) .button {
+    background: var(--tap-sys-color-gradient-brand);
+    color: var(--tap-sys-color-content-on-inverse);
   }
 `;

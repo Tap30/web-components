@@ -1,4 +1,4 @@
-@import './pallete.css';
+@import "./pallete.css";
 
 :root {
   /* surface  */
@@ -55,4 +55,16 @@
   --tap-sys-color-border-negative: var(--tap-palette-red-200);
   --tap-sys-color-border-postive: var(--tap-palette-green-200);
   --tap-sys-color-border-warning: var(--tap-palette-yellow-200);
+
+  /* brand */
+  --tap-sys-color-brand: var(--tap-palette-orange-400);
+
+  /* gradient */
+  --tap-sys-color-gradient-brand: linear-gradient(
+    91.39deg,
+    #ff7733 0%,
+    #ff5722 50.15%,
+    #e64917 100%
+  );
+  /* TODO: add other gradient tokens */
 }
