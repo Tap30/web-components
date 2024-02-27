@@ -41,7 +41,7 @@ export default css`
     gap: inherit;
     width: 100%;
     font-family: var(--tap-sys-font-family);
-    border-radius: 999px;
+    border-radius: var(--tap-sys-radius-full);
   }
 
   .cover {
