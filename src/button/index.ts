@@ -9,6 +9,6 @@ export class TapButton extends Button {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-button": Button;
+    "tap-button": TapButton;
   }
 }
