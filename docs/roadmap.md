@@ -2,18 +2,19 @@
 
 ###### Q4 1402
 
-- [ ] Bootstrap the project
-  - [ ] Setup development server
-  - [ ] Setup test runner
+- [x] Bootstrap the project
+  - [x] Setup development server
+  - [x] Setup test runner
   - [ ] Setup linter and formatter
-- [ ] Add theme and tokens
+  - [x] Setup storybook
+- [x] Add theme and tokens
 - [ ] Implement components
-  - [ ] Button
+  - [x] Typography
+  - [x] Button
+  - [x] Modal
   - [ ] Input
-  - [ ] Modal
   - [ ] Switch
   - [ ] Checkbox
-  - [ ] Typography
 
 ###### Q1 1403
 
@@ -24,13 +25,12 @@
   - [ ] Pin Input
   - [ ] Radio
   - [ ] Snackbar (Toast)
-  - [ ] Tabs (Segmented)
+  - [x] Tabs (Segmented)
   - [ ] Chip
   - [ ] Badge
 
 ###### Q2 1403
 
-- [ ] Setup storybook
 - [ ] Follow accessibility best practices
 - [ ] Setup a11y test
 - [ ] Implement components
