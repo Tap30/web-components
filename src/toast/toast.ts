@@ -1,13 +1,6 @@
-import { LitElement, html, nothing } from "lit";
-import { property, state } from "lit/decorators.js";
-import {
-  defaultIcon,
-  circleInformationFill,
-  circleExclamationFill,
-  triangleExclamationFill,
-  circleCheckFill,
-} from "./icon";
-import { ToastColors } from "./types";
+import {html, LitElement, nothing} from "lit";
+import {property} from "lit/decorators.js";
+import {TOAST_COLORS} from "./types";
 
 // TODO: after implementing the icon library, add the `icon` property to this component.
 // TODO: add close icon.
@@ -56,17 +49,17 @@ export class Toast extends LitElement {
   }
 
   private renderIcon() {
-    if (this.color === "success") return this.renderSuccessIcon();
-    if (this.color === "error") return this.renderErrorIcon();
-    if (this.color === "info") return this.renderInfoIcon();
-    if (this.color === "warning") return this.renderWarningIcon();
+    if (this.color === TOAST_COLORS.SUCCESS) return this.renderSuccessIcon();
+    if (this.color === TOAST_COLORS.ERROR) return this.renderErrorIcon();
+    if (this.color === TOAST_COLORS.INFO) return this.renderInfoIcon();
+    if (this.color === TOAST_COLORS.WARNING) return this.renderWarningIcon();
     return this.renderDefaultIcon();
   }
 
   @property() message?: string;
   @property({ type: Boolean, reflect: true }) showDismissButton? = false;
   @property({ type: Number, reflect: true }) autoHideDuration? = -1;
-  @property({ reflect: true }) color?: ToastColors = "inverse";
+  @property({ reflect: true }) color?: TOAST_COLORS = TOAST_COLORS.INVERSE;
   @property({ reflect: true }) onOpen?: () => void;
   @property({ reflect: true }) onClose?: () => void;
 
