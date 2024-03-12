@@ -1,7 +1,12 @@
-export type ToastColors = "success" | "error" | "info" | "inverse" | "warning";
-
+export enum TOAST_COLORS {
+  SUCCESS = "success",
+  ERROR = "error",
+  INFO = "info",
+  INVERSE = "inverse",
+  WARNING = "warning",
+}
 export type ToastOptions = {
-  color?: ToastColors;
+  color?: TOAST_COLORS;
   showDismissButton?: boolean;
   dismissOnClickingOutside?: boolean;
   autoHideDuration?: number;
