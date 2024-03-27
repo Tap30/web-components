@@ -1,8 +1,8 @@
-import { html, TemplateResult } from "lit";
+import {html, TemplateResult} from "lit";
 import "./index.js";
 import "../button";
-import ToastProps from "./types";
-import { enqueueToast } from "./utils.js";
+import ToastProps, {TOAST_COLORS} from "./types";
+import {enqueueToast} from "./utils.js";
 
 export default {
   title: "Toast",
@@ -47,7 +47,7 @@ interface Story<T> {
 
 const defaultProps: ToastProps = {
   message: "متن اسنک‌بار اینجا قرار می‌گیرد.",
-  color: "inverse",
+  color: TOAST_COLORS.INVERSE,
   showDismissButton: false,
 };
 
