@@ -3,7 +3,6 @@ import {property} from "lit/decorators.js";
 import {TOAST_COLORS} from "./types";
 
 // TODO: after implementing the icon library, add the `icon` property to this component.
-// TODO: add close icon.
 export class Toast extends LitElement {
   static readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
