@@ -3,7 +3,7 @@ import "../segmented-button";
 import "./index.js";
 
 export default {
-  title: "Segmented Buttons",
+  title: "Segmented Button Group",
   component: "tap-segmented-button-group",
   argTypes: {},
 };
