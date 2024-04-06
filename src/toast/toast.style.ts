@@ -31,7 +31,6 @@ export default css`
     align-items: center;
     justify-content: center;
     vertical-align: middle;
-    background: transparent;
     text-decoration: none;
     font: inherit;
     gap: var(--tap-sys-spacing-3);
@@ -40,6 +39,8 @@ export default css`
     border-radius: 999px;
     padding: var(--tap-sys-spacing-5) var(--tap-sys-spacing-5);
     animation: toast-animation 1s;
+    background-color: var(--tap-sys-color-surface-inverse-secondary);
+    color: var(--tap-sys-color-content-on-inverse);
   }
 
   :host .toast-icon {
@@ -57,23 +58,23 @@ export default css`
     }
   }
 
-  :host([color="success"]) .toast {
+  :host([variant="success"]) .toast {
     background-color: var(--tap-sys-color-surface-positive);
     color: var(--tap-sys-color-content-on-inverse);
   }
-  :host([color="error"]) .toast {
+  :host([variant="error"]) .toast {
     background-color: var(--tap-sys-color-surface-negative);
     color: var(--tap-sys-color-content-on-inverse);
   }
-  :host([color="info"]) .toast {
+  :host([variant="info"]) .toast {
     background-color: var(--tap-sys-color-surface-accent);
     color: var(--tap-sys-color-content-on-inverse);
   }
-  :host([color="inverse"]) .toast {
+  :host([variant="inverse"]) .toast {
     background-color: var(--tap-sys-color-surface-inverse-secondary);
     color: var(--tap-sys-color-content-on-inverse);
   }
-  :host([color="warning"]) .toast {
+  :host([variant="warning"]) .toast {
     background-color: var(--tap-sys-color-surface-warning);
     color: var(--tap-sys-color-content-primary);
   }
