@@ -65,7 +65,7 @@ export class Toast extends LitElement {
     return this.renderDefaultIcon();
   }
 
-  @property({type: Boolean, reflect: true}) showDismissButton? = false;
+  @property({type: Boolean}) showDismissButton? = false;
 
   @property() variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse' = 'inverse';
 
