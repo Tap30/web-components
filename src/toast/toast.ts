@@ -1,6 +1,5 @@
 import {html, LitElement, nothing} from "lit";
 import {property} from "lit/decorators.js";
-import {TOAST_COLORS} from "./types";
 
 // TODO: after implementing the icon library, add the `icon` property to this component.
 export class Toast extends LitElement {
@@ -8,7 +7,6 @@ export class Toast extends LitElement {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
-  private readonly internals!: ElementInternals;
 
   private renderSuccessIcon() {
     return html`
@@ -17,6 +15,7 @@ export class Toast extends LitElement {
       </svg>
     `
   }
+
   private renderErrorIcon() {
     return html`
       <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,6 +23,7 @@ export class Toast extends LitElement {
       </svg>
     `
   }
+
   private renderInfoIcon() {
     return html`
       <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,6 +31,7 @@ export class Toast extends LitElement {
       </svg>
     `
   }
+
   private renderWarningIcon() {
     return html`
       <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,6 +39,7 @@ export class Toast extends LitElement {
       </svg>
     `
   }
+
   private renderDefaultIcon() {
     return html`
       <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,6 +48,7 @@ export class Toast extends LitElement {
       </svg>
     `
   }
+
   private renderCloseIcon() {
     return html`
       <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -55,61 +58,46 @@ export class Toast extends LitElement {
   }
 
   private renderIcon() {
-    if (this.color === TOAST_COLORS.SUCCESS) return this.renderSuccessIcon();
-    if (this.color === TOAST_COLORS.ERROR) return this.renderErrorIcon();
-    if (this.color === TOAST_COLORS.INFO) return this.renderInfoIcon();
-    if (this.color === TOAST_COLORS.WARNING) return this.renderWarningIcon();
+    if (this.variant === 'success') return this.renderSuccessIcon();
+    if (this.variant === 'error') return this.renderErrorIcon();
+    if (this.variant === 'info') return this.renderInfoIcon();
+    if (this.variant === 'warning') return this.renderWarningIcon();
     return this.renderDefaultIcon();
   }
 
-  @property() message?: string;
-  @property({ type: Boolean, reflect: true }) showDismissButton? = false;
-  @property({ type: Number, reflect: true }) autoHideDuration? = -1;
-  @property({ reflect: true }) color?: TOAST_COLORS = TOAST_COLORS.INVERSE;
-  @property({ reflect: true }) onOpen?: () => void;
-  @property({ reflect: true }) onClose?: () => void;
+  @property({type: Boolean, reflect: true}) showDismissButton? = false;
 
-  constructor() {
-    super();
-    this.internals = this.attachInternals();
-  }
+  @property({reflect: true}) variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse' = 'inverse';
 
-  handleClose() {
-    this.onClose?.();
+  private handleDismiss() {
     this.disconnectedCallback();
     this.remove();
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.onOpen?.();
-    if (this.autoHideDuration && this.autoHideDuration >= 0)
-      setTimeout(() => this.handleClose(), this.autoHideDuration);
-  }
-
   render() {
     return html`
-          <div
-            dir="rtl"
-            id="toast"
-            class="toast"
-            role="alertdialog"
-            aria-label=${nothing}
-            aria-labelledby=${nothing}
-            aria-describedby=${nothing}
-          >
-            <span class="toast-icon" id="toast-icon">
-              ${this.renderIcon()}
-            </span>
-            <span id="toast-message">${this.message}</span>
-            <button
-              class="toast-dismiss"
-              id="toast-dismiss"
-              @click=${this.handleClose}
-            >
-              ${this.renderCloseIcon()}
-            </button>
-          </div>
-        `;
+      <div
+        id="toast"
+        class="toast"
+        role="alertdialog"
+        aria-label=${nothing}
+        aria-labelledby=${nothing}
+        aria-describedby=${nothing}
+      >
+        <span class="toast-icon" id="toast-icon">
+          ${this.renderIcon()}
+        </span>
+        <span id="toast-message">
+          <slot></slot>
+        </span>
+        <button
+          class="toast-dismiss"
+          id="toast-dismiss"
+          @click=${this.handleDismiss}
+        >
+          ${this.renderCloseIcon()}
+        </button>
+      </div>
+    `;
   }
 }
