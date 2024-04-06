@@ -48,8 +48,17 @@ const Template: Story<ArgTypes> = ({
   toastContent,
   showDismissButton,
 }) => {
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const toastElement = document.getElementById('toast-story');
+    toastElement?.addEventListener('dismiss', () => {
+      toastElement.remove();
+    });
+  });
+
   return html`
     <tap-toast
+      id="toast-story"
       variant=${variant}
       ?showDismissButton=${showDismissButton}
     >
