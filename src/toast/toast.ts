@@ -67,7 +67,7 @@ export class Toast extends LitElement {
 
   @property({type: Boolean, reflect: true}) showDismissButton? = false;
 
-  @property({reflect: true}) variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse' = 'inverse';
+  @property() variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse' = 'inverse';
 
   private handleDismiss() {
     this.disconnectedCallback();

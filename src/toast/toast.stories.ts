@@ -2,6 +2,8 @@ import {html, TemplateResult} from "lit";
 import "./index.js";
 import "../button";
 
+const toastVariants: string[] = ["success", "error", "info", "inverse", "warning"]
+
 export default {
   title: "Toast",
   component: "tap-toast",
@@ -11,7 +13,7 @@ export default {
       description: "Toast Content",
     },
     variant: {
-      options: ["success", "error", "info", "inverse", "warning"],
+      options: toastVariants,
       control: { type: "inline-radio" },
       description: "The toast variant",
       defaultValue: `"inverse"`,
@@ -19,7 +21,7 @@ export default {
     showDismissButton: {
       description: "Should the Dismiss button be visible?",
       control: { type: "boolean" },
-      defaultValue: true,
+      defaultValue: false,
     },
   },
 };
@@ -47,14 +49,20 @@ const Template: Story<ArgTypes> = ({
   showDismissButton,
 }) => {
   return html`
-    <div>
-      <tap-toast
-        .variant=${variant}
-        .showDismissButton=${showDismissButton}
-      >
-        ${toastContent}
-      </tap-toast>
-    </div>
+    <tap-toast
+      variant=${variant}
+      ?showDismissButton=${showDismissButton}
+    >
+      ${toastContent}
+    </tap-toast>
+  `;
+};
+
+const VariantTemplate: Story<{}> = () => {
+  return html`
+    ${toastVariants.map((variant) => html`
+      <tap-toast variant=${variant}>${variant}</tap-toast>
+    `)}
   `;
 };
 
@@ -63,11 +71,8 @@ Simple.args = {
   toastContent: "a simple toast",
 };
 
-export const Variants = Template.bind({});
-Variants.args = {
-  toastContent: "A toast with success variant",
-  variant: 'success',
-};
+export const Variants = VariantTemplate.bind({});
+Variants.args = {};
 
 export const DismissButton = Template.bind({});
 DismissButton.args = {
