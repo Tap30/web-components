@@ -69,9 +69,11 @@ export class Toast extends LitElement {
 
   @property() variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse' = 'inverse';
 
-  private handleDismiss() {
-    this.disconnectedCallback();
-    this.remove();
+  private dispatchDismissEvent() {
+    this.dispatchEvent(new CustomEvent('dismiss', {
+      bubbles: true,
+      composed: true
+    }));
   }
 
   render() {
@@ -93,7 +95,7 @@ export class Toast extends LitElement {
         <button
           class="toast-dismiss"
           id="toast-dismiss"
-          @click=${this.handleDismiss}
+          @click=${this.dispatchDismissEvent}
         >
           ${this.renderCloseIcon()}
         </button>
