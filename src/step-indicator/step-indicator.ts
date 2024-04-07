@@ -7,9 +7,7 @@ import { map } from "lit/directives/map.js";
  * @prop steps - total steps
  * @prop selected - current selected step
  *
- * @fires {CustomEvent} -
- *
- * @cssprop --pf-c-accordion--BackgroundColor {@default var(--pf-global--BackgroundColor--100, #fff)}
+ * @fires {CustomEvent} - Step indicator change event
  *
  * @csspart steps - container for the steps
  * @csspart step - step button
