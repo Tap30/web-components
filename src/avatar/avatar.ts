@@ -1,6 +1,5 @@
 import { LitElement, PropertyValues, html } from "lit";
 import { property, state } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js";
 
 export class Avatar extends LitElement {
   @state() private hasError = false;
@@ -44,10 +43,7 @@ export class Avatar extends LitElement {
         role="img"
         aria-label=${this.label}
         part="avatar"
-        class=${classMap({
-          avatar: true,
-          [this.size]: true,
-        })}
+        class="avatar"
       >
         ${this.image && !this.hasError
           ? this.renderImage()
