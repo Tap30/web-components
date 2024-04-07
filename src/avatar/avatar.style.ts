@@ -14,10 +14,8 @@ export default css`
   [hidden] {
     display: none !important;
   }
-  
+
   .avatar {
-    width: var(--tap-sys-spacing-11);
-    height: var(--tap-sys-spacing-11);
     background-color: var(--tap-sys-color-surface-secondary);
     border: 1px solid var(--tap-sys-color-border-primary);
     border-radius: var(--tap-sys-radius-full);
@@ -30,5 +28,37 @@ export default css`
     width: 100%;
     height: 100%;
     border-radius: inherit;
+  }
+
+  .avatar[size="xxSmall"] {
+    width: var(--tap-sys-spacing-8);
+    height: var(--tap-sys-spacing-8);
+  }
+
+  .avatar[size="xSmall"] {
+    width: var(--tap-sys-spacing-9);
+    height: var(--tap-sys-spacing-9);
+  }
+
+  .avatar[size="small"] {
+    width: var(--tap-sys-spacing-10);
+    height: var(--tap-sys-spacing-10);
+  }
+
+  .avatar[size="medium"] {
+    width: var(--tap-sys-spacing-11);
+    height: var(--tap-sys-spacing-11);
+  }
+
+  // TODO: add to tokens
+  .avatar[size="large"] {
+    width: 56px;
+    height: 56px;
+  }
+
+  // TODO: add to tokens
+  .avatar[size="xLarge"] {
+    width: 72px;
+    height: 72px;
   }
 `;
