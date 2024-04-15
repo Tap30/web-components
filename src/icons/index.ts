@@ -1,6 +1,6 @@
 export {TapIconAlarmClockFill} from './alarm-clock-fill'
 export {TapIconAlarmClock} from './alarm-clock'
-export {TapIconArrowTopRight1} from './arrow-top-right-1'
+export {TapIconArrowTopRightFill} from './arrow-top-right-fill'
 export {TapIconArrowTopRightQuestionFill} from './arrow-top-right-question-fill'
 export {TapIconArrowTopRightQuestion} from './arrow-top-right-question'
 export {TapIconArrowTopRight} from './arrow-top-right'

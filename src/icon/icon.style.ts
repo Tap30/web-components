@@ -7,20 +7,26 @@ export default css`
 
   ::slotted(svg) {
     color: inherit;
+    height: 100%;
+    width: 100%;
   }
 
-  :host([size="small"]) ::slotted(svg) {
-    height: var(--tap-sys-spacing-7);
-    width: var(--tap-sys-spacing-7);
+  #icon-container {
+    display: inline-block;
   }
 
-  :host([size="medium"]) ::slotted(svg) {
-    height: var(--tap-sys-spacing-8);
-    width: var(--tap-sys-spacing-8);
-  }
-
-  :host([size="large"]) ::slotted(svg) {
-    height: var(--tap-sys-spacing-9);
-    width: var(--tap-sys-spacing-9);
-  }
+  //:host([size="small"]) ::slotted(svg) {
+  //  height: var(--tap-sys-spacing-7);
+  //  width: var(--tap-sys-spacing-7);
+  //}
+  //
+  //:host([size="medium"]) ::slotted(svg) {
+  //  height: var(--tap-sys-spacing-8);
+  //  width: var(--tap-sys-spacing-8);
+  //}
+  //
+  //:host([size="large"]) ::slotted(svg) {
+  //  height: var(--tap-sys-spacing-9);
+  //  width: var(--tap-sys-spacing-9);
+  //}
 `;
