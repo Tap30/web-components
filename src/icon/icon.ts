@@ -19,7 +19,6 @@ export class Icon extends LitElement {
   renderIcon(content: unknown) {
     return html`
       <tap-icon
-        size=${this.size}
         color=${this.color}
         width=${this.width}
         height=${this.height}
