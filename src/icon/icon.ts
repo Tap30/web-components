@@ -6,6 +6,8 @@ export class Icon extends LitElement {
 
   @property({ reflect: true }) color: string = "inherit";
 
+  // TODO: add width and height properties
+
   render() {
     return html`
         <span id="icon-container" style="color: ${this.color};">
