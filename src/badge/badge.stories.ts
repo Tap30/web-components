@@ -1,10 +1,10 @@
 import { html, TemplateResult } from "lit";
 import "./index.js";
-import {BadgePriority, BadgeType, BadgeValue, BadgeVariant} from "./types";
+import { BadgePriority, BadgeType, BadgeValue, BadgeVariant } from "./types";
 
 const BadgeTypes = ["pill", "numeral", "dot"]
 const BadgeVariants = ["success", "error", "info", "inverse", "warning"]
-const BadgePriority = ["high", "low"]
+const BadgePriorities = ["high", "low"]
 
 export default {
   title: "Badge",
@@ -25,7 +25,7 @@ export default {
       description: "Badge Variant",
     },
     priority: {
-      options: BadgePriority,
+      options: BadgePriorities,
       control: { type: "inline-radio" },
       description: "Badge Priority",
     },

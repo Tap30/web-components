@@ -1,6 +1,6 @@
 import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
-import {BadgePriority, BadgeType, BadgeValue, BadgeVariant} from "./types";
+import { BadgePriority, BadgeType, BadgeValue, BadgeVariant } from "./types";
 
 export class Badge extends LitElement {
   @property({ reflect: true }) value?: BadgeValue = "";
