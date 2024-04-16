@@ -2,10 +2,17 @@ import { html, TemplateResult } from "lit";
 import "../radio";
 import "./index.js";
 
+const radioGroupDirection: string[] = ['row', 'col']
+
 export default {
   title: "Radio Group",
   component: "tap-radio-group",
-  argTypes: {},
+  argTypes: {
+    direction: {
+      options: radioGroupDirection,
+      control: { type: "inline-radio" },
+    },
+  },
 };
 
 interface Story<T> {
@@ -14,10 +21,13 @@ interface Story<T> {
   argTypes?: Record<string, unknown>;
 }
 
-interface ArgTypes {}
+interface ArgTypes {
+  value?: string,
+  direction?: 'col' | 'row'
+}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
-  <tap-radio-group value="2">
+const Template: Story<ArgTypes> = ({value,direction}: ArgTypes) => html`
+  <tap-radio-group value="${value}" direction="${direction}" >
     <tap-radio value="1"></tap-radio>
     <tap-radio value="2"></tap-radio>
     <tap-radio value="3"></tap-radio>
@@ -27,4 +37,7 @@ const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
 
 export const RadioGroup = Template.bind({});
 
-RadioGroup.args = {};
+RadioGroup.args = {
+  direction: 'col',
+  value: '2'
+};
