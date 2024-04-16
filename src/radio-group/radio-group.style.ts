@@ -17,16 +17,14 @@ export default css`
 
   .radio-group {
     display: flex;
-    background-color: var(--tap-sys-color-surface-secondary);
-    border-radius: var(--tap-sys-radius-full);
     padding: var(--tap-sys-spacing-3);
   }
 
-  :host([size="sm"]) .radio-group {
-    height: var(--tap-sys-spacing-10);
+  :host([direction="col"]) .radio-group {
+    flex-direction: column;
   }
 
-  :host([size="md"]) .radio-group {
-    height: var(--tap-sys-spacing-11);
+  :host([direction="row"]) .radio-group {
+    flex-direction: row;
   }
 `;
