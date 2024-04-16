@@ -18,6 +18,7 @@ export default css`
   .radio-group {
     display: flex;
     padding: var(--tap-sys-spacing-3);
+    gap: var(--tap-sys-spacing-3);
   }
 
   :host([direction="col"]) .radio-group {
