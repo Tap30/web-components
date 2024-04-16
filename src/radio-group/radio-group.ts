@@ -3,7 +3,8 @@ import { property, queryAssignedElements } from "lit/decorators.js";
 import { Radio } from "../radio/radio";
 
 export class RadioGroup extends LitElement {
-  @property({reflect: true}) direction: "row" | "col" = "col";
+  @property({ reflect: true }) direction: "row" | "col" = "col";
+  @property({ reflect: true }) value = "";
 
   @queryAssignedElements() private radios!: Radio[];
 
@@ -13,6 +14,13 @@ export class RadioGroup extends LitElement {
       "radio-input-change",
       this.handleRadioChangeClick
     );
+  }
+
+  private selectDefaultOption(){
+    if(!this.value) return;
+    const selectedRadio = this.radios.find(radio => radio.value == this.value);
+    if(!selectedRadio) return
+    selectedRadio.checked = true;
   }
 
   private handleRadioChangeClick(e: Event) {
@@ -49,7 +57,7 @@ export class RadioGroup extends LitElement {
         part="radio-group"
         aria-label=${nothing}
       >
-        <slot></slot>
+        <slot @slotchange="${this.selectDefaultOption}"></slot>
       </div>
     `;
   }
