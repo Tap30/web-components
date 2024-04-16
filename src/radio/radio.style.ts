@@ -24,6 +24,7 @@ export default css`
     width: var(--tap-sys-spacing-7);
     background-color: var(--tap-sys-color-surface-primary);
     border: 1px solid var(--tap-sys-color-border-inverse-primary);
+    margin: var(--tap-sys-spacing-3);
     cursor: pointer;
     align-items: center;
     justify-content: center;

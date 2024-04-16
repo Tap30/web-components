@@ -3,7 +3,7 @@ import { property, queryAssignedElements } from "lit/decorators.js";
 import { Radio } from "../radio/radio";
 
 export class RadioGroup extends LitElement {
-  // @property({ reflect: true }) size: "sm" | "md" = "md";
+  @property({reflect: true}) direction: "row" | "col" = "col";
 
   @queryAssignedElements() private radios!: Radio[];
 
