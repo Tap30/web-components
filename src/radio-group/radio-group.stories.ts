@@ -17,11 +17,11 @@ interface Story<T> {
 interface ArgTypes {}
 
 const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
-  <tap-radio-group>
-    <tap-radio></tap-radio>
-    <tap-radio></tap-radio>
-    <tap-radio></tap-radio>
-    <tap-radio></tap-radio>
+  <tap-radio-group value="2">
+    <tap-radio value="1"></tap-radio>
+    <tap-radio value="2"></tap-radio>
+    <tap-radio value="3"></tap-radio>
+    <tap-radio value="4"></tap-radio>
   </tap-radio-group>
 `;
 
