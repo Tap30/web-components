@@ -81,4 +81,40 @@ export default css`
     background-color: var(--tap-sys-color-surface-warning-light);
     color: var(--tap-sys-color-content-warning);
   }
+
+  :host([variant="info"]) .icon path {
+    fill: var(--tap-sys-color-content-on-negative);
+  }
+
+  :host([variant="success"]) .icon path {
+    fill: var(--tap-sys-color-content-on-negative);
+  }
+
+  :host([variant="error"]) .icon path {
+    fill: var(--tap-sys-color-content-on-negative);
+  }
+
+  :host([variant="warning"]) .icon path {
+    fill: var(--tap-sys-color-content-on-warning);
+  }
+
+  :host([variant="inverse"]) .icon path {
+    fill: var(--tap-sys-color-content-tertiary);
+  }
+
+  :host([variant="info"][priority="low"]) .icon path {
+    fill: var(--tap-sys-color-content-accent);
+  }
+
+  :host([variant="success"][priority="low"]) .icon path {
+    fill: var(--tap-sys-color-content-positive);
+  }
+
+  :host([variant="error"][priority="low"]) .icon path {
+    fill: var(--tap-sys-color-content-negative);
+  }
+
+  :host([variant="warning"][priority="low"]) .icon path {
+    fill: var(--tap-sys-color-content-warning);
+  }
 `;
