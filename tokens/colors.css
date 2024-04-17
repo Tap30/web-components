@@ -42,7 +42,7 @@
   --tap-sys-color-content-on-brand: var(--tap-palette-white);
   --tap-sys-color-content-on-accent: var(--tap-palette-white);
   --tap-sys-color-content-on-negative: var(--tap-palette-white);
-  --tap-sys-color-content-on-warning: var(--tap-palette-white);
+  --tap-sys-color-content-on-warning: var(--tap-palette-black);
   --tap-sys-color-content-on-postive: var(--tap-palette-white);
 
   /* border */
