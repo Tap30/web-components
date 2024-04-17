@@ -51,15 +51,13 @@ interface ArgTypes {
 }
 
 const Template: Story<ArgTypes> = ({value, variant, type, priority, leadingIcon}: ArgTypes) => html`
-  <div style="direction: rtl">
-    <tap-badge
-      value=${value}
-      type=${type}
-      variant=${variant}
-      priority=${priority}
-      ?leadingIcon=${leadingIcon}
-    />
-  </div>
+  <tap-badge
+    value=${value}
+    type=${type}
+    variant=${variant}
+    priority=${priority}
+    ?leadingIcon=${leadingIcon}
+  />
 `;
 
 export const Badge = Template.bind({});
