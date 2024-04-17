@@ -1,5 +1,7 @@
 import { html, TemplateResult } from "lit";
 import "./index.js";
+import "../badge";
+import "../button";
 
 export default {
   title: "Badge",
