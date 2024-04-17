@@ -12,6 +12,5 @@ export default css`
     top: 0;
     left: 0;
     transform: translate(-50%, -30%);
-    z-index: 1;
   }
 `;
