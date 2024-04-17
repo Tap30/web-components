@@ -39,5 +39,5 @@ export const RadioGroup = Template.bind({});
 
 RadioGroup.args = {
   direction: 'col',
-  value: '2'
+  value: '1'
 };
