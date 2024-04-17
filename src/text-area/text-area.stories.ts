@@ -22,10 +22,12 @@ interface ArgTypes {
   label: string,
   caption: string,
   placeholder: string,
+  disabled: boolean,
+  error: boolean,
 }
 
-const Template: Story<ArgTypes> = ({ label, caption, placeholder }) => html`
-  <tap-text-area label=${label} caption=${caption} placeholder=${placeholder}>
+const Template: Story<ArgTypes> = ({ ...args }: ArgTypes) => html`
+  <tap-text-area label=${args.label} caption=${args.caption} placeholder=${args.placeholder} ?disabled=${args.disabled} ?error=${args.error}>
   </tap-text-area>
 `;
 
@@ -35,4 +37,6 @@ TextArea.args = {
   label: 'لیبل',
   caption: 'توضیحات',
   placeholder: 'متن',
+  disabled: false,
+  error: false,
 };
