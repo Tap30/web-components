@@ -4,10 +4,10 @@ import { BadgePriority, BadgeType, BadgeValue, BadgeVariant } from "./types";
 
 export class Badge extends LitElement {
   @property({ reflect: true }) value?: BadgeValue = "";
-  @property({ reflect: true }) type: BadgeType = "pill";
-  @property({ reflect: true }) variant: BadgeVariant = "inverse";
-  @property({ reflect: true }) priority: BadgePriority = "high";
-  @property({ reflect: true }) leadingIcon?: boolean = false;
+  @property({ reflect: true }) type?: BadgeType = "pill";
+  @property({ reflect: true }) variant?: BadgeVariant = "inverse";
+  @property({ reflect: true }) priority?: BadgePriority = "high";
+  @property({ type: Boolean }) leadingIcon? = false;
 
   private renderIcon() {
     return html`
@@ -33,11 +33,9 @@ export class Badge extends LitElement {
   }
 
   render() {
-    return html`
-      <span class="wrapper">
-        ${ this.type === "dot" ? this.renderDotBadge() : this.renderNormalBadge()}
-        <slot></slot>
-      </span>
-    `;
+    if (this.type === "dot")
+      return this.renderDotBadge();
+    else
+      return this.renderNormalBadge();
   }
 }

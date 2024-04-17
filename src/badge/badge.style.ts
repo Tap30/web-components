@@ -17,11 +17,6 @@ export default css`
     font-weight: var(--tap-sys-typography-body-xs-weight);
     color: var(--tap-sys-color-content-primary);
     border-radius: var(--tap-sys-radius-4);
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -30%);
-    z-index: 1;
   }
 
   .icon {

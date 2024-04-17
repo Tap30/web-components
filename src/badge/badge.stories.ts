@@ -58,9 +58,7 @@ const Template: Story<ArgTypes> = ({value, variant, type, priority, leadingIcon}
       variant=${variant}
       priority=${priority}
       ?leadingIcon=${leadingIcon}
-    >
-      <tap-button>عنوان دکمه</tap-button>
-    </tap-badge>
+    />
   </div>
 `;
 

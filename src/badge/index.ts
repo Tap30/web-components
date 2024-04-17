@@ -9,6 +9,6 @@ export class TapBadge extends Badge {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-divider": TapBadge;
+    "tap-badge": TapBadge;
   }
 }
