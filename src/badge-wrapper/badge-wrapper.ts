@@ -1,0 +1,12 @@
+import { html, LitElement } from "lit";
+
+export class BadgeWrapper extends LitElement {
+  render() {
+    return html`
+      <span class="wrapper">
+        <slot class="badge" name="badge"></slot>
+        <slot></slot>
+      </span>
+    `;
+  }
+}
