@@ -21,11 +21,11 @@ export default css`
     gap: var(--tap-sys-spacing-3);
   }
 
-  :host([direction="col"]) .radio-group {
+  :host([direction="vertical"]) .radio-group {
     flex-direction: column;
   }
 
-  :host([direction="row"]) .radio-group {
+  :host([direction="horizontal"]) .radio-group {
     flex-direction: row;
   }
 `;

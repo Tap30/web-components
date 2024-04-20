@@ -2,7 +2,7 @@ import { html, TemplateResult } from "lit";
 import "../radio";
 import "./index.js";
 
-const radioGroupDirection: string[] = ['row', 'col']
+const radioGroupDirection: string[] = ['horizontal', 'vertical']
 
 export default {
   title: "Radio Group",
@@ -23,7 +23,7 @@ interface Story<T> {
 
 interface ArgTypes {
   value?: string,
-  direction?: 'col' | 'row'
+  direction?: 'vertical' | 'horizontal'
 }
 
 const Template: Story<ArgTypes> = ({value,direction}: ArgTypes) => html`
@@ -38,6 +38,6 @@ const Template: Story<ArgTypes> = ({value,direction}: ArgTypes) => html`
 export const RadioGroup = Template.bind({});
 
 RadioGroup.args = {
-  direction: 'col',
+  direction: 'vertical',
   value: '1'
 };
