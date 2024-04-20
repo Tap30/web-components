@@ -45,6 +45,8 @@ export default css`
 
   .button .icon {
     height: 100%;
+    display: flex;
+    align-items: center;
   }
 
   :host([size="small"]) .button .icon {
@@ -137,5 +139,21 @@ export default css`
   :host([variant="brand"]) .button {
     background: var(--tap-button-color-gradient-brand, var(--tap-sys-color-gradient-brand));
     color: var(--tap-button-color-content-on-inverse, var(--tap-sys-color-content-on-inverse));
+  }
+
+  :host([shape="circle"]) .button {
+    padding: 0;
+  }
+
+  :host([size="small"][shape="circle"]) .button {
+    width: var(--tap-button-sm-height, var(--tap-sys-spacing-9));
+  }
+
+  :host([size="medium"][shape="circle"]) .button {
+    width: var(--tap-button-sm-height, var(--tap-sys-spacing-10));
+  }
+
+  :host([size="large"][shape="circle"]) .button {
+    width: var(--tap-button-sm-height, var(--tap-sys-spacing-11));
   }
 `;
