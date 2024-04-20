@@ -34,6 +34,8 @@ export class Button extends LitElement {
     | "destructive"
     | "brand" = "primary";
 
+  @property() icon?: string;
+
   constructor() {
     super();
     this.internals = this.attachInternals();
@@ -66,6 +68,7 @@ export class Button extends LitElement {
         aria-labelledby=${nothing}
         aria-describedby=${nothing}
       >
+        ${this.icon ? html`<img src=${this.icon} class="icon"></i>` : nothing}
         <span class="cover"></span>
         <!-- TODO: add spinner -->
         ${this.loading ? html`<span>loading</span>` : html`<slot></slot>`}

@@ -41,7 +41,18 @@ export default css`
     width: 100%;
     font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
     border-radius: var(--tap-button-radius, var(--tap-sys-radius-full));
+  }
 
+  .button .icon {
+    height: 100%;
+  }
+
+  :host([size="small"]) .button .icon {
+    height: var(--tap-sys-spacing-7);
+  }
+
+  :host([size="medium"]) .button .icon, :host([size="large"]) .button .icon {
+    height: var(--tap-sys-spacing-8);
   }
 
   .cover {
