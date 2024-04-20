@@ -1,7 +1,20 @@
-import {html, LitElement} from "lit";
+import {html, LitElement, PropertyValues} from "lit";
 import {property} from "lit/decorators.js";
 
 export class Icon extends LitElement {
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.style.display = 'inline-block';
+  }
+
+  protected updated(_changedProperties: PropertyValues) {
+    super.updated(_changedProperties);
+    this.style.height = `${this.height}px`;
+    this.style.width = `${this.width}px`;
+    this.style.color = this.color;
+  }
+
   @property({reflect: true}) color: string = "inherit";
 
   @property({reflect: true}) width: number = 24;
@@ -10,10 +23,7 @@ export class Icon extends LitElement {
 
   render() {
     return html`
-      <span id="icon-container" style="height: ${this.height}px; width: ${this.width}px; color: ${this.color};">
-          <slot></slot>
-        </span>
-    `;
+      <slot></slot>`;
   }
 
   renderIcon(content: unknown) {

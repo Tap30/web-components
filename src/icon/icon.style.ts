@@ -10,8 +10,4 @@ export default css`
     height: 100%;
     width: 100%;
   }
-
-  #icon-container {
-    display: inline-block;
-  }
 `;
