@@ -43,12 +43,6 @@ export default css`
     border-radius: var(--tap-button-radius, var(--tap-sys-radius-full));
   }
 
-  .button .icon {
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
-
   :host([size="small"]) .button .icon {
     height: var(--tap-sys-spacing-7);
   }
@@ -139,6 +133,12 @@ export default css`
   :host([variant="brand"]) .button {
     background: var(--tap-button-color-gradient-brand, var(--tap-sys-color-gradient-brand));
     color: var(--tap-button-color-content-on-inverse, var(--tap-sys-color-content-on-inverse));
+  }
+
+  .button .icon {
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 
   :host([shape="circle"]) .button {
