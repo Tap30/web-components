@@ -22,10 +22,11 @@ export default css`
     right: 0;
     height: 72px;
     background: var(--tap-sys-color-surface-secondary);
-    border-top: var(-tap-sys-stroke-1) solid var(--tap-sys-color-border-primary);
+    border-top-width: var(-tap-sys-stroke-1);
+    border-top-style: solid;
+    border-top-color: var(--tap-sys-color-border-primary);
     display: flex;
     align-items: center;
     justify-content: space-evenly;
   }
-
 `;

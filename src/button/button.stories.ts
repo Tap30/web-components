@@ -74,7 +74,7 @@ const Template: Story<ArgTypes> = ({
   <tap-button
     ?disabled=${disabled}
     ?loading=${loading}
-    type=${type}
+    type=${type || 'button'}
     size=${size}
     variant=${variant}
     @click=${() => alert('Clicked!')}
