@@ -22,7 +22,7 @@ export default css`
     right: 0;
     height: 72px;
     background: var(--tap-sys-color-surface-secondary);
-    border-top-width: var(-tap-sys-stroke-1);
+    border-top-width: var(--tap-sys-stroke-1);
     border-top-style: solid;
     border-top-color: var(--tap-sys-color-border-primary);
     display: flex;
