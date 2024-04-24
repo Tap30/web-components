@@ -30,9 +30,6 @@ export class Radio extends LitElement {
   }
 
   private handleInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.checked = target.checked;
-
     this.dispatchEvent(
       new CustomEvent("radio-input-change", {
         detail: {
