@@ -49,8 +49,8 @@ export class Row extends LitElement {
         </span>
           <span class="row-content">
              <slot name="content" @slotchange=${this.updateSlotsVisibility}></slot>
-              ${this.title ? html`<b class="row-title">${this.title}</b>` : nothing}
-              ${this.subtitle ? html`<p class="row-subtitle">${this.subtitle || ''}</p>` : nothing}
+              ${this.title ? html`<b id="row-title" class="row-title">${this.title}</b>` : nothing}
+              ${this.subtitle ? html`<p id="row-subtitle" class="row-subtitle">${this.subtitle || ''}</p>` : nothing}
           </span>
           <span class="row-trailing">
             <slot name="trailing" @slotchange="${this.updateSlotsVisibility}"></slot>
