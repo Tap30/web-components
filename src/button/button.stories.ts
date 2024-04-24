@@ -1,9 +1,12 @@
-import {html, TemplateResult} from "lit";
+import {html, TemplateResult,} from "lit";
+import {spreadProps} from "@open-wc/lit-helpers";
 import "./index.js";
+import "../icons/default";
 
-const buttonTypes: string[] = ["button", "submit", "reset"];
-const buttonSizes: string[] = ["small", "medium", "large"];
-const buttonVariants: string[] = ["primary", "ghost", "naked", "elevated", "destructive", "brand"];
+const buttonSlots = ["Text", "Icon"];
+const buttonTypes = ["button", "submit", "reset"];
+const buttonSizes = ["small", "medium", "large"];
+const buttonVariants = ["primary", "ghost", "naked", "elevated", "destructive", "brand"];
 
 export default {
   title: "Button",
@@ -11,7 +14,8 @@ export default {
   argTypes: {
     slot: {
       description: "Button slot content",
-      control: {type: "text"},
+      options: buttonSlots,
+      control: {type: "select"},
     },
     disabled: {
       description: "Is the button disabled?",
@@ -48,7 +52,7 @@ interface Story<T> {
   argTypes?: Record<string, unknown>;
 }
 
-interface ArgTypes {
+type  ArgTypes = {
   slot: string,
   disabled?: boolean,
   loading?: boolean,
@@ -60,33 +64,28 @@ interface ArgTypes {
     | "naked"
     | "elevated"
     | "destructive"
-    | "brand",
+    | "brand"
 }
 
-const Template: Story<ArgTypes> = ({
-   slot,
-   disabled,
-   loading,
-   type,
-   size,
-   variant,
- }: ArgTypes) => html`
-  <tap-button
-    ?disabled=${disabled}
-    ?loading=${loading}
-    type=${type || 'button'}
-    size=${size}
-    variant=${variant}
-    @click=${() => alert('Clicked!')}
-  >
-    ${slot}
-  </tap-button>
-`;
+const Template: Story<ArgTypes> = (props: ArgTypes) => {
+  const icon = html`
+    <tap-icon-default></tap-icon-default>`;
+
+  let slot = props.slot === "Text" ? "Simple Text" : icon;
+  return html`
+    <tap-button
+      @click=${() => alert('Clicked!')}
+      ${spreadProps(props)}
+    >
+      ${slot}
+    </tap-button>
+  `;
+};
 
 export const Button = Template.bind({});
 
 Button.args = {
-  slot: 'a beautiful button',
+  slot: 'text',
   disabled: false,
   loading: false,
   type: 'button',
