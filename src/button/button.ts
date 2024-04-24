@@ -1,6 +1,6 @@
-import { LitElement, html, nothing } from "lit";
-import { property } from "lit/decorators.js";
-import { ifDefined } from "lit/directives/if-defined.js";
+import {html, LitElement, nothing, PropertyValues} from "lit";
+import {property} from "lit/decorators.js";
+import {ifDefined} from "lit/directives/if-defined.js";
 
 export class Button extends LitElement {
   static readonly shadowRootOptions = {
@@ -8,13 +8,15 @@ export class Button extends LitElement {
     delegatesFocus: true,
   };
 
-  static readonly formAssociated = true;
-
   private readonly internals!: ElementInternals;
 
-  @property({ type: Boolean, reflect: true }) disabled = false;
+  @property({state: true}) isCircle = false;
 
-  @property({ reflect: true }) type?: "button" | "submit" | "reset";
+  @property({reflect: true}) slot = '';
+
+  @property({type: Boolean, reflect: true}) disabled = false;
+
+  @property({reflect: true}) type?: "button" | "submit" | "reset";
 
   @property() value?: string;
 
@@ -22,11 +24,11 @@ export class Button extends LitElement {
 
   @property() label?: string;
 
-  @property({ type: Boolean, reflect: true }) loading = false;
+  @property({type: Boolean, reflect: true}) loading = false;
 
-  @property({ reflect: true }) size: "small" | "medium" | "large" = "medium";
+  @property({reflect: true}) size: "small" | "medium" | "large" = "medium";
 
-  @property({ reflect: true }) variant:
+  @property({reflect: true}) variant:
     | "primary"
     | "ghost"
     | "naked"
@@ -37,6 +39,18 @@ export class Button extends LitElement {
   constructor() {
     super();
     this.internals = this.attachInternals();
+    this.isCircle = false;
+  }
+
+  protected updated(_changedProperties: PropertyValues) {
+    this.updateIsCircle();
+    super.updated(_changedProperties);
+  }
+
+  private updateIsCircle() {
+    const slot = this.renderRoot?.querySelector('slot');
+    const iconSlot = slot?.assignedNodes().map(el => el.nodeName.toLowerCase()).some(name => name.includes('tap-icon'));
+    this.isCircle = Boolean(iconSlot);
   }
 
   private handleClick() {
@@ -61,6 +75,7 @@ export class Button extends LitElement {
         type="${ifDefined(this.type)}"
         name=${ifDefined(this.name)}
         value=${ifDefined(this.value)}
+        data-shape=${this.isCircle ? "circle" : "pill"}
         aria-label="${ifDefined(this.label)}"
         aria-disabled=${this.disabled}
         aria-labelledby=${nothing}

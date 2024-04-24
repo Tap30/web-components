@@ -127,4 +127,23 @@ export default css`
     background: var(--tap-button-color-gradient-brand, var(--tap-sys-color-gradient-brand));
     color: var(--tap-button-color-content-on-inverse, var(--tap-sys-color-content-on-inverse));
   }
+
+  :host .button[data-shape="circle"] {
+    border-radius: var(--tap-sys-radius-full)
+  }
+
+  :host([size="small"]) .button[data-shape="circle"] {
+    padding: var(--tap-button-sm-padding, var(--tap-sys-spacing-5));
+    width: var(--tap-button-sm-height, var(--tap-sys-spacing-9));
+  }
+
+  :host([size="medium"]) .button[data-shape="circle"] {
+    padding: var(--tap-button-md-padding, var(--tap-sys-spacing-6));
+    width: var(--tap-button-md-height, var(--tap-sys-spacing-10));
+  }
+
+  :host([size="large"]) .button[data-shape="circle"] {
+    padding: var(--tap-button-lg-padding, var(--tap-sys-spacing-8));
+    width: var(--tap-button-lg-height, var(--tap-sys-spacing-11));
+  }
 `;
