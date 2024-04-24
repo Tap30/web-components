@@ -25,7 +25,10 @@ export class Banner extends LitElement {
     }
 
     if (changed.has("image") && !!this.image) {
-      this.style.setProperty("--tap-banner-background-image", this.image);
+      this.style.setProperty(
+        "--tap-banner-background-image",
+        `url(${this.image})`
+      );
     }
   }
 
@@ -38,11 +41,14 @@ export class Banner extends LitElement {
           hero: this.variant === "hero",
         })}
       >
-     <div class="extra">
-     <slot name="extra"></slot>
-     </div>
-
-        <div>
+        ${this.variant === "hero"
+          ? html`
+              <div class="extra">
+                <slot name="extra"></slot>
+              </div>
+            `
+          : nothing}
+        <div class="content">
           ${this.heading ? html`<h4>${this.heading}</h4>` : nothing}
           ${this.description ? html`<p>${this.description}</p>` : nothing}
           <div class="action">

@@ -21,9 +21,9 @@ export default css`
     border-radius: var(--tap-sys-radius-4);
     text-align: right;
 
-    background-image: url(var(--tap-banner-background-image));
+    background-image: var(--tap-banner-background-image);
     background-position: left bottom;
-    background-size: 30% 100%;
+    background-size: 30% auto;
     background-repeat: no-repeat;
 
     margin: var(--tap-sys-spacing-4, --tap-sys-spacing-6);
@@ -41,6 +41,7 @@ export default css`
     font-size: var(--tap-sys-typography-headline-xs-size);
     font-weight: var(--tap-sys-typography-headline-xs-weight);
     margin: 0;
+    margin-bottom: var(--tap-sys-spacing-3);
   }
 
   .banner p {
@@ -52,14 +53,18 @@ export default css`
     margin: 0;
   }
 
-  // TODO: remove style if not slotted
+  .content {
+    width: 75%;
+  }
+
+  /* TODO: remove style if not slotted */
   .action {
     margin-top: var(--tap-sys-spacing-5);
   }
 
-  // TODO: remove style if not slotted
   .extra {
     display: flex;
     margin-bottom: var(--tap-sys-spacing-4);
+    min-height: var(--tap-sys-spacing-8);
   }
 `;
