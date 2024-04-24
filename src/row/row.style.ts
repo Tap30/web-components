@@ -22,7 +22,7 @@ export default css`
   }
 
   .row-leading {
-    padding: var(--tap-sys-spacing-4);
+    padding: 0 var(--tap-sys-spacing-4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,7 +51,7 @@ export default css`
   }
 
   .row-trailing {
-    padding: var(--tap-sys-spacing-4);
+    padding: 0 var(--tap-sys-spacing-4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,7 +74,6 @@ export default css`
   }
 
   .row-leading.hidden,
-  .row-content.hidden,
   .row-trailing.hidden {
     display: none;
   }
