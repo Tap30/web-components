@@ -37,7 +37,7 @@ export class Button extends LitElement {
     | "destructive"
     | "brand" = "primary";
 
-  @property({ reflect: true }) icon?: TemplateResult;
+  @property({ reflect: true }) icon: TemplateResult | null = null;
 
   constructor() {
     super();
@@ -51,6 +51,14 @@ export class Button extends LitElement {
 
     if (this.type === "submit") {
       return this.internals.form?.requestSubmit();
+    }
+  }
+
+  private renderIcon(): TemplateResult | typeof nothing {
+    if (this.icon) {
+      return html`${this.icon}`;
+    } else {
+      return nothing;
     }
   }
 
@@ -71,7 +79,7 @@ export class Button extends LitElement {
         aria-labelledby=${nothing}
         aria-describedby=${nothing}
       >
-        ${this.icon ? html`<i class="icon">${this.icon}</i>` : nothing}
+        ${this.renderIcon()}
         <span class="cover"></span>
         <!-- TODO: add spinner -->
         ${this.loading ? html`<span>loading</span>` : html`<slot></slot>`}

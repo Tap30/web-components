@@ -1,5 +1,6 @@
-import { html, LitElement } from "lit";
+import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js"
+import "../icons/index.js";
 import "../button/index";
 
 export class Tooltip extends LitElement {
@@ -7,24 +8,26 @@ export class Tooltip extends LitElement {
     
   }
 
-  @property({ type: String }) label = '';
+  @property({ type: String }) label: string = '';
 
-  @property({ type: String }) backgroundColor = '';
+  @property({ type: String }) pointer: 'top' | 'right' | 'left' | 'bottom' = 'bottom';
 
-  @property({ type: String }) pointer?: 'top' | 'bottom' | 'left' | 'right' = 'bottom';
+  @property({ type: String }) pointerAlignment: 'start' | 'end' | 'middle' = 'middle';
+
+  @property({ type: Boolean }) dismissible: boolean = true;
+
+  @property({ type: Number }) width: number | null = null;
 
   private renderDismissIcon() {
-    return html`
-      <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M18.1568 7.75735L13.9142 12L18.1568 16.2426L16.7426 17.6568L12.5 13.4142L8.25735 17.6568L6.84314 16.2426L11.0858 12L6.84314 7.75735L8.25735 6.34314L12.5 10.5858L16.7426 6.34314L18.1568 7.75735Z" fill="currentColor"/>
-      </svg>
-    `
+    return this.dismissible ? html`
+      <tap-button size="small" variant="naked" shape="circle" .icon=${html`<tap-icon-cross color="#fff"></tap-icon-cross>`}></tap-button>
+    ` : nothing;
   }
 
   render() {
     return html`
-      <div class="tooltip">
-        <tap-button size="small" variant="naked" shape="circle" .icon=${this.renderDismissIcon()}></tap-button>
+      <div class="tooltip ${this.pointer} ${this.pointerAlignment}">
+        ${this.renderDismissIcon()}
         <div class="tooltip-label">
           <slot></slot>
         </div>
