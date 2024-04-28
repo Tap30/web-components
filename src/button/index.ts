@@ -4,7 +4,7 @@ import styles from "./button.style";
 
 @customElement("tap-button")
 export class TapButton extends Button {
-  static readonly styles = [styles];
+  static readonly styles = [...super.styles, styles];
 }
 
 declare global {
