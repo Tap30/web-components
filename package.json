@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "tsc --watch --preserveWatchOutput & wds",
     "storybook": "storybook dev -p 3001",
-    "test": "wtr --watch"
+    "test": "wtr --watch",
+    "lint": "pnpm eslint ./src/**/* --fix"
   },
   "devDependencies": {
     "@eslint/js": "^9.1.1",
