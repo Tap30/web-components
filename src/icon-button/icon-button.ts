@@ -5,10 +5,9 @@ import { TapIcon } from "../icon";
 export class IconButton extends TapBaseButton {
   protected updated(_changedProperties: PropertyValues) {
     super.updated(_changedProperties);
-    const isSlotChanged = !!_changedProperties.get("slot");
     const isSizeChanged = !!_changedProperties.get("size");
     this.checkSlotType();
-    if (isSizeChanged || isSlotChanged) this.updateIconSize();
+    if (isSizeChanged) this.updateIconSize();
   }
 
   private checkSlotType = () => {
