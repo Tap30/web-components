@@ -1,15 +1,14 @@
-import {html, LitElement, nothing} from "lit";
-import {property, state} from "lit/decorators.js";
-import '../divider';
+import {html, LitElement, nothing, PropertyValues} from "lit";
+import {property} from "lit/decorators.js";
 
 export class Row extends LitElement {
   @property({ reflect: true }) size: "standard" | "compact" = "standard";
 
-  @property({ reflect: true, type: Boolean }) divider: boolean = false;
-
   @property({ reflect: true }) title: string = '';
 
   @property({ reflect: true }) subtitle?: string;
+
+  @property({ type: Boolean, reflect: true }) navigable: boolean = false;
 
   private hasSlotContent(slotName: string): boolean {
     const slot = this.shadowRoot?.querySelector(`slot[name="${slotName}"]`) as HTMLSlotElement;
@@ -17,9 +16,9 @@ export class Row extends LitElement {
   }
 
   private hideSlotContainerIfNotExists(slotName: string) {
-    const hasSlot = this.hasSlotContent(slotName);
-    const slotContainer = this.shadowRoot?.getElementById(`row-${slotName}`);
+    const slotContainer = this.shadowRoot?.getElementById(slotName);
     if (slotContainer) {
+      const hasSlot = this.hasSlotContent(slotName);
       slotContainer.classList.toggle('hidden', !hasSlot);
     }
   }
@@ -27,36 +26,62 @@ export class Row extends LitElement {
   private updateSlotsVisibility() {
     this.hideSlotContainerIfNotExists('leading');
     this.hideSlotContainerIfNotExists('trailing');
-    ['row-title', 'row-subtitle'].forEach((id) => {
+    ['title', 'subtitle'].forEach((id) => {
       const element = this.shadowRoot?.getElementById(id);
       if (element) element.style.display = this.hasSlotContent('content') ? 'none' : 'block'
     })
   }
 
-  protected firstUpdated() {
-    this.updateSlotsVisibility();
+  private getDirection() {
+    let element: Element | null = this;
+    let direction = getComputedStyle(element).direction;
+    while (direction === 'ltr' && element.parentElement) {
+      element = element.parentElement;
+      direction = getComputedStyle(element).direction;
+    }
+    return direction
   }
 
-  protected updated() {
+  private changeNavigableDirections() {
+    if (this.navigable) {
+      const direction = this.getDirection();
+      const navigableElement = this.shadowRoot?.getElementById('navigable');
+      if (navigableElement) navigableElement.style.transform = `rotate(${direction === 'ltr' ? '180' : '0'}deg)`;
+    }
+  }
+
+  protected firstUpdated(_changedProperties: PropertyValues) {
+    super.firstUpdated(_changedProperties);
     this.updateSlotsVisibility();
+    this.changeNavigableDirections();
+  }
+
+  private renderNavigableIcon() {
+    return html`
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.9143 8.46445L10.3794 11.9993L13.9143 15.5355L12.5 16.9497L7.55029 12L12.5 7.05023L13.9143 8.46445Z" fill="#B1B2B2"/>
+      </svg>
+    `
   }
 
   protected render(): unknown {
     return html`
-      <div class="row-container">
-        <span class="row-leading">
+      <div class="container" part="row">
+        <span class="leading" part="leading">
           <slot name="leading" @slotchange="${this.updateSlotsVisibility}"></slot>
         </span>
-          <span class="row-content">
+          <span class="content" part="content">
              <slot name="content" @slotchange=${this.updateSlotsVisibility}></slot>
-              ${this.title ? html`<b id="row-title" class="row-title">${this.title}</b>` : nothing}
-              ${this.subtitle ? html`<p id="row-subtitle" class="row-subtitle">${this.subtitle || ''}</p>` : nothing}
+              ${this.title ? html`<h3 id="title" part="title" class="title">${this.title}</h3>` : nothing}
+              ${this.subtitle ? html`<p id="subtitle" part="subtitle" class="subtitle">${this.subtitle || ''}</p>` : nothing}
           </span>
-          <span class="row-trailing">
+          <span class="trailing" part="trailing">
             <slot name="trailing" @slotchange="${this.updateSlotsVisibility}"></slot>
-        </span>
+          </span>
+            <span id="navigable" part="navigable">
+              ${this.renderNavigableIcon()}
+            </span>
         </div>
-      <tap-divider class="row-divider"> </tap-divider>
     `;
   }
 }

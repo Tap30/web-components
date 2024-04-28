@@ -15,66 +15,79 @@ export default css`
     display: none !important;
   }
 
-  .row-container{
+  .container{
     display: flex;
     align-items: stretch;
     width: 100%;
+    transition: background-color 0.3s;
+    font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
+    background-color: var(--tap-row-background-color, var(--tap-palette-white));
   }
 
-  .row-leading {
-    padding: 0 var(--tap-sys-spacing-4);
+  .leading {
+    padding: var(--tap-row-leading-vertical-padding, 0) var(--tap-row-leading-horizontal-padding, var(--tap-sys-spacing-4));
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .row-content {
-    padding: var(--tap-sys-spacing-4);
+  .content {
+    padding: var(--tap-row-content-padding ,var(--tap-sys-spacing-4));
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
-  .row-title {
+  .title {
     margin: 0;
-    font-size: var(--tap-sys-typography-body-md-size);
-    font-weight: var(--tap-sys-typography-body-md-weight);
+    font-size: var(--tap-row-title-font-size, var(--tap-sys-typography-body-md-size));
+    font-weight: var(--tap-row-title-font-weight, var(--tap-sys-typography-body-md-weight));
   }
 
-  .row-subtitle {
+  .subtitle {
     margin: 0;
     color: var(--tap-palette-gray-500);
-    font-size: var(--tap-sys-typography-body-sm-size);
-    font-weight: var(--tap-sys-typography-body-sm-weight);
+    font-size: var(--tap-row-subtitle-font-size, var(--tap-sys-typography-body-sm-size));
+    font-weight: var(--tap-row-subtitle-font-weight, var(--tap-sys-typography-body-sm-weight));
 
   }
 
-  .row-trailing {
-    padding: 0 var(--tap-sys-spacing-4);
+  .trailing {
+    padding: var(--tap-row-trailing-vertical-padding, 0) var(--tap-row-trailing-horizontal-padding, var(--tap-sys-spacing-4));
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  :host([size="standard"]) .row-container {
-    height: var(--tap-sys-spacing-13);
+  #navigable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  :host([size="compact"]) .row-container {
-    height:var(--tap-sys-spacing-12);
+  :host([size="standard"]) .container {
+    height: var(--tap-row-standard-height, var(--tap-sys-spacing-13));
   }
 
-  :host .row-divider {
-    margin: 0;
+  :host([size="compact"]) .container {
+    height: var(--tap-row-compact-height, var(--tap-sys-spacing-12));
   }
 
-  :host(:not([divider])) .row-divider {
+  .leading.hidden,
+  .trailing.hidden {
     display: none;
   }
 
-  .row-leading.hidden,
-  .row-trailing.hidden {
+  :host(:not([navigable])) #navigable {
     display: none;
+  }
+
+  :host([navigable]) .container {
+    cursor: pointer;
+  }
+
+  :host([navigable]) .container:active {
+    background-color: var(--tap-row-background-color, var(--tap-palette-gray-50));
   }
 `;
