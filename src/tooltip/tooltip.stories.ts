@@ -62,17 +62,3 @@ FixedWidth.args = {
   pointer: 'left',
   pointerAlignment: 'start'
 };
-
-export const Bottom = Template.bind({});
-Bottom.args = {
-  label: 'عنوان',
-  pointer: 'bottom',
-  pointerAlignment: 'start'
-};
-
-export const Top = Template.bind({});
-Top.args = {
-  label: 'عنوان',
-  pointer: 'top',
-  pointerAlignment: 'start'
-};
