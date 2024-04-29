@@ -18,9 +18,7 @@ interface ArgTypes {}
 const items = ['عنوان ۱', 'عنوان ۲', 'عنوان ۳', 'عنوان ۴', 'عنوان ۵', 'عنوان ۶', 'عنوان ۷', 'عنوان ۸', 'عنوان ۹']
 
 const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
-  <div style="position: relative">
-    <tap-pinwheel .items=${items}></tap-pinwheel>
-    <tap-pinwheel .items=${items}></tap-pinwheel>
+  <div>
     <tap-pinwheel .items=${items}></tap-pinwheel>
   </div>
 `;
