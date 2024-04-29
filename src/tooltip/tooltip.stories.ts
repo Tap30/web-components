@@ -8,6 +8,18 @@ export default {
   argTypes: {
     
   },
+  decorators: [
+    (Story: () => TemplateResult) => (
+      html`<div
+      style="width: 40px;
+      height: 40px;
+      border: 1px solid #ccc;
+      position: relative;"
+    >
+      ${Story()}
+    </div>`
+    ),
+  ],
 };
 
 interface Story<T> {
@@ -17,19 +29,50 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  
+  label: string,
+  width: string,
+  pointer: string,
+  pointerAlignment?: string,
 }
 
 const Template: Story<ArgTypes> = ({
-
+  width,
+  label,
+  pointer,
+  pointerAlignment,
 }) => {
   return html`
-    <tap-tooltip>
+    <tap-tooltip width=${width} pointer=${pointer} pointerAlignment=${pointerAlignment} >
+      ${label}
     </tap-tooltip>
   `;
 }
 
 export const Simple = Template.bind({});
 Simple.args = {
+  label: 'عنوان',
+  pointer: 'right',
+  pointerAlignment: 'start'
+};
 
+export const FixedWidth = Template.bind({});
+FixedWidth.args = {
+  label: 'عنوان',
+  width: '80px',
+  pointer: 'left',
+  pointerAlignment: 'start'
+};
+
+export const Bottom = Template.bind({});
+Bottom.args = {
+  label: 'عنوان',
+  pointer: 'bottom',
+  pointerAlignment: 'start'
+};
+
+export const Top = Template.bind({});
+Top.args = {
+  label: 'عنوان',
+  pointer: 'top',
+  pointerAlignment: 'start'
 };
