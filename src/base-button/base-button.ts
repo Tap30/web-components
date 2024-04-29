@@ -39,6 +39,8 @@ export abstract class BaseButton extends LitElement {
     this.internals = this.attachInternals();
   }
 
+  protected handleSlotChange = () => {};
+
   private handleClick() {
     if (this.type === "reset") {
       return this.internals.form?.reset();
@@ -68,7 +70,9 @@ export abstract class BaseButton extends LitElement {
       >
         <span class="cover"></span>
         <!-- TODO: add spinner -->
-        ${this.loading ? html`<span>loading</span>` : html`<slot></slot>`}
+        ${this.loading
+          ? html`<span>loading</span>`
+          : html`<slot @slotchange=${this.handleSlotChange}></slot>`}
       </button>
     `;
   }
