@@ -9,9 +9,12 @@ export class IconButton extends TapBaseButton {
   protected updated(_changedProperties: PropertyValues) {
     super.updated(_changedProperties);
     const isSizeChanged = !!_changedProperties.get("size");
-    this.checkSlotType();
     if (isSizeChanged) this.updateIconSize();
   }
+
+  protected handleSlotChange = () => {
+    this.checkSlotType();
+  };
 
   private checkSlotType = () => {
     if (!this.icon[0] && !this.loading)
