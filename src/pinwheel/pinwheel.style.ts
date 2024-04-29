@@ -3,6 +3,7 @@ import { css } from "lit";
 export default css`
   :host {
     display: inline-flex;
+    /* FIXME: we dont have sizing tokens yet  */
     height: 144px;
     overflow: hidden;
     overflow-y: auto;
@@ -16,7 +17,8 @@ export default css`
   }
 
   div > div {
-    padding: 0 16px;
+    padding: var(--tap-sys-spacing-0) var(--tap-sys-spacing-6);
+    /* FIXME: we dont have sizing tokens yet  */
     height: 48px;
     font: inherit;
     font-family: var(--tap-sys-font-family);
@@ -27,11 +29,11 @@ export default css`
   }
 
   .pinwheel div:first-child {
-    padding-top: 48px;
+    padding-top: var(--tap-sys-spacing-11);
   }
 
   .pinwheel div:last-child {
-    padding-bottom: 48px;
+    padding-bottom: var(--tap-sys-spacing-11);
   }
 
   .active {
