@@ -1,8 +1,11 @@
+import { queryAssignedElements } from "lit/decorators.js";
 import { TapBaseButton } from "../base-button";
 import { PropertyValues } from "lit";
 import { TapIcon } from "../icon";
 
 export class IconButton extends TapBaseButton {
+  @queryAssignedElements() private icon!: TapIcon[];
+
   protected updated(_changedProperties: PropertyValues) {
     super.updated(_changedProperties);
     const isSizeChanged = !!_changedProperties.get("size");
@@ -11,22 +14,14 @@ export class IconButton extends TapBaseButton {
   }
 
   private checkSlotType = () => {
-    const iconSlot = this.getIconSlot();
-    if (!iconSlot && !this.loading)
+    if (!this.icon[0] && !this.loading)
       throw new Error('Slot of TapIconButton should be a "tap-icon"');
   };
 
   private updateIconSize = () => {
-    const iconSlot = this.getIconSlot();
-    iconSlot.width = this.getIconSize();
-    iconSlot.height = this.getIconSize();
+    this.icon[0].width = this.getIconSize();
+    this.icon[0].height = this.getIconSize();
   };
-
-  private getIconSlot = () =>
-    this.shadowRoot
-      ?.querySelector("slot")
-      ?.assignedNodes()
-      ?.find((el) => el.nodeName.toLowerCase().includes("tap-icon")) as TapIcon;
 
   private getIconSize = () => {
     switch (this.size) {
