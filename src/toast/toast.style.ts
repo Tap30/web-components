@@ -35,58 +35,48 @@ export default css`
     font: inherit;
     gap: var(--tap-sys-spacing-3);
     width: 100%;
-    font-family: var(--tap-sys-font-family);
+    font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
     border-radius: 999px;
-    padding: var(--tap-sys-spacing-5) var(--tap-sys-spacing-5);
-    animation: toast-animation 1s;
-    background-color: var(--tap-sys-color-surface-inverse-secondary);
-    color: var(--tap-sys-color-content-on-inverse);
+    padding: var(--tap-toast-vertical-padding, var(--tap-sys-spacing-5)) var(--tap-toast-horizontal-padding, var(--tap-sys-spacing-5));
+    background-color: var(--tap-toast-background-color-default, var(--tap-sys-color-surface-inverse-secondary));
+    color: var(--tap-toast-color-default, var(--tap-sys-color-content-on-inverse));
   }
 
-  :host .toast-icon {
+  :host .icon {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  @keyframe toast-animation {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
   :host([variant="success"]) .toast {
-    background-color: var(--tap-sys-color-surface-positive);
-    color: var(--tap-sys-color-content-on-inverse);
+    background-color: var(--tap-toast-background-color-success, var(--tap-sys-color-surface-positive));
+    color: var(--tap-toast-color-success, var(--tap-sys-color-content-on-inverse));
   }
   :host([variant="error"]) .toast {
-    background-color: var(--tap-sys-color-surface-negative);
-    color: var(--tap-sys-color-content-on-inverse);
+    background-color: var(--tap-toast-background-color-error, var(--tap-sys-color-surface-negative));
+    color: var(--tap-toast-color-error, var(--tap-sys-color-content-on-inverse));
   }
   :host([variant="info"]) .toast {
-    background-color: var(--tap-sys-color-surface-accent);
-    color: var(--tap-sys-color-content-on-inverse);
+    background-color: var(--tap-toast-background-color-info, var(--tap-sys-color-surface-accent));
+    color: var(--tap-toast-color-info, var(--tap-sys-color-content-on-inverse));
   }
   :host([variant="inverse"]) .toast {
-    background-color: var(--tap-sys-color-surface-inverse-secondary);
-    color: var(--tap-sys-color-content-on-inverse);
+    background-color: var(--tap-toast-background-color-inverse, var(--tap-sys-color-surface-inverse-secondary));
+    color: var(--tap-toast-color-inverse, var(--tap-sys-color-content-on-inverse));
   }
   :host([variant="warning"]) .toast {
-    background-color: var(--tap-sys-color-surface-warning);
-    color: var(--tap-sys-color-content-primary);
+    background-color: var(--tap-toast-background-color-warning, var(--tap-sys-color-surface-warning));
+    color: var(--tap-toast-color-warning, var(--tap-sys-color-content-primary));
   }
 
-  :host(:not([showDismissButton])) .toast-dismiss {
+  :host(:not([show-dismiss-button])) .dismiss {
     display: none;
     color: inherit;
   }
 
-  :host .toast-dismiss {
-    color: inherit;
-    background: transparent;
+  :host .dismiss {
+    color: var(--tap-toast-dismiss-color, inherit);
+    background: var(--tap-toast-dismiss-background-color, transparent);
     cursor: pointer;
     display: inline-flex;
     user-select: none;
