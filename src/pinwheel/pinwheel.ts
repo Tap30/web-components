@@ -45,7 +45,7 @@ export class Pinwheel extends LitElement {
     this.dispatchChangeEvent();
   }
 
-  private scrollToActiveItem =() => {
+  private scrollToActiveItem = () => {
     const scrollTopPosition = this.selectedItemIndex * this.itemHeight;
     this.scrollTo({ top: scrollTopPosition, behavior: 'smooth' })
   }
@@ -61,7 +61,7 @@ export class Pinwheel extends LitElement {
 
   render() {
     return html`
-      <div class="pinwheel">
+      <div class="pinwheel" part="pinwheel">
         ${this.items.map(this.renderItem)}
       </div>
     `
