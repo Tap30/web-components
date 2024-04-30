@@ -1,5 +1,6 @@
 import { html, LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
+import { debounce } from '../utils/utils';
 
 export class Pinwheel extends LitElement {
   @state() private selectedItemIndex = 0;
@@ -9,11 +10,11 @@ export class Pinwheel extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('scrollend', this.handleScrollEnd);
+    this.addEventListener('scroll', this.handleScroll);
   }
 
   disconnectedCallback() {
-    this.removeEventListener('scrollend', this.handleScrollEnd)
+    this.removeEventListener('scroll', this.handleScroll)
     super.disconnectedCallback();
   }
 
@@ -29,14 +30,14 @@ export class Pinwheel extends LitElement {
     );
   }
 
-  private handleScrollEnd = (event: Event) => {
+  private handleScroll = debounce((event: Event) => {
     const target = event.target as HTMLElement;
     this.selectedItemIndex = Math.round(target?.scrollTop / this.itemHeight);
     if (target?.scrollTop % this.itemHeight) {
       this.scrollToActiveItem();
     }
     this.dispatchChangeEvent();
-  }
+  }, 100);
 
   private handleClickItem = (index: number) => {
     this.selectedItemIndex = index;
