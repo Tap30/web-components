@@ -17,7 +17,7 @@ function parseArguments() {
 // TODO: move to env
 const args = parseArguments();
 const storyPath = args.storyPath || 'src/icon/iconSet.stories.ts';
-const repoUrl = args.repoUrl || 'https://github.com/amir78729/icons/archive/refs/heads/main.zip';
+const repoUrl = args.repoUrl || 'https://github.com/amir78729/icons/archive/refs/heads/main.zip'; // TODO: add to Tap30
 const cachePath = args.cachePath || './assets/';
 const zipFilename = 'repo.zip';
 
