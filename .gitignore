@@ -62,5 +62,4 @@ out-tsc
 storybook-static
 
 /src/icon/iconSet.stories.ts
-.cache
 assets
