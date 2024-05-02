@@ -1,14 +1,14 @@
 import {html, LitElement, PropertyValues} from "lit";
 import {property} from "lit/decorators.js";
 
-export class Icon extends LitElement {
 
+export class Icon extends LitElement {
   connectedCallback() {
     super.connectedCallback();
-    this.style.display = 'inline-block';
+    this.style.display = 'block';
   }
 
-  protected updated(_changedProperties: PropertyValues) {
+  protected async updated(_changedProperties: PropertyValues) {
     super.updated(_changedProperties);
     this.style.height = `${this.height}px`;
     this.style.width = `${this.width}px`;
@@ -21,20 +21,19 @@ export class Icon extends LitElement {
 
   @property({reflect: true}) height: number = 24;
 
-  render() {
-    return html`
-      <slot></slot>`;
-  }
+  @property({reflect: true}) name: string = '';
 
-  renderIcon(content: unknown) {
+  render() {
+    if (this.name)
+      return html`
+        <svg
+          style="height: ${this.height}px; width: ${this.width}px; fill: ${this.color};"
+        >
+          <use href="${this.name ? `./assets/${this.name}.svg#${this.name}` : ''}"></use>
+        </svg>`;
+
     return html`
-      <tap-icon
-        color=${this.color}
-        width=${this.width}
-        height=${this.height}
-      >
-        ${content}
-      </tap-icon>
-    `
+      <slot></slot>`
+
   }
 }

@@ -60,3 +60,7 @@ out-tsc
 
 # Storybook
 storybook-static
+
+/src/icon/iconSet.stories.ts
+.cache
+assets

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "tsc --watch --preserveWatchOutput & wds",
     "storybook": "storybook dev -p 3001",
-    "test": "wtr --watch"
+    "test": "wtr --watch",
+    "build": "node ./scripts/add-icons.js -f && mkdir -p ./assets && cp ./.cache/icons/* ./assets"
   },
   "devDependencies": {
     "@open-wc/testing": "^4.0.0",
