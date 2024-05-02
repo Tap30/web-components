@@ -185,10 +185,8 @@ async function addIconsToProject(repoUrl, outputDir, zipFilename) {
   }
 }
 
-function main() {
+export function addIcons() {
   addIconsToProject(repoUrl, cachePath, zipFilename)
     .then(() => console.info('Done'))
     .catch(err => console.error('Failed: ', err));
 }
-
-main();
