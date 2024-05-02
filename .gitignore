@@ -61,5 +61,6 @@ out-tsc
 # Storybook
 storybook-static
 
+# Icon set
 /src/icon/iconSet.stories.ts
-assets
+assets/**.svg
