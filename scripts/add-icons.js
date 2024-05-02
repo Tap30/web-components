@@ -169,7 +169,17 @@ async function addIconsToProject(repoUrl, outputDir, zipFilename) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    await downloadIcons(repoUrl, outputDir, zipFilename);
+    if (!fs.existsSync(cachePath)) {
+      fs.mkdirSync(cachePath, { recursive: true });
+    }
+
+    const existingSVGs = fs.readdirSync(cachePath).some(file => file.endsWith('.svg'));
+
+    if (existingSVGs && !process.argv.includes('-f')) {
+      console.log('Icons are already available. use `-f` flag to override existing SVG files');
+    } else {
+      await downloadIcons(repoUrl, outputDir, zipFilename);
+    }
 
     updateSVGFiles(outputDir);
 
@@ -188,7 +198,7 @@ function main() {
 
   const existingSVGs = fs.readdirSync(cachePath).some(file => file.endsWith('.svg'));
 
-  if (existingSVGs && !process.argv.includes('-f')) {
+  if (existingSVGs && !process.argv.includes('-f') && false) {
     console.log('Icons are already available. use `-f` flag to override existing SVG files');
   } else {
     if (existingSVGs) {
