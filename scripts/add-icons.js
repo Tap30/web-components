@@ -21,27 +21,23 @@ const repoUrl = args.repoUrl || 'https://github.com/amir78729/icons/archive/refs
 const cachePath = args.cachePath || './.cache/icons/';
 const zipFilename = 'repo.zip';
 
-// Removes all files with a specified extension from a directory
 function removeFilesByExtension(directory, extension) {
-  console.log(`Removing ${extension} files from ${directory}...`);
+  console.info(`Removing ${extension} files from ${directory}...`);
   const files = fs.readdirSync(directory);
   for (const file of files) {
     if (file.endsWith(`.${extension}`)) {
       fs.unlinkSync(path.join(directory, file));
     }
   }
-  console.log(`Files removed successfully`);
+  console.info(`Files removed successfully`);
 }
 
-// Updates SVG files in the directory
 function updateSVGFiles(directory) {
-  console.log(`Processing svg files in ${directory}...`);
+  console.info(`Processing svg files in ${directory}...`);
   const files = fs.readdirSync(directory);
   files.filter(file => file.endsWith('.svg')).forEach(file => {
     const filePath = path.join(directory, file);
     let content = fs.readFileSync(filePath, 'utf-8');
-
-    // Add id attribute and update other attributes in the SVG
     const id = path.basename(file, '.svg');
     const svgTagRegex = /<svg([^>]*)>/i;
     content = content.replace(svgTagRegex, `<svg$1 id="${id}">`)
@@ -50,12 +46,11 @@ function updateSVGFiles(directory) {
 
     fs.writeFileSync(filePath, content, 'utf-8');
   });
-  console.log(`Files processed successfully`);
+  console.info(`Files processed successfully`);
 }
 
-// Generates a story file for the icons
 function generateStoryFile(directory, outputFilename) {
-  console.log(`Generating story file from ${directory} in ${outputFilename}...`);
+  console.info(`Generating story file from ${directory} in ${outputFilename}...`);
   const files = fs.readdirSync(directory);
   const iconNames = files.filter(file => file.endsWith('.svg')).map(file => path.basename(file, '.svg'));
 
@@ -124,12 +119,11 @@ NamedIcon.args = {color: '#ff5722', width: 100, height: 100};
 `;
 
   fs.writeFileSync(outputFilename, storyContent, 'utf-8');
-  console.log(`Generated story file: ${outputFilename}`);
+  console.info(`Generated story file: ${outputFilename}`);
 }
 
-// Downloads and extracts icon SVGs from the repository
 async function downloadIcons(repoUrl, outputDir, zipFilename) {
-  console.log(`Downloading icons from ${repoUrl}...`);
+  console.info(`Downloading icons from ${repoUrl}...`);
   const response = await fetch(repoUrl);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
@@ -145,24 +139,22 @@ async function downloadIcons(repoUrl, outputDir, zipFilename) {
     fileStream.on('error', reject);
   });
 
-  console.log(`Extracting ${zipPath} to ${outputDir}`);
+  console.info(`Extracting ${zipPath} to ${outputDir}`);
   await new Promise((resolve, reject) => {
-    console.log(`unzip -j ${zipPath} "*.svg" -d ${outputDir}`)
     exec(`unzip -j ${zipPath} "*.svg" -d ${outputDir}`, (error, stdout, stderr) => {
       if (error) {
         console.error(`Unzip error: ${stderr}`);
         return reject(error);
       }
-      console.log(`Extraction completed: ${stdout}`);
+      console.info(`Extraction completed: ${stdout}`);
       resolve();
     });
   });
 
   fs.unlinkSync(zipPath);
-  console.log('ZIP file deleted successfully.');
+  console.info('Zip file deleted successfully.');
 }
 
-// Adds downloaded icons to the project
 async function addIconsToProject(repoUrl, outputDir, zipFilename) {
   try {
     if (!fs.existsSync(outputDir)) {
@@ -174,10 +166,13 @@ async function addIconsToProject(repoUrl, outputDir, zipFilename) {
     }
 
     const existingSVGs = fs.readdirSync(cachePath).some(file => file.endsWith('.svg'));
-
     if (existingSVGs && !process.argv.includes('-f')) {
-      console.log('Icons are already available. use `-f` flag to override existing SVG files');
+      console.info('Icons are already available. use `-f` flag to override existing SVG files');
     } else {
+      if (existingSVGs) {
+        removeFilesByExtension(cachePath, 'svg');
+        console.info('Existing SVG files removed.');
+      }
       await downloadIcons(repoUrl, outputDir, zipFilename);
     }
 
@@ -190,25 +185,10 @@ async function addIconsToProject(repoUrl, outputDir, zipFilename) {
   }
 }
 
-// Main function to orchestrate the process
 function main() {
-  if (!fs.existsSync(cachePath)) {
-    fs.mkdirSync(cachePath, { recursive: true });
-  }
-
-  const existingSVGs = fs.readdirSync(cachePath).some(file => file.endsWith('.svg'));
-
-  if (existingSVGs && !process.argv.includes('-f') && false) {
-    console.log('Icons are already available. use `-f` flag to override existing SVG files');
-  } else {
-    if (existingSVGs) {
-      removeFilesByExtension(cachePath, 'svg');
-      console.log('Existing SVG files removed.');
-    }
-    addIconsToProject(repoUrl, cachePath, zipFilename)
-      .then(() => console.log('Done'))
-      .catch(err => console.error('Failed: ', err));
-  }
+  addIconsToProject(repoUrl, cachePath, zipFilename)
+    .then(() => console.info('Done'))
+    .catch(err => console.error('Failed: ', err));
 }
 
 main();
