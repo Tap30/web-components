@@ -8,7 +8,7 @@ export class Icon extends LitElement {
     this.style.display = 'block';
   }
 
-  protected async updated(_changedProperties: PropertyValues) {
+  protected updated(_changedProperties: PropertyValues) {
     super.updated(_changedProperties);
     this.style.height = `${this.height}px`;
     this.style.width = `${this.width}px`;
