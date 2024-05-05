@@ -39,7 +39,7 @@ export default css`
     font: inherit;
     gap: inherit;
     width: 100%;
-    font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
+    font-family: var(--tap-font-family, var(--tap-sys-font-family));
     border-radius: var(--tap-button-radius, var(--tap-sys-radius-full));
 
   }
