@@ -35,13 +35,14 @@ export class Pinwheel extends LitElement {
     if (target?.scrollTop % this.itemHeight) {
       this.scrollToActiveItem();
     }
-    this.dispatchChangeEvent();
+    else {
+      this.dispatchChangeEvent();
+    }
   }, 100);
 
   private handleClickItem = (index: number) => {
     this.selectedIndex = index;
     this.scrollToActiveItem();
-    this.dispatchChangeEvent();
   }
 
   private scrollToActiveItem = () => {
