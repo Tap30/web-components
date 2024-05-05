@@ -3,18 +3,18 @@ import { property, state } from 'lit/decorators.js';
 import { debounce } from '../utils/utils';
 
 export class Pinwheel extends LitElement {
-  @state() private selectedItemIndex = 0;
+  @state() private selectedIndex = 0;
   @property({ type: Array , attribute:false}) items: Array<string> = [];
 
   private itemHeight = 48;
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('scroll', this.handleScroll);
+    this.addEventListener('scroll', (event) => this.handleScroll(event.target as HTMLElement));
   }
 
   disconnectedCallback() {
-    this.removeEventListener('scroll', this.handleScroll)
+    this.removeEventListener('scroll', (event) => this.handleScroll(event.target as HTMLElement))
     super.disconnectedCallback();
   }
 
@@ -22,7 +22,7 @@ export class Pinwheel extends LitElement {
     this.dispatchEvent(
       new CustomEvent("pinwheel-change", {
         detail: {
-          selected: this.selectedItemIndex,
+          selectedIndex: this.selectedIndex,
         },
         bubbles: true,
         composed: true,
@@ -30,9 +30,8 @@ export class Pinwheel extends LitElement {
     );
   }
 
-  private handleScroll = debounce((event: Event) => {
-    const target = event.target as HTMLElement;
-    this.selectedItemIndex = Math.round(target?.scrollTop / this.itemHeight);
+  private handleScroll = debounce((target: HTMLElement) => {
+    this.selectedIndex = Math.round(target?.scrollTop / this.itemHeight);
     if (target?.scrollTop % this.itemHeight) {
       this.scrollToActiveItem();
     }
@@ -40,19 +39,19 @@ export class Pinwheel extends LitElement {
   }, 100);
 
   private handleClickItem = (index: number) => {
-    this.selectedItemIndex = index;
+    this.selectedIndex = index;
     this.scrollToActiveItem();
     this.dispatchChangeEvent();
   }
 
   private scrollToActiveItem = () => {
-    const scrollTopPosition = this.selectedItemIndex * this.itemHeight;
+    const scrollTopPosition = this.selectedIndex * this.itemHeight;
     this.scrollTo({ top: scrollTopPosition, behavior: 'smooth' })
   }
 
   private renderItem = (item: string, index: number) => {
     return html`<div
-      class=${this.selectedItemIndex === index ? 'active': null}
+      class=${this.selectedIndex === index ? 'active': null}
       @click='${() => {this.handleClickItem(index)}}'
     >
       ${item}
