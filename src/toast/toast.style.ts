@@ -35,7 +35,7 @@ export default css`
     font: inherit;
     gap: var(--tap-sys-spacing-3);
     width: 100%;
-    font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
+    font-family: var(--tap-font-family, var(--tap-sys-font-family));
     border-radius: 999px;
     padding: var(--tap-toast-vertical-padding, var(--tap-sys-spacing-5)) var(--tap-toast-horizontal-padding, var(--tap-sys-spacing-5));
     background-color: var(--tap-toast-background-color-default, var(--tap-sys-color-surface-inverse-secondary));
