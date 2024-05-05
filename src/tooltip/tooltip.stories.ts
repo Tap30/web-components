@@ -11,13 +11,16 @@ export default {
   decorators: [
     (Story: () => TemplateResult) => (
       html`<div
-      style="width: 40px;
-      height: 40px;
-      border: 1px solid #ccc;
-      position: relative;"
-    >
-      ${Story()}
-    </div>`
+      id="reference"
+      style="width: 80px;
+      height: 80px;
+      border: 2px dashed #999;
+      position: relative;
+      left: 100px;
+      top: 100px;"
+      >
+        ${Story()}
+      </div>`
     ),
   ],
 };
@@ -33,6 +36,9 @@ interface ArgTypes {
   width: string,
   pointer: string,
   pointerAlignment?: string,
+  referenceId: string,
+  dismissible: boolean,
+  arrowOffset: number,
 }
 
 const Template: Story<ArgTypes> = ({
@@ -40,9 +46,12 @@ const Template: Story<ArgTypes> = ({
   label,
   pointer,
   pointerAlignment,
+  referenceId,
+  dismissible,
+  arrowOffset,
 }) => {
   return html`
-    <tap-tooltip width=${width} pointer=${pointer} pointerAlignment=${pointerAlignment} >
+    <tap-tooltip width=${width} pointer=${pointer} pointerAlignment=${pointerAlignment} referenceId=${referenceId} dismissible=${dismissible} arrowOffset=${arrowOffset}>
       ${label}
     </tap-tooltip>
   `;
@@ -50,15 +59,26 @@ const Template: Story<ArgTypes> = ({
 
 export const Simple = Template.bind({});
 Simple.args = {
-  label: 'عنوان',
-  pointer: 'right',
-  pointerAlignment: 'start'
+  label: 'label',
+  pointer: 'left',
+  referenceId: "reference",
+  dismissible: true,
+};
+
+export const CustomArrowOffset = Template.bind({});
+CustomArrowOffset.args = {
+  label: 'label',
+  pointer: 'top-start',
+  referenceId: "reference",
+  dismissible: true,
+  arrowOffset: 15,
 };
 
 export const FixedWidth = Template.bind({});
 FixedWidth.args = {
-  label: 'عنوان',
+  label: 'This is a fixed width tooltip!',
   width: '80px',
-  pointer: 'left',
-  pointerAlignment: 'start'
+  pointer: 'bottom',
+  referenceId: "reference",
+  dismissible: true,
 };
