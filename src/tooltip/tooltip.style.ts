@@ -12,74 +12,32 @@ export default css`
     padding: var(--tap-sys-spacing-2) var(--tap-sys-spacing-4);
     padding-left: 0;
     justify-content: space-between;
+    font-family: var(--tap-sys-font-family);
   }
 
   .tooltip-icon {
     position: absolute;
     display: flex;
+    width: 10px;
+    height: 10px;
   }
 
-  :host([pointer="top"]) .tooltip-icon {
-    transform: translateY(-2px) rotate(90deg);
-    left: 50%;
-    top: -5px;
+  :host([placement="top"]) .tooltip-icon,
+  :host([placement="top-start"]) .tooltip-icon,
+  :host([placement="top-end"]) .tooltip-icon {
+    transform: rotate(-90deg);
   }
 
-  :host([pointer="left"]) .tooltip-icon {
-    left: -5px;
+  :host([placement="bottom"]) .tooltip-icon,
+  :host([placement="bottom-start"]) .tooltip-icon,
+  :host([placement="bottom-end"]) .tooltip-icon {
+    transform: rotate(90deg);
   }
 
-  :host([pointer="bottom"]) .tooltip-icon {
-    transform: translateY(2px) rotate(-90deg);
-    left: 50%;
-    bottom: -5px;
-  }
-
-  :host([pointer="right"]) .tooltip-icon {
+  :host([placement="left"]) .tooltip-icon,
+  :host([placement="left-start"]) .tooltip-icon,
+  :host([placement="left-end"]) .tooltip-icon {
     transform: rotate(180deg);
-    right: -5px;
-  }
-
-  :host([pointer="top"][pointerAlignment="start"]) .tooltip-icon {
-    left: 25%;
-    transform: translateY(-2px) rotate(90deg);
-  }
-
-  :host([pointer="bottom"][pointerAlignment="start"]) .tooltip-icon {
-    left: 25%;
-    transform: translateY(2px) rotate(-90deg);
-  }
-
-  :host([pointer="top"][pointerAlignment="end"]) .tooltip-icon {
-    right: 25%;
-    left: unset;
-    transform: translateY(-2px) rotate(90deg);
-  }
-  
-  :host([pointer="bottom"][pointerAlignment="end"]) .tooltip-icon {
-    right: 25%;
-    left: unset;
-    transform: translateY(2px) rotate(-90deg);
-  }
-
-  :host([pointer="right"][pointerAlignment="start"]) .tooltip-icon {
-    transform: rotate(180deg);
-    right: -5px;
-    top: 25%;
-  }
-  
-  :host([pointer="left"][pointerAlignment="start"]) .tooltip-icon {
-    top: 25%;
-  }
-
-  :host([pointer="right"][pointerAlignment="end"]) .tooltip-icon {
-    transform: rotate(180deg);
-    right: -5px;
-    bottom: 25%;
-  }
-  
-  :host([pointer="left"][pointerAlignment="end"]) .tooltip-icon {
-    bottom: 25%;
   }
 
   .tooltip-label {
