@@ -1,14 +1,14 @@
-import { queryAssignedElements } from "lit/decorators.js";
-import { TapBaseButton } from "../base-button";
-import { PropertyValues } from "lit";
-import { TapIcon } from "../icon";
+import { queryAssignedElements } from 'lit/decorators.js';
+import { BaseButton } from '../base-button';
+import { PropertyValues } from 'lit';
+import { TapIcon } from '../icon';
 
-export class IconButton extends TapBaseButton {
+export class IconButton extends BaseButton {
   @queryAssignedElements() private icon!: TapIcon[];
 
   protected updated(_changedProperties: PropertyValues) {
     super.updated(_changedProperties);
-    const isSizeChanged = !!_changedProperties.get("size");
+    const isSizeChanged = !!_changedProperties.get('size');
     if (isSizeChanged) this.updateIconSize();
   }
 
@@ -28,10 +28,10 @@ export class IconButton extends TapBaseButton {
 
   private getIconSize = () => {
     switch (this.size) {
-      case "small":
+      case 'small':
         return 20;
-      case "medium":
-      case "large":
+      case 'medium':
+      case 'large':
         return 24;
     }
   };
