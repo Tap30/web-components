@@ -9,8 +9,7 @@ export default css`
     background-color: var(--tap-palette-gray-700);
     border-radius: var(--radius-8px, 8px);
     width: var(--tap-tooltip-width, auto);
-    padding: var(--tap-sys-spacing-2) var(--tap-sys-spacing-4);
-    padding-left: 0;
+    padding: var(--tap-sys-spacing-3) var(--tap-sys-spacing-4);
     justify-content: space-between;
     font-family: var(--tap-sys-font-family);
   }
@@ -43,5 +42,13 @@ export default css`
   .tooltip-label {
     color: var(--tap-palette-white);
     text-align: right;
+    line-height: var(--tap-sys-typography-body-sm-height);
+    font-size: var(--tap-sys-typography-body-sm-size);
+    direction: rtl;
+  }
+
+  :host([dismissible]) .tooltip {
+    padding: var(--tap-sys-spacing-2) var(--tap-sys-spacing-4);
+    padding-left: 0;
   }
 `;

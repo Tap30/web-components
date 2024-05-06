@@ -22,7 +22,6 @@ export default {
         justify-content: center;
         font-family: var(--tap-sys-font-family);"
         >
-          <span style="color: #999">reference</span>
           ${Story()}
         </div>`
     ),
@@ -59,14 +58,14 @@ const Template: Story<ArgTypes> = ({
 
 export const Simple = Template.bind({});
 Simple.args = {
-  label: 'label',
+  label: 'عنوان',
   placement: 'left',
   dismissible: true,
 };
 
 export const CustomArrowOffset = Template.bind({});
 CustomArrowOffset.args = {
-  label: 'label',
+  label: 'عنوان',
   placement: 'top-start',
   dismissible: true,
   arrowOffset: '15px',
@@ -74,7 +73,7 @@ CustomArrowOffset.args = {
 
 export const FixedWidth = Template.bind({});
 FixedWidth.args = {
-  label: 'This is a fixed width tooltip!',
+  label: 'راهنما با عرض ثابت!',
   placement: 'bottom',
   dismissible: true,
   width: '80px',

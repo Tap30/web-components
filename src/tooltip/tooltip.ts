@@ -41,6 +41,10 @@ export class Tooltip extends LitElement {
         });
       }
     })
+
+    if (this.hasAttribute('dismissible')) {
+      this.dismissible = this.getAttribute('dismissible') !== 'false';
+    }
   }
 
   protected updated(changed: PropertyValues): void {
