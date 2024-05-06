@@ -81,13 +81,12 @@ export class Tooltip extends LitElement {
 
   private handleDismiss() {
     const tooltipElement = this.renderRoot.querySelector("#tooltip") as HTMLElement;
-    debugger;
     tooltipElement.remove();
-  }
+  } 
 
   private renderDismissIcon() {
     return this.dismissible ? html`
-      <tap-icon-button @click=${() => this.handleDismiss}  size="small" variant="naked"}>
+      <tap-icon-button @click=${() => this.handleDismiss()} type="button" size="small" variant="naked"}>
         <tap-icon-cross color="#fff"></tap-icon-cross>
       </tap-icon-button>
     ` : nothing;
