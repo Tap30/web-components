@@ -84,7 +84,7 @@ export class Tooltip extends LitElement {
     tooltipElement.remove();
   } 
 
-  private renderDismissIcon() {
+  private renderDismissButton() {
     return this.dismissible ? html`
       <tap-icon-button @click=${() => this.handleDismiss()} type="button" size="small" variant="naked"}>
         <tap-icon-cross color="#fff"></tap-icon-cross>
@@ -92,7 +92,7 @@ export class Tooltip extends LitElement {
     ` : nothing;
   }
 
-  private renderArrowIcon() {
+  private renderArrow() {
     return html`
       <svg xmlns="http://www.w3.org/2000/svg" width="5" height="10" viewBox="0 0 5 10" fill="none">
         <path d="M5.0001 0V10L0.707205 5.70711C0.316681 5.31658 0.316682 4.68342 0.707206 4.29289L5.0001 0Z" fill="#323333"/>
@@ -103,9 +103,9 @@ export class Tooltip extends LitElement {
   render() {
     return html`
       <div id="tooltip" class="tooltip">
-        ${this.renderDismissIcon()}
+        ${this.renderDismissButton()}
         <div id="arrow" class="tooltip-icon">
-          ${this.renderArrowIcon()}
+          ${this.renderArrow()}
         </div>
         <div class="tooltip-label">
           <slot></slot>
