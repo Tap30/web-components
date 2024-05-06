@@ -65,7 +65,7 @@ export class Toast extends LitElement {
     return this.renderDefaultIcon();
   }
 
-  @property({type: Boolean}) showDismissButton? = false;
+  @property({type: Boolean, attribute: 'show-dismiss-button'}) showDismissButton? = false;
 
   @property() variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse' = 'inverse';
 
@@ -79,6 +79,7 @@ export class Toast extends LitElement {
   render() {
     return html`
       <div
+        part="toast"
         id="toast"
         class="toast"
         role="alertdialog"
@@ -86,15 +87,16 @@ export class Toast extends LitElement {
         aria-labelledby=${nothing}
         aria-describedby=${nothing}
       >
-        <span class="toast-icon" id="toast-icon">
+        <span class="icon" id="icon" part="icon">
           ${this.renderIcon()}
         </span>
-        <span id="toast-message">
+        <span id="message" part="message">
           <slot></slot>
         </span>
         <button
-          class="toast-dismiss"
-          id="toast-dismiss"
+          part="dismiss"
+          class="dismiss"
+          id="dismiss"
           @click=${this.dispatchDismissEvent}
         >
           ${this.renderCloseIcon()}
