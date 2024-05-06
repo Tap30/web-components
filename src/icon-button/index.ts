@@ -1,15 +1,15 @@
 import { customElement } from 'lit/decorators.js';
-import { Button } from './button';
-import styles from './button.style';
+import { IconButton } from './icon-button';
+import styles from './icon-button.style';
 import { baseButtonStyles } from '../base-button';
 
-@customElement('tap-button')
-export class TapButton extends Button {
+@customElement('tap-icon-button')
+export class TapIconButton extends IconButton {
   static readonly styles = [baseButtonStyles, styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-button': TapButton;
+    'tap-icon-button': TapIconButton;
   }
 }
