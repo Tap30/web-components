@@ -1,12 +1,8 @@
-import {html, LitElement, nothing, PropertyValues} from "lit";
+import {html, LitElement, PropertyValues} from "lit";
 import {property} from "lit/decorators.js";
 
 export class Row extends LitElement {
   @property({ reflect: true }) size: "standard" | "compact" = "standard";
-
-  @property({ reflect: true }) title: string = '';
-
-  @property({ reflect: true }) subtitle?: string;
 
   @property({ type: Boolean, reflect: true }) navigable: boolean = false;
 
@@ -72,8 +68,6 @@ export class Row extends LitElement {
         </span>
           <span class="content" part="content">
              <slot name="content" @slotchange=${this.updateSlotsVisibility}></slot>
-              ${this.title ? html`<h3 id="title" part="title" class="title">${this.title}</h3>` : nothing}
-              ${this.subtitle ? html`<p id="subtitle" part="subtitle" class="subtitle">${this.subtitle || ''}</p>` : nothing}
           </span>
           <span class="trailing" part="trailing">
             <slot name="trailing" @slotchange="${this.updateSlotsVisibility}"></slot>

@@ -39,20 +39,6 @@ export default css`
     justify-content: center;
   }
 
-  .title {
-    margin: 0;
-    font-size: var(--tap-row-title-font-size, var(--tap-sys-typography-body-md-size));
-    font-weight: var(--tap-row-title-font-weight, var(--tap-sys-typography-body-md-weight));
-  }
-
-  .subtitle {
-    margin: 0;
-    color: var(--tap-palette-gray-500);
-    font-size: var(--tap-row-subtitle-font-size, var(--tap-sys-typography-body-sm-size));
-    font-weight: var(--tap-row-subtitle-font-weight, var(--tap-sys-typography-body-sm-weight));
-
-  }
-
   .trailing {
     padding: var(--tap-row-trailing-vertical-padding, 0) var(--tap-row-trailing-horizontal-padding, var(--tap-sys-spacing-4));
     display: flex;
@@ -85,9 +71,5 @@ export default css`
 
   :host([navigable]) .container {
     cursor: pointer;
-  }
-
-  :host([navigable]) .container:active {
-    background-color: var(--tap-row-background-color, var(--tap-palette-gray-50));
   }
 `;
