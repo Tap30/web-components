@@ -9,6 +9,6 @@ export class TapTooltip extends Tooltip {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tooltip": TapTooltip;
+    "tap-tooltip": TapTooltip;
   }
 }
