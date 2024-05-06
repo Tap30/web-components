@@ -11,16 +11,20 @@ export default {
   decorators: [
     (Story: () => TemplateResult) => (
       html`<div
-      id="reference"
-      style="width: 80px;
-      height: 80px;
-      border: 2px dashed #999;
-      position: relative;
-      left: 80px;
-      top: 80px;"
-      >
-        ${Story()}
-      </div>`
+        style="width: 80px;
+        height: 80px;
+        border: 2px dashed #999;
+        position: relative;
+        left: 80px;
+        top: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--tap-sys-font-family);"
+        >
+          <span style="color: #999">reference</span>
+          ${Story()}
+        </div>`
     ),
   ],
 };
@@ -35,21 +39,19 @@ interface ArgTypes {
   label: string,
   width: string,
   placement: string,
-  referenceId: string,
   dismissible: boolean,
-  arrowOffset: number,
+  arrowOffset: string,
 }
 
 const Template: Story<ArgTypes> = ({
   width,
   label,
   placement,
-  referenceId,
   dismissible,
   arrowOffset,
 }) => {
   return html`
-    <tap-tooltip width=${width} placement=${placement} referenceId=${referenceId} dismissible=${dismissible} arrowOffset=${arrowOffset}>
+    <tap-tooltip width=${width} placement=${placement} dismissible=${dismissible} arrowOffset=${arrowOffset}>
       ${label}
     </tap-tooltip>
   `;
@@ -59,7 +61,6 @@ export const Simple = Template.bind({});
 Simple.args = {
   label: 'label',
   placement: 'left',
-  referenceId: "reference",
   dismissible: true,
 };
 
@@ -67,16 +68,14 @@ export const CustomArrowOffset = Template.bind({});
 CustomArrowOffset.args = {
   label: 'label',
   placement: 'top-start',
-  referenceId: "reference",
   dismissible: true,
-  arrowOffset: 15,
+  arrowOffset: '15px',
 };
 
 export const FixedWidth = Template.bind({});
 FixedWidth.args = {
   label: 'This is a fixed width tooltip!',
-  width: '80px',
   placement: 'bottom',
-  referenceId: "reference",
   dismissible: true,
+  width: '80px',
 };
