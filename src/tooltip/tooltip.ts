@@ -2,7 +2,7 @@ import { html, LitElement, PropertyValues, nothing } from "lit";
 import { property } from "lit/decorators.js"
 import { computePosition, arrow, offset, MiddlewareData } from "@floating-ui/dom";
 import "../icons/index.js";
-import "../button/index";
+import "../icon-button";
 
 export class Tooltip extends LitElement {
   @property({ type: String, reflect: true }) placement:
