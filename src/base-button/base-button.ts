@@ -58,14 +58,10 @@ export abstract class BaseButton extends LitElement {
       >
         <span class="cover"></span>
         <!-- TODO: add spinner -->
-        ${this.loading
-          ? html`<span>loading</span>`
-          : html` <slot @change=${this.handleSlotChange}></slot>`}
+        ${this.loading ? html`<span>loading</span>` : html` <slot></slot>`}
       </button>
     `;
   }
-
-  protected handleSlotChange = () => {};
 
   private handleClick = () => {
     if (this.type === 'reset') {
