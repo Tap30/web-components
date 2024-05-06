@@ -41,7 +41,14 @@ export default css`
     width: 100%;
     font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
     border-radius: var(--tap-button-radius, var(--tap-sys-radius-full));
+  }
 
+  :host([size="small"]) .button .icon {
+    height: var(--tap-sys-spacing-7);
+  }
+
+  :host([size="medium"]) .button .icon, :host([size="large"]) .button .icon {
+    height: var(--tap-sys-spacing-8);
   }
 
   .cover {
@@ -126,5 +133,27 @@ export default css`
   :host([variant="brand"]) .button {
     background: var(--tap-button-color-gradient-brand, var(--tap-sys-color-gradient-brand));
     color: var(--tap-button-color-content-on-inverse, var(--tap-sys-color-content-on-inverse));
+  }
+
+  .button .icon {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  :host([shape="circle"]) .button {
+    padding: 0;
+  }
+
+  :host([size="small"][shape="circle"]) .button {
+    width: var(--tap-button-sm-height, var(--tap-sys-spacing-9));
+  }
+
+  :host([size="medium"][shape="circle"]) .button {
+    width: var(--tap-button-sm-height, var(--tap-sys-spacing-10));
+  }
+
+  :host([size="large"][shape="circle"]) .button {
+    width: var(--tap-button-sm-height, var(--tap-sys-spacing-11));
   }
 `;

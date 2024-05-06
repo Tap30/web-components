@@ -1,6 +1,7 @@
 import { LitElement, html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
+import { TemplateResult } from "lit-html";
 
 export class Button extends LitElement {
   static readonly shadowRootOptions = {
@@ -15,6 +16,8 @@ export class Button extends LitElement {
   @property({ type: Boolean, reflect: true }) disabled = false;
 
   @property({ reflect: true }) type?: "button" | "submit" | "reset";
+
+  @property({ reflect: true }) shape?: "pill" | "circle" = "pill";
 
   @property() value?: string;
 
@@ -34,6 +37,8 @@ export class Button extends LitElement {
     | "destructive"
     | "brand" = "primary";
 
+  @property({ reflect: true }) icon: TemplateResult | null = null;
+
   constructor() {
     super();
     this.internals = this.attachInternals();
@@ -46,6 +51,14 @@ export class Button extends LitElement {
 
     if (this.type === "submit") {
       return this.internals.form?.requestSubmit();
+    }
+  }
+
+  private renderIcon(): TemplateResult | typeof nothing {
+    if (this.icon) {
+      return html`${this.icon}`;
+    } else {
+      return nothing;
     }
   }
 
@@ -66,6 +79,7 @@ export class Button extends LitElement {
         aria-labelledby=${nothing}
         aria-describedby=${nothing}
       >
+        ${this.renderIcon()}
         <span class="cover"></span>
         <!-- TODO: add spinner -->
         ${this.loading ? html`<span>loading</span>` : html`<slot></slot>`}
