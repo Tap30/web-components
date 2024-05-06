@@ -12,18 +12,11 @@ export class IconButton extends BaseButton {
     if (isSizeChanged) this.updateIconSize();
   }
 
-  protected handleSlotChange = () => {
-    this.checkSlotType();
-  };
-
-  private checkSlotType = () => {
-    if (!this.icon[0] && !this.loading)
-      throw new Error('Slot of TapIconButton should be a "tap-icon"');
-  };
-
   private updateIconSize = () => {
-    this.icon[0].width = this.getIconSize();
-    this.icon[0].height = this.getIconSize();
+    if (this.icon[0]) {
+      this.icon[0].width = this.getIconSize();
+      this.icon[0].height = this.getIconSize();
+    }
   };
 
   private getIconSize = () => {
