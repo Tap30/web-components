@@ -5,7 +5,7 @@ import "../icons/index.js";
 import "../button/index";
 
 export class Tooltip extends LitElement {
-  @property({ type: String }) placement:
+  @property({ type: String, reflect: true }) placement:
   | 'top'
   | 'top-start'
   | 'top-end'
@@ -18,9 +18,8 @@ export class Tooltip extends LitElement {
   | 'left'
   | 'left-start'
   | 'left-end' = 'top';
-  @property({ type: Boolean }) dismissible: boolean = true;
-  @property({ type: String }) width: string = "0";
-  //@property({ type: String }) referenceId: string = "";
+  @property({ type: Boolean, reflect: true }) dismissible: boolean = true;
+  @property({ type: String, reflect: true }) width: string = "0";
   @property({ type: String, reflect: true }) arrowOffset: string = "";
 
   connectedCallback() {
