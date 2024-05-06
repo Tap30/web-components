@@ -52,8 +52,6 @@ interface Story<T> {
 
 interface ArgTypes {
   size: 'standard' | 'compact';
-  title: string;
-  subtitle: string;
   leading: unknown;
   trailing: unknown;
   content: unknown;
