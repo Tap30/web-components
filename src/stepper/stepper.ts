@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import '../icon-button';
 import '../icons/plus';
@@ -23,9 +23,7 @@ export class Stepper extends LitElement {
   @property({ type: Number, reflect: true }) value = 0;
 
   render() {
-    const isSmall = this.size === 'small';
-    const text = `${this.value}${isSmall ? '' : ` ${this.unit}`}`;
-    const iconSize = isSmall ? 20 : 24;
+    const iconSize = this.size === 'small' ? 20 : 24;
 
     return html`
       <div class="stepper">
@@ -41,7 +39,8 @@ export class Stepper extends LitElement {
             .height=${iconSize}
           ></tap-icon-minus>
         </tap-icon-button>
-        <p>${text}</p>
+        <p>${this.value}</p>
+        ${this.unit ? html`<p>${this.unit}</p>` : nothing}
         <tap-icon-button
           .size=${this.size}
           type="button"
