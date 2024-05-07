@@ -25,15 +25,7 @@ export default css`
     font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
   }
 
-  /* FIXME: 104px is not supported in spacing */
-
-  :host([size='small']) .stepper {
-    width: var(--tap-button-sm-width, 104px);
-  }
-
-  /* FIXME: 360px is not supported in spacing */
-
-  :host([size='medium']) .stepper {
-    width: var(--tap-button-md-width, 360px);
+  :host([fullWidth]) {
+    width: 100%;
   }
 `;
