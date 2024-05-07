@@ -25,8 +25,8 @@ export default css`
     font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
   }
 
-  :host([fullWidth]) {
-    width: 100%;
+  :host([fullWidth]) .stepper {
+    display: flex;
   }
 
   :host([size='small']) .stepper {
