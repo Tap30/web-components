@@ -1,49 +1,50 @@
-import {html, TemplateResult} from "lit";
-import "./index.js";
-import {spreadProps} from "@open-wc/lit-helpers";
+import { html, TemplateResult } from 'lit';
+import './index.js';
+import { spreadProps } from '@open-wc/lit-helpers';
 
-const stepperSizes: string[] = ["small", "medium"];
+const stepperSizes: string[] = ['small', 'medium'];
 
 export default {
-  title: "Stepper",
-  component: "tap-stepper",
+  title: 'Stepper',
+  component: 'tap-stepper',
   argTypes: {
     unit: {
-      control: "text",
-      description: "َUnit of steps",
-      defaultValue: "دقیقه",
+      control: 'text',
+      description: 'َUnit of steps',
+      defaultValue: 'دقیقه',
     },
     disabled: {
-      description: "If true both button will be disabled",
-      control: {type: "boolean"},
+      description: 'If true both button will be disabled',
+      control: { type: 'boolean' },
       defaultValue: false,
     },
     step: {
-      control: "number",
-      description: "Increasing or decreasing step size",
+      control: 'number',
+      description: 'Increasing or decreasing step size',
       defaultValue: 1,
-
     },
     min: {
-      control: "number",
-      description: "Minimum amount of value (if value reaches the min the decrease button will be disabled)",
+      control: 'number',
+      description:
+        'Minimum amount of value (if value reaches the min the decrease button will be disabled)',
       defaultValue: 0,
-
     },
     max: {
-      control: "number",
-      description: "Maximum amount of value (if value reaches the max the increase button will be disabled)",
+      control: 'number',
+      description:
+        'Maximum amount of value (if value reaches the max the increase button will be disabled)',
       defaultValue: 10,
     },
     size: {
       options: stepperSizes,
-      control: {type: "inline-radio"},
-      description: "Size of the stepper (if size sets to medium, unit will be shown)",
+      control: { type: 'inline-radio' },
+      description:
+        'Size of the stepper (if size sets to medium, unit will be shown)',
       defaultValue: `"small"`,
     },
     value: {
-      control: "number",
-      description: "Value of stepper",
+      control: 'number',
+      description: 'Value of stepper',
       defaultValue: 2,
     },
   },
@@ -63,17 +64,17 @@ type ArgTypes = {
   max: number;
   size: 'small' | 'medium';
   value: number;
-  disabled: boolean
-}
+  disabled: boolean;
+};
 
 const defaultProps: ArgTypes = {
-  unit: "دقیقه",
+  unit: 'دقیقه',
   step: 1,
   min: 0,
   max: 10,
-  size: "medium",
+  size: 'medium',
   value: 2,
-  disabled: false
+  disabled: false,
 };
 
 const Template: Story<ArgTypes> = (props) => html`
