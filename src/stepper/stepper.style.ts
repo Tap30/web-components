@@ -31,9 +31,17 @@ export default css`
 
   :host([size='small']) .stepper {
     gap: var(--tap-sys-spacing-4);
+    font-size: var(
+      --tap-stepper-typography-label-sm-size,
+      var(--tap-sys-typography-label-md-size)
+    );
   }
 
   :host([size='medium']) .stepper {
     gap: var(--tap-sys-spacing-8);
+    font-size: var(
+      --tap-stepper-typography-label-md-size,
+      var(--tap-sys-typography-label-lg-size)
+    );
   }
 `;
