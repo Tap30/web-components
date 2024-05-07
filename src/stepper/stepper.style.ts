@@ -1,4 +1,4 @@
-import {css} from "lit";
+import { css } from 'lit';
 
 export default css`
   :host {
@@ -27,13 +27,13 @@ export default css`
 
   /* FIXME: 104px is not supported in spacing */
 
-  :host([size="small"]) .stepper {
+  :host([size='small']) .stepper {
     width: var(--tap-button-sm-width, 104px);
   }
 
   /* FIXME: 360px is not supported in spacing */
 
-  :host([size="medium"]) .stepper {
+  :host([size='medium']) .stepper {
     width: var(--tap-button-md-width, 360px);
   }
 `;
