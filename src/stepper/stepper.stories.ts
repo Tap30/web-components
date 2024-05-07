@@ -18,6 +18,11 @@ export default {
       control: { type: 'boolean' },
       defaultValue: false,
     },
+    fullWidth: {
+      description: 'If true width of the component will be "100%"',
+      control: { type: 'boolean' },
+      defaultValue: false,
+    },
     step: {
       control: 'number',
       description: 'Increasing or decreasing step size',
@@ -65,16 +70,18 @@ type ArgTypes = {
   size: 'small' | 'medium';
   value: number;
   disabled: boolean;
+  fullWidth: boolean;
 };
 
 const defaultProps: ArgTypes = {
-  unit: 'دقیقه',
+  unit: '',
   step: 1,
   min: 0,
   max: 10,
   size: 'medium',
   value: 2,
   disabled: false,
+  fullWidth: false,
 };
 
 const Template: Story<ArgTypes> = (props) => html`
