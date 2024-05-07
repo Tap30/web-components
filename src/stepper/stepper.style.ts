@@ -28,4 +28,12 @@ export default css`
   :host([fullWidth]) {
     width: 100%;
   }
+
+  :host([size='small']) .stepper {
+    gap: var(--tap-sys-spacing-4);
+  }
+
+  :host([size='medium']) .stepper {
+    gap: var(--tap-sys-spacing-8);
+  }
 `;
