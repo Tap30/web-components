@@ -1,6 +1,6 @@
 import { html, LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
-import '../button';
+import '../icon-button';
 import '../icons/plus';
 import '../icons/minus';
 
@@ -17,6 +17,8 @@ export class Stepper extends LitElement {
 
   @property({ type: String, reflect: true }) size: 'small' | 'medium' =
     'medium';
+
+  @property({ type: Boolean, reflect: true }) fullWidth = false;
 
   @property({ type: Number, reflect: true }) value = 0;
 
@@ -39,7 +41,6 @@ export class Stepper extends LitElement {
             .height=${iconSize}
           ></tap-icon-minus>
         </tap-icon-button>
-
         <p>${text}</p>
         <tap-icon-button
           .size=${this.size}
