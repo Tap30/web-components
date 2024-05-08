@@ -10,9 +10,11 @@
     "fmt": "pnpm prettier src/**/* --write --fix",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "analyze": "cem analyze --litelement --globs \"src/**/index.ts\""
   },
   "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.10.2",
     "@eslint/js": "^9.1.1",
     "@open-wc/testing": "^4.0.0",
     "@open-wc/lit-helpers": "^0.7.0",
@@ -42,6 +44,7 @@
     "vitepress": "^1.1.4"
   },
   "dependencies": {
+    "custom-elements-manifest": "^2.1.0",
     "lit": "^3.1.2"
   }
 }
