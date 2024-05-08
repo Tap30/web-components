@@ -7,15 +7,15 @@ export default {
     const manifest = JSON.parse(file.toString()) as Package;
 
     return manifest.modules
-      .filter((module) => !module.path.startsWith('src/icon'))
+      .filter((module) => !module.path.startsWith('src/icon') && !!module.declarations?.length)
       .map((module) => {
         if (!module.exports)
           throw new Error(`Module has no export: ${module.path}`);
 
         const component = module.declarations?.[0] as CustomElement;
 
-        if (!component.tagName || !component.tagName.startsWith('tap')) {
-          throw new Error(`Module has no custom element: ${module.path}`);
+        if (!component || !component.tagName || !component.tagName.startsWith('tap')) {
+          return
         }
 
         let content = '';
@@ -23,8 +23,20 @@ export default {
         content += `# ${component.name} \n`;
 
         if (component.summary) {
-          content += `${component.summary}`;
+          content += `${component.summary}\n`;
         }
+
+        if (!!component.slots?.length) {
+          content += "### Slots\n"
+          content += "| Name | Description |\n"
+          content += "| ------------- | :----: |\n"
+
+          component.slots.forEach(slot => {
+            const name = !!slot.name ? slot.name : "default" ;
+            content += `| ${name} | ${slot.description} |\n`
+          })
+        }
+
 
         return {
           params: {
