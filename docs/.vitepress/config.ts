@@ -28,6 +28,7 @@ const components = manifest.modules
 export default defineConfig({
   title: 'Tapsi components',
   description: 'A set of components based on Tapsi design system.',
+  base: "/web-components/",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
 
