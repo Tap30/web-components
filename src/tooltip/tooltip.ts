@@ -20,7 +20,7 @@ export class Tooltip extends LitElement {
   | 'left-end' = 'top';
   @property({ type: Boolean, reflect: true }) dismissible: boolean = true;
   @property({ type: String, reflect: true }) width: string = "0";
-  @property({ type: String, reflect: true }) arrowOffset: string = "";
+  @property({ type: String, reflect: true, attribute: 'arrow-offset' }) arrowOffset: string = "";
 
   connectedCallback() {
     super.connectedCallback();
