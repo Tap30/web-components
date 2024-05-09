@@ -11,7 +11,7 @@ export default css`
     width: var(--tap-tooltip-width, auto);
     padding: var(--tap-sys-spacing-3) var(--tap-sys-spacing-4);
     justify-content: space-between;
-    font-family: var(--tap-sys-font-family);
+    font-family: var(--tap-font-family, var(--tap-sys-font-family));
   }
 
   .tooltip-icon {
