@@ -6,8 +6,8 @@ export default css`
     position: absolute;
     flex-direction: row;
     align-items: center;
-    background-color: var(--tap-palette-gray-700);
-    border-radius: var(--radius-8px, 8px);
+    background-color: var(--tap-tooltip-background, var(--tap-palette-gray-700));
+    border-radius: var(--tap-tooltip-radius, var(--tap-sys-radius-3));
     width: var(--tap-tooltip-width, auto);
     padding: var(--tap-sys-spacing-3) var(--tap-sys-spacing-4);
     justify-content: space-between;
