@@ -6,7 +6,26 @@ export default {
   title: "Tooltip",
   component: "tap-tooltip",
   argTypes: {
-    
+    label: { 
+      control: "text",
+      description: "The label text displayed inside the tooltip."
+    },
+    width: { 
+      control: "text",
+      description: "The width of the tooltip container."
+    },
+    placement: { 
+      control: { type: "select", options: ["top", "top-start", "top-end", "bottom", "bottom-start", "bottom-end", "left", "left-start", "left-end", "right", "right-start", "right-end"] },
+      description: "The placement of the tooltip relative to its target."
+    },
+    dismissible: { 
+      control: "boolean",
+      description: "Whether the tooltip can be dismissed (closed) by user interaction."
+    },
+    arrowOffset: { 
+      control: "text",
+      description: "The arrowOffset determines the distance of the tooltip arrow from its default position, either from the top or left, depending on the tooltip's placement."
+    },
   },
   decorators: [
     (Story: () => TemplateResult) => (
