@@ -20,11 +20,11 @@ export default {
     },
     dismissible: { 
       control: "boolean",
-      description: "Whether the tooltip can be dismissed (closed) by user interaction."
+      description: "Should the Dismiss button be visible?"
     },
     arrowOffset: { 
       control: "text",
-      description: "The arrowOffset determines the distance of the tooltip arrow from its default position, either from the top or left, depending on the tooltip's placement."
+      description: "The arrowOffset determines the distance of the tooltip arrow from the top or left of the container, depending on the tooltip's placement."
     },
   },
   decorators: [
@@ -68,7 +68,7 @@ const Template: Story<ArgTypes> = ({
   arrowOffset,
 }) => {
   return html`
-    <tap-tooltip width=${width} placement=${placement} dismissible=${dismissible} arrowOffset=${arrowOffset}>
+    <tap-tooltip width=${width} placement=${placement} dismissible=${dismissible} arrow-offset=${arrowOffset}>
       ${label}
     </tap-tooltip>
   `;
