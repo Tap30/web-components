@@ -38,8 +38,7 @@ export default {
         top: 80px;
         display: flex;
         align-items: center;
-        justify-content: center;
-        font-family: var(--tap-sys-font-family);"
+        justify-content: center;"
         >
           ${Story()}
         </div>`
