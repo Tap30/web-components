@@ -1,9 +1,9 @@
-import {html, TemplateResult} from "lit";
-import "./index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
 
 export default {
-  title: "PinInput",
-  component: "tap-pin-input",
+  title: 'PinInput',
+  component: 'tap-pin-input',
   argTypes: {},
 };
 
@@ -14,11 +14,14 @@ interface Story<T> {
   argTypes?: Record<string, unknown>;
 }
 
-interface ArgTypes {
-}
+interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
-  <tap-pin-input title="عنوان" description="توضیحات" @filled=${(e) => console.log(e)}></tap-pin-input>
+const Template: Story<ArgTypes> = (/*{}: ArgTypes*/) => html`
+  <tap-pin-input
+    title="عنوان"
+    description="توضیحات"
+    @filled=${(e: Error) => console.log(e)}
+  ></tap-pin-input>
 `;
 
 export const PinInput = Template.bind({});
