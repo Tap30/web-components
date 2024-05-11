@@ -66,6 +66,46 @@ export class Stepper extends LitElement {
     `;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  private handleKeyDown = (event: KeyboardEvent) => {
+    switch (event.code) {
+      case 'ArrowDown':
+        this.handleDecrease();
+        event.preventDefault();
+        event.stopPropagation();
+        break;
+      case 'ArrowUp':
+        this.handleIncrease();
+        event.preventDefault();
+        event.stopPropagation();
+        break;
+      case 'Home':
+        this.handleChange(this.min);
+        event.preventDefault();
+        event.stopPropagation();
+        break;
+      case 'End':
+        this.handleChange(this.max);
+        event.preventDefault();
+        event.stopPropagation();
+        break;
+    }
+  };
+
+  private handleChange = (newValue: number) => {
+    this.value = newValue;
+    this.dispatchChangeEvent();
+  };
+
   private dispatchChangeEvent = () => {
     this.dispatchEvent(
       new CustomEvent('stepper-change', {
@@ -80,15 +120,13 @@ export class Stepper extends LitElement {
 
   private handleIncrease = () => {
     if (this.value < this.max) {
-      this.value += this.step;
-      this.dispatchChangeEvent();
+      this.handleChange(this.value + this.step);
     }
   };
 
   private handleDecrease = () => {
     if (this.value > this.min) {
-      this.value -= this.step;
-      this.dispatchChangeEvent();
+      this.handleChange(this.value - this.step);
     }
   };
 }
