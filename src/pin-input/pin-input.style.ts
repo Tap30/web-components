@@ -1,4 +1,4 @@
-import {css} from "lit";
+import { css } from 'lit';
 
 export default css`
   :host {
@@ -26,7 +26,7 @@ export default css`
     --title-text-color: var(--tap-sys-color-content-primary);
     --title-disabled-text-color: var(--tap-sys-color-content-disabled);
 
-    --vertical-gap: .5rem;
+    --vertical-gap: 0.5rem;
     --horizontal-cell-gap: var(--tap-pin-input-cell-gap, 1rem);
   }
 
@@ -44,7 +44,8 @@ export default css`
     color: var(--description-error-text-color);
   }
 
-  :host([disabled]) .title, :host([disabled]) .description {
+  :host([disabled]) .title,
+  :host([disabled]) .description {
     color: var(--title-disabled-text-color);
   }
 
@@ -53,7 +54,6 @@ export default css`
   }
 
   .pin-input {
-
   }
 
   .pin-input-wrapper {
@@ -61,7 +61,6 @@ export default css`
     row-gap: var(--vertical-gap);
     flex-direction: column;
   }
-
 
   .title {
     flex: 0 1;
