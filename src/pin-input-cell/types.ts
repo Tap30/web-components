@@ -1,8 +1,7 @@
-import {PinInputCell} from "./pin-input-cell";
+import { PinInputCell } from './pin-input-cell';
 
 export type ValueChangedEventParams = {
-  cell: PinInputCell,
-  index: number,
-  value: string,
-}
-
+  cell: PinInputCell;
+  index: number;
+  value: string;
+};
