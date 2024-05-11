@@ -32,6 +32,7 @@ export class Stepper extends LitElement {
           type="button"
           part="decrease-button"
           variant="ghost"
+          tabindex="-1"
           @click=${this.handleDecrease}
           ?disabled=${this.disabled || this.value <= this.min}
         >
@@ -40,13 +41,22 @@ export class Stepper extends LitElement {
             .height=${iconSize}
           ></tap-icon-minus>
         </tap-icon-button>
-        <p part="value">${this.value}</p>
-        ${this.unit ? html`<p part="unit">${this.unit}</p>` : nothing}
+        <dev
+          tabindex="0"
+          role="spinbutton"
+          aria-valuenow=${this.value}
+          aria-valuemax=${this.max}
+          aria-valuemin=${this.min}
+        >
+          <span part="value">${this.value}</span>
+          ${this.unit ? html`<span part="unit">${this.unit}</span>` : nothing}
+        </dev>
         <tap-icon-button
           .size=${this.size}
           type="button"
           part="increase-button"
           variant="ghost"
+          tabindex="-1"
           @click=${this.handleIncrease}
           ?disabled=${this.disabled || this.value >= this.max}
         >
