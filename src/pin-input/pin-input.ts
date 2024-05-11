@@ -165,6 +165,7 @@ export class PinInput extends LitElement {
                 @overflow-value=${(e: CustomEvent<ValueChangedEventParams>) =>
                   this.handleOverflowedCell(e)}
                 ?auto-focus=${this.isFirstCellShouldAutoFocus(index)}
+                .size=${this.size}
               ></tap-pin-input-cell>`;
             },
           )}
