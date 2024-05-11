@@ -21,7 +21,7 @@ export default css`
     /* FIXME: we dont have sizing tokens yet  */
     height: 48px;
     font: inherit;
-    font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
+    font-family: var(--tap-font-family, var(--tap-sys-font-family));
     line-height: var(--tap-pinwheel-typography-body-md-height, var(--tap-sys-typography-body-md-height));
     font-size: var(--tap-pinwheel-typography-body-md-size, var(--tap-sys-typography-body-md-size));
     font-weight: var(--tap-pinwheel-typography-body-md-weight, var(--tap-sys-typography-body-md-weight));

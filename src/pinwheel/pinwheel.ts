@@ -52,8 +52,9 @@ export class Pinwheel extends LitElement {
 
   private renderItem = (item: string, index: number) => {
     return html`<div
+      part="pinwheel-item"
       class=${this.selectedIndex === index ? 'active': null}
-      @click='${() => {this.handleClickItem(index)}}'
+      @click='${() => this.handleClickItem(index)}'
     >
       ${item}
     </div>`
