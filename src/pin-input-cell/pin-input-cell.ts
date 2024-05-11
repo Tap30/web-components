@@ -3,7 +3,9 @@ import { property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import {
   englishToPersian,
-  isDeletionKey,
+  isArrowKeyPressed,
+  isDeletionKeyPressed,
+  isDeletionKeyWithCtrlOrMetaPressed,
   isValidDigit,
   persianToEnglish,
 } from './util';
@@ -75,6 +77,34 @@ export class PinInputCell extends LitElement {
     this.dispatchEvent(event);
   }
 
+  private async emitDeletionWithMetaKeys() {
+    await this.updateComplete;
+    const event = new CustomEvent('clear-all', {
+      bubbles: true,
+      composed: false,
+      detail: {
+        cell: this,
+        index: this.index,
+        value: this.value,
+      } as ValueChangedEventParams,
+    });
+    this.dispatchEvent(event);
+  }
+
+  private async emitArrowKeyPressed(key: 'ArrowLeft' | 'ArrowRight') {
+    await this.updateComplete;
+    const event = new CustomEvent('arrow-key-pressed', {
+      bubbles: true,
+      composed: false,
+      detail: {
+        cell: this,
+        index: this.index,
+        value: key === 'ArrowLeft' ? 'left' : 'right',
+      } as ValueChangedEventParams<'left' | 'right'>,
+    });
+    this.dispatchEvent(event);
+  }
+
   private async emitOverflowedValue(value: string) {
     await this.updateComplete;
     const event = new CustomEvent('overflow-value', {
@@ -112,13 +142,33 @@ export class PinInputCell extends LitElement {
   }
 
   private async validatePressedKey(event: KeyboardEvent) {
-    if (event.key === 'Backspace' && this.value === '') {
+    if (
+      isDeletionKeyWithCtrlOrMetaPressed({
+        input: event.key,
+        metaKey: event.metaKey,
+        ctrlKey: event.ctrlKey,
+      })
+    ) {
+      this.value = '';
+      event.preventDefault();
+      await this.handleDeletionWithMetaKeys();
+      return;
+    }
+
+    if (isDeletionKeyPressed(event.key) && this.value === '') {
+      this.value = '';
       event.preventDefault();
       await this.handleEmptyCellBackspace();
       return;
     }
 
-    if (isValidDigit(event.key) || isDeletionKey(event.key)) {
+    if (isArrowKeyPressed(event.key)) {
+      event.preventDefault();
+      await this.handleArrowKeyPressed(event.key);
+      return;
+    }
+
+    if (isValidDigit(event.key) || isDeletionKeyPressed(event.key)) {
       return true;
     }
 
@@ -165,6 +215,13 @@ export class PinInputCell extends LitElement {
     await this.emitValueCleared();
   }
 
+  private async handleDeletionWithMetaKeys() {
+    await this.emitDeletionWithMetaKeys();
+  }
+  private async handleArrowKeyPressed(key: 'ArrowLeft' | 'ArrowRight') {
+    await this.emitArrowKeyPressed(key);
+  }
+
   private handleFocus(e: FocusEvent) {
     const _target = e.target as HTMLInputElement;
     if (_target.value?.length > 0) {
@@ -181,7 +238,13 @@ export class PinInputCell extends LitElement {
   async setValue(value: string) {
     if (value.length === 1 && this.value === '') {
       await this.updateInputValue(value);
+      await this.updateComplete;
     }
+  }
+
+  async clearValue() {
+    await this.updateInputValue('');
+    await this.updateComplete;
   }
 
   render() {

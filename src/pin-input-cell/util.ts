@@ -44,8 +44,27 @@ export function isValidDigit(input: string): boolean {
   return false;
 }
 
-const deletionKeys = ['Meta', 'Delete', 'Backspace'];
+export function isArrowKeyPressed(
+  input: string,
+): input is 'ArrowLeft' | 'ArrowRight' {
+  return ['ArrowLeft', 'ArrowRight'].includes(input);
+}
 
-export function isDeletionKey(key: string): boolean {
-  return deletionKeys.includes(key);
+export function isDeletionKeyPressed(input: string): boolean {
+  return ['Backspace', 'Delete'].includes(input);
+}
+
+export function isDeletionKeyWithCtrlOrMetaPressed({
+  input,
+  metaKey = false,
+  ctrlKey = false,
+}: {
+  input: string;
+  metaKey: boolean;
+  ctrlKey: boolean;
+}) {
+  if (isDeletionKeyPressed(input) && (metaKey || ctrlKey)) {
+    return true;
+  }
+  return false;
 }
