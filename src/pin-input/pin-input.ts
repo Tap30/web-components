@@ -68,6 +68,43 @@ export class PinInput extends LitElement {
 
     await this.fillCells(overflowedText, cellIndex + 1);
   }
+  private async handleClearPrevCells(
+    event: CustomEvent<ValueChangedEventParams>,
+  ) {
+    await this.updateComplete;
+    const currentIndex = event.detail.index;
+
+    const isNotFirstItem =
+      currentIndex > 0 && this.checkIndexIsInRange(currentIndex);
+
+    if (isNotFirstItem) {
+      await this.clearCellsUntil(currentIndex);
+      this._cells?.[0].focus();
+    }
+  }
+
+  private async handleArrowKeyPressed(
+    event: CustomEvent<ValueChangedEventParams<'left' | 'right'>>,
+  ) {
+    await this.updateComplete;
+    const currentIndex = event.detail.index;
+
+    const shouldPrevItemFocus =
+      event.detail.value === 'left' &&
+      this.checkIndexIsInRange(currentIndex) &&
+      !this.checkIndexIsFirst(currentIndex);
+
+    const shouldNextItemFocus =
+      event.detail.value === 'right' &&
+      this.checkIndexIsInRange(currentIndex) &&
+      !this.checkIndexIsLast(currentIndex);
+
+    if (shouldPrevItemFocus) {
+      this.focusPrevElementByIndex(currentIndex);
+    } else if (shouldNextItemFocus) {
+      this.focusNextElementByIndex(currentIndex);
+    }
+  }
 
   private async fillCells(value: string, startingAt: number = 0) {
     if (startingAt <= this.lastCellIndex) {
@@ -75,7 +112,6 @@ export class PinInput extends LitElement {
       for (const char of value.split('')) {
         const pos = index + startingAt;
         await this._cells[pos].setValue(char);
-        await this._cells[pos].updateComplete;
         index++;
       }
     }
@@ -112,6 +148,12 @@ export class PinInput extends LitElement {
     const nextIndex = current + 1;
     if (this.checkIndexIsInRange(current) && !this.checkIndexIsLast(current)) {
       this._cells[nextIndex].focus();
+    }
+  }
+
+  private async clearCellsUntil(index: number) {
+    for (let i = 0; i <= index; i++) {
+      await this._cells?.[i].clearValue();
     }
   }
 
@@ -164,6 +206,11 @@ export class PinInput extends LitElement {
                   this.handleCellCleared(e)}
                 @overflow-value=${(e: CustomEvent<ValueChangedEventParams>) =>
                   this.handleOverflowedCell(e)}
+                @clear-all=${(e: CustomEvent<ValueChangedEventParams>) =>
+                  this.handleClearPrevCells(e)}
+                @arrow-key-pressed=${(
+                  e: CustomEvent<ValueChangedEventParams<'left' | 'right'>>,
+                ) => this.handleArrowKeyPressed(e)}
                 ?auto-focus=${this.isFirstCellShouldAutoFocus(index)}
                 .size=${this.size}
               ></tap-pin-input-cell>`;
