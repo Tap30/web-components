@@ -17,6 +17,9 @@ export default css`
   }
 
   .pinwheel > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: var(--tap-pinwheel-spacing-0, var(--tap-sys-spacing-0)) var(--tap-pinwheel-spacing-6, var(--tap-sys-spacing-6));
     /* FIXME: we dont have sizing tokens yet  */
     height: 48px;
