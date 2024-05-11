@@ -17,7 +17,7 @@ export default css`
   }
 
   .pinwheel > div {
-    padding: var(--tap-sys-spacing-0) var(--tap-sys-spacing-6);
+    padding: var(--tap-pinwheel-spacing-0, var(--tap-sys-spacing-0)) var(--tap-pinwheel-spacing-6, var(--tap-sys-spacing-6));
     /* FIXME: we dont have sizing tokens yet  */
     height: 48px;
     font: inherit;
