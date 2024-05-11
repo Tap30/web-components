@@ -26,10 +26,11 @@ export class Stepper extends LitElement {
     const iconSize = this.size === 'small' ? 20 : 24;
 
     return html`
-      <div class="stepper">
+      <div class="stepper" part="stepper">
         <tap-icon-button
           .size=${this.size}
           type="button"
+          part="decrease-button"
           variant="ghost"
           @click=${this.handleDecrease}
           ?disabled=${this.disabled || this.value <= this.min}
@@ -39,11 +40,12 @@ export class Stepper extends LitElement {
             .height=${iconSize}
           ></tap-icon-minus>
         </tap-icon-button>
-        <p>${this.value}</p>
-        ${this.unit ? html`<p>${this.unit}</p>` : nothing}
+        <p part="value">${this.value}</p>
+        ${this.unit ? html`<p part="unit">${this.unit}</p>` : nothing}
         <tap-icon-button
           .size=${this.size}
           type="button"
+          part="increase-button"
           variant="ghost"
           @click=${this.handleIncrease}
           ?disabled=${this.disabled || this.value >= this.max}
