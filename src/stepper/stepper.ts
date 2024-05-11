@@ -56,15 +56,29 @@ export class Stepper extends LitElement {
     `;
   }
 
+  private dispatchChangeEvent = () => {
+    this.dispatchEvent(
+      new CustomEvent('stepper-change', {
+        detail: {
+          value: this.value,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  };
+
   private handleIncrease = () => {
     if (this.value < this.max) {
       this.value += this.step;
+      this.dispatchChangeEvent();
     }
   };
 
   private handleDecrease = () => {
     if (this.value > this.min) {
       this.value -= this.step;
+      this.dispatchChangeEvent();
     }
   };
 }
