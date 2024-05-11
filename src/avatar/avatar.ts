@@ -32,7 +32,7 @@ export class Avatar extends LitElement {
   }
 
   private renderPlaceholder() {
-    return html` <div part="placeholder" aria-hidden="true">
+    return html` <div part="placeholder" aria-hidden="true" class="placeholder">
       <slot></slot>
     </div>`;
   }

@@ -60,7 +60,7 @@ const Template: Story<ArgTypes> = ({
     <tap-toast
       id="toast-story"
       variant=${variant}
-      ?showDismissButton=${showDismissButton}
+      ?show-dismiss-button=${showDismissButton}
     >
       ${toastContent}
     </tap-toast>

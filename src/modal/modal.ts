@@ -63,7 +63,6 @@ export class Modal extends LitElement implements HTMLDialogElement {
     const { open, overlay, dialog } = this;
     if (open) {
       const path = event.composedPath();
-      console.log(path);
       if (path.includes(overlay!) && !path.includes(dialog!)) {
         event.preventDefault();
         this.close();

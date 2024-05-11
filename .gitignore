@@ -60,3 +60,7 @@ out-tsc
 
 # Storybook
 storybook-static
+
+# Vitepress
+docs/.vitepress/dist 
+docs/.vitepress/cache
