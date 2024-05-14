@@ -1,5 +1,5 @@
 import { html, LitElement, PropertyValues, nothing } from "lit";
-import { property } from "lit/decorators.js"
+import { property, query } from "lit/decorators.js"
 import { computePosition, arrow, offset, MiddlewareData } from "@floating-ui/dom";
 import "../icons/index.js";
 import "../icon-button";
@@ -22,22 +22,27 @@ export class Tooltip extends LitElement {
   @property({ type: String, reflect: true }) width: string = "0";
   @property({ type: String, reflect: true, attribute: 'arrow-offset' }) arrowOffset: string = "";
 
+  @query("#tooltip")
+  private tooltipElement?: HTMLElement | null;
+
+  @query("#arrow")
+  private arrowElement?: HTMLElement | null;
+
   connectedCallback() {
     super.connectedCallback();
     window.requestAnimationFrame(() => {
-      const tooltipElement = this.renderRoot.querySelector("#tooltip") as HTMLElement;
-      const arrowElement = this.renderRoot.querySelector("#arrow")as HTMLElement;
-      const referenceElement = tooltipElement.offsetParent;
-
-      if (referenceElement && tooltipElement && arrowElement) {
-        computePosition(referenceElement, tooltipElement, {
+      if (this.tooltipElement && this.arrowElement) {
+        const referenceElement = this.tooltipElement.offsetParent ?? new HTMLDivElement();
+        
+        computePosition(referenceElement, this.tooltipElement, {
           placement: this.placement,
-          middleware: [arrow({ element: arrowElement }), offset(8)]
+          middleware: [arrow({ element: this.arrowElement }), offset(8)]
         }).then(({ x, y, middlewareData }) => {
-          tooltipElement.style.left = `${x}px`;
-          tooltipElement.style.top = `${y}px`;
-          
-          this.calculateArrowPosition(middlewareData, arrowElement);
+          if (this.tooltipElement) {
+            this.tooltipElement.style.left = `${x}px`;
+            this.tooltipElement.style.top = `${y}px`;
+          }
+          this.arrowElement && this.calculateArrowPosition(middlewareData, this.arrowElement);
         });
       }
     })
