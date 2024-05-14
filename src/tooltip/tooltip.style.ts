@@ -43,7 +43,7 @@ export default css`
     color: var(--tap-palette-white);
     text-align: right;
     line-height: var(--tap-sys-typography-body-sm-height);
-    font-size: var(--tap-sys-typography-body-sm-size);
+    font-size: var(--tap-tooltip-label-font-size, --tap-sys-typography-body-sm-size);
     direction: rtl;
   }
 
