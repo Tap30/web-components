@@ -21,6 +21,10 @@ export default css`
     height: 10px;
   }
 
+  :host {
+    display: inline-block;
+  }
+
   :host([placement="top"]) .tooltip-icon,
   :host([placement="top-start"]) .tooltip-icon,
   :host([placement="top-end"]) .tooltip-icon {
