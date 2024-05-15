@@ -27,23 +27,6 @@ export default {
       description: "The arrowOffset determines the distance of the tooltip arrow from the top or left of the container, depending on the tooltip's placement."
     },
   },
-  decorators: [
-    (Story: () => TemplateResult) => (
-      html`<div
-        style="width: 80px;
-        height: 80px;
-        border: 2px dashed #999;
-        position: relative;
-        left: 80px;
-        top: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: center;"
-        >
-          ${Story()}
-        </div>`
-    ),
-  ],
 };
 
 interface Story<T> {
