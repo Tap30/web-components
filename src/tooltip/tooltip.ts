@@ -1,5 +1,5 @@
 import { html, LitElement, PropertyValues, nothing } from "lit";
-import { property, query } from "lit/decorators.js"
+import { property, query, queryAssignedElements } from "lit/decorators.js"
 import { computePosition, arrow, offset, MiddlewareData } from "@floating-ui/dom";
 import "../icons/index.js";
 import "../icon-button";
@@ -28,13 +28,14 @@ export class Tooltip extends LitElement {
   @query("#arrow")
   private arrowElement?: HTMLElement | null;
 
+  @queryAssignedElements({ slot: 'target-element' })
+  private targetElement?: Array<HTMLElement> | [];
+
   connectedCallback() {
     super.connectedCallback();
     window.requestAnimationFrame(() => {
-      if (this.tooltipElement && this.arrowElement) {
-        const referenceElement = this.tooltipElement.offsetParent ?? new HTMLDivElement();
-        
-        computePosition(referenceElement, this.tooltipElement, {
+      if (this.tooltipElement && this.arrowElement && this.targetElement?.[0]) {
+        computePosition(this.targetElement[0], this.tooltipElement, {
           placement: this.placement,
           middleware: [arrow({ element: this.arrowElement }), offset(8)]
         }).then(({ x, y, middlewareData }) => {
@@ -107,15 +108,16 @@ export class Tooltip extends LitElement {
 
   render() {
     return html`
-      <div id="tooltip" class="tooltip">
-        ${this.renderDismissButton()}
-        <div id="arrow" class="tooltip-icon">
-          ${this.renderArrow()}
+        <div id="tooltip" class="tooltip">
+          ${this.renderDismissButton()}
+          <div id="arrow" class="tooltip-icon">
+            ${this.renderArrow()}
+          </div>
+          <div class="tooltip-label">
+            <slot name="label"></slot>
+          </div>
         </div>
-        <div class="tooltip-label">
-          <slot></slot>
-        </div>
-      </div>
+        <slot name="target-element"></slot>
     `;
   }
 }

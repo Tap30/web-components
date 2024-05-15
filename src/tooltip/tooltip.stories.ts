@@ -52,7 +52,17 @@ const Template: Story<ArgTypes> = ({
 }) => {
   return html`
     <tap-tooltip width=${width} placement=${placement} dismissible=${dismissible} arrow-offset=${arrowOffset}>
-      ${label}
+      <span slot="label">${label}</span>
+      <div
+          slot="target-element"
+          style="width: 80px;
+          height: 80px;
+          border: 2px dashed #999;
+          position: relative;
+          left: 80px;
+          top: 80px;"
+        >
+      </div>
     </tap-tooltip>
   `;
 }
