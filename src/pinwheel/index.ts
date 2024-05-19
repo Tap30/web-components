@@ -11,7 +11,7 @@ import styles from "./pinwheel.style";
  *
  * @summary A pinwheel component for selecting items by scrolling through a list.
  *
- * @prop {Array.<string>} items - An array of strings that contains pinwheel items.
+ * @prop {string[]} items - An array of strings that contains pinwheel items.
  *
  * @csspart pinwheel - The container that wraps the pinwheel component.
  * @csspart pinwheel-item - The item that rendered in pinwheel.
