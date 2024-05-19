@@ -1,4 +1,4 @@
-import { html, LitElement } from "lit";
+import { html, LitElement } from 'lit';
 
 export class BadgeWrapper extends LitElement {
   render() {
