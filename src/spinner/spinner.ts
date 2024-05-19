@@ -2,7 +2,7 @@ import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 
-export class spinner extends LitElement {
+export class Spinner extends LitElement {
 	@property() variant:
 		| "primary"
 		| "inverse" = "primary";
