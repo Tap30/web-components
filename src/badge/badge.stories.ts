@@ -63,7 +63,7 @@ const Template: Story<ArgTypes> = ({
     variant=${variant}
     priority=${priority}
     ?leadingIcon=${leadingIcon}
-  />
+  ></tap-badge>
 `;
 
 export const Badge = Template.bind({});
