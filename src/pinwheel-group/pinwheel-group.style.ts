@@ -11,9 +11,9 @@ export default css`
 
   .selector-indicator {
     /* FIXME: we dont have sizing tokens yet */
-    height: 48px;
-    background-color: var(--tap-pinwheel-group-color-surface-tertiary, var(--tap-sys-color-surface-tertiary));
-    border-radius: var(--tap-pinwheel-group-spacing-4, var(--tap-sys-spacing-4));
+    height: var(--tap-pinwheel-item-height, 48px);
+    background-color: var(--tap-pinwheel-group-selector-background-color, var(--tap-sys-color-surface-tertiary));
+    border-radius: var(--tap-pinwheel-group-selector-radius, var(--tap-sys-spacing-4));
     position: absolute;
     top: calc(50% - 24px);
     left: 0;

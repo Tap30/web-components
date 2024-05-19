@@ -20,9 +20,9 @@ import styles from "./pinwheel-group.style";
  * @csspart pinwheel-group - The container that wraps the pinwheels.
  * @csspart pinwheel-selector-indicator - The selector indicator that wraps selected row.
  *
- * @cssprop [--tap-pinwheel-group-spacing-4=--tap-sys-spacing-4]
+ * @cssprop [--tap-pinwheel-group-selector-radius=--tap-sys-spacing-4]
  *
- * @cssprop [--tap-pinwheel-group-color-surface-tertiary=--tap-sys-color-surface-tertiary]
+ * @cssprop [--tap-pinwheel-group-selector-background-color=--tap-sys-color-surface-tertiary]
  *
  */
 @customElement("tap-pinwheel-group")
