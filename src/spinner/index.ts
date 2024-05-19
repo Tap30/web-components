@@ -1,9 +1,9 @@
 import { customElement } from "lit/decorators.js";
-import { spinner } from "./spinner";
+import { Spinner } from "./spinner";
 import styles from "./spinner.style";
 
 @customElement("tap-spinner")
-export class TapSpinner extends spinner {
+export class TapSpinner extends Spinner {
   static readonly styles = [styles];
 }
 
