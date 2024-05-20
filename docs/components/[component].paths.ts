@@ -9,7 +9,7 @@ export default {
     return manifest.modules
       .filter(
         (module) =>
-          !module.path.startsWith('src/icon') && !!module.declarations?.length,
+          !(module.path.startsWith('src/icon/') || module.path.startsWith('src/icons/')) && !!module.declarations?.length
       )
       .map((module) => {
         if (!module.exports)
