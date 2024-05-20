@@ -158,42 +158,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/badge/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapBadge",
-          "members": [],
-          "superclass": {
-            "name": "Badge",
-            "module": "/src/badge/badge"
-          },
-          "tagName": "tap-badge",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapBadge",
-          "declaration": {
-            "name": "TapBadge",
-            "module": "src/badge/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-badge",
-          "declaration": {
-            "name": "TapBadge",
-            "module": "src/badge/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/base-button/index.ts",
       "declarations": [],
       "exports": [
@@ -217,36 +181,250 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/bottom-navigation/index.ts",
+      "path": "src/badge/index.ts",
       "declarations": [
         {
           "kind": "class",
-          "description": "",
-          "name": "TapBottomNavigation",
-          "members": [],
+          "description": "### Example\n\n##### Simple\n\n```html\n<tap-badge value=\"1\"></tap-badge>\n```\n\n##### Variants\n\n```html\n<tap-badge variant=\"success\" value=\"Success\"></tap-badge>\n<tap-badge variant=\"error\" value=\"Error\"></tap-badge>\n```\n\n##### Types\n\n```html\n<tap-badge type=\"pill\" value=\"Pill\"></tap-badge>\n<tap-badge type=\"numeral\" value=\"99\"></tap-badge>\n<tap-badge type=\"dot\"></tap-badge>\n```",
+          "name": "TapBadge",
+          "cssProperties": [
+            {
+              "description": "Font family of the badge.",
+              "name": "`--tap-font-family`",
+              "default": "`--tap-sys-font-family`"
+            },
+            {
+              "description": "Line height of the badge text.",
+              "name": "`--tap-badge-line-height`",
+              "default": "`--tap-sys-typography-body-xs-height`"
+            },
+            {
+              "description": "Font size of the badge text.",
+              "name": "`--tap-badge-font-size`",
+              "default": "`--tap-sys-typography-body-xs-size`"
+            },
+            {
+              "description": "Font weight of the badge text.",
+              "name": "`--tap-badge-font-weight`",
+              "default": "`--tap-sys-typography-body-xs-weight`"
+            },
+            {
+              "description": "Text color of the badge.",
+              "name": "`--tap-badge-color`",
+              "default": "`--tap-sys-color-content-primary`"
+            },
+            {
+              "description": "Border radius of the badge.",
+              "name": "`--tap-badge-border-radius`",
+              "default": "`--tap-sys-radius-4`"
+            },
+            {
+              "description": "Margin around the icon.",
+              "name": "`--tap-badge-icon-margin`",
+              "default": "`--tap-sys-spacing-2`"
+            },
+            {
+              "description": "Border radius for pill and numeral types.",
+              "name": "`--tap-badge-pill-numeral-border-radius`",
+              "default": "`--tap-sys-radius-4`"
+            },
+            {
+              "description": "Vertical padding for pill and numeral types.",
+              "name": "`--tap-badge-pill-numeral-vertical-padding`",
+              "default": "`--tap-sys-spacing-2`"
+            },
+            {
+              "description": "Horizontal padding for pill and numeral types.",
+              "name": "`--tap-badge-pill-numeral-horizontal-padding`",
+              "default": "`--tap-sys-spacing-4`"
+            },
+            {
+              "description": "Width of the dot type badge.",
+              "name": "`--tap-badge-dot-width`",
+              "default": "`6px`"
+            },
+            {
+              "description": "Height of the dot type badge.",
+              "name": "`--tap-badge-dot-height`",
+              "default": "`6px`"
+            },
+            {
+              "description": "Margin around the dot type badge.",
+              "name": "`--tap-badge-dot-margin`",
+              "default": "`3px`"
+            },
+            {
+              "description": "Background color for info variant.",
+              "name": "`--tap-badge-info-background-color`",
+              "default": "`--tap-sys-color-surface-accent`"
+            },
+            {
+              "description": "Text color for info variant.",
+              "name": "`--tap-badge-info-color`",
+              "default": "`--tap-sys-color-content-on-negative`"
+            },
+            {
+              "description": "Background color for success variant.",
+              "name": "`--tap-badge-success-background-color`",
+              "default": "`--tap-sys-color-surface-positive`"
+            },
+            {
+              "description": "Text color for success variant.",
+              "name": "`--tap-badge-success-color`",
+              "default": "`--tap-sys-color-content-on-negative`"
+            },
+            {
+              "description": "Background color for error variant.",
+              "name": "`--tap-badge-error-background-color`",
+              "default": "`--tap-sys-color-surface-negative`"
+            },
+            {
+              "description": "Text color for error variant.",
+              "name": "`--tap-badge-error-color`",
+              "default": "`--tap-sys-color-content-on-negative`"
+            },
+            {
+              "description": "Background color for warning variant.",
+              "name": "`--tap-badge-warning-background-color`",
+              "default": "`--tap-sys-color-surface-warning`"
+            },
+            {
+              "description": "Text color for warning variant.",
+              "name": "`--tap-badge-warning-color`",
+              "default": "`--tap-sys-color-content-on-warning`"
+            },
+            {
+              "description": "Background color for inverse variant.",
+              "name": "`--tap-badge-inverse-background-color`",
+              "default": "`--tap-sys-color-surface-disabled`"
+            },
+            {
+              "description": "Text color for inverse variant.",
+              "name": "`--tap-badge-inverse-color`",
+              "default": "`--tap-sys-color-content-tertiary`"
+            },
+            {
+              "description": "Background color for low priority info variant.",
+              "name": "`--tap-badge-info-low-background-color`",
+              "default": "`--tap-sys-color-surface-accent-light`"
+            },
+            {
+              "description": "Text color for low priority info variant.",
+              "name": "`--tap-badge-info-low-color`",
+              "default": "`--tap-sys-color-content-accent`"
+            },
+            {
+              "description": "Background color for low priority success variant.",
+              "name": "`--tap-badge-success-low-background-color`",
+              "default": "`--tap-sys-color-surface-positive-light`"
+            },
+            {
+              "description": "Text color for low priority success variant.",
+              "name": "`--tap-badge-success-low-color`",
+              "default": "`--tap-sys-color-content-positive`"
+            },
+            {
+              "description": "Background color for low priority error variant.",
+              "name": "`--tap-badge-error-low-background-color`",
+              "default": "`--tap-sys-color-surface-negative-light`"
+            },
+            {
+              "description": "Text color for low priority error variant.",
+              "name": "`--tap-badge-error-low-color`",
+              "default": "`--tap-sys-color-content-negative`"
+            },
+            {
+              "description": "Background color for low priority warning variant.",
+              "name": "`--tap-badge-warning-low-background-color`",
+              "default": "`--tap-sys-color-surface-warning-light`"
+            },
+            {
+              "description": "Text color for low priority warning variant.",
+              "name": "`--tap-badge-warning-low-color`",
+              "default": "`--tap-sys-color-content-warning`"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The main badge element.",
+              "name": "`badge`"
+            },
+            {
+              "description": "The icon inside the badge.",
+              "name": "`icon`"
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "`string`\\|`number`"
+              },
+              "description": "The value to display inside the badge.",
+              "name": "`value`",
+              "default": "`\"\"`",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "`\"pill\"` \\| `\"numeral\"` \\| `\"dot\"`"
+              },
+              "description": "The type of the badge.",
+              "name": "`type`",
+              "default": "`\"pill\"`",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "`\"success\"` \\| `\"error\"` \\| `\"info\"` \\| `\"warning\"` \\| `\"inverse\"`"
+              },
+              "description": "The variant style of the badge.",
+              "name": "`variant`",
+              "default": "`\"inverse\"`",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "`\"high\"` \\| `\"low\"`"
+              },
+              "description": "The priority level of the badge.",
+              "name": "`priority`",
+              "default": "`\"high\"`",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "`boolean`"
+              },
+              "description": "Whether to show an icon before the badge value.",
+              "name": "`leadingIcon`",
+              "default": "`false`",
+              "kind": "field"
+            }
+          ],
           "superclass": {
-            "name": "BottomNavigation",
-            "module": "/src/bottom-navigation/bottom-navigation.js"
+            "name": "Badge",
+            "module": "/src/badge/badge"
           },
-          "tagName": "tap-bottom-navigation",
+          "summary": "Display badge component with different styles and types.",
+          "tagName": "tap-badge",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapBottomNavigation",
+          "name": "TapBadge",
           "declaration": {
-            "name": "TapBottomNavigation",
-            "module": "src/bottom-navigation/index.ts"
+            "name": "TapBadge",
+            "module": "src/badge/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-bottom-navigation",
+          "name": "tap-badge",
           "declaration": {
-            "name": "TapBottomNavigation",
-            "module": "src/bottom-navigation/index.ts"
+            "name": "TapBadge",
+            "module": "src/badge/index.ts"
           }
         }
       ]
@@ -289,36 +467,36 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/banner/index.ts",
+      "path": "src/bottom-navigation/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapBanner",
+          "name": "TapBottomNavigation",
           "members": [],
           "superclass": {
-            "name": "Banner",
-            "module": "/src/banner/banner.js"
+            "name": "BottomNavigation",
+            "module": "/src/bottom-navigation/bottom-navigation.js"
           },
-          "tagName": "tap-banner",
+          "tagName": "tap-bottom-navigation",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapBanner",
+          "name": "TapBottomNavigation",
           "declaration": {
-            "name": "TapBanner",
-            "module": "src/banner/index.ts"
+            "name": "TapBottomNavigation",
+            "module": "src/bottom-navigation/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-banner",
+          "name": "tap-bottom-navigation",
           "declaration": {
-            "name": "TapBanner",
-            "module": "src/banner/index.ts"
+            "name": "TapBottomNavigation",
+            "module": "src/bottom-navigation/index.ts"
           }
         }
       ]
@@ -376,6 +554,42 @@
           "declaration": {
             "name": "TapBadgeWrapper",
             "module": "src/badge-wrapper/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/banner/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapBanner",
+          "members": [],
+          "superclass": {
+            "name": "Banner",
+            "module": "/src/banner/banner.js"
+          },
+          "tagName": "tap-banner",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapBanner",
+          "declaration": {
+            "name": "TapBanner",
+            "module": "src/banner/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-banner",
+          "declaration": {
+            "name": "TapBanner",
+            "module": "src/banner/index.ts"
           }
         }
       ]
@@ -3981,6 +4195,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/alarm-clock-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconAlarmClockFill",
+          "superclass": {
+            "name": "AlarmClockFillIcon",
+            "module": "/src/icons/alarm-clock-fill/alarm-clock-fill"
+          },
+          "tagName": "tap-icon-alarm-clock-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconAlarmClockFill",
+          "declaration": {
+            "name": "TapIconAlarmClockFill",
+            "module": "src/icons/alarm-clock-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-alarm-clock-fill",
+          "declaration": {
+            "name": "TapIconAlarmClockFill",
+            "module": "src/icons/alarm-clock-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/arrow-top-right/index.ts",
       "declarations": [
         {
@@ -4051,41 +4300,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/arrow-top-right-question/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconArrowTopRightQuestion",
-          "superclass": {
-            "name": "ArrowTopRightQuestionIcon",
-            "module": "/src/icons/arrow-top-right-question/arrow-top-right-question"
-          },
-          "tagName": "tap-icon-arrow-top-right-question",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconArrowTopRightQuestion",
-          "declaration": {
-            "name": "TapIconArrowTopRightQuestion",
-            "module": "src/icons/arrow-top-right-question/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-arrow-top-right-question",
-          "declaration": {
-            "name": "TapIconArrowTopRightQuestion",
-            "module": "src/icons/arrow-top-right-question/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/arrow-top-right-question-fill/index.ts",
       "declarations": [
         {
@@ -4121,35 +4335,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/alarm-clock-fill/index.ts",
+      "path": "src/icons/arrow-top-right-question/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconAlarmClockFill",
+          "name": "TapIconArrowTopRightQuestion",
           "superclass": {
-            "name": "AlarmClockFillIcon",
-            "module": "/src/icons/alarm-clock-fill/alarm-clock-fill"
+            "name": "ArrowTopRightQuestionIcon",
+            "module": "/src/icons/arrow-top-right-question/arrow-top-right-question"
           },
-          "tagName": "tap-icon-alarm-clock-fill",
+          "tagName": "tap-icon-arrow-top-right-question",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconAlarmClockFill",
+          "name": "TapIconArrowTopRightQuestion",
           "declaration": {
-            "name": "TapIconAlarmClockFill",
-            "module": "src/icons/alarm-clock-fill/index.ts"
+            "name": "TapIconArrowTopRightQuestion",
+            "module": "src/icons/arrow-top-right-question/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-alarm-clock-fill",
+          "name": "tap-icon-arrow-top-right-question",
           "declaration": {
-            "name": "TapIconAlarmClockFill",
-            "module": "src/icons/alarm-clock-fill/index.ts"
+            "name": "TapIconArrowTopRightQuestion",
+            "module": "src/icons/arrow-top-right-question/index.ts"
           }
         }
       ]
@@ -4891,41 +5105,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/call-righ/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCallRigh",
-          "superclass": {
-            "name": "CallRighIcon",
-            "module": "/src/icons/call-righ/call-righ"
-          },
-          "tagName": "tap-icon-call-righ",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCallRigh",
-          "declaration": {
-            "name": "TapIconCallRigh",
-            "module": "src/icons/call-righ/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-call-righ",
-          "declaration": {
-            "name": "TapIconCallRigh",
-            "module": "src/icons/call-righ/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/call-right-slash/index.ts",
       "declarations": [
         {
@@ -4990,6 +5169,41 @@
           "declaration": {
             "name": "TapIconCamera",
             "module": "src/icons/camera/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/call-righ/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCallRigh",
+          "superclass": {
+            "name": "CallRighIcon",
+            "module": "/src/icons/call-righ/call-righ"
+          },
+          "tagName": "tap-icon-call-righ",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCallRigh",
+          "declaration": {
+            "name": "TapIconCallRigh",
+            "module": "src/icons/call-righ/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-call-righ",
+          "declaration": {
+            "name": "TapIconCallRigh",
+            "module": "src/icons/call-righ/index.ts"
           }
         }
       ]
@@ -5136,41 +5350,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/car-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCarFill",
-          "superclass": {
-            "name": "CarFillIcon",
-            "module": "/src/icons/car-fill/car-fill"
-          },
-          "tagName": "tap-icon-car-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCarFill",
-          "declaration": {
-            "name": "TapIconCarFill",
-            "module": "src/icons/car-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-car-fill",
-          "declaration": {
-            "name": "TapIconCarFill",
-            "module": "src/icons/car-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/car-clock-fill/index.ts",
       "declarations": [
         {
@@ -5200,6 +5379,41 @@
           "declaration": {
             "name": "TapIconCarClockFill",
             "module": "src/icons/car-clock-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/car-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCarFill",
+          "superclass": {
+            "name": "CarFillIcon",
+            "module": "/src/icons/car-fill/car-fill"
+          },
+          "tagName": "tap-icon-car-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCarFill",
+          "declaration": {
+            "name": "TapIconCarFill",
+            "module": "src/icons/car-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-car-fill",
+          "declaration": {
+            "name": "TapIconCarFill",
+            "module": "src/icons/car-fill/index.ts"
           }
         }
       ]
@@ -5346,41 +5560,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/card-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCardFill",
-          "superclass": {
-            "name": "CardFillIcon",
-            "module": "/src/icons/card-fill/card-fill"
-          },
-          "tagName": "tap-icon-card-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCardFill",
-          "declaration": {
-            "name": "TapIconCardFill",
-            "module": "src/icons/card-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-card-fill",
-          "declaration": {
-            "name": "TapIconCardFill",
-            "module": "src/icons/card-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/card-left-arrow/index.ts",
       "declarations": [
         {
@@ -5410,41 +5589,6 @@
           "declaration": {
             "name": "TapIconCardLeftArrow",
             "module": "src/icons/card-left-arrow/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/card-plus/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCardPlus",
-          "superclass": {
-            "name": "CardPlusIcon",
-            "module": "/src/icons/card-plus/card-plus"
-          },
-          "tagName": "tap-icon-card-plus",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCardPlus",
-          "declaration": {
-            "name": "TapIconCardPlus",
-            "module": "src/icons/card-plus/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-card-plus",
-          "declaration": {
-            "name": "TapIconCardPlus",
-            "module": "src/icons/card-plus/index.ts"
           }
         }
       ]
@@ -5486,6 +5630,76 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/card-plus/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCardPlus",
+          "superclass": {
+            "name": "CardPlusIcon",
+            "module": "/src/icons/card-plus/card-plus"
+          },
+          "tagName": "tap-icon-card-plus",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCardPlus",
+          "declaration": {
+            "name": "TapIconCardPlus",
+            "module": "src/icons/card-plus/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-card-plus",
+          "declaration": {
+            "name": "TapIconCardPlus",
+            "module": "src/icons/card-plus/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/card-right-arrow/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCardRightArrow",
+          "superclass": {
+            "name": "CardRightArrowIcon",
+            "module": "/src/icons/card-right-arrow/card-right-arrow"
+          },
+          "tagName": "tap-icon-card-right-arrow",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCardRightArrow",
+          "declaration": {
+            "name": "TapIconCardRightArrow",
+            "module": "src/icons/card-right-arrow/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-card-right-arrow",
+          "declaration": {
+            "name": "TapIconCardRightArrow",
+            "module": "src/icons/card-right-arrow/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/card-plus-fill/index.ts",
       "declarations": [
         {
@@ -5515,6 +5729,41 @@
           "declaration": {
             "name": "TapIconCardPlusFill",
             "module": "src/icons/card-plus-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/card-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCardFill",
+          "superclass": {
+            "name": "CardFillIcon",
+            "module": "/src/icons/card-fill/card-fill"
+          },
+          "tagName": "tap-icon-card-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCardFill",
+          "declaration": {
+            "name": "TapIconCardFill",
+            "module": "src/icons/card-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-card-fill",
+          "declaration": {
+            "name": "TapIconCardFill",
+            "module": "src/icons/card-fill/index.ts"
           }
         }
       ]
@@ -5626,76 +5875,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/card-time/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCardTime",
-          "superclass": {
-            "name": "CardTimeIcon",
-            "module": "/src/icons/card-time/card-time"
-          },
-          "tagName": "tap-icon-card-time",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCardTime",
-          "declaration": {
-            "name": "TapIconCardTime",
-            "module": "src/icons/card-time/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-card-time",
-          "declaration": {
-            "name": "TapIconCardTime",
-            "module": "src/icons/card-time/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/card-right-arrow/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCardRightArrow",
-          "superclass": {
-            "name": "CardRightArrowIcon",
-            "module": "/src/icons/card-right-arrow/card-right-arrow"
-          },
-          "tagName": "tap-icon-card-right-arrow",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCardRightArrow",
-          "declaration": {
-            "name": "TapIconCardRightArrow",
-            "module": "src/icons/card-right-arrow/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-card-right-arrow",
-          "declaration": {
-            "name": "TapIconCardRightArrow",
-            "module": "src/icons/card-right-arrow/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/card-time-fill/index.ts",
       "declarations": [
         {
@@ -5725,6 +5904,41 @@
           "declaration": {
             "name": "TapIconCardTimeFill",
             "module": "src/icons/card-time-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/card-time/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCardTime",
+          "superclass": {
+            "name": "CardTimeIcon",
+            "module": "/src/icons/card-time/card-time"
+          },
+          "tagName": "tap-icon-card-time",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCardTime",
+          "declaration": {
+            "name": "TapIconCardTime",
+            "module": "src/icons/card-time/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-card-time",
+          "declaration": {
+            "name": "TapIconCardTime",
+            "module": "src/icons/card-time/index.ts"
           }
         }
       ]
@@ -5801,41 +6015,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/circle-check/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCircleCheck",
-          "superclass": {
-            "name": "CircleCheckIcon",
-            "module": "/src/icons/circle-check/circle-check"
-          },
-          "tagName": "tap-icon-circle-check",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCircleCheck",
-          "declaration": {
-            "name": "TapIconCircleCheck",
-            "module": "src/icons/circle-check/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-circle-check",
-          "declaration": {
-            "name": "TapIconCircleCheck",
-            "module": "src/icons/circle-check/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/circle-check-fill/index.ts",
       "declarations": [
         {
@@ -5871,35 +6050,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/circle-check-small/index.ts",
+      "path": "src/icons/circle-check/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconCircleCheckSmall",
+          "name": "TapIconCircleCheck",
           "superclass": {
-            "name": "CircleCheckSmallIcon",
-            "module": "/src/icons/circle-check-small/circle-check-small"
+            "name": "CircleCheckIcon",
+            "module": "/src/icons/circle-check/circle-check"
           },
-          "tagName": "tap-icon-circle-check-small",
+          "tagName": "tap-icon-circle-check",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconCircleCheckSmall",
+          "name": "TapIconCircleCheck",
           "declaration": {
-            "name": "TapIconCircleCheckSmall",
-            "module": "src/icons/circle-check-small/index.ts"
+            "name": "TapIconCircleCheck",
+            "module": "src/icons/circle-check/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-circle-check-small",
+          "name": "tap-icon-circle-check",
           "declaration": {
-            "name": "TapIconCircleCheckSmall",
-            "module": "src/icons/circle-check-small/index.ts"
+            "name": "TapIconCircleCheck",
+            "module": "src/icons/circle-check/index.ts"
           }
         }
       ]
@@ -6046,6 +6225,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/circle-check-small/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCircleCheckSmall",
+          "superclass": {
+            "name": "CircleCheckSmallIcon",
+            "module": "/src/icons/circle-check-small/circle-check-small"
+          },
+          "tagName": "tap-icon-circle-check-small",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCircleCheckSmall",
+          "declaration": {
+            "name": "TapIconCircleCheckSmall",
+            "module": "src/icons/circle-check-small/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-circle-check-small",
+          "declaration": {
+            "name": "TapIconCircleCheckSmall",
+            "module": "src/icons/circle-check-small/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/circle-exclamation-fill/index.ts",
       "declarations": [
         {
@@ -6075,6 +6289,76 @@
           "declaration": {
             "name": "TapIconCircleExclamationFill",
             "module": "src/icons/circle-exclamation-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/circle-fill-2/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCircleFill2",
+          "superclass": {
+            "name": "CircleFill2Icon",
+            "module": "/src/icons/circle-fill-2/circle-fill-2"
+          },
+          "tagName": "tap-icon-circle-fill-2",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCircleFill2",
+          "declaration": {
+            "name": "TapIconCircleFill2",
+            "module": "src/icons/circle-fill-2/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-circle-fill-2",
+          "declaration": {
+            "name": "TapIconCircleFill2",
+            "module": "src/icons/circle-fill-2/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/circle-fill-3/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCircleFill3",
+          "superclass": {
+            "name": "CircleFill3Icon",
+            "module": "/src/icons/circle-fill-3/circle-fill-3"
+          },
+          "tagName": "tap-icon-circle-fill-3",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCircleFill3",
+          "declaration": {
+            "name": "TapIconCircleFill3",
+            "module": "src/icons/circle-fill-3/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-circle-fill-3",
+          "declaration": {
+            "name": "TapIconCircleFill3",
+            "module": "src/icons/circle-fill-3/index.ts"
           }
         }
       ]
@@ -6116,35 +6400,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/circle-fill-2/index.ts",
+      "path": "src/icons/circle-fill-5/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconCircleFill2",
+          "name": "TapIconCircleFill5",
           "superclass": {
-            "name": "CircleFill2Icon",
-            "module": "/src/icons/circle-fill-2/circle-fill-2"
+            "name": "CircleFill5Icon",
+            "module": "/src/icons/circle-fill-5/circle-fill-5"
           },
-          "tagName": "tap-icon-circle-fill-2",
+          "tagName": "tap-icon-circle-fill-5",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconCircleFill2",
+          "name": "TapIconCircleFill5",
           "declaration": {
-            "name": "TapIconCircleFill2",
-            "module": "src/icons/circle-fill-2/index.ts"
+            "name": "TapIconCircleFill5",
+            "module": "src/icons/circle-fill-5/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-circle-fill-2",
+          "name": "tap-icon-circle-fill-5",
           "declaration": {
-            "name": "TapIconCircleFill2",
-            "module": "src/icons/circle-fill-2/index.ts"
+            "name": "TapIconCircleFill5",
+            "module": "src/icons/circle-fill-5/index.ts"
           }
         }
       ]
@@ -6221,41 +6505,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/circle-fill-5/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCircleFill5",
-          "superclass": {
-            "name": "CircleFill5Icon",
-            "module": "/src/icons/circle-fill-5/circle-fill-5"
-          },
-          "tagName": "tap-icon-circle-fill-5",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCircleFill5",
-          "declaration": {
-            "name": "TapIconCircleFill5",
-            "module": "src/icons/circle-fill-5/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-circle-fill-5",
-          "declaration": {
-            "name": "TapIconCircleFill5",
-            "module": "src/icons/circle-fill-5/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/circle-fill-7/index.ts",
       "declarations": [
         {
@@ -6285,41 +6534,6 @@
           "declaration": {
             "name": "TapIconCircleFill7",
             "module": "src/icons/circle-fill-7/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/circle-fill-3/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCircleFill3",
-          "superclass": {
-            "name": "CircleFill3Icon",
-            "module": "/src/icons/circle-fill-3/circle-fill-3"
-          },
-          "tagName": "tap-icon-circle-fill-3",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCircleFill3",
-          "declaration": {
-            "name": "TapIconCircleFill3",
-            "module": "src/icons/circle-fill-3/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-circle-fill-3",
-          "declaration": {
-            "name": "TapIconCircleFill3",
-            "module": "src/icons/circle-fill-3/index.ts"
           }
         }
       ]
@@ -6396,41 +6610,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/circle-information/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCircleInformation",
-          "superclass": {
-            "name": "CircleInformationIcon",
-            "module": "/src/icons/circle-information/circle-information"
-          },
-          "tagName": "tap-icon-circle-information",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCircleInformation",
-          "declaration": {
-            "name": "TapIconCircleInformation",
-            "module": "src/icons/circle-information/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-circle-information",
-          "declaration": {
-            "name": "TapIconCircleInformation",
-            "module": "src/icons/circle-information/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/circle-information-fill/index.ts",
       "declarations": [
         {
@@ -6466,35 +6645,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/circle-minus/index.ts",
+      "path": "src/icons/circle-information/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconCircleMinus",
+          "name": "TapIconCircleInformation",
           "superclass": {
-            "name": "CircleMinusIcon",
-            "module": "/src/icons/circle-minus/circle-minus"
+            "name": "CircleInformationIcon",
+            "module": "/src/icons/circle-information/circle-information"
           },
-          "tagName": "tap-icon-circle-minus",
+          "tagName": "tap-icon-circle-information",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconCircleMinus",
+          "name": "TapIconCircleInformation",
           "declaration": {
-            "name": "TapIconCircleMinus",
-            "module": "src/icons/circle-minus/index.ts"
+            "name": "TapIconCircleInformation",
+            "module": "src/icons/circle-information/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-circle-minus",
+          "name": "tap-icon-circle-information",
           "declaration": {
-            "name": "TapIconCircleMinus",
-            "module": "src/icons/circle-minus/index.ts"
+            "name": "TapIconCircleInformation",
+            "module": "src/icons/circle-information/index.ts"
           }
         }
       ]
@@ -6571,6 +6750,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/circle-minus/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCircleMinus",
+          "superclass": {
+            "name": "CircleMinusIcon",
+            "module": "/src/icons/circle-minus/circle-minus"
+          },
+          "tagName": "tap-icon-circle-minus",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCircleMinus",
+          "declaration": {
+            "name": "TapIconCircleMinus",
+            "module": "src/icons/circle-minus/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-circle-minus",
+          "declaration": {
+            "name": "TapIconCircleMinus",
+            "module": "src/icons/circle-minus/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/circle-outline-1/index.ts",
       "declarations": [
         {
@@ -6641,76 +6855,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/circle-outline-3/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCircleOutline3",
-          "superclass": {
-            "name": "CircleOutline3Icon",
-            "module": "/src/icons/circle-outline-3/circle-outline-3"
-          },
-          "tagName": "tap-icon-circle-outline-3",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCircleOutline3",
-          "declaration": {
-            "name": "TapIconCircleOutline3",
-            "module": "src/icons/circle-outline-3/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-circle-outline-3",
-          "declaration": {
-            "name": "TapIconCircleOutline3",
-            "module": "src/icons/circle-outline-3/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/circle-outline-4/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCircleOutline4",
-          "superclass": {
-            "name": "CircleOutline4Icon",
-            "module": "/src/icons/circle-outline-4/circle-outline-4"
-          },
-          "tagName": "tap-icon-circle-outline-4",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCircleOutline4",
-          "declaration": {
-            "name": "TapIconCircleOutline4",
-            "module": "src/icons/circle-outline-4/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-circle-outline-4",
-          "declaration": {
-            "name": "TapIconCircleOutline4",
-            "module": "src/icons/circle-outline-4/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/circle-outline-5/index.ts",
       "declarations": [
         {
@@ -6746,41 +6890,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/circle-outline-6/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCircleOutline6",
-          "superclass": {
-            "name": "CircleOutline6Icon",
-            "module": "/src/icons/circle-outline-6/circle-outline-6"
-          },
-          "tagName": "tap-icon-circle-outline-6",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCircleOutline6",
-          "declaration": {
-            "name": "TapIconCircleOutline6",
-            "module": "src/icons/circle-outline-6/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-circle-outline-6",
-          "declaration": {
-            "name": "TapIconCircleOutline6",
-            "module": "src/icons/circle-outline-6/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/circle-outline-7/index.ts",
       "declarations": [
         {
@@ -6810,6 +6919,41 @@
           "declaration": {
             "name": "TapIconCircleOutline7",
             "module": "src/icons/circle-outline-7/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/circle-outline-6/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCircleOutline6",
+          "superclass": {
+            "name": "CircleOutline6Icon",
+            "module": "/src/icons/circle-outline-6/circle-outline-6"
+          },
+          "tagName": "tap-icon-circle-outline-6",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCircleOutline6",
+          "declaration": {
+            "name": "TapIconCircleOutline6",
+            "module": "src/icons/circle-outline-6/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-circle-outline-6",
+          "declaration": {
+            "name": "TapIconCircleOutline6",
+            "module": "src/icons/circle-outline-6/index.ts"
           }
         }
       ]
@@ -6886,35 +7030,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/circle-person/index.ts",
+      "path": "src/icons/circle-outline-3/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconCirclePerson",
+          "name": "TapIconCircleOutline3",
           "superclass": {
-            "name": "CirclePersonIcon",
-            "module": "/src/icons/circle-person/circle-person"
+            "name": "CircleOutline3Icon",
+            "module": "/src/icons/circle-outline-3/circle-outline-3"
           },
-          "tagName": "tap-icon-circle-person",
+          "tagName": "tap-icon-circle-outline-3",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconCirclePerson",
+          "name": "TapIconCircleOutline3",
           "declaration": {
-            "name": "TapIconCirclePerson",
-            "module": "src/icons/circle-person/index.ts"
+            "name": "TapIconCircleOutline3",
+            "module": "src/icons/circle-outline-3/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-circle-person",
+          "name": "tap-icon-circle-outline-3",
           "declaration": {
-            "name": "TapIconCirclePerson",
-            "module": "src/icons/circle-person/index.ts"
+            "name": "TapIconCircleOutline3",
+            "module": "src/icons/circle-outline-3/index.ts"
           }
         }
       ]
@@ -6950,6 +7094,76 @@
           "declaration": {
             "name": "TapIconCirclePersonFill",
             "module": "src/icons/circle-person-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/circle-person/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCirclePerson",
+          "superclass": {
+            "name": "CirclePersonIcon",
+            "module": "/src/icons/circle-person/circle-person"
+          },
+          "tagName": "tap-icon-circle-person",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCirclePerson",
+          "declaration": {
+            "name": "TapIconCirclePerson",
+            "module": "src/icons/circle-person/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-circle-person",
+          "declaration": {
+            "name": "TapIconCirclePerson",
+            "module": "src/icons/circle-person/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/circle-outline-4/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCircleOutline4",
+          "superclass": {
+            "name": "CircleOutline4Icon",
+            "module": "/src/icons/circle-outline-4/circle-outline-4"
+          },
+          "tagName": "tap-icon-circle-outline-4",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCircleOutline4",
+          "declaration": {
+            "name": "TapIconCircleOutline4",
+            "module": "src/icons/circle-outline-4/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-circle-outline-4",
+          "declaration": {
+            "name": "TapIconCircleOutline4",
+            "module": "src/icons/circle-outline-4/index.ts"
           }
         }
       ]
@@ -7131,41 +7345,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/circle-star-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCircleStarFill",
-          "superclass": {
-            "name": "CircleStarFillIcon",
-            "module": "/src/icons/circle-star-fill/circle-star-fill"
-          },
-          "tagName": "tap-icon-circle-star-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCircleStarFill",
-          "declaration": {
-            "name": "TapIconCircleStarFill",
-            "module": "src/icons/circle-star-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-circle-star-fill",
-          "declaration": {
-            "name": "TapIconCircleStarFill",
-            "module": "src/icons/circle-star-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/circle-thunder/index.ts",
       "declarations": [
         {
@@ -7201,35 +7380,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/circle-thunder-fill/index.ts",
+      "path": "src/icons/circle-star-fill/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconCircleThunderFill",
+          "name": "TapIconCircleStarFill",
           "superclass": {
-            "name": "CircleThunderFillIcon",
-            "module": "/src/icons/circle-thunder-fill/circle-thunder-fill"
+            "name": "CircleStarFillIcon",
+            "module": "/src/icons/circle-star-fill/circle-star-fill"
           },
-          "tagName": "tap-icon-circle-thunder-fill",
+          "tagName": "tap-icon-circle-star-fill",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconCircleThunderFill",
+          "name": "TapIconCircleStarFill",
           "declaration": {
-            "name": "TapIconCircleThunderFill",
-            "module": "src/icons/circle-thunder-fill/index.ts"
+            "name": "TapIconCircleStarFill",
+            "module": "src/icons/circle-star-fill/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-circle-thunder-fill",
+          "name": "tap-icon-circle-star-fill",
           "declaration": {
-            "name": "TapIconCircleThunderFill",
-            "module": "src/icons/circle-thunder-fill/index.ts"
+            "name": "TapIconCircleStarFill",
+            "module": "src/icons/circle-star-fill/index.ts"
           }
         }
       ]
@@ -7300,6 +7479,41 @@
           "declaration": {
             "name": "TapIconClipboardClockFill",
             "module": "src/icons/clipboard-clock-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/circle-thunder-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCircleThunderFill",
+          "superclass": {
+            "name": "CircleThunderFillIcon",
+            "module": "/src/icons/circle-thunder-fill/circle-thunder-fill"
+          },
+          "tagName": "tap-icon-circle-thunder-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCircleThunderFill",
+          "declaration": {
+            "name": "TapIconCircleThunderFill",
+            "module": "src/icons/circle-thunder-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-circle-thunder-fill",
+          "declaration": {
+            "name": "TapIconCircleThunderFill",
+            "module": "src/icons/circle-thunder-fill/index.ts"
           }
         }
       ]
@@ -7551,41 +7765,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/copy-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCopyFill",
-          "superclass": {
-            "name": "CopyFillIcon",
-            "module": "/src/icons/copy-fill/copy-fill"
-          },
-          "tagName": "tap-icon-copy-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCopyFill",
-          "declaration": {
-            "name": "TapIconCopyFill",
-            "module": "src/icons/copy-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-copy-fill",
-          "declaration": {
-            "name": "TapIconCopyFill",
-            "module": "src/icons/copy-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/copy/index.ts",
       "declarations": [
         {
@@ -7621,35 +7800,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/coupon-fill/index.ts",
+      "path": "src/icons/copy-fill/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconCouponFill",
+          "name": "TapIconCopyFill",
           "superclass": {
-            "name": "CouponFillIcon",
-            "module": "/src/icons/coupon-fill/coupon-fill"
+            "name": "CopyFillIcon",
+            "module": "/src/icons/copy-fill/copy-fill"
           },
-          "tagName": "tap-icon-coupon-fill",
+          "tagName": "tap-icon-copy-fill",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconCouponFill",
+          "name": "TapIconCopyFill",
           "declaration": {
-            "name": "TapIconCouponFill",
-            "module": "src/icons/coupon-fill/index.ts"
+            "name": "TapIconCopyFill",
+            "module": "src/icons/copy-fill/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-coupon-fill",
+          "name": "tap-icon-copy-fill",
           "declaration": {
-            "name": "TapIconCouponFill",
-            "module": "src/icons/coupon-fill/index.ts"
+            "name": "TapIconCopyFill",
+            "module": "src/icons/copy-fill/index.ts"
           }
         }
       ]
@@ -7685,6 +7864,41 @@
           "declaration": {
             "name": "TapIconCoupon",
             "module": "src/icons/coupon/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/coupon-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCouponFill",
+          "superclass": {
+            "name": "CouponFillIcon",
+            "module": "/src/icons/coupon-fill/coupon-fill"
+          },
+          "tagName": "tap-icon-coupon-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCouponFill",
+          "declaration": {
+            "name": "TapIconCouponFill",
+            "module": "src/icons/coupon-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-coupon-fill",
+          "declaration": {
+            "name": "TapIconCouponFill",
+            "module": "src/icons/coupon-fill/index.ts"
           }
         }
       ]
@@ -7761,41 +7975,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/cross-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconCrossFill",
-          "superclass": {
-            "name": "CrossFillIcon",
-            "module": "/src/icons/cross-fill/cross-fill"
-          },
-          "tagName": "tap-icon-cross-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconCrossFill",
-          "declaration": {
-            "name": "TapIconCrossFill",
-            "module": "src/icons/cross-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-cross-fill",
-          "declaration": {
-            "name": "TapIconCrossFill",
-            "module": "src/icons/cross-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/cross/index.ts",
       "declarations": [
         {
@@ -7825,6 +8004,41 @@
           "declaration": {
             "name": "TapIconCross",
             "module": "src/icons/cross/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/cross-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconCrossFill",
+          "superclass": {
+            "name": "CrossFillIcon",
+            "module": "/src/icons/cross-fill/cross-fill"
+          },
+          "tagName": "tap-icon-cross-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconCrossFill",
+          "declaration": {
+            "name": "TapIconCrossFill",
+            "module": "src/icons/cross-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-cross-fill",
+          "declaration": {
+            "name": "TapIconCrossFill",
+            "module": "src/icons/cross-fill/index.ts"
           }
         }
       ]
@@ -7971,41 +8185,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/default-5/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconDefault5",
-          "superclass": {
-            "name": "Default5Icon",
-            "module": "/src/icons/default-5/default-5"
-          },
-          "tagName": "tap-icon-default-5",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconDefault5",
-          "declaration": {
-            "name": "TapIconDefault5",
-            "module": "src/icons/default-5/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-default-5",
-          "declaration": {
-            "name": "TapIconDefault5",
-            "module": "src/icons/default-5/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/default-4/index.ts",
       "declarations": [
         {
@@ -8035,6 +8214,41 @@
           "declaration": {
             "name": "TapIconDefault4",
             "module": "src/icons/default-4/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/default-5/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconDefault5",
+          "superclass": {
+            "name": "Default5Icon",
+            "module": "/src/icons/default-5/default-5"
+          },
+          "tagName": "tap-icon-default-5",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconDefault5",
+          "declaration": {
+            "name": "TapIconDefault5",
+            "module": "src/icons/default-5/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-default-5",
+          "declaration": {
+            "name": "TapIconDefault5",
+            "module": "src/icons/default-5/index.ts"
           }
         }
       ]
@@ -8111,41 +8325,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/default-9/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconDefault9",
-          "superclass": {
-            "name": "Default9Icon",
-            "module": "/src/icons/default-9/default-9"
-          },
-          "tagName": "tap-icon-default-9",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconDefault9",
-          "declaration": {
-            "name": "TapIconDefault9",
-            "module": "src/icons/default-9/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-default-9",
-          "declaration": {
-            "name": "TapIconDefault9",
-            "module": "src/icons/default-9/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/default-8/index.ts",
       "declarations": [
         {
@@ -8175,6 +8354,41 @@
           "declaration": {
             "name": "TapIconDefault8",
             "module": "src/icons/default-8/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/default-9/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconDefault9",
+          "superclass": {
+            "name": "Default9Icon",
+            "module": "/src/icons/default-9/default-9"
+          },
+          "tagName": "tap-icon-default-9",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconDefault9",
+          "declaration": {
+            "name": "TapIconDefault9",
+            "module": "src/icons/default-9/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-default-9",
+          "declaration": {
+            "name": "TapIconDefault9",
+            "module": "src/icons/default-9/index.ts"
           }
         }
       ]
@@ -8391,41 +8605,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/double-check/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconDoubleCheck",
-          "superclass": {
-            "name": "DoubleCheckIcon",
-            "module": "/src/icons/double-check/double-check"
-          },
-          "tagName": "tap-icon-double-check",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconDoubleCheck",
-          "declaration": {
-            "name": "TapIconDoubleCheck",
-            "module": "src/icons/double-check/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-double-check",
-          "declaration": {
-            "name": "TapIconDoubleCheck",
-            "module": "src/icons/double-check/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/dot-fill/index.ts",
       "declarations": [
         {
@@ -8455,6 +8634,41 @@
           "declaration": {
             "name": "TapIconDotFill",
             "module": "src/icons/dot-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/double-check/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconDoubleCheck",
+          "superclass": {
+            "name": "DoubleCheckIcon",
+            "module": "/src/icons/double-check/double-check"
+          },
+          "tagName": "tap-icon-double-check",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconDoubleCheck",
+          "declaration": {
+            "name": "TapIconDoubleCheck",
+            "module": "src/icons/double-check/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-double-check",
+          "declaration": {
+            "name": "TapIconDoubleCheck",
+            "module": "src/icons/double-check/index.ts"
           }
         }
       ]
@@ -8601,41 +8815,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/exclamation/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconExclamation",
-          "superclass": {
-            "name": "ExclamationIcon",
-            "module": "/src/icons/exclamation/exclamation"
-          },
-          "tagName": "tap-icon-exclamation",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconExclamation",
-          "declaration": {
-            "name": "TapIconExclamation",
-            "module": "src/icons/exclamation/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-exclamation",
-          "declaration": {
-            "name": "TapIconExclamation",
-            "module": "src/icons/exclamation/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/envelope-open-fill/index.ts",
       "declarations": [
         {
@@ -8671,35 +8850,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/eye/index.ts",
+      "path": "src/icons/exclamation/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconEye",
+          "name": "TapIconExclamation",
           "superclass": {
-            "name": "EyeIcon",
-            "module": "/src/icons/eye/eye"
+            "name": "ExclamationIcon",
+            "module": "/src/icons/exclamation/exclamation"
           },
-          "tagName": "tap-icon-eye",
+          "tagName": "tap-icon-exclamation",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconEye",
+          "name": "TapIconExclamation",
           "declaration": {
-            "name": "TapIconEye",
-            "module": "src/icons/eye/index.ts"
+            "name": "TapIconExclamation",
+            "module": "src/icons/exclamation/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-eye",
+          "name": "tap-icon-exclamation",
           "declaration": {
-            "name": "TapIconEye",
-            "module": "src/icons/eye/index.ts"
+            "name": "TapIconExclamation",
+            "module": "src/icons/exclamation/index.ts"
           }
         }
       ]
@@ -8735,6 +8914,41 @@
           "declaration": {
             "name": "TapIconExclamationFill",
             "module": "src/icons/exclamation-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/eye/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconEye",
+          "superclass": {
+            "name": "EyeIcon",
+            "module": "/src/icons/eye/eye"
+          },
+          "tagName": "tap-icon-eye",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconEye",
+          "declaration": {
+            "name": "TapIconEye",
+            "module": "src/icons/eye/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-eye",
+          "declaration": {
+            "name": "TapIconEye",
+            "module": "src/icons/eye/index.ts"
           }
         }
       ]
@@ -8811,41 +9025,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/face-sad/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconFaceSad",
-          "superclass": {
-            "name": "FaceSadIcon",
-            "module": "/src/icons/face-sad/face-sad"
-          },
-          "tagName": "tap-icon-face-sad",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconFaceSad",
-          "declaration": {
-            "name": "TapIconFaceSad",
-            "module": "src/icons/face-sad/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-face-sad",
-          "declaration": {
-            "name": "TapIconFaceSad",
-            "module": "src/icons/face-sad/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/eye-slash-fill/index.ts",
       "declarations": [
         {
@@ -8881,35 +9060,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/face-smile/index.ts",
+      "path": "src/icons/face-sad/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconFaceSmile",
+          "name": "TapIconFaceSad",
           "superclass": {
-            "name": "FaceSmileIcon",
-            "module": "/src/icons/face-smile/face-smile"
+            "name": "FaceSadIcon",
+            "module": "/src/icons/face-sad/face-sad"
           },
-          "tagName": "tap-icon-face-smile",
+          "tagName": "tap-icon-face-sad",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconFaceSmile",
+          "name": "TapIconFaceSad",
           "declaration": {
-            "name": "TapIconFaceSmile",
-            "module": "src/icons/face-smile/index.ts"
+            "name": "TapIconFaceSad",
+            "module": "src/icons/face-sad/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-face-smile",
+          "name": "tap-icon-face-sad",
           "declaration": {
-            "name": "TapIconFaceSmile",
-            "module": "src/icons/face-smile/index.ts"
+            "name": "TapIconFaceSad",
+            "module": "src/icons/face-sad/index.ts"
           }
         }
       ]
@@ -9021,35 +9200,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/finger-swipe-vertical/index.ts",
+      "path": "src/icons/face-smile/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconFingerSwipeVertical",
+          "name": "TapIconFaceSmile",
           "superclass": {
-            "name": "FingerSwipeVerticalIcon",
-            "module": "/src/icons/finger-swipe-vertical/finger-swipe-vertical"
+            "name": "FaceSmileIcon",
+            "module": "/src/icons/face-smile/face-smile"
           },
-          "tagName": "tap-icon-finger-swipe-vertical",
+          "tagName": "tap-icon-face-smile",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconFingerSwipeVertical",
+          "name": "TapIconFaceSmile",
           "declaration": {
-            "name": "TapIconFingerSwipeVertical",
-            "module": "src/icons/finger-swipe-vertical/index.ts"
+            "name": "TapIconFaceSmile",
+            "module": "src/icons/face-smile/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-finger-swipe-vertical",
+          "name": "tap-icon-face-smile",
           "declaration": {
-            "name": "TapIconFingerSwipeVertical",
-            "module": "src/icons/finger-swipe-vertical/index.ts"
+            "name": "TapIconFaceSmile",
+            "module": "src/icons/face-smile/index.ts"
           }
         }
       ]
@@ -9085,6 +9264,41 @@
           "declaration": {
             "name": "TapIconFingerTouch",
             "module": "src/icons/finger-touch/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/finger-swipe-vertical/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconFingerSwipeVertical",
+          "superclass": {
+            "name": "FingerSwipeVerticalIcon",
+            "module": "/src/icons/finger-swipe-vertical/finger-swipe-vertical"
+          },
+          "tagName": "tap-icon-finger-swipe-vertical",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconFingerSwipeVertical",
+          "declaration": {
+            "name": "TapIconFingerSwipeVertical",
+            "module": "src/icons/finger-swipe-vertical/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-finger-swipe-vertical",
+          "declaration": {
+            "name": "TapIconFingerSwipeVertical",
+            "module": "src/icons/finger-swipe-vertical/index.ts"
           }
         }
       ]
@@ -9161,41 +9375,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/flag/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconFlag",
-          "superclass": {
-            "name": "FlagIcon",
-            "module": "/src/icons/flag/flag"
-          },
-          "tagName": "tap-icon-flag",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconFlag",
-          "declaration": {
-            "name": "TapIconFlag",
-            "module": "src/icons/flag/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-flag",
-          "declaration": {
-            "name": "TapIconFlag",
-            "module": "src/icons/flag/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/fire-fill/index.ts",
       "declarations": [
         {
@@ -9225,6 +9404,41 @@
           "declaration": {
             "name": "TapIconFireFill",
             "module": "src/icons/fire-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/flag/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconFlag",
+          "superclass": {
+            "name": "FlagIcon",
+            "module": "/src/icons/flag/flag"
+          },
+          "tagName": "tap-icon-flag",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconFlag",
+          "declaration": {
+            "name": "TapIconFlag",
+            "module": "src/icons/flag/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-flag",
+          "declaration": {
+            "name": "TapIconFlag",
+            "module": "src/icons/flag/index.ts"
           }
         }
       ]
@@ -9371,41 +9585,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/gift/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconGift",
-          "superclass": {
-            "name": "GiftIcon",
-            "module": "/src/icons/gift/gift"
-          },
-          "tagName": "tap-icon-gift",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconGift",
-          "declaration": {
-            "name": "TapIconGift",
-            "module": "src/icons/gift/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-gift",
-          "declaration": {
-            "name": "TapIconGift",
-            "module": "src/icons/gift/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/gear-fill/index.ts",
       "declarations": [
         {
@@ -9441,70 +9620,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/graduation-cap-fill/index.ts",
+      "path": "src/icons/gift/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconGraduationCapFill",
+          "name": "TapIconGift",
           "superclass": {
-            "name": "GraduationCapFillIcon",
-            "module": "/src/icons/graduation-cap-fill/graduation-cap-fill"
+            "name": "GiftIcon",
+            "module": "/src/icons/gift/gift"
           },
-          "tagName": "tap-icon-graduation-cap-fill",
+          "tagName": "tap-icon-gift",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconGraduationCapFill",
+          "name": "TapIconGift",
           "declaration": {
-            "name": "TapIconGraduationCapFill",
-            "module": "src/icons/graduation-cap-fill/index.ts"
+            "name": "TapIconGift",
+            "module": "src/icons/gift/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-graduation-cap-fill",
+          "name": "tap-icon-gift",
           "declaration": {
-            "name": "TapIconGraduationCapFill",
-            "module": "src/icons/graduation-cap-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/headphone-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconHeadphoneFill",
-          "superclass": {
-            "name": "HeadphoneFillIcon",
-            "module": "/src/icons/headphone-fill/headphone-fill"
-          },
-          "tagName": "tap-icon-headphone-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconHeadphoneFill",
-          "declaration": {
-            "name": "TapIconHeadphoneFill",
-            "module": "src/icons/headphone-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-headphone-fill",
-          "declaration": {
-            "name": "TapIconHeadphoneFill",
-            "module": "src/icons/headphone-fill/index.ts"
+            "name": "TapIconGift",
+            "module": "src/icons/gift/index.ts"
           }
         }
       ]
@@ -9546,6 +9690,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/graduation-cap-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconGraduationCapFill",
+          "superclass": {
+            "name": "GraduationCapFillIcon",
+            "module": "/src/icons/graduation-cap-fill/graduation-cap-fill"
+          },
+          "tagName": "tap-icon-graduation-cap-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconGraduationCapFill",
+          "declaration": {
+            "name": "TapIconGraduationCapFill",
+            "module": "src/icons/graduation-cap-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-graduation-cap-fill",
+          "declaration": {
+            "name": "TapIconGraduationCapFill",
+            "module": "src/icons/graduation-cap-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/headphone/index.ts",
       "declarations": [
         {
@@ -9575,6 +9754,41 @@
           "declaration": {
             "name": "TapIconHeadphone",
             "module": "src/icons/headphone/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/headphone-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconHeadphoneFill",
+          "superclass": {
+            "name": "HeadphoneFillIcon",
+            "module": "/src/icons/headphone-fill/headphone-fill"
+          },
+          "tagName": "tap-icon-headphone-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconHeadphoneFill",
+          "declaration": {
+            "name": "TapIconHeadphoneFill",
+            "module": "src/icons/headphone-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-headphone-fill",
+          "declaration": {
+            "name": "TapIconHeadphoneFill",
+            "module": "src/icons/headphone-fill/index.ts"
           }
         }
       ]
@@ -9721,35 +9935,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/home/index.ts",
+      "path": "src/icons/helmets-fill/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconHome",
+          "name": "TapIconHelmetsFill",
           "superclass": {
-            "name": "HomeIcon",
-            "module": "/src/icons/home/home"
+            "name": "HelmetsFillIcon",
+            "module": "/src/icons/helmets-fill/helmets-fill"
           },
-          "tagName": "tap-icon-home",
+          "tagName": "tap-icon-helmets-fill",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconHome",
+          "name": "TapIconHelmetsFill",
           "declaration": {
-            "name": "TapIconHome",
-            "module": "src/icons/home/index.ts"
+            "name": "TapIconHelmetsFill",
+            "module": "src/icons/helmets-fill/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-home",
+          "name": "tap-icon-helmets-fill",
           "declaration": {
-            "name": "TapIconHome",
-            "module": "src/icons/home/index.ts"
+            "name": "TapIconHelmetsFill",
+            "module": "src/icons/helmets-fill/index.ts"
           }
         }
       ]
@@ -9791,35 +10005,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/helmets-fill/index.ts",
+      "path": "src/icons/home/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconHelmetsFill",
+          "name": "TapIconHome",
           "superclass": {
-            "name": "HelmetsFillIcon",
-            "module": "/src/icons/helmets-fill/helmets-fill"
+            "name": "HomeIcon",
+            "module": "/src/icons/home/home"
           },
-          "tagName": "tap-icon-helmets-fill",
+          "tagName": "tap-icon-home",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconHelmetsFill",
+          "name": "TapIconHome",
           "declaration": {
-            "name": "TapIconHelmetsFill",
-            "module": "src/icons/helmets-fill/index.ts"
+            "name": "TapIconHome",
+            "module": "src/icons/home/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-helmets-fill",
+          "name": "tap-icon-home",
           "declaration": {
-            "name": "TapIconHelmetsFill",
-            "module": "src/icons/helmets-fill/index.ts"
+            "name": "TapIconHome",
+            "module": "src/icons/home/index.ts"
           }
         }
       ]
@@ -9855,6 +10069,41 @@
           "declaration": {
             "name": "TapIconHourglass",
             "module": "src/icons/hourglass/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/hourglass-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconHourglassFill",
+          "superclass": {
+            "name": "HourglassFillIcon",
+            "module": "/src/icons/hourglass-fill/hourglass-fill"
+          },
+          "tagName": "tap-icon-hourglass-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconHourglassFill",
+          "declaration": {
+            "name": "TapIconHourglassFill",
+            "module": "src/icons/hourglass-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-hourglass-fill",
+          "declaration": {
+            "name": "TapIconHourglassFill",
+            "module": "src/icons/hourglass-fill/index.ts"
           }
         }
       ]
@@ -9966,111 +10215,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/hourglass-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconHourglassFill",
-          "superclass": {
-            "name": "HourglassFillIcon",
-            "module": "/src/icons/hourglass-fill/hourglass-fill"
-          },
-          "tagName": "tap-icon-hourglass-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconHourglassFill",
-          "declaration": {
-            "name": "TapIconHourglassFill",
-            "module": "src/icons/hourglass-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-hourglass-fill",
-          "declaration": {
-            "name": "TapIconHourglassFill",
-            "module": "src/icons/hourglass-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/info-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconInfoFill",
-          "superclass": {
-            "name": "InfoFillIcon",
-            "module": "/src/icons/info-fill/info-fill"
-          },
-          "tagName": "tap-icon-info-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconInfoFill",
-          "declaration": {
-            "name": "TapIconInfoFill",
-            "module": "src/icons/info-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-info-fill",
-          "declaration": {
-            "name": "TapIconInfoFill",
-            "module": "src/icons/info-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/info/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconInfo",
-          "superclass": {
-            "name": "InfoIcon",
-            "module": "/src/icons/info/info"
-          },
-          "tagName": "tap-icon-info",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconInfo",
-          "declaration": {
-            "name": "TapIconInfo",
-            "module": "src/icons/info/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-info",
-          "declaration": {
-            "name": "TapIconInfo",
-            "module": "src/icons/info/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/image-two-fill/index.ts",
       "declarations": [
         {
@@ -10141,35 +10285,70 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/keyboard-fill/index.ts",
+      "path": "src/icons/info/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconKeyboardFill",
+          "name": "TapIconInfo",
           "superclass": {
-            "name": "KeyboardFillIcon",
-            "module": "/src/icons/keyboard-fill/keyboard-fill"
+            "name": "InfoIcon",
+            "module": "/src/icons/info/info"
           },
-          "tagName": "tap-icon-keyboard-fill",
+          "tagName": "tap-icon-info",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconKeyboardFill",
+          "name": "TapIconInfo",
           "declaration": {
-            "name": "TapIconKeyboardFill",
-            "module": "src/icons/keyboard-fill/index.ts"
+            "name": "TapIconInfo",
+            "module": "src/icons/info/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-keyboard-fill",
+          "name": "tap-icon-info",
           "declaration": {
-            "name": "TapIconKeyboardFill",
-            "module": "src/icons/keyboard-fill/index.ts"
+            "name": "TapIconInfo",
+            "module": "src/icons/info/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/info-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconInfoFill",
+          "superclass": {
+            "name": "InfoFillIcon",
+            "module": "/src/icons/info-fill/info-fill"
+          },
+          "tagName": "tap-icon-info-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconInfoFill",
+          "declaration": {
+            "name": "TapIconInfoFill",
+            "module": "src/icons/info-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-info-fill",
+          "declaration": {
+            "name": "TapIconInfoFill",
+            "module": "src/icons/info-fill/index.ts"
           }
         }
       ]
@@ -10211,70 +10390,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/list-bullet/index.ts",
+      "path": "src/icons/keyboard-fill/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconListBullet",
+          "name": "TapIconKeyboardFill",
           "superclass": {
-            "name": "ListBulletIcon",
-            "module": "/src/icons/list-bullet/list-bullet"
+            "name": "KeyboardFillIcon",
+            "module": "/src/icons/keyboard-fill/keyboard-fill"
           },
-          "tagName": "tap-icon-list-bullet",
+          "tagName": "tap-icon-keyboard-fill",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconListBullet",
+          "name": "TapIconKeyboardFill",
           "declaration": {
-            "name": "TapIconListBullet",
-            "module": "src/icons/list-bullet/index.ts"
+            "name": "TapIconKeyboardFill",
+            "module": "src/icons/keyboard-fill/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-list-bullet",
+          "name": "tap-icon-keyboard-fill",
           "declaration": {
-            "name": "TapIconListBullet",
-            "module": "src/icons/list-bullet/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/line-three-horizontal-decrease/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconLineThreeHorizontalDecrease",
-          "superclass": {
-            "name": "LineThreeHorizontalDecreaseIcon",
-            "module": "/src/icons/line-three-horizontal-decrease/line-three-horizontal-decrease"
-          },
-          "tagName": "tap-icon-line-three-horizontal-decrease",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconLineThreeHorizontalDecrease",
-          "declaration": {
-            "name": "TapIconLineThreeHorizontalDecrease",
-            "module": "src/icons/line-three-horizontal-decrease/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-line-three-horizontal-decrease",
-          "declaration": {
-            "name": "TapIconLineThreeHorizontalDecrease",
-            "module": "src/icons/line-three-horizontal-decrease/index.ts"
+            "name": "TapIconKeyboardFill",
+            "module": "src/icons/keyboard-fill/index.ts"
           }
         }
       ]
@@ -10316,6 +10460,76 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/line-three-horizontal-decrease/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconLineThreeHorizontalDecrease",
+          "superclass": {
+            "name": "LineThreeHorizontalDecreaseIcon",
+            "module": "/src/icons/line-three-horizontal-decrease/line-three-horizontal-decrease"
+          },
+          "tagName": "tap-icon-line-three-horizontal-decrease",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconLineThreeHorizontalDecrease",
+          "declaration": {
+            "name": "TapIconLineThreeHorizontalDecrease",
+            "module": "src/icons/line-three-horizontal-decrease/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-line-three-horizontal-decrease",
+          "declaration": {
+            "name": "TapIconLineThreeHorizontalDecrease",
+            "module": "src/icons/line-three-horizontal-decrease/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/list-bullet/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconListBullet",
+          "superclass": {
+            "name": "ListBulletIcon",
+            "module": "/src/icons/list-bullet/list-bullet"
+          },
+          "tagName": "tap-icon-list-bullet",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconListBullet",
+          "declaration": {
+            "name": "TapIconListBullet",
+            "module": "src/icons/list-bullet/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-list-bullet",
+          "declaration": {
+            "name": "TapIconListBullet",
+            "module": "src/icons/list-bullet/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/loading/index.ts",
       "declarations": [
         {
@@ -10345,111 +10559,6 @@
           "declaration": {
             "name": "TapIconLoading",
             "module": "src/icons/loading/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/location-up/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconLocationUp",
-          "superclass": {
-            "name": "LocationUpIcon",
-            "module": "/src/icons/location-up/location-up"
-          },
-          "tagName": "tap-icon-location-up",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconLocationUp",
-          "declaration": {
-            "name": "TapIconLocationUp",
-            "module": "src/icons/location-up/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-location-up",
-          "declaration": {
-            "name": "TapIconLocationUp",
-            "module": "src/icons/location-up/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/location-left/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconLocationLeft",
-          "superclass": {
-            "name": "LocationLeftIcon",
-            "module": "/src/icons/location-left/location-left"
-          },
-          "tagName": "tap-icon-location-left",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconLocationLeft",
-          "declaration": {
-            "name": "TapIconLocationLeft",
-            "module": "src/icons/location-left/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-location-left",
-          "declaration": {
-            "name": "TapIconLocationLeft",
-            "module": "src/icons/location-left/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/lock-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconLockFill",
-          "superclass": {
-            "name": "LockFillIcon",
-            "module": "/src/icons/lock-fill/lock-fill"
-          },
-          "tagName": "tap-icon-lock-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconLockFill",
-          "declaration": {
-            "name": "TapIconLockFill",
-            "module": "src/icons/lock-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-lock-fill",
-          "declaration": {
-            "name": "TapIconLockFill",
-            "module": "src/icons/lock-fill/index.ts"
           }
         }
       ]
@@ -10491,35 +10600,105 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/lock-small-fill/index.ts",
+      "path": "src/icons/location-left/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconLockSmallFill",
+          "name": "TapIconLocationLeft",
           "superclass": {
-            "name": "LockSmallFillIcon",
-            "module": "/src/icons/lock-small-fill/lock-small-fill"
+            "name": "LocationLeftIcon",
+            "module": "/src/icons/location-left/location-left"
           },
-          "tagName": "tap-icon-lock-small-fill",
+          "tagName": "tap-icon-location-left",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconLockSmallFill",
+          "name": "TapIconLocationLeft",
           "declaration": {
-            "name": "TapIconLockSmallFill",
-            "module": "src/icons/lock-small-fill/index.ts"
+            "name": "TapIconLocationLeft",
+            "module": "src/icons/location-left/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-lock-small-fill",
+          "name": "tap-icon-location-left",
           "declaration": {
-            "name": "TapIconLockSmallFill",
-            "module": "src/icons/lock-small-fill/index.ts"
+            "name": "TapIconLocationLeft",
+            "module": "src/icons/location-left/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/location-up/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconLocationUp",
+          "superclass": {
+            "name": "LocationUpIcon",
+            "module": "/src/icons/location-up/location-up"
+          },
+          "tagName": "tap-icon-location-up",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconLocationUp",
+          "declaration": {
+            "name": "TapIconLocationUp",
+            "module": "src/icons/location-up/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-location-up",
+          "declaration": {
+            "name": "TapIconLocationUp",
+            "module": "src/icons/location-up/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/lock-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconLockFill",
+          "superclass": {
+            "name": "LockFillIcon",
+            "module": "/src/icons/lock-fill/lock-fill"
+          },
+          "tagName": "tap-icon-lock-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconLockFill",
+          "declaration": {
+            "name": "TapIconLockFill",
+            "module": "src/icons/lock-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-lock-fill",
+          "declaration": {
+            "name": "TapIconLockFill",
+            "module": "src/icons/lock-fill/index.ts"
           }
         }
       ]
@@ -10561,41 +10740,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/magnifier/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconMagnifier",
-          "superclass": {
-            "name": "MagnifierIcon",
-            "module": "/src/icons/magnifier/magnifier"
-          },
-          "tagName": "tap-icon-magnifier",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconMagnifier",
-          "declaration": {
-            "name": "TapIconMagnifier",
-            "module": "src/icons/magnifier/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-magnifier",
-          "declaration": {
-            "name": "TapIconMagnifier",
-            "module": "src/icons/magnifier/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/magnifier-fill/index.ts",
       "declarations": [
         {
@@ -10631,35 +10775,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/map/index.ts",
+      "path": "src/icons/lock-small-fill/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconMap",
+          "name": "TapIconLockSmallFill",
           "superclass": {
-            "name": "MapIcon",
-            "module": "/src/icons/map/map"
+            "name": "LockSmallFillIcon",
+            "module": "/src/icons/lock-small-fill/lock-small-fill"
           },
-          "tagName": "tap-icon-map",
+          "tagName": "tap-icon-lock-small-fill",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconMap",
+          "name": "TapIconLockSmallFill",
           "declaration": {
-            "name": "TapIconMap",
-            "module": "src/icons/map/index.ts"
+            "name": "TapIconLockSmallFill",
+            "module": "src/icons/lock-small-fill/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-map",
+          "name": "tap-icon-lock-small-fill",
           "declaration": {
-            "name": "TapIconMap",
-            "module": "src/icons/map/index.ts"
+            "name": "TapIconLockSmallFill",
+            "module": "src/icons/lock-small-fill/index.ts"
           }
         }
       ]
@@ -10701,6 +10845,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/magnifier/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconMagnifier",
+          "superclass": {
+            "name": "MagnifierIcon",
+            "module": "/src/icons/magnifier/magnifier"
+          },
+          "tagName": "tap-icon-magnifier",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconMagnifier",
+          "declaration": {
+            "name": "TapIconMagnifier",
+            "module": "src/icons/magnifier/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-magnifier",
+          "declaration": {
+            "name": "TapIconMagnifier",
+            "module": "src/icons/magnifier/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/medal/index.ts",
       "declarations": [
         {
@@ -10736,41 +10915,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/medal-1/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconMedal1",
-          "superclass": {
-            "name": "Medal1Icon",
-            "module": "/src/icons/medal-1/medal-1"
-          },
-          "tagName": "tap-icon-medal-1",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconMedal1",
-          "declaration": {
-            "name": "TapIconMedal1",
-            "module": "src/icons/medal-1/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-medal-1",
-          "declaration": {
-            "name": "TapIconMedal1",
-            "module": "src/icons/medal-1/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/medal-fill/index.ts",
       "declarations": [
         {
@@ -10800,6 +10944,76 @@
           "declaration": {
             "name": "TapIconMedalFill",
             "module": "src/icons/medal-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/map/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconMap",
+          "superclass": {
+            "name": "MapIcon",
+            "module": "/src/icons/map/map"
+          },
+          "tagName": "tap-icon-map",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconMap",
+          "declaration": {
+            "name": "TapIconMap",
+            "module": "src/icons/map/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-map",
+          "declaration": {
+            "name": "TapIconMap",
+            "module": "src/icons/map/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/medal-1/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconMedal1",
+          "superclass": {
+            "name": "Medal1Icon",
+            "module": "/src/icons/medal-1/medal-1"
+          },
+          "tagName": "tap-icon-medal-1",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconMedal1",
+          "declaration": {
+            "name": "TapIconMedal1",
+            "module": "src/icons/medal-1/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-medal-1",
+          "declaration": {
+            "name": "TapIconMedal1",
+            "module": "src/icons/medal-1/index.ts"
           }
         }
       ]
@@ -10946,35 +11160,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/microphone-slash-fill/index.ts",
+      "path": "src/icons/microphone-spark-fill/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconMicrophoneSlashFill",
+          "name": "TapIconMicrophoneSparkFill",
           "superclass": {
-            "name": "MicrophoneSlashFillIcon",
-            "module": "/src/icons/microphone-slash-fill/microphone-slash-fill"
+            "name": "MicrophoneSparkFillIcon",
+            "module": "/src/icons/microphone-spark-fill/microphone-spark-fill"
           },
-          "tagName": "tap-icon-microphone-slash-fill",
+          "tagName": "tap-icon-microphone-spark-fill",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconMicrophoneSlashFill",
+          "name": "TapIconMicrophoneSparkFill",
           "declaration": {
-            "name": "TapIconMicrophoneSlashFill",
-            "module": "src/icons/microphone-slash-fill/index.ts"
+            "name": "TapIconMicrophoneSparkFill",
+            "module": "src/icons/microphone-spark-fill/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-microphone-slash-fill",
+          "name": "tap-icon-microphone-spark-fill",
           "declaration": {
-            "name": "TapIconMicrophoneSlashFill",
-            "module": "src/icons/microphone-slash-fill/index.ts"
+            "name": "TapIconMicrophoneSparkFill",
+            "module": "src/icons/microphone-spark-fill/index.ts"
           }
         }
       ]
@@ -11016,35 +11230,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/microphone-spark-fill/index.ts",
+      "path": "src/icons/microphone-slash-fill/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconMicrophoneSparkFill",
+          "name": "TapIconMicrophoneSlashFill",
           "superclass": {
-            "name": "MicrophoneSparkFillIcon",
-            "module": "/src/icons/microphone-spark-fill/microphone-spark-fill"
+            "name": "MicrophoneSlashFillIcon",
+            "module": "/src/icons/microphone-slash-fill/microphone-slash-fill"
           },
-          "tagName": "tap-icon-microphone-spark-fill",
+          "tagName": "tap-icon-microphone-slash-fill",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconMicrophoneSparkFill",
+          "name": "TapIconMicrophoneSlashFill",
           "declaration": {
-            "name": "TapIconMicrophoneSparkFill",
-            "module": "src/icons/microphone-spark-fill/index.ts"
+            "name": "TapIconMicrophoneSlashFill",
+            "module": "src/icons/microphone-slash-fill/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-microphone-spark-fill",
+          "name": "tap-icon-microphone-slash-fill",
           "declaration": {
-            "name": "TapIconMicrophoneSparkFill",
-            "module": "src/icons/microphone-spark-fill/index.ts"
+            "name": "TapIconMicrophoneSlashFill",
+            "module": "src/icons/microphone-slash-fill/index.ts"
           }
         }
       ]
@@ -11156,41 +11370,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/moon-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconMoonFill",
-          "superclass": {
-            "name": "MoonFillIcon",
-            "module": "/src/icons/moon-fill/moon-fill"
-          },
-          "tagName": "tap-icon-moon-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconMoonFill",
-          "declaration": {
-            "name": "TapIconMoonFill",
-            "module": "src/icons/moon-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-moon-fill",
-          "declaration": {
-            "name": "TapIconMoonFill",
-            "module": "src/icons/moon-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/more-horizontal/index.ts",
       "declarations": [
         {
@@ -11220,6 +11399,41 @@
           "declaration": {
             "name": "TapIconMoreHorizontal",
             "module": "src/icons/more-horizontal/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/moon-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconMoonFill",
+          "superclass": {
+            "name": "MoonFillIcon",
+            "module": "/src/icons/moon-fill/moon-fill"
+          },
+          "tagName": "tap-icon-moon-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconMoonFill",
+          "declaration": {
+            "name": "TapIconMoonFill",
+            "module": "src/icons/moon-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-moon-fill",
+          "declaration": {
+            "name": "TapIconMoonFill",
+            "module": "src/icons/moon-fill/index.ts"
           }
         }
       ]
@@ -11261,76 +11475,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/more-vertical/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconMoreVertical",
-          "superclass": {
-            "name": "MoreVerticalIcon",
-            "module": "/src/icons/more-vertical/more-vertical"
-          },
-          "tagName": "tap-icon-more-vertical",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconMoreVertical",
-          "declaration": {
-            "name": "TapIconMoreVertical",
-            "module": "src/icons/more-vertical/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-more-vertical",
-          "declaration": {
-            "name": "TapIconMoreVertical",
-            "module": "src/icons/more-vertical/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/more-vertical-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconMoreVerticalFill",
-          "superclass": {
-            "name": "MoreVerticalFillIcon",
-            "module": "/src/icons/more-vertical-fill/more-vertical-fill"
-          },
-          "tagName": "tap-icon-more-vertical-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconMoreVerticalFill",
-          "declaration": {
-            "name": "TapIconMoreVerticalFill",
-            "module": "src/icons/more-vertical-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-more-vertical-fill",
-          "declaration": {
-            "name": "TapIconMoreVerticalFill",
-            "module": "src/icons/more-vertical-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/motorcycle/index.ts",
       "declarations": [
         {
@@ -11360,6 +11504,41 @@
           "declaration": {
             "name": "TapIconMotorcycle",
             "module": "src/icons/motorcycle/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/more-vertical/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconMoreVertical",
+          "superclass": {
+            "name": "MoreVerticalIcon",
+            "module": "/src/icons/more-vertical/more-vertical"
+          },
+          "tagName": "tap-icon-more-vertical",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconMoreVertical",
+          "declaration": {
+            "name": "TapIconMoreVertical",
+            "module": "src/icons/more-vertical/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-more-vertical",
+          "declaration": {
+            "name": "TapIconMoreVertical",
+            "module": "src/icons/more-vertical/index.ts"
           }
         }
       ]
@@ -11471,6 +11650,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/more-vertical-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconMoreVerticalFill",
+          "superclass": {
+            "name": "MoreVerticalFillIcon",
+            "module": "/src/icons/more-vertical-fill/more-vertical-fill"
+          },
+          "tagName": "tap-icon-more-vertical-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconMoreVerticalFill",
+          "declaration": {
+            "name": "TapIconMoreVerticalFill",
+            "module": "src/icons/more-vertical-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-more-vertical-fill",
+          "declaration": {
+            "name": "TapIconMoreVerticalFill",
+            "module": "src/icons/more-vertical-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/person/index.ts",
       "declarations": [
         {
@@ -11500,41 +11714,6 @@
           "declaration": {
             "name": "TapIconPerson",
             "module": "src/icons/person/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/person-1/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconPerson1",
-          "superclass": {
-            "name": "Person1Icon",
-            "module": "/src/icons/person-1/person-1"
-          },
-          "tagName": "tap-icon-person-1",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconPerson1",
-          "declaration": {
-            "name": "TapIconPerson1",
-            "module": "src/icons/person-1/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-person-1",
-          "declaration": {
-            "name": "TapIconPerson1",
-            "module": "src/icons/person-1/index.ts"
           }
         }
       ]
@@ -11605,6 +11784,41 @@
           "declaration": {
             "name": "TapIconPersonFill1",
             "module": "src/icons/person-fill-1/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/person-1/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconPerson1",
+          "superclass": {
+            "name": "Person1Icon",
+            "module": "/src/icons/person-1/person-1"
+          },
+          "tagName": "tap-icon-person-1",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconPerson1",
+          "declaration": {
+            "name": "TapIconPerson1",
+            "module": "src/icons/person-1/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-person-1",
+          "declaration": {
+            "name": "TapIconPerson1",
+            "module": "src/icons/person-1/index.ts"
           }
         }
       ]
@@ -11716,41 +11930,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/person-plus/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconPersonPlus",
-          "superclass": {
-            "name": "PersonPlusIcon",
-            "module": "/src/icons/person-plus/person-plus"
-          },
-          "tagName": "tap-icon-person-plus",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconPersonPlus",
-          "declaration": {
-            "name": "TapIconPersonPlus",
-            "module": "src/icons/person-plus/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-person-plus",
-          "declaration": {
-            "name": "TapIconPersonPlus",
-            "module": "src/icons/person-plus/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/person-plus-fill/index.ts",
       "declarations": [
         {
@@ -11780,6 +11959,41 @@
           "declaration": {
             "name": "TapIconPersonPlusFill",
             "module": "src/icons/person-plus-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/person-plus/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconPersonPlus",
+          "superclass": {
+            "name": "PersonPlusIcon",
+            "module": "/src/icons/person-plus/person-plus"
+          },
+          "tagName": "tap-icon-person-plus",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconPersonPlus",
+          "declaration": {
+            "name": "TapIconPersonPlus",
+            "module": "src/icons/person-plus/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-person-plus",
+          "declaration": {
+            "name": "TapIconPersonPlus",
+            "module": "src/icons/person-plus/index.ts"
           }
         }
       ]
@@ -11856,41 +12070,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/person-wave/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconPersonWave",
-          "superclass": {
-            "name": "PersonWaveIcon",
-            "module": "/src/icons/person-wave/person-wave"
-          },
-          "tagName": "tap-icon-person-wave",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconPersonWave",
-          "declaration": {
-            "name": "TapIconPersonWave",
-            "module": "src/icons/person-wave/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-person-wave",
-          "declaration": {
-            "name": "TapIconPersonWave",
-            "module": "src/icons/person-wave/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/person-wave-fill/index.ts",
       "declarations": [
         {
@@ -11926,35 +12105,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/phone-fill/index.ts",
+      "path": "src/icons/person-wave/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconPhoneFill",
+          "name": "TapIconPersonWave",
           "superclass": {
-            "name": "PhoneFillIcon",
-            "module": "/src/icons/phone-fill/phone-fill"
+            "name": "PersonWaveIcon",
+            "module": "/src/icons/person-wave/person-wave"
           },
-          "tagName": "tap-icon-phone-fill",
+          "tagName": "tap-icon-person-wave",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconPhoneFill",
+          "name": "TapIconPersonWave",
           "declaration": {
-            "name": "TapIconPhoneFill",
-            "module": "src/icons/phone-fill/index.ts"
+            "name": "TapIconPersonWave",
+            "module": "src/icons/person-wave/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-phone-fill",
+          "name": "tap-icon-person-wave",
           "declaration": {
-            "name": "TapIconPhoneFill",
-            "module": "src/icons/phone-fill/index.ts"
+            "name": "TapIconPersonWave",
+            "module": "src/icons/person-wave/index.ts"
           }
         }
       ]
@@ -11996,70 +12175,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/phone-vibrate/index.ts",
+      "path": "src/icons/phone-fill/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconPhoneVibrate",
+          "name": "TapIconPhoneFill",
           "superclass": {
-            "name": "PhoneVibrateIcon",
-            "module": "/src/icons/phone-vibrate/phone-vibrate"
+            "name": "PhoneFillIcon",
+            "module": "/src/icons/phone-fill/phone-fill"
           },
-          "tagName": "tap-icon-phone-vibrate",
+          "tagName": "tap-icon-phone-fill",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconPhoneVibrate",
+          "name": "TapIconPhoneFill",
           "declaration": {
-            "name": "TapIconPhoneVibrate",
-            "module": "src/icons/phone-vibrate/index.ts"
+            "name": "TapIconPhoneFill",
+            "module": "src/icons/phone-fill/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-phone-vibrate",
+          "name": "tap-icon-phone-fill",
           "declaration": {
-            "name": "TapIconPhoneVibrate",
-            "module": "src/icons/phone-vibrate/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/pin/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconPin",
-          "superclass": {
-            "name": "PinIcon",
-            "module": "/src/icons/pin/pin"
-          },
-          "tagName": "tap-icon-pin",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconPin",
-          "declaration": {
-            "name": "TapIconPin",
-            "module": "src/icons/pin/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-pin",
-          "declaration": {
-            "name": "TapIconPin",
-            "module": "src/icons/pin/index.ts"
+            "name": "TapIconPhoneFill",
+            "module": "src/icons/phone-fill/index.ts"
           }
         }
       ]
@@ -12101,6 +12245,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/phone-vibrate/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconPhoneVibrate",
+          "superclass": {
+            "name": "PhoneVibrateIcon",
+            "module": "/src/icons/phone-vibrate/phone-vibrate"
+          },
+          "tagName": "tap-icon-phone-vibrate",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconPhoneVibrate",
+          "declaration": {
+            "name": "TapIconPhoneVibrate",
+            "module": "src/icons/phone-vibrate/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-phone-vibrate",
+          "declaration": {
+            "name": "TapIconPhoneVibrate",
+            "module": "src/icons/phone-vibrate/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/pin-cross/index.ts",
       "declarations": [
         {
@@ -12130,6 +12309,41 @@
           "declaration": {
             "name": "TapIconPinCross",
             "module": "src/icons/pin-cross/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/pin/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconPin",
+          "superclass": {
+            "name": "PinIcon",
+            "module": "/src/icons/pin/pin"
+          },
+          "tagName": "tap-icon-pin",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconPin",
+          "declaration": {
+            "name": "TapIconPin",
+            "module": "src/icons/pin/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-pin",
+          "declaration": {
+            "name": "TapIconPin",
+            "module": "src/icons/pin/index.ts"
           }
         }
       ]
@@ -12381,6 +12595,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/plane-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconPlaneFill",
+          "superclass": {
+            "name": "PlaneFillIcon",
+            "module": "/src/icons/plane-fill/plane-fill"
+          },
+          "tagName": "tap-icon-plane-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconPlaneFill",
+          "declaration": {
+            "name": "TapIconPlaneFill",
+            "module": "src/icons/plane-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-plane-fill",
+          "declaration": {
+            "name": "TapIconPlaneFill",
+            "module": "src/icons/plane-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/planet-earth/index.ts",
       "declarations": [
         {
@@ -12410,41 +12659,6 @@
           "declaration": {
             "name": "TapIconPlanetEarth",
             "module": "src/icons/planet-earth/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/plus/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconPlus",
-          "superclass": {
-            "name": "PlusIcon",
-            "module": "/src/icons/plus/plus"
-          },
-          "tagName": "tap-icon-plus",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconPlus",
-          "declaration": {
-            "name": "TapIconPlus",
-            "module": "src/icons/plus/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-plus",
-          "declaration": {
-            "name": "TapIconPlus",
-            "module": "src/icons/plus/index.ts"
           }
         }
       ]
@@ -12521,35 +12735,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/point-three-connected-trianglepath-line/index.ts",
+      "path": "src/icons/plus/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconPointThreeConnectedTrianglepathLine",
+          "name": "TapIconPlus",
           "superclass": {
-            "name": "PointThreeConnectedTrianglepathLineIcon",
-            "module": "/src/icons/point-three-connected-trianglepath-line/point-three-connected-trianglepath-line"
+            "name": "PlusIcon",
+            "module": "/src/icons/plus/plus"
           },
-          "tagName": "tap-icon-point-three-connected-trianglepath-line",
+          "tagName": "tap-icon-plus",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconPointThreeConnectedTrianglepathLine",
+          "name": "TapIconPlus",
           "declaration": {
-            "name": "TapIconPointThreeConnectedTrianglepathLine",
-            "module": "src/icons/point-three-connected-trianglepath-line/index.ts"
+            "name": "TapIconPlus",
+            "module": "src/icons/plus/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-point-three-connected-trianglepath-line",
+          "name": "tap-icon-plus",
           "declaration": {
-            "name": "TapIconPointThreeConnectedTrianglepathLine",
-            "module": "src/icons/point-three-connected-trianglepath-line/index.ts"
+            "name": "TapIconPlus",
+            "module": "src/icons/plus/index.ts"
           }
         }
       ]
@@ -12591,70 +12805,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/plane-fill/index.ts",
+      "path": "src/icons/point-three-connected-trianglepath-line/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconPlaneFill",
+          "name": "TapIconPointThreeConnectedTrianglepathLine",
           "superclass": {
-            "name": "PlaneFillIcon",
-            "module": "/src/icons/plane-fill/plane-fill"
+            "name": "PointThreeConnectedTrianglepathLineIcon",
+            "module": "/src/icons/point-three-connected-trianglepath-line/point-three-connected-trianglepath-line"
           },
-          "tagName": "tap-icon-plane-fill",
+          "tagName": "tap-icon-point-three-connected-trianglepath-line",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconPlaneFill",
+          "name": "TapIconPointThreeConnectedTrianglepathLine",
           "declaration": {
-            "name": "TapIconPlaneFill",
-            "module": "src/icons/plane-fill/index.ts"
+            "name": "TapIconPointThreeConnectedTrianglepathLine",
+            "module": "src/icons/point-three-connected-trianglepath-line/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-plane-fill",
+          "name": "tap-icon-point-three-connected-trianglepath-line",
           "declaration": {
-            "name": "TapIconPlaneFill",
-            "module": "src/icons/plane-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/question/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconQuestion",
-          "superclass": {
-            "name": "QuestionIcon",
-            "module": "/src/icons/question/question"
-          },
-          "tagName": "tap-icon-question",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconQuestion",
-          "declaration": {
-            "name": "TapIconQuestion",
-            "module": "src/icons/question/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-question",
-          "declaration": {
-            "name": "TapIconQuestion",
-            "module": "src/icons/question/index.ts"
+            "name": "TapIconPointThreeConnectedTrianglepathLine",
+            "module": "src/icons/point-three-connected-trianglepath-line/index.ts"
           }
         }
       ]
@@ -12696,6 +12875,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/question/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconQuestion",
+          "superclass": {
+            "name": "QuestionIcon",
+            "module": "/src/icons/question/question"
+          },
+          "tagName": "tap-icon-question",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconQuestion",
+          "declaration": {
+            "name": "TapIconQuestion",
+            "module": "src/icons/question/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-question",
+          "declaration": {
+            "name": "TapIconQuestion",
+            "module": "src/icons/question/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/power/index.ts",
       "declarations": [
         {
@@ -12725,41 +12939,6 @@
           "declaration": {
             "name": "TapIconPower",
             "module": "src/icons/power/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/rectangle-person-text-with-badge/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconRectanglePersonTextWithBadge",
-          "superclass": {
-            "name": "RectanglePersonTextWithBadgeIcon",
-            "module": "/src/icons/rectangle-person-text-with-badge/rectangle-person-text-with-badge"
-          },
-          "tagName": "tap-icon-rectangle-person-text-with-badge",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconRectanglePersonTextWithBadge",
-          "declaration": {
-            "name": "TapIconRectanglePersonTextWithBadge",
-            "module": "src/icons/rectangle-person-text-with-badge/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-rectangle-person-text-with-badge",
-          "declaration": {
-            "name": "TapIconRectanglePersonTextWithBadge",
-            "module": "src/icons/rectangle-person-text-with-badge/index.ts"
           }
         }
       ]
@@ -12801,6 +12980,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/rectangle-person-text-with-badge/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconRectanglePersonTextWithBadge",
+          "superclass": {
+            "name": "RectanglePersonTextWithBadgeIcon",
+            "module": "/src/icons/rectangle-person-text-with-badge/rectangle-person-text-with-badge"
+          },
+          "tagName": "tap-icon-rectangle-person-text-with-badge",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconRectanglePersonTextWithBadge",
+          "declaration": {
+            "name": "TapIconRectanglePersonTextWithBadge",
+            "module": "src/icons/rectangle-person-text-with-badge/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-rectangle-person-text-with-badge",
+          "declaration": {
+            "name": "TapIconRectanglePersonTextWithBadge",
+            "module": "src/icons/rectangle-person-text-with-badge/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/send-chat/index.ts",
       "declarations": [
         {
@@ -12836,41 +13050,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/share/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconShare",
-          "superclass": {
-            "name": "ShareIcon",
-            "module": "/src/icons/share/share"
-          },
-          "tagName": "tap-icon-share",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconShare",
-          "declaration": {
-            "name": "TapIconShare",
-            "module": "src/icons/share/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-share",
-          "declaration": {
-            "name": "TapIconShare",
-            "module": "src/icons/share/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/send-chat-fill/index.ts",
       "declarations": [
         {
@@ -12900,6 +13079,41 @@
           "declaration": {
             "name": "TapIconSendChatFill",
             "module": "src/icons/send-chat-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/share/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconShare",
+          "superclass": {
+            "name": "ShareIcon",
+            "module": "/src/icons/share/share"
+          },
+          "tagName": "tap-icon-share",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconShare",
+          "declaration": {
+            "name": "TapIconShare",
+            "module": "src/icons/share/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-share",
+          "declaration": {
+            "name": "TapIconShare",
+            "module": "src/icons/share/index.ts"
           }
         }
       ]
@@ -13046,6 +13260,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/shopping-bag-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconShoppingBagFill",
+          "superclass": {
+            "name": "ShoppingBagFillIcon",
+            "module": "/src/icons/shopping-bag-fill/shopping-bag-fill"
+          },
+          "tagName": "tap-icon-shopping-bag-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconShoppingBagFill",
+          "declaration": {
+            "name": "TapIconShoppingBagFill",
+            "module": "src/icons/shopping-bag-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-shopping-bag-fill",
+          "declaration": {
+            "name": "TapIconShoppingBagFill",
+            "module": "src/icons/shopping-bag-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/shopping-cart/index.ts",
       "declarations": [
         {
@@ -13110,41 +13359,6 @@
           "declaration": {
             "name": "TapIconShoppingCartFill",
             "module": "src/icons/shopping-cart-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/shopping-bag-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconShoppingBagFill",
-          "superclass": {
-            "name": "ShoppingBagFillIcon",
-            "module": "/src/icons/shopping-bag-fill/shopping-bag-fill"
-          },
-          "tagName": "tap-icon-shopping-bag-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconShoppingBagFill",
-          "declaration": {
-            "name": "TapIconShoppingBagFill",
-            "module": "src/icons/shopping-bag-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-shopping-bag-fill",
-          "declaration": {
-            "name": "TapIconShoppingBagFill",
-            "module": "src/icons/shopping-bag-fill/index.ts"
           }
         }
       ]
@@ -13256,6 +13470,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/slider-horizontal/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconSliderHorizontal",
+          "superclass": {
+            "name": "SliderHorizontalIcon",
+            "module": "/src/icons/slider-horizontal/slider-horizontal"
+          },
+          "tagName": "tap-icon-slider-horizontal",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconSliderHorizontal",
+          "declaration": {
+            "name": "TapIconSliderHorizontal",
+            "module": "src/icons/slider-horizontal/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-slider-horizontal",
+          "declaration": {
+            "name": "TapIconSliderHorizontal",
+            "module": "src/icons/slider-horizontal/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/slider-horizontal-fill/index.ts",
       "declarations": [
         {
@@ -13291,35 +13540,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/slider-horizontal/index.ts",
+      "path": "src/icons/spark/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconSliderHorizontal",
+          "name": "TapIconSpark",
           "superclass": {
-            "name": "SliderHorizontalIcon",
-            "module": "/src/icons/slider-horizontal/slider-horizontal"
+            "name": "SparkIcon",
+            "module": "/src/icons/spark/spark"
           },
-          "tagName": "tap-icon-slider-horizontal",
+          "tagName": "tap-icon-spark",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconSliderHorizontal",
+          "name": "TapIconSpark",
           "declaration": {
-            "name": "TapIconSliderHorizontal",
-            "module": "src/icons/slider-horizontal/index.ts"
+            "name": "TapIconSpark",
+            "module": "src/icons/spark/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-slider-horizontal",
+          "name": "tap-icon-spark",
           "declaration": {
-            "name": "TapIconSliderHorizontal",
-            "module": "src/icons/slider-horizontal/index.ts"
+            "name": "TapIconSpark",
+            "module": "src/icons/spark/index.ts"
           }
         }
       ]
@@ -13396,35 +13645,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/spark/index.ts",
+      "path": "src/icons/spark-small-fill/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconSpark",
+          "name": "TapIconSparkSmallFill",
           "superclass": {
-            "name": "SparkIcon",
-            "module": "/src/icons/spark/spark"
+            "name": "SparkSmallFillIcon",
+            "module": "/src/icons/spark-small-fill/spark-small-fill"
           },
-          "tagName": "tap-icon-spark",
+          "tagName": "tap-icon-spark-small-fill",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconSpark",
+          "name": "TapIconSparkSmallFill",
           "declaration": {
-            "name": "TapIconSpark",
-            "module": "src/icons/spark/index.ts"
+            "name": "TapIconSparkSmallFill",
+            "module": "src/icons/spark-small-fill/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-spark",
+          "name": "tap-icon-spark-small-fill",
           "declaration": {
-            "name": "TapIconSpark",
-            "module": "src/icons/spark/index.ts"
+            "name": "TapIconSparkSmallFill",
+            "module": "src/icons/spark-small-fill/index.ts"
           }
         }
       ]
@@ -13460,41 +13709,6 @@
           "declaration": {
             "name": "TapIconSparkThree",
             "module": "src/icons/spark-three/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/spark-small-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconSparkSmallFill",
-          "superclass": {
-            "name": "SparkSmallFillIcon",
-            "module": "/src/icons/spark-small-fill/spark-small-fill"
-          },
-          "tagName": "tap-icon-spark-small-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconSparkSmallFill",
-          "declaration": {
-            "name": "TapIconSparkSmallFill",
-            "module": "src/icons/spark-small-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-spark-small-fill",
-          "declaration": {
-            "name": "TapIconSparkSmallFill",
-            "module": "src/icons/spark-small-fill/index.ts"
           }
         }
       ]
@@ -13816,41 +14030,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/square-fill-3/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconSquareFill3",
-          "superclass": {
-            "name": "SquareFill3Icon",
-            "module": "/src/icons/square-fill-3/square-fill-3"
-          },
-          "tagName": "tap-icon-square-fill-3",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconSquareFill3",
-          "declaration": {
-            "name": "TapIconSquareFill3",
-            "module": "src/icons/square-fill-3/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-square-fill-3",
-          "declaration": {
-            "name": "TapIconSquareFill3",
-            "module": "src/icons/square-fill-3/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/square-fill-4/index.ts",
       "declarations": [
         {
@@ -13880,6 +14059,41 @@
           "declaration": {
             "name": "TapIconSquareFill4",
             "module": "src/icons/square-fill-4/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/square-fill-3/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconSquareFill3",
+          "superclass": {
+            "name": "SquareFill3Icon",
+            "module": "/src/icons/square-fill-3/square-fill-3"
+          },
+          "tagName": "tap-icon-square-fill-3",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconSquareFill3",
+          "declaration": {
+            "name": "TapIconSquareFill3",
+            "module": "src/icons/square-fill-3/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-square-fill-3",
+          "declaration": {
+            "name": "TapIconSquareFill3",
+            "module": "src/icons/square-fill-3/index.ts"
           }
         }
       ]
@@ -14026,41 +14240,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/square-grid/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconSquareGrid",
-          "superclass": {
-            "name": "SquareGridIcon",
-            "module": "/src/icons/square-grid/square-grid"
-          },
-          "tagName": "tap-icon-square-grid",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconSquareGrid",
-          "declaration": {
-            "name": "TapIconSquareGrid",
-            "module": "src/icons/square-grid/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-square-grid",
-          "declaration": {
-            "name": "TapIconSquareGrid",
-            "module": "src/icons/square-grid/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/square-fill-9/index.ts",
       "declarations": [
         {
@@ -14090,6 +14269,41 @@
           "declaration": {
             "name": "TapIconSquareFill9",
             "module": "src/icons/square-fill-9/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/square-four/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconSquareFour",
+          "superclass": {
+            "name": "SquareFourIcon",
+            "module": "/src/icons/square-four/square-four"
+          },
+          "tagName": "tap-icon-square-four",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconSquareFour",
+          "declaration": {
+            "name": "TapIconSquareFour",
+            "module": "src/icons/square-four/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-square-four",
+          "declaration": {
+            "name": "TapIconSquareFour",
+            "module": "src/icons/square-four/index.ts"
           }
         }
       ]
@@ -14131,35 +14345,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/square-four/index.ts",
+      "path": "src/icons/square-grid/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconSquareFour",
+          "name": "TapIconSquareGrid",
           "superclass": {
-            "name": "SquareFourIcon",
-            "module": "/src/icons/square-four/square-four"
+            "name": "SquareGridIcon",
+            "module": "/src/icons/square-grid/square-grid"
           },
-          "tagName": "tap-icon-square-four",
+          "tagName": "tap-icon-square-grid",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconSquareFour",
+          "name": "TapIconSquareGrid",
           "declaration": {
-            "name": "TapIconSquareFour",
-            "module": "src/icons/square-four/index.ts"
+            "name": "TapIconSquareGrid",
+            "module": "src/icons/square-grid/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-square-four",
+          "name": "tap-icon-square-grid",
           "declaration": {
-            "name": "TapIconSquareFour",
-            "module": "src/icons/square-four/index.ts"
+            "name": "TapIconSquareGrid",
+            "module": "src/icons/square-grid/index.ts"
           }
         }
       ]
@@ -14446,41 +14660,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/square-outline-5/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconSquareOutline5",
-          "superclass": {
-            "name": "SquareOutline5Icon",
-            "module": "/src/icons/square-outline-5/square-outline-5"
-          },
-          "tagName": "tap-icon-square-outline-5",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconSquareOutline5",
-          "declaration": {
-            "name": "TapIconSquareOutline5",
-            "module": "src/icons/square-outline-5/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-square-outline-5",
-          "declaration": {
-            "name": "TapIconSquareOutline5",
-            "module": "src/icons/square-outline-5/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/square-outline-4/index.ts",
       "declarations": [
         {
@@ -14510,6 +14689,41 @@
           "declaration": {
             "name": "TapIconSquareOutline4",
             "module": "src/icons/square-outline-4/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/square-outline-5/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconSquareOutline5",
+          "superclass": {
+            "name": "SquareOutline5Icon",
+            "module": "/src/icons/square-outline-5/square-outline-5"
+          },
+          "tagName": "tap-icon-square-outline-5",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconSquareOutline5",
+          "declaration": {
+            "name": "TapIconSquareOutline5",
+            "module": "src/icons/square-outline-5/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-square-outline-5",
+          "declaration": {
+            "name": "TapIconSquareOutline5",
+            "module": "src/icons/square-outline-5/index.ts"
           }
         }
       ]
@@ -14586,41 +14800,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/square-outline-9/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconSquareOutline9",
-          "superclass": {
-            "name": "SquareOutline9Icon",
-            "module": "/src/icons/square-outline-9/square-outline-9"
-          },
-          "tagName": "tap-icon-square-outline-9",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconSquareOutline9",
-          "declaration": {
-            "name": "TapIconSquareOutline9",
-            "module": "src/icons/square-outline-9/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-square-outline-9",
-          "declaration": {
-            "name": "TapIconSquareOutline9",
-            "module": "src/icons/square-outline-9/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/square-outline-8/index.ts",
       "declarations": [
         {
@@ -14685,6 +14864,76 @@
           "declaration": {
             "name": "TapIconSquarePerson",
             "module": "src/icons/square-person/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/square-outline-9/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconSquareOutline9",
+          "superclass": {
+            "name": "SquareOutline9Icon",
+            "module": "/src/icons/square-outline-9/square-outline-9"
+          },
+          "tagName": "tap-icon-square-outline-9",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconSquareOutline9",
+          "declaration": {
+            "name": "TapIconSquareOutline9",
+            "module": "src/icons/square-outline-9/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-square-outline-9",
+          "declaration": {
+            "name": "TapIconSquareOutline9",
+            "module": "src/icons/square-outline-9/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/star/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconStar",
+          "superclass": {
+            "name": "StarIcon",
+            "module": "/src/icons/star/star"
+          },
+          "tagName": "tap-icon-star",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconStar",
+          "declaration": {
+            "name": "TapIconStar",
+            "module": "src/icons/star/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-star",
+          "declaration": {
+            "name": "TapIconStar",
+            "module": "src/icons/star/index.ts"
           }
         }
       ]
@@ -14761,41 +15010,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/star/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconStar",
-          "superclass": {
-            "name": "StarIcon",
-            "module": "/src/icons/star/star"
-          },
-          "tagName": "tap-icon-star",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconStar",
-          "declaration": {
-            "name": "TapIconStar",
-            "module": "src/icons/star/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-star",
-          "declaration": {
-            "name": "TapIconStar",
-            "module": "src/icons/star/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/steer/index.ts",
       "declarations": [
         {
@@ -14866,41 +15080,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/sticky-note-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconStickyNoteFill",
-          "superclass": {
-            "name": "StickyNoteFillIcon",
-            "module": "/src/icons/sticky-note-fill/sticky-note-fill"
-          },
-          "tagName": "tap-icon-sticky-note-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconStickyNoteFill",
-          "declaration": {
-            "name": "TapIconStickyNoteFill",
-            "module": "src/icons/sticky-note-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-sticky-note-fill",
-          "declaration": {
-            "name": "TapIconStickyNoteFill",
-            "module": "src/icons/sticky-note-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/sticky-note/index.ts",
       "declarations": [
         {
@@ -14936,35 +15115,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/store-fill/index.ts",
+      "path": "src/icons/sticky-note-fill/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconStoreFill",
+          "name": "TapIconStickyNoteFill",
           "superclass": {
-            "name": "StoreFillIcon",
-            "module": "/src/icons/store-fill/store-fill"
+            "name": "StickyNoteFillIcon",
+            "module": "/src/icons/sticky-note-fill/sticky-note-fill"
           },
-          "tagName": "tap-icon-store-fill",
+          "tagName": "tap-icon-sticky-note-fill",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconStoreFill",
+          "name": "TapIconStickyNoteFill",
           "declaration": {
-            "name": "TapIconStoreFill",
-            "module": "src/icons/store-fill/index.ts"
+            "name": "TapIconStickyNoteFill",
+            "module": "src/icons/sticky-note-fill/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-store-fill",
+          "name": "tap-icon-sticky-note-fill",
           "declaration": {
-            "name": "TapIconStoreFill",
-            "module": "src/icons/store-fill/index.ts"
+            "name": "TapIconStickyNoteFill",
+            "module": "src/icons/sticky-note-fill/index.ts"
           }
         }
       ]
@@ -15000,6 +15179,41 @@
           "declaration": {
             "name": "TapIconStore",
             "module": "src/icons/store/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/store-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconStoreFill",
+          "superclass": {
+            "name": "StoreFillIcon",
+            "module": "/src/icons/store-fill/store-fill"
+          },
+          "tagName": "tap-icon-store-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconStoreFill",
+          "declaration": {
+            "name": "TapIconStoreFill",
+            "module": "src/icons/store-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-store-fill",
+          "declaration": {
+            "name": "TapIconStoreFill",
+            "module": "src/icons/store-fill/index.ts"
           }
         }
       ]
@@ -15111,35 +15325,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/target/index.ts",
+      "path": "src/icons/target-fill/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconTarget",
+          "name": "TapIconTargetFill",
           "superclass": {
-            "name": "TargetIcon",
-            "module": "/src/icons/target/target"
+            "name": "TargetFillIcon",
+            "module": "/src/icons/target-fill/target-fill"
           },
-          "tagName": "tap-icon-target",
+          "tagName": "tap-icon-target-fill",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconTarget",
+          "name": "TapIconTargetFill",
           "declaration": {
-            "name": "TapIconTarget",
-            "module": "src/icons/target/index.ts"
+            "name": "TapIconTargetFill",
+            "module": "src/icons/target-fill/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-target",
+          "name": "tap-icon-target-fill",
           "declaration": {
-            "name": "TapIconTarget",
-            "module": "src/icons/target/index.ts"
+            "name": "TapIconTargetFill",
+            "module": "src/icons/target-fill/index.ts"
           }
         }
       ]
@@ -15181,35 +15395,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/target-fill/index.ts",
+      "path": "src/icons/target/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconTargetFill",
+          "name": "TapIconTarget",
           "superclass": {
-            "name": "TargetFillIcon",
-            "module": "/src/icons/target-fill/target-fill"
+            "name": "TargetIcon",
+            "module": "/src/icons/target/target"
           },
-          "tagName": "tap-icon-target-fill",
+          "tagName": "tap-icon-target",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconTargetFill",
+          "name": "TapIconTarget",
           "declaration": {
-            "name": "TapIconTargetFill",
-            "module": "src/icons/target-fill/index.ts"
+            "name": "TapIconTarget",
+            "module": "src/icons/target/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-target-fill",
+          "name": "tap-icon-target",
           "declaration": {
-            "name": "TapIconTargetFill",
-            "module": "src/icons/target-fill/index.ts"
+            "name": "TapIconTarget",
+            "module": "src/icons/target/index.ts"
           }
         }
       ]
@@ -15251,41 +15465,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/thumb-down-fill/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconThumbDownFill",
-          "superclass": {
-            "name": "ThumbDownFillIcon",
-            "module": "/src/icons/thumb-down-fill/thumb-down-fill"
-          },
-          "tagName": "tap-icon-thumb-down-fill",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconThumbDownFill",
-          "declaration": {
-            "name": "TapIconThumbDownFill",
-            "module": "src/icons/thumb-down-fill/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-thumb-down-fill",
-          "declaration": {
-            "name": "TapIconThumbDownFill",
-            "module": "src/icons/thumb-down-fill/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/telephone-fill/index.ts",
       "declarations": [
         {
@@ -15321,41 +15500,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/thumb-down/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconThumbDown",
-          "superclass": {
-            "name": "ThumbDownIcon",
-            "module": "/src/icons/thumb-down/thumb-down"
-          },
-          "tagName": "tap-icon-thumb-down",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconThumbDown",
-          "declaration": {
-            "name": "TapIconThumbDown",
-            "module": "src/icons/thumb-down/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-thumb-down",
-          "declaration": {
-            "name": "TapIconThumbDown",
-            "module": "src/icons/thumb-down/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/thumb-up/index.ts",
       "declarations": [
         {
@@ -15385,6 +15529,76 @@
           "declaration": {
             "name": "TapIconThumbUp",
             "module": "src/icons/thumb-up/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/thumb-down-fill/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconThumbDownFill",
+          "superclass": {
+            "name": "ThumbDownFillIcon",
+            "module": "/src/icons/thumb-down-fill/thumb-down-fill"
+          },
+          "tagName": "tap-icon-thumb-down-fill",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconThumbDownFill",
+          "declaration": {
+            "name": "TapIconThumbDownFill",
+            "module": "src/icons/thumb-down-fill/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-thumb-down-fill",
+          "declaration": {
+            "name": "TapIconThumbDownFill",
+            "module": "src/icons/thumb-down-fill/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/thumb-down/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconThumbDown",
+          "superclass": {
+            "name": "ThumbDownIcon",
+            "module": "/src/icons/thumb-down/thumb-down"
+          },
+          "tagName": "tap-icon-thumb-down",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconThumbDown",
+          "declaration": {
+            "name": "TapIconThumbDown",
+            "module": "src/icons/thumb-down/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-thumb-down",
+          "declaration": {
+            "name": "TapIconThumbDown",
+            "module": "src/icons/thumb-down/index.ts"
           }
         }
       ]
@@ -15531,70 +15745,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/trash/index.ts",
+      "path": "src/icons/traffic-light-fill/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconTrash",
+          "name": "TapIconTrafficLightFill",
           "superclass": {
-            "name": "TrashIcon",
-            "module": "/src/icons/trash/trash"
+            "name": "TrafficLightFillIcon",
+            "module": "/src/icons/traffic-light-fill/traffic-light-fill"
           },
-          "tagName": "tap-icon-trash",
+          "tagName": "tap-icon-traffic-light-fill",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconTrash",
+          "name": "TapIconTrafficLightFill",
           "declaration": {
-            "name": "TapIconTrash",
-            "module": "src/icons/trash/index.ts"
+            "name": "TapIconTrafficLightFill",
+            "module": "src/icons/traffic-light-fill/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-trash",
+          "name": "tap-icon-traffic-light-fill",
           "declaration": {
-            "name": "TapIconTrash",
-            "module": "src/icons/trash/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/icons/triangle-exclamation/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconTriangleExclamation",
-          "superclass": {
-            "name": "TriangleExclamationIcon",
-            "module": "/src/icons/triangle-exclamation/triangle-exclamation"
-          },
-          "tagName": "tap-icon-triangle-exclamation",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconTriangleExclamation",
-          "declaration": {
-            "name": "TapIconTriangleExclamation",
-            "module": "src/icons/triangle-exclamation/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-triangle-exclamation",
-          "declaration": {
-            "name": "TapIconTriangleExclamation",
-            "module": "src/icons/triangle-exclamation/index.ts"
+            "name": "TapIconTrafficLightFill",
+            "module": "src/icons/traffic-light-fill/index.ts"
           }
         }
       ]
@@ -15636,6 +15815,41 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/icons/trash/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconTrash",
+          "superclass": {
+            "name": "TrashIcon",
+            "module": "/src/icons/trash/trash"
+          },
+          "tagName": "tap-icon-trash",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconTrash",
+          "declaration": {
+            "name": "TapIconTrash",
+            "module": "src/icons/trash/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-trash",
+          "declaration": {
+            "name": "TapIconTrash",
+            "module": "src/icons/trash/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/icons/triangle-exclamation-fill/index.ts",
       "declarations": [
         {
@@ -15671,35 +15885,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/traffic-light-fill/index.ts",
+      "path": "src/icons/triangle-exclamation/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconTrafficLightFill",
+          "name": "TapIconTriangleExclamation",
           "superclass": {
-            "name": "TrafficLightFillIcon",
-            "module": "/src/icons/traffic-light-fill/traffic-light-fill"
+            "name": "TriangleExclamationIcon",
+            "module": "/src/icons/triangle-exclamation/triangle-exclamation"
           },
-          "tagName": "tap-icon-traffic-light-fill",
+          "tagName": "tap-icon-triangle-exclamation",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconTrafficLightFill",
+          "name": "TapIconTriangleExclamation",
           "declaration": {
-            "name": "TapIconTrafficLightFill",
-            "module": "src/icons/traffic-light-fill/index.ts"
+            "name": "TapIconTriangleExclamation",
+            "module": "src/icons/triangle-exclamation/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-traffic-light-fill",
+          "name": "tap-icon-triangle-exclamation",
           "declaration": {
-            "name": "TapIconTrafficLightFill",
-            "module": "src/icons/traffic-light-fill/index.ts"
+            "name": "TapIconTriangleExclamation",
+            "module": "src/icons/triangle-exclamation/index.ts"
           }
         }
       ]
@@ -15776,41 +15990,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/video-two/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconVideoTwo",
-          "superclass": {
-            "name": "VideoTwoIcon",
-            "module": "/src/icons/video-two/video-two"
-          },
-          "tagName": "tap-icon-video-two",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconVideoTwo",
-          "declaration": {
-            "name": "TapIconVideoTwo",
-            "module": "src/icons/video-two/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-video-two",
-          "declaration": {
-            "name": "TapIconVideoTwo",
-            "module": "src/icons/video-two/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/video-two-fill/index.ts",
       "declarations": [
         {
@@ -15846,35 +16025,35 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/wallet/index.ts",
+      "path": "src/icons/video-two/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapIconWallet",
+          "name": "TapIconVideoTwo",
           "superclass": {
-            "name": "WalletIcon",
-            "module": "/src/icons/wallet/wallet"
+            "name": "VideoTwoIcon",
+            "module": "/src/icons/video-two/video-two"
           },
-          "tagName": "tap-icon-wallet",
+          "tagName": "tap-icon-video-two",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapIconWallet",
+          "name": "TapIconVideoTwo",
           "declaration": {
-            "name": "TapIconWallet",
-            "module": "src/icons/wallet/index.ts"
+            "name": "TapIconVideoTwo",
+            "module": "src/icons/video-two/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-icon-wallet",
+          "name": "tap-icon-video-two",
           "declaration": {
-            "name": "TapIconWallet",
-            "module": "src/icons/wallet/index.ts"
+            "name": "TapIconVideoTwo",
+            "module": "src/icons/video-two/index.ts"
           }
         }
       ]
@@ -15916,41 +16095,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/icons/wallet-swap/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapIconWalletSwap",
-          "superclass": {
-            "name": "WalletSwapIcon",
-            "module": "/src/icons/wallet-swap/wallet-swap"
-          },
-          "tagName": "tap-icon-wallet-swap",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapIconWalletSwap",
-          "declaration": {
-            "name": "TapIconWalletSwap",
-            "module": "src/icons/wallet-swap/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-icon-wallet-swap",
-          "declaration": {
-            "name": "TapIconWalletSwap",
-            "module": "src/icons/wallet-swap/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/icons/wifi/index.ts",
       "declarations": [
         {
@@ -15980,6 +16124,76 @@
           "declaration": {
             "name": "TapIconWifi",
             "module": "src/icons/wifi/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/wallet/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconWallet",
+          "superclass": {
+            "name": "WalletIcon",
+            "module": "/src/icons/wallet/wallet"
+          },
+          "tagName": "tap-icon-wallet",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconWallet",
+          "declaration": {
+            "name": "TapIconWallet",
+            "module": "src/icons/wallet/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-wallet",
+          "declaration": {
+            "name": "TapIconWallet",
+            "module": "src/icons/wallet/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/icons/wallet-swap/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapIconWalletSwap",
+          "superclass": {
+            "name": "WalletSwapIcon",
+            "module": "/src/icons/wallet-swap/wallet-swap"
+          },
+          "tagName": "tap-icon-wallet-swap",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapIconWalletSwap",
+          "declaration": {
+            "name": "TapIconWalletSwap",
+            "module": "src/icons/wallet-swap/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-icon-wallet-swap",
+          "declaration": {
+            "name": "TapIconWalletSwap",
+            "module": "src/icons/wallet-swap/index.ts"
           }
         }
       ]
