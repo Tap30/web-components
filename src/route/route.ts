@@ -9,17 +9,25 @@ export class Route extends TapRow {
 
   @property({type: Boolean, reflect: true}) editable: boolean = false;
 
+  private renderOrdinal() {
+    return html`
+      <span class="ordinal" slot="leading">
+        ${this.renderLeadingIcon()}
+      </span>
+    `;
+  }
+
   private renderLeadingIcon() {
     switch (this.leadingIcon) {
       case 'circle':
         return html`
-          <tap-icon-dot-fill slot="leading"></tap-icon-dot-fill>`;
+          <tap-icon-dot-fill></tap-icon-dot-fill>`;
       case 'square':
         return html`
-          <tap-icon-square-fill slot="leading"></tap-icon-square-fill>`;
+          <tap-icon-square-fill></tap-icon-square-fill>`;
       case 'plus':
         return html`
-          <tap-icon-plus-fill slot="leading"></tap-icon-plus-fill>`;
+          <tap-icon-plus-fill></tap-icon-plus-fill>`;
     }
   }
 
@@ -30,7 +38,7 @@ export class Route extends TapRow {
   protected render(): unknown {
     return html`
       <tap-row size=${this.size}>
-        ${this.renderLeadingIcon()}
+        ${this.renderOrdinal()}
         ${this.renderAction()}
         <slot name="content" slot="content"></slot>
       </tap-row>
