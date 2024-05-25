@@ -123,7 +123,8 @@ export class Alert extends LitElement {
   @property({ type: String, attribute: 'alert-title' })
   alertTitle? = '';
 
-  @property() variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse' = 'inverse';
+  @property() variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse' =
+    'inverse';
   @property() priority?: 'high' | 'low' = 'high';
 
   render() {
@@ -143,6 +144,7 @@ export class Alert extends LitElement {
           <span id="message" part="message" class="message">
             <slot></slot>
           </span>
+          <slot name="actions" part="actions"></slot>
         </p>
       </div>
     `;

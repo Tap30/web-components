@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+import { html, TemplateResult, nothing } from 'lit';
 import './index.js';
 import '../button';
 
@@ -13,13 +13,16 @@ const alertVariants: string[] = [
 const alertPriorities: string[] = ['high', 'low'];
 // TODO: fix
 
+type Actions = 'nothing' | 'button' | 'any';
+type Variants = 'success' | 'error' | 'info' | 'warning' | 'inverse';
+
 export default {
   title: 'Alert',
   component: 'tap-alert',
   argTypes: {
     alertContent: {
       control: 'text',
-      description: 'Alert Content',
+      description: 'Alert content',
     },
     variant: {
       options: alertVariants,
@@ -35,8 +38,15 @@ export default {
     },
     alertTitle: {
       control: 'text',
-      description: 'Alert Title',
+      description: 'Alert title',
       defaultValue: '',
+    },
+    actions: {
+      description:
+        'Actions section of the Alert: These actions are passed to the Alert component as an slot named `actions`',
+      control: { type: 'select' },
+      options: ['button', 'any', 'nothing'],
+      defaultValue: 'nothing',
     },
   },
 };
@@ -49,16 +59,30 @@ interface Story<T> {
 
 interface ArgTypes {
   alertContent: string;
-  variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse';
+  variant?: Variants;
   priority?: 'high' | 'low';
   alertTitle?: string;
+  actions?: Actions;
 }
+
+const renderActionsSection = (actions?: Actions) => {
+  if (actions === 'button')
+    return html`<div slot="actions" style="margin-top: 8px">
+      <tap-button varinat="ghost">button</tap-button>
+    </div>`;
+  if (actions === 'any')
+    return html`<p slot="actions" style="margin-top: 8px">
+      your actions slot goes here, and you are responsible of styling it
+    </p>`;
+  return nothing;
+};
 
 const Template: Story<ArgTypes> = ({
   variant,
   alertContent,
   priority,
   alertTitle,
+  actions,
 }) => {
   return html`
     <tap-alert
@@ -67,7 +91,7 @@ const Template: Story<ArgTypes> = ({
       priority=${priority}
       alert-title=${alertTitle}
     >
-      ${alertContent}
+      ${alertContent} ${renderActionsSection(actions)}
     </tap-alert>
   `;
 };
@@ -95,6 +119,7 @@ Simple.args = {
   alertTitle: 'Title',
   variant: 'info',
   priority: 'low',
+  actions: 'nothing',
 };
 
 export const Variants = VariantTemplate.bind({});
