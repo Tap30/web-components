@@ -3,12 +3,12 @@ import { Alert } from './alert';
 import styles from './alert.style';
 
 @customElement('tap-alert')
-export class TapToast extends Alert {
+export class TapAlert extends Alert {
   static readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-alert': TapToast;
+    'tap-alert': TapAlert;
   }
 }

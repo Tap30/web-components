@@ -1,28 +1,42 @@
-import {html, TemplateResult} from "lit";
-import "./index.js";
-import "../button";
+import { html, TemplateResult } from 'lit';
+import './index.js';
+import '../button';
 
-const alertVariants: string[] = ["success", "error", "info", "inverse", "warning"]
+const alertVariants: string[] = [
+  'success',
+  'error',
+  'info',
+  'warning',
+  'inverse',
+];
+
+const alertPriorities: string[] = ['high', 'low'];
 // TODO: fix
 
 export default {
-  title: "Toast",
-  component: "tap-alert",
+  title: 'Alert',
+  component: 'tap-alert',
   argTypes: {
     alertContent: {
-      control: "text",
-      description: "Toast Content",
+      control: 'text',
+      description: 'Alert Content',
     },
     variant: {
       options: alertVariants,
-      control: { type: "inline-radio" },
-      description: "The alert variant",
-      defaultValue: `"inverse"`,
+      control: { type: 'inline-radio' },
+      description: 'The alert variant',
+      defaultValue: `inverse`,
     },
-    showDismissButton: {
-      description: "Should the Dismiss button be visible?",
-      control: { type: "boolean" },
-      defaultValue: false,
+    priority: {
+      options: alertPriorities,
+      control: { type: 'inline-radio' },
+      description: 'The alert priority',
+      defaultValue: `low`,
+    },
+    alertTitle: {
+      control: 'text',
+      description: 'Alert Title',
+      defaultValue: '',
     },
   },
 };
@@ -33,59 +47,57 @@ interface Story<T> {
   argTypes?: Record<string, unknown>;
 }
 
-const defaultProps = {
-  alertContent: "alert text goes here!",
-  showDismissButton: false,
-};
-
 interface ArgTypes {
-  alertContent: string,
-  variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse',
-  showDismissButton?: boolean,
+  alertContent: string;
+  variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse';
+  priority?: 'high' | 'low';
+  alertTitle?: string;
 }
 
 const Template: Story<ArgTypes> = ({
   variant,
   alertContent,
-  showDismissButton,
+  priority,
+  alertTitle,
 }) => {
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const alertElement = document.getElementById('alert-story');
-    alertElement?.addEventListener('dismiss', () => {
-      alertElement.remove();
-    });
-  });
-
   return html`
     <tap-alert
       id="alert-story"
       variant=${variant}
-      ?show-dismiss-button=${showDismissButton}
+      priority=${priority}
+      alert-title=${alertTitle}
     >
       ${alertContent}
     </tap-alert>
   `;
 };
 
-const VariantTemplate: Story<{}> = () => {
+const VariantTemplate: Story<{ priority?: 'low' | 'high' }> = ({
+  priority,
+}) => {
   return html`
-    ${alertVariants.map((variant) => html`
-      <tap-alert variant=${variant}>${variant}</tap-alert>
-    `)}
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      ${alertVariants.map(
+        (variant) => html`
+          <tap-alert variant=${variant} priority=${priority} alert-title="title"
+            >unchangeable ${variant}${priority ? `-${priority}` : ''}</tap-alert
+          >
+        `,
+      )}
+    </div>
   `;
 };
 
 export const Simple = Template.bind({});
 Simple.args = {
-  alertContent: "a simple alert",
+  alertContent:
+    'Please notice this text here. It is important and the user should pay attention. Default variant of the Alert component is `inverse` and its default priority is `high`. What you see is a customized `info-low` Alert/Notice. Good luck using this component!',
+  alertTitle: 'Title',
+  variant: 'info',
+  priority: 'low',
 };
 
 export const Variants = VariantTemplate.bind({});
-Variants.args = {};
-
-export const DismissButton = Template.bind({});
-DismissButton.args = {
-  alertContent: "A alert with dismiss button",
-  showDismissButton: true,
+Variants.args = {
+  priority: 'high',
 };
