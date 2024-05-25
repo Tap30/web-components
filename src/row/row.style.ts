@@ -22,6 +22,7 @@ export default css`
     transition: background-color 0.3s;
     font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
     background-color: var(--tap-row-background-color, var(--tap-palette-white));
+    position: relative;
   }
 
   .leading {
@@ -72,4 +73,14 @@ export default css`
   :host([navigable]) .container {
     cursor: pointer;
   }
+
+  .overlay {
+    background-color: #FFF;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 40%;
+  }
+
+  :host([act])
 `;
