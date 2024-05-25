@@ -9,14 +9,6 @@ export class Route extends TapRow {
 
   @property({type: Boolean, reflect: true}) editable: boolean = false;
 
-  private renderOrdinal() {
-    return html`
-      <span class="ordinal" slot="leading">
-        ${this.renderLeadingIcon()}
-      </span>
-    `;
-  }
-
   private renderLeadingIcon() {
     switch (this.leadingIcon) {
       case 'circle':
@@ -38,7 +30,10 @@ export class Route extends TapRow {
   protected render(): unknown {
     return html`
       <tap-row size=${this.size}>
-        ${this.renderOrdinal()}
+        <div class="ordinal" slot="leading">
+          ${this.renderLeadingIcon()}
+        </div>
+        ${this.renderLeadingIcon()}
         ${this.renderAction()}
         <slot name="content" slot="content"></slot>
       </tap-row>

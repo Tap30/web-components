@@ -5,45 +5,39 @@ export default css`
     box-sizing: border-box;
   }
 
-  :host([ordinal="first"]) .ordinal {
+  .ordinal {
     :after {
       content: "";
-      border: 1px solid var(--tap-palette-gray-200);
+      width: 2px;
+      height: 120%;
+      background-color: transparent;
       display: flex;
       align-items: center;
       justify-content: center;
-      transform: rotate(90deg);
+      transform: translate(11px, -5px);
+    }
+
+    :before {
+      content: "";
+      width: 2px;
+      height: 120%;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(11px);
     }
   }
 
-  :host([ordinal="middle"]) .ordinal {
-    :before {
-      content: "";
-      border: 1px solid var(--tap-palette-gray-200);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform: rotate(90deg);
-    }
-
+  :host([ordinal="first"]) .ordinal, :host([ordinal="middle"]) .ordinal {
     :after {
-      content: "";
-      border: 1px solid var(--tap-palette-gray-200);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform: rotate(90deg);
+      background-color: var(--tap-palette-gray-200);
     }
   }
 
-  :host([ordinal="last"]) .ordinal {
+  :host([ordinal="last"]) .ordinal, :host([ordinal="middle"]) .ordinal {
     :before {
-      content: "";
-      border: 1px solid var(--tap-palette-gray-200);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform: rotate(90deg);
+      background-color: var(--tap-palette-gray-200);
     }
   }
 `;
