@@ -1,4 +1,4 @@
-import {html, LitElement, PropertyValues} from "lit";
+import {html} from "lit";
 import {property} from "lit/decorators.js";
 import {TapRow} from "../row";
 
@@ -29,7 +29,7 @@ export class Route extends TapRow {
 
   protected render(): unknown {
     return html`
-      <tap-row size=${this.size}>
+      <tap-row size=${this.size} ?disabled=${this.disabled}>
         <div class="ordinal" slot="leading">
           ${this.renderLeadingIcon()}
         </div>
