@@ -6,7 +6,7 @@ export class Row extends LitElement {
 
   @property({type: Boolean, reflect: true}) navigable: boolean = false;
 
-  @property({type: Boolean, reflect: true}) active: boolean = true;
+  @property({type: Boolean, reflect: true}) disabled: boolean = false;
 
   private hasSlotContent(slotName: string): boolean {
     const slot = this.shadowRoot?.querySelector(`slot[name="${slotName}"]`) as HTMLSlotElement;
@@ -65,7 +65,7 @@ export class Row extends LitElement {
   }
 
   private renderOverlay() {
-    return !this.active
+    return this.disabled
       ? html`
         <div class="overlay"/>
       `
