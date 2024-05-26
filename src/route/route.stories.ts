@@ -34,6 +34,11 @@ export default {
       control: {type: "boolean"},
       defaultValue: false,
     },
+    disabled: {
+      description: "Disable Row",
+      control: {type: "boolean"},
+      defaultValue: false,
+    },
     content: {
       description: "Route content slot.",
       control: {type: "select"},
@@ -55,6 +60,7 @@ interface ArgTypes {
   leadingIcon: 'circle' | 'square' | 'plus';
   ordinal: 'first' | 'middle' | 'last';
   editable: boolean;
+  disabled: boolean;
   content: unknown;
 }
 
@@ -81,12 +87,13 @@ const renderExampleContentSlot = (example: unknown) => {
   }
 }
 
-const Template: Story<ArgTypes> = ({size, leadingIcon, ordinal, editable, content}: ArgTypes) => html`
+const Template: Story<ArgTypes> = ({size, leadingIcon, ordinal, editable, disabled, content}: ArgTypes) => html`
   <tap-route
     size=${size}
     leading-icon=${leadingIcon}
     ordinal=${ordinal}
     ?editable=${editable}
+    ?disabled=${disabled}
   >
     ${renderExampleContentSlot(content)}
   </tap-route>
@@ -99,5 +106,6 @@ Route.args = {
   leadingIcon: 'circle',
   ordinal: 'first',
   editable: false,
+  disabled: false,
   content: 'standard',
 };

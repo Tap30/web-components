@@ -22,6 +22,11 @@ export default {
       control: {type: "boolean"},
       defaultValue: false,
     },
+    disabled: {
+      description: "Disable Row",
+      control: {type: "boolean"},
+      defaultValue: false,
+    },
     leading: {
       description: "Row leading slot",
       control: {type: "select"},
@@ -56,6 +61,7 @@ interface ArgTypes {
   trailing: unknown;
   content: unknown;
   navigable: boolean;
+  disabled: boolean;
 }
 
 const renderExampleSideSlot = (example: unknown, type: 'leading' | 'trailing') => {
@@ -109,8 +115,8 @@ const renderExampleContentSlot = (example: unknown) => {
   }
 }
 
-const Template: Story<ArgTypes> = ({size, leading, trailing, navigable, content}: ArgTypes) => html`
-  <tap-row ?navigable=${navigable} size=${size}>
+const Template: Story<ArgTypes> = ({size, leading, trailing, navigable, disabled, content}: ArgTypes) => html`
+  <tap-row ?navigable=${navigable} ?disabled=${disabled} size=${size}>
     ${renderExampleSideSlot(leading, 'leading')}
     ${renderExampleContentSlot(content)}
     ${renderExampleSideSlot(trailing, 'trailing')}
@@ -124,5 +130,6 @@ Row.args = {
   leading: 'icon',
   trailing: 'ghost-button',
   navigable: false,
+  disabled: false,
   content: 'standard',
 };
