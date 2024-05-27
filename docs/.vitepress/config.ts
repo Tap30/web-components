@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { defineConfig } from 'vitepress';
 import type { Package } from 'custom-elements-manifest';
 
-const file = fs.readFileSync('custom-elements.json');
+const file = fs.readFileSync('dist/custom-elements.json');
 const manifest = JSON.parse(file.toString()) as Package;
 
 const components = manifest.modules
