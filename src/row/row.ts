@@ -1,4 +1,4 @@
-import {html, LitElement, PropertyValues} from "lit";
+import {html, LitElement, nothing, PropertyValues} from "lit";
 import {property} from "lit/decorators.js";
 
 export class Row extends LitElement {
@@ -69,7 +69,7 @@ export class Row extends LitElement {
       ? html`
         <div class="overlay"/>
       `
-      : '';
+      : nothing;
   }
 
   protected render(): unknown {
