@@ -1,11 +1,6 @@
 import { html, TemplateResult } from 'lit';
 import './index.ts';
-import {
-  SkeletonAnimation,
-  SkeletonHeight,
-  SkeletonVariant,
-  SkeletonWidth,
-} from './types';
+import { SkeletonAnimation, SkeletonVariant } from './types';
 
 const SkeletonVariants = ['line', 'rect', 'circle'];
 const SkeletonAnimationMode = ['progress', 'none', 'pulse'];
@@ -44,8 +39,8 @@ interface Story<T> {
 interface ArgTypes {
   variant: SkeletonVariant;
   animationMode: SkeletonAnimation;
-  height: SkeletonHeight;
-  width: SkeletonWidth;
+  height: string;
+  width: string;
 }
 
 const Template: Story<ArgTypes> = ({
@@ -57,8 +52,8 @@ const Template: Story<ArgTypes> = ({
   html`<tap-skeleton
     variant=${variant}
     animationMode=${animationMode}
-    ?width=${width}
-    ?height=${height}
+    width=${width}
+    height=${height}
   ></tap-skeleton> `;
 
 export const Skeleton = Template.bind({});
