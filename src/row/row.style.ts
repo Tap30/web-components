@@ -81,6 +81,4 @@ export default css`
     position: absolute;
     opacity: 40%;
   }
-
-  :host([act])
 `;
