@@ -3,7 +3,7 @@ import type { Package, CustomElement, PropertyLike } from 'custom-elements-manif
 
 export default {
   paths() {
-    const file = fs.readFileSync('custom-elements.json');
+    const file = fs.readFileSync('dist/custom-elements.json');
     const manifest = JSON.parse(file.toString()) as Package;
 
     return manifest.modules
