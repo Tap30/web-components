@@ -1,11 +1,11 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
-import "../bottom-navigation-item/index.js";
-import "../icons/index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
+import '../bottom-navigation-item/index.js';
+import '../icons/index.js';
 
 export default {
-  title: "Bottom Navigation",
-  component: "tap-bottom-navigation",
+  title: 'Bottom Navigation',
+  component: 'tap-bottom-navigation',
   argTypes: {},
 };
 

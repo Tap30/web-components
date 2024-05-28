@@ -1,6 +1,6 @@
-import { LitElement, html } from "lit";
-import { BottomNavigationItem } from "../bottom-navigation-item/bottom-navigation-item";
-import { queryAssignedElements } from "lit/decorators.js";
+import { LitElement, html } from 'lit';
+import { BottomNavigationItem } from '../bottom-navigation-item/bottom-navigation-item';
+import { queryAssignedElements } from 'lit/decorators.js';
 
 export class BottomNavigation extends LitElement {
   @queryAssignedElements() private items!: BottomNavigationItem[];
@@ -8,8 +8,8 @@ export class BottomNavigation extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener(
-      "bottom-navigation-item-click",
-      this.handleBottomNavigationItemClick
+      'bottom-navigation-item-click',
+      this.handleBottomNavigationItemClick,
     );
   }
 
