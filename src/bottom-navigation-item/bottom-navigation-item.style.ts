@@ -36,14 +36,14 @@ export default css`
     background: transparent;
     text-decoration: none;
     font: inherit;
-    font-family: var(--tap-sys-font-family);
-    color: var(--tap-sys-color-content-tertiary);
-    line-height: var(--tap-sys-typography-label-xs-height);
-    font-size: var(--tap-sys-typography-label-xs-size);
-    font-weight: var(--tap-sys-typography-label-xs-weight);
+    font-family: var(--tap-font-family, var(--tap-sys-font-family));
+    color: var(--tap-bottom-navigation-item-color, var(--tap-sys-color-content-tertiary));
+    line-height: var(--tap-bottom-navigation-item-line-height, var(--tap-sys-typography-label-xs-height));
+    font-size: var(--tap-bottom-navigation-item-font-size, var(--tap-sys-typography-label-xs-size));
+    font-weight: var(--tap-bottom-navigation-item-font-weight, var(--tap-sys-typography-label-xs-weight));
   }
 
   :host([active]) .bottom-navigation-item {
-    color: var(--tap-sys-color-content-primary);
+    color: var(--tap-bottom-navigation-active-color, var(--tap-sys-color-content-primary));
   }
 `;
