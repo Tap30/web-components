@@ -20,61 +20,61 @@ export default css`
     font-family: var(--tap-font-family, var(--tap-sys-font-family));
     display: flex;
     flex-direction: column;
-    gap: var(--tap-textfield-field-gap, var(--tap-sys-spacing-4));
+    gap: var(--tap-text-field-field-gap, var(--tap-sys-spacing-4));
   }
 
   .label {
     color: var(
-      --tap-textfield-label-color,
+      --tap-text-field-label-color,
       var(--tap-sys-color-content-primary)
     );
     line-height: var(
-      --tap-textfield-label-line-height,
+      --tap-text-field-label-line-height,
       var(--tap-sys-typography-label-sm-height)
     );
     font-size: var(
-      --tap-textfield-label-font-size,
+      --tap-text-field-label-font-size,
       var(--tap-sys-typography-label-sm-size)
     );
     font-weight: var(
-      --tap-textfield-label-font-weight,
+      --tap-text-field-label-font-weight,
       var(--tap-sys-typography-label-sm-weight)
     );
   }
 
   .caption {
     color: var(
-      --tap-textfield-caption-color,
+      --tap-text-field-caption-color,
       var(--tap-sys-color-content-tertiary)
     );
     line-height: var(
-      --tap-textfield-caption-line-height,
+      --tap-text-field-caption-line-height,
       var(--tap-sys-typography-body-sm-height)
     );
     font-size: var(
-      --tap-textfield-caption-font-size,
+      --tap-text-field-caption-font-size,
       var(--tap-sys-typography-body-sm-size)
     );
     font-weight: var(
-      --tap-textfield-caption-font-weight,
+      --tap-text-field-caption-font-weight,
       var(--tap-sys-typography-body-sm-weight)
     );
   }
 
   .container {
     /* FIXME: height of the input is 52px but we dont have 52px in our tokens */
-    height: var(--tap-textfield-container-height, var(--tap-sys-spacing-11));
-    padding: 0 var(--tap-textfield-container-padding, var(--tap-sys-spacing-6));
+    height: var(--tap-text-field-container-height, var(--tap-sys-spacing-11));
+    padding: 0 var(--tap-text-field-container-padding, var(--tap-sys-spacing-6));
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--tap-textfield-container-gap, var(--tap-sys-spacing-4));
+    gap: var(--tap-text-field-container-gap, var(--tap-sys-spacing-4));
     background-color: var(
-      --tap-textfield-container-background-color,
+      --tap-text-field-container-background-color,
       var(--tap-sys-color-surface-tertiary)
     );
     border-radius: var(
-      --tap-textfield-container-border-radius,
+      --tap-text-field-container-border-radius,
       var(--tap-sys-radius-3)
     );
     border: 2px solid transparent;
@@ -82,12 +82,12 @@ export default css`
 
   .container:focus-within {
     background-color: var(
-      --tap-textfield-focus-background-color,
+      --tap-text-field-focus-background-color,
       var(--tap-sys-color-surface-secondary)
     );
     border: 2px solid
       var(
-        --tap-textfield-focus-border-width,
+        --tap-text-field-focus-border-width,
         var(--tap-sys-color-border-inverse-primary)
       );
   }
@@ -98,19 +98,19 @@ export default css`
     flex: 1;
     background-color: transparent;
     color: var(
-      --tap-textfield-input-color,
+      --tap-text-field-input-color,
       var(--tap-sys-color-content-primary)
     );
     line-height: var(
-      --tap-textfield-input-line-height,
+      --tap-text-field-input-line-height,
       var(--tap-sys-typography-body-md-height)
     );
     font-size: var(
-      --tap-textfield-input-font-size,
+      --tap-text-field-input-font-size,
       var(--tap-sys-typography-body-md-size)
     );
     font-weight: var(
-      --tap-textfield-input-font-weight,
+      --tap-text-field-input-font-weight,
       var(--tap-sys-typography-body-md-weight)
     );
     font-family: inherit;
@@ -118,19 +118,19 @@ export default css`
 
   .input::placeholder {
     color: var(
-      --tap-textfield-input-placeholder-color,
+      --tap-text-field-input-placeholder-color,
       var(--tap-sys-color-content-tertiary)
     );
     line-height: var(
-      --tap-textfield-input-placeholder-line-height,
+      --tap-text-field-input-placeholder-line-height,
       var(--tap-sys-typography-body-md-height)
     );
     font-size: var(
-      --tap-textfield-input-placeholder-font-size,
+      --tap-text-field-input-placeholder-font-size,
       var(--tap-sys-typography-body-md-size)
     );
     font-weight: var(
-      --tap-textfield-input-placeholder-font-weight,
+      --tap-text-field-input-placeholder-font-weight,
       var(--tap-sys-typography-body-md-weight)
     );
     font-family: inherit;
@@ -138,25 +138,25 @@ export default css`
 
   :host([error]) .caption {
     color: var(
-      --tap-textfield-error-caption-color,
+      --tap-text-field-error-caption-color,
       var(--tap-sys-color-content-negative)
     );
   }
 
   :host([error]) .container {
     background-color: var(
-      --tap-textfield-error-container-background-color,
+      --tap-text-field-error-container-background-color,
       var(--tap-sys-color-surface-negative-light)
     );
     border-color: var(
-      --tap-textfield-error-container-border-color,
+      --tap-text-field-error-container-border-color,
       var(--tap-sys-color-border-negative)
     );
   }
 
   :host([disabled]) .container {
     background-color: var(
-      --tap-textfield-disabled-container-background-color,
+      --tap-text-field-disabled-container-background-color,
       var(--tap-sys-color-surface-disabled)
     );
   }
@@ -166,7 +166,7 @@ export default css`
   :host([disabled]) .input,
   :host([disabled]) .input::placeholder {
     color: var(
-      --tap-textfield-disabled-container-color,
+      --tap-text-field-disabled-container-color,
       var(--tap-sys-color-content-disabled)
     );
   }
