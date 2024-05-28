@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 export default css`
   :host {
@@ -22,15 +22,15 @@ export default css`
     margin: var(--tap-sys-spacing-4) 0;
   }
 
-  :host([type="thin"]) {
+  :host([type='thin']) {
     height: var(--tap-sys-spacing-1);
   }
 
-  :host([type="medium"]) {
+  :host([type='medium']) {
     height: var(--tap-sys-spacing-2);
   }
 
-  :host([type="bold"]) {
+  :host([type='bold']) {
     background-color: var(--tap-sys-color-surface-secondary);
     height: var(--tap-sys-spacing-4);
   }
