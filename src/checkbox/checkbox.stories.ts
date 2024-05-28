@@ -1,9 +1,9 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
 
 export default {
-  title: "Checkbox",
-  component: "tap-checkbox",
+  title: 'Checkbox',
+  component: 'tap-checkbox',
   argTypes: {},
 };
 
