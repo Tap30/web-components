@@ -61,5 +61,4 @@ export const Skeleton = Template.bind({});
 Skeleton.args = {
   variant: 'line',
   animationMode: 'progress',
-  height: '200',
 };

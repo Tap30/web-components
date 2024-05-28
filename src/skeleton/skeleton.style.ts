@@ -19,23 +19,29 @@ export default css`
     position: relative;
     overflow: hidden;
     outline: none;
-    background: var(--tap-skeleton-background, var(--tap-palette-gray-100))
+    background: var(
+        --tap-skeleton-background,
+        var(--tap-sys-color-surface-tertiary)
+      )
       no-repeat;
     border-radius: var(--tap-skeleton-radius, var(--tap-sys-radius-2));
     width: var(--tap-skeleton-width, 100%);
-    height: var(--tap-skeleton-height, 20px);
+    height: var(--tap-skeleton-height, var(--tap-sys-spacing-8));
     display: inline-block;
     will-change: transform;
   }
 
   :host([variant='rect']) .skeleton {
-    border-radius: var(--tap-skeleton-radius, 0px);
+    border-radius: var(--tap-skeleton-rect-radius, var(--tap-sys-spacing-0));
   }
 
   :host([variant='circle']) .skeleton {
-    width: var(--tap-skeleton-width, 40px);
-    height: var(--tap-skeleton-height, 40px);
-    border-radius: var(--tap-skeleton-radius, var(--tap-sys-radius-full));
+    width: var(--tap-skeleton-circle-width, var(--tap-sys-spacing-10));
+    height: var(--tap-skeleton-circle-height, var(--tap-sys-spacing-10));
+    border-radius: var(
+      --tap-skeleton-circle-radius,
+      var(--tap-sys-radius-full)
+    );
   }
 
   :host([animationMode='progress']) .skeleton {
@@ -43,9 +49,9 @@ export default css`
     background-size: 200px 100%;
     background-image: linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0.6),
-      rgba(255, 255, 255, 0)
+      color-mix(in srgb, var(--tap-sys-color-surface-white), transparent 100%),
+      color-mix(in srgb, var(--tap-sys-color-surface-white), transparent 40%),
+      color-mix(in srgb, var(--tap-sys-color-surface-white), transparent 100%)
     );
   }
   :host([animationMode='pulse']) .skeleton {
@@ -67,7 +73,7 @@ export default css`
     }
 
     50% {
-      opacity: 0.4%;
+      opacity: 0.4;
     }
 
     100% {
@@ -75,9 +81,7 @@ export default css`
     }
   }
 
-  /*
-    Removing animation if user enabled the 'Reduce Motion' option.
-  */
+  // Removing animation if user enabled the 'Reduce Motion' option.
   @media (prefers-reduced-motion: reduce) {
     :host([animationMode='progress']) .skeleton,
     :host([animationMode='pulse']) .skeleton {
