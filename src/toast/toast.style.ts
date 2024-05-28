@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 export default css`
   :host {
@@ -37,9 +37,16 @@ export default css`
     width: 100%;
     font-family: var(--tap-font-family, var(--tap-sys-font-family));
     border-radius: 999px;
-    padding: var(--tap-toast-vertical-padding, var(--tap-sys-spacing-5)) var(--tap-toast-horizontal-padding, var(--tap-sys-spacing-5));
-    background-color: var(--tap-toast-background-color-default, var(--tap-sys-color-surface-inverse-secondary));
-    color: var(--tap-toast-color-default, var(--tap-sys-color-content-on-inverse));
+    padding: var(--tap-toast-vertical-padding, var(--tap-sys-spacing-5))
+      var(--tap-toast-horizontal-padding, var(--tap-sys-spacing-5));
+    background-color: var(
+      --tap-toast-background-color-default,
+      var(--tap-sys-color-surface-inverse-secondary)
+    );
+    color: var(
+      --tap-toast-color-default,
+      var(--tap-sys-color-content-on-inverse)
+    );
   }
 
   :host .icon {
@@ -48,24 +55,48 @@ export default css`
     justify-content: center;
   }
 
-  :host([variant="success"]) .toast {
-    background-color: var(--tap-toast-background-color-success, var(--tap-sys-color-surface-positive));
-    color: var(--tap-toast-color-success, var(--tap-sys-color-content-on-inverse));
+  :host([variant='success']) .toast {
+    background-color: var(
+      --tap-toast-background-color-success,
+      var(--tap-sys-color-surface-positive)
+    );
+    color: var(
+      --tap-toast-color-success,
+      var(--tap-sys-color-content-on-inverse)
+    );
   }
-  :host([variant="error"]) .toast {
-    background-color: var(--tap-toast-background-color-error, var(--tap-sys-color-surface-negative));
-    color: var(--tap-toast-color-error, var(--tap-sys-color-content-on-inverse));
+  :host([variant='error']) .toast {
+    background-color: var(
+      --tap-toast-background-color-error,
+      var(--tap-sys-color-surface-negative)
+    );
+    color: var(
+      --tap-toast-color-error,
+      var(--tap-sys-color-content-on-inverse)
+    );
   }
-  :host([variant="info"]) .toast {
-    background-color: var(--tap-toast-background-color-info, var(--tap-sys-color-surface-accent));
+  :host([variant='info']) .toast {
+    background-color: var(
+      --tap-toast-background-color-info,
+      var(--tap-sys-color-surface-accent)
+    );
     color: var(--tap-toast-color-info, var(--tap-sys-color-content-on-inverse));
   }
-  :host([variant="inverse"]) .toast {
-    background-color: var(--tap-toast-background-color-inverse, var(--tap-sys-color-surface-inverse-secondary));
-    color: var(--tap-toast-color-inverse, var(--tap-sys-color-content-on-inverse));
+  :host([variant='inverse']) .toast {
+    background-color: var(
+      --tap-toast-background-color-inverse,
+      var(--tap-sys-color-surface-inverse-secondary)
+    );
+    color: var(
+      --tap-toast-color-inverse,
+      var(--tap-sys-color-content-on-inverse)
+    );
   }
-  :host([variant="warning"]) .toast {
-    background-color: var(--tap-toast-background-color-warning, var(--tap-sys-color-surface-warning));
+  :host([variant='warning']) .toast {
+    background-color: var(
+      --tap-toast-background-color-warning,
+      var(--tap-sys-color-surface-warning)
+    );
     color: var(--tap-toast-color-warning, var(--tap-sys-color-content-primary));
   }
 
@@ -95,4 +126,3 @@ export default css`
     gap: inherit;
   }
 `;
-
