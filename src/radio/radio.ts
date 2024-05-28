@@ -1,5 +1,5 @@
-import { LitElement, PropertyValues, html, nothing } from "lit";
-import { property } from "lit/decorators.js";
+import { LitElement, PropertyValues, html, nothing } from 'lit';
+import { property } from 'lit/decorators.js';
 
 export class Radio extends LitElement {
   static override shadowRootOptions: ShadowRootInit = {
@@ -12,7 +12,7 @@ export class Radio extends LitElement {
   @property({ type: Boolean })
   disabled = false;
 
-  @property() value = "";
+  @property() value = '';
 
   private internals: ElementInternals;
 
@@ -31,18 +31,18 @@ export class Radio extends LitElement {
 
   private handleInput(event: Event) {
     this.dispatchEvent(
-      new CustomEvent("radio-input-change", {
+      new CustomEvent('radio-input-change', {
         detail: {
           selected: this.value,
         },
         bubbles: true,
         composed: true,
-      })
+      }),
     );
   }
 
   protected updated(changed: PropertyValues) {
-    if (changed.has("checked")) {
+    if (changed.has('checked')) {
       const value = this.checked ? this.value : null;
       this.internals.setFormValue(value, String(this.checked));
     }
@@ -53,7 +53,7 @@ export class Radio extends LitElement {
   }
 
   formStateRestoreCallback(state: string) {
-    this.checked = state === "true";
+    this.checked = state === 'true';
   }
 
   render() {
@@ -62,13 +62,12 @@ export class Radio extends LitElement {
         id="input"
         type="radio"
         role="radio"
+        part="radio"
         class="input"
-        aria-checked=${this.checked
-          ? "true"
-          : "false"}
+        aria-checked=${this.checked ? 'true' : 'false'}
         aria-label=${nothing}
         aria-describedby=${nothing}
-        tabindex=${this.disabled ? "-1" : "0"}
+        tabindex=${this.disabled ? '-1' : '0'}
         ?disabled=${this.disabled}
         .checked=${this.checked}
         @input=${this.handleInput}

@@ -1,9 +1,9 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
 
 export default {
-  title: "Radio",
-  component: "tap-radio",
+  title: 'Radio',
+  component: 'tap-radio',
   argTypes: {},
 };
 
