@@ -20,9 +20,9 @@ import styles from './radio.style';
  *
  * @summary A radio button component.
  *
- * @prop {`boolean`} `checked` - Indicates whether the radio button is checked.
- * @prop {`boolean`} `disabled` - Indicates whether the radio button is disabled.
- * @prop {`string`} `value` - The value of the radio button.
+ * @prop {`boolean`} [`checked`=`false`] - Indicates whether the radio button is checked.
+ * @prop {`boolean`} [`disabled`=`false`] - Indicates whether the radio button is disabled.
+ * @prop {`string`} [`value`=`''`] - The value of the radio button.
  *
  * @csspart [`radio`] - The main container for the radio button.
  * @cssprop [`--tap-radio-border-radius`=`--tap-sys-radius-full`] - The border radius of the radio button.
