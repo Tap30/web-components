@@ -22,7 +22,7 @@ export default css`
       var(--tap-sys-color-border-primary)
     );
     width: 100%;
-    margin: var(--tap-devider-margin, var(--tap-sys-spacing-4)) 0;
+    margin: var(--tap-divider-margin, var(--tap-sys-spacing-4)) 0;
   }
 
   :host([type='thin']) {
