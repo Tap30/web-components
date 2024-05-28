@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 export default css`
   :host {
@@ -30,12 +30,13 @@ export default css`
     width: calc(var(--tap-sys-spacing-5) / 2);
     padding: 0;
     border-radius: var(--tap-sys-radius-full);
-    border: calc(var(--tap-sys-spacing-5) / 4) solid var(--tap-sys-color-surface-primary);
+    border: calc(var(--tap-sys-spacing-5) / 4) solid
+      var(--tap-sys-color-surface-primary);
     background-color: var(--tap-sys-color-border-primary);
   }
 
-  .step[aria-current="step"] {
+  .step[aria-current='step'] {
     background-color: var(--tap-sys-color-content-primary);
-    width: var(--tap-sys-spacing-5)
+    width: var(--tap-sys-spacing-5);
   }
 `;
