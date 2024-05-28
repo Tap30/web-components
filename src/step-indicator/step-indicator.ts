@@ -1,17 +1,8 @@
-import { LitElement, html } from 'lit';
-import { property, queryAll } from 'lit/decorators.js';
+import { html, LitElement } from 'lit';
+import { property } from 'lit/decorators.js';
 import { range } from 'lit/directives/range.js';
 import { map } from 'lit/directives/map.js';
 
-/**
- * @prop steps - total steps
- * @prop selected - current selected step
- *
- * @fires {CustomEvent} - Step indicator change event
- *
- * @csspart steps - container for the steps
- * @csspart step - step button
- */
 export class StepIndicator extends LitElement {
   @property({ type: Number }) steps = 2;
 
