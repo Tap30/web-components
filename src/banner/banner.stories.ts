@@ -1,10 +1,10 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
-import "../button/index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
+import '../button/index.js';
 
 export default {
-  title: "Banner",
-  component: "tap-banner",
+  title: 'Banner',
+  component: 'tap-banner',
   argTypes: {},
 };
 
@@ -28,19 +28,19 @@ const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
   </tap-banner>
 
   <tap-banner
-variant="hero"
+    variant="hero"
     heading="با ۱۶۳۰، تلفنی تپسی بگیر"
     description="درخواست خودرو بدون نیاز به اینترنت"
     image="https://able-media.tapsi.cab/statics/N31LNC95J6MCPIYB0D.jpg"
     background-color="rgb(255, 213, 194)"
     text-color="rgb(66, 46, 40)"
   >
-    <tap-button size="small" slot="extra" >majid</tap-button>
+    <tap-button size="small" slot="extra">majid</tap-button>
     <tap-button size="small">دریافت تخفیف</tap-button>
   </tap-banner>
-<br />
+  <br />
   <tap-banner
-variant="hero"
+    variant="hero"
     heading="با ۱۶۳۰، تلفنی تپسی بگیر"
     description="درخواست خودرو بدون نیاز به اینترنت"
     image="https://able-media.tapsi.cab/statics/N31LNC95J6MCPIYB0D.jpg"

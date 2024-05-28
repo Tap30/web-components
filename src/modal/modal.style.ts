@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 // tokens
 // --tap-dialog-color-surface-overlay
@@ -31,9 +31,9 @@ export default css`
   }
   .dialog {
     position: fixed;
-    left: var(--tap-sys-spacing-6);
-    right: var(--tap-sys-spacing-6);
-    bottom: var(--tap-sys-spacing-6);
+    left: var(--tap-dialog-left, var(--tap-sys-spacing-6));
+    right: var(--tap-dialog-right, var(--tap-sys-spacing-6));
+    bottom: var(--tap-dialog-bottom, var(--tap-sys-spacing-6));
     background-color: var(
       --tap-dialog-color-surface-primary,
       var(--tap-sys-color-surface-primary)
