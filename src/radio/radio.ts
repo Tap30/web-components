@@ -62,6 +62,7 @@ export class Radio extends LitElement {
         id="input"
         type="radio"
         role="radio"
+        part="radio"
         class="input"
         aria-checked=${this.checked ? 'true' : 'false'}
         aria-label=${nothing}
