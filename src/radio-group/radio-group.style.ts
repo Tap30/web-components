@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 export default css`
   :host {
@@ -21,11 +21,11 @@ export default css`
     gap: var(--tap-sys-spacing-3);
   }
 
-  :host([direction="vertical"]) .radio-group {
+  :host([direction='vertical']) .radio-group {
     flex-direction: column;
   }
 
-  :host([direction="horizontal"]) .radio-group {
+  :host([direction='horizontal']) .radio-group {
     flex-direction: row;
   }
 `;

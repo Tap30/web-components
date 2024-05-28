@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 export default css`
   :host {
@@ -29,7 +29,7 @@ export default css`
     justify-content: center;
   }
 
-  :host([checked]){
+  :host([checked]) {
     background-color: var(--tap-sys-color-surface-inverse-primary);
     color: var(--tap-sys-color-content-on-inverse);
   }
