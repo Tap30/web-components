@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 // tokens
 // --tap-dialog-color-surface-overlay
