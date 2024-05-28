@@ -22,9 +22,9 @@ import styles from './banner.style.js';
  * @prop {`string`} [`heading`] - The heading text to display in the banner.
  * @prop {`string`} [`description`] - The description text to display in the banner.
  * @prop {`string`} [`image`] - The URL of the background image to display in the banner.
- * @prop {`boolean`} [`fullWidth`=`false`] - Whether the banner should take the full width of its container.
+ * @prop {`boolean`} [`full-width`=`false`] - Whether the banner should take the full width of its container.
  * @prop {`'default'` \| `'hero'`} [`variant`=`'default'`] - The variant style of the banner.
- * @prop {`string`} [`backgroundColor`] - The background color of the banner.
+ * @prop {`string`} [`background-color`] - The background color of the banner.
  * @prop {`string`} [`textColor`] - The text color of the banner.
  *
  * @csspart `banner` - The main banner element.
