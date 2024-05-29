@@ -1,5 +1,5 @@
-import { LitElement, html, nothing } from "lit";
-import { property } from "lit/decorators.js";
+import { LitElement, html, nothing } from 'lit';
+import { property } from 'lit/decorators.js';
 
 export class SegmentedButton extends LitElement {
   @property({ type: Boolean, reflect: true }) selected = false;
@@ -7,10 +7,10 @@ export class SegmentedButton extends LitElement {
 
   private handleClick() {
     this.dispatchEvent(
-      new Event("segmented-button-click", {
+      new Event('segmented-button-click', {
         bubbles: true,
         composed: true,
-      })
+      }),
     );
   }
 
@@ -21,7 +21,7 @@ export class SegmentedButton extends LitElement {
         part="button"
         aria-label=${nothing}
         aria-pressed=${this.selected}
-        tabindex="${this.disabled ? "-1" : "0"}"
+        tabindex="${this.disabled ? '-1' : '0'}"
         ?disabled=${this.disabled}
         @click="${this.handleClick}"
       >

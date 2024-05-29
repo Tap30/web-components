@@ -1,6 +1,6 @@
-import { customElement } from "lit/decorators.js";
-import { Pinwheel } from "./pinwheel";
-import styles from "./pinwheel.style";
+import { customElement } from 'lit/decorators.js';
+import { Pinwheel } from './pinwheel';
+import styles from './pinwheel.style';
 
 /**
  * ### Example
@@ -11,7 +11,7 @@ import styles from "./pinwheel.style";
  *
  * @summary A pinwheel component for selecting items by scrolling through a list.
  *
- * @prop {string[]} `items` - An array of strings that contains pinwheel items.
+ * @prop {`string[]`} [`items`=`[]`] - An array of strings that contains pinwheel items.
  *
  * @csspart `pinwheel` - The container that wraps the pinwheel component.
  * @csspart `pinwheel-item` - The item that rendered in pinwheel.
@@ -33,13 +33,13 @@ import styles from "./pinwheel.style";
  * @cssprop [`--tap-pinwheel-active-item-color`=`--tap-sys-color-content-primary`]
  *
  */
-@customElement("tap-pinwheel")
+@customElement('tap-pinwheel')
 export class TapPinwheel extends Pinwheel {
   static readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-pinwheel": TapPinwheel;
+    'tap-pinwheel': TapPinwheel;
   }
 }

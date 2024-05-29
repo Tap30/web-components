@@ -1,9 +1,9 @@
-import { html, TemplateResult } from "lit";
-import "./text-field.js";
+import { html, TemplateResult } from 'lit';
+import './text-field.js';
 
 export default {
-  title: "TextField",
-  component: "tap-text-field",
+  title: 'TextField',
+  component: 'tap-text-field',
   argTypes: {},
 };
 

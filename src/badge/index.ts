@@ -28,10 +28,10 @@ import styles from './badge.style';
  *
  * @summary Display badge component with different styles and types.
  *
- * @prop {`string`\|`number`} [`value`=`""`] - The value to display inside the badge.
- * @prop {`"pill"` \| `"numeral"` \| `"dot"`} [`type`=`"pill"`] - The type of the badge.
- * @prop {`"success"` \| `"error"` \| `"info"` \| `"warning"` \| `"inverse"`} [`variant`=`"inverse"`] - The variant style of the badge.
- * @prop {`"high"` \| `"low"`} [`priority`=`"high"`] - The priority level of the badge.
+ * @prop {`string`\|`number`} [`value`=`''`] - The value to display inside the badge.
+ * @prop {`'pill'` \| `'numeral'` \| `'dot'`} [`type`=`'pill'`] - The type of the badge.
+ * @prop {`'success'` \| `'error'` \| `'info'` \| `'warning'` \| `'inverse'`} [`variant`=`'inverse'`] - The variant style of the badge.
+ * @prop {`'high'` \| `'low'`} [`priority`=`'high'`] - The priority level of the badge.
  * @prop {`boolean`} [`leadingIcon`=`false`] - Whether to show an icon before the badge value.
  *
  * @csspart `badge` - The main badge element.
