@@ -1,5 +1,5 @@
-import { LitElement, PropertyValues, html, nothing } from "lit";
-import { property } from "lit/decorators.js";
+import { LitElement, PropertyValues, html, nothing } from 'lit';
+import { property } from 'lit/decorators.js';
 
 export class Checkbox extends LitElement {
   static override shadowRootOptions: ShadowRootInit = {
@@ -14,7 +14,7 @@ export class Checkbox extends LitElement {
   @property({ type: Boolean })
   disabled = false;
 
-  @property() value = "on";
+  @property() value = 'on';
 
   private internals: ElementInternals;
 
@@ -38,7 +38,7 @@ export class Checkbox extends LitElement {
   }
 
   protected updated(changed: PropertyValues) {
-    if (changed.has("checked")) {
+    if (changed.has('checked')) {
       const value = this.checked && !this.indeterminate ? this.value : null;
       this.internals.setFormValue(value, String(this.checked));
     }
@@ -49,7 +49,7 @@ export class Checkbox extends LitElement {
   }
 
   formStateRestoreCallback(state: string) {
-    this.checked = state === "true";
+    this.checked = state === 'true';
   }
 
   render() {
@@ -59,10 +59,10 @@ export class Checkbox extends LitElement {
         type="checkbox"
         class="input"
         aria-checked=${this.indeterminate
-          ? "mixed"
+          ? 'mixed'
           : this.checked
-          ? "true"
-          : "false"}
+            ? 'true'
+            : 'false'}
         aria-label=${nothing}
         aria-describedby=${nothing}
         ?disabled=${this.disabled}
@@ -70,8 +70,7 @@ export class Checkbox extends LitElement {
         .checked=${this.checked}
         @input=${this.handleInput}
       />
-      ${this.renderCheckIcon()}
-      ${this.renderIndeterminateIcon()}
+      ${this.renderCheckIcon()} ${this.renderIndeterminateIcon()}
     `;
   }
 

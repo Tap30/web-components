@@ -1,11 +1,11 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
 
 export default {
-  title: "Modal",
-  component: "tap-modal",
+  title: 'Modal',
+  component: 'tap-modal',
   argTypes: {
-    open: { control: "boolean" },
+    open: { control: 'boolean' },
   },
 };
 

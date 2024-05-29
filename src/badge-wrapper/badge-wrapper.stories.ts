@@ -1,11 +1,11 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
-import "../badge";
-import "../button";
+import { html, TemplateResult } from 'lit';
+import './index.js';
+import '../badge';
+import '../button';
 
 export default {
-  title: "Badge",
-  component: "tap-badge-wrapper",
+  title: 'Badge',
+  component: 'tap-badge-wrapper',
   argTypes: {},
 };
 

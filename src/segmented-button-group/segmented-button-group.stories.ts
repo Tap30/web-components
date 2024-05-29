@@ -1,10 +1,10 @@
-import { html, TemplateResult } from "lit";
-import "../segmented-button";
-import "./index.js";
+import { html, TemplateResult } from 'lit';
+import '../segmented-button';
+import './index.js';
 
 export default {
-  title: "Segmented Button Group",
-  component: "tap-segmented-button-group",
+  title: 'Segmented Button Group',
+  component: 'tap-segmented-button-group',
   argTypes: {},
 };
 
