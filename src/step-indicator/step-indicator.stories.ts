@@ -1,9 +1,9 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
 
 export default {
-  title: "Step Indicator",
-  component: "tap-step-indicator",
+  title: 'Step Indicator',
+  component: 'tap-step-indicator',
   argTypes: {},
 };
 

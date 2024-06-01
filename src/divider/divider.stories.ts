@@ -1,9 +1,9 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
 
 export default {
-  title: "Divider",
-  component: "tap-divider",
+  title: 'Divider',
+  component: 'tap-divider',
   argTypes: {},
 };
 
