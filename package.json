@@ -44,6 +44,7 @@
     "vitepress": "^1.1.4"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.6.4",
     "custom-elements-manifest": "^2.1.0",
     "lit": "^3.1.2"
   }
