@@ -22,15 +22,15 @@ import styles from './skeleton.style';
  * ##### Animation Modes
  *
  * ```html
- * <tap-skeleton animationMode="progress"></tap-skeleton>
- * <tap-skeleton animationMode="pulse"></tap-skeleton>
- * <tap-skeleton animationMode="none"></tap-skeleton>
+ * <tap-skeleton animation-mode="progress"></tap-skeleton>
+ * <tap-skeleton animation-mode="pulse"></tap-skeleton>
+ * <tap-skeleton animation-mode="none"></tap-skeleton>
  * ```
  *
  * @summary Display Skeleton component with different styles and types.
  *
  * @prop {`"line"` \| `"rect"` \| `"circle"`} [`variant`=`"line"`] - The variant of the skeleton.
- * @prop {`"progress"` \| `"pulse"` \| `"none"`} [`animationMode`=`"progress"`] - The animation mode of the skeleton.
+ * @prop {`"progress"` \| `"pulse"` \| `"none"`} [`animation-mode`=`"progress"`] - The animation mode of the skeleton.
  * @prop {`string`} [`width`=`"100%"`] - The width value of the skeleton.
  * @prop {`string`} [`height`=`"20px"`] - The height value of the skeleton.
  *

@@ -51,7 +51,7 @@ const Template: Story<ArgTypes> = ({
 }: ArgTypes) =>
   html`<tap-skeleton
     variant=${variant}
-    animationMode=${animationMode}
+    animation-mode=${animationMode}
     width=${width}
     height=${height}
   ></tap-skeleton> `;
