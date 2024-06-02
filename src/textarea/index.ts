@@ -1,14 +1,14 @@
 import { customElement } from "lit/decorators.js";
-import { TextArea } from "./text-area";
-import styles from "./text-area.style";
+import { TextArea } from "./textarea";
+import styles from "./textarea.style";
 
-@customElement("tap-text-area")
+@customElement("tap-textarea")
 export class TapTextArea extends TextArea {
     static readonly styles = [styles];
 }
 
 declare global {
     interface HTMLElementTagNameMap {
-        "tap-text-area": TapTextArea;
+        "tap-textarea": TapTextArea;
     }
 }

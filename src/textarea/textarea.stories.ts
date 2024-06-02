@@ -1,9 +1,9 @@
 import { html, TemplateResult } from "lit";
-import "./index.ts";
+import "./index.js";
 
 export default {
   title: "TextArea",
-  component: "tap-text-area",
+  component: "tap-textarea",
   argTypes: {
     label: {
       control: 'text',
@@ -27,8 +27,8 @@ interface ArgTypes {
 }
 
 const Template: Story<ArgTypes> = ({ ...args }: ArgTypes) => html`
-  <tap-text-area label=${args.label} caption=${args.caption} placeholder=${args.placeholder} ?disabled=${args.disabled} ?error=${args.error}>
-  </tap-text-area>
+  <tap-textarea label=${args.label} caption=${args.caption} placeholder=${args.placeholder} ?disabled=${args.disabled} ?error=${args.error}>
+  </tap-textarea>
 `;
 
 export const TextArea = Template.bind({});
