@@ -1,26 +1,32 @@
-import {html, TemplateResult} from "lit";
-import "./index.js";
-import "../button";
+import { html, TemplateResult } from 'lit';
+import './index.js';
+import '../button';
 
-const toastVariants: string[] = ["success", "error", "info", "inverse", "warning"]
+const toastVariants: string[] = [
+  'success',
+  'error',
+  'info',
+  'inverse',
+  'warning',
+];
 
 export default {
-  title: "Toast",
-  component: "tap-toast",
+  title: 'Toast',
+  component: 'tap-toast',
   argTypes: {
     toastContent: {
-      control: "text",
-      description: "Toast Content",
+      control: 'text',
+      description: 'Toast Content',
     },
     variant: {
       options: toastVariants,
-      control: { type: "inline-radio" },
-      description: "The toast variant",
+      control: { type: 'inline-radio' },
+      description: 'The toast variant',
       defaultValue: `"inverse"`,
     },
     showDismissButton: {
-      description: "Should the Dismiss button be visible?",
-      control: { type: "boolean" },
+      description: 'Should the Dismiss button be visible?',
+      control: { type: 'boolean' },
       defaultValue: false,
     },
   },
@@ -33,14 +39,14 @@ interface Story<T> {
 }
 
 const defaultProps = {
-  toastContent: "toast text goes here!",
+  toastContent: 'toast text goes here!',
   showDismissButton: false,
 };
 
 interface ArgTypes {
-  toastContent: string,
-  variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse',
-  showDismissButton?: boolean,
+  toastContent: string;
+  variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse';
+  showDismissButton?: boolean;
 }
 
 const Template: Story<ArgTypes> = ({
@@ -48,7 +54,6 @@ const Template: Story<ArgTypes> = ({
   toastContent,
   showDismissButton,
 }) => {
-
   document.addEventListener('DOMContentLoaded', () => {
     const toastElement = document.getElementById('toast-story');
     toastElement?.addEventListener('dismiss', () => {
@@ -60,7 +65,7 @@ const Template: Story<ArgTypes> = ({
     <tap-toast
       id="toast-story"
       variant=${variant}
-      ?showDismissButton=${showDismissButton}
+      ?show-dismiss-button=${showDismissButton}
     >
       ${toastContent}
     </tap-toast>
@@ -69,15 +74,15 @@ const Template: Story<ArgTypes> = ({
 
 const VariantTemplate: Story<{}> = () => {
   return html`
-    ${toastVariants.map((variant) => html`
-      <tap-toast variant=${variant}>${variant}</tap-toast>
-    `)}
+    ${toastVariants.map(
+      (variant) => html` <tap-toast variant=${variant}>${variant}</tap-toast> `,
+    )}
   `;
 };
 
 export const Simple = Template.bind({});
 Simple.args = {
-  toastContent: "a simple toast",
+  toastContent: 'a simple toast',
 };
 
 export const Variants = VariantTemplate.bind({});
@@ -85,6 +90,6 @@ Variants.args = {};
 
 export const DismissButton = Template.bind({});
 DismissButton.args = {
-  toastContent: "A toast with dismiss button",
+  toastContent: 'A toast with dismiss button',
   showDismissButton: true,
 };
