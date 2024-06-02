@@ -8,7 +8,23 @@ export default {
     label: {
       control: 'text',
       description: 'label',
-    }
+    },
+    caption: {
+      control: 'text',
+      description: 'hints on input'
+    },
+    placeholder: {
+      control: 'text',
+      description: 'placeholder'
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'is input editable?',
+    },
+    error: {
+      control: 'boolean',
+      description: 'does the input value have an error?',
+    },
   },
 };
 
