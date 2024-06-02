@@ -48,6 +48,13 @@ export class TextArea extends LitElement {
                 >
                 </textarea>
             </div>
+            <span
+          part="caption"
+          class="caption"
+          id="caption"
+          ?hidden=${!this.caption}
+          >${this.caption ?? nothing}</span
+        >
         </div>
         `;
     }
