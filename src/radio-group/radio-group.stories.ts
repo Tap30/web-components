@@ -1,19 +1,21 @@
 import { html, TemplateResult } from 'lit';
 import '../radio';
 import './index.js';
+import {Meta} from "@storybook/web-components";
 
 const radioGroupDirection: string[] = ['horizontal', 'vertical'];
 
 export default {
-  title: 'Radio Group',
+  title: 'Components/Radio Group',
   component: 'tap-radio-group',
+  subcomponents: { Radio: 'tap-radio' },
   argTypes: {
     direction: {
       options: radioGroupDirection,
       control: { type: 'inline-radio' },
     },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;

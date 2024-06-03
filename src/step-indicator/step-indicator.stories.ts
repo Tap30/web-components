@@ -1,11 +1,12 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
+import {Meta} from "@storybook/web-components";
 
 export default {
-  title: 'Step Indicator',
+  title: 'Components/Step Indicator',
   component: 'tap-step-indicator',
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;

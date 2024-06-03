@@ -1,9 +1,10 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
 import '../tooltip';
+import {Meta} from "@storybook/web-components";
 
 export default {
-  title: 'Tooltip',
+  title: 'Components/Tooltip',
   component: 'tap-tooltip',
   argTypes: {
     label: {
@@ -44,7 +45,7 @@ export default {
         "The arrowOffset determines the distance of the tooltip arrow from the top or left of the container, depending on the tooltip's placement.",
     },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;

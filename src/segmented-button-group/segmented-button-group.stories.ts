@@ -1,12 +1,13 @@
 import { html, TemplateResult } from 'lit';
 import '../segmented-button';
 import './index.js';
+import {Meta} from "@storybook/web-components";
 
 export default {
-  title: 'Segmented Button Group',
+  title: 'Components/Segmented Button Group',
   component: 'tap-segmented-button-group',
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;

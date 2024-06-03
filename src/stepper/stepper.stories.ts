@@ -1,11 +1,12 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
 import { spreadProps } from '@open-wc/lit-helpers';
+import {Meta} from "@storybook/web-components";
 
 const stepperSizes: string[] = ['small', 'medium'];
 
 export default {
-  title: 'Stepper',
+  title: 'Components/Stepper',
   component: 'tap-stepper',
   argTypes: {
     unit: {
@@ -53,7 +54,7 @@ export default {
       defaultValue: 2,
     },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;

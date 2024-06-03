@@ -1,8 +1,9 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Avatar',
+  title: 'Components/Avatar',
   component: 'tap-avatar',
   argTypes: {
     image: {
@@ -18,7 +19,7 @@ export default {
       options: ['eager', 'lazy'],
     },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
