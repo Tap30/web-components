@@ -1,7 +1,7 @@
 import { html, TemplateResult } from 'lit';
 import '../radio';
 import './index.js';
-import {Meta} from "@storybook/web-components";
+import { Meta } from '@storybook/web-components';
 
 const radioGroupDirection: string[] = ['horizontal', 'vertical'];
 

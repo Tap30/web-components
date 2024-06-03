@@ -1,7 +1,7 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
 import '../button';
-import {Meta} from "@storybook/web-components";
+import { Meta } from '@storybook/web-components';
 
 const toastVariants: string[] = [
   'success',

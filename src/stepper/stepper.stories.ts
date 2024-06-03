@@ -1,7 +1,7 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
 import { spreadProps } from '@open-wc/lit-helpers';
-import {Meta} from "@storybook/web-components";
+import { Meta } from '@storybook/web-components';
 
 const stepperSizes: string[] = ['small', 'medium'];
 

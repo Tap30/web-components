@@ -1,6 +1,6 @@
 import { html, TemplateResult } from 'lit';
 import './text-field.js';
-import {Meta} from "@storybook/web-components";
+import { Meta } from '@storybook/web-components';
 
 export default {
   title: 'Components/TextField',

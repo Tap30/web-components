@@ -6,7 +6,7 @@ import '../checkbox';
 import '../radio';
 import '../badge';
 import '../avatar';
-import {Meta} from "@storybook/web-components";
+import { Meta } from '@storybook/web-components';
 
 export default {
   title: 'Components/Row',

@@ -1,7 +1,7 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
 import '../tooltip';
-import {Meta} from "@storybook/web-components";
+import { Meta } from '@storybook/web-components';
 
 export default {
   title: 'Components/Tooltip',
