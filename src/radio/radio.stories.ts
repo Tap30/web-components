@@ -1,11 +1,12 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Radio',
+  title: 'Components/Radio',
   component: 'tap-radio',
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;

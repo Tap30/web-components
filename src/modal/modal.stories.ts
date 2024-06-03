@@ -1,13 +1,14 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Modal',
+  title: 'Components/Modal',
   component: 'tap-modal',
   argTypes: {
     open: { control: 'boolean' },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;

@@ -2,12 +2,14 @@ import { html, TemplateResult } from 'lit';
 import './index.js';
 import '../bottom-navigation-item/index.js';
 import '../icons/index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Bottom Navigation',
+  title: 'Components/Bottom Navigation',
   component: 'tap-bottom-navigation',
+  subcomponents: { 'Bottom Navigation Item': 'tap-bottom-navigation-item' },
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;

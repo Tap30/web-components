@@ -6,9 +6,10 @@ import '../checkbox';
 import '../radio';
 import '../badge';
 import '../avatar';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Row',
+  title: 'Components/Row',
   component: 'tap-row',
   argTypes: {
     size: {
@@ -41,7 +42,7 @@ export default {
       defaultValue: 'nothing',
     },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
