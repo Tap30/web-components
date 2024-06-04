@@ -51,6 +51,7 @@ import styles from './toast.style';
  * @cssprop [`--tap-toast-dismiss-color`=`'inherit'`] - The color of the dismiss button.
  * @cssprop [`--tap-toast-dismiss-background-color`=`transparent`] - The background color of the dismiss button.
  *
+ * @fires `dismiss` - Fires when the toast dismiss button is clicked
  */
 @customElement('tap-toast')
 export class TapToast extends Toast {

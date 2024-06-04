@@ -32,6 +32,8 @@ import styles from './pinwheel.style';
  * @cssprop [`--tap-pinwheel-typography-label-md-weight`=`--tap-sys-typography-label-md-weight`]
  * @cssprop [`--tap-pinwheel-active-item-color`=`--tap-sys-color-content-primary`]
  *
+ * @fires `pinwheel-change` - Fires when the pinwheel changes
+ *
  */
 @customElement('tap-pinwheel')
 export class TapPinwheel extends Pinwheel {

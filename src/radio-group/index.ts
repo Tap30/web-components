@@ -34,7 +34,7 @@ import styles from './radio-group.style';
  * @cssprop [`--tap-radio-group-padding`=`--tap-sys-spacing-3`] - The padding around the radio group.
  * @cssprop [`--tap-radio-group-gap`=`--tap-sys-spacing-3`] - The gap between radio buttons.
  *
- * @event radio-group-change - Dispatched when the selected radio button changes.
+ * @event `radio-group-change` - Dispatched when the selected radio button changes.
  */
 @customElement('tap-radio-group')
 export class TapRadioGroup extends RadioGroup {

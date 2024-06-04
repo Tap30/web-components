@@ -41,6 +41,8 @@ import styles from './segmented-button-group.style';
  * @cssprop [`--tap-segmented-button-group-padding`=`--tap-sys-spacing-3`] - The padding inside the button group.
  * @cssprop [`--tap-segmented-button-group-sm-height`=`--tap-sys-spacing-10`] - The height of the small size button group.
  * @cssprop [`--tap-segmented-button-group-md-height`=`--tap-sys-spacing-11`] - The height of the medium size button group.
+ *
+ * @fires `segmented-button-group-change` - Fires when the button group is changed
  */
 @customElement('tap-segmented-button-group')
 export class TapSegmentedButtonGroup extends SegmentedButtonGroup {

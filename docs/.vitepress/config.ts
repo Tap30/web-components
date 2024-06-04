@@ -18,9 +18,11 @@ const components = manifest.modules
     // For now we asume we have only one custom element per moduel
     const component = components[0];
 
+    console.log('🐕 sag component', component); // TODO: REMOVE ME ⚠️
+
     return {
       link: '/components/' + component.name,
-      text: component.declaration.name,
+      text: component.name,
     };
   });
 
