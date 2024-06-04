@@ -37,6 +37,8 @@ import styles from './radio.style';
  * @cssprop [`--tap-radio-disabled-color`=`--tap-sys-color-content-disabled`] - The color of the content inside the disabled radio button.
  * @cssprop [`--tap-radio-input-height`=`--tap-sys-spacing-7`] - The height of the radio button input.
  * @cssprop [`--tap-radio-input-width`=`--tap-sys-spacing-7`] - The width of the radio button input.
+ *
+ * @fires `radio-input-change` - Fires when a radio option is selected
  */
 @customElement('tap-radio')
 export class TapRadio extends Radio {

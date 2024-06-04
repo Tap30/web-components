@@ -31,7 +31,7 @@ import styles from './step-indicator.style.js';
  * @cssprop [`--tap-step-indicator-step-border-color`=`--tap-sys-color-surface-primary`] - The border color of each step.
  * @cssprop [`--tap-step-indicator-step-background-color`=`--tap-sys-color-border-primary`] - The background color of each step.
  *
- * @fires {CustomEvent} - Step indicator change event
+ * @fires `tap-step-indicator-change` - Step indicator change event
  */
 @customElement('tap-step-indicator')
 export class TapStepIndicator extends StepIndicator {
