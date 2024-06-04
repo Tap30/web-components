@@ -60,6 +60,12 @@ export default defineConfig({
           {text: 'Lit', link: '/package/web-component'},
           {text: 'React', link: '/package/react'}
         ],
+      },
+      {
+        text: 'Related Links',
+        items: [
+          {text: 'Icon Library', link: 'https://tap30.github.io/icons', target: '_blank'},
+        ],
       }
     ]
   },
