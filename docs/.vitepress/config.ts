@@ -18,8 +18,6 @@ const components = manifest.modules
     // For now we asume we have only one custom element per moduel
     const component = components[0];
 
-    console.log('🐕 sag component', component); // TODO: REMOVE ME ⚠️
-
     return {
       link: '/components/' + component.name,
       text: component.name,
@@ -35,16 +33,34 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
 
     sidebar: [
-      { text: 'Getting Started', link: '/' },
+      { text: 'Getting Started', link: '/getting-started' },
       {
         text: 'Components',
         collapsed: false,
         items: components,
       },
+      { text: 'Packages', items: [
+          {text: 'Lit', link: '/package/web-component'},
+          {text: 'React', link: '/package/react'}
+        ] },
     ],
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Tap30/web-components' },
+      { icon: 'linkedin', link: 'https://www.linkedin.com/company/tapsi' },
     ],
+    nav: [
+      {
+        text: 'Components',
+        link: '/components/tap-avatar',
+      },
+      {
+        text: 'Packages',
+        items: [
+          {text: 'Lit', link: '/package/web-component'},
+          {text: 'React', link: '/package/react'}
+        ],
+      }
+    ]
   },
 });
