@@ -1,9 +1,9 @@
-import { LitElement, PropertyValues, html, nothing } from 'lit';
+import { LitElement, PropertyValues, TemplateResult, html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 
-export class Input extends LitElement {
+export abstract class Input extends LitElement {
     static override shadowRootOptions: ShadowRootInit = {
         ...LitElement.shadowRootOptions,
         delegatesFocus: true,
@@ -66,29 +66,7 @@ export class Input extends LitElement {
         this.value = (event.target as HTMLInputElement).value;
     }
 
-    protected renderInput() {
-        return html`
-            <slot name="leading"></slot>
-                <input
-                id="input"
-                class="input"
-                part="input"
-                aria-describedby="caption"
-                aria-invalid=${this.error}
-                aria-label=${ifDefined(this.label)}
-                aria-disabled=${this.disabled ? 'true' : 'false'}
-                ?disabled=${this.disabled}
-                inputmode=${ifDefined(this.inputmode)}
-                placeholder=${ifDefined(this.placeholder)}
-                autocomplete=${ifDefined(this.autocomplete) as any}
-                type=${ifDefined(this.type) as any}
-                .value=${live(this.value)}
-                @input=${this.handleInput}
-                />
-            <slot name="trailing"></slot>
-        `;
-    }
-
+    protected abstract renderInput(): TemplateResult;
     // TODO: check if using generic ids for caption and input is ok
     render() {
         return html`
