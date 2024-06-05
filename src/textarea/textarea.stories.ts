@@ -2,7 +2,7 @@ import { html, TemplateResult } from "lit";
 import "./index.js";
 
 export default {
-  title: "TextArea",
+  title: "Components/TextArea",
   component: "tap-textarea",
   argTypes: {
     label: {
