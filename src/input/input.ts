@@ -62,7 +62,7 @@ export abstract class Input extends LitElement {
         this.value = '';
     }
 
-    private handleInput(event: InputEvent) {
+    protected handleInput(event: InputEvent) {
         this.value = (event.target as HTMLInputElement).value;
     }
 
