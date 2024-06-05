@@ -1,5 +1,5 @@
 import { customElement } from "lit/decorators.js";
-import { TextArea } from "./textarea";
+import { Textarea } from "./textarea";
 import styles from "./textarea.style";
 /**
  * ### Example
@@ -65,12 +65,12 @@ import styles from "./textarea.style";
  * @cssprop [`--tap-input-disabled-container-color`=`--tap-sys-color-content-disabled`] - The color of the text and elements when disabled.
  */
 @customElement("tap-textarea")
-export class TapTextArea extends TextArea {
+export class TapTextarea extends Textarea {
     static readonly styles = [...super.styles, styles];
 }
 
 declare global {
     interface HTMLElementTagNameMap {
-        "tap-textarea": TapTextArea;
+        "tap-textarea": TapTextarea;
     }
 }

@@ -2,7 +2,7 @@ import { TemplateResult, html } from "lit";
 import { live } from "lit/directives/live.js";
 import { TapInput } from "../input";
 
-export class TextArea extends TapInput {
+export class Textarea extends TapInput {
 
     protected renderInput(): TemplateResult {
         return html`
