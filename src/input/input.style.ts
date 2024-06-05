@@ -92,50 +92,6 @@ export default css`
       );
   }
 
-  .input {
-    border: 0;
-    outline: none;
-    flex: 1;
-    background-color: transparent;
-    color: var(
-      --tap-text-field-input-color,
-      var(--tap-sys-color-content-primary)
-    );
-    line-height: var(
-      --tap-text-field-input-line-height,
-      var(--tap-sys-typography-body-md-height)
-    );
-    font-size: var(
-      --tap-text-field-input-font-size,
-      var(--tap-sys-typography-body-md-size)
-    );
-    font-weight: var(
-      --tap-text-field-input-font-weight,
-      var(--tap-sys-typography-body-md-weight)
-    );
-    font-family: inherit;
-  }
-
-  .input::placeholder {
-    color: var(
-      --tap-text-field-input-placeholder-color,
-      var(--tap-sys-color-content-tertiary)
-    );
-    line-height: var(
-      --tap-text-field-input-placeholder-line-height,
-      var(--tap-sys-typography-body-md-height)
-    );
-    font-size: var(
-      --tap-text-field-input-placeholder-font-size,
-      var(--tap-sys-typography-body-md-size)
-    );
-    font-weight: var(
-      --tap-text-field-input-placeholder-font-weight,
-      var(--tap-sys-typography-body-md-weight)
-    );
-    font-family: inherit;
-  }
-
   :host([error]) .caption {
     color: var(
       --tap-text-field-error-caption-color,
@@ -159,12 +115,12 @@ export default css`
       --tap-text-field-disabled-container-background-color,
       var(--tap-sys-color-surface-disabled)
     );
+    border: 2px solid transparent;
   }
 
   :host([disabled]) .caption,
-  :host([disabled]) .label,
-  :host([disabled]) .input,
-  :host([disabled]) .input::placeholder {
+  :host([disabled]) .label
+  {
     color: var(
       --tap-text-field-disabled-container-color,
       var(--tap-sys-color-content-disabled)

@@ -1,6 +1,7 @@
 import { customElement } from 'lit/decorators.js';
 import { TextField } from './text-field';
 import styles from './text-field.style';
+import parentStyles from '../input/input.style';
 
 /**
  * ### Example
@@ -70,7 +71,7 @@ import styles from './text-field.style';
  */
 @customElement('tap-text-field')
 export class TapTextField extends TextField {
-  static readonly styles = [styles];
+  static readonly styles = [parentStyles, styles];
 }
 
 declare global {
