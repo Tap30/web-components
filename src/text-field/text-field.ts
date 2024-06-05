@@ -1,11 +1,16 @@
-import { TemplateResult, html, nothing } from 'lit';
+import { TemplateResult, html } from 'lit';
+import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
-import { Input } from '../input/input';
 import { TapInput } from '../input';
 
 export class TextField extends TapInput {
-  static readonly formAssociated = true;
+
+  @property({ type: String }) inputmode?: string; // TODO: add type
+
+  @property({ type: String }) type?: string; // TODO: add type
+
+  @property({ type: String }) autocomplete?: string; // TODO: add type
 
   // TODO: check if using generic ids for caption and input is ok
   protected renderInput(): TemplateResult {

@@ -1,7 +1,5 @@
 import { LitElement, PropertyValues, TemplateResult, html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
-import { live } from 'lit/directives/live.js';
 
 export abstract class Input extends LitElement {
     static override shadowRootOptions: ShadowRootInit = {
@@ -26,12 +24,6 @@ export abstract class Input extends LitElement {
     @property({ type: String }) name?: string;
 
     @property({ type: String }) placeholder?: string;
-
-    @property({ type: String }) inputmode?: string; // TODO: add type
-
-    @property({ type: String }) type?: string; // TODO: add type
-
-    @property({ type: String }) autocomplete?: string; // TODO: add type
 
     private internals: ElementInternals;
 

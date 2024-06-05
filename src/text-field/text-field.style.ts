@@ -44,14 +44,6 @@ export default css`
     );
     font-family: inherit;
   }
-
-  :host([disabled]) .container {
-    background-color: var(
-      --tap-text-field-disabled-container-background-color,
-      var(--tap-sys-color-surface-disabled)
-    );
-  }
-
   :host([disabled]) .input,
   :host([disabled]) .input::placeholder {
     color: var(

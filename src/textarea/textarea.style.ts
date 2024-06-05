@@ -13,24 +13,24 @@ export default css`
     outline: none;
     flex: 1;
     background-color: transparent;
-    color: var(--tap-textarea-color-content-primary, var(--tap-sys-color-content-primary));
-    line-height: var(--tap-textarea-typography-input-height, var(--tap-sys-typography-body-md-height));
-    font-size: var(--tap-textarea-typography-input-size, var(--tap-sys-typography-body-md-size));
-    font-weight: var(--tap-textarea-typography-input-weight, var(--tap-sys-typography-body-md-weight));
+    color: var(--tap-textarea-input-color, var(--tap-sys-color-content-primary));
+    line-height: var(--tap-textarea-input-line-height, var(--tap-sys-typography-body-md-height));
+    font-size: var(--tap-textarea-input-font-size, var(--tap-sys-typography-body-md-size));
+    font-weight: var(--tap-textarea-input-font-weight, var(--tap-sys-typography-body-md-weight));
     font-family: inherit;
     resize: none;
   }
 
   .input::placeholder {
-    color: var(--tap-textarea-color-content-tertiary,var( --tap-sys-color-content-tertiary));
-    line-height: var(--tap-textarea-typography-placeholder-height, var(--tap-sys-typography-body-md-height));
-    font-size: var(--tap-textarea-typography-placeholder-size, var(--tap-sys-typography-body-md-size));
-    font-weight: var(--tap-textarea-typography-placeholder-weight, var(--tap-sys-typography-body-md-weight));
+    color: var(--tap-textarea-input-placeholder-color,var( --tap-sys-color-content-tertiary));
+    line-height: var(--tap-textarea-input-placeholder-line-height, var(--tap-sys-typography-body-md-height));
+    font-size: var(--tap-textarea-input-placeholder-font-size, var(--tap-sys-typography-body-md-size));
+    font-weight: var(--tap-textarea-input-placeholder-font-weight, var(--tap-sys-typography-body-md-weight));
     font-family: inherit;
   }
 
   :host([disabled]) .input,
   :host([disabled]) .input::placeholder {
-    color: var(--tap-textarea-color-content-disabled, var(--tap-sys-color-content-disabled));
+    color: var(--tap-input-disabled-container-color, var(--tap-sys-color-content-disabled));
   }
 `;
