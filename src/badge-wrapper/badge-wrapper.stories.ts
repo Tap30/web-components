@@ -2,12 +2,13 @@ import { html, TemplateResult } from 'lit';
 import './index.js';
 import '../badge';
 import '../button';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Badge',
+  title: 'Components/Badge',
   component: 'tap-badge-wrapper',
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;

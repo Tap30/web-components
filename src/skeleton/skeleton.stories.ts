@@ -1,12 +1,13 @@
 import { html, TemplateResult } from 'lit';
 import './index.ts';
 import { SkeletonAnimation, SkeletonVariant } from './types';
+import { Meta } from '@storybook/web-components';
 
 const SkeletonVariants = ['line', 'rect', 'circle'];
 const SkeletonAnimationMode = ['progress', 'none', 'pulse'];
 
 export default {
-  title: 'Skeleton',
+  title: 'Components/Skeleton',
   component: 'tap-skelton',
   argTypes: {
     variant: {
@@ -28,7 +29,7 @@ export default {
       description: 'Skeleton Width',
     },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;

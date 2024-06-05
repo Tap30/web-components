@@ -1,10 +1,11 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
+import { Meta } from '@storybook/web-components';
 
 const spinnerVariants: string[] = ['primary', 'inverse'];
 
 export default {
-  title: 'Spinner',
+  title: 'Components/Spinner',
   component: 'tap-spinner',
   argTypes: {
     variant: {
@@ -19,7 +20,7 @@ export default {
         ${Story()}
       </div>`,
   ],
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
