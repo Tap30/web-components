@@ -38,6 +38,7 @@ export default [
       { text: 'CSS Parts', link: '/references/css-parts' },
       {
         text: 'Design Tokens', items: [
+          { text: 'Colors', link: '/references/color-tokens' },
           { text: 'Components', link: '/references/components-tokens' },
         ]
       },
