@@ -6,6 +6,7 @@ import getComponentsTokensReferenceContent from "../utils/getComponentsTokensRef
 import getRadiusTokensReferenceContent from "../utils/getRadiusTokensReferenceContent";
 import getSpacingTokensReferenceContent from "../utils/getSpacingTokensReferenceContent";
 import getStrokeTokensReferenceContent from "../utils/getStrokeTokensReferenceContent";
+import getTypographyTokensReferenceContent from "../utils/getTypographyTokensReferenceContent";
 
 
 
@@ -24,6 +25,7 @@ export default {
       { params: { 'reference': 'radius-tokens' }, content: getRadiusTokensReferenceContent() },
       { params: { 'reference': 'spacing-tokens' }, content: getSpacingTokensReferenceContent() },
       { params: { 'reference': 'stroke-tokens' }, content: getStrokeTokensReferenceContent() },
+      { params: { 'reference': 'typography-tokens' }, content: getTypographyTokensReferenceContent() },
     ]
   },
 };

@@ -42,6 +42,7 @@ export default [
           { text: 'Radius', link: '/references/radius-tokens' },
           { text: 'Spacing', link: '/references/spacing-tokens' },
           { text: 'Stroke', link: '/references/stroke-tokens' },
+          { text: 'Typography', link: '/references/typography-tokens' },
           { text: 'Components', link: '/references/components-tokens' },
         ]
       },

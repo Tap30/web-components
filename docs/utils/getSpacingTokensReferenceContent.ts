@@ -3,7 +3,7 @@ const spacingFile = fs.readFileSync('tokens/spacing.css');
 
 const getSpacingTokensReferenceContent = () => {
   let content = ''
-  content += '# Radius Tokens\n\n';
+  content += '# Spacing Tokens\n\n';
 
   content += `| Token | Value | Example |\n`
   content += `| ----- | ----- | ----- |\n`

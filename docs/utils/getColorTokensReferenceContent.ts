@@ -13,7 +13,7 @@ const getColorTokensReferenceContent = () => {
   paletteFile.toString().split('\n').forEach(line => {
     if (line.trim().startsWith('--tap-')) {
       const x = line.replace(':', ';').trim().split(';')
-      content += `| \`${x[0]}\` | \`${x[1]}\` | <div style="background: ${x[1]}; width: 24px; height: 24px"></div>\n`
+      content += `| \`${x[0]}\` | \`${x[1]}\` | <div style="background: ${x[1]}; width: 64px; height: 64px"></div>\n`
     }
   })
 
@@ -26,7 +26,7 @@ const getColorTokensReferenceContent = () => {
       content += `| ----- | ----- | ----- |\n`
     } else if (line.trim().startsWith('--tap-')) {
       const x = line.replace(':', ';').trim().split(';')
-      content += `| \`${x[0]}\` | \`${x[1]}\` | <div style="background: ${x[1]}; width: 24px; height: 24px"></div>\n`
+      content += `| \`${x[0]}\` | \`${x[1]}\` | <div style="background: ${x[1]}; width: 64px; height: 64px"></div>\n`
     }
   })
   return content
