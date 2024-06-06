@@ -8,14 +8,6 @@ import getSpacingTokensReferenceContent from "../utils/getSpacingTokensReference
 import getStrokeTokensReferenceContent from "../utils/getStrokeTokensReferenceContent";
 import getTypographyTokensReferenceContent from "../utils/getTypographyTokensReferenceContent";
 
-
-
-// TODO: refactor
-
-
-
-
-
 export default {
   paths() {
     return [
