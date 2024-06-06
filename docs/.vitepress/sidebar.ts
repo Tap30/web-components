@@ -40,6 +40,7 @@ export default [
         text: 'Design Tokens', items: [
           { text: 'Colors', link: '/references/color-tokens' },
           { text: 'Components', link: '/references/components-tokens' },
+          { text: 'Radius', link: '/references/radius-tokens' },
         ]
       },
     ],
