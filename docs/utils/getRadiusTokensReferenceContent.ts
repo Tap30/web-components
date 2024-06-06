@@ -3,9 +3,9 @@ const radiusFile = fs.readFileSync('tokens/radius.css');
 
 const getRadiusTokensReferenceContent = () => {
   let content = ''
-  content += '# Radius\n\n';
+  content += '# Radius Tokens\n\n';
 
-  content += `| Token | Value | Preview |\n`
+  content += `| Token | Value | Example |\n`
   content += `| ----- | ----- | ----- |\n`
 
   radiusFile.toString().split('\n').forEach(line => {

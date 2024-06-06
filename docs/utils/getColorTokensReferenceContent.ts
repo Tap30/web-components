@@ -7,7 +7,7 @@ const getColorTokensReferenceContent = () => {
   content += '# Color Tokens\n\n';
 
   content += `## Palette\n`
-  content += `| Token | Value | Preview |\n`
+  content += `| Token | Value | Example |\n`
   content += `| ----- | ----- | ----- |\n`
 
   paletteFile.toString().split('\n').forEach(line => {

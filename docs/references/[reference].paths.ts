@@ -4,6 +4,7 @@ import getColorTokensReferenceContent from "../utils/getColorTokensReferenceCont
 import getCssPartsReferenceContent from "../utils/getCssPartsReferenceContent";
 import getComponentsTokensReferenceContent from "../utils/getComponentsTokensReferenceContent";
 import getRadiusTokensReferenceContent from "../utils/getRadiusTokensReferenceContent";
+import getSpacingTokensReferenceContent from "../utils/getSpacingTokensReferenceContent";
 
 
 
@@ -20,6 +21,7 @@ export default {
       { params: { 'reference': 'components-tokens' }, content: getComponentsTokensReferenceContent() },
       { params: { 'reference': 'color-tokens' }, content: getColorTokensReferenceContent() },
       { params: { 'reference': 'radius-tokens' }, content: getRadiusTokensReferenceContent() },
+      { params: { 'reference': 'spacing-tokens' }, content: getSpacingTokensReferenceContent() },
     ]
   },
 };

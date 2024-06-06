@@ -5,7 +5,7 @@ const file = fs.readFileSync('dist/custom-elements.json');
 const manifest = JSON.parse(file.toString()) as Package;
 
 const getComponentsTokensReferenceContent = () => {
-  let content = '# CSS Tokens API Reference\n'
+  let content = '# Components Tokens\n'
 
   manifest.modules
     .filter(

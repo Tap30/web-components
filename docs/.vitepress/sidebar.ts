@@ -39,8 +39,9 @@ export default [
       {
         text: 'Design Tokens', items: [
           { text: 'Colors', link: '/references/color-tokens' },
-          { text: 'Components', link: '/references/components-tokens' },
           { text: 'Radius', link: '/references/radius-tokens' },
+          { text: 'Spacing', link: '/references/spacing-tokens' },
+          { text: 'Components', link: '/references/components-tokens' },
         ]
       },
     ],
