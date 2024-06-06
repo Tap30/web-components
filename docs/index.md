@@ -2,8 +2,8 @@
 layout: home
 
 hero:
-  name: Tapsi Design System
-  text: in Web Components
+  name: Tapsi
+  text: Design System
 
   actions:
     - theme: brand
@@ -12,6 +12,9 @@ hero:
     - theme: alt
       text: Explore Components
       link: /components/tap-avatar
+    - theme: alt
+      text: Github
+      link: https://github.com/Tap30/web-components
 
 ---
 
