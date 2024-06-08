@@ -1,12 +1,11 @@
 {
   "name": "@tapsioss/web-components",
-  "version": "0.0.0-alpha",
+  "version": "0.0.0-alpha-1",
   "files": [
     "dist/**/*.js",
     "dist/**/*.js.map",
     "dist/**/*.d.ts",
-    "dist/**/*.css",
-    "!dist/**/*.stories.js"
+    "dist/**/*.css"
   ],
   "type": "module",
   "scripts": {
