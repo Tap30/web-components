@@ -1,6 +1,6 @@
-import { customElement } from "lit/decorators.js";
-import { PinwheelGroup } from "./pinwheel-group";
-import styles from "./pinwheel-group.style";
+import { customElement } from 'lit/decorators.js';
+import { PinwheelGroup } from './pinwheel-group';
+import styles from './pinwheel-group.style';
 
 /**
  * ### Example
@@ -25,13 +25,13 @@ import styles from "./pinwheel-group.style";
  * @cssprop [`--tap-pinwheel-group-selector-background-color`=`--tap-sys-color-surface-tertiary`]
  *
  */
-@customElement("tap-pinwheel-group")
+@customElement('tap-pinwheel-group')
 export class TapPinwheelGroup extends PinwheelGroup {
   static readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-pinwheel-group": TapPinwheelGroup;
+    'tap-pinwheel-group': TapPinwheelGroup;
   }
 }

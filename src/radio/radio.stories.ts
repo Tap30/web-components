@@ -1,11 +1,12 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Radio',
+  title: 'Components/Radio',
   component: 'tap-radio',
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -15,9 +16,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
-  <tap-radio></tap-radio>
-`;
+const Template: Story<ArgTypes> = () => html` <tap-radio></tap-radio> `;
 
 export const Radio = Template.bind({});
 

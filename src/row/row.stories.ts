@@ -6,9 +6,10 @@ import '../checkbox';
 import '../radio';
 import '../badge';
 import '../avatar';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Row',
+  title: 'Components/Row',
   component: 'tap-row',
   argTypes: {
     size: {
@@ -19,6 +20,11 @@ export default {
     },
     navigable: {
       description: 'Navigable (Show Chevron)',
+      control: { type: 'boolean' },
+      defaultValue: false,
+    },
+    disabled: {
+      description: 'Disable Row',
       control: { type: 'boolean' },
       defaultValue: false,
     },
@@ -41,7 +47,7 @@ export default {
       defaultValue: 'nothing',
     },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -56,6 +62,7 @@ interface ArgTypes {
   trailing: unknown;
   content: unknown;
   navigable: boolean;
+  disabled: boolean;
 }
 
 const renderExampleSideSlot = (
@@ -121,9 +128,10 @@ const Template: Story<ArgTypes> = ({
   leading,
   trailing,
   navigable,
+  disabled,
   content,
 }: ArgTypes) => html`
-  <tap-row ?navigable=${navigable} size=${size}>
+  <tap-row ?navigable=${navigable} ?disabled=${disabled} size=${size}>
     ${renderExampleSideSlot(leading, 'leading')}
     ${renderExampleContentSlot(content)}
     ${renderExampleSideSlot(trailing, 'trailing')}
@@ -137,5 +145,6 @@ Row.args = {
   leading: 'icon',
   trailing: 'ghost-button',
   navigable: false,
+  disabled: false,
   content: 'standard',
 };

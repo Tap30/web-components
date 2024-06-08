@@ -1,10 +1,12 @@
-import { html, LitElement, PropertyValues } from 'lit';
+import { html, LitElement, nothing, PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 export class Row extends LitElement {
   @property({ reflect: true }) size: 'standard' | 'compact' = 'standard';
 
   @property({ type: Boolean, reflect: true }) navigable: boolean = false;
+
+  @property({ type: Boolean, reflect: true }) disabled: boolean = false;
 
   private hasSlotContent(slotName: string): boolean {
     const slot = this.shadowRoot?.querySelector(
@@ -77,6 +79,10 @@ export class Row extends LitElement {
     `;
   }
 
+  private renderOverlay() {
+    return this.disabled ? html` <div class="overlay" ></div> ` : nothing;
+  }
+
   protected render(): unknown {
     return html`
       <div class="container" part="row">
@@ -98,6 +104,7 @@ export class Row extends LitElement {
         <span id="navigable" part="navigable">
           ${this.renderNavigableIcon()}
         </span>
+        ${this.renderOverlay()}
       </div>
     `;
   }

@@ -1,11 +1,12 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Checkbox',
+  title: 'Components/Checkbox',
   component: 'tap-checkbox',
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -15,9 +16,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
-  <tap-checkbox></tap-checkbox>
-`;
+const Template: Story<ArgTypes> = () => html` <tap-checkbox></tap-checkbox> `;
 
 export const Checkbox = Template.bind({});
 

@@ -1,5 +1,6 @@
 /* --tap-sys-typography-[type]-[size]-[property] */
 :root {
+  /* family */
   --tap-sys-font-family: "Vazirmatn", sans-serif;
 
   /* body */
@@ -81,3 +82,4 @@
   --tap-sys-typography-display-lg-height: 72px;
   --tap-sys-typography-display-lg-weight: 600;
 }
+e

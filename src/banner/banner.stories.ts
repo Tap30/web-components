@@ -1,12 +1,13 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
 import '../button/index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Banner',
+  title: 'Components/Banner',
   component: 'tap-banner',
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -16,7 +17,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
+const Template: Story<ArgTypes> = () => html`
   <tap-banner
     heading="با ۱۶۳۰، تلفنی تپسی بگیر"
     description="درخواست خودرو بدون نیاز به اینترنت"

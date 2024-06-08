@@ -31,7 +31,7 @@ export class Modal extends LitElement implements HTMLDialogElement {
     this.addEventListener('click', this.handleClick);
   }
 
-  protected updated(changed: PropertyValues): void {
+  protected updated(changed: PropertyValues<this>): void {
     const oldValue = changed.get('open');
     const newValue = this.open;
     const openChanged = oldValue !== undefined && oldValue !== newValue;

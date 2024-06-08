@@ -1,11 +1,12 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Divider',
+  title: 'Components/Divider',
   component: 'tap-divider',
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -15,7 +16,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
+const Template: Story<ArgTypes> = () => html`
   <tap-divider type="thin"> </tap-divider>
   <tap-divider> </tap-divider>
   <tap-divider type="bold"> </tap-divider>
