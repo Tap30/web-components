@@ -20,7 +20,7 @@ export class BottomNavigationItem extends LitElement {
       part="bottom-navigation-item"
       aria-label=${nothing}
       aria-selected=${this.active ? 'true' : 'false'}
-      @click="${this.handleClick}"
+      @click="${() => this.handleClick()}"
     >
       <slot name="icon" ?hidden=${this.active}></slot>
       <slot name="active-icon" ?hidden=${!this.active}></slot>

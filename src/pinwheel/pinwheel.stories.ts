@@ -28,7 +28,7 @@ const items = [
   'عنوان ۹',
 ];
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
+const Template: Story<ArgTypes> = (_: ArgTypes) => html`
   <tap-pinwheel .items=${items}></tap-pinwheel>
 `;
 
