@@ -78,7 +78,9 @@ const Template: Story<ArgTypes> = ({
 const VariantTemplate: Story<Record<string, never>> = () => {
   return html`
     ${toastVariants.map(
-      (variant) => html` <tap-toast variant=${ifDefined(variant)}>${variant}</tap-toast> `,
+      (variant) => html`
+        <tap-toast variant=${ifDefined(variant)}>${variant}</tap-toast>
+      `,
     )}
   `;
 };
