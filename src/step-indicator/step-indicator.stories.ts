@@ -16,7 +16,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
+const Template: Story<ArgTypes> = () => html`
   <tap-step-indicator .steps=${5}></tap-step-indicator>
 `;
 

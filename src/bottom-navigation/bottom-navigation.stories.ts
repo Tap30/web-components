@@ -19,7 +19,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = (_: ArgTypes) => html`
+const Template: Story<ArgTypes> = () => html`
   <tap-bottom-navigation>
     <tap-bottom-navigation-item>
       پروفایل

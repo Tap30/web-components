@@ -18,7 +18,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = (_: ArgTypes) => html`
+const Template: Story<ArgTypes> = () => html`
   <tap-badge-wrapper>
     <tap-badge value="‍۱۰" slot="badge" variant="info"></tap-badge>
     <tap-button>عنوان دکمه</tap-button>

@@ -16,7 +16,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
+const Template: Story<ArgTypes> = () => html`
   <tap-text-field label="لیبل" caption="متن ساپورت" placeholder="مقدار">
   </tap-text-field>
 `;

@@ -16,9 +16,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = (_: ArgTypes) => html`
-  <tap-radio></tap-radio>
-`;
+const Template: Story<ArgTypes> = () => html` <tap-radio></tap-radio> `;
 
 export const Radio = Template.bind({});
 

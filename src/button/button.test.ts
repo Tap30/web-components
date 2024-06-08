@@ -1,5 +1,4 @@
-import { expect, defineCE, fixture } from '@open-wc/testing';
-import { TapButton } from './';
+import { expect } from '@open-wc/testing';
 
 describe('Test tap-button', () => {
   it('should pass', () => {
