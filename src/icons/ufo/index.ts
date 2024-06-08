@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { UfoIcon } from "./ufo";
+import { customElement } from 'lit/decorators.js';
+import { UfoIcon } from './ufo';
 
-@customElement("tap-icon-ufo")
-export class TapIconUfo extends UfoIcon {
-}
+@customElement('tap-icon-ufo')
+export class TapIconUfo extends UfoIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-ufo": TapIconUfo;
+    'tap-icon-ufo': TapIconUfo;
   }
 }

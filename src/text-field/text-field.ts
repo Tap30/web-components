@@ -5,7 +5,6 @@ import { live } from 'lit/directives/live.js';
 import { TapInput } from '../input';
 
 export class TextField extends TapInput {
-
   @property({ type: String }) inputmode?: string; // TODO: add type
 
   @property({ type: String }) type?: string; // TODO: add type
@@ -15,24 +14,24 @@ export class TextField extends TapInput {
   // TODO: check if using generic ids for caption and input is ok
   protected renderInput(): TemplateResult {
     return html`
-        <slot name="leading"></slot>
-                <input
-                id="input"
-                class="input"
-                part="input"
-                aria-describedby="caption"
-                aria-invalid=${this.error}
-                aria-label=${ifDefined(this.label)}
-                aria-disabled=${this.disabled ? 'true' : 'false'}
-                ?disabled=${this.disabled}
-                inputmode=${ifDefined(this.inputmode)}
-                placeholder=${ifDefined(this.placeholder)}
-                autocomplete=${ifDefined(this.autocomplete) as any}
-                type=${ifDefined(this.type) as any}
-                .value=${live(this.value)}
-                @input=${this.handleInput}
-                />
-            <slot name="trailing"></slot>
+      <slot name="leading"></slot>
+      <input
+        id="input"
+        class="input"
+        part="input"
+        aria-describedby="caption"
+        aria-invalid=${this.error}
+        aria-label=${ifDefined(this.label)}
+        aria-disabled=${this.disabled ? 'true' : 'false'}
+        ?disabled=${this.disabled}
+        inputmode=${ifDefined(this.inputmode)}
+        placeholder=${ifDefined(this.placeholder)}
+        autocomplete=${ifDefined(this.autocomplete) as any}
+        type=${ifDefined(this.type) as any}
+        .value=${live(this.value)}
+        @input=${this.handleInput}
+      />
+      <slot name="trailing"></slot>
     `;
   }
 }

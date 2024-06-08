@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { KeyboardIcon } from "./keyboard";
+import { customElement } from 'lit/decorators.js';
+import { KeyboardIcon } from './keyboard';
 
-@customElement("tap-icon-keyboard")
-export class TapIconKeyboard extends KeyboardIcon {
-}
+@customElement('tap-icon-keyboard')
+export class TapIconKeyboard extends KeyboardIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-keyboard": TapIconKeyboard;
+    'tap-icon-keyboard': TapIconKeyboard;
   }
 }

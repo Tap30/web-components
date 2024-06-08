@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { CameraPlusIcon } from "./camera-plus";
+import { customElement } from 'lit/decorators.js';
+import { CameraPlusIcon } from './camera-plus';
 
-@customElement("tap-icon-camera-plus")
-export class TapIconCameraPlus extends CameraPlusIcon {
-}
+@customElement('tap-icon-camera-plus')
+export class TapIconCameraPlus extends CameraPlusIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-camera-plus": TapIconCameraPlus;
+    'tap-icon-camera-plus': TapIconCameraPlus;
   }
 }

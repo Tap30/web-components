@@ -81,7 +81,7 @@ export default css`
   }
 
   .overlay {
-    background-color: #FFF;
+    background-color: #fff;
     width: 100%;
     height: 100%;
     position: absolute;

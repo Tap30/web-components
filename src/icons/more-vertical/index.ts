@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { MoreVerticalIcon } from "./more-vertical";
+import { customElement } from 'lit/decorators.js';
+import { MoreVerticalIcon } from './more-vertical';
 
-@customElement("tap-icon-more-vertical")
-export class TapIconMoreVertical extends MoreVerticalIcon {
-}
+@customElement('tap-icon-more-vertical')
+export class TapIconMoreVertical extends MoreVerticalIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-more-vertical": TapIconMoreVertical;
+    'tap-icon-more-vertical': TapIconMoreVertical;
   }
 }

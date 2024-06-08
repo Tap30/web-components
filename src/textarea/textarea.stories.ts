@@ -1,9 +1,9 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
 
 export default {
-  title: "Components/TextArea",
-  component: "tap-textarea",
+  title: 'Components/TextArea',
+  component: 'tap-textarea',
   argTypes: {
     label: {
       control: 'text',
@@ -11,11 +11,11 @@ export default {
     },
     caption: {
       control: 'text',
-      description: 'hints on input'
+      description: 'hints on input',
     },
     placeholder: {
       control: 'text',
-      description: 'placeholder'
+      description: 'placeholder',
     },
     disabled: {
       control: 'boolean',
@@ -35,15 +35,21 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  label: string,
-  caption: string,
-  placeholder: string,
-  disabled: boolean,
-  error: boolean,
+  label: string;
+  caption: string;
+  placeholder: string;
+  disabled: boolean;
+  error: boolean;
 }
 
 const Template: Story<ArgTypes> = ({ ...args }: ArgTypes) => html`
-  <tap-textarea label=${args.label} caption=${args.caption} placeholder=${args.placeholder} ?disabled=${args.disabled} ?error=${args.error}>
+  <tap-textarea
+    label=${args.label}
+    caption=${args.caption}
+    placeholder=${args.placeholder}
+    ?disabled=${args.disabled}
+    ?error=${args.error}
+  >
   </tap-textarea>
 `;
 

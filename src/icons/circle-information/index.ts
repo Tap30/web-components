@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { CircleInformationIcon } from "./circle-information";
+import { customElement } from 'lit/decorators.js';
+import { CircleInformationIcon } from './circle-information';
 
-@customElement("tap-icon-circle-information")
-export class TapIconCircleInformation extends CircleInformationIcon {
-}
+@customElement('tap-icon-circle-information')
+export class TapIconCircleInformation extends CircleInformationIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-circle-information": TapIconCircleInformation;
+    'tap-icon-circle-information': TapIconCircleInformation;
   }
 }

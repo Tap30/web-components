@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { LockIcon } from "./lock";
+import { customElement } from 'lit/decorators.js';
+import { LockIcon } from './lock';
 
-@customElement("tap-icon-lock")
-export class TapIconLock extends LockIcon {
-}
+@customElement('tap-icon-lock')
+export class TapIconLock extends LockIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-lock": TapIconLock;
+    'tap-icon-lock': TapIconLock;
   }
 }

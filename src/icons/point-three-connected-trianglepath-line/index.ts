@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { PointThreeConnectedTrianglepathLineIcon } from "./point-three-connected-trianglepath-line";
+import { customElement } from 'lit/decorators.js';
+import { PointThreeConnectedTrianglepathLineIcon } from './point-three-connected-trianglepath-line';
 
-@customElement("tap-icon-point-three-connected-trianglepath-line")
-export class TapIconPointThreeConnectedTrianglepathLine extends PointThreeConnectedTrianglepathLineIcon {
-}
+@customElement('tap-icon-point-three-connected-trianglepath-line')
+export class TapIconPointThreeConnectedTrianglepathLine extends PointThreeConnectedTrianglepathLineIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-point-three-connected-trianglepath-line": TapIconPointThreeConnectedTrianglepathLine;
+    'tap-icon-point-three-connected-trianglepath-line': TapIconPointThreeConnectedTrianglepathLine;
   }
 }

@@ -24,8 +24,8 @@ export default {
       defaultValue: false,
     },
     disabled: {
-      description: "Disable Row",
-      control: {type: "boolean"},
+      description: 'Disable Row',
+      control: { type: 'boolean' },
       defaultValue: false,
     },
     leading: {
@@ -123,7 +123,13 @@ const renderExampleContentSlot = (example: unknown) => {
   }
 };
 
-const Template: Story<ArgTypes> = ({size, leading, trailing, navigable, disabled, content,
+const Template: Story<ArgTypes> = ({
+  size,
+  leading,
+  trailing,
+  navigable,
+  disabled,
+  content,
 }: ArgTypes) => html`
   <tap-row ?navigable=${navigable} ?disabled=${disabled} size=${size}>
     ${renderExampleSideSlot(leading, 'leading')}

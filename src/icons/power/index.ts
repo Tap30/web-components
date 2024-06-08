@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { PowerIcon } from "./power";
+import { customElement } from 'lit/decorators.js';
+import { PowerIcon } from './power';
 
-@customElement("tap-icon-power")
-export class TapIconPower extends PowerIcon {
-}
+@customElement('tap-icon-power')
+export class TapIconPower extends PowerIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-power": TapIconPower;
+    'tap-icon-power': TapIconPower;
   }
 }

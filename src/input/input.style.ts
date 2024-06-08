@@ -24,10 +24,7 @@ export default css`
   }
 
   .label {
-    color: var(
-      --tap-input-label-color,
-      var(--tap-sys-color-content-primary)
-    );
+    color: var(--tap-input-label-color, var(--tap-sys-color-content-primary));
     line-height: var(
       --tap-input-label-line-height,
       var(--tap-sys-typography-label-sm-height)
@@ -119,8 +116,7 @@ export default css`
   }
 
   :host([disabled]) .caption,
-  :host([disabled]) .label
-  {
+  :host([disabled]) .label {
     color: var(
       --tap-input-disabled-container-color,
       var(--tap-sys-color-content-disabled)

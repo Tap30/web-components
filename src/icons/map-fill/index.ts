@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { MapFillIcon } from "./map-fill";
+import { customElement } from 'lit/decorators.js';
+import { MapFillIcon } from './map-fill';
 
-@customElement("tap-icon-map-fill")
-export class TapIconMapFill extends MapFillIcon {
-}
+@customElement('tap-icon-map-fill')
+export class TapIconMapFill extends MapFillIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-map-fill": TapIconMapFill;
+    'tap-icon-map-fill': TapIconMapFill;
   }
 }
