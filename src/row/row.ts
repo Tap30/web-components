@@ -80,7 +80,7 @@ export class Row extends LitElement {
   }
 
   private renderOverlay() {
-    return this.disabled ? html` <div class="overlay" /> ` : nothing;
+    return this.disabled ? html` <div class="overlay" ></div> ` : nothing;
   }
 
   protected render(): unknown {
