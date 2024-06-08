@@ -76,6 +76,10 @@ export default css`
     cursor: pointer;
   }
 
+  :host([disabled]) .container {
+    pointer-events: none;
+  }
+
   .overlay {
     background-color: #FFF;
     width: 100%;
