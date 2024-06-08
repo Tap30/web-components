@@ -26,8 +26,8 @@ export class TextField extends TapInput {
         ?disabled=${this.disabled}
         inputmode=${ifDefined(this.inputmode)}
         placeholder=${ifDefined(this.placeholder)}
-        autocomplete=${ifDefined(this.autocomplete) as any}
-        type=${ifDefined(this.type) as any}
+        autocomplete=${ifDefined(this.autocomplete)}
+        type=${ifDefined(this.type)}
         .value=${live(this.value)}
         @input=${this.handleInput}
       />
