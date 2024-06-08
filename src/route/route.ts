@@ -24,7 +24,7 @@ export class Route extends TapRow {
   }
 
   private renderAction() {
-    return this.editable ? html`<tap-icon-pencil-line-fill slot="trailing"></tap-icon-pencil-line-fill>` : '';
+    return this.editable ? html`<tap-icon-pencil-line-fill class="edit-btn" slot="trailing"></tap-icon-pencil-line-fill>` : '';
   }
 
   protected render(): unknown {

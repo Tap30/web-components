@@ -40,4 +40,8 @@ export default css`
       background-color: var(--tap-palette-gray-200);
     }
   }
+
+  .edit-btn {
+    cursor: pointer;
+  }
 `;
