@@ -34,7 +34,7 @@ interface ArgTypes {
   loading: 'lazy' | 'eager';
 }
 
-const Template: Story<ArgTypes> = ({ image, size, loading }: ArgTypes) => html`
+const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
   <tap-avatar image="https://picsum.photos/100">
     <svg fill="#666" viewBox="0 0 24 24">
       <path
