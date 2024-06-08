@@ -19,7 +19,7 @@ import styles from './stepper.style.js';
  * @prop {`number`} [`fullWidth`=`false`] - If `true` the component will fill the parent.
  * @prop {`number`} [`value`=`0`] - The current value.
  *
- * @fires {`CustomEvent`} - Stepper change event
+ * @fires `stepper-change` - Fired when the value of the stepper changes.
  *
  * @csspart `stepper` - The container that wraps the stepper component.
  * @csspart `decrease-button` - The button that contains minus icon and decrease the value.

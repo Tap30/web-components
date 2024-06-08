@@ -1,6 +1,7 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
 import '../button';
+import { Meta } from '@storybook/web-components';
 
 const toastVariants: string[] = [
   'success',
@@ -11,7 +12,7 @@ const toastVariants: string[] = [
 ];
 
 export default {
-  title: 'Toast',
+  title: 'Components/Toast',
   component: 'tap-toast',
   argTypes: {
     toastContent: {
@@ -30,7 +31,7 @@ export default {
       defaultValue: false,
     },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;

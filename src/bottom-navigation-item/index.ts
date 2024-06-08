@@ -24,7 +24,7 @@ import styles from './bottom-navigation-item.style.js';
  * @slot `active-icon` - Slot for the icon when the item is active.
  * @slot - The default slot for the item label or content.
  *
- * @prop {`boolean`} `active` - Indicates whether the navigation item is active.
+ * @prop {`boolean`} [`active`=`false`] - Indicates whether the navigation item is active.
  *
  * @csspart `bottom-navigation-item` - The main container for the bottom navigation item.
  *

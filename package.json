@@ -16,11 +16,13 @@
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.2",
     "@eslint/js": "^9.1.1",
-    "@open-wc/testing": "^4.0.0",
     "@open-wc/lit-helpers": "^0.7.0",
+    "@open-wc/testing": "^4.0.0",
     "@storybook/addon-essentials": "^7.6.16",
     "@storybook/addon-links": "^7.6.16",
     "@storybook/blocks": "^7.6.16",
+    "@storybook/manager-api": "^8.1.5",
+    "@storybook/theming": "^8.1.5",
     "@storybook/web-components": "^7.6.16",
     "@storybook/web-components-vite": "^7.6.16",
     "@types/chai": "^4.3.12",
@@ -44,6 +46,8 @@
     "vitepress": "^1.1.4"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.6.4",
+    "@storybook/addon-actions": "^8.1.5",
     "custom-elements-manifest": "^2.1.0",
     "lit": "^3.1.2"
   }

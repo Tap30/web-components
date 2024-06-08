@@ -65,7 +65,7 @@ import { baseButtonStyles } from '../base-button';
  * @prop {`'small'` \| `'medium'` \| `'large'`} [`size`=`'medium'`] - The size of the icon button.
  * @prop {`'primary'` \| `'ghost'` \| `'naked'` \| `'elevated'` \| `'destructive'` \| `'brand'`} [`variant`=`'primary'`] - The variant style of the icon button.
  *
- * @csspart button - The button element.
+ * @csspart `button` - The button element.
  *
  * @cssprop [`--tap-font-family`=`--tap-sys-font-family`] - The font family for the button.
  * @cssprop [`--tap-sys-radius-full`] - The border radius for the button.
