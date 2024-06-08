@@ -1,10 +1,12 @@
-import { html, LitElement, PropertyValues } from 'lit';
+import { html, LitElement, nothing, PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 export class Row extends LitElement {
-  @property({ reflect: true }) size: 'standard' | 'compact' = 'standard';
+  @property({reflect: true}) size: 'standard' | 'compact' = 'standard';
 
-  @property({ type: Boolean, reflect: true }) navigable: boolean = false;
+  @property({type: Boolean, reflect: true}) navigable: boolean = false;
+
+  @property({type: Boolean, reflect: true}) disabled: boolean = false;
 
   private hasSlotContent(slotName: string): boolean {
     const slot = this.shadowRoot?.querySelector(
@@ -66,15 +68,19 @@ export class Row extends LitElement {
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M13.9143 8.46445L10.3794 11.9993L13.9143 15.5355L12.5 16.9497L7.55029 12L12.5 7.05023L13.9143 8.46445Z"
-          fill="#B1B2B2"
-        />
+      >  <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M13.9143 8.46445L10.3794 11.9993L13.9143 15.5355L12.5 16.9497L7.55029 12L12.5 7.05023L13.9143 8.46445Z"
+              fill="#B1B2B2"/>
       </svg>
     `;
+  }
+
+  private renderOverlay() {
+    return this.disabled
+      ? html`
+        <div class="overlay"/>
+      `
+      : nothing;
   }
 
   protected render(): unknown {
@@ -87,17 +93,15 @@ export class Row extends LitElement {
           ></slot>
         </span>
         <span class="content" part="content">
-          <slot name="content" @slotchange=${this.updateSlotsVisibility}></slot>
-        </span>
+             <slot name="content" @slotchange=${this.updateSlotsVisibility}></slot>
+          </span>
         <span class="trailing" part="trailing">
-          <slot
-            name="trailing"
-            @slotchange="${this.updateSlotsVisibility}"
-          ></slot>
-        </span>
+            <slot name="trailing" @slotchange="${this.updateSlotsVisibility}"></slot>
+          </span>
         <span id="navigable" part="navigable">
-          ${this.renderNavigableIcon()}
+              ${this.renderNavigableIcon()}
         </span>
+        ${this.renderOverlay()}
       </div>
     `;
   }
