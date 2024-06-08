@@ -17,7 +17,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
+const Template: Story<ArgTypes> = (_: ArgTypes) => html`
   <tap-banner
     heading="با ۱۶۳۰، تلفنی تپسی بگیر"
     description="درخواست خودرو بدون نیاز به اینترنت"
