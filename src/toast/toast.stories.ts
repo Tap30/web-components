@@ -41,11 +41,6 @@ interface Story<T> {
   argTypes?: Record<string, unknown>;
 }
 
-const defaultProps = {
-  toastContent: 'toast text goes here!',
-  showDismissButton: false,
-};
-
 interface ArgTypes {
   toastContent: string;
   variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse';
