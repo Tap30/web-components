@@ -2,7 +2,7 @@ import { html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 
 // TODO: fix
-export class Alert extends LitElement {
+export class Notice extends LitElement {
   private renderSuccessIcon() {
     return html`
       <svg
@@ -113,15 +113,15 @@ export class Alert extends LitElement {
   }
 
   private renderTitle() {
-    if (this.alertTitle)
+    if (this.noticeTitle)
       return html`<span id="title" part="title" class="title">
-        ${this.alertTitle}
+        ${this.noticeTitle}
       </span>`;
     return '';
   }
 
-  @property({ type: String, attribute: 'alert-title' })
-  alertTitle? = '';
+  @property({ type: String, attribute: 'notice-title' })
+  noticeTitle? = '';
 
   @property() variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse' =
     'inverse';
@@ -130,10 +130,10 @@ export class Alert extends LitElement {
   render() {
     return html`
       <div
-        part="alert"
-        id="alert"
-        class="alert"
-        role="alertdialog"
+        part="notice"
+        id="notice"
+        class="notice"
+        role="noticedialog"
         aria-label=${nothing}
         aria-labelledby=${nothing}
         aria-describedby=${nothing}

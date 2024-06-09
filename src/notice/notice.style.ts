@@ -25,7 +25,7 @@ export default css`
     position: relative;
   }
 
-  .alert {
+  .notice {
     /* alignment */
     position: relative;
     cursor: inherit;
@@ -34,22 +34,22 @@ export default css`
     justify-content: flex-start;
     vertical-align: middle;
     /* spacing and border */
-    width: var(--tap-alert-width, 100%);
+    width: var(--tap-notice-width, 100%);
     gap: var(--tap-sys-spacing-5);
-    border-radius: var(--tap-alert-radius, var(--tap-sys-radius-3));
-    padding: var(--tap-alert-vertical-padding, var(--tap-sys-spacing-6))
-      var(--tap-alert-horizontal-padding, var(--tap-sys-spacing-5));
+    border-radius: var(--tap-notice-radius, var(--tap-sys-radius-3));
+    padding: var(--tap-notice-vertical-padding, var(--tap-sys-spacing-6))
+      var(--tap-notice-horizontal-padding, var(--tap-sys-spacing-5));
     /* text and font */
     text-decoration: none;
     font: inherit;
     font-family: var(--tap-font-family, var(--tap-sys-font-family));
     /* default = inverse high */
     color: var(
-      --tap-alert-color-inverse,
+      --tap-notice-color-inverse,
       var(--tap-sys-color-content-on-inverse)
     );
     background-color: var(
-      --tap-alert-bg-color-inverse,
+      --tap-notice-bg-color-inverse,
       var(--tap-sys-color-surface-inverse-primary)
     );
   }
@@ -62,15 +62,15 @@ export default css`
   :host .title {
     display: block;
     font-size: var(
-      --tap-alert-title-font-size,
+      --tap-notice-title-font-size,
       var(--tap-sys-typography-label-md-size)
     );
     line-height: var(
-      --tap-alert-title-line-height,
+      --tap-notice-title-line-height,
       var(--tap-sys-typography-label-md-height)
     );
     font-weight: var(
-      --tap-alert-title-font-weight,
+      --tap-notice-title-font-weight,
       var(--tap-sys-typography-label-md-weight)
     );
   }
@@ -78,15 +78,15 @@ export default css`
   :host .message {
     display: block;
     font-size: var(
-      --tap-alert-message-font-size,
+      --tap-notice-message-font-size,
       var(--tap-sys-typography-body-sm-size)
     );
     line-height: var(
-      --tap-alert-message-line-height,
+      --tap-notice-message-line-height,
       var(--tap-sys-typography-body-sm-height)
     );
     font-weight: var(
-      --tap-alert-message-font-weight,
+      --tap-notice-message-font-weight,
       var(--tap-sys-typography-body-sm-weight)
     );
   }
@@ -97,108 +97,108 @@ export default css`
     justify-content: center;
   }
 
-  :host([variant='inverse']) .alert {
+  :host([variant='inverse']) .notice {
     color: var(
-      --tap-alert-color-inverse,
+      --tap-notice-color-inverse,
       var(--tap-sys-color-content-on-inverse)
     );
     background-color: var(
-      --tap-alert-bg-color-inverse,
+      --tap-notice-bg-color-inverse,
       var(--tap-sys-color-surface-inverse-primary)
     );
   }
-  :host([variant='inverse'][priority='low']) .alert {
+  :host([variant='inverse'][priority='low']) .notice {
     color: var(
-      --tap-alert-color-inverse-low,
+      --tap-notice-color-inverse-low,
       var(--tap-sys-color-content-primary)
     );
     background-color: var(
-      --tap-alert-bg-color-inverse-low,
+      --tap-notice-bg-color-inverse-low,
       var(--tap-sys-color-surface-primary)
     );
   }
 
-  :host([variant='success']) .alert {
+  :host([variant='success']) .notice {
     color: var(
-      --tap-alert-color-success,
+      --tap-notice-color-success,
       var(--tap-sys-color-content-on-inverse)
     );
     background-color: var(
-      --tap-alert-bg-color-success,
+      --tap-notice-bg-color-success,
       var(--tap-sys-color-surface-positive)
     );
   }
-  :host([variant='success'][priority='low']) .alert {
+  :host([variant='success'][priority='low']) .notice {
     color: var(
-      --tap-alert-color-success-low,
+      --tap-notice-color-success-low,
       var(--tap-sys-color-content-positive)
     );
     background-color: var(
-      --tap-alert-bg-color-success-low,
+      --tap-notice-bg-color-success-low,
       var(--tap-sys-color-surface-positive-light)
     );
   }
-  :host([variant='warning']) .alert {
-    color: var(--tap-alert-color-warning, var(--tap-sys-color-content-primary));
+  :host([variant='warning']) .notice {
+    color: var(--tap-notice-color-warning, var(--tap-sys-color-content-primary));
     background-color: var(
-      --tap-alert-bg-color-warning,
+      --tap-notice-bg-color-warning,
       var(--tap-sys-color-surface-warning)
     );
   }
-  :host([variant='warning'][priority='low']) .alert {
+  :host([variant='warning'][priority='low']) .notice {
     color: var(
-      --tap-alert-color-warning-low,
+      --tap-notice-color-warning-low,
       var(--tap-sys-color-content-warning)
     );
     background-color: var(
-      --tap-alert-bg-color-warning-low,
+      --tap-notice-bg-color-warning-low,
       var(--tap-sys-color-surface-warning-light)
     );
   }
-  :host([variant='error']) .alert {
+  :host([variant='error']) .notice {
     color: var(
-      --tap-alert-color-error,
+      --tap-notice-color-error,
       var(--tap-sys-color-content-on-inverse)
     );
     background-color: var(
-      --tap-alert-bg-color-error,
+      --tap-notice-bg-color-error,
       var(--tap-sys-color-surface-negative)
     );
   }
-  :host([variant='error'][priority='low']) .alert {
+  :host([variant='error'][priority='low']) .notice {
     color: var(
-      --tap-alert-color-error-low,
+      --tap-notice-color-error-low,
       var(--tap-sys-color-content-negative)
     );
     background-color: var(
-      --tap-alert-bg-color-error-low,
+      --tap-notice-bg-color-error-low,
       var(--tap-sys-color-surface-negative-light)
     );
   }
-  :host([variant='info']) .alert {
-    color: var(--tap-alert-color-info, var(--tap-sys-color-content-on-inverse));
+  :host([variant='info']) .notice {
+    color: var(--tap-notice-color-info, var(--tap-sys-color-content-on-inverse));
     background-color: var(
-      --tap-alert-bg-color-info,
+      --tap-notice-bg-color-info,
       var(--tap-sys-color-surface-accent)
     );
   }
-  :host([variant='info'][priority='low']) .alert {
-    color: var(--tap-alert-color-info-low, var(--tap-sys-color-content-accent));
+  :host([variant='info'][priority='low']) .notice {
+    color: var(--tap-notice-color-info-low, var(--tap-sys-color-content-accent));
     background-color: var(
-      --tap-alert-bg-color-info-low,
+      --tap-notice-bg-color-info-low,
       var(--tap-sys-color-surface-accent-light)
     );
   }
 
-  :host([priority='low']) .alert > p.text-root > span.message {
+  :host([priority='low']) .notice > p.text-root > span.message {
     color: var(
-      --tap-alert-message-color-low,
+      --tap-notice-message-color-low,
       var(--tap-sys-color-content-secondary)
     );
   }
-  :host([priority='low']) .alert > p.text-root > span.title {
+  :host([priority='low']) .notice > p.text-root > span.title {
     color: var(
-      --tap-alert-title-color-low,
+      --tap-notice-title-color-low,
       var(--tap-sys-color-content-primary)
     );
   }

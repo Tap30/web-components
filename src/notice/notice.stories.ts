@@ -2,7 +2,7 @@ import { html, TemplateResult, nothing } from 'lit';
 import './index.js';
 import '../button';
 
-const alertVariants: string[] = [
+const noticeVariants: string[] = [
   'success',
   'error',
   'info',
@@ -10,40 +10,40 @@ const alertVariants: string[] = [
   'inverse',
 ];
 
-const alertPriorities: string[] = ['high', 'low'];
+const noticePriorities: string[] = ['high', 'low'];
 // TODO: fix
 
 type Actions = 'nothing' | 'button' | 'any';
 type Variants = 'success' | 'error' | 'info' | 'warning' | 'inverse';
 
 export default {
-  title: 'Alert',
-  component: 'tap-alert',
+  title: 'Notice',
+  component: 'tap-notice',
   argTypes: {
-    alertContent: {
+    noticeContent: {
       control: 'text',
-      description: 'Alert content',
+      description: 'Notice content',
     },
     variant: {
-      options: alertVariants,
+      options: noticeVariants,
       control: { type: 'inline-radio' },
-      description: 'The alert variant',
+      description: 'The notice variant',
       defaultValue: `inverse`,
     },
     priority: {
-      options: alertPriorities,
+      options: noticePriorities,
       control: { type: 'inline-radio' },
-      description: 'The alert priority',
+      description: 'The notice priority',
       defaultValue: `low`,
     },
-    alertTitle: {
+    noticeTitle: {
       control: 'text',
-      description: 'Alert title',
+      description: 'Notice title',
       defaultValue: '',
     },
     actions: {
       description:
-        'Actions section of the Alert: These actions are passed to the Alert component as an slot named `actions`',
+        'Actions section of the Notice: These actions are passed to the Notice component as an slot named `actions`',
       control: { type: 'select' },
       options: ['button', 'any', 'nothing'],
       defaultValue: 'nothing',
@@ -58,10 +58,10 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  alertContent: string;
+  noticeContent: string;
   variant?: Variants;
   priority?: 'high' | 'low';
-  alertTitle?: string;
+  noticeTitle?: string;
   actions?: Actions;
 }
 
@@ -79,20 +79,20 @@ const renderActionsSection = (actions?: Actions) => {
 
 const Template: Story<ArgTypes> = ({
   variant,
-  alertContent,
+  noticeContent,
   priority,
-  alertTitle,
+  noticeTitle,
   actions,
 }) => {
   return html`
-    <tap-alert
-      id="alert-story"
+    <tap-notice
+      id="notice-story"
       variant=${variant}
       priority=${priority}
-      alert-title=${alertTitle}
+      notice-title=${noticeTitle}
     >
-      ${alertContent} ${renderActionsSection(actions)}
-    </tap-alert>
+      ${noticeContent} ${renderActionsSection(actions)}
+    </tap-notice>
   `;
 };
 
@@ -101,10 +101,10 @@ const VariantTemplate: Story<{ priority?: 'low' | 'high' }> = ({
 }) => {
   return html`
     <div style="display: flex; flex-direction: column; gap: 16px">
-      ${alertVariants.map(
+      ${noticeVariants.map(
         (variant) => html`
-          <tap-alert variant=${variant} priority=${priority} alert-title="title"
-            >unchangeable ${variant}${priority ? `-${priority}` : ''}</tap-alert
+          <tap-notice variant=${variant} priority=${priority} notice-title="title"
+            >unchangeable ${variant}${priority ? `-${priority}` : ''}</tap-notice
           >
         `,
       )}
@@ -114,9 +114,9 @@ const VariantTemplate: Story<{ priority?: 'low' | 'high' }> = ({
 
 export const Simple = Template.bind({});
 Simple.args = {
-  alertContent:
-    'Please notice this text here. It is important and the user should pay attention. Default variant of the Alert component is `inverse` and its default priority is `high`. What you see is a customized `info-low` Alert/Notice. Good luck using this component!',
-  alertTitle: 'Title',
+  noticeContent:
+    'Please notice this text here. It is important and the user should pay attention. Default variant of the Notice component is `inverse` and its default priority is `high`. What you see is a customized `info-low` Notice/Notice. Good luck using this component!',
+  noticeTitle: 'Title',
   variant: 'info',
   priority: 'low',
   actions: 'nothing',
