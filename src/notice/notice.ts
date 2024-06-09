@@ -116,7 +116,7 @@ export class Notice extends LitElement {
       return html`<span id="title" part="title" class="title">
         ${this.noticeTitle}
       </span>`;
-    return '';
+    return nothing;
   }
 
   @property({ type: String, attribute: 'notice-title' })
@@ -128,15 +128,7 @@ export class Notice extends LitElement {
 
   render() {
     return html`
-      <div
-        part="notice"
-        id="notice"
-        class="notice"
-        role="noticedialog"
-        aria-label=${nothing}
-        aria-labelledby=${nothing}
-        aria-describedby=${nothing}
-      >
+      <div part="notice" id="notice" class="notice" role="notice">
         <span class="icon" id="icon" part="icon"> ${this.renderIcon()} </span>
         <p id="text-root" part="text-root" class="text-root">
           ${this.renderTitle()}
