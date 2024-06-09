@@ -1,5 +1,18 @@
 import { css } from 'lit';
 
+/* variables:
+ * --tap-notice-[property]
+ * --tap-notice-[part]-[property] for parts: title | message | actions
+ *
+ * variants: inverse | success | info | error | warning
+ * priority: high | low
+ * --tap-notice-[variant]-[priority]-color
+ * --tap-notice-[variant]-[priority]-bg-color
+ *   --tap-notice-title-low-color
+ *   --tap-notice-message-low-color
+ *   --tap-notice-dismiss-low-color
+ * */
+
 export default css`
   :host {
     box-sizing: border-box;
@@ -34,7 +47,8 @@ export default css`
     vertical-align: middle;
     /* spacing and border */
     width: var(--tap-notice-width, 100%);
-    gap: var(--tap-sys-spacing-5);
+    height: var(--tap-notice-height, auto);
+    gap: var(--tap-notice-gap, var(--tap-sys-spacing-5));
     border-radius: var(--tap-notice-radius, var(--tap-sys-radius-3));
     padding: var(--tap-notice-vertical-padding, var(--tap-sys-spacing-6))
       var(--tap-notice-horizontal-padding, var(--tap-sys-spacing-5));
@@ -44,11 +58,11 @@ export default css`
     font-family: var(--tap-font-family, var(--tap-sys-font-family));
     /* default = inverse high */
     color: var(
-      --tap-notice-color-inverse,
+      --tap-notice-inverse-high-color,
       var(--tap-sys-color-content-on-inverse)
     );
     background-color: var(
-      --tap-notice-bg-color-inverse,
+      --tap-notice-inverse-high-bg-color,
       var(--tap-sys-color-surface-inverse-primary)
     );
   }
@@ -115,107 +129,107 @@ export default css`
 
   /* actions section is the adjacent sibling of the message */
   :host .message + ::slotted(*) {
-    margin-top: var(--tap-notice-actions-margin, var(--tap-sys-spacing-4));
+    margin-top: var(--tap-notice-actions-margin-top, var(--tap-sys-spacing-4));
   }
 
   :host([variant='inverse']) .notice {
     color: var(
-      --tap-notice-color-inverse,
+      --tap-notice-inverse-high-color,
       var(--tap-sys-color-content-on-inverse)
     );
     background-color: var(
-      --tap-notice-bg-color-inverse,
+      --tap-notice-inverse-high-bg-color,
       var(--tap-sys-color-surface-inverse-primary)
     );
   }
   :host([variant='inverse'][priority='low']) .notice {
     color: var(
-      --tap-notice-color-inverse-low,
+      --tap-notice-inverse-low-color,
       var(--tap-sys-color-content-primary)
     );
     background-color: var(
-      --tap-notice-bg-color-inverse-low,
+      --tap-notice-inverse-low-bg-color,
       var(--tap-sys-color-surface-primary)
     );
   }
 
   :host([variant='success']) .notice {
     color: var(
-      --tap-notice-color-success,
+      --tap-notice-success-high-color,
       var(--tap-sys-color-content-on-inverse)
     );
     background-color: var(
-      --tap-notice-bg-color-success,
+      --tap-notice-success-high-bg-color,
       var(--tap-sys-color-surface-positive)
     );
   }
   :host([variant='success'][priority='low']) .notice {
     color: var(
-      --tap-notice-color-success-low,
+      --tap-notice-success-low-color,
       var(--tap-sys-color-content-positive)
     );
     background-color: var(
-      --tap-notice-bg-color-success-low,
+      --tap-notice-success-low-bg-color,
       var(--tap-sys-color-surface-positive-light)
     );
   }
   :host([variant='warning']) .notice {
     color: var(
-      --tap-notice-color-warning,
+      --tap-notice-warning-high-color,
       var(--tap-sys-color-content-primary)
     );
     background-color: var(
-      --tap-notice-bg-color-warning,
+      --tap-notice-warning-high-bg-color,
       var(--tap-sys-color-surface-warning)
     );
   }
   :host([variant='warning'][priority='low']) .notice {
     color: var(
-      --tap-notice-color-warning-low,
+      --tap-notice-warning-low-color,
       var(--tap-sys-color-content-warning)
     );
     background-color: var(
-      --tap-notice-bg-color-warning-low,
+      --tap-notice-warning-low-bg-color,
       var(--tap-sys-color-surface-warning-light)
     );
   }
   :host([variant='error']) .notice {
     color: var(
-      --tap-notice-color-error,
+      --tap-notice-error-high-color,
       var(--tap-sys-color-content-on-inverse)
     );
     background-color: var(
-      --tap-notice-bg-color-error,
+      --tap-notice-error-high-bg-color,
       var(--tap-sys-color-surface-negative)
     );
   }
   :host([variant='error'][priority='low']) .notice {
     color: var(
-      --tap-notice-color-error-low,
+      --tap-notice-error-low-color,
       var(--tap-sys-color-content-negative)
     );
     background-color: var(
-      --tap-notice-bg-color-error-low,
+      --tap-notice-error-low-bg-color,
       var(--tap-sys-color-surface-negative-light)
     );
   }
   :host([variant='info']) .notice {
     color: var(
-      --tap-notice-color-info,
+      --tap-notice-info-high-color,
       var(--tap-sys-color-content-on-inverse)
     );
     background-color: var(
-      --tap-notice-bg-color-info,
+      --tap-notice-info-high-bg-color,
       var(--tap-sys-color-surface-accent)
     );
   }
   :host([variant='info'][priority='low']) .notice {
     color: var(
-      --tap-notice-color-info-low,
+      --tap-notice-info-low-color,
       var(--tap-sys-color-content-accent)
     );
     background-color: var(
-      --tap-notice-bg-color-info-low,
+      --tap-notice-info-low-bg-color,
       var(--tap-sys-color-surface-accent-light)
     );
   }
@@ -224,19 +238,19 @@ export default css`
   /* without this higher priority selector, the texts would be the same color as the icons */
   :host([priority='low']) .notice > div.content-root > p.message {
     color: var(
-      --tap-notice-message-color-low,
+      --tap-notice-message-low-color,
       var(--tap-sys-color-content-secondary)
     );
   }
   :host([priority='low']) .notice > button.dismiss {
     color: var(
-      --tap-notice-message-color-low,
+      --tap-notice-dismiss-low-color,
       var(--tap-sys-color-content-secondary)
     );
   }
   :host([priority='low']) .notice > div.content-root > p.title {
     color: var(
-      --tap-notice-title-color-low,
+      --tap-notice-title-low-color,
       var(--tap-sys-color-content-primary)
     );
   }
