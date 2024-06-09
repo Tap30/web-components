@@ -40,6 +40,11 @@ export default {
       description: 'Notice title',
       defaultValue: '',
     },
+    dismissable: {
+      description: 'Should the Notice be dismissable?',
+      control: { type: 'boolean' },
+      defaultValue: false,
+    },
     actions: {
       description:
         'Actions section of the Notice: These actions are passed to the Notice component as an slot named `actions`',
@@ -62,16 +67,17 @@ interface ArgTypes {
   priority?: 'high' | 'low';
   noticeTitle?: string;
   actions?: Actions;
+  dismissable?: boolean;
 }
 
 const renderActionsSection = (actions?: Actions) => {
   if (actions === 'button')
-    return html`<div slot="actions" style="margin-top: 8px">
+    return html`<div slot="actions">
       <tap-button varinat="ghost">button</tap-button>
     </div>`;
   if (actions === 'any')
-    return html`<p slot="actions" style="margin-top: 8px">
-      your actions slot goes here, and you are responsible of styling it
+    return html`<p slot="actions">
+      your actions slot goes here, and you are responsible for styling it
     </p>`;
   return nothing;
 };
@@ -82,11 +88,20 @@ const Template: Story<ArgTypes> = ({
   priority,
   noticeTitle,
   actions,
+                                     dismissable,
 }) => {
+  document.addEventListener('DOMContentLoaded', () => {
+    const noticeElement = document.getElementById('notice-story');
+    noticeElement?.addEventListener('dismiss', () => {
+      noticeElement.remove();
+    });
+  });
+
   return html`
     <tap-notice
       id="notice-story"
       variant=${variant}
+      dismissable=${dismissable}
       priority=${priority}
       notice-title=${noticeTitle}
     >
@@ -103,7 +118,7 @@ const VariantTemplate: Story<{ priority?: 'low' | 'high' }> = ({
       ${noticeVariants.map(
         (variant) => html`
           <tap-notice variant=${variant} priority=${priority} notice-title="title"
-            >unchangeable ${variant}${priority ? `-${priority}` : ''}</tap-notice
+            >unchangeable variant "${variant}". Try changing the priority to ${priority === 'high' ? `"low"` : '"high"'}!</tap-notice
           >
         `,
       )}
@@ -114,11 +129,12 @@ const VariantTemplate: Story<{ priority?: 'low' | 'high' }> = ({
 export const Simple = Template.bind({});
 Simple.args = {
   noticeContent:
-    'Please notice this text here. It is important and the user should pay attention. Default variant of the Notice component is `inverse` and its default priority is `high`. What you see is a customized `info-low` Notice/Notice. Good luck using this component!',
+    'Please notice this text here. It is important and the user should pay attention. Default variant of the Notice component is `inverse`, its default priority is `high`, and it is not dismissable by default. What you see is a customized `info-low` Notice. Good luck using this component!',
   noticeTitle: 'Title',
   variant: 'info',
   priority: 'low',
   actions: 'nothing',
+  dismissable: true,
 };
 
 export const Variants = VariantTemplate.bind({});

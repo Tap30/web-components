@@ -53,7 +53,14 @@ export default css`
     );
   }
 
-  :host .text-root {
+  /* removing default margin of the div element*/
+  :host .content-root {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* removing default margin of the p element*/
+  :host .content-root p {
     margin: 0;
     padding: 0;
   }
@@ -94,6 +101,21 @@ export default css`
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  :host .dismiss {
+    background: transparent;
+    border: none;
+    padding: 0; /* set button padding to 0 because padding is already provided by flex gap */
+    color: inherit;
+  }
+  :host .dismiss:hover {
+    cursor: pointer;
+  }
+
+  /* actions section is the adjacent sibling of the message */
+  :host .message + ::slotted(*) {
+    margin-top: var(--tap-notice-actions-margin, var(--tap-sys-spacing-4));
   }
 
   :host([variant='inverse']) .notice {
@@ -138,7 +160,10 @@ export default css`
     );
   }
   :host([variant='warning']) .notice {
-    color: var(--tap-notice-color-warning, var(--tap-sys-color-content-primary));
+    color: var(
+      --tap-notice-color-warning,
+      var(--tap-sys-color-content-primary)
+    );
     background-color: var(
       --tap-notice-bg-color-warning,
       var(--tap-sys-color-surface-warning)
@@ -175,27 +200,41 @@ export default css`
     );
   }
   :host([variant='info']) .notice {
-    color: var(--tap-notice-color-info, var(--tap-sys-color-content-on-inverse));
+    color: var(
+      --tap-notice-color-info,
+      var(--tap-sys-color-content-on-inverse)
+    );
     background-color: var(
       --tap-notice-bg-color-info,
       var(--tap-sys-color-surface-accent)
     );
   }
   :host([variant='info'][priority='low']) .notice {
-    color: var(--tap-notice-color-info-low, var(--tap-sys-color-content-accent));
+    color: var(
+      --tap-notice-color-info-low,
+      var(--tap-sys-color-content-accent)
+    );
     background-color: var(
       --tap-notice-bg-color-info-low,
       var(--tap-sys-color-surface-accent-light)
     );
   }
 
-  :host([priority='low']) .notice > p.text-root > span.message {
+  /* text style of the "low priority" mode is selected by a higher-priority selector */
+  /* without this higher priority selector, the texts would be the same color as the icons */
+  :host([priority='low']) .notice > div.content-root > p.message {
     color: var(
       --tap-notice-message-color-low,
       var(--tap-sys-color-content-secondary)
     );
   }
-  :host([priority='low']) .notice > p.text-root > span.title {
+  :host([priority='low']) .notice > button.dismiss {
+    color: var(
+      --tap-notice-message-color-low,
+      var(--tap-sys-color-content-secondary)
+    );
+  }
+  :host([priority='low']) .notice > div.content-root > p.title {
     color: var(
       --tap-notice-title-color-low,
       var(--tap-sys-color-content-primary)

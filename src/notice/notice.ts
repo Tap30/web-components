@@ -2,6 +2,25 @@ import { html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 
 export class Notice extends LitElement {
+  private renderCloseIcon() {
+    return html`
+      <svg
+        width="25"
+        height="24"
+        viewBox="0 0 25 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M18.1568 7.75735L13.9142 12L18.1568 16.2426L16.7426 17.6568L12.5 13.4142L8.25735 17.6568L6.84314 16.2426L11.0858 12L6.84314 7.75735L8.25735 6.34314L12.5 10.5858L16.7426 6.34314L18.1568 7.75735Z"
+          fill="currentColor"
+        />
+      </svg>
+    `;
+  }
+
   private renderSuccessIcon() {
     return html`
       <svg
@@ -113,9 +132,31 @@ export class Notice extends LitElement {
 
   private renderTitle() {
     if (this.noticeTitle)
-      return html`<span id="title" part="title" class="title">
+      return html`<p id="title" part="title" class="title">
         ${this.noticeTitle}
-      </span>`;
+      </p>`;
+    return nothing;
+  }
+
+  private dispatchDismissEvent() {
+    this.dispatchEvent(
+      new CustomEvent('dismiss', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
+  private renderDismiss() {
+    if (this.dismissable)
+      return html`<button
+        part="dismiss"
+        class="dismiss"
+        id="dismiss"
+        @click=${this.dispatchDismissEvent}
+      >
+        ${this.renderCloseIcon()}
+      </button>`;
     return nothing;
   }
 
@@ -126,17 +167,21 @@ export class Notice extends LitElement {
     'inverse';
   @property() priority?: 'high' | 'low' = 'high';
 
+  @property({ type: Boolean, attribute: 'dismissable' })
+  dismissable? = false;
+
   render() {
     return html`
       <div part="notice" id="notice" class="notice" role="notice">
         <span class="icon" id="icon" part="icon"> ${this.renderIcon()} </span>
-        <p id="text-root" part="text-root" class="text-root">
+        <div id="content-root" part="content-root" class="content-root">
           ${this.renderTitle()}
-          <span id="message" part="message" class="message">
+          <p id="message" part="message" class="message">
             <slot></slot>
-          </span>
+          </p>
           <slot name="actions" part="actions"></slot>
-        </p>
+        </div>
+        ${this.renderDismiss()}
       </div>
     `;
   }
