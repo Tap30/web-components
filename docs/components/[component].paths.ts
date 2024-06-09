@@ -3,13 +3,13 @@ import type { Package, CustomElement, PropertyLike } from 'custom-elements-manif
 
 export default {
   paths() {
-    const file = fs.readFileSync('custom-elements.json');
+    const file = fs.readFileSync('dist/custom-elements.json');
     const manifest = JSON.parse(file.toString()) as Package;
 
     return manifest.modules
       .filter(
         (module) =>
-          !module.path.startsWith('src/icon') && !!module.declarations?.length,
+          !(module.path.startsWith('src/icon/') || module.path.startsWith('src/icons/')) && !!module.declarations?.length
       )
       .map((module) => {
         if (!module.exports)
@@ -27,7 +27,8 @@ export default {
 
         let content = '';
 
-        content += `# ${component.name} \n`;
+
+        content += `# ${getPageTitle(component.tagName)}\n`;
 
         if (component.summary) {
           content += `${component.summary}\n`;
@@ -71,14 +72,26 @@ export default {
           });
         }
 
-        if (!!component.cssProperties?.length) {
+
+
+
+          if (!!component.cssProperties?.length) {
           content += '### CSS Properties\n';
-          content += '| Token | Default |\n';
-          content += '| ---- | ---- |\n';
+          content += '| Token | Default | Description\n';
+          content += '| ---- | ---- | ---- |\n';
 
           component.cssProperties.forEach((cssProperty) => {
-            content += `| ${cssProperty.name} | ${cssProperty.default} |\n`;
+            content += `| ${cssProperty.name} | ${cssProperty.default || '-'} | ${cssProperty.description || '-'} |\n`;
           });
+        }
+
+        if (!!component.events?.length) {
+          content += '### Events\n';
+          content += '| Name  | Description\n';
+          content += '| ----- | ------- |\n';
+          component.events.forEach((event) => {
+            content += `| ${event.name}  | ${event.description || '-'} |\n`;
+          })
         }
 
         return {
@@ -101,15 +114,15 @@ If you are using node and NPM, you can install this component using npm:
 ::: code-group
 
 \`\`\`bash [npm]
-npm install @tapsi/components
+npm install @tapsi-oss/web-components
 \`\`\`
 
 \`\`\`bash [yarn]
-yarn add @tapsi/components
+yarn add @tapsi-oss/web-components
 \`\`\`
 
 \`\`\`bash [pnpm]
-pnpm install @tapsi/components
+pnpm install @tapsi-oss/web-components
 \`\`\`
 
 :::
@@ -117,7 +130,13 @@ pnpm install @tapsi/components
 Then import this component into your project by using a bare module specifier:
 
 \`\`\`js
-import '@tapsi/components/${name}/${name}.js';
+import '@tapsi-oss/web-components/${name}/${name}.js';
 \`\`\`
 `
 }
+
+const getPageTitle = (componentName: string): string => {
+  const result = componentName.replace(/^-*(.)|-+(.)/g, (s, c, d) => c ? c.toUpperCase() : ' ' + d.toUpperCase())
+  const title = result.charAt(0).toUpperCase() + result.slice(1);
+  return `${title} Component`
+};

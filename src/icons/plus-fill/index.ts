@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { PlusFillIcon } from "./plus-fill";
+import { customElement } from 'lit/decorators.js';
+import { PlusFillIcon } from './plus-fill';
 
-@customElement("tap-icon-plus-fill")
-export class TapIconPlusFill extends PlusFillIcon {
-}
+@customElement('tap-icon-plus-fill')
+export class TapIconPlusFill extends PlusFillIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-plus-fill": TapIconPlusFill;
+    'tap-icon-plus-fill': TapIconPlusFill;
   }
 }

@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { SunIcon } from "./sun";
+import { customElement } from 'lit/decorators.js';
+import { SunIcon } from './sun';
 
-@customElement("tap-icon-sun")
-export class TapIconSun extends SunIcon {
-}
+@customElement('tap-icon-sun')
+export class TapIconSun extends SunIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-sun": TapIconSun;
+    'tap-icon-sun': TapIconSun;
   }
 }

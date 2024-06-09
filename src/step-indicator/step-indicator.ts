@@ -1,17 +1,8 @@
-import { LitElement, html } from "lit";
-import { property, queryAll } from "lit/decorators.js";
-import { range } from "lit/directives/range.js";
-import { map } from "lit/directives/map.js";
+import { html, LitElement } from 'lit';
+import { property } from 'lit/decorators.js';
+import { range } from 'lit/directives/range.js';
+import { map } from 'lit/directives/map.js';
 
-/**
- * @prop steps - total steps
- * @prop selected - current selected step
- *
- * @fires {CustomEvent} - Step indicator change event
- *
- * @csspart steps - container for the steps
- * @csspart step - step button
- */
 export class StepIndicator extends LitElement {
   @property({ type: Number }) steps = 2;
 
@@ -24,11 +15,11 @@ export class StepIndicator extends LitElement {
   private handleClick(index: number) {
     this.current = index;
     this.dispatchEvent(
-      new CustomEvent("tap-step-indicator-change", {
+      new CustomEvent('tap-step-indicator-change', {
         detail: { current: this.normalizedCurrent },
         bubbles: true,
         composed: true,
-      })
+      }),
     );
   }
 
@@ -43,10 +34,10 @@ export class StepIndicator extends LitElement {
               class="step"
               part="step"
               aria-current=${index === this.normalizedCurrent
-                ? "step"
-                : "false"}
+                ? 'step'
+                : 'false'}
               @click="${() => this.handleClick(index)}"
-            ></button>`
+            ></button>`,
         )}
       </div>
     `;

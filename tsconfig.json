@@ -14,7 +14,10 @@
     "sourceMap": true,
     "inlineSources": true,
     "declaration": true,
-    "incremental": true
+    "incremental": true,
+    "declarationMap": true,
+    "useDefineForClassFields": false
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/**/*.stories.ts"]
 }

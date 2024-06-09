@@ -1,13 +1,15 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
-import "../bottom-navigation-item/index.js";
-import "../icons/index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
+import '../bottom-navigation-item/index.js';
+import '../icons/index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: "Bottom Navigation",
-  component: "tap-bottom-navigation",
+  title: 'Components/Bottom Navigation',
+  component: 'tap-bottom-navigation',
+  subcomponents: { 'Bottom Navigation Item': 'tap-bottom-navigation-item' },
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -17,7 +19,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
+const Template: Story<ArgTypes> = () => html`
   <tap-bottom-navigation>
     <tap-bottom-navigation-item>
       پروفایل

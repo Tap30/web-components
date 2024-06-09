@@ -1,13 +1,14 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
 import { BadgePriority, BadgeType, BadgeValue, BadgeVariant } from './types';
+import { Meta } from '@storybook/web-components';
 
 const BadgeTypes = ['pill', 'numeral', 'dot'];
 const BadgeVariants = ['success', 'error', 'info', 'inverse', 'warning'];
 const BadgePriorities = ['high', 'low'];
 
 export default {
-  title: 'Badge',
+  title: 'Components/Badge',
   component: 'tap-badge',
   argTypes: {
     value: {
@@ -34,10 +35,11 @@ export default {
       control: { type: 'boolean' },
     },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
+
   args?: Partial<T>;
   argTypes?: Record<string, unknown>;
 }

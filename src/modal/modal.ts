@@ -1,5 +1,5 @@
-import { LitElement, PropertyValues, html, nothing } from "lit";
-import { property, query } from "lit/decorators.js";
+import { LitElement, PropertyValues, html, nothing } from 'lit';
+import { property, query } from 'lit/decorators.js';
 
 export class Modal extends LitElement implements HTMLDialogElement {
   static readonly shadowRootOptions = {
@@ -10,13 +10,13 @@ export class Modal extends LitElement implements HTMLDialogElement {
   @property({ type: Boolean, reflect: true })
   open: boolean = false;
 
-  @query("#dialog")
+  @query('#dialog')
   private dialog?: HTMLElement | null;
 
-  @query("#overlay")
+  @query('#overlay')
   private overlay?: HTMLElement | null;
 
-  returnValue: string = "";
+  returnValue: string = '';
 
   constructor() {
     super();
@@ -27,12 +27,12 @@ export class Modal extends LitElement implements HTMLDialogElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener("keydown", this.handleKeydown);
-    this.addEventListener("click", this.handleClick);
+    this.addEventListener('keydown', this.handleKeydown);
+    this.addEventListener('click', this.handleClick);
   }
 
-  protected updated(changed: PropertyValues): void {
-    const oldValue = changed.get("open");
+  protected updated(changed: PropertyValues<this>): void {
+    const oldValue = changed.get('open');
     const newValue = this.open;
     const openChanged = oldValue !== undefined && oldValue !== newValue;
 
@@ -41,19 +41,19 @@ export class Modal extends LitElement implements HTMLDialogElement {
         this.dialog?.focus();
 
         this.dispatchEvent(
-          new Event("open", {
+          new Event('open', {
             bubbles: true,
             composed: true,
             cancelable: true,
-          })
+          }),
         );
       } else {
         this.dispatchEvent(
-          new Event("close", {
+          new Event('close', {
             bubbles: true,
             composed: true,
             cancelable: true,
-          })
+          }),
         );
       }
     }
@@ -72,7 +72,7 @@ export class Modal extends LitElement implements HTMLDialogElement {
 
   private handleKeydown(event: KeyboardEvent) {
     // TODO: handle `Tab`, `Shift + Tab`.
-    if (["Escape", "Esc"].includes(event.key)) {
+    if (['Escape', 'Esc'].includes(event.key)) {
       this.close();
     }
   }

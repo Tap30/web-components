@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { RecordIcon } from "./record";
+import { customElement } from 'lit/decorators.js';
+import { RecordIcon } from './record';
 
-@customElement("tap-icon-record")
-export class TapIconRecord extends RecordIcon {
-}
+@customElement('tap-icon-record')
+export class TapIconRecord extends RecordIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-record": TapIconRecord;
+    'tap-icon-record': TapIconRecord;
   }
 }
