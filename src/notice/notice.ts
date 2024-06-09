@@ -1,7 +1,6 @@
 import { html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 
-// TODO: fix
 export class Notice extends LitElement {
   private renderSuccessIcon() {
     return html`

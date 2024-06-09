@@ -11,7 +11,6 @@ const noticeVariants: string[] = [
 ];
 
 const noticePriorities: string[] = ['high', 'low'];
-// TODO: fix
 
 type Actions = 'nothing' | 'button' | 'any';
 type Variants = 'success' | 'error' | 'info' | 'warning' | 'inverse';

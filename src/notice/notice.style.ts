@@ -1,5 +1,4 @@
 import { css } from 'lit';
-// TODO: fix
 
 export default css`
   :host {
