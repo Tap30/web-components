@@ -1,8 +1,8 @@
 import { TemplateResult, html } from 'lit';
 import { live } from 'lit/directives/live.js';
-import { TapInput } from '../input';
+import { Input } from '../input';
 
-export class Textarea extends TapInput {
+export class Textarea extends Input {
   protected renderInput(): TemplateResult {
     return html`
       <textarea

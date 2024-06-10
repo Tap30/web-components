@@ -1,6 +1,7 @@
 import { customElement } from 'lit/decorators.js';
 import { Textarea } from './textarea';
 import styles from './textarea.style';
+import { inputStyles } from '../input';
 /**
  * ### Example
  *
@@ -66,7 +67,7 @@ import styles from './textarea.style';
  */
 @customElement('tap-textarea')
 export class TapTextarea extends Textarea {
-  static readonly styles = [...super.styles, styles];
+  static readonly styles = [inputStyles, styles];
 }
 
 declare global {
