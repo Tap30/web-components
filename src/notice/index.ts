@@ -20,25 +20,25 @@ import styles from './notice.style';
  * ##### Warning Variant - High Priority
  *
  * ```html
- * <tap-notice variant="warning" title="Warning">Warning variant with high priority</tap-notice>
+ * <tap-notice variant="warning">Warning variant with high priority</tap-notice>
  * ```
  *
  * ##### Warning Variant - Low Priority
  *
  * ```html
- * <tap-notice variant="warning" priority="low" title="Warning">Warning variant with low priority</tap-notice>
+ * <tap-notice variant="warning" priority="low">Warning variant with low priority</tap-notice>
  * ```
  *
- * ##### Dismissable
+ * ##### Dismissible
  *
  * ```html
- * <tap-notice variant="error" priority="low" title="Dismissable" dismissable>Notice that can be dismissed with error variant</tap-notice>
+ * <tap-notice dismissable>Notice that can be dismissed</tap-notice>
  * ```
  *
  * ##### With Actions Slot
  *
  * ```html
- * <tap-notice variant="info" priority="low" title="Actions"  dismissable>
+ * <tap-notice>
  *   Notice with Actions with info variant
  *   <p slot="actions">
  *       Your actions slot goes here, and you are responsible for styling it
@@ -62,7 +62,7 @@ import styles from './notice.style';
  * @csspart [`dismiss`] - The dismiss button, a `button`.
  *
  * @cssprop [`--tap-notice-width`=`100%`] - The width of the notice component.
- * @cssprop [`--tap-notice-height`=`auto`]- The height of the notice component.
+ * @cssprop [`--tap-notice-height`=`auto`] - The height of the notice component.
  * @cssprop [`--tap-notice-gap`=`--tap-sys-spacing-5`] - The default gap between horizontal items of the notice.
  * @cssprop [`--tap-notice-radius`=`--tap-sys-radius-3`] - The default border radius of the notice.
  * @cssprop [`--tap-notice-vertical-padding`=`--tap-sys-spacing-6`] - The default vertical padding of the notice.
