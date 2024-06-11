@@ -26,8 +26,6 @@ import styles from "./empty-state.style";
  * @cssprop [`--tap-font-family`=`--tap-sys-font-family`] - The font family used in the empty state.
  * @cssprop [`--tap-empty-state-leading-horizontal-margin`] - The horizontal margin for the leading slot.
  * @cssprop [`--tap-empty-state-leading-vertical-margin`=`--tap-sys-spacing-6`] - The vertical margin for the leading slot.
- * @cssprop [`--tap-empty-state-leading-height`=`--tap-sys-spacing-13`] - The height of the leading slot.
- * @cssprop [`--tap-empty-state-leading-width`=`--tap-sys-spacing-13`] - The width of the leading slot.
  * @cssprop [`--tap-empty-state-trailing-horizontal-margin`] - The horizontal margin for the trailing slot.
  * @cssprop [`--tap-empty-state-trailing-vertical-margin`=`--tap-sys-spacing-6`] - The vertical margin for the trailing slot.
  * @cssprop [`--tap-empty-state-content-horizontal-padding`=`--tap-sys-spacing-6`] - The horizontal padding for the content slot.

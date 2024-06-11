@@ -20,8 +20,6 @@ export default css`
   }
 
   .leading {
-    height: var(--tap-empty-state-leading-height, var(--tap-sys-spacing-12));
-    width: var(--tap-empty-state-leading-width, var(--tap-sys-spacing-12));
     margin: var(--tap-empty-state-content-vertical-margin, var(--tap-sys-spacing-6))
       var(--tap-empty-state-content-horizontal-margin, 0);
   }
