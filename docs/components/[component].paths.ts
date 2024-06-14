@@ -25,8 +25,6 @@ export default {
           return;
         }
 
-
-
         let content = '';
 
         content += `# ${getPageTitle(component.tagName)}\n`;
@@ -34,13 +32,6 @@ export default {
         if (component.summary) {
           content += `${component.summary}\n`;
         }
-
-        // content += `<custom-element-manifest-viewer tag-name=${component.tagName} src="./custom-elements.json"></custom-element-manifest-viewer>`
-
-//         content += `<api-viewer src="./custom-elements.json" only="${component.tagName}">
-//
-//     <template></template>
-// </api-viewer>`;
 
         content += getInstallSection(component.tagName)
 
