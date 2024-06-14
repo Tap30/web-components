@@ -1,6 +1,6 @@
 import { customElement } from 'lit/decorators.js';
-import { Avatar } from './avatar.js';
-import styles from './avatar.style.js';
+import { CustomElementManifestViewer } from './custom-element-manifest-viewer';
+import styles from './custom-element-manifest-viewer.style';
 
 /**
  * ### Example
@@ -38,35 +38,35 @@ import styles from './avatar.style.js';
  * @csspart [placeholder] - The container that wraps the avatar's placeholder.
  * @csspart [image] - The avatar image. Only shown when the image is present.
  *
- * @cssprop [--tap-avatar-background-color=--tap-sys-color-surface-secondary]
- * @cssprop [--tap-avatar-border-color=--tap-sys-color-border-primary]
- * @cssprop [--tap-avatar-border-radius=--tap-sys-radius-full]
+ * @cssprop [--cemv-avatar-background-color=--cemv-sys-color-surface-secondary]
+ * @cssprop [--cemv-avatar-border-color=--cemv-sys-color-border-primary]
+ * @cssprop [--cemv-avatar-border-radius=--cemv-sys-radius-full]
  *
- * @cssprop [--tap-avatar-width-xxSmall=--tap-sys-spacing-8]
- * @cssprop [--tap-avatar-height-xxSmall=--tap-sys-spacing-8]
+ * @cssprop [--cemv-avatar-width-xxSmall=--cemv-sys-spacing-8]
+ * @cssprop [--cemv-avatar-height-xxSmall=--cemv-sys-spacing-8]
  *
- * @cssprop [--tap-avatar-width-xSmall=--tap-sys-spacing-9]
- * @cssprop [--tap-avatar-height-xSmall=--tap-sys-spacing-9]
+ * @cssprop [--cemv-avatar-width-xSmall=--cemv-sys-spacing-9]
+ * @cssprop [--cemv-avatar-height-xSmall=--cemv-sys-spacing-9]
  *
- * @cssprop [--tap-avatar-width-small=--tap-sys-spacing-10]
- * @cssprop [--tap-avatar-height-small=--tap-sys-spacing-10]
+ * @cssprop [--cemv-avatar-width-small=--cemv-sys-spacing-10]
+ * @cssprop [--cemv-avatar-height-small=--cemv-sys-spacing-10]
  *
- * @cssprop [--tap-avatar-width-medium=--tap-sys-spacing-11]
- * @cssprop [--tap-avatar-height-medium=--tap-sys-spacing-11]
+ * @cssprop [--cemv-avatar-width-medium=--cemv-sys-spacing-11]
+ * @cssprop [--cemv-avatar-height-medium=--cemv-sys-spacing-11]
  *
- * @cssprop [--tap-avatar-width-large=56px]
- * @cssprop [--tap-avatar-height-large=56px]
+ * @cssprop [--cemv-avatar-width-large=56px]
+ * @cssprop [--cemv-avatar-height-large=56px]
  *
- * @cssprop [--tap-avatar-width-xLarge=72px]
- * @cssprop [--tap-avatar-height-xLarge=72px]
+ * @cssprop [--cemv-avatar-width-xLarge=72px]
+ * @cssprop [--cemv-avatar-height-xLarge=72px]
  */
-@customElement('tap-avatar')
-export class TapAvatar extends Avatar {
+@customElement('custom-element-manifest-viewer')
+export class CustomElementManifestViewerComponent extends CustomElementManifestViewer {
   static readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-avatar': TapAvatar;
+    'custom-element-manifest-viewer': CustomElementManifestViewerComponent;
   }
 }
