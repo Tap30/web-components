@@ -4,6 +4,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import '../spinner';
 
 export abstract class BaseButton extends LitElement {
+  static formAssociated = true;
   static readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
