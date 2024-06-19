@@ -1,8 +1,16 @@
 {
-  "name": "@tapsi/web-components",
-  "version": "0.0.0",
+  "name": "@tapsioss/web-components",
+  "version": "0.0.0-alpha-2",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.js.map",
+    "dist/**/*.d.ts",
+    "dist/**/*.css"
+  ],
   "type": "module",
   "scripts": {
+    "publish": "pnpm build && pnpm deploy",
+    "build": "rm -rf dist && tsc && pnpm analyze && cp -r ./tokens ./dist && cp -r ./styles ./dist",
     "dev": "tsc --watch --preserveWatchOutput & wds",
     "storybook": "storybook dev -p 3001",
     "test": "wtr --watch",
@@ -18,6 +26,7 @@
     "@eslint/js": "^9.1.1",
     "@open-wc/lit-helpers": "^0.7.0",
     "@open-wc/testing": "^4.0.0",
+    "@storybook/addon-actions": "^8.1.5",
     "@storybook/addon-essentials": "^7.6.16",
     "@storybook/addon-links": "^7.6.16",
     "@storybook/blocks": "^7.6.16",
@@ -31,6 +40,7 @@
     "@web/dev-server": "^0.4.2",
     "@web/dev-server-esbuild": "^1.0.2",
     "@web/test-runner": "^0.18.0",
+    "custom-elements-manifest": "^2.1.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-lit": "^1.11.0",
@@ -47,8 +57,7 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.4",
-    "@storybook/addon-actions": "^8.1.5",
-    "custom-elements-manifest": "^2.1.0",
-    "lit": "^3.1.2"
+    "lit": "^3.1.2",
+    "tslib": "^2.4.0"
   }
 }

@@ -2,9 +2,9 @@ import { TemplateResult, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
-import { TapInput } from '../input';
+import { Input } from '../input';
 
-export class TextField extends TapInput {
+export class TextField extends Input {
   @property({ type: String }) inputmode?: string; // TODO: add type
 
   @property({ type: String }) type?: string; // TODO: add type
@@ -26,8 +26,8 @@ export class TextField extends TapInput {
         ?disabled=${this.disabled}
         inputmode=${ifDefined(this.inputmode)}
         placeholder=${ifDefined(this.placeholder)}
-        autocomplete=${ifDefined(this.autocomplete) as any}
-        type=${ifDefined(this.type) as any}
+        autocomplete=${ifDefined(this.autocomplete)}
+        type=${ifDefined(this.type)}
         .value=${live(this.value)}
         @input=${this.handleInput}
       />
