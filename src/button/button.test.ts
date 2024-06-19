@@ -24,7 +24,7 @@ describe('Test tap-button', () => {
       html` <tap-button type="submit"></tap-button>`,
     );
     setTimeout(() => el?.click(), 0);
-    const event = await oneEvent(el, 'click');
+    const event = await oneEvent(el, 'click', false);
     expect(event).to.exist;
   });
 
