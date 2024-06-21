@@ -88,13 +88,13 @@ const renderExampleContentSlot = (example: unknown) => {
 };
 
 const Template: Story<ArgTypes> = ({
-                                     size,
-                                     leadingIcon,
-                                     ordinal,
-                                     editable,
-                                     disabled,
-                                     content,
-                                   }: ArgTypes) => html`
+  size,
+  leadingIcon,
+  ordinal,
+  editable,
+  disabled,
+  content,
+}: ArgTypes) => html`
   <tap-route
     size=${size}
     leading-icon=${leadingIcon}
@@ -119,12 +119,10 @@ Raw.args = {
 
 
 const GroupTemplate: Story<ArgTypes> = ({
- size,
- leadingIcon,
- ordinal,
- editable,
- disabled,
- content,
+  size,
+  editable,
+  disabled,
+  content,
 }: ArgTypes) => html`
   <tap-route
     size=${size}
