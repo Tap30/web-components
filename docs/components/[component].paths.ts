@@ -9,7 +9,7 @@ export default {
     return manifest.modules
       .filter(
         (module) =>
-          !(module.path.startsWith('src/icon/') || module.path.startsWith('src/icons/')) && !!module.declarations?.length
+          !(module.path.startsWith('src/icon/') || module.path.startsWith('src/custom-elem') || module.path.startsWith('src/icons/')) && !!module.declarations?.length
       )
       .map((module) => {
         if (!module.exports)
@@ -128,7 +128,7 @@ pnpm install @tapsioss/web-components
 Then import this component into your project by using a bare module specifier:
 
 \`\`\`js
-import '@tapsi-oss/web-components/${name}/${name}.js';
+import '@tapsioss/web-components/${name}/${name}.js';
 \`\`\`
 `
 }

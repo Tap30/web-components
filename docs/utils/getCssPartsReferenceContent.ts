@@ -10,7 +10,7 @@ const getCssPartsReferenceContent = () => {
   manifest.modules
     .filter(
       (module) =>
-        !(module.path.startsWith('src/icon/') || module.path.startsWith('src/icons/')) && !!module.declarations?.length
+        !(module.path.startsWith('src/icon/') || module.path.startsWith('src/custom-elem') || module.path.startsWith('src/icons/')) && !!module.declarations?.length
     )
     .forEach((module) => {
       if (!module.exports)
