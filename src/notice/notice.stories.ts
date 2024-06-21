@@ -16,7 +16,7 @@ type Actions = 'nothing' | 'button' | 'any';
 type Variants = 'success' | 'error' | 'info' | 'warning' | 'inverse';
 
 export default {
-  title: 'Notice',
+  title: 'Components/Notice',
   component: 'tap-notice',
   argTypes: {
     noticeContent: {
