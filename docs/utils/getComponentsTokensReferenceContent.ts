@@ -33,7 +33,7 @@ const getComponentsTokensReferenceContent = () => {
         content += '| ---- | ---- | ---- |\n';
 
         component.cssProperties.forEach((cssPart) => {
-          content += `| ${cssPart.name} | ${cssPart.default}| ${cssPart.description} |\n`;
+          content += `| \`${cssPart.name}\` | \`${cssPart.default}\`| ${cssPart.description || '-'} |\n`;
         });
       }
 
