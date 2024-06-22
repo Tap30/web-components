@@ -33,8 +33,16 @@ const getCssPartsReferenceContent = () => {
         content += '| ---- | ---- |\n';
 
         component.cssParts.forEach((cssPart) => {
-          content += `| ${cssPart.name} | ${cssPart.description} |\n`;
+          content += `| \`${cssPart.name}\` | ${cssPart.description} |\n`;
         });
+
+        content += '\n\n```css\n';
+
+        component.cssParts.forEach((cssPart) => {
+          content += `${component.tagName}::part(${cssPart.name}) { /* ... */ }\n`;
+        });
+
+        content += '```'
       }
 
     });
