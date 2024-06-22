@@ -40,9 +40,6 @@ import styles from './row.style';
  * </tap-row>
  * ```
  *
- *
- *
- *
  * @summary A flexible row component with leading, content, and trailing slots.
  *
  * @prop {'standard' | 'compact'} [size='compact'] - The size of the row. Defaults to `standard`.
