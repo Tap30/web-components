@@ -4,38 +4,13 @@ import styles from './button.style';
 import { baseButtonStyles } from '../base-button';
 
 /**
- * ### Example
  *
- * ##### Simple
  *
- * ```html
- * <tap-button>Click Me</tap-button>
- * ```
+ * <custom-element-manifest-viewer tag-name="tap-button" src="./custom-elements.json">
+ *   <span data-knob-type="slot" slot="default" title="Persian Text">کلیک</span>
+ * </custom-element-manifest-viewer>
  *
- * ##### Disabled Button
- *
- * ```html
- * <tap-button disabled>Disabled</tap-button>
- * ```
- *
- * ##### Variants
- *
- * ```html
- * <tap-button variant="primary">Primary</tap-button>
- * <tap-button variant="ghost">Ghost</tap-button>
- * <tap-button variant="naked">Naked</tap-button>
- * <tap-button variant="elevated">Elevated</tap-button>
- * <tap-button variant="destructive">Destructive</tap-button>
- * <tap-button variant="brand">Brand</tap-button>
- * ```
- *
- * ##### Sizes
- *
- * ```html
- * <tap-button size="small">Small</tap-button>
- * <tap-button size="medium">Medium</tap-button>
- * <tap-button size="large">Large</tap-button>
- * ```
+ * ---
  *
  * @summary A customizable button component with various styles and states.
  *
