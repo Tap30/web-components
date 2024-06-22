@@ -73,6 +73,9 @@ devDependencies:
   '@web/test-runner':
     specifier: ^0.18.0
     version: 0.18.0(typescript@5.3.3)
+  cemnama:
+    specifier: 0.0.0-alpha-1
+    version: 0.0.0-alpha-1
   custom-elements-manifest:
     specifier: ^2.1.0
     version: 2.1.0
@@ -3402,6 +3405,10 @@ packages:
     resolution: {integrity: sha512-xjV63pRUBvxA1LsxOUhRKLPh0uUjwBLzAKLdEuYSLIylo71sYuwDcttqNP01Ib1TZlLfO840CXHPlgUUsYFjzg==}
     dev: true
 
+  /@shikijs/core@1.7.0:
+    resolution: {integrity: sha512-O6j27b7dGmJbR3mjwh/aHH8Ld+GQvA0OQsNO43wKWnqbAae3AYXrhFyScHGX8hXZD6vX2ngjzDFkZY5srtIJbQ==}
+    dev: true
+
   /@shikijs/transformers@1.5.1:
     resolution: {integrity: sha512-vir+y0elkjh2CepLVbqeGX+ftuc6WpfWNCMV/EBIallSLzhBfDO9r/TORDVOzegbTg9JMEmtOFv6PT9cSZTcyA==}
     dependencies:
@@ -5649,6 +5656,15 @@ packages:
     resolution: {integrity: sha512-+hVY9jE44uKLkH0SrUTqxjxqNTOWHsbnQDIKjwkZ3lNTzUUVdBLBGXtj/q5Mp5u98r3droaZAewQuEDzjQdZlQ==}
     dev: true
 
+  /cemnama@0.0.0-alpha-1:
+    resolution: {integrity: sha512-9+sV+R5MZbYoGu5sIPWtcYUj2Wu+OCd07AxAKnfpPbTAjT5CKAVVcPZ3sBrzZn06nDU/bzmh+A0ihowsUoGq2w==}
+    dependencies:
+      immer: 10.1.1
+      lit: 3.1.2
+      shiki: 1.7.0
+      tslib: 2.6.2
+    dev: true
+
   /chai-a11y-axe@1.5.0:
     resolution: {integrity: sha512-V/Vg/zJDr9aIkaHJ2KQu7lGTQQm5ZOH4u1k5iTMvIXuSVlSuUo0jcSpSqf9wUn9zl6oQXa4e4E0cqH18KOgKlQ==}
     dependencies:
@@ -7309,6 +7325,10 @@ packages:
   /ignore@5.3.1:
     resolution: {integrity: sha512-5Fytz/IraMjqpwfd34ke28PTVMjZjJG2MPn5t7OE4eUCUNf8BAa7b5WUS9/Qvr6mwOQS7Mk6vdsMno5he+T8Xw==}
     engines: {node: '>= 4'}
+    dev: true
+
+  /immer@10.1.1:
+    resolution: {integrity: sha512-s2MPrmjovJcoMaHtx6K11Ra7oD05NT97w1IC5zpMkT6Atjr7H8LjaDd81iIxUYpMKSRRNMJE703M1Fhr/TctHw==}
     dev: true
 
   /import-fresh@3.3.0:
@@ -9351,6 +9371,12 @@ packages:
       '@shikijs/core': 1.5.1
     dev: true
 
+  /shiki@1.7.0:
+    resolution: {integrity: sha512-H5pMn4JA7ayx8H0qOz1k2qANq6mZVCMl1gKLK6kWIrv1s2Ial4EmD4s4jE8QB5Dw03d/oCQUxc24sotuyR5byA==}
+    dependencies:
+      '@shikijs/core': 1.7.0
+    dev: true
+
   /side-channel@1.0.5:
     resolution: {integrity: sha512-QcgiIWV4WV7qWExbN5llt6frQB/lBven9pqliLXfGPB+K9ZYXxDozp0wLkHS24kWCm+6YXH/f0HhnObZnZOBnQ==}
     engines: {node: '>= 0.4'}
@@ -10167,7 +10193,7 @@ packages:
       focus-trap: 7.5.4
       mark.js: 8.11.1
       minisearch: 6.3.0
-      shiki: 1.5.1
+      shiki: 1.7.0
       vite: 5.2.11(@types/node@20.12.11)
       vue: 3.4.27(typescript@5.3.3)
     transitivePeerDependencies:

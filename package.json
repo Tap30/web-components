@@ -16,8 +16,8 @@
     "test": "wtr --watch",
     "lint": "pnpm eslint ./src/**/* --fix",
     "fmt": "pnpm prettier src/**/* --write --fix",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
+    "docs:dev": "cp ./dist/custom-elements.json ./docs/components/custom-elements.json && vitepress dev docs",
+    "docs:build": "vitepress build docs && cp ./dist/custom-elements.json ./docs/.vitepress/dist/components/custom-elements.json",
     "docs:preview": "vitepress preview docs",
     "analyze": "cem analyze  --litelement --outdir dist --globs \"src/**/index.ts\""
   },
@@ -41,6 +41,7 @@
     "@web/dev-server": "^0.4.2",
     "@web/dev-server-esbuild": "^1.0.2",
     "@web/test-runner": "^0.18.0",
+    "cemnama": "0.0.0-alpha-1",
     "custom-elements-manifest": "^2.1.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",

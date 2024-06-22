@@ -60,6 +60,8 @@ import { baseButtonStyles } from '../base-button';
  * ```
  *
  * @summary A customizable icon button component with various styles and states.
+
+ * @slot - Icon button's content.
  *
  * @prop {boolean} [disabled=false] - Whether the icon button is disabled.
  * @prop {'small' | 'medium' | 'large'} [size='medium'] - The size of the icon button.
