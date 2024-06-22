@@ -68,6 +68,7 @@ export default {
           component.cssParts.forEach((cssPart) => {
             content += `| \`${cssPart.name}\` | ${cssPart.description} |\n`;
           });
+          content += `\n > Check [this link](/references/css-parts.html#${component.tagName}) to learn how to use CSS parts for ${getPageTitle(component.tagName).replace('Tap ', '')}.\n`;
         }
 
 
