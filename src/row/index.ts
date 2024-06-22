@@ -8,7 +8,7 @@ import styles from './row.style';
  *    <tap-icon-default color="black" data-knob-type="slot" slot="leading" title="icon"></tap-icon-default>
  *    <tap-checkbox data-knob-type="slot" slot="leading" title="checkbox"></tap-checkbox>
  *    <tap-radio data-knob-type="slot" slot="leading" title="radio"></tap-radio>
- *    <tap-avatar data-knob-type="slot" slot="leading" title="avatar" size="small" image="https://picsum.photos/100"></tap-avatar>
+ *    <tap-avatar slot="leading" title="avatar" size="small" image="https://picsum.photos/100" data-knob-type="slot"></tap-avatar>
  *    <tap-button data-knob-type="slot" slot="trailing" title="button">پرداخت</tap-button>
  *    <tap-badge data-knob-type="slot" slot="trailing" title="badge" value="1" variant="error" type="numeral"></tap-badge>
  *    <tap-icon-default color="black" data-knob-type="slot" slot="trailing" title="icon"></tap-icon-default>
