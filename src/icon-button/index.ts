@@ -4,60 +4,11 @@ import styles from './icon-button.style';
 import { baseButtonStyles } from '../base-button';
 
 /**
- * ### Example
+ * <custom-element-manifest-viewer tag-name="tap-icon-button" src="./custom-elements.json">
+ *  <tap-icon-default data-knob-type="slot" slot="default" title="icon"></tap-icon-default>
+ * </custom-element-manifest-viewer>
  *
- * ##### Simple
- *
- * ```html
- * <tap-icon-button size="medium">
- *   <tap-icon name="check"></tap-icon>
- * </tap-icon-button>
- * ```
- *
- * ##### Disabled IconButton
- *
- * ```html
- * <tap-icon-button disabled>
- *   <tap-icon name="check"></tap-icon>
- * </tap-icon-button>
- * ```
- *
- * ##### Variants
- *
- * ```html
- * <tap-icon-button variant="primary">
- *   <tap-icon name="check"></tap-icon>
- * </tap-icon-button>
- * <tap-icon-button variant="ghost">
- *   <tap-icon name="check"></tap-icon>
- * </tap-icon-button>
- * <tap-icon-button variant="naked">
- *   <tap-icon name="check"></tap-icon>
- * </tap-icon-button>
- * <tap-icon-button variant="elevated">
- *   <tap-icon name="check"></tap-icon>
- * </tap-icon-button>
- * <tap-icon-button variant="destructive">
- *   <tap-icon name="check"></tap-icon>
- * </tap-icon-button>
- * <tap-icon-button variant="brand">
- *   <tap-icon name="check"></tap-icon>
- * </tap-icon-button>
- * ```
- *
- * ##### Sizes
- *
- * ```html
- * <tap-icon-button size="small">
- *   <tap-icon name="check"></tap-icon>
- * </tap-icon-button>
- * <tap-icon-button size="medium">
- *   <tap-icon name="check"></tap-icon>
- * </tap-icon-button>
- * <tap-icon-button size="large">
- *   <tap-icon name="check"></tap-icon>
- * </tap-icon-button>
- * ```
+ * ---
  *
  * @summary A customizable icon button component with various styles and states.
 
