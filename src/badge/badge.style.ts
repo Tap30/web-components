@@ -48,7 +48,6 @@ export default css`
     height: var(--tap-badge-dot-height, 6px);
     /* FIXME: use spacing tokens  */
     margin: var(--tap-badge-dot-margin, 3px);
-    transform: translate(0, 0);
   }
 
   :host([variant='info']) .badge {
