@@ -9,8 +9,8 @@ export default {
   title: 'Components/EmptyState',
   component: 'tap-empty-state',
   argTypes: {
-    leading: {
-      description: 'Empty State Leading Slot',
+    icon: {
+      description: 'Empty State Icon Slot',
       control: { type: 'select' },
       options: ['default', 'person', 'success', 'custom'],
     },
@@ -24,10 +24,10 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  leading: unknown;
+  icon: unknown;
 }
 
-const renderExampleLeadingSlot = (
+const renderExampleIconSlot = (
   example: unknown,
 ) => {
   switch (example) {
@@ -36,39 +36,37 @@ const renderExampleLeadingSlot = (
       height="64" 
       width="64" 
       color="var(--tap-palette-green-300)" 
-      slot="leading"></tap-icon-circle-check-fill>`;
+      slot="icon"></tap-icon-circle-check-fill>`;
     case 'custom':
       return html` <tap-avatar
       size="large"
-      slot="leading"
+      slot="icon"
       image="https://picsum.photos/100"
     ></tap-avatar>`;
     case 'person':
       return html` <tap-icon-person-two 
       height="64" 
       width="64" 
-      slot="leading"></tap-icon-person-two>`;
+      slot="icon"></tap-icon-person-two>`;
     default:
       return html` <tap-icon-default 
-      slot="leading" 
+      slot="icon" 
       width="64" 
       height="64"></tap-icon-default>`;
   }
 };
 
-const Template: Story<ArgTypes> = ({ leading }: ArgTypes) => html`
-  <tap-empty-state>
-    ${renderExampleLeadingSlot(leading)}
-    <div slot="content">
-      <h3 style="margin: 0;">عنوان را وارد کنید</h3>
-      <p style="margin: 8px 0 0 0;">توضیحات مربوط به عنوان را اینجا وارد کنید. توضیحات مربوط به عنوان را اینجا وارد کنید</p>
-    </div>
-    <tap-button slot="trailing">کپی لینک دعوت</tap-button>
+const Template: Story<ArgTypes> = ({ icon }: ArgTypes) => html`
+  <tap-empty-state 
+    title="عنوان را وارد کنید"
+    description="توضیحات مربوط به عنوان را اینجا وارد کنید. توضیحات مربوط به عنوان را اینجا وارد کنید">
+    ${renderExampleIconSlot(icon)}
+    <tap-button slot="actions">کپی لینک دعوت</tap-button>
   </tap-empty-state>
 `;
 
 export const EmptyState = Template.bind({});
 
 EmptyState.args = {
-  leading: '',
+  icon: '',
 };
