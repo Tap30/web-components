@@ -62,5 +62,6 @@ out-tsc
 storybook-static
 
 # Vitepress
-docs/.vitepress/dist 
+docs/.vitepress/dist
 docs/.vitepress/cache
+docs/components/custom-elements.json

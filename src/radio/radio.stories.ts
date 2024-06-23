@@ -1,6 +1,7 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
 import { Meta } from '@storybook/web-components';
+import 'custom-element-manifest-demo/dist'
 
 export default {
   title: 'Components/Radio',

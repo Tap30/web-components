@@ -3,6 +3,7 @@ import { css } from 'lit';
 export default css`
   :host {
     box-sizing: border-box;
+    display: flex;
   }
 
   .spinner {
@@ -17,12 +18,16 @@ export default css`
     animation: rotate 1s linear infinite;
   }
 
-  .primary {
+  .normal {
     color: var(--tap-spinner-color-primary, var(--tap-sys-color-surface-black));
   }
 
   .inverse {
     color: var(--tap-spinner-color-inverse, var(--tap-sys-color-surface-white));
+  }
+
+  .inherit {
+    color: inherit;
   }
 
   @keyframes rotate {

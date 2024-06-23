@@ -1,6 +1,2 @@
-import { Input } from './input';
-import styles from './input.style';
-
-export abstract class TapInput extends Input {
-  static readonly styles = [styles];
-}
+export { default as inputStyles } from './input.style';
+export { Input } from './input';
