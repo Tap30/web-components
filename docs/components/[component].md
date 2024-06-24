@@ -38,8 +38,8 @@ import '../../src/textarea';
 import '../../src/toast';
 import '../../src/tooltip';
 import '../../src/button';
-import '../../src/icons/default'; // TODO: remove
 import '../../styles/theme.css';
+import '@tapsioss/icons/dist/icons';
 import "cemnama"
 
 </script>

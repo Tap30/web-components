@@ -34,7 +34,6 @@
     "@storybook/theming": "^8.1.5",
     "@storybook/web-components": "^7.6.16",
     "@storybook/web-components-vite": "^7.6.16",
-    "@tapsioss/icons": "0.0.0-alpha-1",
     "@types/chai": "^4.3.12",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.12.10",
@@ -60,6 +59,7 @@
     "vitepress": "^1.1.4"
   },
   "dependencies": {
+    "@tapsioss/icons": "0.0.0-alpha-8",
     "@floating-ui/dom": "^1.6.4",
     "lit": "^3.1.2",
     "tslib": "^2.4.0"

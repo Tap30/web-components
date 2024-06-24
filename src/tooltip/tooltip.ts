@@ -6,7 +6,7 @@ import {
   offset,
   MiddlewareData,
 } from '@floating-ui/dom';
-import '../icons/index.js';
+import '@tapsioss/icons/dist/icons/cross';
 import '../icon-button';
 
 export class Tooltip extends LitElement {

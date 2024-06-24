@@ -1,7 +1,7 @@
 import { html, nothing, TemplateResult } from 'lit';
 import './index';
 import '../button';
-import '../icons';
+import '@tapsioss/icons/dist/icons/default';
 import '../checkbox';
 import '../radio';
 import '../badge';

@@ -2,8 +2,7 @@ import { html, TemplateResult } from 'lit';
 import { spreadProps } from '@open-wc/lit-helpers';
 import buttonStory from '../button/button.stories';
 import './index.js';
-import '../icons/default';
-import '../icons/alarm-clock';
+import '@tapsioss/icons/dist/icons/default';
 import { Meta } from '@storybook/web-components';
 
 export default {

@@ -2,6 +2,7 @@ import { html, TemplateResult } from 'lit';
 import './index.js';
 import '../bottom-navigation-item/index.js';
 import { Meta } from '@storybook/web-components';
+
 import '@tapsioss/icons/dist/icons/person'
 import '@tapsioss/icons/dist/icons/person-fill'
 import '@tapsioss/icons/dist/icons/spark'
