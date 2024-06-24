@@ -8,10 +8,7 @@ const getComponentsTokensReferenceContent = () => {
   let content = '# Components Tokens\n'
 
   manifest.modules
-    .filter(
-      (module) =>
-        !(module.path.startsWith('src/icon/') || module.path.startsWith('src/icons/')) && !!module.declarations?.length
-    )
+    .filter((module) => !!module.declarations?.length)
     .forEach((module) => {
       if (!module.exports)
         throw new Error(`Module has no export: ${module.path}`);
