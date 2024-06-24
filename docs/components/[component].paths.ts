@@ -30,7 +30,7 @@ export default {
           content += `${component.summary}\n`;
         }
 
-        content += getInstallSection(component.tagName)
+        // content += getInstallSection(component.tagName)
 
         if (component.description) {
           content +=`\n${component.description}\n`
