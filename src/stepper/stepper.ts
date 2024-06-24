@@ -1,8 +1,8 @@
 import { html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import '../icon-button';
-import '../icons/plus';
-import '../icons/minus';
+import '@tapsioss/icons/dist/icons/plus';
+import '@tapsioss/icons/dist/icons/minus';
 
 export class Stepper extends LitElement {
   @property({ type: String }) unit = '';

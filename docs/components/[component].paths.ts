@@ -7,10 +7,7 @@ export default {
     const manifest = JSON.parse(file.toString()) as Package;
 
     return manifest.modules
-      .filter(
-        (module) =>
-          !(module.path.startsWith('src/icon/') || module.path.startsWith('src/custom-elem') || module.path.startsWith('src/icons/')) && !!module.declarations?.length
-      )
+      .filter((module) => !!module.declarations?.length)
       .map((module) => {
         if (!module.exports)
           throw new Error(`Module has no export: ${module.path}`);
@@ -33,7 +30,7 @@ export default {
           content += `${component.summary}\n`;
         }
 
-        content += getInstallSection(component.tagName)
+        // content += getInstallSection(component.tagName)
 
         if (component.description) {
           content +=`\n${component.description}\n`

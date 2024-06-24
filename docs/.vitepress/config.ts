@@ -8,6 +8,7 @@ export default defineConfig({
   title: 'Tapsi components',
   description: 'A set of components based on Tapsi design system.',
   base: "/web-components/",
+  vite:{},
   themeConfig: {
     sidebar,
     socialLinks,

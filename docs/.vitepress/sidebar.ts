@@ -6,7 +6,7 @@ const file = fs.readFileSync('dist/custom-elements.json');
 const manifest = JSON.parse(file.toString()) as Package;
 
 const components = manifest.modules
-  .filter((module) => !(module.path.startsWith('src/icon/') || module.path.startsWith('src/icons/')) && !!module.declarations?.length)
+  .filter((module) => !!module.declarations?.length)
   .map((module) => {
     if (!module.exports)
       throw new Error(`Module has no export: ${module.path}`);
