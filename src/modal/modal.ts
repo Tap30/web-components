@@ -1,5 +1,6 @@
 import { LitElement, PropertyValues, html, nothing } from 'lit';
 import { property, query } from 'lit/decorators.js';
+import { ARIAMixinStrict } from '../aria/aria';
 
 export class Modal extends LitElement implements HTMLDialogElement {
   static readonly shadowRootOptions = {
@@ -109,6 +110,7 @@ export class Modal extends LitElement implements HTMLDialogElement {
   }
 
   render() {
+    const { ariaLabel } = this as ARIAMixinStrict;
     return html`
       <section ?hidden=${!this.open}>
         <div
