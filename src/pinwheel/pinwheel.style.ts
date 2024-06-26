@@ -16,7 +16,7 @@ export default css`
     display: none;
   }
 
-  .pinwheel > div {
+  .item {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,15 +44,15 @@ export default css`
     );
   }
 
-  .pinwheel div:first-child {
+  .item:first-child {
     padding-top: var(--tap-pinwheel-item-height, var(--tap-sys-spacing-11));
   }
 
-  .pinwheel div:last-child {
+  .item:last-child {
     padding-bottom: var(--tap-pinwheel-item-height, var(--tap-sys-spacing-11));
   }
 
-  .pinwheel .active {
+  .active {
     line-height: var(
       --tap-pinwheel-typography-label-md-height,
       var(--tap-sys-typography-label-md-height)

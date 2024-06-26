@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { debounce } from '../utils/utils';
+import { classMap } from "lit/directives/class-map.js";
 
 export class Pinwheel extends LitElement {
   @state() private selectedIndex = 0;
@@ -36,7 +37,8 @@ export class Pinwheel extends LitElement {
 
   private handleScroll = debounce((target: HTMLElement) => {
     this.selectedIndex = Math.round(target?.scrollTop / this.itemHeight);
-    if (target?.scrollTop % this.itemHeight) {
+    const isActiveElementInCenter = target?.scrollTop % this.itemHeight === 0;
+    if (!isActiveElementInCenter) {
       this.scrollToActiveItem();
     } else {
       this.dispatchChangeEvent();
@@ -56,8 +58,12 @@ export class Pinwheel extends LitElement {
   private renderItem = (item: string, index: number) => {
     return html`<div
       part="pinwheel-item"
-      class=${this.selectedIndex === index ? 'active' : null}
+      class=${classMap({
+        item: true,
+        active: this.selectedIndex === index,
+      })}
       @click="${() => this.handleClickItem(index)}"
+      tabindex="0"
     >
       ${item}
     </div>`;
