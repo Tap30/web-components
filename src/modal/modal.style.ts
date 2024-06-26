@@ -20,7 +20,6 @@ export default css`
   [hidden] {
     display: none !important;
   }
-
   .overlay {
     background-color: var(
       --tap-dialog-color-surface-overlay,

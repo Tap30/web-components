@@ -9,20 +9,6 @@ export default {
   component: 'tap-modal',
   argTypes: {
     open: { control: 'boolean' },
-    alignment: {
-      control: { type: 'radio' },
-      options: ['left', 'center', 'right'],
-      description: 'Modal Alignment',
-    },
-    layout: {
-      control: { type: 'radio' },
-      options: ['horizontal', 'vertical'],
-      description: 'Modal Actions Layout',
-    },
-    isBannerFullWidth: {
-      control: { type: 'boolean' },
-      description: 'Toggle Between Image and Icon Slot for the Banner',
-    },
   },
 } as Meta;
 
