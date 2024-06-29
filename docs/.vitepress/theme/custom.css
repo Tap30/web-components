@@ -1,0 +1,69 @@
+:root {
+  --vp-c-brand-1: #ff7733;
+  --vp-button-brand-bg: #e64917;
+  --vp-c-brand-2: #e64917;
+  --vp-badge-tip-text: #e64917;
+  --vp-badge-tip-bg: #e6491722;
+}
+
+custom-element-manifest-viewer::part(container) {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+custom-element-manifest-viewer::part(label) {
+  border-radius: 4px;
+  padding: 3px 6px;
+  transition: color 0.25s, background-color 0.5s;
+  font-size: var(--vp-code-font-size);
+}
+
+custom-element-manifest-viewer::part(input) {
+  transition: all 0.3s;
+  border: 1px solid var(--vp-c-divider);
+  padding: 8px;
+  background: transparent;
+  border-radius: 8px;
+}
+
+custom-element-manifest-viewer::part(input):hover, custom-element-manifest-viewer::part(input):focus {
+  border: 1px solid var(--vp-c-brand-1);
+}
+
+custom-element-manifest-viewer::part(component-preview) {
+  background-color: #fff;
+  background-image: linear-gradient(45deg,#eee 25%,transparent 25%,transparent 75%,#eee 75%,#eee),linear-gradient(45deg,#eee 25%,transparent 25%,transparent 75%,#eee 75%,#eee);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  color: black;
+  padding: 16px;
+  border-radius: 8px 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  direction: rtl;
+}
+
+custom-element-manifest-viewer::part(knobs) {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  border-radius: 0 8px 0 0;
+  position: relative;
+  width: 40%;
+  background: var(--vp-c-bg-elv);
+}
+
+custom-element-manifest-viewer::part(code) {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 20px 24px;
+  background: #0d1117;
+  overflow-x: auto;
+  font-size: var(--vp-code-font-size);
+  width: 100%;
+  border-radius: 0 0 8px 8px;
+}

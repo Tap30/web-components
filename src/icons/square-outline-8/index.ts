@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { SquareOutline8Icon } from "./square-outline-8";
+import { customElement } from 'lit/decorators.js';
+import { SquareOutline8Icon } from './square-outline-8';
 
-@customElement("tap-icon-square-outline-8")
-export class TapIconSquareOutline8 extends SquareOutline8Icon {
-}
+@customElement('tap-icon-square-outline-8')
+export class TapIconSquareOutline8 extends SquareOutline8Icon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-square-outline-8": TapIconSquareOutline8;
+    'tap-icon-square-outline-8': TapIconSquareOutline8;
   }
 }

@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { MinusIcon } from "./minus";
+import { customElement } from 'lit/decorators.js';
+import { MinusIcon } from './minus';
 
-@customElement("tap-icon-minus")
-export class TapIconMinus extends MinusIcon {
-}
+@customElement('tap-icon-minus')
+export class TapIconMinus extends MinusIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-minus": TapIconMinus;
+    'tap-icon-minus': TapIconMinus;
   }
 }

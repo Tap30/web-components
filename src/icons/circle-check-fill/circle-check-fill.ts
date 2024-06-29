@@ -1,12 +1,23 @@
-import {html} from "lit";
-import {TapIcon} from "../../icon";
+import { html } from 'lit';
+import { TapIcon } from '../../icon';
 
 export class CircleCheckFillIcon extends TapIcon {
   render() {
     return this.renderIcon(html`
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C17.52 2 22 6.48 22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2ZM16.2929 8.29297L11 13.5859L8.70712 11.293L7.29291 12.7072L11 16.4143L17.7071 9.70718L16.2929 8.29297Z" fill="currentColor"/>
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M12 2C17.52 2 22 6.48 22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2ZM16.2929 8.29297L11 13.5859L8.70712 11.293L7.29291 12.7072L11 16.4143L17.7071 9.70718L16.2929 8.29297Z"
+          fill="currentColor"
+        />
       </svg>
-      `);
+    `);
   }
 }

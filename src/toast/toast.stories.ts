@@ -1,8 +1,11 @@
 import { html, TemplateResult } from 'lit';
+import { Meta } from '@storybook/web-components';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { TapToast } from './index.js';
 import './index.js';
 import '../button';
 
-const toastVariants: string[] = [
+const toastVariants: TapToast['variant'][] = [
   'success',
   'error',
   'info',
@@ -11,7 +14,7 @@ const toastVariants: string[] = [
 ];
 
 export default {
-  title: 'Toast',
+  title: 'Components/Toast',
   component: 'tap-toast',
   argTypes: {
     toastContent: {
@@ -30,18 +33,13 @@ export default {
       defaultValue: false,
     },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
   args?: Partial<T>;
   argTypes?: Record<string, unknown>;
 }
-
-const defaultProps = {
-  toastContent: 'toast text goes here!',
-  showDismissButton: false,
-};
 
 interface ArgTypes {
   toastContent: string;
@@ -64,7 +62,7 @@ const Template: Story<ArgTypes> = ({
   return html`
     <tap-toast
       id="toast-story"
-      variant=${variant}
+      variant=${ifDefined(variant)}
       ?show-dismiss-button=${showDismissButton}
     >
       ${toastContent}
@@ -72,10 +70,12 @@ const Template: Story<ArgTypes> = ({
   `;
 };
 
-const VariantTemplate: Story<{}> = () => {
+const VariantTemplate: Story<Record<string, never>> = () => {
   return html`
     ${toastVariants.map(
-      (variant) => html` <tap-toast variant=${variant}>${variant}</tap-toast> `,
+      (variant) => html`
+        <tap-toast variant=${ifDefined(variant)}>${variant}</tap-toast>
+      `,
     )}
   `;
 };

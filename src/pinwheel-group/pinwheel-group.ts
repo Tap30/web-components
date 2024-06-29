@@ -10,8 +10,11 @@ export class PinwheelGroup extends LitElement {
         aria-label=${nothing}
       >
         <slot></slot>
-        <div class="selector-indicator" part="pinwheel-selector-indicator"></div>
+        <div
+          class="selector-indicator"
+          part="pinwheel-selector-indicator"
+        ></div>
       </div>
-    `
+    `;
   }
 }

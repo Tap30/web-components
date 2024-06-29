@@ -29,7 +29,7 @@ export class Radio extends LitElement {
     return this.internals.labels;
   }
 
-  private handleInput(event: Event) {
+  private handleInput() {
     this.dispatchEvent(
       new CustomEvent('radio-input-change', {
         detail: {

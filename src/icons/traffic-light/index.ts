@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { TrafficLightIcon } from "./traffic-light";
+import { customElement } from 'lit/decorators.js';
+import { TrafficLightIcon } from './traffic-light';
 
-@customElement("tap-icon-traffic-light")
-export class TapIconTrafficLight extends TrafficLightIcon {
-}
+@customElement('tap-icon-traffic-light')
+export class TapIconTrafficLight extends TrafficLightIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-traffic-light": TapIconTrafficLight;
+    'tap-icon-traffic-light': TapIconTrafficLight;
   }
 }

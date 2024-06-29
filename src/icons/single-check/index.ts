@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { SingleCheckIcon } from "./single-check";
+import { customElement } from 'lit/decorators.js';
+import { SingleCheckIcon } from './single-check';
 
-@customElement("tap-icon-single-check")
-export class TapIconSingleCheck extends SingleCheckIcon {
-}
+@customElement('tap-icon-single-check')
+export class TapIconSingleCheck extends SingleCheckIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-single-check": TapIconSingleCheck;
+    'tap-icon-single-check': TapIconSingleCheck;
   }
 }

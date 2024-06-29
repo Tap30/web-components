@@ -1,5 +1,6 @@
 /* --tap-sys-typography-[type]-[size]-[property] */
 :root {
+  /* family */
   --tap-sys-font-family: "Vazirmatn", sans-serif;
 
   /* body */

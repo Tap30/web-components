@@ -185,4 +185,16 @@ export default css`
       var(--tap-sys-color-content-on-inverse)
     );
   }
+
+  .spinner {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .content {
+    visibility: hidden;
+  }
 `;

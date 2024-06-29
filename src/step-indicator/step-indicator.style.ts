@@ -26,13 +26,26 @@ export default css`
     cursor: inherit;
     display: inline-flex;
     outline: none;
-    height: calc(var(--tap-step-indicator-step-size, var(--tap-sys-spacing-5)) / 2);
-    width: calc(var(--tap-step-indicator-step-size, var(--tap-sys-spacing-5)) / 2);
+    height: calc(
+      var(--tap-step-indicator-step-size, var(--tap-sys-spacing-5)) / 2
+    );
+    width: calc(
+      var(--tap-step-indicator-step-size, var(--tap-sys-spacing-5)) / 2
+    );
     padding: 0;
-    border-radius: var(--tap-step-indicator-step-border-radius, var(--tap-sys-radius-full));
+    border-radius: var(
+      --tap-step-indicator-step-border-radius,
+      var(--tap-sys-radius-full)
+    );
     border: calc(var(--tap-sys-spacing-5) / 4) solid
-      var(--tap-step-indicator-step-border-color, var(--tap-sys-color-surface-primary));
-    background-color: var(--tap-step-indicator-step-background-color, var(--tap-sys-color-border-primary));
+      var(
+        --tap-step-indicator-step-border-color,
+        var(--tap-sys-color-surface-primary)
+      );
+    background-color: var(
+      --tap-step-indicator-step-background-color,
+      var(--tap-sys-color-border-primary)
+    );
   }
 
   .step[aria-current='step'] {

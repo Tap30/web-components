@@ -1,11 +1,12 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Pinwheel',
+  title: 'Components/Pinwheel',
   component: 'tap-pinwheel',
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -27,7 +28,7 @@ const items = [
   'عنوان ۹',
 ];
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
+const Template: Story<ArgTypes> = () => html`
   <tap-pinwheel .items=${items}></tap-pinwheel>
 `;
 

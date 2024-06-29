@@ -1,8 +1,9 @@
 import { html, TemplateResult } from 'lit';
 import './index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: 'Progress Indicator',
+  title: 'Components/Progress Indicator',
   component: 'tap-progress-indicator',
   argTypes: {
     current: {
@@ -14,7 +15,7 @@ export default {
       description: 'Progress indicator max value',
     },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;

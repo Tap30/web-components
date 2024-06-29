@@ -1,12 +1,11 @@
-import {customElement} from "lit/decorators.js";
-import { ClipboardClockIcon } from "./clipboard-clock";
+import { customElement } from 'lit/decorators.js';
+import { ClipboardClockIcon } from './clipboard-clock';
 
-@customElement("tap-icon-clipboard-clock")
-export class TapIconClipboardClock extends ClipboardClockIcon {
-}
+@customElement('tap-icon-clipboard-clock')
+export class TapIconClipboardClock extends ClipboardClockIcon {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-clipboard-clock": TapIconClipboardClock;
+    'tap-icon-clipboard-clock': TapIconClipboardClock;
   }
 }

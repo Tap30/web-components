@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 export default css`
   :host {
@@ -12,8 +12,14 @@ export default css`
   .selector-indicator {
     /* FIXME: we dont have sizing tokens yet */
     height: var(--tap-pinwheel-item-height, 48px);
-    background-color: var(--tap-pinwheel-group-selector-background-color, var(--tap-sys-color-surface-tertiary));
-    border-radius: var(--tap-pinwheel-group-selector-radius, var(--tap-sys-spacing-4));
+    background-color: var(
+      --tap-pinwheel-group-selector-background-color,
+      var(--tap-sys-color-surface-tertiary)
+    );
+    border-radius: var(
+      --tap-pinwheel-group-selector-radius,
+      var(--tap-sys-spacing-4)
+    );
     position: absolute;
     top: calc(50% - 24px);
     left: 0;

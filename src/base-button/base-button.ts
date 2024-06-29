@@ -1,8 +1,10 @@
 import { html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import '../spinner';
 
 export abstract class BaseButton extends LitElement {
+  static formAssociated = true;
   static readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
@@ -57,9 +59,19 @@ export abstract class BaseButton extends LitElement {
         aria-describedby=${nothing}
       >
         <span class="cover"></span>
-        <!-- TODO: add spinner -->
-        ${this.loading ? html`<span>loading</span>` : html` <slot></slot>`}
+        ${this.loading ? this.renderLoadingContent() : html` <slot></slot>`}
       </button>
+    `;
+  }
+
+  private renderLoadingContent = () => {
+    return html `
+      <div class="spinner">
+        <tap-spinner></tap-spinner>
+      </div>
+      <div class="content">
+        <slot></slot>
+      </div>
     `;
   }
 

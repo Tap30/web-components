@@ -36,7 +36,10 @@ export default css`
 
   .banner h4 {
     color: var(--tap-banner-color-content);
-    font-family: var(--tap-sys-typography-headline-xs-font, --tap-sys-font-family);
+    font-family: var(
+      --tap-sys-typography-headline-xs-font,
+      --tap-sys-font-family
+    );
     line-height: var(--tap-sys-typography-headline-xs-height);
     font-size: var(--tap-sys-typography-headline-xs-size);
     font-weight: var(--tap-sys-typography-headline-xs-weight);
