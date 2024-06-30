@@ -1,7 +1,8 @@
 import { html, TemplateResult } from 'lit';
 import { Meta } from '@storybook/web-components';
+import '../button';
 import './index.js';
-import '@tapsioss/icons/dist/icons/circle-check-fill'
+import '@tapsioss/icons/dist/icons/circle-check-fill';
 
 export default {
   title: 'Components/Modal',
