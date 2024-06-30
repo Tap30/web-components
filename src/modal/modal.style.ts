@@ -77,6 +77,10 @@ export default css`
   .right {
     text-align: right;
   }
+  
+  .left {
+    text-align: left;
+  }
 
   .title {
     font-size: var(--tap-dialog-title-size, var(--tap-sys-typography-headline-sm-size));

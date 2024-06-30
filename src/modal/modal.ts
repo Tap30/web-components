@@ -16,7 +16,7 @@ export class Modal extends LitElement implements HTMLDialogElement {
   description: string = "";
 
   @property({ type: String })
-  alignment: string = 'right';
+  alignment: 'left' | 'center' | 'right' = 'right';
 
   @property({ type: String })
   image?: string;
