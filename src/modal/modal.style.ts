@@ -82,6 +82,10 @@ export default css`
   .right {
     text-align: right;
   }
+  
+  .left {
+    text-align: left;
+  }
 
   .left {
     text-align: left;
