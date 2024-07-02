@@ -26,7 +26,9 @@ import styles from './spinner.style';
  *
  * @cssprop [`--tap-spinner-color-primary`=`--tap-sys-color-surface-black`]
  * @cssprop [`--tap-spinner-color-inverse`=`--tap-sys-color-surface-white`]
- * @cssprop [`--tap-spinner-size`=`--tap-sys-spacing-8`]
+ * @cssprop [`--tap-spinner-sm-size`=`--tap-sys-spacing-7`]
+ * @cssprop [`--tap-spinner-md-size`=`--tap-sys-spacing-8`]
+ * @cssprop [`--tap-spinner-lg-size`=`--tap-sys-spacing-10`]
  * @cssprop [`--tap-spinner-padding`=`--tap-sys-spacing-2`]
  */
 
