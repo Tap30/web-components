@@ -30,6 +30,21 @@ export default css`
     color: inherit;
   }
 
+  :host([size='small']) .spinner {
+    height: var(--tap-spinner-sm-size, var(--tap-sys-spacing-7));
+    width: var(--tap-spinner-sm-size, var(--tap-sys-spacing-7));
+  }
+
+  :host([size='medium']) .spinner {
+    height: var(--tap-spinner-md-size, var(--tap-sys-spacing-8));
+    width: var(--tap-spinner-md-size, var(--tap-sys-spacing-8));
+  }
+
+  :host([size='large']) .spinner {
+    height: var(--tap-spinner-lg-size, var(--tap-sys-spacing-10));
+    width: var(--tap-spinner-lg-size, var(--tap-sys-spacing-10));
+  }
+
   @keyframes rotate {
     from {
       transform: rotate(105deg);
