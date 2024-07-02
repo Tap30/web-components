@@ -4,6 +4,8 @@ import { classMap } from 'lit/directives/class-map.js';
 
 export class Spinner extends LitElement {
   @property() variant: 'normal' | 'inverse' | 'inherit' = 'inherit';
+  @property() size: 'small' | 'medium' | 'large' = 'medium';
+
 
   render() {
     return html`
