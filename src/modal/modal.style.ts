@@ -47,7 +47,7 @@ export default css`
     overflow: hidden;
   }
 
-  .icon {
+  .icon-container {
     margin-top: var(--tap-dialog-icon-top-margin, var(--tap-sys-spacing-8));
     display: flex;
     justify-content: center;
@@ -55,19 +55,25 @@ export default css`
 
   .image-container {
     height: 200px;
-    background-color: var(--tap-dialog-image-container-background-color, var(--tap-palette-gray-100));
+    background-color: var(
+      --tap-dialog-image-container-background-color,
+      var(--tap-palette-gray-100)
+    );
   }
 
-  .image {
+  ::slotted([slot='banner']) {
     width: 100%;
     height: 100%;
-    object-fit: cover;
   }
 
   .content {
-    padding: var(--tap-dialog-content-vertical-padding, var(--tap-sys-spacing-4))
+    padding: var(
+        --tap-dialog-content-vertical-padding,
+        var(--tap-sys-spacing-4)
+      )
       var(--tap-dialog-content-horizontal-padding, var(--tap-sys-spacing-6));
-    margin: var(--tap-dialog-content-vertical-margin, var(--tap-sys-spacing-6)) var(--tap-dialog-content-horizontal-margin, 0);
+    margin: var(--tap-dialog-content-vertical-margin, var(--tap-sys-spacing-6))
+      var(--tap-dialog-content-horizontal-margin, 0);
   }
 
   .center {
@@ -77,23 +83,44 @@ export default css`
   .right {
     text-align: right;
   }
-  
+
   .left {
     text-align: left;
   }
 
   .title {
-    font-size: var(--tap-dialog-title-size, var(--tap-sys-typography-headline-sm-size));
-    font-weight: var(--tap-dialog-title-weight, var(--tap-sys-typography-headline-sm-weight));
-    line-height: var(--tap-dialog-title-line-height, var(--tap-sys-typography-headline-sm-height));
+    font-size: var(
+      --tap-dialog-title-size,
+      var(--tap-sys-typography-headline-sm-size)
+    );
+    font-weight: var(
+      --tap-dialog-title-weight,
+      var(--tap-sys-typography-headline-sm-weight)
+    );
+    line-height: var(
+      --tap-dialog-title-line-height,
+      var(--tap-sys-typography-headline-sm-height)
+    );
   }
 
   .description {
     margin: var(--tap-dialog-description-margin, 0);
-    padding-top: var(--tap-dialog-description-padding-top, var(--tap-sys-spacing-4));
-    font-size: var(--tap-dialog-description-font-size, var(--tap-sys-typography-body-md-size));
-    font-weight: var(--tap-dialog-description-font-weight, var(--tap-sys-typography-body-md-weight));
-    line-height: var(--tap-dialog-description-line-height, var(--tap-sys-typography-body-md-height));
+    padding-top: var(
+      --tap-dialog-description-padding-top,
+      var(--tap-sys-spacing-4)
+    );
+    font-size: var(
+      --tap-dialog-description-font-size,
+      var(--tap-sys-typography-body-md-size)
+    );
+    font-weight: var(
+      --tap-dialog-description-font-weight,
+      var(--tap-sys-typography-body-md-weight)
+    );
+    line-height: var(
+      --tap-dialog-description-line-height,
+      var(--tap-sys-typography-body-md-height)
+    );
     color: var(--tap-dialog-description-color, var(--tap-palette-gray-500));
   }
 

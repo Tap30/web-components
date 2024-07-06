@@ -11,7 +11,7 @@ export default {
     open: { control: 'boolean' },
     alignment: {
       control: { type: 'radio' },
-      options: ['center', 'right'],
+      options: ['left', 'center', 'right'],
       description: 'Modal Alignment',
     },
     layout: {
@@ -19,10 +19,9 @@ export default {
       options: ['horizontal', 'vertical'],
       description: 'Modal Actions Layout',
     },
-    leadingType: {
-      control: { type: 'radio' },
-      options: ['icon', 'image'],
-      description: 'Modal Leading Type',
+    isBannerFullWidth: {
+      control: { type: 'boolean' },
+      description: 'Toggle Between Image and Icon Slot for the Banner',
     },
   },
 } as Meta;
@@ -37,55 +36,45 @@ interface ArgTypes {
   open: boolean;
   alignment: string;
   layout: string;
-  leadingType: string;
+  isBannerFullWidth: boolean;
 }
 
-const renderActions = (layout: string) => {
-  if (layout === 'vertical') {
-    return html`
+const renderActions = (layout: string) => (
+  layout === 'vertical'
+    ? html`
       <div slot="actions" style="display: flex; flex-direction: column; gap: 12px">
         <tap-button tabindex="0" style="width:100%">عنوان دکمه</tap-button>
         <tap-button tabindex="0" style="width:100%" variant="ghost">عنوان دکمه</tap-button>
-      </div>`;
-  } else {
-    return html`
+      </div>`
+    : html`
       <div slot="actions" style="display: flex; gap: 12px">
         <tap-button tabindex="0" style="width:100%">عنوان دکمه</tap-button>
         <tap-button tabindex="0" style="width:100%" variant="ghost">عنوان دکمه</tap-button>
-      </div>`;
-  }
-}
+      </div>`
+)
 
-const renderModal = ({ alignment, open, layout, leadingType }: ArgTypes) => {
-  if (leadingType === 'icon') {
-    return html`
-      <tap-modal 
-      .open=${open} 
+const renderBanner = (isBannerFullWidth: boolean) => (
+  isBannerFullWidth
+    ? html`
+      <img alt="banner" slot="banner" src="https://picsum.photos/600/200" />`
+    : html`
+      <tap-icon-circle-check-fill
+        height="64"
+        width="64"
+        color="var(--tap-palette-green-300)"
+        slot="banner"></tap-icon-circle-check-fill>`
+)
+
+const Template: Story<ArgTypes> = ({ open, alignment, layout, isBannerFullWidth }: ArgTypes) => html`
+      <tap-modal
+      .open=${open}
       .alignment=${alignment}
+      .isBannerFullWidth=${isBannerFullWidth}
       title="عنوان را وارد کنید"
       description="این محل نوشتن توضیح این مودال است. لطفاً متن مورد نظر را اینجا بنویسید">
-        <tap-icon-circle-check-fill 
-          height="64" 
-          width="64" 
-          color="var(--tap-palette-green-300)" 
-          slot="icon"></tap-icon-circle-check-fill>
-        ${renderActions(layout)}
-      </tap-modal>`
-  } else {
-    return html`
-      <tap-modal 
-      .open=${open} 
-      .alignment=${alignment}
-      image="https://picsum.photos/100"
-      title="عنوان را وارد کنید"
-      description="این محل نوشتن توضیح این مودال است. لطفاً متن مورد نظر را اینجا بنویسید">
-        ${renderActions(layout)}
-      </tap-modal>`;
-  }
-}
-
-const Template: Story<ArgTypes> = ({ open, alignment, layout, leadingType }: ArgTypes) => html`
-  ${renderModal({ open, alignment, layout, leadingType })}
+      ${renderBanner(isBannerFullWidth)}
+      ${renderActions(layout)}
+      </tap-modal>
 `;
 
 export const Modal = Template.bind({});
@@ -94,5 +83,5 @@ Modal.args = {
   open: true,
   alignment: 'right',
   layout: 'horizontal',
-  leadingType: 'icon',
+  isBannerFullWidth: true,
 };
