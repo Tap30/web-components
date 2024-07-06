@@ -14,7 +14,7 @@ export default {
       options: spinnerVariants,
       control: { type: 'select' },
     },
-    spinnerSize: {
+    size: {
       description: 'Spinner size',
       options: spinnerSize,
       control: { type: 'select' },
@@ -45,4 +45,6 @@ const Template: Story<ArgTypes> = ({ variant, size }: ArgTypes) => html`
 
 export const Spinner = Template.bind({});
 
-Spinner.args = {};
+Spinner.args = {
+  size: 'medium',
+};
