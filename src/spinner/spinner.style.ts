@@ -18,16 +18,12 @@ export default css`
     animation: rotate 1s linear infinite;
   }
 
-  .normal {
+  .primary {
     color: var(--tap-spinner-color-primary, var(--tap-sys-color-surface-black));
   }
 
   .inverse {
     color: var(--tap-spinner-color-inverse, var(--tap-sys-color-surface-white));
-  }
-
-  .inherit {
-    color: inherit;
   }
 
   @keyframes rotate {
