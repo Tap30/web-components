@@ -2,7 +2,7 @@ import { html, TemplateResult } from 'lit';
 import './index.js';
 import { Meta } from '@storybook/web-components';
 
-const spinnerVariants: string[] = ['normal', 'inverse'];
+const spinnerVariants: string[] = ['primary', 'inverse'];
 
 export default {
   title: 'Components/Spinner',

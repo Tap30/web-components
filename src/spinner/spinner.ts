@@ -3,7 +3,7 @@ import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 export class Spinner extends LitElement {
-  @property() variant: 'normal' | 'inverse' | 'inherit' = 'inherit';
+  @property() variant: 'default' | 'primary' | 'inverse' = 'default';
 
   render() {
     return html`
