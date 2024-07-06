@@ -10,16 +10,16 @@ export class Modal extends LitElement implements HTMLDialogElement {
   open: boolean = false;
 
   @property({ type: String })
-  title: string = "";
+  title: string = '';
 
   @property({ type: String })
-  description: string = "";
+  description: string = '';
 
   @property({ type: String })
   alignment: 'left' | 'center' | 'right' = 'right';
 
-  @property({ type: String })
-  image?: string;
+  @property({ type: Boolean })
+  isBannerFullWidth = true;
 
   @query('#dialog')
   private dialog?: HTMLElement | null;
@@ -88,6 +88,10 @@ export class Modal extends LitElement implements HTMLDialogElement {
     }
   }
 
+  private getBannerClassname(): string {
+    return this.isBannerFullWidth ? 'image-container' : 'icon-container';
+  }
+
   close(returnValue?: string): void {
     if (returnValue) {
       this.returnValue = returnValue;
@@ -125,17 +129,20 @@ export class Modal extends LitElement implements HTMLDialogElement {
           aria-labelledby=${nothing}
           aria-describedby=${nothing}
         >
-        ${this.image
-        ? html`
-          <div class="image-container" part="image-container">
-            <img class="image" part="image" src=${this.image} alt="dialog image" />
-          </div>`
-        : html`
-          <div class="icon" part="icon"><slot name="icon"></slot></div>
-        `}
+          <div class="${this.getBannerClassname()}" part="container">
+            <slot name="banner" part="banner"></slot>
+          </div>
           <div class="content ${this.alignment}" part="content">
-            ${this.title ? html`<span id="title" class="title" part="title">${this.title}</span>` : nothing}
-            ${this.description ? html`<p id="description" class="description" part="description">${this.description}</p>` : nothing}
+            ${this.title
+              ? html`<span id="title" class="title" part="title"
+                  >${this.title}</span
+                >`
+              : nothing}
+            ${this.description
+              ? html`<p id="description" class="description" part="description">
+                  ${this.description}
+                </p>`
+              : nothing}
           </div>
           <div class="actions" part="actions">
             <slot name="actions"></slot>
