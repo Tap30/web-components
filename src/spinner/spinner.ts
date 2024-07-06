@@ -1,20 +1,16 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 
 export class Spinner extends LitElement {
-  @property() variant: 'normal' | 'inverse' | 'inherit' = 'inherit';
-  @property() size: 'small' | 'medium' | 'large' = 'medium';
+  @property({ reflect: true }) variant: 'normal' | 'inverse' | 'inherit' = 'inherit';
+  @property({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
 
   render() {
     return html`
       <svg
         part="svg"
-        class=${classMap({
-          spinner: true,
-          [this.variant]: true,
-        })}
+        class="spinner"
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
         viewBox="0 0 600 600"

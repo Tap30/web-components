@@ -7,8 +7,6 @@ export default css`
   }
 
   .spinner {
-    width: var(--tap-spinner-size, var(--tap-sys-spacing-8));
-    height: var(--tap-spinner-size, var(--tap-sys-spacing-8));
     padding: var(--tap-spinner-padding, var(--tap-sys-spacing-2));
     stroke-linecap: round;
   }
@@ -18,15 +16,15 @@ export default css`
     animation: rotate 1s linear infinite;
   }
 
-  .primary {
+  :host([variant='normal']) .spinner {
     color: var(--tap-spinner-color-primary, var(--tap-sys-color-surface-black));
   }
 
-  .inverse {
+  :host([variant='inverse']) .spinner {
     color: var(--tap-spinner-color-inverse, var(--tap-sys-color-surface-white));
   }
 
-  .inherit {
+  :host([variant='inherit']) .spinner {
     color: inherit;
   }
 
