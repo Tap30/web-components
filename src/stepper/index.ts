@@ -3,10 +3,6 @@ import { Stepper } from './stepper.js';
 import styles from './stepper.style.js';
 
 /**
- * ### Example
- * ```html
- * <tap-stepper unit="USDT" step="1" min="0" max="10" size="medium" fullWidth></tap-avatar>
- * ```
  * @summary A form item that shows a value and can be increased or decreased by tw buttons
  *
  * @prop {string} [unit=''] - A single quantity of the value

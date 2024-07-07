@@ -3,33 +3,6 @@ import { SegmentedButtonGroup } from './segmented-button-group';
 import styles from './segmented-button-group.style';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-segmented-button-group>
- *   <tap-segmented-button>Button 1</tap-segmented-button>
- *   <tap-segmented-button>Button 2</tap-segmented-button>
- *   <tap-segmented-button>Button 3</tap-segmented-button>
- * </tap-segmented-button-group>
- * ```
- *
- * ##### With Sizes
- *
- * ```html
- * <tap-segmented-button-group size="sm">
- *   <tap-segmented-button>Small Button 1</tap-segmented-button>
- *   <tap-segmented-button>Small Button 2</tap-segmented-button>
- * </tap-segmented-button-group>
- *
- * <tap-segmented-button-group size="md">
- *   <tap-segmented-button>Medium Button 1</tap-segmented-button>
- *   <tap-segmented-button>Medium Button 2</tap-segmented-button>
- * </tap-segmented-button-group>
- * ```
- *
  * @summary A group of segmented buttons.
  *
  * @prop {'sm' | 'md'} [size='md'] - The size of the segmented button group.

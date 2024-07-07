@@ -3,49 +3,6 @@ import { Notice } from './notice';
 import styles from './notice.style';
 
 /**
- * ### Example
- *
- * ##### Simple
- *
- * ```html
- * <tap-notice>Notice Me</tap-notice>
- * ```
- *
- * ##### Tile
- *
- * ```html
- * <tap-notice title="Tile">Notice content</tap-notice>
- * ```
- *
- * ##### Warning Variant - High Priority
- *
- * ```html
- * <tap-notice variant="warning">Warning variant with high priority</tap-notice>
- * ```
- *
- * ##### Warning Variant - Low Priority
- *
- * ```html
- * <tap-notice variant="warning" priority="low">Warning variant with low priority</tap-notice>
- * ```
- *
- * ##### Dismissible
- *
- * ```html
- * <tap-notice dismissable>Notice that can be dismissed</tap-notice>
- * ```
- *
- * ##### With Actions Slot
- *
- * ```html
- * <tap-notice>
- *   Notice with Actions with info variant
- *   <p slot="actions">
- *       Your actions slot goes here, and you are responsible for styling it
- *   </p>
- * </tap-notice>
- * ```
- *
  * @summary A notice/alert component is a user interface element that displays important messages or alerts to inform or warn users about specific events or actions.
  *
  * @prop {'success' | 'error' | 'info' | 'warning' | 'inverse'} [variant='inverse'] - The variant of the notice. Defaults to `inverse`.

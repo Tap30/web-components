@@ -3,27 +3,6 @@ import { Checkbox } from './checkbox';
 import styles from './checkbox.style';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-checkbox></tap-checkbox>
- * ```
- *
- * ##### Checked
- *
- * ```html
- * <tap-checkbox checked></tap-checkbox>
- * ```
- *
- * ##### Indeterminate
- *
- * ```html
- * <tap-checkbox indeterminate></tap-checkbox>
- * ```
- *
  * @summary A checkbox component with support for checked and indeterminate states.
  *
  * @prop {boolean} [checked=false] - Indicates whether the checkbox is checked.

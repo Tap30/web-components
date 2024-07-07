@@ -3,12 +3,6 @@ import { Pinwheel } from './pinwheel';
 import styles from './pinwheel.style';
 
 /**
- * ### Example
- *
- * ```html
- * <tap-pinwheel .items=${["item1", "item2"]}></tap-avatar>
- * ```
- *
  * @summary A pinwheel component for selecting items by scrolling through a list.
  *
  * @prop {string[]} [items=[]] - An array of strings that contains pinwheel items.

@@ -3,21 +3,6 @@ import { Spinner } from './spinner';
 import styles from './spinner.style';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-spinner />
- * ```
- *
- * ##### Variant
- *
- * ```html
- * <tap-spinner variant="inverse" />
- * ```
- *
  * @summary Display spinner.
  *
  * @prop {'primary' | 'inverse'} [variant='primary'] - Specifies the spinner color. Acceptable values are `primary` and `inverse`.

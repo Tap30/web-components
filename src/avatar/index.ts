@@ -3,28 +3,6 @@ import { Avatar } from './avatar.js';
 import styles from './avatar.style.js';
 
 /**
- * ### Example
- *
- * ##### Simple
- *
- * ```html
- * <tap-avatar image="avatar.png"></tap-avatar>
- * ```
- *
- * ##### Placeholder
- *
- * ```html
- * <tap-avatar image="avatar.png">AV</tap-avatar>
- * ```
- *
- * ##### Size
- *
- * ```html
- * <tap-avatar size="small" image="avatar.png">AV</tap-avatar>
- * <tap-avatar size="xSmall" image="avatar.png">AV</tap-avatar>
- * <tap-avatar size="large" image="avatar.png">AV</tap-avatar>
- * ```
- *
  * @summary Display user profile image, initials or fallback icon
  *
  * @slot - The default slot to use when image is not present.

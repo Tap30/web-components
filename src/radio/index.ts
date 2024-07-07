@@ -3,21 +3,6 @@ import { Radio } from './radio';
 import styles from './radio.style';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-radio></tap-radio>
- * ```
- *
- * ##### Checked
- *
- * ```html
- * <tap-radio checked></tap-radio>
- * ```
- *
  * @summary A radio button component.
  *
  * @prop {boolean} [checked=false] - Indicates whether the radio button is checked.

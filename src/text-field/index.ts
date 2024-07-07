@@ -4,21 +4,6 @@ import styles from './text-field.style';
 import { inputStyles } from '../input';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-text-field></tap-text-field>
- * ```
- *
- * ##### With Label and Placeholder
- *
- * ```html
- * <tap-text-field label="Name" placeholder="Enter your name"></tap-text-field>
- * ```
- *
  * @summary A text field component.
  *
  * @prop {string} [value=''] - The value of the text field.

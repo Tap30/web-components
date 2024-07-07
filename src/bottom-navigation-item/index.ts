@@ -3,21 +3,6 @@ import { BottomNavigationItem } from './bottom-navigation-item.js';
 import styles from './bottom-navigation-item.style.js';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-bottom-navigation-item></tap-bottom-navigation-item>
- * ```
- *
- * ##### Active State
- *
- * ```html
- * <tap-bottom-navigation-item active></tap-bottom-navigation-item>
- * ```
- *
  * @summary Represents a single item in a bottom navigation bar.
  *
  * @slot [icon] - Slot for the icon when the item is inactive.

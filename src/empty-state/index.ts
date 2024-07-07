@@ -3,25 +3,7 @@ import { EmptyState } from "./empty-state";
 import styles from "./empty-state.style";
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- *  <tap-empty-state>
- *    <tap-icon-default 
- *      slot="icon" 
- *      width="64" 
- *      height="64">
- *    </tap-icon-default>
- *    <div slot="content">content</div>
- *    <tap-button slot="actions">click</tap-button>
- *  </tap-empty-state>
- * ```
- *
  * @summary An empty state component with icon and actions slots.
- *
  *
  * @cssprop [--tap-font-family=--tap-sys-font-family] - The font family used in the empty state.
  * @cssprop [--tap-empty-state-icon-horizontal-margin] - The horizontal margin for the icon slot.
@@ -38,14 +20,14 @@ import styles from "./empty-state.style";
  * @cssprop [--tap-empty-state-description-line-height=--tap-sys-typography-headline-sm-size] - The line height used for the description in the empty state.
  * @cssprop [--tap-empty-state-description-color=--tap-sys-typography-headline-sm-size] - The color used for the description in the empty state.
  * @cssprop [--tap-empty-state-description-top-margin=--tap-sys-spacing-4] - The top margin used for the description in the empty state.
- * 
+ *
  * @csspart [container] - The root container of the empty state component a `div`.
  * @csspart [icon] - The container of the icon slot, a `span`.
  * @csspart [content] - The wrapper around heading and description, a `div`.
  * @csspart [heading] - The heading element, a `span`.
  * @csspart [description] - The description element, a `p`.
  * @csspart [actions] - The container of the actions slot, a `div`.
- * 
+ *
  * @slot [icon] - the icon slot of the empty state.
  * @slot [actions] - the actions slot of the empty state.
  *
