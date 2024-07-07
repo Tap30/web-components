@@ -3,16 +3,6 @@ import { PinwheelGroup } from './pinwheel-group';
 import styles from './pinwheel-group.style';
 
 /**
- * ### Example
- *
- * ```html
- * <tap-pinwheel-group>
- *  <tap-pinwheel .items=${["item1", "item2"]}></tap-avatar>
- *  <tap-pinwheel .items=${["item1", "item2"]}></tap-avatar>
- *  <tap-pinwheel .items=${["item1", "item2"]}></tap-avatar>
- * </tap-pinwheel-group>
- * ```
- *
  * @summary Grouping pinwheel components and attach selector indicator to them.
  *
  * @slot - The default slot to get pinwheels.

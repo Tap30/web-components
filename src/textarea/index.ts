@@ -3,21 +3,6 @@ import { Textarea } from './textarea';
 import styles from './textarea.style';
 import { inputStyles } from '../input';
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-textarea></tap-textarea>
- * ```
- *
- * ##### With Label and Placeholder
- *
- * ```html
- * <tap-textarea label="Name" placeholder="Enter your name"></tap-textarea>
- * ```
- *
  * @summary A textarea component.
  *
  * @prop {string} [value=''] - The value of the textarea.

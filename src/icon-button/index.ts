@@ -4,12 +4,6 @@ import styles from './icon-button.style';
 import { baseButtonStyles } from '../base-button';
 
 /**
- * <custom-element-manifest-viewer tag-name="tap-icon-button" src="./custom-elements.json">
- *  <tap-icon-default data-knob-type="slot" slot="default" title="icon"></tap-icon-default>
- * </custom-element-manifest-viewer>
- *
- * ---
- *
  * @summary A customizable icon button component with various styles and states.
 
  * @slot - Icon button's content.

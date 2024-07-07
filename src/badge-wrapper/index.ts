@@ -5,15 +5,6 @@ import { BadgeWrapper } from './badge-wrapper';
 import styles from './badge-wrapper.style';
 
 /**
- * <custom-element-manifest-viewer tag-name="tap-badge-wrapper" src="./custom-elements.json">
- *   <tap-button data-knob-type="slot" slot="default" title="Button">عنوان دکمه</tap-button>
- *   <tap-icon-button data-knob-type="slot" slot="default" title="Icon Button" size="medium"><tap-icon-default></tap-icon-default></tap-icon-button>
- *   <tap-badge data-knob-type="slot" slot="badge" title="Pill Badge" value="‍۱۰" variant="info"></tap-badge>
- *   <tap-badge data-knob-type="slot" slot="badge" title="Dot Badge" type="dot" variant="info"></tap-badge>
- * </custom-element-manifest-viewer>
- *
- * ---
- *
  * @summary A wrapper component to position a badge relative to its content.
  *
  * @slot - The default slot for the main content.

@@ -3,23 +3,6 @@ import { Divider } from './divider.js';
 import styles from './divider.style.js';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-divider></tap-divider>
- * ```
- *
- * ##### Different Types
- *
- * ```html
- * <tap-divider type="thin"></tap-divider>
- * <tap-divider type="medium"></tap-divider>
- * <tap-divider type="bold"></tap-divider>
- * ```
- *
  * @summary A divider component used to separate content.
  *
  * @prop {'thin' | 'medium' | 'bold'} [type='medium'] - The thickness of the divider.

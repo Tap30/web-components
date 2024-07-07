@@ -3,30 +3,6 @@ import { Skeleton } from './skeleton';
 import styles from './skeleton.style';
 
 /**
- * ### Example
- *
- * ##### Simple
- *
- * ```html
- * <tap-skeleton></tap-skeleton>
- * ```
- *
- * ##### Variants
- *
- * ```html
- * <tap-skeleton variant="line"></tap-skeleton>
- * <tap-skeleton variant="rect"></tap-skeleton>
- * <tap-skeleton variant="circle"></tap-skeleton>
- * ```
- *
- * ##### Animation Modes
- *
- * ```html
- * <tap-skeleton animation-mode="progress"></tap-skeleton>
- * <tap-skeleton animation-mode="pulse"></tap-skeleton>
- * <tap-skeleton animation-mode="none"></tap-skeleton>
- * ```
- *
  * @summary Display Skeleton component with different styles and types.
  *
  * @prop {"line" | "rect" | "circle"} [variant="line"] - The variant of the skeleton.

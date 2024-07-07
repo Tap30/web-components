@@ -3,20 +3,6 @@ import { Banner } from './banner.js';
 import styles from './banner.style.js';
 
 /**
- * ### Example
- *
- * ##### Simple
- *
- * ```html
- * <tap-banner heading="Welcome!" description="This is a banner."></tap-banner>
- * ```
- *
- * ##### Hero Variant
- *
- * ```html
- * <tap-banner variant="hero" heading="Hero Banner" description="This is a hero banner."></tap-banner>
- * ```
- *
  * @summary Display a banner with optional heading, description, and action slot.
  *
  * @prop {string} [heading] - The heading text to display in the banner.

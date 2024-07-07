@@ -3,18 +3,6 @@ import { BottomNavigation } from './bottom-navigation.js';
 import styles from './bottom-navigation.style.js';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-bottom-navigation>
- *   <tap-bottom-navigation-item></tap-bottom-navigation-item>
- *   <tap-bottom-navigation-item></tap-bottom-navigation-item>
- * </tap-bottom-navigation>
- * ```
- *
  * @summary A bottom navigation bar that contains multiple navigation items.
  *
  * @slot - The default slot for adding `tap-bottom-navigation-item` elements.

@@ -36,6 +36,9 @@ export default {
           content +=`\n${component.description}\n`
         }
 
+        // TODO: remove after fixing cemnama
+        if (!['tap-modal', 'tap-bottom-navigation'].includes(component.tagName)) content += `<custom-element-manifest-viewer theme="github-dark-default" tag-name=${component.tagName} config="./elements-config.json" manifest="./custom-elements.json"></custom-element-manifest-viewer>\n`
+
         if (!!component.members?.length) {
           content += '### Properties\n';
           content += '| Name | Type | Default | Description |\n';

@@ -3,10 +3,6 @@ import { Badge } from './badge';
 import styles from './badge.style';
 
 /**
- * <custom-element-manifest-viewer tag-name="tap-badge" src="./custom-elements.json">
- * </custom-element-manifest-viewer>
- *
- * ---
  *
  * @summary Display badge component with different styles and types.
  *

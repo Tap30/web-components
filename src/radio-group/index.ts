@@ -3,27 +3,6 @@ import { RadioGroup } from './radio-group';
 import styles from './radio-group.style';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-radio-group>
- *   <tap-radio value="1"></tap-radio>
- *   <tap-radio value="2"></tap-radio>
- * </tap-radio-group>
- * ```
- *
- * ##### With Direction
- *
- * ```html
- * <tap-radio-group direction="horizontal">
- *   <tap-radio value="1"></tap-radio>
- *   <tap-radio value="2"></tap-radio>
- * </tap-radio-group>
- * ```
- *
  * @summary A group of radio buttons.
  *
  * @prop {'horizontal' | 'vertical'} [direction='vertical'] - The direction in which the radio buttons are laid out. Defaults to `vertical`.

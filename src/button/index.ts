@@ -4,14 +4,6 @@ import styles from './button.style';
 import { baseButtonStyles } from '../base-button';
 
 /**
- *
- *
- * <custom-element-manifest-viewer tag-name="tap-button" src="./custom-elements.json">
- *   <span data-knob-type="slot" slot="default" title="Persian Text">کلیک</span>
- * </custom-element-manifest-viewer>
- *
- * ---
- *
  * @summary A customizable button component with various styles and states.
  *
  * @prop {boolean} [disabled=false] - Whether the button is disabled.

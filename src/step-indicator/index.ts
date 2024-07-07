@@ -3,21 +3,6 @@ import { StepIndicator } from './step-indicator.js';
 import styles from './step-indicator.style.js';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-step-indicator steps="3" current="1"></tap-step-indicator>
- * ```
- *
- * ##### With Custom Steps
- *
- * ```html
- * <tap-step-indicator steps="5" current="2"></tap-step-indicator>
- * ```
- *
  * @summary A step indicator component.
  *
  * @prop {number} [steps=2] - The total number of steps. Defaults to 2.

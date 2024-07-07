@@ -3,27 +3,6 @@ import { Toast } from './toast';
 import styles from './toast.style';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-toast>Message</tap-toast>
- * ```
- *
- * ##### Success Variant
- *
- * ```html
- * <tap-toast variant="success">Success message</tap-toast>
- * ```
- *
- * ##### With Dismiss Button
- *
- * ```html
- * <tap-toast show-dismiss-button>Message with dismiss</tap-toast>
- * ```
- *
  * @summary A toast notification component.
  *
  * @prop {boolean} [show-dismiss-button=false] - Indicates whether to show the dismiss button.

@@ -3,27 +3,6 @@ import { SegmentedButton } from './segmented-button';
 import styles from './segmented-button.style';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-segmented-button>Button</tap-segmented-button>
- * ```
- *
- * ##### Selected
- *
- * ```html
- * <tap-segmented-button selected>Selected Button</tap-segmented-button>
- * ```
- *
- * ##### Disabled
- *
- * ```html
- * <tap-segmented-button disabled>Disabled Button</tap-segmented-button>
- * ```
- *
  * @summary A segmented button component.
  *
  * @prop {boolean} [selected=false] - Indicates whether the button is selected.

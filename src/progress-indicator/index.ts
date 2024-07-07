@@ -4,14 +4,6 @@ import styles from './progress-indicator.style.js';
 
 /**
  * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-progress-indicator max="4" current="2"></tap-progress-indicator>
- * ```
- *
  * @summary A progress indicator component displaying multiple steps.
  *
  * @prop {number} [max=2] - The total number of steps.

@@ -3,21 +3,6 @@ import { Modal } from './modal';
 import styles from './modal.style';
 
 /**
- * ### Example
- *
- *
- * ##### Simple
- *
- * ```html
- * <tap-modal></tap-modal>
- * ```
- *
- * ##### Open Modal
- *
- * ```html
- * <tap-modal open></tap-modal>
- * ```
- *
  * @summary A modal dialog component.
  *
  * @prop {boolean} [open=false] - Indicates whether the modal is open.
