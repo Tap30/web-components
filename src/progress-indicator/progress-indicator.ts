@@ -4,15 +4,6 @@ import { range } from 'lit/directives/range.js';
 import { map } from 'lit/directives/map.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-/**
- * @prop steps - total steps
- * @prop selected - current selected step
- *
- * @fires {CustomEvent} - Step indicator change event
- *
- * @csspart steps - container for the steps
- * @csspart step - step button
- */
 export class ProgressIndicator extends LitElement {
   @property({ type: Number }) max = 2;
 

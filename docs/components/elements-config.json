@@ -5,6 +5,18 @@
       "label": "a beautiful avatar"
     },
     "slotKnobs": {
+      "default": {
+        "simple": "<tap-icon-default height=\"46px\" width=\"46px\"></tap-icon-default>"
+      }
+    }
+  },
+  "tap-stepper": {
+    "propertyDefaultValues": {
+      "unit": "دقیقه",
+      "value": 10,
+      "step": 5,
+      "min": 5,
+      "max": 60
     }
   },
   "tap-skeleton": {
@@ -116,12 +128,16 @@
   "tap-route": {
     "slotKnobs": {
       "content": {
-        "address": "<p color=\"black\" slot=\"content\">انتخاب آدرس</p>",
-        "simple text": "<p color=\"black\" slot=\"content\">متن ساده</p>"
+        "standard": "<div slot=\"content\">\n    <h3 style=\"margin: 0;\">عنوان را وارد کنید</h3>\n    <p style=\"margin: 0;\">توضیحات لیست</p>\n  </div>",
+        "reverse": "<div slot=\"content\">\n    <p style=\"margin: 0;\">عنوان را وارد کنید</p>\n    <h3 style=\"margin: 0;\">توضیحات لیست</h3>\n  </div>",
+        "address": "<p slot=\"content\">سعادت\u200Cآباد، بلوار بهزاد</p>"
       }
     }
   },
   "tap-segmented-button": {
+    "propertyDefaultValues": {
+      "selected": true
+    },
     "slotKnobs": {
       "default": {
         "simple": "عنوان"
@@ -131,7 +147,7 @@
   "tap-segmented-button-group": {
     "slotKnobs": {
       "default": {
-        "simple": "<tap-segmented-button>مسافر</tap-segmented-button>\n<tap-segmented-button>راننده</tap-segmented-button>"
+        "simple": "<tap-segmented-button>مسافر</tap-segmented-button>\n  <tap-segmented-button>راننده</tap-segmented-button>"
       }
     }
   },
@@ -144,7 +160,20 @@
   },
   "tap-pinwheel": {
     "propertyDefaultValues": {
-      "items": ["1", "2", "3"]
+      "items": [
+         "فروردین",
+         "اردیبهشت",
+         "خرداد",
+         "تیر",
+         "مرداد",
+         "شهریور",
+         "مهر",
+         "آبان",
+         "آذر",
+         "دی",
+         "بهمن",
+         "اسفند"
+      ]
     }
   },
   "tap-radio-group": {
@@ -175,17 +204,12 @@
     }
   },
   "tap-banner": {
-    "slotKnobs": {
-      "default": {
-
-      }
-    },
     "propertyDefaultValues": {
       "heading": "با ۱۶۳۰، تلفنی تپسی بگیر",
       "description": "با شماره‌گیری ۱۶۳۰، بدون نیاز به اینرتنت، درخواست سفرتان را ثبت کنید",
       "image": "https://able-media.tapsi.cab/statics/EA3ORTXURYJ02LA4XF.jpg",
-      "background-color": "rgb(173, 222, 201)",
-      "textColor": "rgb(16, 70, 45)"
+      "background-color": "#ff5722",
+      "textColor": "#fff"
     }
   }
 }

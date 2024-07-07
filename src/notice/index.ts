@@ -10,6 +10,9 @@ import styles from './notice.style';
  * @prop {boolean} [dismissable=false] - Indicates whether the notice can be dismissed or not. When dismissable, the dismiss button is rendered and emits 'dismiss' event upon click.
  * @prop {string} [noticeTitle=] - The title of the notice that won't be rendered upon passing empty string.
  *
+ * @slot - notice text
+ * @slot actions - slot actions
+ *
  * @csspart [notice] - The root container of the notice component a `div`.
  * @csspart [icon] - The container of the icon, a `span`.
  * @csspart [content-root] - The wrapper around title, message and actions, a `div`.

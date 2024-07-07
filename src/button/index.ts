@@ -15,6 +15,8 @@ import { baseButtonStyles } from '../base-button';
  * @prop {'small' | 'medium' | 'large'} [size='medium'] - The size of the button.
  * @prop {'primary' | 'ghost' | 'naked' | 'elevated' | 'destructive' | 'brand'} [variant='primary'] - The variant style of the button.
  *
+ * @slot - buttons content
+ *
  * @csspart [button] - The button element.
  *
  * @cssprop [--tap-font-family=--tap-sys-font-family] - The font family for the button.

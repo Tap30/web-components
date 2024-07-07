@@ -77,8 +77,8 @@ devDependencies:
     specifier: ^0.18.0
     version: 0.18.0(typescript@5.3.3)
   cemnama:
-    specifier: 0.0.0-alpha-4
-    version: 0.0.0-alpha-4
+    specifier: 0.0.0-alpha-5
+    version: 0.0.0-alpha-5
   custom-elements-manifest:
     specifier: ^2.1.0
     version: 2.1.0
@@ -5925,8 +5925,8 @@ packages:
     resolution: {integrity: sha512-+hVY9jE44uKLkH0SrUTqxjxqNTOWHsbnQDIKjwkZ3lNTzUUVdBLBGXtj/q5Mp5u98r3droaZAewQuEDzjQdZlQ==}
     dev: true
 
-  /cemnama@0.0.0-alpha-4:
-    resolution: {integrity: sha512-KgRIFJ4XMyVmUhtdg3oLvXywJlSyCfHRvaATld94NdEm4zOQZKqXPhQAzFRLB2pRDNb0VdP8K+cvxT/QKY/HCg==}
+  /cemnama@0.0.0-alpha-5:
+    resolution: {integrity: sha512-epeirZNLvDPaAzZASvORBAhjU5QYBQ6JVyS3E0SPT/8dq6eeer72XjwxgbaBjkMN3wH0Okyd5qB68pwqWdU3lw==}
     dependencies:
       immer: 10.1.1
       lit: 3.1.2
