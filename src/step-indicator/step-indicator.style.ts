@@ -21,6 +21,9 @@ export default css`
   }
 
   .step {
+    transition:
+      width 0.3s,
+      background-color 0.3s;
     box-sizing: content-box;
     position: relative;
     cursor: inherit;

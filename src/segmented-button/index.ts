@@ -8,6 +8,8 @@ import styles from './segmented-button.style';
  * @prop {boolean} [selected=false] - Indicates whether the button is selected.
  * @prop {boolean} [disabled=false] - Indicates whether the button is disabled.
  *
+ * @slot - segmented button content
+ *
  * @csspart [button] - The main container for the button.
  *
  * @cssprop [--tap-font-family=--tap-sys-font-family] - The font family used in the button.

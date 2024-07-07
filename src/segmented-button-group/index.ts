@@ -9,6 +9,8 @@ import styles from './segmented-button-group.style';
  *
  * @csspart [button-group] - The main container for the button group.
  *
+ * @slot - segmented button group contents, you should use some `tap-segmented-button` components here
+ *
  * @cssprop [--tap-segmented-button-group-color-surface=--tap-sys-color-surface-secondary] - The background color of the button group.
  * @cssprop [--tap-segmented-button-group-border-radius=--tap-sys-radius-full] - The border radius of the button group.
  * @cssprop [--tap-segmented-button-group-padding=--tap-sys-spacing-3] - The padding inside the button group.

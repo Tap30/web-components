@@ -26,6 +26,7 @@ export default {
 
         content += `# ${getPageTitle(component.tagName)}\n`;
 
+
         if (component.summary) {
           content += `${component.summary}\n`;
         }
@@ -37,7 +38,7 @@ export default {
         }
 
         // TODO: remove after fixing cemnama
-        if (!['tap-modal', 'tap-bottom-navigation'].includes(component.tagName)) content += `<custom-element-manifest-viewer theme="github-dark-default" tag-name=${component.tagName} config="./elements-config.json" manifest="./custom-elements.json"></custom-element-manifest-viewer>\n`
+        if (!['tap-modal', 'tap-pinwheel-group'].includes(component.tagName)) content += `<custom-element-manifest-viewer theme="github-dark-default" tag-name=${component.tagName} config="./elements-config.json" manifest="./custom-elements.json"></custom-element-manifest-viewer>\n`
 
         if (!!component.members?.length) {
           content += '### Properties\n';
@@ -68,7 +69,7 @@ export default {
           component.cssParts.forEach((cssPart) => {
             content += `| \`${cssPart.name}\` | ${cssPart.description} |\n`;
           });
-          content += `\n > Check [this link](/references/css-parts.html#${component.tagName}) to learn how to use CSS parts for ${getPageTitle(component.tagName).replace('Tap ', '')}.\n`;
+          content += `\n > Check [this link](/references/css-parts.html#${component.tagName}) to learn how to use CSS parts for ${getPageTitle(component.tagName)}.\n`;
         }
 
 
@@ -137,5 +138,5 @@ import '@tapsioss/web-components/${name}/${name}.js';
 const getPageTitle = (componentName: string): string => {
   const result = componentName?.replace(/^-*(.)|-+(.)/g, (s, c, d) => c ? c.toUpperCase() : ' ' + d.toUpperCase())
   const title = result?.charAt(0)?.toUpperCase() + result?.slice(1);
-  return `${title} Component`
+  return `${title} Component`.replace('Tap ', '')
 };
