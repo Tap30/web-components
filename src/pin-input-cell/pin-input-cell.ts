@@ -1,6 +1,6 @@
-import {html, LitElement, PropertyValues} from 'lit';
-import {property, query} from 'lit/decorators.js';
-import {classMap} from 'lit/directives/class-map.js';
+import { html, LitElement, PropertyValues } from 'lit';
+import { property, query } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import {
   isArrowKeyPressed,
   isDeletionKeyPressed,
@@ -8,26 +8,32 @@ import {
   isValidDigit,
   persianToEnglish,
 } from './util';
-import {ValueChangedEventParams} from './types';
+import {
+  PinInputCellArrowKeyPressed,
+  PinInputCellCleared,
+  PinInputCellClearedAll,
+  PinInputCellFilled,
+  PinInputCellOverflowValue,
+} from './events';
 
 export class PinInputCell extends LitElement {
   @query('.cell') _cell!: HTMLInputElement;
 
-  @property({type: Boolean, reflect: true}) disabled: boolean = false;
+  @property({ type: Boolean, reflect: true }) disabled: boolean = false;
 
-  @property({attribute: 'auto-focus', type: Boolean}) autoFocus: boolean =
+  @property({ attribute: 'auto-focus', type: Boolean }) autoFocus: boolean =
     false;
 
-  @property({reflect: true, type: Boolean, attribute: 'has-error'}) hasError =
+  @property({ reflect: true, type: Boolean, attribute: 'has-error' }) hasError =
     false;
 
-  @property({reflect: true, type: String}) value: string = '';
+  @property({ reflect: true, type: String }) value: string = '';
 
   @property() label = '';
 
   @property() size: 'small' | 'medium' | 'large' = 'medium';
 
-  @property({type: Number}) index: number = null!;
+  @property({ type: Number }) index: number = null!;
 
   protected updated(changed: PropertyValues) {
     if (changed.has('value') && !Number.isNaN(this.value)) {
@@ -37,7 +43,7 @@ export class PinInputCell extends LitElement {
 
   private async updateInputValue(newValue: string) {
     this.value = persianToEnglish(newValue);
-    this._cell.value = (newValue);
+    this._cell.value = newValue;
 
     if (newValue.length) {
       await this.emitValueChanged();
@@ -50,71 +56,63 @@ export class PinInputCell extends LitElement {
 
   private async emitValueChanged() {
     await this.updateComplete;
-    const event = new CustomEvent('cell-filled', {
-      bubbles: true,
-      composed: false,
-      detail: {
-        cell: this,
-        index: this.index,
-        value: this.value,
-      } as ValueChangedEventParams,
+    const event = new PinInputCellFilled('PinInputCell filled', {
+      cell: this,
+      index: this.index,
+      value: this.value,
     });
+
     this.dispatchEvent(event);
   }
 
   private async emitValueCleared() {
     await this.updateComplete;
-    const event = new CustomEvent('cell-cleared', {
-      bubbles: true,
-      composed: false,
-      detail: {
-        cell: this,
-        index: this.index,
-        value: this.value,
-      } as ValueChangedEventParams,
+    const event = new PinInputCellCleared('PinInputCell cleared', {
+      cell: this,
+      index: this.index,
+      value: this.value,
     });
+
     this.dispatchEvent(event);
   }
 
   private async emitDeletionWithMetaKeys() {
     await this.updateComplete;
-    const event = new CustomEvent('clear-all', {
-      bubbles: true,
-      composed: false,
-      detail: {
-        cell: this,
-        index: this.index,
-        value: this.value,
-      } as ValueChangedEventParams,
+    const event = new PinInputCellClearedAll('PinInputCell cleared all', {
+      cell: this,
+      index: this.index,
+      value: this.value,
     });
+
     this.dispatchEvent(event);
   }
 
   private async emitArrowKeyPressed(key: 'ArrowLeft' | 'ArrowRight') {
     await this.updateComplete;
-    const event = new CustomEvent('arrow-key-pressed', {
-      bubbles: true,
-      composed: false,
-      detail: {
+
+    const event = new PinInputCellArrowKeyPressed<'left' | 'right'>(
+      'PinInputCell arrow key pressed',
+      {
         cell: this,
         index: this.index,
         value: key === 'ArrowLeft' ? 'left' : 'right',
-      } as ValueChangedEventParams<'left' | 'right'>,
-    });
+      },
+    );
+
     this.dispatchEvent(event);
   }
 
   private async emitOverflowedValue(value: string) {
     await this.updateComplete;
-    const event = new CustomEvent('overflow-value', {
-      bubbles: true,
-      composed: false,
-      detail: {
+    const event = new PinInputCellOverflowValue(
+      'PinInputCell Overflowed value',
+      {
         cell: this,
         index: this.index,
         value: value,
-      } as ValueChangedEventParams,
-    });
+      },
+    );
+
     this.dispatchEvent(event);
   }
 

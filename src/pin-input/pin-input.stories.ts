@@ -20,7 +20,7 @@ const Template: Story<ArgTypes> = (/*{}: ArgTypes*/) => html`
   <tap-pin-input
     title="عنوان"
     description="توضیحات"
-    @filled=${(e: Error) => console.log(e)}
+    @input-filled=${(e: Error) => console.log(e)}
   ></tap-pin-input>
 `;
 

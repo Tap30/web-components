@@ -1,29 +1,57 @@
-import {css} from 'lit';
+import { css } from 'lit';
 
 export default css`
   :host {
     --tap-pin-input-box-sizing: border-box;
     --tap-pin-input-direction: rtl;
 
-    --tap-pin-input-description-font-family: var(--tap-sys-typography-body-sm-font);
-    --tap-pin-input-description-font-size: var(--tap-sys-typography-body-sm-size);
-    --tap-pin-input-description-line-height: var(--tap-sys-typography-body-sm-height);
-    --tap-pin-input-description-font-weight: var(--tap-sys-typography-body-sm-weight);
+    --tap-pin-input-description-font-family: var(
+      --tap-sys-typography-body-sm-font
+    );
+    --tap-pin-input-description-font-size: var(
+      --tap-sys-typography-body-sm-size
+    );
+    --tap-pin-input-description-line-height: var(
+      --tap-sys-typography-body-sm-height
+    );
+    --tap-pin-input-description-font-weight: var(
+      --tap-sys-typography-body-sm-weight
+    );
 
-    --tap-pin-input-description-font-family: var(--tap-sys-typography-body-sm-font);
-    --tap-pin-input-description-font-size: var(--tap-sys-typography-body-sm-size);
-    --tap-pin-input-description-line-height: var(--tap-sys-typography-body-sm-height);
-    --tap-pin-input-description-font-weight: var(--tap-sys-typography-body-sm-weight);
-    --tap-pin-input-description-text-color: var(--tap-sys-color-content-tertiary);
-    --tap-pin-input-description-error-text-color: var(--tap-sys-color-content-negative);
-    --tap-pin-input-description-disabled-text-color: var(--tap-sys-color-content-disabled);
+    --tap-pin-input-description-font-family: var(
+      --tap-sys-typography-body-sm-font
+    );
+    --tap-pin-input-description-font-size: var(
+      --tap-sys-typography-body-sm-size
+    );
+    --tap-pin-input-description-line-height: var(
+      --tap-sys-typography-body-sm-height
+    );
+    --tap-pin-input-description-font-weight: var(
+      --tap-sys-typography-body-sm-weight
+    );
+    --tap-pin-input-description-text-color: var(
+      --tap-sys-color-content-tertiary
+    );
+    --tap-pin-input-description-error-text-color: var(
+      --tap-sys-color-content-negative
+    );
+    --tap-pin-input-description-disabled-text-color: var(
+      --tap-sys-color-content-disabled
+    );
 
     --tap-inpu-input-title-font-family: var(--tap-sys-typography-body-md-font);
     --tap-inpu-input-title-font-size: var(--tap-sys-typography-body-md-size);
-    --tap-inpu-input-title-line-height: var(--tap-sys-typography-body-md-height);
-    --tap-inpu-input-title-font-weight: var(--tap-sys-typography-body-md-weight);
+    --tap-inpu-input-title-line-height: var(
+      --tap-sys-typography-body-md-height
+    );
+    --tap-inpu-input-title-font-weight: var(
+      --tap-sys-typography-body-md-weight
+    );
     --tap-inpu-input-title-text-color: var(--tap-sys-color-content-primary);
-    --tap-inpu-input-title-disabled-text-color: var(--tap-sys-color-content-disabled);
+    --tap-inpu-input-title-disabled-text-color: var(
+      --tap-sys-color-content-disabled
+    );
 
     --tap-pin-input-justify-content: start;
     --tap-input-input-vertical-gap: 0.5rem;

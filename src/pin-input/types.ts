@@ -1,5 +1,5 @@
 export type InputFilledEventParams = {
-  cellCount: number,
-  value: string,
-  displayValue: string,
-}
+  cellCount: number;
+  value: string;
+  displayValue: string;
+};
