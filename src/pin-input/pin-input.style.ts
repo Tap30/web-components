@@ -1,39 +1,40 @@
-import { css } from 'lit';
+import {css} from 'lit';
 
 export default css`
   :host {
-    box-sizing: border-box;
-    direction: rtl;
-    --justify-content: var(--tap-pin-input-justify-content, start);
+    --tap-pin-input-box-sizing: border-box;
+    --tap-pin-input-direction: rtl;
 
-    --description-font-family: var(--tap-sys-typography-body-sm-font);
-    --description-font-size: var(--tap-sys-typography-body-sm-size);
-    --description-line-height: var(--tap-sys-typography-body-sm-height);
-    --description-font-weight: var(--tap-sys-typography-body-sm-weight);
+    --tap-pin-input-description-font-family: var(--tap-sys-typography-body-sm-font);
+    --tap-pin-input-description-font-size: var(--tap-sys-typography-body-sm-size);
+    --tap-pin-input-description-line-height: var(--tap-sys-typography-body-sm-height);
+    --tap-pin-input-description-font-weight: var(--tap-sys-typography-body-sm-weight);
 
-    --description-font-family: var(--tap-sys-typography-body-sm-font);
-    --description-font-size: var(--tap-sys-typography-body-sm-size);
-    --description-line-height: var(--tap-sys-typography-body-sm-height);
-    --description-font-weight: var(--tap-sys-typography-body-sm-weight);
-    --description-text-color: var(--tap-sys-color-content-tertiary);
-    --description-error-text-color: var(--tap-sys-color-content-negative);
-    --description-disabled-text-color: var(--tap-sys-color-content-disabled);
+    --tap-pin-input-description-font-family: var(--tap-sys-typography-body-sm-font);
+    --tap-pin-input-description-font-size: var(--tap-sys-typography-body-sm-size);
+    --tap-pin-input-description-line-height: var(--tap-sys-typography-body-sm-height);
+    --tap-pin-input-description-font-weight: var(--tap-sys-typography-body-sm-weight);
+    --tap-pin-input-description-text-color: var(--tap-sys-color-content-tertiary);
+    --tap-pin-input-description-error-text-color: var(--tap-sys-color-content-negative);
+    --tap-pin-input-description-disabled-text-color: var(--tap-sys-color-content-disabled);
 
-    --title-font-family: var(--tap-sys-typography-body-md-font);
-    --title-font-size: var(--tap-sys-typography-body-md-size);
-    --title-line-height: var(--tap-sys-typography-body-md-height);
-    --title-font-weight: var(--tap-sys-typography-body-md-weight);
-    --title-text-color: var(--tap-sys-color-content-primary);
-    --title-disabled-text-color: var(--tap-sys-color-content-disabled);
+    --tap-inpu-input-title-font-family: var(--tap-sys-typography-body-md-font);
+    --tap-inpu-input-title-font-size: var(--tap-sys-typography-body-md-size);
+    --tap-inpu-input-title-line-height: var(--tap-sys-typography-body-md-height);
+    --tap-inpu-input-title-font-weight: var(--tap-sys-typography-body-md-weight);
+    --tap-inpu-input-title-text-color: var(--tap-sys-color-content-primary);
+    --tap-inpu-input-title-disabled-text-color: var(--tap-sys-color-content-disabled);
 
-    --vertical-gap: 0.5rem;
-    --horizontal-cell-gap: var(--tap-pin-input-cell-gap, 1rem);
+    --tap-pin-input-justify-content: start;
+    --tap-input-input-vertical-gap: 0.5rem;
+    --tap-pin-input-horizontal-cell-gap: 1rem;
   }
 
   :host *,
   :host *::before,
   :host *::after {
-    box-sizing: inherit;
+    box-sizing: var(--tap-pin-input-box-sizing);
+    direction: var(--tap-pin-input-direction);
   }
 
   [hidden] {
@@ -41,16 +42,16 @@ export default css`
   }
 
   :host([has-error]) .description {
-    color: var(--description-error-text-color);
+    color: var(--tap-pin-input-description-error-text-color);
   }
 
   :host([disabled]) .title,
   :host([disabled]) .description {
-    color: var(--title-disabled-text-color);
+    color: var(--tap-inpu-input-title-disabled-text-color);
   }
 
   :host([disabled]) .description {
-    color: var(--description-disabled-text-color);
+    color: var(--tap-pin-input-description-disabled-text-color);
   }
 
   .pin-input {
@@ -58,32 +59,32 @@ export default css`
 
   .pin-input-wrapper {
     display: flex;
-    row-gap: var(--vertical-gap);
+    row-gap: var(--tap-input-input-vertical-gap);
     flex-direction: column;
   }
 
   .title {
     flex: 0 1;
-    font-family: var(--title-font-family);
-    font-size: var(--title-font-size);
-    font-weight: var(--title-font-weight);
-    line-height: var(--title-line-height);
-    color: var(--title-text-color);
+    font-family: var(--tap-inpu-input-title-font-family);
+    font-size: var(--tap-inpu-input-title-font-size);
+    font-weight: var(--tap-inpu-input-title-font-weight);
+    line-height: var(--tap-inpu-input-title-line-height);
+    color: var(--tap-inpu-input-title-text-color);
   }
 
   .description {
     flex: 0 1;
-    font-family: var(--description-font-family);
-    font-size: var(--description-font-size);
-    font-weight: var(--description-font-weight);
-    line-height: var(--description-line-height);
-    color: var(--description-text-color);
+    font-family: var(--tap-pin-input-description-font-family);
+    font-size: var(--tap-pin-input-description-font-size);
+    font-weight: var(--tap-pin-input-description-font-weight);
+    line-height: var(--tap-pin-input-description-line-height);
+    color: var(--tap-pin-input-description-text-color);
   }
 
   .input-cells {
     display: flex;
-    justify-content: var(--justify-content);
+    justify-content: var(--tap-pin-input-justify-content);
     flex-direction: row-reverse;
-    gap: var(--horizontal-cell-gap);
+    gap: var(--tap-pin-input-horizontal-cell-gap);
   }
 `;
