@@ -18,8 +18,8 @@ export default tseslint.config(
       },
     },
     rules: {
-      "@typescript-eslint/unbound-method": "off"
-    }
+      '@typescript-eslint/unbound-method': 'off',
+    },
   },
   {
     files: ['*.js'],
