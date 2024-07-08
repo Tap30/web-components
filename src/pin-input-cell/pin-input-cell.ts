@@ -1,34 +1,33 @@
-import { html, LitElement, PropertyValues } from 'lit';
-import { property, query } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
+import {html, LitElement, PropertyValues} from 'lit';
+import {property, query} from 'lit/decorators.js';
+import {classMap} from 'lit/directives/class-map.js';
 import {
-  englishToPersian,
   isArrowKeyPressed,
   isDeletionKeyPressed,
   isDeletionKeyWithCtrlOrMetaPressed,
   isValidDigit,
   persianToEnglish,
 } from './util';
-import { ValueChangedEventParams } from './types';
+import {ValueChangedEventParams} from './types';
 
 export class PinInputCell extends LitElement {
   @query('.cell') _cell!: HTMLInputElement;
 
-  @property({ type: Boolean, reflect: true }) disabled: boolean = false;
+  @property({type: Boolean, reflect: true}) disabled: boolean = false;
 
-  @property({ attribute: 'auto-focus', type: Boolean }) autoFocus: boolean =
+  @property({attribute: 'auto-focus', type: Boolean}) autoFocus: boolean =
     false;
 
-  @property({ reflect: true, type: Boolean, attribute: 'has-error' }) hasError =
+  @property({reflect: true, type: Boolean, attribute: 'has-error'}) hasError =
     false;
 
-  @property({ reflect: true, type: String }) value: string = '';
+  @property({reflect: true, type: String}) value: string = '';
 
   @property() label = '';
 
   @property() size: 'small' | 'medium' | 'large' = 'medium';
 
-  @property({ type: Number }) index: number = null!;
+  @property({type: Number}) index: number = null!;
 
   protected updated(changed: PropertyValues) {
     if (changed.has('value') && !Number.isNaN(this.value)) {
@@ -38,7 +37,7 @@ export class PinInputCell extends LitElement {
 
   private async updateInputValue(newValue: string) {
     this.value = persianToEnglish(newValue);
-    this._cell.value = englishToPersian(newValue);
+    this._cell.value = (newValue);
 
     if (newValue.length) {
       await this.emitValueChanged();
@@ -218,6 +217,7 @@ export class PinInputCell extends LitElement {
   private async handleDeletionWithMetaKeys() {
     await this.emitDeletionWithMetaKeys();
   }
+
   private async handleArrowKeyPressed(key: 'ArrowLeft' | 'ArrowRight') {
     await this.emitArrowKeyPressed(key);
   }
