@@ -14,6 +14,14 @@ import {
 import { PinInputFilled } from './events';
 
 export class PinInput extends LitElement {
+  private internals_: ElementInternals;
+  static formAssociated = true;
+
+  constructor() {
+    super();
+    this.internals_ = this.attachInternals();
+  }
+
   @queryAll('.pin-input-cell') _cells!: PinInputCell[];
 
   @property({ type: Boolean, reflect: true }) disabled: boolean = false;
@@ -21,16 +29,16 @@ export class PinInput extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'has-error' })
   hasError = false;
 
-  @property({ type: Boolean, attribute: 'auto-focus-first-cell' })
-  autoFocusFirstCell: boolean = true;
+  @property({ type: Boolean, attribute: 'auto-focus' })
+  autoFocus: boolean = true;
 
-  @property({ reflect: true, type: Number }) value = null;
+  @property({ reflect: true, type: String }) _value = '';
 
   @property() label = '';
 
-  @property({ reflect: true }) title = '';
+  @property() title = '';
 
-  @property({ reflect: true }) description = '';
+  @property() description = '';
 
   @property({ reflect: true, type: Number }) count = 5;
 
@@ -41,7 +49,7 @@ export class PinInput extends LitElement {
   }
 
   isFirstCellShouldAutoFocus(index: number) {
-    return this.autoFocusFirstCell && index === 0;
+    return this.autoFocus && index === 0;
   }
 
   private handleCellFilled(event: PinInputCellFilled) {
@@ -118,13 +126,25 @@ export class PinInput extends LitElement {
   }
 
   private emitPinInputFilled() {
+    const value = this.inputValue!;
     const event = new PinInputFilled('PinInput Filled.', {
-      value: this.inputValue!,
+      value: value,
       cellCount: this.count,
-      displayValue: this.inputValue!,
+      displayValue: value,
     });
 
     this.dispatchEvent(event);
+  }
+
+  private handleFormValidity(value: string) {
+    if (typeof value === 'string' && value.length < this.count) {
+      this.internals_.setValidity(
+        { customError: true },
+        'Value is less than required',
+      );
+    } else {
+      this.internals_.setValidity({});
+    }
   }
 
   get cellValues() {
@@ -133,11 +153,62 @@ export class PinInput extends LitElement {
 
   get inputValue() {
     const result = this.cellValues.join('');
+    this.internals_.setFormValue(result);
+    this._value = result;
+    this.handleFormValidity(result);
+
     if (result.length === this.count) {
       return result;
     }
 
     return null;
+  }
+
+  set value(value: string) {
+    if (value) {
+      void this.fillCells(value);
+    }
+  }
+
+  async formResetCallback() {
+    await this.fillCells('');
+    void this.emitPinInputFilled();
+  }
+
+  formStateRestoreCallback(state: string) {
+    this.internals_.setFormValue(state);
+  }
+
+  get value() {
+    return this._value;
+  }
+
+  get form() {
+    return this.internals_.form;
+  }
+
+  get type() {
+    return 'pin-input';
+  }
+
+  get validity() {
+    return this.internals_.validity;
+  }
+
+  get validationMessage() {
+    return this.internals_.validationMessage;
+  }
+
+  get willValidate() {
+    return this.internals_.willValidate;
+  }
+
+  checkValidity() {
+    return this.internals_.checkValidity();
+  }
+
+  reportValidity() {
+    return this.internals_.reportValidity();
   }
 
   private focusNextElementByIndex(current: number) {
