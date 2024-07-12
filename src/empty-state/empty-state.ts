@@ -1,12 +1,9 @@
-import { html, LitElement, nothing } from "lit";
+import { html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 
 export class EmptyState extends LitElement {
-  @property({ type: String })
-  title: string = "";
-
-  @property({ type: String })
-  description: string = "";
+  @property({ type: String }) title = '';
+  @property({ type: String }) description = '';
 
   render() {
     return html`
@@ -15,13 +12,19 @@ export class EmptyState extends LitElement {
           <slot name="icon"></slot>
         </span>
         <div class="content" part="content">
-          ${this.title ? html`<span part="title" class="title">${this.title}</span>` : nothing}
-          ${this.description ? html`<p part="description" class="description">${this.description}</p>` : nothing}
+          ${this.title
+            ? html`<span part="title" class="title">${this.title}</span>`
+            : nothing}
+          ${this.description
+            ? html`<p part="description" class="description">
+                ${this.description}
+              </p>`
+            : nothing}
         </div>
         <div class="actions" part="actions">
           <slot name="actions"></slot>
         </div>
       </div>
-    `
+    `;
   }
-};
+}
