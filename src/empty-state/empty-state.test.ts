@@ -1,34 +1,39 @@
+import '../../dist/empty-state/index.js';
 import { fixture, expect } from '@open-wc/testing';
 import { html } from 'lit';
-import { TapEmptyState } from '.';
+import { TapEmptyState } from './index.js';
 import sinon from 'sinon';
 
 describe('tap-empty-state component', () => {
   it('should render title', async () => {
+    const title = 'عنوان';
+    const description = 'توضیح';
     const element = await fixture<TapEmptyState>(
       html`<tap-empty-state
-        title="عنوان"
-        description="توضیح"
+        title=${title}
+        description=${description}
       ></tap-empty-state>`,
     );
-    const title = element.getAttribute('title');
-    const description = element.getAttribute('description');
+    const titleElement = element.shadowRoot!.querySelector('.title');
+    const descriptionElement =
+      element.shadowRoot!.querySelector('.description');
 
-    expect(title).to.exist;
-    expect(title).to.equal('عنوان');
-    expect(description).to.exist;
-    expect(description).to.equal('توضیح');
+    expect(titleElement).to.exist;
+    expect(titleElement).to.equal(title);
+    expect(descriptionElement).to.exist;
+    expect(descriptionElement).to.equal(description);
   });
 
   it('should not render title and description when not provided', async () => {
     const element = await fixture<TapEmptyState>(
       html`<tap-empty-state></tap-empty-state>`,
     );
-    const title = element.getAttribute('title');
-    const description = element.getAttribute('description');
+    const titleElement = element.shadowRoot!.querySelector('.title');
+    const descriptionElement =
+      element.shadowRoot!.querySelector('.description');
 
-    expect(title).not.to.exist;
-    expect(description).not.to.exist;
+    expect(titleElement).not.to.exist;
+    expect(descriptionElement).not.to.exist;
   });
 
   it('should render slot', async () => {
@@ -37,7 +42,7 @@ describe('tap-empty-state component', () => {
         ><tap-button slot="actions">کپی لینک دعوت</tap-button></tap-empty-state
       >`,
     );
-    const slotContent = element.querySelector('[slot="actions"]');
+    const slotContent = element.shadowRoot!.querySelector('[slot="actions"]');
 
     expect(slotContent).to.exist;
     expect(slotContent?.textContent).to.include('کپی لینک دعوت');
@@ -49,7 +54,7 @@ describe('tap-empty-state component', () => {
         ><tap-button slot="actions">copy</tap-button></tap-empty-state
       >`,
     );
-    const button = element.querySelector('tap-button');
+    const button = element.shadowRoot!.querySelector('tap-button');
 
     const clickSpy = sinon.spy();
     addEventListener('click', clickSpy);
