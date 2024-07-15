@@ -1,4 +1,4 @@
-import { TemplateResult, html, nothing } from 'lit';
+import { TemplateResult, html, nothing, Part } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
@@ -38,12 +38,21 @@ export class TextField extends Input {
   @property({ type: Number }) maxLength?: number;
   @property({ type: Number }) minLength?: number;
 
+  @property({ type: String }) pattern?: string;
+
   @property({ type: String }) autocomplete?: string; // TODO: add type
+
+  private getAttributeValueByType(
+    attribute: Partial<(typeof TextField)[keyof typeof TextField]>,
+    allowedTypes: string[],
+  ) {
+    return attribute && allowedTypes.includes(this.type) ? attribute : nothing;
+  }
 
   // TODO: check if using generic ids for caption and input is ok
   protected renderInput(): TemplateResult {
     return html`
-      <slot name="leading"></slot>
+      <slot part="leading" name="leading"></slot>
       <input
         id="input"
         class="input"
@@ -56,19 +65,16 @@ export class TextField extends Input {
         inputmode=${ifDefined(this.inputmode)}
         placeholder=${ifDefined(this.placeholder)}
         autocomplete=${ifDefined(this.autocomplete)}
-        max=${this.max && numericTypes.includes(this.type) ? this.max : nothing}
-        min=${this.min && numericTypes.includes(this.type) ? this.min : nothing}
-        maxlength=${this.maxLength && stringTypes.includes(this.type)
-          ? this.maxLength
-          : nothing}
-        minlength=${this.minLength && stringTypes.includes(this.type)
-          ? this.minLength
-          : nothing}
+        max=${this.getAttributeValueByType(this.min, numericTypes)}
+        min=${this.getAttributeValueByType(this.max, numericTypes)}
+        maxlength=${this.getAttributeValueByType(this.maxLength, stringTypes)}
+        minlength=${this.getAttributeValueByType(this.minLength, stringTypes)}
+        pattern=${this.getAttributeValueByType(this.pattern, stringTypes)}
         type=${this.type}
         .value=${live(this.value)}
         @input=${this.handleInput}
       />
-      <slot name="trailing"></slot>
+      <slot part="trailing" name="trailing"></slot>
     `;
   }
 }

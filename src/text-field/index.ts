@@ -16,10 +16,11 @@ import { inputStyles } from '../input';
  * @prop {string} [inputmode=''] - The input mode for the text field.
  * @prop {'text'|'date'|'month'|'time'|'week'|'datetime-local'|'number'|'password'|'search'|'tel'|'url'|'email'} [type='text'] - The type of the text field.
  * @prop {string} [autocomplete=''] - The autocomplete attribute for the text field.
- * @prop {number} [max] - The Maximum value of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.
- * @prop {number} [min] - The Minimum value of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.
- * @prop {number} [maxLength] - The Maximum length of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
- * @prop {number} [minLength] - The Minimum length of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
+ * @prop {number} [max] - The maximum value of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.
+ * @prop {number} [min] - The minimum value of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.
+ * @prop {number} [maxLength] - The maximum length of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
+ * @prop {number} [minLength] - The minimum length of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
+ * @prop {string} [pattern] - The allowed regex pattern of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
  *
  * @csspart [field] - The main container for the text field.
  * @csspart [label] - The label for the text field.
