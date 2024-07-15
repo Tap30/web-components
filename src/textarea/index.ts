@@ -49,6 +49,7 @@ import { inputStyles } from '../input';
  * @cssprop [--tap-input-error-container-border-color=--tap-sys-color-border-negative] - The border color of the container when there is an error.
  * @cssprop [--tap-input-disabled-container-background-color=--tap-sys-color-surface-disabled] - The background color of the container when disabled.
  * @cssprop [--tap-input-disabled-container-color=--tap-sys-color-content-disabled] - The color of the text and elements when disabled.
+ * @cssprop [--tap-input-caret-color=--tap-sys-color-surface-accent] - The color of the input caret.
  */
 @customElement('tap-textarea')
 export class TapTextarea extends Textarea {

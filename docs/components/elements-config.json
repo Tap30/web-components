@@ -211,5 +211,29 @@
       "background-color": "#ff5722",
       "textColor": "#fff"
     }
+  },
+  "tap-text-field": {
+    "slotKnobs": {
+      "leading": {
+        "empty": "<div></div>",
+        "icon": "<tap-icon-default color=\"black\" slot=\"leading\"></tap-icon-default>"
+      },
+      "trailing": {
+        "empty": "<div></div>",
+        "suffix": "<p slot=\"trailing\">تومان</tap-button>",
+        "icon": "<tap-icon-default color=\"black\" slot=\"trailing\"></tap-icon-default>"
+      }
+    },
+    "propertyDefaultValues": {
+      "label": "نام گیرنده",
+      "caption": "لطفا نام و نام خانوادگی کامل خود را وارد نمایید"
+    }
+  },
+  "tap-textarea": {
+    "propertyDefaultValues": {
+      "label": "توضیحات سفارش (اختیاری)",
+      "placeholder": "مثلا بسته با احتیاط حمل شود...",
+      "caption": "در صورت پر بودن این فیلد، متن آن برای راننده نمایش داده خواهد شد"
+    }
   }
 }
