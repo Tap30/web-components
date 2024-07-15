@@ -13,7 +13,7 @@ import { inputStyles } from '../input';
  * @prop {string} [label=''] - The label for the text field.
  * @prop {string} [name=''] - The name of the text field.
  * @prop {string} [placeholder=''] - The placeholder text for the text field.
- * @prop {string} [inputmode=''] - The input mode for the text field.
+ * @prop {'none'|'text'|'tel'|'url'|'email'|'numeric'|'decimal'|'search'} [inputmode] - The input mode for the text field.
  * @prop {'text'|'date'|'month'|'time'|'week'|'datetime-local'|'number'|'password'|'search'|'tel'|'url'|'email'} [type='text'] - The type of the text field.
  * @prop {string} [autocomplete=''] - The autocomplete attribute for the text field.
  * @prop {number} [max] - The maximum value of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.

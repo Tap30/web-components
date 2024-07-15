@@ -16,7 +16,15 @@ const numericTypes = [
 const stringTypes = ['text', 'search', 'url', 'tel', 'email', 'password'];
 
 export class TextField extends Input {
-  @property({ type: String }) inputmode?: string; // TODO: add type
+  @property({ type: String }) inputmode?:
+    | `none`
+    | `text`
+    | `tel`
+    | `url`
+    | `email`
+    | `numeric`
+    | `decimal`
+    | `search`;
 
   @property({ type: String }) type:
     | 'text'
