@@ -21,12 +21,15 @@ import { inputStyles } from '../input';
  * @prop {number} [maxLength] - The maximum length of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
  * @prop {number} [minLength] - The minimum length of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
  * @prop {string} [pattern] - The allowed regex pattern of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
+ * @prop {number} [step] - The step of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.
  *
  * @csspart [field] - The main container for the text field.
  * @csspart [label] - The label for the text field.
  * @csspart [container] - The container for the input and any leading/trailing elements.
  * @csspart [input] - The input element.
  * @csspart [caption] - The caption for the text field.
+ * @csspart [leading] - The leading for the text field.
+ * @csspart [trailing] - The trailing for the text field.
  *
  * @cssprop [--tap-font-family=--tap-sys-font-family] - The font family used in the text field.
  * @cssprop [--tap-input-field-gap=--tap-sys-spacing-4] - The gap between the elements in the text field.

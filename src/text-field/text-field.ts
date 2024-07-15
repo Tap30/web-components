@@ -40,6 +40,8 @@ export class TextField extends Input {
 
   @property({ type: String }) pattern?: string;
 
+  @property({ type: Number }) step?: number;
+
   @property({ type: String }) autocomplete?: string; // TODO: add type
 
   private getAttributeValueByType(
@@ -70,6 +72,7 @@ export class TextField extends Input {
         maxlength=${this.getAttributeValueByType(this.maxLength, stringTypes)}
         minlength=${this.getAttributeValueByType(this.minLength, stringTypes)}
         pattern=${this.getAttributeValueByType(this.pattern, stringTypes)}
+        step=${this.getAttributeValueByType(this.step, numericTypes)}
         type=${this.type}
         .value=${live(this.value)}
         @input=${this.handleInput}
