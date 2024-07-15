@@ -14,7 +14,7 @@ import { inputStyles } from '../input';
  * @prop {string} [name=''] - The name of the text field.
  * @prop {string} [placeholder=''] - The placeholder text for the text field.
  * @prop {string} [inputmode=''] - The input mode for the text field.
- * @prop {string} [type=''] - The type of the text field.
+ * @prop {'text'|'date'|'month'|'time'|'week'|'datetime-local'|'number'|'password'|'search'|'tel'|'url'|'email'} [type='text'] - The type of the text field.
  * @prop {string} [autocomplete=''] - The autocomplete attribute for the text field.
  *
  * @csspart [field] - The main container for the text field.

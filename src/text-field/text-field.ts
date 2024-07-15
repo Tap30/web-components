@@ -7,7 +7,19 @@ import { Input } from '../input';
 export class TextField extends Input {
   @property({ type: String }) inputmode?: string; // TODO: add type
 
-  @property({ type: String }) type?: string; // TODO: add type
+  @property({ type: String }) type?:
+    | 'text'
+    | 'date'
+    | 'month'
+    | 'time'
+    | 'week'
+    | 'datetime-local'
+    | 'number'
+    | 'password'
+    | 'search'
+    | 'tel'
+    | 'url'
+    | 'email' = 'text';
 
   @property({ type: String }) autocomplete?: string; // TODO: add type
 
@@ -27,7 +39,7 @@ export class TextField extends Input {
         inputmode=${ifDefined(this.inputmode)}
         placeholder=${ifDefined(this.placeholder)}
         autocomplete=${ifDefined(this.autocomplete)}
-        type=${ifDefined(this.type)}
+        type=${this.type}
         .value=${live(this.value)}
         @input=${this.handleInput}
       />
