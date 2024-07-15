@@ -1,13 +1,22 @@
-import { TemplateResult, html } from 'lit';
+import { TemplateResult, html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { Input } from '../input';
 
+const numericTypes = [
+  'date',
+  'month',
+  'week',
+  'time',
+  'datetime-local',
+  'number',
+];
+
 export class TextField extends Input {
   @property({ type: String }) inputmode?: string; // TODO: add type
 
-  @property({ type: String }) type?:
+  @property({ type: String }) type:
     | 'text'
     | 'date'
     | 'month'
@@ -20,6 +29,9 @@ export class TextField extends Input {
     | 'tel'
     | 'url'
     | 'email' = 'text';
+
+  @property({ type: Number }) max?: number;
+  @property({ type: Number }) min?: number;
 
   @property({ type: String }) autocomplete?: string; // TODO: add type
 
@@ -39,6 +51,8 @@ export class TextField extends Input {
         inputmode=${ifDefined(this.inputmode)}
         placeholder=${ifDefined(this.placeholder)}
         autocomplete=${ifDefined(this.autocomplete)}
+        max=${this.max && numericTypes.includes(this.type) ? this.max : nothing}
+        min=${this.min && numericTypes.includes(this.type) ? this.min : nothing}
         type=${this.type}
         .value=${live(this.value)}
         @input=${this.handleInput}
