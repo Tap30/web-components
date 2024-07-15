@@ -18,6 +18,8 @@ import { inputStyles } from '../input';
  * @prop {string} [autocomplete=''] - The autocomplete attribute for the text field.
  * @prop {number} [max] - The Maximum value of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.
  * @prop {number} [min] - The Minimum value of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.
+ * @prop {number} [maxLength] - The Maximum length of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
+ * @prop {number} [minLength] - The Minimum length of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
  *
  * @csspart [field] - The main container for the text field.
  * @csspart [label] - The label for the text field.

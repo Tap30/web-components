@@ -13,6 +13,8 @@ const numericTypes = [
   'number',
 ];
 
+const stringTypes = ['text', 'search', 'url', 'tel', 'email', 'password'];
+
 export class TextField extends Input {
   @property({ type: String }) inputmode?: string; // TODO: add type
 
@@ -32,6 +34,9 @@ export class TextField extends Input {
 
   @property({ type: Number }) max?: number;
   @property({ type: Number }) min?: number;
+
+  @property({ type: Number }) maxLength?: number;
+  @property({ type: Number }) minLength?: number;
 
   @property({ type: String }) autocomplete?: string; // TODO: add type
 
@@ -53,6 +58,12 @@ export class TextField extends Input {
         autocomplete=${ifDefined(this.autocomplete)}
         max=${this.max && numericTypes.includes(this.type) ? this.max : nothing}
         min=${this.min && numericTypes.includes(this.type) ? this.min : nothing}
+        maxlength=${this.maxLength && stringTypes.includes(this.type)
+          ? this.maxLength
+          : nothing}
+        minlength=${this.minLength && stringTypes.includes(this.type)
+          ? this.minLength
+          : nothing}
         type=${this.type}
         .value=${live(this.value)}
         @input=${this.handleInput}
