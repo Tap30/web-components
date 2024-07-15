@@ -1,4 +1,4 @@
-import { TemplateResult, html, nothing, Part } from 'lit';
+import { TemplateResult, html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
