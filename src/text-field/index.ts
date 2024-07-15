@@ -23,6 +23,9 @@ import { inputStyles } from '../input';
  * @csspart [input] - The input element.
  * @csspart [caption] - The caption for the text field.
  *
+ * @slot [leading] - the leading slot of the text-field
+ * @slot [trailing] - the trailing slot of the text-field
+ *
  * @cssprop [--tap-font-family=--tap-sys-font-family] - The font family used in the text field.
  * @cssprop [--tap-input-field-gap=--tap-sys-spacing-4] - The gap between the elements in the text field.
  * @cssprop [--tap-input-label-color=--tap-sys-color-content-primary] - The color of the label.
@@ -53,6 +56,7 @@ import { inputStyles } from '../input';
  * @cssprop [--tap-input-error-container-border-color=--tap-sys-color-border-negative] - The border color of the container when there is an error.
  * @cssprop [--tap-input-disabled-container-background-color=--tap-sys-color-surface-disabled] - The background color of the container when disabled.
  * @cssprop [--tap-input-disabled-container-color=--tap-sys-color-content-disabled] - The color of the text and elements when disabled.
+ * @cssprop [--tap-input-caret-color=--tap-sys-color-surface-accent] - The color of the input caret.
  */
 @customElement('tap-text-field')
 export class TapTextField extends TextField {

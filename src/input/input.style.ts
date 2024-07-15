@@ -77,6 +77,14 @@ export default css`
     border: 2px solid transparent;
   }
 
+  .container input,
+  .container textarea {
+    caret-color: var(
+      --tap-input-caret-color,
+      var(--tap-sys-color-surface-accent)
+    );
+  }
+
   .container:focus-within {
     background-color: var(
       --tap-input-focus-background-color,
