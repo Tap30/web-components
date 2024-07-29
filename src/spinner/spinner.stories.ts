@@ -2,7 +2,7 @@ import { html, TemplateResult } from 'lit';
 import './index.js';
 import { Meta } from '@storybook/web-components';
 
-const spinnerVariants: string[] = ['normal', 'inverse'];
+const spinnerVariants: string[] = ['default', 'primary', 'inverse'];
 const spinnerSize: string[] = [ 'small' , 'medium' , 'large' ]
 
 export default {
@@ -35,7 +35,7 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  variant: 'normal' | 'inverse';
+  variant: 'default' | 'primary' | 'inverse';
   size: 'small' | 'medium'| 'large';
 }
 

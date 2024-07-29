@@ -20,7 +20,7 @@ import styles from './spinner.style';
  *
  * @summary Display spinner.
  *
- * @prop {`'primary'` \| `'inverse'`} [`variant`=`'primary'`] - Specifies the spinner color. Acceptable values are `primary` and `inverse`.
+ * @prop {`'default'` \| `'primary'` \| `'inverse'`} [`variant`=`'primary'`] - Specifies the spinner color. Acceptable values are `primary` and `inverse`.
  *
  * @csspart `svg` - The svg tag that represents spinner component.
  *
