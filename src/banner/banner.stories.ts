@@ -1,12 +1,13 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
-import "../button/index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
+import '../button/index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: "Banner",
-  component: "tap-banner",
+  title: 'Components/Banner',
+  component: 'tap-banner',
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -16,7 +17,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
+const Template: Story<ArgTypes> = () => html`
   <tap-banner
     heading="با ۱۶۳۰، تلفنی تپسی بگیر"
     description="درخواست خودرو بدون نیاز به اینترنت"
@@ -28,19 +29,19 @@ const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
   </tap-banner>
 
   <tap-banner
-variant="hero"
+    variant="hero"
     heading="با ۱۶۳۰، تلفنی تپسی بگیر"
     description="درخواست خودرو بدون نیاز به اینترنت"
     image="https://able-media.tapsi.cab/statics/N31LNC95J6MCPIYB0D.jpg"
     background-color="rgb(255, 213, 194)"
     text-color="rgb(66, 46, 40)"
   >
-    <tap-button size="small" slot="extra" >majid</tap-button>
+    <tap-button size="small" slot="extra">majid</tap-button>
     <tap-button size="small">دریافت تخفیف</tap-button>
   </tap-banner>
-<br />
+  <br />
   <tap-banner
-variant="hero"
+    variant="hero"
     heading="با ۱۶۳۰، تلفنی تپسی بگیر"
     description="درخواست خودرو بدون نیاز به اینترنت"
     image="https://able-media.tapsi.cab/statics/N31LNC95J6MCPIYB0D.jpg"

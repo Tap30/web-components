@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit';
 
 export default css`
   :host {
@@ -38,16 +38,34 @@ export default css`
     text-decoration: none;
     font: inherit;
     gap: inherit;
-    font-family: var(--tap-sys-font-family);
-    border-radius: var(--tap-sys-radius-full);
-    color: var(--tap-sys-color-content-primary);
-    line-height: var(--tap-sys-typography-label-sm-height);
-    font-size: var(--tap-sys-typography-label-sm-size);
-    font-weight: var(--tap-sys-typography-label-sm-weight);
+    font-family: var(--tap-font-family, var(--tap-sys-font-family));
+    border-radius: var(
+      --tap-segmented-button-border-radius,
+      var(--tap-sys-radius-full)
+    );
+    color: var(
+      --tap-segmented-button-color,
+      var(--tap-sys-color-content-primary)
+    );
+    line-height: var(
+      --tap-segmented-button-line-height,
+      var(--tap-sys-typography-label-sm-height)
+    );
+    font-size: var(
+      --tap-segmented-button-font-size,
+      var(--tap-sys-typography-label-sm-size)
+    );
+    font-weight: var(
+      --tap-segmented-button-font-weight,
+      var(--tap-sys-typography-label-sm-weight)
+    );
   }
 
   :host([selected]) .button {
-    background-color: var(--tap-sys-color-surface-primary);
+    background-color: var(
+      --tap-segmented-button-selected-background-color,
+      var(--tap-sys-color-surface-primary)
+    );
     /* FIXME: we dont have shadow tokens yet  */
     box-shadow: 0px 4px 16px 0px #0000001a;
   }

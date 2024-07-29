@@ -39,7 +39,7 @@ export default css`
     font: inherit;
     gap: inherit;
     width: 100%;
-    font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
+    font-family: var(--tap-font-family, var(--tap-sys-font-family));
     border-radius: var(--tap-button-radius, var(--tap-sys-radius-full));
   }
 
@@ -184,5 +184,17 @@ export default css`
       --tap-button-color-content-on-inverse,
       var(--tap-sys-color-content-on-inverse)
     );
+  }
+
+  .spinner {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .content {
+    visibility: hidden;
   }
 `;

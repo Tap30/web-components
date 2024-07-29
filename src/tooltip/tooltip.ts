@@ -6,7 +6,7 @@ import {
   offset,
   MiddlewareData,
 } from '@floating-ui/dom';
-import '../icons/index.js';
+import '@tapsioss/icons/dist/icons/cross';
 import '../icon-button';
 
 export class Tooltip extends LitElement {
@@ -44,14 +44,16 @@ export class Tooltip extends LitElement {
         computePosition(this.targetElement[0], this.tooltipElement, {
           placement: this.placement,
           middleware: [arrow({ element: this.arrowElement }), offset(8)],
-        }).then(({ x, y, middlewareData }) => {
-          if (this.tooltipElement) {
-            this.tooltipElement.style.left = `${x}px`;
-            this.tooltipElement.style.top = `${y}px`;
-          }
-          this.arrowElement &&
-            this.calculateArrowPosition(middlewareData, this.arrowElement);
-        });
+        })
+          .then(({ x, y, middlewareData }) => {
+            if (this.tooltipElement) {
+              this.tooltipElement.style.left = `${x}px`;
+              this.tooltipElement.style.top = `${y}px`;
+            }
+            this.arrowElement &&
+              this.calculateArrowPosition(middlewareData, this.arrowElement);
+          })
+          .catch((error) => console.error(error));
       }
     });
 
