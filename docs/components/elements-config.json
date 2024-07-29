@@ -1,0 +1,239 @@
+{
+  "tap-avatar": {
+    "propertyDefaultValues": {
+      "image": "https://picsum.photos/200",
+      "label": "a beautiful avatar"
+    },
+    "slotKnobs": {
+      "default": {
+        "simple": "<tap-icon-default height=\"46px\" width=\"46px\"></tap-icon-default>"
+      }
+    }
+  },
+  "tap-stepper": {
+    "propertyDefaultValues": {
+      "unit": "دقیقه",
+      "value": 10,
+      "step": 5,
+      "min": 5,
+      "max": 60
+    }
+  },
+  "tap-skeleton": {
+    "propertyDefaultValues": {
+      "width": "100px",
+      "height": "100px",
+      "variant": "circle"
+    }
+  },
+  "tap-badge": {
+    "propertyDefaultValues": {
+      "value": "درخواست",
+      "variant": "info",
+      "priority": "low"
+    },
+    "slotKnobs": {
+    }
+  },
+  "tap-toast": {
+    "propertyDefaultValues": {
+      "show-dismiss-button": false,
+      "variant": "warning"
+    },
+    "slotKnobs": {
+      "default": {
+        "text": "برای تجربه کاربری بهتر VPN را خاموش کنید"
+      }
+    }
+  },
+  "tap-tooltip": {
+    "propertyDefaultValues": {
+      "width": "100px"
+    },
+    "slotKnobs": {
+      "target-element": {
+        "simple": "<div slot=\"target-element\" style=\"width: 80px;   height: 80px;   border: 2px dashed #999;   position: relative;   left: 80px;   top: 80px;\"></div>"
+      },
+      "label": {
+        "simple": "<span slot=\"label\">متن</span>"
+      }
+    }
+  },
+  "tap-icon-button": {
+    "slotKnobs": {
+      "default": {
+        "simple": "<tap-icon-default slot=\"default\"></tap-icon-default>"
+      }
+    }
+  },
+  "tap-notice": {
+    "propertyDefaultValues": {
+      "variant": "error",
+      "priority": "low"
+    },
+    "slotKnobs": {
+      "default": {
+        "simple": "متن شما در اینجا قرار می‌گیرد"
+      },
+      "actions": {
+        "button": "<tap-button slot=\"actions\" title=\"Button\">عنوان دکمه</tap-button>"
+      }
+    }
+  },
+  "tap-empty-state": {
+    "propertyDefaultValues": {
+      "title": "عدم دسترسی به موقعیت مکانی",
+      "description": "با فعال کردن گزینه موقعیت مکانی (لوکیشن)، مبدأ و مقصد خود را راحت‌تر ثبت کنید"
+    },
+    "slotKnobs": {
+      "icon": {
+        "simple icon": "<tap-icon-target-slash slot=\"icon\" width=\"120\" height=\"120\" color=\"#ff7733\"></tap-icon-map>"
+      },
+      "actions": {
+        "multiple action": "<tap-button slot=\"actions\" variant=\"primary\">روشن کن</tap-button>"
+      }
+    }
+  },
+  "tap-badge-wrapper": {
+    "slotKnobs": {
+      "default": {
+        "Button":  "<tap-button slot=\"default\" title=\"Button\">عنوان دکمه</tap-button>",
+        "Icon Button": "<tap-icon-button slot=\"default\" title=\"Icon Button\" size=\"medium\"><tap-icon-default></tap-icon-default></tap-icon-button>"
+      },
+      "badge": {
+        "Pill Badge":  "<tap-badge slot=\"badge\" value=\"‍۱۰\" variant=\"info\"></tap-badge>",
+        "Dot Badge":"<tap-badge slot=\"badge\" type=\"dot\" variant=\"info\"></tap-badge>"
+      }
+    }
+  },
+  "tap-row": {
+    "slotKnobs": {
+      "leading": {
+        "checkbox": "<tap-checkbox slot=\"leading\"></tap-checkbox>",
+        "radio": "<tap-radio slot=\"leading\"></tap-radio>",
+        "avatar": "<tap-avatar slot=\"leading\" size=\"small\" image=\"https://picsum.photos/100\"></tap-avatar>"
+      },
+      "trailing": {
+        "button": "<tap-button slot=\"trailing\">پرداخت</tap-button>",
+        "badge": "<tap-badge slot=\"trailing\" value=\"1\" variant=\"error\" type=\"numeral\"></tap-badge>",
+        "icon": "<tap-icon-default color=\"black\" slot=\"trailing\"></tap-icon-default>",
+        "price": "<p color=\"black\" slot=\"trailing\">۱۵۷٬۰۰۰ تومان</p>"
+      },
+      "content": {
+        "address": "<p color=\"black\" slot=\"content\">انتخاب آدرس</p>",
+        "simple text": "<p color=\"black\" slot=\"content\">متن ساده</p>"
+      }
+    }
+  },
+  "tap-route": {
+    "slotKnobs": {
+      "content": {
+        "standard": "<div slot=\"content\">\n    <h3 style=\"margin: 0;\">عنوان را وارد کنید</h3>\n    <p style=\"margin: 0;\">توضیحات لیست</p>\n  </div>",
+        "reverse": "<div slot=\"content\">\n    <p style=\"margin: 0;\">عنوان را وارد کنید</p>\n    <h3 style=\"margin: 0;\">توضیحات لیست</h3>\n  </div>",
+        "address": "<p slot=\"content\">سعادت\u200Cآباد، بلوار بهزاد</p>"
+      }
+    }
+  },
+  "tap-segmented-button": {
+    "propertyDefaultValues": {
+      "selected": true
+    },
+    "slotKnobs": {
+      "default": {
+        "simple": "عنوان"
+      }
+    }
+  },
+  "tap-segmented-button-group": {
+    "slotKnobs": {
+      "default": {
+        "simple": "<tap-segmented-button>مسافر</tap-segmented-button>\n  <tap-segmented-button>راننده</tap-segmented-button>"
+      }
+    }
+  },
+  "tap-button": {
+    "slotKnobs": {
+      "default": {
+        "text": "ثبت مبدأ"
+      }
+    }
+  },
+  "tap-pinwheel": {
+    "propertyDefaultValues": {
+      "items": [
+         "فروردین",
+         "اردیبهشت",
+         "خرداد",
+         "تیر",
+         "مرداد",
+         "شهریور",
+         "مهر",
+         "آبان",
+         "آذر",
+         "دی",
+         "بهمن",
+         "اسفند"
+      ]
+    }
+  },
+  "tap-radio-group": {
+    "slotKnobs": {
+      "default": {
+        "text": "<tap-radio value=\"1\"></tap-radio>\n  <tap-radio value=\"2\"></tap-radio>"
+      }
+    }
+  },
+  "tap-bottom-navigation-item": {
+    "slotKnobs": {
+      "icon": {
+        "profile": "<tap-icon-person slot=\"icon\"></tap-icon-person>"
+      },
+      "active-icon": {
+        "profile": "<tap-icon-person-fill slot=\"active-icon\"></tap-icon-person-fill>"
+      },
+      "default": {
+        "profile": "پروفایل"
+      }
+    }
+  },
+  "tap-bottom-navigation": {
+    "slotKnobs": {
+      "default": {
+        "sample": "<tap-bottom-navigation-item>\n      پروفایل\n      <tap-icon-person slot=\"icon\"></tap-icon-person>\n      <tap-icon-person-fill slot=\"active-icon\"></tap-icon-person-fill>\n    </tap-bottom-navigation-item>\n    <tap-bottom-navigation-item>\n      باشگاه مشتریان\n      <tap-icon-spark slot=\"icon\"></tap-icon-spark>\n      <tap-icon-spark-fill slot=\"active-icon\"></tap-icon-spark-fill>\n    </tap-bottom-navigation-item>\n    <tap-bottom-navigation-item>\n      تخفیف\u200Cها\n      <tap-icon-coupon slot=\"icon\"></tap-icon-coupon>\n      <tap-icon-coupon-fill slot=\"active-icon\"></tap-icon-coupon-fill>\n    </tap-bottom-navigation-item>\n    <tap-bottom-navigation-item>\n      سرویس\u200Cها\n      <tap-icon-square-grid-rounded slot=\"icon\"></tap-icon-square-grid-rounded>\n      <tap-icon-square-grid-rounded-fill\n        slot=\"active-icon\"\n      ></tap-icon-square-grid-rounded-fill>\n    </tap-bottom-navigation-item>"
+      }
+    }
+  },
+  "tap-banner": {
+    "propertyDefaultValues": {
+      "heading": "با ۱۶۳۰، تلفنی تپسی بگیر",
+      "description": "با شماره‌گیری ۱۶۳۰، بدون نیاز به اینرتنت، درخواست سفرتان را ثبت کنید",
+      "image": "https://able-media.tapsi.cab/statics/EA3ORTXURYJ02LA4XF.jpg",
+      "background-color": "#ff5722",
+      "textColor": "#fff"
+    }
+  },
+  "tap-text-field": {
+    "slotKnobs": {
+      "leading": {
+        "empty": "<div></div>",
+        "icon": "<tap-icon-default color=\"black\" slot=\"leading\"></tap-icon-default>"
+      },
+      "trailing": {
+        "empty": "<div></div>",
+        "suffix": "<p slot=\"trailing\">تومان</tap-button>",
+        "icon": "<tap-icon-default color=\"black\" slot=\"trailing\"></tap-icon-default>"
+      }
+    },
+    "propertyDefaultValues": {
+      "label": "نام گیرنده",
+      "caption": "لطفا نام و نام خانوادگی کامل خود را وارد نمایید"
+    }
+  },
+  "tap-textarea": {
+    "propertyDefaultValues": {
+      "label": "توضیحات سفارش (اختیاری)",
+      "placeholder": "مثلا بسته با احتیاط حمل شود...",
+      "caption": "در صورت پر بودن این فیلد، متن آن برای راننده نمایش داده خواهد شد"
+    }
+  }
+}

@@ -1,11 +1,12 @@
-import { html, TemplateResult } from "lit";
-import "./text-field.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
+import { Meta } from '@storybook/web-components';
 
 export default {
-  title: "TextField",
-  component: "tap-text-field",
+  title: 'Components/TextField',
+  component: 'tap-text-field',
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -15,7 +16,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
+const Template: Story<ArgTypes> = () => html`
   <tap-text-field label="لیبل" caption="متن ساپورت" placeholder="مقدار">
   </tap-text-field>
 `;

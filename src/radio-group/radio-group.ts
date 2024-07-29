@@ -1,25 +1,25 @@
-import { LitElement, html, nothing } from "lit";
-import { property, queryAssignedElements } from "lit/decorators.js";
-import { Radio } from "../radio/radio";
+import { LitElement, html, nothing } from 'lit';
+import { property, queryAssignedElements } from 'lit/decorators.js';
+import { Radio } from '../radio/radio';
 
 export class RadioGroup extends LitElement {
-  @property({ reflect: true }) direction: "horizontal" | "vertical" = "vertical";
-  @property({ reflect: true }) value = "";
+  @property({ reflect: true }) direction: 'horizontal' | 'vertical' =
+    'vertical';
+  @property({ reflect: true }) value = '';
 
   @queryAssignedElements() private radios!: Radio[];
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener(
-      "radio-input-change",
-      this.handleRadioChangeClick
-    );
+    this.addEventListener('radio-input-change', this.handleRadioChangeClick);
   }
 
-  private selectDefaultOption(){
-    if(!this.value) return;
-    const selectedRadio = this.radios.find(radio => radio.value == this.value);
-    if(!selectedRadio) return
+  private selectDefaultOption() {
+    if (!this.value) return;
+    const selectedRadio = this.radios.find(
+      (radio) => radio.value == this.value,
+    );
+    if (!selectedRadio) return;
     selectedRadio.checked = true;
   }
 
@@ -27,7 +27,8 @@ export class RadioGroup extends LitElement {
     const index = this.radios.indexOf(e.target as Radio);
     const selectedRadio = this.radios[index];
 
-    if (!selectedRadio || selectedRadio.checked || selectedRadio.disabled) return;
+    if (!selectedRadio || selectedRadio.checked || selectedRadio.disabled)
+      return;
 
     selectedRadio.checked = true;
 
@@ -38,14 +39,14 @@ export class RadioGroup extends LitElement {
     });
 
     this.dispatchEvent(
-      new CustomEvent("radio-group-change", {
+      new CustomEvent('radio-group-change', {
         detail: {
           checked: selectedRadio,
           index,
         },
         bubbles: true,
         composed: true,
-      })
+      }),
     );
   }
 

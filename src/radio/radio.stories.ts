@@ -1,11 +1,13 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
+import { Meta } from '@storybook/web-components';
+import 'custom-element-manifest-demo/dist'
 
 export default {
-  title: "Radio",
-  component: "tap-radio",
+  title: 'Components/Radio',
+  component: 'tap-radio',
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -15,9 +17,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
-  <tap-radio></tap-radio>
-`;
+const Template: Story<ArgTypes> = () => html` <tap-radio></tap-radio> `;
 
 export const Radio = Template.bind({});
 

@@ -1,19 +1,21 @@
-import { html, TemplateResult } from "lit";
-import "../radio";
-import "./index.js";
+import { html, TemplateResult } from 'lit';
+import '../radio';
+import './index.js';
+import { Meta } from '@storybook/web-components';
 
-const radioGroupDirection: string[] = ['horizontal', 'vertical']
+const radioGroupDirection: string[] = ['horizontal', 'vertical'];
 
 export default {
-  title: "Radio Group",
-  component: "tap-radio-group",
+  title: 'Components/Radio Group',
+  component: 'tap-radio-group',
+  subcomponents: { Radio: 'tap-radio' },
   argTypes: {
     direction: {
       options: radioGroupDirection,
-      control: { type: "inline-radio" },
+      control: { type: 'inline-radio' },
     },
   },
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -22,12 +24,12 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  value?: string,
-  direction?: 'vertical' | 'horizontal'
+  value?: string;
+  direction?: 'vertical' | 'horizontal';
 }
 
-const Template: Story<ArgTypes> = ({value,direction}: ArgTypes) => html`
-  <tap-radio-group value="${value}" direction="${direction}" >
+const Template: Story<ArgTypes> = ({ value, direction }: ArgTypes) => html`
+  <tap-radio-group value="${value}" direction="${direction}">
     <tap-radio value="1"></tap-radio>
     <tap-radio value="2"></tap-radio>
     <tap-radio value="3"></tap-radio>
@@ -39,5 +41,5 @@ export const RadioGroup = Template.bind({});
 
 RadioGroup.args = {
   direction: 'vertical',
-  value: '1'
+  value: '1',
 };

@@ -1,13 +1,23 @@
-import { html, TemplateResult } from "lit";
-import "./index.js";
-import "../bottom-navigation-item/index.js";
-import "../icons/index.js";
+import { html, TemplateResult } from 'lit';
+import './index.js';
+import '../bottom-navigation-item/index.js';
+import { Meta } from '@storybook/web-components';
+
+import '@tapsioss/icons/dist/icons/person'
+import '@tapsioss/icons/dist/icons/person-fill'
+import '@tapsioss/icons/dist/icons/spark'
+import '@tapsioss/icons/dist/icons/spark-fill'
+import '@tapsioss/icons/dist/icons/coupon'
+import '@tapsioss/icons/dist/icons/coupon-fill'
+import '@tapsioss/icons/dist/icons/square-grid-rounded'
+import '@tapsioss/icons/dist/icons/square-grid-rounded-fill'
 
 export default {
-  title: "Bottom Navigation",
-  component: "tap-bottom-navigation",
+  title: 'Components/Bottom Navigation',
+  component: 'tap-bottom-navigation',
+  subcomponents: { 'Bottom Navigation Item': 'tap-bottom-navigation-item' },
   argTypes: {},
-};
+} as Meta;
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -17,7 +27,7 @@ interface Story<T> {
 
 interface ArgTypes {}
 
-const Template: Story<ArgTypes> = ({}: ArgTypes) => html`
+const Template: Story<ArgTypes> = () => html`
   <tap-bottom-navigation>
     <tap-bottom-navigation-item>
       پروفایل
