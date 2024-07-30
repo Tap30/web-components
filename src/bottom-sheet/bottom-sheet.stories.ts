@@ -2,7 +2,13 @@ import { html, TemplateResult } from 'lit';
 import './index.js';
 import '../tooltip';
 
-export default {};
+export default {
+  title: 'Bottom Sheet',
+  component: 'tap-bottom-sheet',
+  parameters: {
+    layout: 'fullscreen', // or `padded` by default
+  },
+};
 
 interface Story<T> {
   (args: T): TemplateResult;
@@ -13,7 +19,7 @@ interface Story<T> {
 interface ArgTypes {}
 
 const Template: Story<ArgTypes> = ({}) => {
-  return html` <tap-bottom-sheet> </tap-bottom-sheet> `;
+  return html` <tap-bottom-sheet></tap-bottom-sheet>`;
 };
 
 export const Simple = Template.bind({});
