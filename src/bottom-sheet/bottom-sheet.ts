@@ -1,8 +1,6 @@
 import { html, LitElement, PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 import '@tapsioss/icons/dist/icons/cross';
-import { classMap } from 'lit-html/directives/class-map';
-import { styleMap } from 'lit-html/directives/style-map';
 
 export class BottomSheet extends LitElement {
   static readonly shadowRootOptions = {
@@ -28,7 +26,9 @@ export class BottomSheet extends LitElement {
   handleOpen(): void {}
 
   handleDismiss(): void {
-    
+    //  this.animateSheet(this.boundaryHeight, {
+    //   ease: cubicBezier(0.23, 1, 0.32, 1),
+    // });
   }
 
   protected updated(changed: PropertyValues): void {
