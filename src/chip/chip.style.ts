@@ -3,9 +3,7 @@ import { css } from 'lit';
 export default css`
   :host {
     box-sizing: border-box;
-    flex: 1;
-    // TODO: add to the tokens
-    min-width: var(--tap-chip-min-width, 72px);
+    width: 100%;
   }
 
   :host *,
@@ -19,6 +17,9 @@ export default css`
   }
 
   .chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font: inherit;
     font-family: var(--tap-font-family, var(--tap-sys-font-family));
     font-size: var(
@@ -42,12 +43,8 @@ export default css`
     color: var(--tap-chip-color, var(--tap-sys-color-content-primary));
     padding: 0 var(--tap-chip-horizontal-padding, var(--tap-sys-spacing-4));
     width: 100%;
-    height: 100%;
     // TODO: add to the tokens
     min-width: var(--tap-chip-min-width, 72px);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
   }
 
   ::slotted([slot='icon']) {
@@ -55,6 +52,7 @@ export default css`
   }
 
   :host([hasicon]) .chip {
+    display: flex;
     justify-content: end;
   }
 
@@ -83,5 +81,13 @@ export default css`
       --tap-chip-selected-and-disabled-color,
       var(--tap-sys-color-border-primary)
     );
+  }
+
+  :host([size='sm']) .chip {
+    height: var(--tap-chip-group-sm-height, var(--tap-sys-spacing-9));
+  }
+
+  :host([size='md']) .chip {
+    height: var(--tap-chip-group-md-height, var(--tap-sys-spacing-10));
   }
 `;

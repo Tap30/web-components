@@ -3,9 +3,11 @@ import { Chip } from '../chip/chip';
 import { property, queryAssignedElements } from 'lit/decorators.js';
 
 export class ChipGroup extends LitElement {
-  @property({ reflect: true }) size: 'sm' | 'md' = 'md';
+  @property({ type: String, reflect: true }) mode: 'single-select' | 'multi-select' = 'single-select';
 
-  @queryAssignedElements() private buttons!: Chip[];
+  @property({ type: Boolean, reflect: true }) fullwidth = false;
+
+  @queryAssignedElements() private chips!: Chip[];
 
   connectedCallback() {
     super.connectedCallback();
@@ -13,24 +15,24 @@ export class ChipGroup extends LitElement {
   }
 
   private handleChipClick(e: Event) {
-    const index = this.buttons.indexOf(e.target as Chip);
-    const clicked = this.buttons[index];
+    const clickedChip = e.target as Chip;
 
-    if (!clicked || clicked.selected || clicked.disabled) return;
+    if (!clickedChip || clickedChip.disabled) return;
 
-    clicked.selected = true;
+    if (this.mode === 'single-select') {
+      this.chips.forEach((chip) => {
+        chip.selected = chip === clickedChip && !chip.selected;
+      });
+    } else if (this.mode === 'multi-select') {
+      clickedChip.selected = !clickedChip.selected;
+    }
 
-    this.buttons.forEach((button) => {
-      if (button !== clicked) {
-        button.selected = false;
-      }
-    });
-
+    const selectedChips = this.chips.filter(chip => chip.selected);
     this.dispatchEvent(
       new CustomEvent('chip-group-change', {
         detail: {
-          selected: clicked,
-          index,
+          selected: selectedChips,
+          indices: selectedChips.map(chip => this.chips.indexOf(chip)),
         },
         bubbles: true,
         composed: true,

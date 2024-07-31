@@ -16,7 +16,7 @@ export default css`
   }
 
   .chip-group {
-    display: flex;
+    display: inline-flex;
     gap: var(--tap-chip-group-gap, var(--tap-sys-spacing-5));
     justify-content: space-between;
     overflow-x: auto;
@@ -28,11 +28,7 @@ export default css`
     display: none;
   }
 
-  :host([size='sm']) .chip-group {
-    height: var(--tap-chip-group-sm-height, var(--tap-sys-spacing-9));
-  }
-
-  :host([size='md']) .chip-group {
-    height: var(--tap-chip-group-md-height, var(--tap-sys-spacing-10));
+  :host([fullwidth]) .chip-group {
+    display: flex;
   }
 `;

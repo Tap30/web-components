@@ -19,8 +19,12 @@ interface Story<T> {
 interface ArgTypes { }
 
 const Template: Story<ArgTypes> = () => html`
-  <tap-chip-group size="md">
-    <tap-chip hasIcon disabled>
+  <tap-chip-group mode="single-select">
+    <tap-chip size="md" hasIcon disabled>
+      <span>اینترنت</span>
+      <tap-icon-default slot="icon"></tap-icon-default>
+    </tap-chip>
+    <tap-chip size="md"  hasIcon>
       <span>اینترنت</span>
       <tap-icon-default slot="icon"></tap-icon-default>
     </tap-chip>
@@ -28,11 +32,7 @@ const Template: Story<ArgTypes> = () => html`
       <span>اینترنت</span>
       <tap-icon-default slot="icon"></tap-icon-default>
     </tap-chip>
-    <tap-chip hasIcon>
-      <span>اینترنت</span>
-      <tap-icon-default slot="icon"></tap-icon-default>
-    </tap-chip>
-    <tap-chip selected>
+    <tap-chip selected disabled>
       اینترنت
     </tap-chip>
   </tap-chip-group>

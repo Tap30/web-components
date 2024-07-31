@@ -11,7 +11,9 @@ export class Chip extends LitElement {
 
   @property({ type: Boolean }) disabled = false;
 
-  @property({ type: Boolean }) hasIcon = false;
+  @property({ reflect: true, type: Boolean }) hasIcon = false;
+
+  @property({ reflect: true }) size: 'sm' | 'md' = 'md';
 
   private handleClick() {
     this.dispatchEvent(
@@ -27,7 +29,7 @@ export class Chip extends LitElement {
 
     return html`
       <button
-        class="chip"
+        class="chip"        
         ?disabled=${this.disabled}
         tabindex="${this.disabled ? '-1' : '0'}"
         @click="${this.handleClick}"

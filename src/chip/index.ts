@@ -19,7 +19,9 @@ import { Chip } from './chip';
  * @cssprop [--tap-chip-selected-border-color=--tap-sys-color-surface-inverse-primary] - The border color of a selected chip.
  * @cssprop [--tap-chip-disabled-color=--tap-sys-color-content-disabled] - The text color of a disabled chip.
  * @cssprop [--tap-chip-selected-and-disabled-color=--tap-sys-color-border-primary] - The border color of a selected and disabled chip.
- *
+ * @cssprop [--tap-chip-group-sm-height=--tap-sys-spacing-9] - The height of the chip in small size.
+ * @cssprop [--tap-chip-group-md-height=--tap-sys-spacing-10] - The height of the chip in medium size.
+ * 
  * @csspart [chip] - The button element representing the chip.
  *
  * @slot - Default content slot for chip text.
@@ -27,7 +29,9 @@ import { Chip } from './chip';
  *
  * @prop {boolean} [disabled=false] - Whether the chip is disabled.
  * @prop {boolean} [selected=false] - Whether the chip is selected.
- *
+ * @prop {'sm' | 'md'} [size='md'] - The size of the chip.
+ * @prop {boolean} [hasIcon=false] - Whether the chip has icon.
+ * 
  */
 
 @customElement('tap-chip')
