@@ -96,7 +96,9 @@ export class BottomSheet extends LitElement {
           <div class="title">${this.title}</div>
           <div class="close-button">${this.renderDismissButton()}</div>
         </div>
-        <div class="bottom-sheet-body">This is body!! :)</div>
+        <div class="bottom-sheet-body">
+          <slot name="bottom-sheet-body"></slot>
+        </div>
       </section>
     `;
   }

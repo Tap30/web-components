@@ -6,7 +6,7 @@ export default {
   title: 'Bottom Sheet',
   component: 'tap-bottom-sheet',
   parameters: {
-    layout: 'fullscreen', // or `padded` by default
+    layout: 'fullscreen',
   },
 };
 
@@ -16,11 +16,23 @@ interface Story<T> {
   argTypes?: Record<string, unknown>;
 }
 
-interface ArgTypes {}
+interface ArgTypes {
+  open?: boolean;
+  disappear?: boolean;
+  isDismissible?: boolean;
+  title?: string;
+  isExpanded?: boolean;
+  showGrabber?: boolean;
+}
 
-const Template: Story<ArgTypes> = ({}) => {
-  return html` <tap-bottom-sheet></tap-bottom-sheet>`;
+const Template: Story<ArgTypes> = ({ title, open }) => {
+  return html` <tap-bottom-sheet title=${title} open=${open}>
+    <div slot="bottom-sheet-body" style="">This is body!</div>
+  </tap-bottom-sheet>`;
 };
 
 export const Simple = Template.bind({});
-Simple.args = {};
+Simple.args = {
+  title: 'عنوان',
+  open: true,
+};
