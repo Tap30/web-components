@@ -1,15 +1,25 @@
-import { html, LitElement, PropertyValues } from 'lit';
-import { property } from 'lit/decorators.js';
+import { html, LitElement, PropertyValues, nothing } from 'lit';
+import { property, query } from 'lit/decorators.js';
 import '@tapsioss/icons/dist/icons/cross';
 
 export class BottomSheet extends LitElement {
   static readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
+    // mode: 'open',
   };
 
   @property({ type: Boolean, reflect: true })
   open: boolean = false;
+
+  @property({ type: Boolean, reflect: true })
+  disappear: boolean = false;
+
+  @property({ type: Boolean, reflect: true })
+  isDismissible: boolean = true;
+
+  @property({ type: String, reflect: true })
+  title: string = '';
 
   @property({ type: Boolean, reflect: true })
   isExpanded: boolean = false;
@@ -17,47 +27,73 @@ export class BottomSheet extends LitElement {
   @property({ type: Boolean, reflect: true })
   showGrabber: boolean = true;
 
+  @query('#bottom-sheet')
+  private bottomSheetElement?: HTMLElement | null;
+
   constructor() {
     super();
     this.handleOpen = this.handleOpen.bind(this);
     this.handleDismiss = this.handleDismiss.bind(this);
+    this.handleTransitionEnd = this.handleTransitionEnd.bind(this);
+  }
+
+  protected updated(changed: PropertyValues): void {
+    if (changed.has('showGrabber')) {
+      this.showGrabber &&
+        this.style.setProperty('--tap-bottom-sheet-header-padding', '12px');
+    }
+
+    if (changed.has('open')) {
+      if (!this.open && this.bottomSheetElement) {
+        this.bottomSheetElement.addEventListener(
+          'transitionend',
+          this.handleTransitionEnd,
+          {
+            once: true,
+          },
+        );
+        this.bottomSheetElement.classList.add('open');
+      }
+    }
   }
 
   handleOpen(): void {}
 
   handleDismiss(): void {
-    //  this.animateSheet(this.boundaryHeight, {
-    //   ease: cubicBezier(0.23, 1, 0.32, 1),
-    // });
+    this.open = false;
   }
 
-  protected updated(changed: PropertyValues): void {
-    if (changed.has('showGrabber')) {
-      this.style.setProperty('--tap-bottom-sheet-header-padding', '12px');
-    }
+  private handleTransitionEnd() {
+    this.bottomSheetElement && this.bottomSheetElement.remove();
+    // TODO: set mode to close
   }
 
   private renderDismissButton() {
-    return html`
-      <tap-icon-button
-        @click=${() => this.handleDismiss()}
-        type="button"
-        size="small"
-        variant="naked"
-        }
-      >
-        <tap-icon-cross color="#000"></tap-icon-cross>
-      </tap-icon-button>
-    `;
+    if (this.isDismissible)
+      return html`
+        <tap-icon-button
+          @click=${() => this.handleDismiss()}
+          type="button"
+          size="small"
+          variant="naked"
+          }
+        >
+          <tap-icon-cross color="#000"></tap-icon-cross>
+        </tap-icon-button>
+      `;
+  }
+
+  private renderGrabber() {
+    if (this.showGrabber) return html`<div class="grabber"></div>`;
   }
 
   render() {
     return html`
       <section class="bottom-sheet-dimmer"></section>
-      <section class="bottom-sheet">
-        <div class="grabber"></div>
+      <section id="bottom-sheet" class="bottom-sheet">
+        ${this.renderGrabber()}
         <div class="bottom-sheet-header">
-          <div class="title">عنوان</div>
+          <div class="title">${this.title}</div>
           <div class="close-button">${this.renderDismissButton()}</div>
         </div>
         <div class="bottom-sheet-body">This is body!! :)</div>
