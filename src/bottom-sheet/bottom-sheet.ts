@@ -1,4 +1,4 @@
-import { html, LitElement, PropertyValues, nothing } from 'lit';
+import { html, LitElement, PropertyValues } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import '@tapsioss/icons/dist/icons/cross';
 
