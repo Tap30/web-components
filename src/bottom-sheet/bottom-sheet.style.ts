@@ -14,10 +14,10 @@ export default css`
       var(--tap-sys-color-surface-primary)
     );
     z-index: 2;
-    // transform: translateY(100vh);
     box-sizing: border-box;
     font-family: var(--tap-font-family, var(--tap-sys-font-family));
     border-radius: 20px 20px 0 0;
+    transition: 1s;
   }
 
   .bottom-sheet-dimmer {
@@ -49,11 +49,12 @@ export default css`
   .bottom-sheet-header {
     display: flex;
     align-items: center;
-    padding: var(--tap-bottom-sheet-header-padding);
+    padding-top: var(--tap-bottom-sheet-header-padding);
+    border-bottom: 1px solid var(--tap-palette-gray-200);
   }
 
   .title {
-    height: 50px;
+    height: 52px;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -69,6 +70,7 @@ export default css`
     position: absolute;
     left: 16px;
     display: flex;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .grabber {
@@ -82,5 +84,35 @@ export default css`
     right: 50%;
     transform: translateX(50%);
     cursor: row-resize;
+  }
+
+  .close {
+    animation: slide-down 1s cubic-bezier(0, 1, 0, 1) forwards;
+  }
+
+  .open {
+    animation: slide-up 0.3s cubic-bezier(0, 1, 0, 1) forwards;
+  }
+
+  @keyframes slide-down {
+    0% {
+      translateY(0)
+    }
+    70% {
+      opacity: 1;
+    }
+    to {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-70vh);
+    }
   }
 `;
