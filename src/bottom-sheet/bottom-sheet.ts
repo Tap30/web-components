@@ -9,8 +9,8 @@ export class BottomSheet extends LitElement {
     // mode: 'open',
   };
 
-  @property({ type: Boolean, reflect: true })
-  open: boolean = false;
+  @property({ type: Boolean, reflect: true, attribute: 'is-open' })
+  isOpen: boolean = false;
 
   @property({ type: Boolean, reflect: true })
   disappear: boolean = false;
@@ -30,11 +30,22 @@ export class BottomSheet extends LitElement {
   @query('#bottom-sheet')
   private bottomSheetElement?: HTMLElement | null;
 
+  @query('.bottom-sheet-header')
+  private headerElement?: HTMLElement | null;
+
+  @query('.bottom-sheet-body')
+  private bodyElement?: HTMLElement | null;
+
   constructor() {
     super();
-    this.handleOpen = this.handleOpen.bind(this);
+    this.handleSheetExpand = this.handleSheetExpand.bind(this);
     this.handleDismiss = this.handleDismiss.bind(this);
     this.handleTransitionEnd = this.handleTransitionEnd.bind(this);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    //this.addEventListener('touchstart', this.handleSheetExpand);
   }
 
   protected updated(changed: PropertyValues): void {
@@ -43,8 +54,19 @@ export class BottomSheet extends LitElement {
         this.style.setProperty('--tap-bottom-sheet-header-padding', '12px');
     }
 
-    if (changed.has('open')) {
-      if (!this.open && this.bottomSheetElement) {
+    if (changed.has('isExpanded') && this.headerElement && this.bodyElement) {
+      const headerHeight = this.headerElement.clientHeight;
+      const bodyHeight = this.bodyElement.clientHeight;
+      const bottomSheetHeight = headerHeight + bodyHeight;
+      !this.isExpanded &&
+        this.style.setProperty(
+          '--tap-bottom-sheet-bottom',
+          `calc(-90vh + ${bottomSheetHeight})`,
+        );
+    }
+
+    if (changed.has('isOpen')) {
+      if (!this.isOpen && this.bottomSheetElement) {
         this.bottomSheetElement.addEventListener(
           'transitionend',
           this.handleTransitionEnd,
@@ -52,15 +74,15 @@ export class BottomSheet extends LitElement {
             once: true,
           },
         );
-        this.bottomSheetElement.classList.add('open');
+        this.bottomSheetElement.classList.add('close');
       }
     }
   }
 
-  handleOpen(): void {}
+  handleSheetExpand(): void {}
 
   handleDismiss(): void {
-    this.open = false;
+    this.isOpen = false;
   }
 
   private handleTransitionEnd() {
@@ -88,6 +110,7 @@ export class BottomSheet extends LitElement {
   }
 
   render() {
+    if (!this.isOpen) return html``;
     return html`
       <section class="bottom-sheet-dimmer"></section>
       <section id="bottom-sheet" class="bottom-sheet">
