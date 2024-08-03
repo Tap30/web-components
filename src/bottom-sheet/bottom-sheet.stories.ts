@@ -17,7 +17,7 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  open?: boolean;
+  isOpen?: boolean;
   disappear?: boolean;
   isDismissible?: boolean;
   title?: string;
@@ -25,8 +25,8 @@ interface ArgTypes {
   showGrabber?: boolean;
 }
 
-const Template: Story<ArgTypes> = ({ title, open }) => {
-  return html` <tap-bottom-sheet title=${title} open=${open}>
+const Template: Story<ArgTypes> = ({ title, isOpen }) => {
+  return html` <tap-bottom-sheet title=${title} ?is-open=${isOpen}>
     <div slot="bottom-sheet-body" style="">This is body!</div>
   </tap-bottom-sheet>`;
 };
@@ -34,5 +34,5 @@ const Template: Story<ArgTypes> = ({ title, open }) => {
 export const Simple = Template.bind({});
 Simple.args = {
   title: 'عنوان',
-  open: true,
+  isOpen: false,
 };
