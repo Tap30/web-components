@@ -70,18 +70,7 @@ export class BottomSheet extends LitElement {
 
     if (changed.has('isExpanded')) this.toggleSheetHeight();
 
-    if (changed.has('disappear')) {
-      if (this.disappear && this.bottomSheetElement) {
-        this.bottomSheetElement.addEventListener(
-          'animationend',
-          this.handleAnimationEnd,
-          {
-            once: true,
-          },
-        );
-        this.bottomSheetElement.classList.add('close');
-      }
-    }
+    if (changed.has('disappear')) this.handleDisappear();
   }
 
   private handleTouchStart = (event: TouchEvent): void => {
@@ -103,6 +92,17 @@ export class BottomSheet extends LitElement {
 
     this.touchDirection = deltaY > 0 ? 'Down' : 'Up';
     this.isExpanded = this.touchDirection === 'Up';
+  };
+
+  private handleDisappear = (): void => {
+    if (this.disappear && this.bottomSheetElement) {
+      this.bottomSheetElement.addEventListener(
+        'animationend',
+        this.handleAnimationEnd,
+        { once: true },
+      );
+      this.bottomSheetElement.classList.add('close');
+    }
   };
 
   private toggleSheetHeight = (): void => {
