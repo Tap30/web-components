@@ -155,7 +155,10 @@ export class BottomSheet extends LitElement {
 
   private renderDimmer() {
     if (this.hasDimmer)
-      return html`<section class="bottom-sheet-dimmer"></section>`;
+      return html`<section
+        class="bottom-sheet-dimmer"
+        @click="${() => this.handleDismiss()}"
+      ></section>`;
   }
 
   render() {
