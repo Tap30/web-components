@@ -1,5 +1,5 @@
 import { html, LitElement, PropertyValues } from 'lit';
-import { property, query } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
 import '@tapsioss/icons/dist/icons/cross';
 
 export class BottomSheet extends LitElement {
@@ -28,8 +28,7 @@ export class BottomSheet extends LitElement {
 
   @property({ type: String }) touchDirection: string = '';
 
-  @property({ type: Boolean, reflect: true })
-  private disappear: boolean = false;
+  @state() private disappear = false;
 
   private startX: number = 0;
   private startY: number = 0;
