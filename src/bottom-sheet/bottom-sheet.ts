@@ -6,17 +6,16 @@ export class BottomSheet extends LitElement {
   static readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
-    // mode: 'open',
   };
 
   @property({ type: Boolean, reflect: true, attribute: 'is-open' })
   isOpen: boolean = false;
 
   @property({ type: Boolean, reflect: true })
-  disappear: boolean = false;
-
-  @property({ type: Boolean, reflect: true })
   isDismissible: boolean = true;
+
+  @property({ type: Boolean, reflect: true, attribute: 'has-dimmer' })
+  hasDimmer: boolean = false;
 
   @property({ type: String, reflect: true })
   title: string = '';
@@ -26,6 +25,14 @@ export class BottomSheet extends LitElement {
 
   @property({ type: Boolean, reflect: true })
   showGrabber: boolean = true;
+
+  @property({ type: String }) touchDirection: string = '';
+
+  @property({ type: Boolean, reflect: true })
+  private disappear: boolean = false;
+
+  private startX: number = 0;
+  private startY: number = 0;
 
   @query('#bottom-sheet')
   private bottomSheetElement?: HTMLElement | null;
@@ -40,12 +47,22 @@ export class BottomSheet extends LitElement {
     super();
     this.handleSheetExpand = this.handleSheetExpand.bind(this);
     this.handleDismiss = this.handleDismiss.bind(this);
-    this.handleTransitionEnd = this.handleTransitionEnd.bind(this);
+    this.handleAnimationEnd = this.handleAnimationEnd.bind(this);
+    this.handleTouchStart = this.handleTouchStart.bind(this);
+    this.handleTouchEnd = this.handleTouchEnd.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    //this.addEventListener('touchstart', this.handleSheetExpand);
+    this.disappear = false; // todo: fix!!
+    this.addEventListener('touchstart', this.handleTouchStart);
+    this.addEventListener('touchend', this.handleTouchEnd);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('touchstart', this.handleTouchStart);
+    this.removeEventListener('touchend', this.handleTouchEnd);
   }
 
   protected updated(changed: PropertyValues): void {
@@ -61,33 +78,71 @@ export class BottomSheet extends LitElement {
       !this.isExpanded &&
         this.style.setProperty(
           '--tap-bottom-sheet-bottom',
-          `calc(-90vh + ${bottomSheetHeight})`,
+          `calc(-90vh + ${bottomSheetHeight}px)`,
         );
+
+      this.isExpanded &&
+        this.style.setProperty('--tap-bottom-sheet-bottom', '0');
     }
 
-    if (changed.has('isOpen')) {
-      if (!this.isOpen && this.bottomSheetElement) {
+    if (changed.has('disappear')) {
+      if (this.disappear && this.bottomSheetElement) {
         this.bottomSheetElement.addEventListener(
-          'transitionend',
-          this.handleTransitionEnd,
+          'animationend',
+          this.handleAnimationEnd,
           {
             once: true,
           },
         );
         this.bottomSheetElement.classList.add('close');
       }
+      // else if (this.disappear && this.bottomSheetElement) {
+      //   this.bottomSheetElement.classList.add('open');
+      // }
     }
   }
 
-  handleSheetExpand(): void {}
-
-  handleDismiss(): void {
-    this.isOpen = false;
+  private handleTouchStart(e: TouchEvent): void {
+    if (e.touches.length) {
+      const touch = e.touches[0];
+      this.startX = touch.clientX;
+      this.startY = touch.clientY;
+    }
   }
 
-  private handleTransitionEnd() {
-    this.bottomSheetElement && this.bottomSheetElement.remove();
-    // TODO: set mode to close
+  private handleTouchEnd(event: TouchEvent): void {
+    if (event.changedTouches.length) {
+      const touch = event.changedTouches[0];
+      const endX = touch.clientX;
+      const endY = touch.clientY;
+      const deltaX = endX - this.startX;
+      const deltaY = endY - this.startY;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        this.touchDirection = deltaX > 0 ? 'Right' : 'Left';
+      } else {
+        this.touchDirection = deltaY > 0 ? 'Down' : 'Up';
+
+        if (this.touchDirection === 'Up') {
+          this.isExpanded = true;
+        } else if (this.touchDirection === 'Down') {
+          this.isExpanded = false;
+        }
+      }
+    }
+  }
+
+  private handleSheetExpand(): void {}
+
+  private handleDismiss(): void {
+    this.disappear = true;
+  }
+
+  private handleAnimationEnd() {
+    if (this.disappear) {
+      this.isOpen = false;
+      this.bottomSheetElement && this.bottomSheetElement.remove();
+    }
   }
 
   private renderDismissButton() {
@@ -109,10 +164,15 @@ export class BottomSheet extends LitElement {
     if (this.showGrabber) return html`<div class="grabber"></div>`;
   }
 
+  private renderDimmer() {
+    if (this.hasDimmer)
+      return html`<section class="bottom-sheet-dimmer"></section>`;
+  }
+
   render() {
     if (!this.isOpen) return html``;
     return html`
-      <section class="bottom-sheet-dimmer"></section>
+      ${this.renderDimmer()}
       <section id="bottom-sheet" class="bottom-sheet">
         ${this.renderGrabber()}
         <div class="bottom-sheet-header">
