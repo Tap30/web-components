@@ -45,7 +45,6 @@ export class BottomSheet extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.disappear = false;
     this.addEventListeners();
   }
 
@@ -130,6 +129,7 @@ export class BottomSheet extends LitElement {
   private handleAnimationEnd = () => {
     if (this.disappear) {
       this.isOpen = false;
+      this.disappear = false;
       this.bottomSheetElement && this.bottomSheetElement.remove();
     }
   };
