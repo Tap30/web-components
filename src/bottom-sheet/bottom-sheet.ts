@@ -166,11 +166,11 @@ export class BottomSheet extends LitElement {
       ${this.renderDimmer()}
       <section id="bottom-sheet" class="bottom-sheet">
         ${this.renderGrabber()}
-        <div class="bottom-sheet-header">
+        <div class="bottom-sheet-header" part="header">
           <div class="title">${this.title}</div>
           <div class="close-button">${this.renderDismissButton()}</div>
         </div>
-        <div class="bottom-sheet-body">
+        <div class="bottom-sheet-body" part="body">
           <slot name="bottom-sheet-body"></slot>
         </div>
       </section>

@@ -40,7 +40,7 @@ export default css`
   .bottom-sheet-header {
     display: flex;
     align-items: center;
-    padding-top: var(--tap-bottom-sheet-header-padding);
+    padding-top: var(--tap-bottom-sheet-header-padding, 0);
     border-bottom: 1px solid var(--tap-palette-gray-200);
   }
 
