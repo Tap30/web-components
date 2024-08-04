@@ -27,8 +27,6 @@ export default css`
     width: 100dvw;
     height: 100dvh;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
     background-color: #33323b4b;
     animation: fade-in 0.3s ease-in-out;
   }
