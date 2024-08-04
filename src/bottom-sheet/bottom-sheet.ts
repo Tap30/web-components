@@ -44,12 +44,12 @@ export class BottomSheet extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListeners();
+    this.showGrabber && this.addEventListeners();
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListeners();
+    this.showGrabber && this.removeEventListeners();
   }
 
   private addEventListeners = (): void => {
