@@ -45,11 +45,6 @@ export class BottomSheet extends LitElement {
 
   constructor() {
     super();
-    this.toggleSheetHeight = this.toggleSheetHeight.bind(this);
-    this.handleDismiss = this.handleDismiss.bind(this);
-    this.handleAnimationEnd = this.handleAnimationEnd.bind(this);
-    this.handleTouchStart = this.handleTouchStart.bind(this);
-    this.handleTouchEnd = this.handleTouchEnd.bind(this);
   }
 
   connectedCallback() {
@@ -87,15 +82,15 @@ export class BottomSheet extends LitElement {
     }
   }
 
-  private handleTouchStart(event: TouchEvent): void {
+  private handleTouchStart = (event: TouchEvent): void => {
     if (event.touches.length) {
       const touch = event.touches[0];
       this.startX = touch.clientX;
       this.startY = touch.clientY;
     }
-  }
+  };
 
-  private handleTouchEnd(event: TouchEvent): void {
+  private handleTouchEnd = (event: TouchEvent): void => {
     if (!event.changedTouches.length) return;
 
     const touch = event.changedTouches[0];
@@ -106,9 +101,9 @@ export class BottomSheet extends LitElement {
 
     this.touchDirection = deltaY > 0 ? 'Down' : 'Up';
     this.isExpanded = this.touchDirection === 'Up';
-  }
+  };
 
-  private toggleSheetHeight(): void {
+  private toggleSheetHeight = (): void => {
     if (this.headerElement && this.bodyElement) {
       const headerHeight = this.headerElement.clientHeight;
       const bodyHeight = this.bodyElement.clientHeight;
@@ -122,20 +117,20 @@ export class BottomSheet extends LitElement {
       this.isExpanded &&
         this.style.setProperty('--tap-bottom-sheet-bottom', '0');
     }
-  }
+  };
 
-  private handleDismiss(): void {
+  private handleDismiss = (): void => {
     this.disappear = true;
-  }
+  };
 
-  private handleAnimationEnd() {
+  private handleAnimationEnd = () => {
     if (this.disappear) {
       this.isOpen = false;
       this.bottomSheetElement && this.bottomSheetElement.remove();
     }
-  }
+  };
 
-  private renderDismissButton() {
+  private renderDismissButton = () => {
     if (this.isDismissible)
       return html`
         <tap-icon-button
