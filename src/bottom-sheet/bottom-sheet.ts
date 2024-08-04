@@ -20,7 +20,7 @@ export class BottomSheet extends LitElement {
   @property({ type: String, reflect: true })
   title: string = '';
 
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean, reflect: true, attribute: 'is-expanded' })
   isExpanded: boolean = false;
 
   @property({ type: Boolean, reflect: true })
