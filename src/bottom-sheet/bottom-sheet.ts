@@ -43,22 +43,26 @@ export class BottomSheet extends LitElement {
   @query('.bottom-sheet-body')
   private bodyElement?: HTMLElement | null;
 
-  constructor() {
-    super();
-  }
-
   connectedCallback() {
     super.connectedCallback();
     this.disappear = false;
-    this.addEventListener('touchstart', this.handleTouchStart);
-    this.addEventListener('touchend', this.handleTouchEnd);
+    this.addEventListeners();
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    this.removeEventListeners();
+  }
+
+  private addEventListeners = (): void => {
+    this.addEventListener('touchstart', this.handleTouchStart);
+    this.addEventListener('touchend', this.handleTouchEnd);
+  };
+
+  private removeEventListeners = (): void => {
     this.removeEventListener('touchstart', this.handleTouchStart);
     this.removeEventListener('touchend', this.handleTouchEnd);
-  }
+  };
 
   protected updated(changed: PropertyValues): void {
     if (changed.has('showGrabber')) {
@@ -143,7 +147,7 @@ export class BottomSheet extends LitElement {
           <tap-icon-cross color="#000"></tap-icon-cross>
         </tap-icon-button>
       `;
-  }
+  };
 
   private renderGrabber() {
     if (this.showGrabber) return html`<div class="grabber"></div>`;
