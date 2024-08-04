@@ -26,7 +26,7 @@ export class BottomSheet extends LitElement {
   @property({ type: Boolean, reflect: true })
   showGrabber: boolean = true;
 
-  @property({ type: String }) touchDirection: string = '';
+  @state() private touchDirection: string = '';
 
   @state() private disappear = false;
 
