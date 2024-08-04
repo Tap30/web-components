@@ -45,7 +45,7 @@ export class BottomSheet extends LitElement {
 
   constructor() {
     super();
-    this.handleSheetExpand = this.handleSheetExpand.bind(this);
+    this.toggleSheetHeight = this.toggleSheetHeight.bind(this);
     this.handleDismiss = this.handleDismiss.bind(this);
     this.handleAnimationEnd = this.handleAnimationEnd.bind(this);
     this.handleTouchStart = this.handleTouchStart.bind(this);
@@ -54,7 +54,7 @@ export class BottomSheet extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.disappear = false; // todo: fix!!
+    this.disappear = false;
     this.addEventListener('touchstart', this.handleTouchStart);
     this.addEventListener('touchend', this.handleTouchEnd);
   }
@@ -71,19 +71,7 @@ export class BottomSheet extends LitElement {
         this.style.setProperty('--tap-bottom-sheet-header-padding', '12px');
     }
 
-    if (changed.has('isExpanded') && this.headerElement && this.bodyElement) {
-      const headerHeight = this.headerElement.clientHeight;
-      const bodyHeight = this.bodyElement.clientHeight;
-      const bottomSheetHeight = headerHeight + bodyHeight;
-      !this.isExpanded &&
-        this.style.setProperty(
-          '--tap-bottom-sheet-bottom',
-          `calc(-90vh + ${bottomSheetHeight}px)`,
-        );
-
-      this.isExpanded &&
-        this.style.setProperty('--tap-bottom-sheet-bottom', '0');
-    }
+    if (changed.has('isExpanded')) this.toggleSheetHeight();
 
     if (changed.has('disappear')) {
       if (this.disappear && this.bottomSheetElement) {
@@ -96,43 +84,45 @@ export class BottomSheet extends LitElement {
         );
         this.bottomSheetElement.classList.add('close');
       }
-      // else if (this.disappear && this.bottomSheetElement) {
-      //   this.bottomSheetElement.classList.add('open');
-      // }
     }
   }
 
-  private handleTouchStart(e: TouchEvent): void {
-    if (e.touches.length) {
-      const touch = e.touches[0];
+  private handleTouchStart(event: TouchEvent): void {
+    if (event.touches.length) {
+      const touch = event.touches[0];
       this.startX = touch.clientX;
       this.startY = touch.clientY;
     }
   }
 
   private handleTouchEnd(event: TouchEvent): void {
-    if (event.changedTouches.length) {
-      const touch = event.changedTouches[0];
-      const endX = touch.clientX;
-      const endY = touch.clientY;
-      const deltaX = endX - this.startX;
-      const deltaY = endY - this.startY;
+    if (!event.changedTouches.length) return;
 
-      if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        this.touchDirection = deltaX > 0 ? 'Right' : 'Left';
-      } else {
-        this.touchDirection = deltaY > 0 ? 'Down' : 'Up';
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - this.startX;
+    const deltaY = touch.clientY - this.startY;
 
-        if (this.touchDirection === 'Up') {
-          this.isExpanded = true;
-        } else if (this.touchDirection === 'Down') {
-          this.isExpanded = false;
-        }
-      }
-    }
+    if (Math.abs(deltaX) >= Math.abs(deltaY)) return;
+
+    this.touchDirection = deltaY > 0 ? 'Down' : 'Up';
+    this.isExpanded = this.touchDirection === 'Up';
   }
 
-  private handleSheetExpand(): void {}
+  private toggleSheetHeight(): void {
+    if (this.headerElement && this.bodyElement) {
+      const headerHeight = this.headerElement.clientHeight;
+      const bodyHeight = this.bodyElement.clientHeight;
+      const bottomSheetHeight = headerHeight + bodyHeight;
+      !this.isExpanded &&
+        this.style.setProperty(
+          '--tap-bottom-sheet-bottom',
+          `calc(-90vh + ${bottomSheetHeight}px)`,
+        );
+
+      this.isExpanded &&
+        this.style.setProperty('--tap-bottom-sheet-bottom', '0');
+    }
+  }
 
   private handleDismiss(): void {
     this.disappear = true;
