@@ -110,14 +110,27 @@ export class BottomSheet extends LitElement {
       const headerHeight = this.headerElement.clientHeight;
       const bodyHeight = this.bodyElement.clientHeight;
       const bottomSheetHeight = headerHeight + bodyHeight;
-      !this.isExpanded &&
+      if (!this.isExpanded) {
         this.style.setProperty(
-          '--tap-bottom-sheet-bottom',
-          `calc(-90vh + ${bottomSheetHeight}px)`,
+          '--tap-bottom-sheet-content-overflow-y',
+          'hidden',
         );
-
-      this.isExpanded &&
+        if (bodyHeight > 400) {
+          // values should be checked
+          this.style.setProperty('--tap-bottom-sheet-bottom', '-50dvh');
+        } else {
+          this.style.setProperty(
+            '--tap-bottom-sheet-bottom',
+            `calc(-90vh + ${bottomSheetHeight}px)`,
+          );
+        }
+      } else {
         this.style.setProperty('--tap-bottom-sheet-bottom', '0');
+        this.style.setProperty(
+          '--tap-bottom-sheet-content-overflow-y',
+          'scroll',
+        );
+      }
     }
   };
 
