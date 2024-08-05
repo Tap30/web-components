@@ -1,10 +1,18 @@
 import { css } from 'lit';
 
 export default css`
+  :host {
+    display: flex;
+    justify-content: center;
+  }
+
   .bottom-sheet {
     position: absolute;
     bottom: var(--tap-bottom-sheet-bottom, 0);
-    height: 90vh;
+    height: 90dvh;
+    max-height: 90dvh;
+    display: flex;
+    flex-direction: column;
     transition: 0.3s;
     direction: rtl;
     max-width: 440px;
@@ -18,8 +26,6 @@ export default css`
     border-radius: 20px 20px 0 0;
     border: 1px solid var(--tap-palette-gray-200);
     border-bottom: 0;
-    transform: translate(-50%, 0);
-    left: 50%;
   }
 
   .bottom-sheet-dimmer {
@@ -32,7 +38,13 @@ export default css`
   }
 
   .bottom-sheet-body {
+    display: flex;
+    width: 100%;
     background-color: inherit;
+    flex-grow: 1;
+    // //height: var(--tap-bottom-sheet-body-height, 5rem);
+    overflow-x: auto;
+    overflow-y: var(--tap-bottom-sheet-content-overflow-y, scroll);
   }
 
   .bottom-sheet-header {
@@ -84,19 +96,19 @@ export default css`
 
   @keyframes slide-down {
     from {
-      transform: translate(-50%, 0);
+      transform: translateY(0);
     }
     to {
-      transform: translate(-50%, 100%);
+      transform: translateY(100%);
     }
   }
 
   @keyframes slide-up {
     from {
-      transform: translate(-50%, 100%);
+      transform: translateY(100%);
     }
     to {
-      transform: translate(-50%, -0);
+      transform: translateY(0);
     }
   }
 
