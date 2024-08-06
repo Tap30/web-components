@@ -8,7 +8,7 @@ export default css`
 
   .bottom-sheet {
     position: absolute;
-    bottom: var(--tap-bottom-sheet-bottom, 0);
+    bottom: var(--tap-bottom-sheet-bottom, -100dvh);
     height: 90dvh;
     max-height: 90dvh;
     display: flex;
@@ -42,7 +42,7 @@ export default css`
     width: 100%;
     background-color: inherit;
     flex-grow: 1;
-    // //height: var(--tap-bottom-sheet-body-height, 5rem);
+    //height: var(--tap-bottom-sheet-body-height, 5rem);
     overflow-x: auto;
     overflow-y: var(--tap-bottom-sheet-content-overflow-y, scroll);
   }
