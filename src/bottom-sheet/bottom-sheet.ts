@@ -30,6 +30,8 @@ export class BottomSheet extends LitElement {
 
   @state() private disappear = false;
 
+  @state() private hasSlotHeaderContent = false;
+
   private startX: number = 0;
   private startY: number = 0;
 
@@ -146,6 +148,14 @@ export class BottomSheet extends LitElement {
     }
   };
 
+  private handleUpdateHeaderSlot = (): void => {
+    const slot = this.shadowRoot?.querySelector(
+      'slot[name="header"]',
+    ) as HTMLSlotElement;
+    this.hasSlotHeaderContent =
+      slot?.assignedNodes({ flatten: true }).length > 0;
+  };
+
   private renderDismissButton = () => {
     if (this.isDismissible)
       return html`
@@ -179,10 +189,15 @@ export class BottomSheet extends LitElement {
       ${this.renderDimmer()}
       <section id="bottom-sheet" class="bottom-sheet">
         ${this.renderGrabber()}
-        <div class="bottom-sheet-header" part="header">
-          <div class="title">${this.title}</div>
-          <div class="close-button">${this.renderDismissButton()}</div>
-        </div>
+        <slot name="header" @slotchange=${this.handleUpdateHeaderSlot}></slot>
+        ${this.hasSlotHeaderContent
+          ? null
+          : html`
+              <div class="bottom-sheet-header" part="header">
+                <div class="title">${this.title}</div>
+                <div class="close-button">${this.renderDismissButton()}</div>
+              </div>
+            `}
         <div class="bottom-sheet-body" part="body">
           <slot name="bottom-sheet-body"></slot>
         </div>
