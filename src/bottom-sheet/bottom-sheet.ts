@@ -1,4 +1,4 @@
-import { html, LitElement, PropertyValues } from 'lit';
+import { html, LitElement, PropertyValues, nothing } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import '@tapsioss/icons/dist/icons/cross';
 
@@ -191,7 +191,7 @@ export class BottomSheet extends LitElement {
         ${this.renderGrabber()}
         <slot name="header" @slotchange=${this.handleUpdateHeaderSlot}></slot>
         ${this.hasSlotHeaderContent
-          ? null
+          ? nothing
           : html`
               <div class="bottom-sheet-header" part="header">
                 <div class="title">${this.title}</div>
