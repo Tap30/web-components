@@ -4,17 +4,6 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { Input } from '../input';
 
-const numericTypes = [
-  'date',
-  'month',
-  'week',
-  'time',
-  'datetime-local',
-  'number',
-];
-
-const stringTypes = ['text', 'search', 'url', 'tel', 'email', 'password'];
-
 export class TextField extends Input {
   @property({ type: String }) inputmode?:
     | 'none'
@@ -52,13 +41,6 @@ export class TextField extends Input {
 
   @property({ type: String }) autocomplete?: string; // TODO: add type
 
-  private getAttributeValueByType(
-    attribute: Partial<(typeof TextField)[keyof typeof TextField]>,
-    allowedTypes: string[],
-  ) {
-    return attribute && allowedTypes.includes(this.type) ? attribute : nothing;
-  }
-
   // TODO: check if using generic ids for caption and input is ok
   protected renderInput(): TemplateResult {
     return html`
@@ -75,12 +57,12 @@ export class TextField extends Input {
         inputmode=${ifDefined(this.inputmode)}
         placeholder=${ifDefined(this.placeholder)}
         autocomplete=${ifDefined(this.autocomplete)}
-        max=${this.getAttributeValueByType(this.min, numericTypes)}
-        min=${this.getAttributeValueByType(this.max, numericTypes)}
-        maxlength=${this.getAttributeValueByType(this.maxLength, stringTypes)}
-        minlength=${this.getAttributeValueByType(this.minLength, stringTypes)}
-        pattern=${this.getAttributeValueByType(this.pattern, stringTypes)}
-        step=${this.getAttributeValueByType(this.step, numericTypes)}
+        max=${ifDefined(this.min)}
+        min=${ifDefined(this.max)}
+        maxlength=${ifDefined(this.maxLength)}
+        minlength=${ifDefined(this.minLength)}
+        pattern=${ifDefined(this.pattern)}
+        step=${ifDefined(this.step)}
         type=${this.type}
         .value=${live(this.value)}
         @input=${this.handleInput}
