@@ -25,6 +25,10 @@ export default css`
     font-family: inherit;
   }
 
+  .input::-webkit-calendar-picker-indicator {
+    filter: brightness(0);
+  }
+
   .input::placeholder {
     color: var(
       --tap-text-field-input-placeholder-color,
