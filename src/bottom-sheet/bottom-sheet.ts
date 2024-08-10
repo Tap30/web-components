@@ -118,7 +118,6 @@ export class BottomSheet extends LitElement {
           'hidden',
         );
         if (bodyHeight > 400) {
-          // values should be checked
           this.style.setProperty('--tap-bottom-sheet-bottom', '-50dvh');
         } else {
           this.style.setProperty(
