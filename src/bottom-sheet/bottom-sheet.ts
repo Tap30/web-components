@@ -149,7 +149,7 @@ export class BottomSheet extends LitElement {
 
   private handleUpdateHeaderSlot = (): void => {
     const slot = this.shadowRoot?.querySelector(
-      'slot[name="header"]',
+      'slot[name="bottom-sheet-header"]',
     ) as HTMLSlotElement;
     this.hasSlotHeaderContent =
       slot?.assignedNodes({ flatten: true }).length > 0;
@@ -188,7 +188,10 @@ export class BottomSheet extends LitElement {
       ${this.renderDimmer()}
       <section id="bottom-sheet" class="bottom-sheet">
         ${this.renderGrabber()}
-        <slot name="header" @slotchange=${this.handleUpdateHeaderSlot}></slot>
+        <slot
+          name="bottom-sheet-header"
+          @slotchange=${this.handleUpdateHeaderSlot}
+        ></slot>
         ${this.hasSlotHeaderContent
           ? nothing
           : html`
