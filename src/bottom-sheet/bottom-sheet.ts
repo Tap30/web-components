@@ -179,6 +179,7 @@ export class BottomSheet extends LitElement {
       return html`<section
         class="bottom-sheet-dimmer"
         @click="${() => this.handleDismiss()}"
+        part="dimmer"
       ></section>`;
   }
 
