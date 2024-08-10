@@ -42,7 +42,6 @@ export default css`
     width: 100%;
     background-color: inherit;
     flex-grow: 1;
-    //height: var(--tap-bottom-sheet-body-height, 5rem);
     overflow-x: auto;
     overflow-y: var(--tap-bottom-sheet-content-overflow-y, scroll);
   }
@@ -83,7 +82,6 @@ export default css`
     background-color: rgba(0, 0, 0, 0.12);
     right: 50%;
     transform: translateX(50%);
-    cursor: row-resize;
   }
 
   .close {

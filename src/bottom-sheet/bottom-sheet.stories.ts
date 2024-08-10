@@ -75,7 +75,12 @@ const Template: Story<ArgTypes> = ({ title, isOpen, hasDimmer }) => {
     ?is-open=${isOpen}
     ?has-dimmer=${hasDimmer}
   >
-    <div slot="bottom-sheet-body" style="">This is body!</div>
+    <div
+      slot="bottom-sheet-body"
+      style="padding: 2rem; height: 100vh; overflow-x: auto; width: 100%; direction: ltr;"
+    >
+      <div>This is body.</div>
+    </div>
   </tap-bottom-sheet>`;
 };
 
