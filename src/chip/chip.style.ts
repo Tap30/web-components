@@ -47,8 +47,8 @@ export default css`
     min-width: var(--tap-chip-min-width, 72px);
   }
 
-  ::slotted([slot='icon']) {
-    margin-left: var(--tap-chip-icon-left-margin, var(--tap-sys-spacing-4));
+  ::slotted([slot='icon']), .chip {
+    gap: var(--tap-chip-icon-gap, var(--tap-sys-spacing-4));
   }
 
   :host([hasicon]) .chip {

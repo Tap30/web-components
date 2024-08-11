@@ -14,7 +14,7 @@ import { Chip } from './chip';
  * @cssprop [--tap-chip-color=--tap-sys-color-content-primary] - The text color of the chip.
  * @cssprop [--tap-chip-horizontal-padding=--tap-sys-spacing-4] - The horizontal padding inside the chip.
  * @cssprop [--tap-chip-min-width=72px] - The minimum width of the chip.
- * @cssprop [--tap-chip-icon-left-margin=--tap-sys-spacing-4] - The left margin of the icon slot in the chip.
+ * @cssprop [--tap-chip-icon-gap=--tap-sys-spacing-4] - The gap of the icon slot in the chip.
  * @cssprop [--tap-chip-selected-background-color=--tap-sys-color-surface-secondary] - The background color of a selected chip.
  * @cssprop [--tap-chip-selected-border-color=--tap-sys-color-surface-inverse-primary] - The border color of a selected chip.
  * @cssprop [--tap-chip-disabled-color=--tap-sys-color-content-disabled] - The text color of a disabled chip.
