@@ -235,5 +235,22 @@
       "placeholder": "مثلا بسته با احتیاط حمل شود...",
       "caption": "در صورت پر بودن این فیلد، متن آن برای راننده نمایش داده خواهد شد"
     }
+  },
+  "tap-chip": {
+    "propertyDefaultValues": {
+      "selected": false
+    },
+    "slotKnobs": {
+      "default": {
+        "simple": "<tap-icon-default slot=\"icon\"></tap-icon-default> عنوان"
+      }
+    }
+  },
+  "tap-chip-group": {
+    "slotKnobs": {
+      "default": {
+        "simple": "<tap-chip size=\"md\" selected>مسافر</tap-chip>\n  <tap-chip>راننده</tap-chip>"
+      }
+    }
   }
 }

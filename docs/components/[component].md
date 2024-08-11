@@ -30,6 +30,8 @@ import '../../src/route';
 import '../../src/row';
 import '../../src/segmented-button';
 import '../../src/segmented-button-group';
+import '../../src/chip';
+import '../../src/chip-group';
 import '../../src/skeleton';
 import '../../src/spinner';
 import '../../src/step-indicator';
