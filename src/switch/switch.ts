@@ -33,6 +33,14 @@ export class Switch extends LitElement {
     this.checked = target.checked;
   }
 
+  private handleKeyDown(event: KeyboardEvent) {
+    if (event.key === ' ') {
+      event.preventDefault();
+      this.checked = !this.checked;
+      this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    }
+  }
+
   protected updated(changed: PropertyValues) {
     if (changed.has('checked')) {
       const value = this.checked ? this.value : null;
@@ -56,6 +64,7 @@ export class Switch extends LitElement {
           part="input"
           type="checkbox"
           @input=${this.handleInput}
+          @keydown=${this.handleKeyDown}
           aria-checked=${this.checked ? 'true' : 'false'}
           aria-label=${nothing}
           aria-describedby=${nothing}
