@@ -74,6 +74,7 @@ export default css`
       --tap-switch-disabled-background-color,
       var(--tap-sys-color-surface-disabled)
     );
+    cursor: not-allowed;
   }
 
   :host([disabled]) .slider:before {
