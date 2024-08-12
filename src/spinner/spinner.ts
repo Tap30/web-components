@@ -2,9 +2,9 @@ import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 
 export class Spinner extends LitElement {
-  @property({ reflect: true }) variant: 'primary' | 'inverse' | 'default' = 'default';
+  @property({ reflect: true }) variant: 'primary' | 'inverse' | 'default' =
+    'default';
   @property({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
-
 
   render() {
     return html`
