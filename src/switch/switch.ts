@@ -50,8 +50,10 @@ export class Switch extends LitElement {
 
   render() {
     return html`
-      <label class="switch">
+      <label part="switch" class="switch">
         <input
+          role="switch"
+          part="input"
           type="checkbox"
           @input=${this.handleInput}
           aria-checked=${this.checked ? 'true' : 'false'}
@@ -60,7 +62,7 @@ export class Switch extends LitElement {
           ?disabled=${this.disabled}
           .checked=${this.checked}
         />
-        <span class="slider"></span>
+        <span part="slider" class="slider"></span>
       </label>
     `;
   }

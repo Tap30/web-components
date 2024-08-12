@@ -30,6 +30,7 @@ import styles from './switch.style';
  * @prop {string} value - The value associated with the switch when it is checked.
  *
  * @csspart switch - The container that wraps the switch component.
+ * @csspart input - The input element that represents the switch's toggle functionality.
  * @csspart slider - The slider element that visually represents the switch's state.
  *
  * @cssprop [--tap-switch-background-color=--tap-sys-color-surface-tertiary] - The background color of the switch.
