@@ -34,7 +34,10 @@ export default css`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--tap-sys-color-surface-tertiary);
+    background-color: var(
+      --tap-switch-background-color,
+      var(--tap-sys-color-surface-tertiary)
+    );
     transition: background-color 0.4s;
     border-radius: 15px;
   }
@@ -53,7 +56,10 @@ export default css`
   }
 
   input:checked + .slider {
-    background-color: #000;
+    background-color: var(
+      --tap-switch-checked-background-color,
+      var(--tap-sys-color-surface-inverse-primary)
+    );
   }
 
   input:checked + .slider:before {
@@ -64,7 +70,10 @@ export default css`
   }
 
   :host([disabled]) .slider {
-    background-color: var(--tap-sys-color-surface-disabled);
+    background-color: var(
+      --tap-switch-disabled-background-color,
+      var(--tap-sys-color-surface-disabled)
+    );
   }
 
   :host([disabled]) .slider:before {
