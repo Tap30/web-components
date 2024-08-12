@@ -33,6 +33,7 @@ import '../../src/skeleton';
 import '../../src/spinner';
 import '../../src/step-indicator';
 import '../../src/stepper';
+import '../../src/switch';
 import '../../src/text-field';
 import '../../src/textarea';
 import '../../src/toast';
