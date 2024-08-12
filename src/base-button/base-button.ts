@@ -67,7 +67,9 @@ export abstract class BaseButton extends LitElement {
   private renderLoadingContent = () => {
     return html `
       <div class="spinner">
-        <tap-spinner></tap-spinner>
+        <tap-spinner
+          size=${this.size === 'small' ? 'small' : nothing}
+        ></tap-spinner>
       </div>
       <div class="content">
         <slot></slot>
