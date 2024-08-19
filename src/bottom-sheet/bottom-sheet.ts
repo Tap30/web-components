@@ -8,7 +8,7 @@ export class BottomSheet extends LitElement {
     delegatesFocus: true,
   };
 
-  @property({ type: Boolean, reflect: true, attribute: 'is-open' })
+  @property({ type: Boolean, reflect: true, attribute: 'open' })
   open: boolean = false;
 
   @property({ type: Boolean, reflect: true })

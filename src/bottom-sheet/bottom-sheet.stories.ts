@@ -10,7 +10,7 @@ export default {
     layout: 'fullscreen',
   },
   argTypes: {
-    isOpen: {
+    open: {
       control: 'boolean',
       description:
         'Controls the visibility of the bottom sheet. If true, the bottom sheet is visible.',
@@ -60,7 +60,7 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  isOpen?: boolean;
+  open?: boolean;
   disappear?: boolean;
   isDismissible?: boolean;
   hasDimmer?: boolean;
@@ -69,10 +69,10 @@ interface ArgTypes {
   showGrabber?: boolean;
 }
 
-const Template: Story<ArgTypes> = ({ title, isOpen, hasDimmer }) => {
+const Template: Story<ArgTypes> = ({ title, open, hasDimmer }) => {
   return html` <tap-bottom-sheet
     title=${title}
-    ?is-open=${isOpen}
+    ?open=${open}
     ?has-dimmer=${hasDimmer}
   >
     <div
@@ -87,6 +87,6 @@ const Template: Story<ArgTypes> = ({ title, isOpen, hasDimmer }) => {
 export const Simple = Template.bind({});
 Simple.args = {
   title: 'عنوان',
-  isOpen: true,
+  open: true,
   hasDimmer: true,
 };
