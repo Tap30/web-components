@@ -15,6 +15,7 @@ import '../../src/bottom-navigation-item';
 import '../../src/base-button';
 import '../../src/button';
 import '../../src/base-button';
+import '../../src/bottom-sheet'
 import '../../src/checkbox';
 import '../../src/divider';
 import '../../src/icon-button';
