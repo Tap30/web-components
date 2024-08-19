@@ -9,7 +9,7 @@ import styles from './bottom-sheet.style';
  * @slot - The slot with name="bottom-sheet-header" contains the bottom sheet's header part.
  *
  * @prop {boolean} [open=false] - Controls the visibility of the bottom sheet. If true, the bottom sheet is visible.
- * @prop {boolean} [isDismissible=true] - Determines whether the bottom sheet can be dismissed by the user. If true, a close button is displayed, allowing the bottom sheet to be closed.
+ * @prop {boolean} [dismissible=true] - Determines whether the bottom sheet can be dismissed by the user. If true, a close button is displayed, allowing the bottom sheet to be closed.
  * @prop {boolean} [hasDimmer=false] -  Controls the presence of a dimmer overlay.
  * @prop {string} [title=''] - Specifies the title displayed in the header of the bottom sheet.
  * @prop {boolean} [expanded=false] -  If true, the bottom sheet expands to 90% of the viewport height (90vh).

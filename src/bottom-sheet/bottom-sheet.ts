@@ -12,7 +12,7 @@ export class BottomSheet extends LitElement {
   open: boolean = false;
 
   @property({ type: Boolean, reflect: true })
-  isDismissible: boolean = true;
+  dismissible: boolean = true;
 
   @property({ type: Boolean, reflect: true, attribute: 'has-dimmer' })
   hasDimmer: boolean = false;
@@ -156,7 +156,7 @@ export class BottomSheet extends LitElement {
   };
 
   private renderDismissButton = () => {
-    if (this.isDismissible)
+    if (this.dismissible)
       return html`
         <tap-icon-button
           @click=${() => this.handleDismiss()}

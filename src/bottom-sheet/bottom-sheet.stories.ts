@@ -15,7 +15,7 @@ export default {
       description:
         'Controls the visibility of the bottom sheet. If true, the bottom sheet is visible.',
     },
-    isDismissible: {
+    dismissible: {
       control: 'boolean',
       description:
         'Determines whether the bottom sheet can be dismissed by the user. If true, a close button is displayed, allowing the bottom sheet to be closed.',
@@ -62,7 +62,7 @@ interface Story<T> {
 interface ArgTypes {
   open?: boolean;
   disappear?: boolean;
-  isDismissible?: boolean;
+  dismissible?: boolean;
   hasDimmer?: boolean;
   title?: string;
   expanded?: boolean;
