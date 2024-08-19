@@ -1,10 +1,10 @@
 import { queryAssignedElements } from 'lit/decorators.js';
 import { BaseButton } from '../base-button';
 import { PropertyValues } from 'lit';
-import { TapIcon } from '../icon';
+import { Icon } from '@tapsioss/icons/dist/icon/icon';
 
 export class IconButton extends BaseButton {
-  @queryAssignedElements() private icon!: TapIcon[];
+  @queryAssignedElements() private icon!: Icon[];
 
   protected updated(_changedProperties: PropertyValues) {
     super.updated(_changedProperties);
