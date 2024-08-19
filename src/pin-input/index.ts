@@ -3,6 +3,7 @@ import { PinInput } from './pin-input.js';
 import styles from './pin-input.style.js';
 export * from './events.js';
 export * from './constants.js';
+export * from './types.js';
 
 @customElement('tap-pin-input')
 export class TapPinInput extends PinInput {

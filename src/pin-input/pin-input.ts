@@ -3,15 +3,18 @@ import { property, queryAll } from 'lit/decorators.js';
 import { range } from 'lit/directives/range.js';
 import { repeat } from 'lit/directives/repeat.js';
 import '../pin-input-cell';
-import { PinInputCell } from '../pin-input-cell/pin-input-cell';
+import { PinInputCell } from '../pin-input-cell/pin-input-cell.js';
+import { PinInputFilled } from './events.js';
 import {
-  PinInputCellArrowKeyPressed,
-  PinInputCellCleared,
-  PinInputCellClearedAll,
-  PinInputCellFilled,
-  PinInputCellOverflowValue,
-} from '../pin-input-cell/events';
-import { PinInputFilled } from './events';
+  isArrowKeyPressed,
+  isDeletionKeyPressed,
+  isDeletionKeyWithCtrlOrMetaPressed,
+} from '../pin-input-cell/util.js';
+import {
+  HandleArrowKeyPressedArgs,
+  HandleClearPrevCellsArgs,
+  HandleOverflowedCellArgs,
+} from './types';
 
 export class PinInput extends LitElement {
   private internals_: ElementInternals;
@@ -29,12 +32,16 @@ export class PinInput extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'has-error' })
   hasError = false;
 
+  @property({ type: Boolean, attribute: 'only-digits' })
+  onlyDigits = false;
+
   @property({ type: Boolean, attribute: 'auto-focus' })
   autoFocus: boolean = true;
 
   @property({ reflect: true, type: String }) _value = '';
 
   @property() label = '';
+  @property({ reflect: true }) name = '';
 
   @property() title = '';
 
@@ -52,24 +59,12 @@ export class PinInput extends LitElement {
     return this.autoFocus && index === 0;
   }
 
-  private handleCellFilled(event: PinInputCellFilled) {
-    this.focusNextElementByIndex(event.details.index);
-    this.handleCellsFilled();
-  }
-
-  private handleCellCleared(event: PinInputCellCleared) {
-    this.focusPrevElementByIndex(event.details.index);
-  }
-
-  private handleCellsFilled() {
-    if (this.inputValue) {
-      this.emitPinInputFilled();
-    }
-  }
-
-  private async handleOverflowedCell(event: PinInputCellOverflowValue) {
-    let overflowedText = event.details.value;
-    const cellIndex = event.details.index;
+  private async handleOverflowedCell({
+    text,
+    index,
+  }: HandleOverflowedCellArgs) {
+    let overflowedText = text;
+    const cellIndex = index;
     const isLongerThanRemainingCells =
       overflowedText.length > this.lastCellIndex - cellIndex;
 
@@ -80,9 +75,9 @@ export class PinInput extends LitElement {
     await this.fillCells(overflowedText, cellIndex + 1);
   }
 
-  private async handleClearPrevCells(event: PinInputCellClearedAll) {
+  private async handleClearPrevCells({ index }: HandleClearPrevCellsArgs) {
     await this.updateComplete;
-    const currentIndex = event.details.index;
+    const currentIndex = index;
 
     const isNotFirstItem =
       currentIndex > 0 && this.checkIndexIsInRange(currentIndex);
@@ -93,17 +88,19 @@ export class PinInput extends LitElement {
     }
   }
 
-  private async handleArrowKeyPressed(event: PinInputCellArrowKeyPressed) {
+  private async handleArrowKeyPressed({
+    index: currentIndex,
+    arrowDirection,
+  }: HandleArrowKeyPressedArgs) {
     await this.updateComplete;
-    const currentIndex = event.details.index;
 
     const shouldPrevItemFocus =
-      event.details.value === 'left' &&
+      arrowDirection === 'left' &&
       this.checkIndexIsInRange(currentIndex) &&
       !this.checkIndexIsFirst(currentIndex);
 
     const shouldNextItemFocus =
-      event.details.value === 'right' &&
+      arrowDirection === 'right' &&
       this.checkIndexIsInRange(currentIndex) &&
       !this.checkIndexIsLast(currentIndex);
 
@@ -122,6 +119,8 @@ export class PinInput extends LitElement {
         await this._cells[pos].setValue(char);
         index++;
       }
+
+      this._cells[index].focus();
     }
   }
 
@@ -167,6 +166,12 @@ export class PinInput extends LitElement {
   set value(value: string) {
     if (value) {
       void this.fillCells(value);
+    }
+  }
+
+  private handleCellsFilled() {
+    if (this.inputValue) {
+      this.emitPinInputFilled();
     }
   }
 
@@ -254,6 +259,78 @@ export class PinInput extends LitElement {
     return nothing;
   }
 
+  private async handleInput(event: InputEvent) {
+    const el = event.currentTarget as PinInputCell;
+    let inputValue = event.data;
+    if (this.onlyDigits) {
+      inputValue = event.data?.replace(/[^\d۰-۹]/g, '') ?? '';
+    }
+
+    if (typeof inputValue === 'string' && inputValue.length === 1) {
+      await el.setValue(inputValue);
+      this.focusNextElementByIndex(el.index);
+    } else {
+      await el.clearValue();
+    }
+
+    this.handleCellsFilled();
+  }
+
+  private async validatePressedKey(event: KeyboardEvent) {
+    const el = event.currentTarget as PinInputCell;
+
+    if (isDeletionKeyWithCtrlOrMetaPressed(event)) {
+      event.preventDefault();
+      await el.clearValue();
+      await this.handleClearPrevCells({ index: el.index });
+      event.stopPropagation();
+      return;
+    }
+
+    if (isDeletionKeyPressed(event.key)) {
+      event.preventDefault();
+      await el.clearValue();
+      this.focusPrevElementByIndex(el.index);
+      event.stopPropagation();
+      return;
+    }
+
+    if (isArrowKeyPressed(event.key)) {
+      event.preventDefault();
+      await this.handleArrowKeyPressed({
+        index: el.index,
+        arrowDirection: this.handleArrowDirection(event.key),
+      });
+      event.stopPropagation();
+      return;
+    }
+  }
+
+  handleArrowDirection(
+    eventKey: KeyboardEvent['key'],
+  ): 'left' | 'right' | null {
+    if (eventKey === 'ArrowLeft') {
+      return 'left';
+    } else if (eventKey === 'ArrowRight') {
+      return 'right';
+    }
+
+    return null;
+  }
+
+  private async handlePaste(e: ClipboardEvent) {
+    const text: string = e.clipboardData?.getData('text/plain') || '';
+    const el = e.currentTarget as PinInputCell;
+
+    if (text?.length > 1) {
+      await el.setValue(text[0]);
+      await this.handleOverflowedCell({ text: text.slice(1), index: el.index });
+      e.preventDefault();
+      this.handleCellsFilled();
+      return;
+    }
+  }
+
   private renderInputCells() {
     if (typeof this.title === 'string' && this.title.length) {
       return html`
@@ -267,16 +344,9 @@ export class PinInput extends LitElement {
                 index=${index}
                 ?disabled=${this.disabled}
                 ?has-error=${this.hasError}
-                @cell-filled=${(e: PinInputCellFilled) =>
-                  this.handleCellFilled(e)}
-                @cell-cleared=${(e: PinInputCellCleared) =>
-                  this.handleCellCleared(e)}
-                @overflow-value=${(e: PinInputCellOverflowValue) =>
-                  this.handleOverflowedCell(e)}
-                @cell-cleared-all-with-meta-key=${(e: PinInputCellClearedAll) =>
-                  this.handleClearPrevCells(e)}
-                @arrow-key-pressed=${(e: PinInputCellArrowKeyPressed) =>
-                  this.handleArrowKeyPressed(e)}
+                @input=${(e: InputEvent) => this.handleInput(e)}
+                @paste=${(e: ClipboardEvent) => this.handlePaste(e)}
+                @keydown=${(e: KeyboardEvent) => this.validatePressedKey(e)}
                 ?auto-focus=${this.isFirstCellShouldAutoFocus(index)}
                 .size=${this.size}
               ></tap-pin-input-cell>`;

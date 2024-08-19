@@ -12,7 +12,7 @@ export class PinInputFilled extends Event {
   ) {
     const _eventInitDict = {
       bubbles: true,
-      composed: false,
+      composed: true,
       ...eventInitDict,
     };
 
