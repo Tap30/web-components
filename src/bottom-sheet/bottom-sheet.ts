@@ -20,10 +20,10 @@ export class BottomSheet extends LitElement {
   @property({ type: String, reflect: true })
   title: string = '';
 
-  @property({ type: Boolean, reflect: true, attribute: 'expanded' })
+  @property({ type: Boolean, reflect: true })
   expanded: boolean = false;
 
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean, reflect: true, attribute: 'show-grabber' })
   showGrabber: boolean = true;
 
   @state() private touchDirection: string = '';
