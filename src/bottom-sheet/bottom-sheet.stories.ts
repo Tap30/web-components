@@ -4,7 +4,7 @@ import './index.js';
 import '../tooltip';
 
 export default {
-  title: 'Bottom Sheet',
+  title: 'Components/Bottom Sheet',
   component: 'tap-bottom-sheet',
   parameters: {
     layout: 'fullscreen',
@@ -29,7 +29,7 @@ export default {
       description:
         'Specifies the title displayed in the header of the bottom sheet.',
     },
-    isExpanded: {
+    expanded: {
       control: 'boolean',
       description:
         'If true, the bottom sheet expands to 90% of the viewport height (90vh).',
@@ -65,7 +65,7 @@ interface ArgTypes {
   isDismissible?: boolean;
   hasDimmer?: boolean;
   title?: string;
-  isExpanded?: boolean;
+  expanded?: boolean;
   showGrabber?: boolean;
 }
 

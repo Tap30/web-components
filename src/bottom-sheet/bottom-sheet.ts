@@ -9,7 +9,7 @@ export class BottomSheet extends LitElement {
   };
 
   @property({ type: Boolean, reflect: true, attribute: 'is-open' })
-  isOpen: boolean = false;
+  open: boolean = false;
 
   @property({ type: Boolean, reflect: true })
   isDismissible: boolean = true;
@@ -20,8 +20,8 @@ export class BottomSheet extends LitElement {
   @property({ type: String, reflect: true })
   title: string = '';
 
-  @property({ type: Boolean, reflect: true, attribute: 'is-expanded' })
-  isExpanded: boolean = false;
+  @property({ type: Boolean, reflect: true, attribute: 'expanded' })
+  expanded: boolean = false;
 
   @property({ type: Boolean, reflect: true })
   showGrabber: boolean = true;
@@ -70,7 +70,7 @@ export class BottomSheet extends LitElement {
         this.style.setProperty('--tap-bottom-sheet-header-padding', '12px');
     }
 
-    if (changed.has('isExpanded')) this.toggleSheetHeight();
+    if (changed.has('expanded')) this.toggleSheetHeight();
 
     if (changed.has('disappear')) this.handleDisappear();
   }
@@ -93,7 +93,7 @@ export class BottomSheet extends LitElement {
     if (Math.abs(deltaX) >= Math.abs(deltaY)) return;
 
     this.touchDirection = deltaY > 0 ? 'Down' : 'Up';
-    this.isExpanded = this.touchDirection === 'Up';
+    this.expanded = this.touchDirection === 'Up';
   };
 
   private handleDisappear = (): void => {
@@ -112,7 +112,7 @@ export class BottomSheet extends LitElement {
       const headerHeight = this.headerElement.clientHeight;
       const bodyHeight = this.bodyElement.clientHeight;
       const bottomSheetHeight = headerHeight + bodyHeight;
-      if (!this.isExpanded) {
+      if (!this.expanded) {
         this.style.setProperty(
           '--tap-bottom-sheet-content-overflow-y',
           'hidden',
@@ -141,7 +141,7 @@ export class BottomSheet extends LitElement {
 
   private handleAnimationEnd = () => {
     if (this.disappear) {
-      this.isOpen = false;
+      this.open = false;
       this.disappear = false;
       this.bottomSheetElement && this.bottomSheetElement.remove();
     }
@@ -184,7 +184,7 @@ export class BottomSheet extends LitElement {
   }
 
   render() {
-    if (!this.isOpen) return html``;
+    if (!this.open) return html``;
     return html`
       ${this.renderDimmer()}
       <section id="bottom-sheet" class="bottom-sheet">
