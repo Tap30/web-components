@@ -70,7 +70,8 @@ export class BottomSheet extends LitElement {
         this.style.setProperty('--tap-bottom-sheet-header-padding', '12px');
     }
 
-    if (changed.has('expanded')) this.toggleSheetHeight();
+    if (changed.has('expanded') || changed.has('open'))
+      this.toggleSheetHeight();
 
     if (changed.has('disappear')) this.handleDisappear();
   }
@@ -202,7 +203,7 @@ export class BottomSheet extends LitElement {
               </div>
             `}
         <div class="bottom-sheet-body" part="body">
-          <slot name="bottom-sheet-body"></slot>
+          <slot></slot>
         </div>
       </section>
     `;
