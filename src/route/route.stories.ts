@@ -1,4 +1,4 @@
-import {html, nothing, TemplateResult} from 'lit';
+import { html, nothing, TemplateResult } from 'lit';
 import './index';
 import '../button';
 import '../checkbox';
@@ -12,35 +12,35 @@ export default {
   argTypes: {
     size: {
       description: 'Route size',
-      control: {type: 'inline-radio'},
+      control: { type: 'inline-radio' },
       options: ['standard', 'compact'],
       defaultValue: 'standard',
     },
     leadingIcon: {
       description: 'Route leading icon type',
-      control: {type: 'select'},
+      control: { type: 'select' },
       options: ['circle', 'square', 'plus'],
       defaultValue: 'circle',
     },
     ordinal: {
       description: 'Route position in order',
-      control: {type: 'select'},
+      control: { type: 'select' },
       options: ['first', 'middle', 'last'],
       defaultValue: 'first',
     },
     editable: {
       description: 'Editable (Show Edit icon)',
-      control: {type: 'boolean'},
+      control: { type: 'boolean' },
       defaultValue: false,
     },
     disabled: {
       description: 'Disable Row',
-      control: {type: 'boolean'},
+      control: { type: 'boolean' },
       defaultValue: false,
     },
     content: {
       description: 'Route content slot.',
-      control: {type: 'select'},
+      control: { type: 'select' },
       options: ['standard', 'reverse', 'address', 'customized', 'nothing'],
       defaultValue: 'nothing',
     },
@@ -68,17 +68,15 @@ const renderExampleContentSlot = (example: unknown) => {
     case 'customized':
       return html`<h1 slot="content">any content you want! 😉</h1>`;
     case 'standard':
-      return html`
-        <div slot="content">
-          <h3 style="margin: 0;">عنوان را وارد کنید</h3>
-          <p style="margin: 0;">توضیحات لیست</p>
-        </div>`;
+      return html` <div slot="content">
+        <h3 style="margin: 0;">عنوان را وارد کنید</h3>
+        <p style="margin: 0;">توضیحات لیست</p>
+      </div>`;
     case 'reverse':
-      return html`
-        <div slot="content">
-          <p style="margin: 0;">عنوان را وارد کنید</p>
-          <h3 style="margin: 0;">توضیحات لیست</h3>
-        </div>`;
+      return html` <div slot="content">
+        <p style="margin: 0;">عنوان را وارد کنید</p>
+        <h3 style="margin: 0;">توضیحات لیست</h3>
+      </div>`;
     case 'address':
       return html`<p slot="content">سعادت‌آباد، بلوار بهزاد</p>`;
     default:
@@ -115,7 +113,6 @@ Raw.args = {
   disabled: false,
   content: 'standard',
 };
-
 
 const GroupTemplate: Story<ArgTypes> = ({
   size,
@@ -160,7 +157,6 @@ const GroupTemplate: Story<ArgTypes> = ({
     ${renderExampleContentSlot(content)}
   </tap-route>
 `;
-
 
 export const Grouped = GroupTemplate.bind({});
 

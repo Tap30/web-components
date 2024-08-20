@@ -3,14 +3,14 @@ import './index.js';
 import '../bottom-navigation-item/index.js';
 import { Meta } from '@storybook/web-components';
 
-import '@tapsioss/icons/dist/icons/person'
-import '@tapsioss/icons/dist/icons/person-fill'
-import '@tapsioss/icons/dist/icons/spark'
-import '@tapsioss/icons/dist/icons/spark-fill'
-import '@tapsioss/icons/dist/icons/coupon'
-import '@tapsioss/icons/dist/icons/coupon-fill'
-import '@tapsioss/icons/dist/icons/square-grid-rounded'
-import '@tapsioss/icons/dist/icons/square-grid-rounded-fill'
+import '@tapsioss/icons/dist/icons/person';
+import '@tapsioss/icons/dist/icons/person-fill';
+import '@tapsioss/icons/dist/icons/spark';
+import '@tapsioss/icons/dist/icons/spark-fill';
+import '@tapsioss/icons/dist/icons/coupon';
+import '@tapsioss/icons/dist/icons/coupon-fill';
+import '@tapsioss/icons/dist/icons/square-grid-rounded';
+import '@tapsioss/icons/dist/icons/square-grid-rounded-fill';
 
 export default {
   title: 'Components/Bottom Navigation',

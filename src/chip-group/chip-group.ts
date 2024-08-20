@@ -3,7 +3,9 @@ import { Chip } from '../chip/chip';
 import { property, queryAssignedElements } from 'lit/decorators.js';
 
 export class ChipGroup extends LitElement {
-  @property({ type: String, reflect: true }) mode: 'single-select' | 'multi-select' = 'single-select';
+  @property({ type: String, reflect: true }) mode:
+    | 'single-select'
+    | 'multi-select' = 'single-select';
 
   @property({ type: Boolean, reflect: true }) fullwidth = false;
 
@@ -27,12 +29,12 @@ export class ChipGroup extends LitElement {
       clickedChip.selected = !clickedChip.selected;
     }
 
-    const selectedChips = this.chips.filter(chip => chip.selected);
+    const selectedChips = this.chips.filter((chip) => chip.selected);
     this.dispatchEvent(
       new CustomEvent('chip-group-change', {
         detail: {
           selected: selectedChips,
-          indices: selectedChips.map(chip => this.chips.indexOf(chip)),
+          indices: selectedChips.map((chip) => this.chips.indexOf(chip)),
         },
         bubbles: true,
         composed: true,

@@ -13,7 +13,7 @@ import { ChipGroup } from './chip-group';
  *
  * @prop {boolean} [fullwidth=false] - The size of the chip group.
  * @prop {'single-select' | 'multi-select'} [mode='single-select'] - The mode of the chip group.
- * 
+ *
  */
 
 @customElement('tap-chip-group')

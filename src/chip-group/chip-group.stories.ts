@@ -1,8 +1,8 @@
-import { Meta } from "@storybook/web-components";
-import { TemplateResult, html } from "lit";
+import { Meta } from '@storybook/web-components';
+import { TemplateResult, html } from 'lit';
 import '../chip';
 import './index.js';
-import '@tapsioss/icons/dist/icons/default'
+import '@tapsioss/icons/dist/icons/default';
 
 export default {
   title: 'Components/Chip Group',
@@ -16,7 +16,7 @@ interface Story<T> {
   argTypes?: Record<string, unknown>;
 }
 
-interface ArgTypes { }
+interface ArgTypes {}
 
 const Template: Story<ArgTypes> = () => html`
   <tap-chip-group mode="single-select">
@@ -24,7 +24,7 @@ const Template: Story<ArgTypes> = () => html`
       <span>اینترنت</span>
       <tap-icon-default slot="icon"></tap-icon-default>
     </tap-chip>
-    <tap-chip size="md"  hasIcon>
+    <tap-chip size="md" hasIcon>
       <span>اینترنت</span>
       <tap-icon-default slot="icon"></tap-icon-default>
     </tap-chip>
@@ -32,12 +32,10 @@ const Template: Story<ArgTypes> = () => html`
       <span>اینترنت</span>
       <tap-icon-default slot="icon"></tap-icon-default>
     </tap-chip>
-    <tap-chip selected disabled>
-      اینترنت
-    </tap-chip>
+    <tap-chip selected disabled> اینترنت </tap-chip>
   </tap-chip-group>
 `;
 
 export const ChipGroup = Template.bind({});
 
-ChipGroup.args = {}
+ChipGroup.args = {};

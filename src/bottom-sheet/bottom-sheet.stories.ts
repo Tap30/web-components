@@ -74,7 +74,7 @@ const Template: Story<ArgTypes> = ({ title, open, hasDimmer }) => {
     title=${title}
     ?open=${open}
     ?has-dimmer=${hasDimmer}
-    >
+  >
     <div
       slot="bottom-sheet-body"
       style="padding: 2rem; height: 100vh; overflow-x: auto; width: 100%; direction: ltr;"

@@ -29,7 +29,7 @@ export class Chip extends LitElement {
 
     return html`
       <button
-        class="chip"        
+        class="chip"
         ?disabled=${this.disabled}
         tabindex="${this.disabled ? '-1' : '0'}"
         @click="${this.handleClick}"

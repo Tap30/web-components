@@ -1,6 +1,6 @@
-import { customElement } from "lit/decorators.js";
-import { EmptyState } from "./empty-state";
-import styles from "./empty-state.style";
+import { customElement } from 'lit/decorators.js';
+import { EmptyState } from './empty-state';
+import styles from './empty-state.style';
 
 /**
  * @summary An empty state component with icon and actions slots.

@@ -1,7 +1,7 @@
 import { html, LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { debounce } from '../utils/utils';
-import { classMap } from "lit/directives/class-map.js";
+import { classMap } from 'lit/directives/class-map.js';
 
 export class Pinwheel extends LitElement {
   @state() private selectedIndex = 0;

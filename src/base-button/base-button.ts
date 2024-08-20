@@ -65,7 +65,7 @@ export abstract class BaseButton extends LitElement {
   }
 
   private renderLoadingContent = () => {
-    return html `
+    return html`
       <div class="spinner">
         <tap-spinner
           size=${this.size === 'small' ? 'small' : nothing}
@@ -75,7 +75,7 @@ export abstract class BaseButton extends LitElement {
         <slot></slot>
       </div>
     `;
-  }
+  };
 
   private handleClick = () => {
     if (this.type === 'reset') {

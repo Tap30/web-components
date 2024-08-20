@@ -47,7 +47,8 @@ export default css`
     min-width: var(--tap-chip-min-width, 72px);
   }
 
-  ::slotted([slot='icon']), .chip {
+  ::slotted([slot='icon']),
+  .chip {
     gap: var(--tap-chip-icon-gap, var(--tap-sys-spacing-4));
   }
 
