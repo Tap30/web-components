@@ -19,7 +19,8 @@
     "docs:dev": "cp ./dist/custom-elements.json ./docs/components/custom-elements.json && vitepress dev docs",
     "docs:build": "vitepress build docs && cp ./dist/custom-elements.json ./docs/.vitepress/dist/components/custom-elements.json && cp ./docs/components/elements-config.json ./docs/.vitepress/dist/components/elements-config.json",
     "docs:preview": "vitepress preview docs",
-    "analyze": "cem analyze  --litelement --outdir dist --globs \"src/**/index.ts\""
+    "analyze": "cem analyze  --litelement --outdir dist --globs \"src/**/index.ts\"",
+    "gen:react": "node scripts/generate-react.js"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.2",
