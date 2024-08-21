@@ -19,9 +19,13 @@ const generateReact = () => {
     return text.replace(/(^\w|-\w)/g, (text) => text.replace(/-/, "").toUpperCase());
   }
 
-  const REACT_PACKAGE_PATH = 'react-components'
+  const ORGANIZATION_NAME = '@tapsioss';
+  const REACT_PACKAGE_PATH = 'react-components';
+  const REACT_PACKAGE_NAME = `${ORGANIZATION_NAME}/react-components`
 
-  console.log('Generating React components:');
+  console.log('Generating React wrapper package:');
+
+  console.log('  Generating component:');
 
   manifest.modules.filter((module) => !!module.declarations?.length).forEach(module => {
     const component = module.declarations?.[0];
@@ -34,7 +38,7 @@ const generateReact = () => {
 
     const imports = `import * as React from 'react';
 import { createComponent } from '@lit/react';
-import { ${name} as ${name}Element } from '@tapsioss/web-components/dist/${tagWithoutPrefix}';
+import { ${name} as ${name}Element } from '${ORGANIZATION_NAME}/web-components/dist/${tagWithoutPrefix}';
 ${(events || []).length > 0 ? "import type { EventName } from '@lit/react';" : ''}`
 
     const componentEvents = events ? `events: {
@@ -59,10 +63,12 @@ const ${name} = createComponent({
       fs.mkdirSync(componentDir, { recursive: true });
     }
     fs.writeFileSync(componentFile, componentFileContent, 'utf8');
-    console.log(`  ✔ "${name}" component generated.`);
+    console.log(`    ✔ "${name}" component generated.`);
 
     index.push(`export { default as ${name} } from './${componentPascalCaseName}/index.js';`);
   })
+  fs.writeFileSync(`${REACT_PACKAGE_PATH}/src/index.ts`, index.join('\n'), 'utf8');
+  console.log(`  ✔ Index file generated.`);
 
   const tsConfigContents = JSON.stringify({
     compilerOptions: {
@@ -86,16 +92,14 @@ const ${name} = createComponent({
       noUnusedParameters: true,
       noFallthroughCasesInSwitch: true
     },
-    include: [
-      "src"
-    ]
-  });
+    include: ["src"]
+  }, null, 2);
   fs.writeFileSync(`${REACT_PACKAGE_PATH}/tsconfig.json`, tsConfigContents, 'utf8');
   console.log(`  ✔ tsconfig.json file generated.`);
 
 
   const reactPackageJsonContents = JSON.stringify({
-    name: "@tapsioss/react-components",
+    name: REACT_PACKAGE_NAME,
     version: packageJson.version,
     files: [
       "dist/**/*.js",
@@ -105,11 +109,20 @@ const ${name} = createComponent({
     ],
     type: "module",
     scripts: {
-      build: 'tsc',
+      build: 'tsc && rollup -c',
       'build:watch': 'tsc --watch',
     },
-    "devDependencies": {
+    devDependencies: {
       typescript: packageJson?.devDependencies?.typescript ?? '~4.7.4',
+      "@rollup/plugin-image": "^2.1.1",
+      "@rollup/plugin-node-resolve": "^13.2.1",
+      "@rollup/plugin-replace": "^4.0.0",
+      "@rollup/plugin-typescript": "^8.3.3",
+      "@types/react": "17.0.2",
+      "@rollup/plugin-babel": "6.0.4",
+      "@rollup/plugin-commonjs": "26.0.1",
+      "rollup-plugin-peer-deps-external": "^2.2.4",
+      "rollup-plugin-postcss": "^4.0.2"
     },
     dependencies: {
       [packageJson.name]: '^' + packageJson.version,
@@ -121,10 +134,85 @@ const ${name} = createComponent({
     },
   }, null, 2);
   fs.writeFileSync(`${REACT_PACKAGE_PATH}/package.json`, reactPackageJsonContents, 'utf8');
-  console.log(`  ✔ Package.json file generated.`);
+  console.log(`  ✔ Package file generated.`);
 
-  fs.writeFileSync(`${REACT_PACKAGE_PATH}/src/index.ts`, index.join('\n'), 'utf8');
-  console.log(`  ✔ Index file generated.`);
+  const rollupConfigContents = `import externalDeps from 'rollup-plugin-peer-deps-external';
+import typescript from '@rollup/plugin-typescript';
+import resolve from '@rollup/plugin-node-resolve';
+import commonJS from 'rollup-plugin-commonjs';
+import replace from '@rollup/plugin-replace';
+import babel from 'rollup-plugin-babel';
+import image from '@rollup/plugin-image';
+import postcss from 'rollup-plugin-postcss';
+import pkg from './package.json';
+
+const depsName = [
+  ...new Set(Object.keys({ ...pkg.peerDependencies, ...pkg.dependencies }).map((pkgName) => pkgName.split('/')[0])),
+];
+const external = depsName.map((packageName) => new RegExp(\`\${packageName}\`));
+
+const globals = {
+  react: 'React',
+  'react-dom': 'ReactDOM',
+};
+
+const extensions = ['.ts', '.tsx'];
+const babelConfig = {
+  babelrc: false,
+  extensions,
+  runtimeHelpers: true,
+  exclude: /node_modules/,
+  presets: ['@babel/env', '@babel/preset-react'],
+};
+const resolveConfig = { extensions, mainFields: ['jsnext:main', 'main', 'module'] };
+const postOptions = {
+  extract: false,
+  modules: true,
+  use: ['sass'],
+};
+
+const plugins = [
+  replace({
+    preferBuiltins: true,
+    preventAssignment: true,
+  }),
+  resolve(resolveConfig),
+  babel(babelConfig),
+  typescript(),
+  commonJS(),
+  externalDeps(),
+  image(),
+  postcss(postOptions),
+];
+
+export default {
+  input: \`src/index.ts\`,
+  output: [
+    {
+      name: '${REACT_PACKAGE_NAME}',
+      file: \`dist/index.js\`,
+      format: 'cjs',
+    },
+    {
+      name: '${REACT_PACKAGE_NAME}',
+      file: \`dist/index.es.js\`,
+      format: 'esm',
+    },
+    {
+      name: '${REACT_PACKAGE_NAME}',
+      file: \`dist/index.umd.js\`,
+      format: 'umd',
+      globals,
+    },
+  ],
+  external: [...external, 'react', 'react-dom'],
+  plugins,
+};
+`;
+  fs.writeFileSync(`${REACT_PACKAGE_PATH}/rollup.config.js`, rollupConfigContents, 'utf8');
+  console.log(`  ✔ Rollup config file generated.`);
+
+
 
   console.log(`✨  Done`);
 };
