@@ -172,7 +172,7 @@ const globals = {
 function packageJsonConfig(name) {
   return generatePackageJson({
     baseContents: {
-      name: \`@tapsioss/react-components/${name}\`,
+      name: \`@tapsioss/react-components/\${name}\`,
       private: true,
       main: './index.js',
       module: './index.es.js',
