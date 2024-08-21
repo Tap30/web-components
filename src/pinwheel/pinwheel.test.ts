@@ -1,5 +1,11 @@
 import '../../dist/pinwheel/index.js';
-import {fixture, expect, html, elementUpdated, fixtureCleanup} from '@open-wc/testing';
+import {
+  fixture,
+  expect,
+  html,
+  elementUpdated,
+  fixtureCleanup,
+} from '@open-wc/testing';
 import { TapPinwheel } from './index';
 
 describe('test tap-pinwheel', () => {
@@ -26,8 +32,8 @@ describe('test tap-pinwheel', () => {
     const el = await fixture<TapPinwheel>(
       html`<tap-pinwheel .items=${items}></tap-pinwheel>`,
     );
-    const firstItem =  el.shadowRoot?.querySelector('.pinwheel')?.children?.[0];
-    expect(firstItem?.className).to.contain('active')
+    const firstItem = el.shadowRoot?.querySelector('.pinwheel')?.children?.[0];
+    expect(firstItem?.className).to.contain('active');
   });
 
   it('should set prev/next item as active item on click event', async () => {
@@ -37,7 +43,7 @@ describe('test tap-pinwheel', () => {
       html`<tap-pinwheel .items=${items}></tap-pinwheel>`,
     );
 
-    const itemNodes =  el.shadowRoot?.querySelector('.pinwheel')?.children;
+    const itemNodes = el.shadowRoot?.querySelector('.pinwheel')?.children;
     const firstItem = itemNodes?.[0];
     const secondItem = itemNodes?.[1];
 
@@ -45,7 +51,6 @@ describe('test tap-pinwheel', () => {
     await elementUpdated(el);
     expect(firstItem?.className).not.to.contain('active');
     expect(secondItem?.className).to.contain('active');
-
 
     (<HTMLDivElement>firstItem)?.click();
     await elementUpdated(el);

@@ -235,5 +235,33 @@
       "placeholder": "مثلا بسته با احتیاط حمل شود...",
       "caption": "در صورت پر بودن این فیلد، متن آن برای راننده نمایش داده خواهد شد"
     }
+  },
+  "tap-chip": {
+    "propertyDefaultValues": {
+      "selected": false
+    },
+    "slotKnobs": {
+      "default": {
+        "simple": "<tap-icon-default slot=\"icon\"></tap-icon-default> عنوان"
+      }
+    }
+  },
+  "tap-chip-group": {
+    "slotKnobs": {
+      "default": {
+        "simple": "<tap-chip size=\"md\" selected>مسافر</tap-chip>\n  <tap-chip>راننده</tap-chip>"
+      }
+    }
+  },
+  "tap-bottom-sheet": {
+    "propertyDefaultValues": {
+      "title": "عنوان"
+    },
+    "slotKnobs": {
+      "bottom-sheet-body": {
+        "security": "<div slot=\"bottom-sheet-body\" style=\"width: 100%\">\n      <div>\n        <tap-row navigable>\n          <tap-icon-button slot=\"leading\" variant=\"ghost\">\n            <tap-icon-pin-wave-fill></tap-icon-pin-wave-fill>\n          </tap-icon-button>\n          <div slot=\"content\">\n            <h3 style=\"margin: 0;\">سفرتان را به اشتراک بگذارید</h3>\n            <p style=\"margin: 0;\">اشتراک سفر با دوستان و آشنایان</p>\n          </div>\n        </tap-row>\n      </div>\n      <tap-divider></tap-divider>\n      <div slot=\"bottom-sheet-body\" style=\"width: 100%\">\n        <tap-row navigable>\n          <tap-icon-button slot=\"leading\" variant=\"destructive\">\n            <tap-icon-siren-fill></tap-icon-siren-fill>\n          </tap-icon-button>\n          <div slot=\"content\">\n            <h3 style=\"margin: 0; color: var(--tap-sys-color-surface-negative)\">در شرایط خطرناکی هستید؟</h3>\n            <p style=\"margin: 0;\">برقراری تماس با تیم امنیت تپسی</p>\n          </div>\n        </tap-row>\n      </div>\n    </div>",
+        "tip": "<div slot=\"bottom-sheet-body\" style=\"width: 100%\">\n      <div>\n        <p style=\"padding: 0 1rem\">مبلغی که شما جهت قدردانی به سفیر می پردازید، بدون کسر کارمزد برای سفیر واریز می شود.</p>\n        <p style=\"padding: 0 1rem;\" slot=\"content\">۱۲,۰۰۰ تومان</p>\n        <tap-divider></tap-divider>\n        <p style=\"padding: 0 1rem;\" slot=\"content\">۱۸,۰۰۰ تومان</p>\n        <tap-divider></tap-divider>\n        <p style=\"padding: 0 1rem;\" slot=\"content\">۲۵,۰۰۰ تومان</p>\n        <tap-divider></tap-divider>\n        <p style=\"padding: 0 1rem;\" slot=\"content\">مبلغ دلخواه</p>\n      </div>\n    </div>"
+      }
+    }
   }
 }

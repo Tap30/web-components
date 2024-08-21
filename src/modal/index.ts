@@ -10,7 +10,7 @@ import styles from './modal.style';
  * @prop {string} [description=''] - Provides a description or content text for the modal. If empty, no description is shown.
  * @prop {string} [alignment='right'] - Determines the alignment of the modal's content. Can be 'right', or 'center'.
  * @prop {string} [image] - URL of an image to display within the modal. If specified, the image is shown above the content, if not pass the icon slot.
- * 
+ *
  * @csspart [overlay] - The overlay background when the modal is open.
  * @csspart [dialog] - The main container for the modal dialog.
  * @csspart [image-container] - The container of the image element, a `div`.

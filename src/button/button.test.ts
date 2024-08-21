@@ -44,7 +44,9 @@ describe('Test tap-button', () => {
   });
 
   it('should conditionally renders loading state', async () => {
-    const el = await fixture<TapButton>(html`<tap-button loading></tap-button>`,);
+    const el = await fixture<TapButton>(
+      html`<tap-button loading></tap-button>`,
+    );
     // Check if the spinner is rendered when loading is true
     const spinner = el.shadowRoot!.querySelector('.spinner');
 
@@ -67,13 +69,15 @@ describe('Test tap-button', () => {
 
   it('should submit when the button is inside the form', async () => {
     const form = await fixture<HTMLFormElement>(html`
-        <form action="" method="post">
-          <tap-button type="submit">Submit</tap-button>
-        </form>
-      `);
+      <form action="" method="post">
+        <tap-button type="submit">Submit</tap-button>
+      </form>
+    `);
     const button = form.querySelector('tap-button');
 
-    const handleSubmit = sinon.spy((event: SubmitEvent) => event.preventDefault());
+    const handleSubmit = sinon.spy((event: SubmitEvent) =>
+      event.preventDefault(),
+    );
 
     addEventListener('submit', handleSubmit);
 
@@ -86,13 +90,15 @@ describe('Test tap-button', () => {
 
   it('should submit when the button is outside the form and has a form attribute', async () => {
     const form = await fixture<HTMLFormElement>(html`
-        <form action="" method="post">
-          <tap-button type="submit">Submit</tap-button>
-        </form>
-      `);
+      <form action="" method="post">
+        <tap-button type="submit">Submit</tap-button>
+      </form>
+    `);
     const button = form.querySelector('tap-button');
 
-    const handleSubmit = sinon.spy((event: SubmitEvent) => event.preventDefault());
+    const handleSubmit = sinon.spy((event: SubmitEvent) =>
+      event.preventDefault(),
+    );
 
     addEventListener('submit', handleSubmit);
 
@@ -102,5 +108,4 @@ describe('Test tap-button', () => {
     buttonElement!.click();
     expect(handleSubmit).to.have.been.called;
   });
-
 });

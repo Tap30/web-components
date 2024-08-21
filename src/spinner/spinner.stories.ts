@@ -3,7 +3,7 @@ import './index.js';
 import { Meta } from '@storybook/web-components';
 
 const spinnerVariants: string[] = ['default', 'primary', 'inverse'];
-const spinnerSize: string[] = [ 'small' , 'medium' , 'large' ]
+const spinnerSize: string[] = ['small', 'medium', 'large'];
 
 export default {
   title: 'Components/Spinner',
@@ -18,7 +18,7 @@ export default {
       description: 'Spinner size',
       options: spinnerSize,
       control: { type: 'select' },
-    }
+    },
   },
   decorators: [
     (Story: () => TemplateResult) =>
@@ -36,11 +36,11 @@ interface Story<T> {
 
 interface ArgTypes {
   variant: 'default' | 'primary' | 'inverse';
-  size: 'small' | 'medium'| 'large';
+  size: 'small' | 'medium' | 'large';
 }
 
 const Template: Story<ArgTypes> = ({ variant, size }: ArgTypes) => html`
-  <tap-spinner variant=${variant} size=${size} ></tap-spinner>
+  <tap-spinner variant=${variant} size=${size}></tap-spinner>
 `;
 
 export const Spinner = Template.bind({});

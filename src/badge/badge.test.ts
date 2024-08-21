@@ -15,7 +15,13 @@ describe('test tap-badge', () => {
 
   it('should reflects properties to attributes', async () => {
     const el = await fixture<TapBadge>(
-      html` <tap-badge value="123" type="numeral" variant="success" priority="low" leadingIcon></tap-badge>`,
+      html` <tap-badge
+        value="123"
+        type="numeral"
+        variant="success"
+        priority="low"
+        leadingIcon
+      ></tap-badge>`,
     );
     expect(el?.getAttribute('value')).to.equal('123');
     expect(el?.getAttribute('type')).to.equal('numeral');
@@ -25,24 +31,26 @@ describe('test tap-badge', () => {
   });
 
   it('should conditionally renders dot badge', async () => {
-    const el = await fixture<TapBadge>(html`<tap-badge type="dot"></tap-badge>`,);
+    const el = await fixture<TapBadge>(
+      html`<tap-badge type="dot"></tap-badge>`,
+    );
     const badge = el.shadowRoot!.querySelector('.badge');
     expect(badge).to.exist;
     expect(badge?.innerHTML).to.equal('');
   });
 
   it('should conditionally renders icon in normal badge', async () => {
-    const el = await fixture<TapBadge>(html`<tap-badge type="pill" leadingIcon></tap-badge>`,);
+    const el = await fixture<TapBadge>(
+      html`<tap-badge type="pill" leadingIcon></tap-badge>`,
+    );
     const badge = el.shadowRoot!.querySelector('.badge');
     expect(badge).to.exist;
-    const icon = badge?.querySelector('.icon')
+    const icon = badge?.querySelector('.icon');
     expect(icon).to.exist;
   });
 
   it('should be accessible', async () => {
-    const el = await fixture(
-      html`<tap-badge label="Test Badge"></tap-badge>`,
-    );
+    const el = await fixture(html`<tap-badge label="Test Badge"></tap-badge>`);
     await expect(el).to.be.accessible();
   });
 });

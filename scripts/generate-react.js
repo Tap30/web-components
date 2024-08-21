@@ -71,28 +71,31 @@ const ${name} = createComponent({
   console.log(`  ✔ Index file generated.`);
 
   const tsConfigContents = JSON.stringify({
-    compilerOptions: {
-      target: "ES2020",
-      useDefineForClassFields: true,
-      lib: [
+    "compilerOptions": {
+      "target": "ES2020",
+      "useDefineForClassFields": true,
+      "lib": [
         "ES2020",
         "DOM",
         "DOM.Iterable"
       ],
-      module: "ESNext",
-      skipLibCheck: true,
-      moduleResolution: "bundler",
-      allowImportingTsExtensions: true,
-      isolatedModules: true,
-      moduleDetection: "force",
-      noEmit: true,
-      jsx: "react-jsx",
-      strict: true,
-      noUnusedLocals: true,
-      noUnusedParameters: true,
-      noFallthroughCasesInSwitch: true
+      "resolveJsonModule": true,
+      "module": "ESNext",
+      "skipLibCheck": true,
+      "moduleResolution": "bundler",
+      "isolatedModules": true,
+      "moduleDetection": "force",
+      "noEmit": true,
+      "jsx": "react-jsx",
+      "strict": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noFallthroughCasesInSwitch": true,
+      "experimentalDecorators": true
     },
-    include: ["src"]
+    "include": [
+      "src"
+    ]
   }, null, 2);
   fs.writeFileSync(`${REACT_PACKAGE_PATH}/tsconfig.json`, tsConfigContents, 'utf8');
   console.log(`  ✔ tsconfig.json file generated.`);
@@ -107,69 +110,86 @@ const ${name} = createComponent({
       "dist/**/*.d.ts",
       "dist/**/*.css"
     ],
-    type: "module",
-    scripts: {
-      build: 'tsc && rollup -c',
-      'build:watch': 'tsc --watch',
+    "type": "module",
+    "scripts": {
+      "build": "pnpm clean && pnpm build:type && pnpm build:rollup",
+      "clean": "rm -rf dist",
+      "build:rollup": "rollup -c",
+      "build:type": "tsc --declaration true --emitDeclarationOnly true --outDir dist --noEmit false"
     },
-    devDependencies: {
-      typescript: packageJson?.devDependencies?.typescript ?? '~4.7.4',
+    "devDependencies": {
+      "@babel/preset-env": "^7.25.3",
+      "@babel/preset-react": "^7.24.7",
+      "@babel/plugin-proposal-decorators": "^7.24.7",
+      "@rollup/plugin-babel": "6.0.4",
+      "@rollup/plugin-commonjs": "26.0.1",
       "@rollup/plugin-image": "^2.1.1",
       "@rollup/plugin-node-resolve": "^13.2.1",
       "@rollup/plugin-replace": "^4.0.0",
       "@rollup/plugin-typescript": "^8.3.3",
       "@types/react": "17.0.2",
-      "@rollup/plugin-babel": "6.0.4",
-      "@rollup/plugin-commonjs": "26.0.1",
+      "glob": "^7.1.4",
+      "path": "^0.12.7",
+      "rollup": "^2.70.2",
+      "rollup-plugin-generate-package-json": "^3.2.0",
       "rollup-plugin-peer-deps-external": "^2.2.4",
-      "rollup-plugin-postcss": "^4.0.2"
+      "rollup-plugin-postcss": "^4.0.2",
+      "typescript": "^5.3.3"
     },
-    dependencies: {
-      [packageJson.name]: '^' + packageJson.version,
-      '@lit/react': '^1.0.0',
+    "dependencies": {
+      "@lit/react": "^1.0.0",
+      "@tapsioss/web-components": "^0.0.0-alpha-3"
     },
-    peerDependencies: {
-      react: '^16 || ^17 || ^18',
-      '@types/react': '^16 || ^17 || ^18',
-    },
+    "peerDependencies": {
+      "@types/react": "^16 || ^17 || ^18",
+      "react": "^16 || ^17 || ^18"
+    }
   }, null, 2);
   fs.writeFileSync(`${REACT_PACKAGE_PATH}/package.json`, reactPackageJsonContents, 'utf8');
   console.log(`  ✔ Package file generated.`);
 
-  const rollupConfigContents = `import externalDeps from 'rollup-plugin-peer-deps-external';
+  const rollupConfigContents = `
+  import externalDeps from 'rollup-plugin-peer-deps-external';
 import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
-import commonJS from 'rollup-plugin-commonjs';
+import commonJS from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
-import babel from 'rollup-plugin-babel';
-import image from '@rollup/plugin-image';
-import postcss from 'rollup-plugin-postcss';
+import babel from '@rollup/plugin-babel';
 import pkg from './package.json';
+import path from "path";
+import glob from 'glob';
+import generatePackageJson from "rollup-plugin-generate-package-json";
 
-const depsName = [
-  ...new Set(Object.keys({ ...pkg.peerDependencies, ...pkg.dependencies }).map((pkgName) => pkgName.split('/')[0])),
+const external = [
+  ...new Set(Object.keys({ ...pkg.peerDependencies })),
 ];
-const external = depsName.map((packageName) => new RegExp(\`\${packageName}\`));
 
 const globals = {
   react: 'React',
   'react-dom': 'ReactDOM',
 };
 
+function packageJsonConfig(name) {
+  return generatePackageJson({
+    baseContents: {
+      name: \`@tapsioss/react-components/${name}\`,
+      private: true,
+      main: './index.js',
+      module: './index.es.js',
+      types: './index.d.ts',
+      browser: './index.umd.js',
+    },
+  });
+}
+
 const extensions = ['.ts', '.tsx'];
 const babelConfig = {
   babelrc: false,
   extensions,
-  runtimeHelpers: true,
   exclude: /node_modules/,
   presets: ['@babel/env', '@babel/preset-react'],
 };
 const resolveConfig = { extensions, mainFields: ['jsnext:main', 'main', 'module'] };
-const postOptions = {
-  extract: false,
-  modules: true,
-  use: ['sass'],
-};
 
 const plugins = [
   replace({
@@ -181,38 +201,37 @@ const plugins = [
   typescript(),
   commonJS(),
   externalDeps(),
-  image(),
-  postcss(postOptions),
 ];
 
-export default {
-  input: \`src/index.ts\`,
+const inputs = glob.sync('./src/*/').map((el) => \`\${path.parse(el).name}\`);
+
+export default inputs.map((input) => ({
+  input: \`src/\${input}\`,
   output: [
     {
-      name: '${REACT_PACKAGE_NAME}',
-      file: \`dist/index.js\`,
+      name: '@tapsioss/react-components',
+      file: \`dist/\${input}/index.js\`,
       format: 'cjs',
     },
     {
-      name: '${REACT_PACKAGE_NAME}',
-      file: \`dist/index.es.js\`,
+      name: '@tapsioss/react-components',
+      file: \`dist/\${input}/index.es.js\`,
       format: 'esm',
     },
     {
-      name: '${REACT_PACKAGE_NAME}',
-      file: \`dist/index.umd.js\`,
+      name: '@tapsioss/react-components',
+      file: \`dist/\${input}/index.umd.js\`,
       format: 'umd',
       globals,
     },
   ],
   external: [...external, 'react', 'react-dom'],
-  plugins,
-};
-`;
+  plugins: [...plugins, packageJsonConfig(input)],
+}));
+
+  `;
   fs.writeFileSync(`${REACT_PACKAGE_PATH}/rollup.config.js`, rollupConfigContents, 'utf8');
   console.log(`  ✔ Rollup config file generated.`);
-
-
 
   console.log(`✨  Done`);
 };

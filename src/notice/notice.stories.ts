@@ -88,7 +88,7 @@ const Template: Story<ArgTypes> = ({
   priority,
   noticeTitle,
   actions,
-                                     dismissable,
+  dismissable,
 }) => {
   document.addEventListener('DOMContentLoaded', () => {
     const noticeElement = document.getElementById('notice-story');
@@ -117,8 +117,12 @@ const VariantTemplate: Story<{ priority?: 'low' | 'high' }> = ({
     <div style="display: flex; flex-direction: column; gap: 16px">
       ${noticeVariants.map(
         (variant) => html`
-          <tap-notice variant=${variant} priority=${priority} notice-title="title"
-            >unchangeable variant "${variant}". Try changing the priority to ${priority === 'high' ? `"low"` : '"high"'}!</tap-notice
+          <tap-notice
+            variant=${variant}
+            priority=${priority}
+            notice-title="title"
+            >unchangeable variant "${variant}". Try changing the priority to
+            ${priority === 'high' ? `"low"` : '"high"'}!</tap-notice
           >
         `,
       )}

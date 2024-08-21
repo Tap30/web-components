@@ -15,6 +15,7 @@ import '../../src/bottom-navigation-item';
 import '../../src/base-button';
 import '../../src/button';
 import '../../src/base-button';
+import '../../src/bottom-sheet'
 import '../../src/checkbox';
 import '../../src/divider';
 import '../../src/icon-button';
@@ -30,6 +31,8 @@ import '../../src/route';
 import '../../src/row';
 import '../../src/segmented-button';
 import '../../src/segmented-button-group';
+import '../../src/chip';
+import '../../src/chip-group';
 import '../../src/skeleton';
 import '../../src/spinner';
 import '../../src/step-indicator';
