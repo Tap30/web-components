@@ -12,7 +12,7 @@ export class RadioGroup extends LitElement {
     this.addEventListener('radio-input-change', this.handleRadioChangeClick);
   }
 
-  private get radios(): Radio[] {
+  public get radios(): Radio[] {
     const slot = this.shadowRoot!.querySelector('slot');
     const elements = slot!.assignedElements({ flatten: true });
 

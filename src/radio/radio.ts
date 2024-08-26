@@ -6,6 +6,7 @@ export class Radio extends LitElement {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
+  static readonly formAssociated = true;
 
   @property({ type: Boolean, reflect: true }) checked = false;
 
