@@ -40,17 +40,11 @@ const Template: Story<ArgTypes> = ({ value, direction }: ArgTypes) => html`
   <tap-row>
     <div slot="content">
       <tap-radio value="2"></tap-radio>
-      <span>Label for Option 1</span>
-    </div>
-  </tap-row>
-  <tap-row>
-    <div slot="content">
-      <tap-radio value="3"></tap-radio>
-      <span>Label for Option 1</span>
+      <span>Label for Option 2</span>
     </div>
   </tap-row>
   
-    <tap-radio value="3">label</tap-radio>
+    <tap-radio value="3"></tap-radio>
     <tap-radio value="4"></tap-radio>
   </tap-radio-group>
 `;
