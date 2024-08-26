@@ -156,6 +156,13 @@ export class BottomSheet extends LitElement {
       slot?.assignedNodes({ flatten: true }).length > 0;
   };
 
+  private renderTitle = () => {
+    if (this.dismissible)
+      return html`<h3>${this.title}</h3>`;
+    else 
+      return html`<h1>${this.title}</h1>`;
+  }
+
   private renderDismissButton = () => {
     if (this.dismissible)
       return html`
@@ -164,7 +171,6 @@ export class BottomSheet extends LitElement {
           type="button"
           size="small"
           variant="naked"
-          }
         >
           <tap-icon-cross color="#000"></tap-icon-cross>
         </tap-icon-button>
@@ -198,8 +204,12 @@ export class BottomSheet extends LitElement {
           ? nothing
           : html`
               <div class="bottom-sheet-header" part="header">
-                <div class="title">${this.title}</div>
-                <div class="close-button">${this.renderDismissButton()}</div>
+                <div class="title" part="title">
+                  ${this.renderTitle()}
+                </div>
+                <div class="close-button" part="close-button">
+                  ${this.renderDismissButton()}
+                </div>
               </div>
             `}
         <div class="bottom-sheet-body" part="body">
