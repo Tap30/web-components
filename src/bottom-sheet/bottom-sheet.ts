@@ -164,6 +164,7 @@ export class BottomSheet extends LitElement {
           type="button"
           size="small"
           variant="naked"
+          }
         >
           <tap-icon-cross color="#000"></tap-icon-cross>
         </tap-icon-button>
