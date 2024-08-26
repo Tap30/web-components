@@ -4,7 +4,7 @@ import '../../dist/radio/index.js';
 import { expect, fixture, html } from '@open-wc/testing';
 import { RadioGroup } from './radio-group.js';
 
-describe('RadioGroup Component', () => {
+describe('tap-radio-group component', () => {
     const value = '2';
     it('should select the correct radio button based on the initial value', async () => {
         const element = await fixture<RadioGroup>(html`
