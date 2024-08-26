@@ -1,5 +1,5 @@
 import { LitElement, html, nothing } from 'lit';
-import { property, queryAssignedElements } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 import { Radio } from '../radio/radio';
 
 export class RadioGroup extends LitElement {
