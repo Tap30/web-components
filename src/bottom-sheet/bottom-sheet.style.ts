@@ -8,9 +8,6 @@ export default css`
 
   .bottom-sheet {
     position: absolute;
-    bottom: var(--tap-bottom-sheet-bottom, -100dvh);
-    height: 90dvh;
-    max-height: 90dvh;
     display: flex;
     flex-direction: column;
     transition: 0.3s;
@@ -26,6 +23,9 @@ export default css`
     border-radius: 20px 20px 0 0;
     border: 1px solid var(--tap-palette-gray-200);
     border-bottom: 0;
+    bottom: 0;
+    height: var(--tap-bottom-sheet-height, auto);
+    max-height: 90dvh;
   }
 
   .bottom-sheet-dimmer {
@@ -54,12 +54,25 @@ export default css`
   }
 
   .title {
-    height: 52px;
     text-align: center;
-    display: flex;
-    justify-content: center;
     flex-grow: 1;
-    align-items: center;
+    padding: var(--tap-bottom-sheet-title-padding, var(--tap-sys-spacing-5)) 0;
+  }
+
+  .title h3 {
+    font-size: var(--tap-sys-typography-label-md-size);
+    font-weight: var(--tap-sys-typography-label-md-weight);
+    line-height: var( --tap-sys-typography-label-md-height);
+  }
+
+  .title h1 {
+    font-size: var(--tap-sys-typography-headline-sm-size);
+    font-weight: var(--tap-sys-typography-headline-sm-weight);
+    line-height: var( --tap-sys-typography-headline-sm-height);
+  }
+
+  .title, h1, h3 {
+    margin: 0;
   }
 
   .close-button {
@@ -105,10 +118,10 @@ export default css`
 
   @keyframes slide-up {
     from {
-      transform: translateY(100%);
+      transform: translate3d(0, 100%, 0);
     }
     to {
-      transform: translateY(0);
+      transform: translate3d(0, 0, 0);
     }
   }
 

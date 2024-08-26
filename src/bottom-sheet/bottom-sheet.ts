@@ -38,12 +38,6 @@ export class BottomSheet extends LitElement {
   @query('#bottom-sheet')
   private bottomSheetElement?: HTMLElement | null;
 
-  @query('.bottom-sheet-header')
-  private headerElement?: HTMLElement | null;
-
-  @query('.bottom-sheet-body')
-  private bodyElement?: HTMLElement | null;
-
   connectedCallback() {
     super.connectedCallback();
     this.showGrabber && this.addEventListeners();
@@ -109,30 +103,12 @@ export class BottomSheet extends LitElement {
   };
 
   private toggleSheetHeight = (): void => {
-    if (this.headerElement && this.bodyElement) {
-      const headerHeight = this.headerElement.clientHeight;
-      const bodyHeight = this.bodyElement.clientHeight;
-      const bottomSheetHeight = headerHeight + bodyHeight;
-      if (!this.expanded) {
-        this.style.setProperty(
-          '--tap-bottom-sheet-content-overflow-y',
-          'hidden',
-        );
-        if (bodyHeight > 400) {
-          this.style.setProperty('--tap-bottom-sheet-bottom', '-50dvh');
-        } else {
-          this.style.setProperty(
-            '--tap-bottom-sheet-bottom',
-            `calc(-90vh + ${bottomSheetHeight}px)`,
-          );
-        }
-      } else {
-        this.style.setProperty('--tap-bottom-sheet-bottom', '0');
-        this.style.setProperty(
-          '--tap-bottom-sheet-content-overflow-y',
-          'scroll',
-        );
-      }
+    if (this.expanded) {
+      this.style.setProperty('--tap-bottom-sheet-height', '90dvh');
+      this.style.setProperty(
+        '--tap-bottom-sheet-content-overflow-y',
+        'scroll',
+      );
     }
   };
 

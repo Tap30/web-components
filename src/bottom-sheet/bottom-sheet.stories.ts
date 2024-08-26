@@ -1,3 +1,4 @@
+
 import { html, TemplateResult } from 'lit';
 import { Meta } from '@storybook/web-components';
 import './index.js';
@@ -64,7 +65,7 @@ interface ArgTypes {
   disappear?: boolean;
   dismissible?: boolean;
   hasDimmer?: boolean;
-  title?: string;
+  title: string;
   expanded?: boolean;
   showGrabber?: boolean;
 }
@@ -76,9 +77,50 @@ const Template: Story<ArgTypes> = ({ title, open, hasDimmer }) => {
     ?has-dimmer=${hasDimmer}
   >
     <div
-      slot="bottom-sheet-body"
-      style="padding: 2rem; height: 100vh; overflow-x: auto; width: 100%; direction: ltr;"
+      style="padding: 2rem; overflow-x: auto; width: 100%; direction: ltr;"
     >
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
+      <div>This is body.</div>
       <div>This is body.</div>
     </div>
   </tap-bottom-sheet>`;
