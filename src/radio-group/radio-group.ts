@@ -17,7 +17,7 @@ export class RadioGroup extends LitElement {
     const elements = slot!.assignedElements({ flatten: true });
 
     const radios = elements.map((element: Element) => {
-      if (!(element instanceof Radio) && element instanceof LitElement) {
+      if (!(element instanceof Radio) && element instanceof Element) {
         return element.querySelector('tap-radio') as Radio | null;
       } else {
         return element;
