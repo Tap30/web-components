@@ -83,45 +83,6 @@ const Template: Story<ArgTypes> = ({ title, open, hasDimmer }) => {
       <div>This is body.</div>
       <div>This is body.</div>
       <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
-      <div>This is body.</div>
     </div>
   </tap-bottom-sheet>`;
 };
