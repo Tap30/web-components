@@ -16,15 +16,21 @@ export class RadioGroup extends LitElement {
     const slot = this.shadowRoot!.querySelector('slot');
     const elements = slot!.assignedElements({ flatten: true });
 
-    const radios = elements.map((element: Element) => {
-      if (!(element instanceof Radio) && element instanceof Element) {
-        return element.querySelector('tap-radio') as Radio | null;
-      } else {
-        return element;
-      }
-    }).filter(Boolean);
+    const findRadios = (nodes: Element[]): Radio[] => {
+      let radios: Radio[] = [];
+      nodes.forEach((node) => {
+        if (node instanceof Radio) {
+          radios.push(node);
+        } else if (node instanceof HTMLElement) {
+          radios = radios.concat(
+            findRadios(Array.from(node.querySelectorAll('tap-radio')))
+          );
+        }
+      });
+      return radios;
+    };
 
-    return radios as Radio[];
+    return findRadios(elements);
   }
 
   private selectDefaultOption() {
