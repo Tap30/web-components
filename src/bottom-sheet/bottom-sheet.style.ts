@@ -88,8 +88,9 @@ export default css`
     -webkit-tap-highlight-color: transparent;
   }
 
-  :host([dismissible]) .close-button {
+  :host(:not([dismissible])) .close-button {
     display: none;
+    color: inherit;
   }
 
   .grabber {
