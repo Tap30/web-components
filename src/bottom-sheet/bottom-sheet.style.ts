@@ -88,6 +88,10 @@ export default css`
     -webkit-tap-highlight-color: transparent;
   }
 
+  :host([dismissible]) .close-button {
+    display: none;
+  }
+
   .grabber {
     width: 44px;
     height: 4px;
@@ -97,6 +101,14 @@ export default css`
     background-color: rgba(0, 0, 0, 0.12);
     right: 50%;
     transform: translateX(50%);
+  }
+
+  :host([showGrabber]) .bottom-sheet-header {
+    padding-top: var(--tap-bottom-sheet-header-padding, var(--tap-sys-spacing-5));
+  }
+
+  :host(:not([showGrabber])) .grabber {
+    display: none
   }
 
   .close {

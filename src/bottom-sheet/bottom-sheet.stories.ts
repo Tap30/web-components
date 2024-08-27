@@ -70,11 +70,13 @@ interface ArgTypes {
   showGrabber?: boolean;
 }
 
-const Template: Story<ArgTypes> = ({ title, open, hasDimmer }) => {
+const Template: Story<ArgTypes> = ({ title, open, hasDimmer, dismissible, showGrabber }) => {
   return html` <tap-bottom-sheet
     title=${title}
     ?open=${open}
     ?has-dimmer=${hasDimmer}
+    ?dismissible=${dismissible}
+    ?showGrabber=${showGrabber}
   >
     <div
       style="padding: 2rem; overflow-x: auto; width: 100%; direction: ltr;"
@@ -92,4 +94,6 @@ Simple.args = {
   title: 'عنوان',
   open: true,
   hasDimmer: true,
+  dismissible: false,
+  showGrabber: false,
 };

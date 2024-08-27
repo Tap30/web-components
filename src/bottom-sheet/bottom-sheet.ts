@@ -59,11 +59,6 @@ export class BottomSheet extends LitElement {
   };
 
   protected updated(changed: PropertyValues): void {
-    if (changed.has('showGrabber')) {
-      this.showGrabber &&
-        this.style.setProperty('--tap-bottom-sheet-header-padding', '12px');
-    }
-
     if (changed.has('expanded') || changed.has('open'))
       this.toggleSheetHeight();
 
@@ -140,8 +135,8 @@ export class BottomSheet extends LitElement {
   }
 
   private renderDismissButton = () => {
-    if (this.dismissible)
-      return html`
+    return html`
+      <div class="close-button" part="close-button">
         <tap-icon-button
           @click=${() => this.handleDismiss()}
           type="button"
@@ -150,11 +145,12 @@ export class BottomSheet extends LitElement {
         >
           <tap-icon-cross color="#000"></tap-icon-cross>
         </tap-icon-button>
-      `;
+      </div>
+    `;
   };
 
   private renderGrabber() {
-    if (this.showGrabber) return html`<div class="grabber"></div>`;
+    return html`<div class="grabber"></div>`;
   }
 
   private renderDimmer() {
@@ -177,15 +173,13 @@ export class BottomSheet extends LitElement {
           @slotchange=${this.handleUpdateHeaderSlot}
         ></slot>
         ${this.hasSlotHeaderContent
-          ? nothing
-          : html`
+        ? nothing
+        : html`
               <div class="bottom-sheet-header" part="header">
                 <div class="title" part="title">
                   ${this.renderTitle()}
                 </div>
-                <div class="close-button" part="close-button">
-                  ${this.renderDismissButton()}
-                </div>
+                ${this.renderDismissButton()}
               </div>
             `}
         <div class="bottom-sheet-body" part="body">
