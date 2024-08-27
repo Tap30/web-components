@@ -139,10 +139,19 @@ export class BottomSheet extends LitElement {
     }
   };
 
+  private dispatchCloseEvent() {
+    this.dispatchEvent(
+      new CustomEvent('close', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
   private handleDismiss = (): void => {
     this.disappear = true;
-    if (this.onClose) {
-      this.onClose();
+    if (this.dispatchCloseEvent) {
+      this.dispatchCloseEvent();
     }
   };
 

@@ -74,7 +74,6 @@ const Template: Story<ArgTypes> = ({ title, open, hasDimmer }) => {
     title=${title}
     ?open=${open}
     ?has-dimmer=${hasDimmer}
-    .onClose=${() => console.log('test')} 
   >
     <div
       slot="bottom-sheet-body"
