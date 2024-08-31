@@ -1,5 +1,5 @@
 import { LitElement, html, nothing } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 import { Radio } from '../radio/radio';
 
 export class RadioGroup extends LitElement {
@@ -7,15 +7,14 @@ export class RadioGroup extends LitElement {
     'vertical';
   @property({ reflect: true }) value = '';
 
+  @queryAssignedElements() private elements!: Element[];
+
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('radio-input-change', this.handleRadioChangeClick);
   }
 
   public get radios(): Radio[] {
-    const slot = this.shadowRoot!.querySelector('slot');
-    const elements = slot!.assignedElements({ flatten: true });
-
     const findRadios = (nodes: Element[]): Radio[] => {
       let radios: Radio[] = [];
       nodes.forEach((node) => {
@@ -30,7 +29,7 @@ export class RadioGroup extends LitElement {
       return radios;
     };
 
-    return findRadios(elements);
+    return findRadios(this.elements);
   }
 
   private selectDefaultOption() {
