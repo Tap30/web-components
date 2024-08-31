@@ -7,11 +7,29 @@ export class RadioGroup extends LitElement {
     'vertical';
   @property({ reflect: true }) value = '';
 
-  @queryAssignedElements() private radios!: Radio[];
+  @queryAssignedElements() private elements!: Element[];
 
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('radio-input-change', this.handleRadioChangeClick);
+  }
+
+  public get radios(): Radio[] {
+    const findRadios = (nodes: Element[]): Radio[] => {
+      let radios: Radio[] = [];
+      nodes.forEach((node) => {
+        if (node instanceof Radio) {
+          radios.push(node);
+        } else if (node instanceof HTMLElement) {
+          radios = radios.concat(
+            findRadios(Array.from(node.querySelectorAll('tap-radio')))
+          );
+        }
+      });
+      return radios;
+    };
+
+    return findRadios(this.elements);
   }
 
   private selectDefaultOption() {

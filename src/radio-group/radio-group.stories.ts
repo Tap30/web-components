@@ -1,5 +1,6 @@
 import { html, TemplateResult } from 'lit';
 import '../radio';
+import '../row';
 import './index.js';
 import { Meta } from '@storybook/web-components';
 
@@ -30,8 +31,19 @@ interface ArgTypes {
 
 const Template: Story<ArgTypes> = ({ value, direction }: ArgTypes) => html`
   <tap-radio-group value="${value}" direction="${direction}">
-    <tap-radio value="1"></tap-radio>
-    <tap-radio value="2"></tap-radio>
+  <tap-row>
+    <div slot="leading"><tap-radio value="1"></tap-radio></div>
+    <div slot="content">
+      <span>Label for Option 1</span>
+    </div>
+  </tap-row>
+  <tap-row>
+    <div slot="content">
+      <tap-radio value="2"></tap-radio>
+      <span>Label for Option 2</span>
+    </div>
+  </tap-row>
+  
     <tap-radio value="3"></tap-radio>
     <tap-radio value="4"></tap-radio>
   </tap-radio-group>
