@@ -8,8 +8,7 @@ export default css`
 
   .bottom-sheet {
     position: absolute;
-    bottom: var(--tap-bottom-sheet-bottom, -100dvh);
-    height: 90dvh;
+    bottom: 0;
     max-height: 90dvh;
     display: flex;
     flex-direction: column;
@@ -65,11 +64,13 @@ export default css`
   .close-button {
     background-color: var(--tap-palette-gray-100);
     width: 32px;
-    heigh: 32px;
+    height: 32px;
     border-radius: 50%;
     position: absolute;
     left: 16px;
     display: flex;
+    align-items: center;
+    justify-content: center;
     -webkit-tap-highlight-color: transparent;
   }
 
