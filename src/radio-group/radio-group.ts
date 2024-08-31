@@ -22,7 +22,7 @@ export class RadioGroup extends LitElement {
           radios.push(node);
         } else if (node instanceof HTMLElement) {
           radios = radios.concat(
-            findRadios(Array.from(node.querySelectorAll('tap-radio')))
+            findRadios(Array.from(node.querySelectorAll('tap-radio'))),
           );
         }
       });

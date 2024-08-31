@@ -24,7 +24,7 @@ import styles from './bottom-sheet.style';
  * @cssprop [--tap-bottom-sheet-header-padding=12px]
  * @cssprop [--tap-bottom-sheet-background=--tap-sys-color-surface-primary]
  * @cssprop [--tap-bottom-sheet-content-overflow-y=scroll]
- * 
+ *
  * @fires close - Fires when the bottom sheet closes.
  */
 @customElement('tap-bottom-sheet')
