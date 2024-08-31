@@ -139,7 +139,7 @@ export class Toast extends LitElement {
   @property({ type: Boolean, attribute: 'show-dismiss-button' })
   showDismissButton? = false;
   
-  @property({ type: String, reflect: true })
+  @property({ reflect: true })
   variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse' = 'inverse';
 
   private dispatchDismissEvent() {
