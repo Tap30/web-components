@@ -77,7 +77,6 @@ export class Radio extends LitElement {
         .checked=${this.checked}
         @input=${this.handleInput}
         @change=${this.redispatchEvent}
-        @select=${this.redispatchEvent}
       />
       ${this.renderCheckIcon()}
     `;

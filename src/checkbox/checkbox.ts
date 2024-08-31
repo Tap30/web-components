@@ -75,7 +75,6 @@ export class Checkbox extends LitElement {
         .checked=${this.checked}
         @input=${this.handleInput}
         @change=${this.redispatchEvent}
-        @select=${this.redispatchEvent}
       />
       ${this.renderCheckIcon()} ${this.renderIndeterminateIcon()}
     `;
