@@ -1,5 +1,6 @@
 import { LitElement, PropertyValues, html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
+import { redispatchEvent } from '../utils/utils';
 
 export class Radio extends LitElement {
   static override shadowRootOptions: ShadowRootInit = {
@@ -57,6 +58,10 @@ export class Radio extends LitElement {
     this.checked = state === 'true';
   }
 
+  private redispatchEvent(event: Event) {
+    redispatchEvent(this, event);
+  }
+
   render() {
     return html`
       <input
@@ -72,6 +77,7 @@ export class Radio extends LitElement {
         ?disabled=${this.disabled}
         .checked=${this.checked}
         @input=${this.handleInput}
+        @change=${this.redispatchEvent}
       />
       ${this.renderCheckIcon()}
     `;

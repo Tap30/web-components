@@ -3,6 +3,7 @@ import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { Input } from '../input';
+import { redispatchEvent } from '../utils/utils';
 
 export class TextField extends Input {
   @property({ type: String }) inputmode?:
@@ -41,6 +42,10 @@ export class TextField extends Input {
 
   @property({ type: String }) autocomplete?: string; // TODO: add type
 
+  private redispatchEvent(event: Event) {
+    redispatchEvent(this, event);
+  }
+
   // TODO: check if using generic ids for caption and input is ok
   protected renderInput(): TemplateResult {
     return html`
@@ -66,6 +71,8 @@ export class TextField extends Input {
         type=${this.type}
         .value=${live(this.value)}
         @input=${this.handleInput}
+        @change=${this.redispatchEvent}
+        @select=${this.redispatchEvent}
       />
       <slot part="trailing" name="trailing"></slot>
     `;
