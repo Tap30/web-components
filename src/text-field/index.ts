@@ -13,15 +13,23 @@ import { inputStyles } from '../input';
  * @prop {string} [label=''] - The label for the text field.
  * @prop {string} [name=''] - The name of the text field.
  * @prop {string} [placeholder=''] - The placeholder text for the text field.
- * @prop {string} [inputmode=''] - The input mode for the text field.
- * @prop {string} [type=''] - The type of the text field.
+ * @prop {'none'|'text'|'tel'|'url'|'email'|'numeric'|'decimal'|'search'} [inputmode] - The input mode for the text field.
+ * @prop {'text'|'date'|'month'|'time'|'week'|'datetime-local'|'number'|'password'|'search'|'tel'|'url'|'email'} [type='text'] - The type of the text field.
  * @prop {string} [autocomplete=''] - The autocomplete attribute for the text field.
+ * @prop {number} [max] - The maximum value of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.
+ * @prop {number} [min] - The minimum value of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.
+ * @prop {number} [maxLength] - The maximum length of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
+ * @prop {number} [minLength] - The minimum length of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
+ * @prop {string} [pattern] - The allowed regex pattern of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.
+ * @prop {number} [step] - The step of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.
  *
  * @csspart [field] - The main container for the text field.
  * @csspart [label] - The label for the text field.
  * @csspart [container] - The container for the input and any leading/trailing elements.
  * @csspart [input] - The input element.
  * @csspart [caption] - The caption for the text field.
+ * @csspart [leading] - The leading for the text field.
+ * @csspart [trailing] - The trailing for the text field.
  *
  * @slot [leading] - the leading slot of the text-field
  * @slot [trailing] - the trailing slot of the text-field
