@@ -135,9 +135,16 @@ export class BottomSheet extends LitElement {
       }
     }
   };
-
+  
   private handleDismiss = (): void => {
     this.disappear = true;
+    
+    this.dispatchEvent(
+      new CustomEvent('close', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   };
 
   private handleAnimationEnd = () => {
