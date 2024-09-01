@@ -166,14 +166,15 @@ export class BottomSheet extends LitElement {
   private renderDismissButton = () => {
     if (this.dismissible)
       return html`
-        <tap-icon-button
-          @click=${() => this.handleDismiss()}
-          type="button"
-          size="small"
-          variant="naked"
-        >
-          <tap-icon-cross color="#000"></tap-icon-cross>
-        </tap-icon-button>
+        <div class="close-button">
+          <tap-icon-button
+            @click=${() => this.handleDismiss()}
+            type="button"
+            size="small"
+            variant="naked">
+            <tap-icon-cross color="#000"></tap-icon-cross>
+          </tap-icon-button>
+        </div>
       `;
   };
 
@@ -205,7 +206,7 @@ export class BottomSheet extends LitElement {
           : html`
               <div class="bottom-sheet-header" part="header">
                 <div class="title">${this.title}</div>
-                <div class="close-button">${this.renderDismissButton()}</div>
+                ${this.renderDismissButton()}
               </div>
             `}
         <div class="bottom-sheet-body" part="body">
