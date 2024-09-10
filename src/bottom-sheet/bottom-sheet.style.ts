@@ -9,7 +9,7 @@ export default css`
   .bottom-sheet {
     position: absolute;
     bottom: 0;
-    max-height: 90dvh;
+    max-height: 90vh;
     display: flex;
     flex-direction: column;
     transition: 0.3s;
@@ -29,8 +29,8 @@ export default css`
 
   .bottom-sheet-dimmer {
     position: fixed;
-    width: 100dvw;
-    height: 100dvh;
+    width: 100vw;
+    height: 100vh;
     bottom: 0;
     background-color: #33323b4b;
     animation: fade-in 0.3s ease-in-out;
