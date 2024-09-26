@@ -3,11 +3,15 @@ import { DefaultTheme } from "vitepress";
 export default [
   {
     text: 'Getting Started',
-    link: '/getting-started',
+    link: '/dev/getting-started',
   },
   {
     text: 'Components',
-    link: '/components/tap-avatar',
+    link: '/dev/components/tap-avatar',
+  },
+  {
+    text: 'Design Guidelines',
+    link: '/design/guidelines',
   },
   {
     text: 'Related Links',
