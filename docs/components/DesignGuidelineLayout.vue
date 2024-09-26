@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import '../components/dont';
-import '../components/do';
-import {Content, useData} from "vitepress";
-const {frontmatter: fm} = useData()
+import { Content, useData } from "vitepress";
+const { frontmatter: fm } = useData()
 </script>
 
 <template>
@@ -56,9 +54,6 @@ const {frontmatter: fm} = useData()
     padding: 48px 32px 0;
   }
 }
-
-
-
 
 .content {
   position: relative;

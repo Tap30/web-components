@@ -4,6 +4,162 @@
   "modules": [
     {
       "kind": "javascript-module",
+      "path": "src/avatar/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapAvatar",
+          "cssProperties": [
+            {
+              "name": "--tap-avatar-background-color",
+              "default": "--tap-sys-color-surface-secondary"
+            },
+            {
+              "name": "--tap-avatar-border-color",
+              "default": "--tap-sys-color-border-primary"
+            },
+            {
+              "name": "--tap-avatar-border-radius",
+              "default": "--tap-sys-radius-full"
+            },
+            {
+              "name": "--tap-avatar-width-xxSmall",
+              "default": "--tap-sys-spacing-8"
+            },
+            {
+              "name": "--tap-avatar-height-xxSmall",
+              "default": "--tap-sys-spacing-8"
+            },
+            {
+              "name": "--tap-avatar-width-xSmall",
+              "default": "--tap-sys-spacing-9"
+            },
+            {
+              "name": "--tap-avatar-height-xSmall",
+              "default": "--tap-sys-spacing-9"
+            },
+            {
+              "name": "--tap-avatar-width-small",
+              "default": "--tap-sys-spacing-10"
+            },
+            {
+              "name": "--tap-avatar-height-small",
+              "default": "--tap-sys-spacing-10"
+            },
+            {
+              "name": "--tap-avatar-width-medium",
+              "default": "--tap-sys-spacing-11"
+            },
+            {
+              "name": "--tap-avatar-height-medium",
+              "default": "--tap-sys-spacing-11"
+            },
+            {
+              "name": "--tap-avatar-width-large",
+              "default": "56px"
+            },
+            {
+              "name": "--tap-avatar-height-large",
+              "default": "56px"
+            },
+            {
+              "name": "--tap-avatar-width-xLarge",
+              "default": "72px"
+            },
+            {
+              "name": "--tap-avatar-height-xLarge",
+              "default": "72px"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The container that wraps the avatar component.",
+              "name": "avatar"
+            },
+            {
+              "description": "The container that wraps the avatar's placeholder.",
+              "name": "placeholder"
+            },
+            {
+              "description": "The avatar image. Only shown when the image is present.",
+              "name": "image"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The default slot to use when image is not present.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "A label to use to describe the avatar to assistive devices.",
+              "name": "label",
+              "default": "''",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The image source to use for the avatar.",
+              "name": "image",
+              "default": "''",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "'eager' | 'lazy'"
+              },
+              "description": " Indicates how the browser should load the image.",
+              "name": "loading",
+              "default": "'eager'",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "'xSmall' | 'small' | 'medium' | 'large' | 'xLarge'"
+              },
+              "description": "The size of the avatar.",
+              "name": "size",
+              "default": "'medium'",
+              "kind": "field"
+            }
+          ],
+          "superclass": {
+            "name": "Avatar",
+            "module": "/src/avatar/avatar.js"
+          },
+          "summary": "Display user profile image, initials or fallback icon",
+          "tagName": "tap-avatar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapAvatar",
+          "declaration": {
+            "name": "TapAvatar",
+            "module": "src/avatar/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-avatar",
+          "declaration": {
+            "name": "TapAvatar",
+            "module": "src/avatar/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/badge/index.ts",
       "declarations": [
         {
@@ -311,6 +467,194 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/bottom-navigation-item/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapBottomNavigationItem",
+          "cssProperties": [
+            {
+              "description": "The font family for the navigation item.",
+              "name": "--tap-font-family",
+              "default": "--tap-sys-font-family"
+            },
+            {
+              "description": "The text color when the item is inactive.",
+              "name": "--tap-bottom-navigation-item-color",
+              "default": "--tap-sys-color-content-tertiary"
+            },
+            {
+              "description": "The text color when the item is active.",
+              "name": "--tap-bottom-navigation-active-color",
+              "default": "--tap-sys-color-content-primary"
+            },
+            {
+              "description": "The line height for the label.",
+              "name": "--tap-bottom-navigation-item-line-height",
+              "default": "--tap-sys-typography-label-xs-height"
+            },
+            {
+              "description": "The font size for the label.",
+              "name": "--tap-bottom-navigation-item-font-size",
+              "default": "--tap-sys-typography-label-xs-size"
+            },
+            {
+              "description": "The font weight for the label.",
+              "name": "--tap-bottom-navigation-item-font-weight",
+              "default": "--tap-sys-typography-label-xs-weight"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The main container for the bottom navigation item.",
+              "name": "bottom-navigation-item"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot for the icon when the item is inactive.",
+              "name": "icon"
+            },
+            {
+              "description": "Slot for the icon when the item is active.",
+              "name": "active-icon"
+            },
+            {
+              "description": "The default slot for the item label or content.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Indicates whether the navigation item is active.",
+              "name": "active",
+              "default": "false",
+              "kind": "field"
+            }
+          ],
+          "superclass": {
+            "name": "BottomNavigationItem",
+            "module": "/src/bottom-navigation-item/bottom-navigation-item.js"
+          },
+          "summary": "Represents a single item in a bottom navigation bar.",
+          "tagName": "tap-bottom-navigation-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapBottomNavigationItem",
+          "declaration": {
+            "name": "TapBottomNavigationItem",
+            "module": "src/bottom-navigation-item/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-bottom-navigation-item",
+          "declaration": {
+            "name": "TapBottomNavigationItem",
+            "module": "src/bottom-navigation-item/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/bottom-navigation/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapBottomNavigation",
+          "cssProperties": [
+            {
+              "description": "The background color of the navigation bar.",
+              "name": "--tap-bottom-navigation-background",
+              "default": "--tap-sys-color-surface-secondary"
+            },
+            {
+              "description": "The width of the top border of the navigation bar.",
+              "name": "--tap-bottom-navigation-border-top-width",
+              "default": "--tap-sys-stroke-1"
+            },
+            {
+              "description": "The color of the top border of the navigation bar.",
+              "name": "--tap-bottom-navigation-border-top-color",
+              "default": "--tap-sys-color-border-primary"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The main container for the bottom navigation bar.",
+              "name": "bottom-navigation"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The default slot for adding `tap-bottom-navigation-item` elements.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "BottomNavigation",
+            "module": "/src/bottom-navigation/bottom-navigation.js"
+          },
+          "summary": "A bottom navigation bar that contains multiple navigation items.",
+          "tagName": "tap-bottom-navigation",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapBottomNavigation",
+          "declaration": {
+            "name": "TapBottomNavigation",
+            "module": "src/bottom-navigation/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-bottom-navigation",
+          "declaration": {
+            "name": "TapBottomNavigation",
+            "module": "src/bottom-navigation/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/base-button/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "baseButtonStyles",
+          "declaration": {
+            "name": "default",
+            "module": "./base-button.style"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "BaseButton",
+          "declaration": {
+            "name": "BaseButton",
+            "module": "./base-button"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/banner/index.ts",
       "declarations": [
         {
@@ -496,307 +840,56 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/avatar/index.ts",
+      "path": "src/bottom-sheet/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapAvatar",
+          "name": "TapBottomSheet",
           "cssProperties": [
             {
-              "name": "--tap-avatar-background-color",
-              "default": "--tap-sys-color-surface-secondary"
+              "name": "--tap-bottom-sheet-bottom",
+              "default": "0"
             },
             {
-              "name": "--tap-avatar-border-color",
-              "default": "--tap-sys-color-border-primary"
+              "name": "--tap-bottom-sheet-header-padding",
+              "default": "0"
             },
             {
-              "name": "--tap-avatar-border-radius",
-              "default": "--tap-sys-radius-full"
+              "name": "--tap-bottom-sheet-header-padding",
+              "default": "12px"
             },
             {
-              "name": "--tap-avatar-width-xxSmall",
-              "default": "--tap-sys-spacing-8"
+              "name": "--tap-bottom-sheet-background",
+              "default": "--tap-sys-color-surface-primary"
             },
             {
-              "name": "--tap-avatar-height-xxSmall",
-              "default": "--tap-sys-spacing-8"
-            },
-            {
-              "name": "--tap-avatar-width-xSmall",
-              "default": "--tap-sys-spacing-9"
-            },
-            {
-              "name": "--tap-avatar-height-xSmall",
-              "default": "--tap-sys-spacing-9"
-            },
-            {
-              "name": "--tap-avatar-width-small",
-              "default": "--tap-sys-spacing-10"
-            },
-            {
-              "name": "--tap-avatar-height-small",
-              "default": "--tap-sys-spacing-10"
-            },
-            {
-              "name": "--tap-avatar-width-medium",
-              "default": "--tap-sys-spacing-11"
-            },
-            {
-              "name": "--tap-avatar-height-medium",
-              "default": "--tap-sys-spacing-11"
-            },
-            {
-              "name": "--tap-avatar-width-large",
-              "default": "56px"
-            },
-            {
-              "name": "--tap-avatar-height-large",
-              "default": "56px"
-            },
-            {
-              "name": "--tap-avatar-width-xLarge",
-              "default": "72px"
-            },
-            {
-              "name": "--tap-avatar-height-xLarge",
-              "default": "72px"
+              "name": "--tap-bottom-sheet-content-overflow-y",
+              "default": "scroll"
             }
           ],
           "cssParts": [
             {
-              "description": "The container that wraps the avatar component.",
-              "name": "avatar"
+              "description": "The dimmer element darkens the background and is clickable to close the bottom sheet.",
+              "name": "dimmer"
             },
             {
-              "description": "The container that wraps the avatar's placeholder.",
-              "name": "placeholder"
+              "description": "The header of the bottom sheet component, containing the title and dismiss button.",
+              "name": "header"
             },
             {
-              "description": "The avatar image. Only shown when the image is present.",
-              "name": "image"
+              "description": "The container that wraps the bottom sheet's content.",
+              "name": "body"
             }
           ],
           "slots": [
             {
-              "description": "The default slot to use when image is not present.",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "A label to use to describe the avatar to assistive devices.",
-              "name": "label",
-              "default": "''",
-              "kind": "field"
+              "description": "The content of the bottom sheet's body.",
+              "name": "bottom-sheet-body"
             },
             {
-              "type": {
-                "text": "string"
-              },
-              "description": "The image source to use for the avatar.",
-              "name": "image",
-              "default": "''",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "'eager' | 'lazy'"
-              },
-              "description": " Indicates how the browser should load the image.",
-              "name": "loading",
-              "default": "'eager'",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "'xSmall' | 'small' | 'medium' | 'large' | 'xLarge'"
-              },
-              "description": "The size of the avatar.",
-              "name": "size",
-              "default": "'medium'",
-              "kind": "field"
-            }
-          ],
-          "superclass": {
-            "name": "Avatar",
-            "module": "/src/avatar/avatar.js"
-          },
-          "summary": "Display user profile image, initials or fallback icon",
-          "tagName": "tap-avatar",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapAvatar",
-          "declaration": {
-            "name": "TapAvatar",
-            "module": "src/avatar/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-avatar",
-          "declaration": {
-            "name": "TapAvatar",
-            "module": "src/avatar/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/base-button/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "baseButtonStyles",
-          "declaration": {
-            "name": "default",
-            "module": "./base-button.style"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "BaseButton",
-          "declaration": {
-            "name": "BaseButton",
-            "module": "./base-button"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/bottom-navigation/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapBottomNavigation",
-          "cssProperties": [
-            {
-              "description": "The background color of the navigation bar.",
-              "name": "--tap-bottom-navigation-background",
-              "default": "--tap-sys-color-surface-secondary"
-            },
-            {
-              "description": "The width of the top border of the navigation bar.",
-              "name": "--tap-bottom-navigation-border-top-width",
-              "default": "--tap-sys-stroke-1"
-            },
-            {
-              "description": "The color of the top border of the navigation bar.",
-              "name": "--tap-bottom-navigation-border-top-color",
-              "default": "--tap-sys-color-border-primary"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "The main container for the bottom navigation bar.",
-              "name": "bottom-navigation"
-            }
-          ],
-          "slots": [
-            {
-              "description": "The default slot for adding `tap-bottom-navigation-item` elements.",
-              "name": ""
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "BottomNavigation",
-            "module": "/src/bottom-navigation/bottom-navigation.js"
-          },
-          "summary": "A bottom navigation bar that contains multiple navigation items.",
-          "tagName": "tap-bottom-navigation",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapBottomNavigation",
-          "declaration": {
-            "name": "TapBottomNavigation",
-            "module": "src/bottom-navigation/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-bottom-navigation",
-          "declaration": {
-            "name": "TapBottomNavigation",
-            "module": "src/bottom-navigation/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/bottom-navigation-item/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapBottomNavigationItem",
-          "cssProperties": [
-            {
-              "description": "The font family for the navigation item.",
-              "name": "--tap-font-family",
-              "default": "--tap-sys-font-family"
-            },
-            {
-              "description": "The text color when the item is inactive.",
-              "name": "--tap-bottom-navigation-item-color",
-              "default": "--tap-sys-color-content-tertiary"
-            },
-            {
-              "description": "The text color when the item is active.",
-              "name": "--tap-bottom-navigation-active-color",
-              "default": "--tap-sys-color-content-primary"
-            },
-            {
-              "description": "The line height for the label.",
-              "name": "--tap-bottom-navigation-item-line-height",
-              "default": "--tap-sys-typography-label-xs-height"
-            },
-            {
-              "description": "The font size for the label.",
-              "name": "--tap-bottom-navigation-item-font-size",
-              "default": "--tap-sys-typography-label-xs-size"
-            },
-            {
-              "description": "The font weight for the label.",
-              "name": "--tap-bottom-navigation-item-font-weight",
-              "default": "--tap-sys-typography-label-xs-weight"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "The main container for the bottom navigation item.",
-              "name": "bottom-navigation-item"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Slot for the icon when the item is inactive.",
-              "name": "icon"
-            },
-            {
-              "description": "Slot for the icon when the item is active.",
-              "name": "active-icon"
-            },
-            {
-              "description": "The default slot for the item label or content.",
-              "name": ""
+              "description": "The bottom sheet's header part.",
+              "name": "bottom-sheet-header"
             }
           ],
           "members": [
@@ -804,36 +897,87 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Indicates whether the navigation item is active.",
-              "name": "active",
+              "description": "Controls the visibility of the bottom sheet. If true, the bottom sheet is visible.",
+              "name": "open",
               "default": "false",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Determines whether the bottom sheet can be dismissed by the user. If true, a close button is displayed, allowing the bottom sheet to be closed.",
+              "name": "dismissible",
+              "default": "true",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": " Controls the presence of a dimmer overlay.",
+              "name": "hasDimmer",
+              "default": "false",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Specifies the title displayed in the header of the bottom sheet.",
+              "name": "title",
+              "default": "''",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": " If true, the bottom sheet expands to 90% of the viewport height (90vh).",
+              "name": "expanded",
+              "default": "false",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": " Controls the visibility of the grabber element.",
+              "name": "showGrabber",
+              "default": "true",
               "kind": "field"
             }
           ],
+          "events": [
+            {
+              "description": "Fires when the bottom sheet closes.",
+              "name": "close"
+            }
+          ],
           "superclass": {
-            "name": "BottomNavigationItem",
-            "module": "/src/bottom-navigation-item/bottom-navigation-item.js"
+            "name": "BottomSheet",
+            "module": "/src/bottom-sheet/bottom-sheet"
           },
-          "summary": "Represents a single item in a bottom navigation bar.",
-          "tagName": "tap-bottom-navigation-item",
+          "summary": "Bottom sheet Element",
+          "tagName": "tap-bottom-sheet",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapBottomNavigationItem",
+          "name": "TapBottomSheet",
           "declaration": {
-            "name": "TapBottomNavigationItem",
-            "module": "src/bottom-navigation-item/index.ts"
+            "name": "TapBottomSheet",
+            "module": "src/bottom-sheet/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-bottom-navigation-item",
+          "name": "tap-bottom-sheet",
           "declaration": {
-            "name": "TapBottomNavigationItem",
-            "module": "src/bottom-navigation-item/index.ts"
+            "name": "TapBottomSheet",
+            "module": "src/bottom-sheet/index.ts"
           }
         }
       ]
@@ -1128,148 +1272,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/checkbox/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapCheckbox",
-          "cssProperties": [
-            {
-              "description": "The border radius of the checkbox.",
-              "name": "--tap-checkbox-border-radius",
-              "default": "--tap-sys-radius-1"
-            },
-            {
-              "description": "The height of the checkbox.",
-              "name": "--tap-checkbox-height",
-              "default": "--tap-sys-spacing-7"
-            },
-            {
-              "description": "The width of the checkbox.",
-              "name": "--tap-checkbox-width",
-              "default": "--tap-sys-spacing-7"
-            },
-            {
-              "description": "The height of the checkbox input.",
-              "name": "--tap-checkbox-input-height",
-              "default": "--tap-sys-spacing-7"
-            },
-            {
-              "description": "The width of the checkbox input.",
-              "name": "--tap-checkbox-input-width",
-              "default": "--tap-sys-spacing-7"
-            },
-            {
-              "description": "The background color of the checkbox.",
-              "name": "--tap-checkbox-background-color",
-              "default": "--tap-sys-color-surface-primary"
-            },
-            {
-              "description": "The border color of the checkbox.",
-              "name": "--tap-checkbox-border",
-              "default": "--tap-sys-color-border-inverse-primary"
-            },
-            {
-              "description": "The background color of the checked or indeterminate checkbox.",
-              "name": "--tap-checkbox-checked-background-color",
-              "default": "--tap-sys-color-surface-inverse-primary"
-            },
-            {
-              "description": "The color of the content inside the checked or indeterminate checkbox.",
-              "name": "--tap-checkbox-checked-color",
-              "default": "--tap-sys-color-content-on-inverse"
-            },
-            {
-              "description": "The background color of the disabled checkbox.",
-              "name": "--tap-checkbox-checked-color",
-              "default": "--tap-sys-color-surface-disabled"
-            },
-            {
-              "description": "The border color of the disabled checkbox.",
-              "name": "--tap-checkbox-disabled-border-color",
-              "default": "--tap-sys-color-surface-disabled"
-            },
-            {
-              "description": "The color of the content inside the disabled checkbox.",
-              "name": "--tap-checkbox-disabled-color",
-              "default": "--tap-sys-color-content-disabled"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "The main container for the checkbox.",
-              "name": "checkbox"
-            }
-          ],
-          "members": [
-            {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicates whether the checkbox is checked.",
-              "name": "checked",
-              "default": "false",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicates whether the checkbox is in an indeterminate state.",
-              "name": "indeterminate",
-              "default": "false",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicates whether the checkbox is disabled.",
-              "name": "disabled",
-              "default": "false",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "The value of the checkbox when it is checked.",
-              "name": "value",
-              "default": "'on'",
-              "kind": "field"
-            }
-          ],
-          "superclass": {
-            "name": "Checkbox",
-            "module": "/src/checkbox/checkbox"
-          },
-          "summary": "A checkbox component with support for checked and indeterminate states.",
-          "tagName": "tap-checkbox",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapCheckbox",
-          "declaration": {
-            "name": "TapCheckbox",
-            "module": "src/checkbox/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-checkbox",
-          "declaration": {
-            "name": "TapCheckbox",
-            "module": "src/checkbox/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/divider/index.ts",
       "declarations": [
         {
@@ -1355,167 +1357,247 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/empty-state/index.ts",
+      "path": "src/chip/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapEmptyState",
+          "name": "TapChip",
           "cssProperties": [
             {
-              "description": "The font family used in the empty state.",
+              "description": "The font family used in the chip.",
               "name": "--tap-font-family",
               "default": "--tap-sys-font-family"
             },
             {
-              "description": "The horizontal margin for the icon slot.",
-              "name": "--tap-empty-state-icon-horizontal-margin"
+              "description": "The font size for the chip's content.",
+              "name": "--tap-chip-font-size",
+              "default": "--tap-sys-typography-body-sm-size"
             },
             {
-              "description": "The vertical margin for the icon slot.",
-              "name": "--tap-empty-state-icon-vertical-margin",
-              "default": "--tap-sys-spacing-6"
+              "description": "The line height for the chip's content.",
+              "name": "--tap-chip-line-height",
+              "default": "--tap-sys-typography-body-sm-height"
             },
             {
-              "description": "The horizontal margin for the actions slot.",
-              "name": "--tap-empty-state-actions-horizontal-margin"
+              "description": "The border radius for the chip.",
+              "name": "--tap-chip-border-radius",
+              "default": "--tap-sys-radius-full"
             },
             {
-              "description": "The vertical margin for the actions slot.",
-              "name": "--tap-empty-state-actions-vertical-margin",
-              "default": "--tap-sys-spacing-6"
+              "description": "The border color of the chip.",
+              "name": "--tap-chip-border-color",
+              "default": "--tap-sys-color-border-primary"
             },
             {
-              "description": "The horizontal padding for the content slot.",
-              "name": "--tap-empty-state-content-horizontal-padding",
-              "default": "--tap-sys-spacing-6"
+              "description": "The background color of the chip.",
+              "name": "--tap-chip-background-color",
+              "default": "--tap-sys-color-surface-primary"
             },
             {
-              "description": "The vertical padding for the content slot.",
-              "name": "--tap-empty-state-content-vertical-padding",
+              "description": "The text color of the chip.",
+              "name": "--tap-chip-color",
+              "default": "--tap-sys-color-content-primary"
+            },
+            {
+              "description": "The horizontal padding inside the chip.",
+              "name": "--tap-chip-horizontal-padding",
               "default": "--tap-sys-spacing-4"
             },
             {
-              "description": "The font size used for the title in the empty state.",
-              "name": "--tap-empty-state-title-font-size",
-              "default": "--tap-sys-typography-headline-sm-size"
+              "description": "The minimum width of the chip.",
+              "name": "--tap-chip-min-width",
+              "default": "72px"
             },
             {
-              "description": "The font weight used for the title in the empty state.",
-              "name": "--tap-empty-state-title-font-weight",
-              "default": "--tap-sys-typography-headline-sm-weight"
-            },
-            {
-              "description": "The line height used for the title in the empty state.",
-              "name": "--tap-empty-state-title-line-height",
-              "default": "--tap-sys-typography-headline-sm-height"
-            },
-            {
-              "description": "The font size used for the description in the empty state.",
-              "name": "--tap-empty-state-description-font-size",
-              "default": "--tap-sys-typography-headline-sm-size"
-            },
-            {
-              "description": "The font weight used for the description in the empty state.",
-              "name": "--tap-empty-state-description-font-weight",
-              "default": "--tap-sys-typography-headline-sm-size"
-            },
-            {
-              "description": "The line height used for the description in the empty state.",
-              "name": "--tap-empty-state-description-line-height",
-              "default": "--tap-sys-typography-headline-sm-size"
-            },
-            {
-              "description": "The color used for the description in the empty state.",
-              "name": "--tap-empty-state-description-color",
-              "default": "--tap-sys-typography-headline-sm-size"
-            },
-            {
-              "description": "The top margin used for the description in the empty state.",
-              "name": "--tap-empty-state-description-top-margin",
+              "description": "The gap of the icon slot in the chip.",
+              "name": "--tap-chip-icon-gap",
               "default": "--tap-sys-spacing-4"
+            },
+            {
+              "description": "The background color of a selected chip.",
+              "name": "--tap-chip-selected-background-color",
+              "default": "--tap-sys-color-surface-secondary"
+            },
+            {
+              "description": "The border color of a selected chip.",
+              "name": "--tap-chip-selected-border-color",
+              "default": "--tap-sys-color-surface-inverse-primary"
+            },
+            {
+              "description": "The text color of a disabled chip.",
+              "name": "--tap-chip-disabled-color",
+              "default": "--tap-sys-color-content-disabled"
+            },
+            {
+              "description": "The border color of a selected and disabled chip.",
+              "name": "--tap-chip-selected-and-disabled-color",
+              "default": "--tap-sys-color-border-primary"
+            },
+            {
+              "description": "The height of the chip in small size.",
+              "name": "--tap-chip-group-sm-height",
+              "default": "--tap-sys-spacing-9"
+            },
+            {
+              "description": "The height of the chip in medium size.",
+              "name": "--tap-chip-group-md-height",
+              "default": "--tap-sys-spacing-10"
             }
           ],
           "cssParts": [
             {
-              "description": "The root container of the empty state component a `div`.",
-              "name": "container"
-            },
-            {
-              "description": "The container of the icon slot, a `span`.",
-              "name": "icon"
-            },
-            {
-              "description": "The wrapper around heading and description, a `div`.",
-              "name": "content"
-            },
-            {
-              "description": "The heading element, a `span`.",
-              "name": "heading"
-            },
-            {
-              "description": "The description element, a `p`.",
-              "name": "description"
-            },
-            {
-              "description": "The container of the actions slot, a `div`.",
-              "name": "actions"
+              "description": "The button element representing the chip.",
+              "name": "chip"
             }
           ],
           "slots": [
             {
-              "description": "the icon slot of the empty state.",
-              "name": "icon"
+              "description": "Default content slot for chip text.",
+              "name": ""
             },
             {
-              "description": "the actions slot of the empty state.",
-              "name": "actions"
+              "description": "Slot for an optional icon.",
+              "name": "icon"
             }
           ],
           "members": [
             {
               "type": {
-                "text": "string"
+                "text": "boolean"
               },
-              "description": "The title of the empty state.",
-              "name": "title",
-              "default": "''",
+              "description": "Whether the chip is disabled.",
+              "name": "disabled",
+              "default": "false",
               "kind": "field"
             },
             {
               "type": {
-                "text": "string"
+                "text": "boolean"
               },
-              "description": "The description for the empty state.",
-              "name": "description",
-              "default": "''",
+              "description": "Whether the chip is selected.",
+              "name": "selected",
+              "default": "false",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "'sm' | 'md'"
+              },
+              "description": "The size of the chip.",
+              "name": "size",
+              "default": "'md'",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the chip has icon.",
+              "name": "hasIcon",
+              "default": "false",
               "kind": "field"
             }
           ],
           "superclass": {
-            "name": "EmptyState",
-            "module": "/src/empty-state/empty-state"
+            "name": "Chip",
+            "module": "/src/chip/chip"
           },
-          "summary": "An empty state component with icon and actions slots.",
-          "tagName": "tap-empty-state",
+          "summary": "A chip component.",
+          "tagName": "tap-chip",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapEmptyState",
+          "name": "TapChip",
           "declaration": {
-            "name": "TapEmptyState",
-            "module": "src/empty-state/index.ts"
+            "name": "TapChip",
+            "module": "src/chip/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-empty-state",
+          "name": "tap-chip",
           "declaration": {
-            "name": "TapEmptyState",
-            "module": "src/empty-state/index.ts"
+            "name": "TapChip",
+            "module": "src/chip/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/chip-group/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapChipGroup",
+          "cssProperties": [
+            {
+              "description": "The gap between chips in the group.",
+              "name": "--tap-chip-group-gap",
+              "default": "--tap-sys-spacing-5"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The main container for the chip group.",
+              "name": "chip-group"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Chip group contents, you should use some `tap-chip` components here",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "The size of the chip group.",
+              "name": "fullwidth",
+              "default": "false",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "'single-select' | 'multi-select'"
+              },
+              "description": "The mode of the chip group.",
+              "name": "mode",
+              "default": "'single-select'",
+              "kind": "field"
+            }
+          ],
+          "superclass": {
+            "name": "ChipGroup",
+            "module": "/src/chip-group/chip-group"
+          },
+          "summary": "A chip group component.",
+          "tagName": "tap-chip-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapChipGroup",
+          "declaration": {
+            "name": "TapChipGroup",
+            "module": "src/chip-group/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-chip-group",
+          "declaration": {
+            "name": "TapChipGroup",
+            "module": "src/chip-group/index.ts"
           }
         }
       ]
@@ -1769,23 +1851,167 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/input/index.ts",
-      "declarations": [],
+      "path": "src/empty-state/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapEmptyState",
+          "cssProperties": [
+            {
+              "description": "The font family used in the empty state.",
+              "name": "--tap-font-family",
+              "default": "--tap-sys-font-family"
+            },
+            {
+              "description": "The horizontal margin for the icon slot.",
+              "name": "--tap-empty-state-icon-horizontal-margin"
+            },
+            {
+              "description": "The vertical margin for the icon slot.",
+              "name": "--tap-empty-state-icon-vertical-margin",
+              "default": "--tap-sys-spacing-6"
+            },
+            {
+              "description": "The horizontal margin for the actions slot.",
+              "name": "--tap-empty-state-actions-horizontal-margin"
+            },
+            {
+              "description": "The vertical margin for the actions slot.",
+              "name": "--tap-empty-state-actions-vertical-margin",
+              "default": "--tap-sys-spacing-6"
+            },
+            {
+              "description": "The horizontal padding for the content slot.",
+              "name": "--tap-empty-state-content-horizontal-padding",
+              "default": "--tap-sys-spacing-6"
+            },
+            {
+              "description": "The vertical padding for the content slot.",
+              "name": "--tap-empty-state-content-vertical-padding",
+              "default": "--tap-sys-spacing-4"
+            },
+            {
+              "description": "The font size used for the title in the empty state.",
+              "name": "--tap-empty-state-title-font-size",
+              "default": "--tap-sys-typography-headline-sm-size"
+            },
+            {
+              "description": "The font weight used for the title in the empty state.",
+              "name": "--tap-empty-state-title-font-weight",
+              "default": "--tap-sys-typography-headline-sm-weight"
+            },
+            {
+              "description": "The line height used for the title in the empty state.",
+              "name": "--tap-empty-state-title-line-height",
+              "default": "--tap-sys-typography-headline-sm-height"
+            },
+            {
+              "description": "The font size used for the description in the empty state.",
+              "name": "--tap-empty-state-description-font-size",
+              "default": "--tap-sys-typography-headline-sm-size"
+            },
+            {
+              "description": "The font weight used for the description in the empty state.",
+              "name": "--tap-empty-state-description-font-weight",
+              "default": "--tap-sys-typography-headline-sm-size"
+            },
+            {
+              "description": "The line height used for the description in the empty state.",
+              "name": "--tap-empty-state-description-line-height",
+              "default": "--tap-sys-typography-headline-sm-size"
+            },
+            {
+              "description": "The color used for the description in the empty state.",
+              "name": "--tap-empty-state-description-color",
+              "default": "--tap-sys-typography-headline-sm-size"
+            },
+            {
+              "description": "The top margin used for the description in the empty state.",
+              "name": "--tap-empty-state-description-top-margin",
+              "default": "--tap-sys-spacing-4"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The root container of the empty state component a `div`.",
+              "name": "container"
+            },
+            {
+              "description": "The container of the icon slot, a `span`.",
+              "name": "icon"
+            },
+            {
+              "description": "The wrapper around heading and description, a `div`.",
+              "name": "content"
+            },
+            {
+              "description": "The heading element, a `span`.",
+              "name": "heading"
+            },
+            {
+              "description": "The description element, a `p`.",
+              "name": "description"
+            },
+            {
+              "description": "The container of the actions slot, a `div`.",
+              "name": "actions"
+            }
+          ],
+          "slots": [
+            {
+              "description": "the icon slot of the empty state.",
+              "name": "icon"
+            },
+            {
+              "description": "the actions slot of the empty state.",
+              "name": "actions"
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The title of the empty state.",
+              "name": "title",
+              "default": "''",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The description for the empty state.",
+              "name": "description",
+              "default": "''",
+              "kind": "field"
+            }
+          ],
+          "superclass": {
+            "name": "EmptyState",
+            "module": "/src/empty-state/empty-state"
+          },
+          "summary": "An empty state component with icon and actions slots.",
+          "tagName": "tap-empty-state",
+          "customElement": true
+        }
+      ],
       "exports": [
         {
           "kind": "js",
-          "name": "inputStyles",
+          "name": "TapEmptyState",
           "declaration": {
-            "name": "default",
-            "module": "./input.style"
+            "name": "TapEmptyState",
+            "module": "src/empty-state/index.ts"
           }
         },
         {
-          "kind": "js",
-          "name": "Input",
+          "kind": "custom-element-definition",
+          "name": "tap-empty-state",
           "declaration": {
-            "name": "Input",
-            "module": "./input"
+            "name": "TapEmptyState",
+            "module": "src/empty-state/index.ts"
           }
         }
       ]
@@ -2017,6 +2243,492 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/pinwheel/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapPinwheel",
+          "cssProperties": [
+            {
+              "name": "--tap-pinwheel-vertical-padding",
+              "default": "--tap-sys-spacing-0"
+            },
+            {
+              "name": "--tap-pinwheel-horizontal-padding",
+              "default": "--tap-sys-spacing-6"
+            },
+            {
+              "name": "--tap-pinwheel-item-height",
+              "default": "--tap-sys-spacing-11"
+            },
+            {
+              "name": "--tap-font-family",
+              "default": "--tap-sys-font-family"
+            },
+            {
+              "name": "--tap-pinwheel-typography-body-md-height",
+              "default": "--tap-sys-typography-body-md-height"
+            },
+            {
+              "name": "--tap-pinwheel-typography-body-md-size",
+              "default": "--tap-sys-typography-body-md-size"
+            },
+            {
+              "name": "--tap-pinwheel-typography-body-md-weight",
+              "default": "--tap-sys-typography-body-md-weight"
+            },
+            {
+              "name": "--tap-pinwheel-item-color",
+              "default": "--tap-sys-color-content-tertiary"
+            },
+            {
+              "name": "--tap-pinwheel-typography-label-md-height",
+              "default": "--tap-sys-typography-label-md-height"
+            },
+            {
+              "name": "--tap-pinwheel-typography-label-md-size",
+              "default": "--tap-sys-typography-label-md-size"
+            },
+            {
+              "name": "--tap-pinwheel-typography-label-md-weight",
+              "default": "--tap-sys-typography-label-md-weight"
+            },
+            {
+              "name": "--tap-pinwheel-active-item-color",
+              "default": "--tap-sys-color-content-primary"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The container that wraps the pinwheel component.",
+              "name": "pinwheel"
+            },
+            {
+              "description": "The item that rendered in pinwheel.",
+              "name": "pinwheel-item"
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "string[]"
+              },
+              "description": "An array of strings that contains pinwheel items.",
+              "name": "items",
+              "default": "[]",
+              "kind": "field"
+            }
+          ],
+          "events": [
+            {
+              "description": "Fires when the pinwheel changes",
+              "name": "pinwheel-change"
+            }
+          ],
+          "superclass": {
+            "name": "Pinwheel",
+            "module": "/src/pinwheel/pinwheel"
+          },
+          "summary": "A pinwheel component for selecting items by scrolling through a list.",
+          "tagName": "tap-pinwheel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapPinwheel",
+          "declaration": {
+            "name": "TapPinwheel",
+            "module": "src/pinwheel/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-pinwheel",
+          "declaration": {
+            "name": "TapPinwheel",
+            "module": "src/pinwheel/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/checkbox/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapCheckbox",
+          "cssProperties": [
+            {
+              "description": "The border radius of the checkbox.",
+              "name": "--tap-checkbox-border-radius",
+              "default": "--tap-sys-radius-1"
+            },
+            {
+              "description": "The height of the checkbox.",
+              "name": "--tap-checkbox-height",
+              "default": "--tap-sys-spacing-7"
+            },
+            {
+              "description": "The width of the checkbox.",
+              "name": "--tap-checkbox-width",
+              "default": "--tap-sys-spacing-7"
+            },
+            {
+              "description": "The height of the checkbox input.",
+              "name": "--tap-checkbox-input-height",
+              "default": "--tap-sys-spacing-7"
+            },
+            {
+              "description": "The width of the checkbox input.",
+              "name": "--tap-checkbox-input-width",
+              "default": "--tap-sys-spacing-7"
+            },
+            {
+              "description": "The background color of the checkbox.",
+              "name": "--tap-checkbox-background-color",
+              "default": "--tap-sys-color-surface-primary"
+            },
+            {
+              "description": "The border color of the checkbox.",
+              "name": "--tap-checkbox-border",
+              "default": "--tap-sys-color-border-inverse-primary"
+            },
+            {
+              "description": "The background color of the checked or indeterminate checkbox.",
+              "name": "--tap-checkbox-checked-background-color",
+              "default": "--tap-sys-color-surface-inverse-primary"
+            },
+            {
+              "description": "The color of the content inside the checked or indeterminate checkbox.",
+              "name": "--tap-checkbox-checked-color",
+              "default": "--tap-sys-color-content-on-inverse"
+            },
+            {
+              "description": "The background color of the disabled checkbox.",
+              "name": "--tap-checkbox-checked-color",
+              "default": "--tap-sys-color-surface-disabled"
+            },
+            {
+              "description": "The border color of the disabled checkbox.",
+              "name": "--tap-checkbox-disabled-border-color",
+              "default": "--tap-sys-color-surface-disabled"
+            },
+            {
+              "description": "The color of the content inside the disabled checkbox.",
+              "name": "--tap-checkbox-disabled-color",
+              "default": "--tap-sys-color-content-disabled"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The main container for the checkbox.",
+              "name": "checkbox"
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Indicates whether the checkbox is checked.",
+              "name": "checked",
+              "default": "false",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Indicates whether the checkbox is in an indeterminate state.",
+              "name": "indeterminate",
+              "default": "false",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Indicates whether the checkbox is disabled.",
+              "name": "disabled",
+              "default": "false",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The value of the checkbox when it is checked.",
+              "name": "value",
+              "default": "'on'",
+              "kind": "field"
+            }
+          ],
+          "superclass": {
+            "name": "Checkbox",
+            "module": "/src/checkbox/checkbox"
+          },
+          "summary": "A checkbox component with support for checked and indeterminate states.",
+          "tagName": "tap-checkbox",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapCheckbox",
+          "declaration": {
+            "name": "TapCheckbox",
+            "module": "src/checkbox/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-checkbox",
+          "declaration": {
+            "name": "TapCheckbox",
+            "module": "src/checkbox/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/pinwheel-group/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapPinwheelGroup",
+          "cssProperties": [
+            {
+              "name": "--tap-pinwheel-group-selector-radius",
+              "default": "--tap-sys-spacing-4"
+            },
+            {
+              "name": "--tap-pinwheel-group-selector-background-color",
+              "default": "--tap-sys-color-surface-tertiary"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The container that wraps the pinwheels.",
+              "name": "pinwheel-group"
+            },
+            {
+              "description": "The selector indicator that wraps selected row.",
+              "name": "pinwheel-selector-indicator"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The default slot to get pinwheels.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "PinwheelGroup",
+            "module": "/src/pinwheel-group/pinwheel-group"
+          },
+          "summary": "Grouping pinwheel components and attach selector indicator to them.",
+          "tagName": "tap-pinwheel-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapPinwheelGroup",
+          "declaration": {
+            "name": "TapPinwheelGroup",
+            "module": "src/pinwheel-group/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-pinwheel-group",
+          "declaration": {
+            "name": "TapPinwheelGroup",
+            "module": "src/pinwheel-group/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/progress-indicator/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "### Example",
+          "name": "TapProgressIndicator",
+          "cssProperties": [
+            {
+              "description": "The gap between steps.",
+              "name": "--tap-progress-indicator-progressbar-color",
+              "default": "--tap-sys-spacing-3"
+            },
+            {
+              "description": "The height of each step.",
+              "name": "--tap-progress-indicator-step-height",
+              "default": "--tap-sys-spacing-3"
+            },
+            {
+              "description": "The background color of each step.",
+              "name": "--tap-progress-indicator-step-background-color",
+              "default": "--tap-sys-color-surface-tertiary"
+            },
+            {
+              "description": "The background color of active steps.",
+              "name": "--tap-progress-indicator-active-step-background-color",
+              "default": "--tap-sys-color-border-inverse-primary"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The container for the progress bar.",
+              "name": "progressbar"
+            },
+            {
+              "description": "Each individual step in the progress bar.",
+              "name": "step"
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "number"
+              },
+              "description": "The total number of steps.",
+              "name": "max",
+              "default": "2",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "number"
+              },
+              "description": "The current step index.",
+              "name": "current",
+              "default": "0",
+              "kind": "field"
+            }
+          ],
+          "superclass": {
+            "name": "ProgressIndicator",
+            "module": "/src/progress-indicator/progress-indicator.js"
+          },
+          "summary": "A progress indicator component displaying multiple steps.",
+          "tagName": "tap-progress-indicator",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapProgressIndicator",
+          "declaration": {
+            "name": "TapProgressIndicator",
+            "module": "src/progress-indicator/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-progress-indicator",
+          "declaration": {
+            "name": "TapProgressIndicator",
+            "module": "src/progress-indicator/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/radio-group/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapRadioGroup",
+          "cssProperties": [
+            {
+              "description": "The padding around the radio group.",
+              "name": "--tap-radio-group-padding",
+              "default": "--tap-sys-spacing-3"
+            },
+            {
+              "description": "The gap between radio buttons.",
+              "name": "--tap-radio-group-gap",
+              "default": "--tap-sys-spacing-3"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The main container for the radio group.",
+              "name": "radio-group"
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "'horizontal' | 'vertical'"
+              },
+              "description": "The direction in which the radio buttons are laid out. Defaults to `vertical`.",
+              "name": "direction",
+              "default": "'vertical'",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The value of the selected radio button.",
+              "name": "value",
+              "default": "''",
+              "kind": "field"
+            }
+          ],
+          "events": [
+            {
+              "description": "Dispatched when the selected radio button changes.",
+              "name": "radio-group-change"
+            }
+          ],
+          "superclass": {
+            "name": "RadioGroup",
+            "module": "/src/radio-group/radio-group"
+          },
+          "summary": "A group of radio buttons.",
+          "tagName": "tap-radio-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapRadioGroup",
+          "declaration": {
+            "name": "TapRadioGroup",
+            "module": "src/radio-group/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-radio-group",
+          "declaration": {
+            "name": "TapRadioGroup",
+            "module": "src/radio-group/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/notice/index.ts",
       "declarations": [
         {
@@ -2227,748 +2939,23 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/pinwheel/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapPinwheel",
-          "cssProperties": [
-            {
-              "name": "--tap-pinwheel-vertical-padding",
-              "default": "--tap-sys-spacing-0"
-            },
-            {
-              "name": "--tap-pinwheel-horizontal-padding",
-              "default": "--tap-sys-spacing-6"
-            },
-            {
-              "name": "--tap-pinwheel-item-height",
-              "default": "--tap-sys-spacing-11"
-            },
-            {
-              "name": "--tap-font-family",
-              "default": "--tap-sys-font-family"
-            },
-            {
-              "name": "--tap-pinwheel-typography-body-md-height",
-              "default": "--tap-sys-typography-body-md-height"
-            },
-            {
-              "name": "--tap-pinwheel-typography-body-md-size",
-              "default": "--tap-sys-typography-body-md-size"
-            },
-            {
-              "name": "--tap-pinwheel-typography-body-md-weight",
-              "default": "--tap-sys-typography-body-md-weight"
-            },
-            {
-              "name": "--tap-pinwheel-item-color",
-              "default": "--tap-sys-color-content-tertiary"
-            },
-            {
-              "name": "--tap-pinwheel-typography-label-md-height",
-              "default": "--tap-sys-typography-label-md-height"
-            },
-            {
-              "name": "--tap-pinwheel-typography-label-md-size",
-              "default": "--tap-sys-typography-label-md-size"
-            },
-            {
-              "name": "--tap-pinwheel-typography-label-md-weight",
-              "default": "--tap-sys-typography-label-md-weight"
-            },
-            {
-              "name": "--tap-pinwheel-active-item-color",
-              "default": "--tap-sys-color-content-primary"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "The container that wraps the pinwheel component.",
-              "name": "pinwheel"
-            },
-            {
-              "description": "The item that rendered in pinwheel.",
-              "name": "pinwheel-item"
-            }
-          ],
-          "members": [
-            {
-              "type": {
-                "text": "string[]"
-              },
-              "description": "An array of strings that contains pinwheel items.",
-              "name": "items",
-              "default": "[]",
-              "kind": "field"
-            }
-          ],
-          "events": [
-            {
-              "description": "Fires when the pinwheel changes",
-              "name": "pinwheel-change"
-            }
-          ],
-          "superclass": {
-            "name": "Pinwheel",
-            "module": "/src/pinwheel/pinwheel"
-          },
-          "summary": "A pinwheel component for selecting items by scrolling through a list.",
-          "tagName": "tap-pinwheel",
-          "customElement": true
-        }
-      ],
+      "path": "src/input/index.ts",
+      "declarations": [],
       "exports": [
         {
           "kind": "js",
-          "name": "TapPinwheel",
+          "name": "inputStyles",
           "declaration": {
-            "name": "TapPinwheel",
-            "module": "src/pinwheel/index.ts"
+            "name": "default",
+            "module": "./input.style"
           }
         },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-pinwheel",
-          "declaration": {
-            "name": "TapPinwheel",
-            "module": "src/pinwheel/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/pinwheel-group/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapPinwheelGroup",
-          "cssProperties": [
-            {
-              "name": "--tap-pinwheel-group-selector-radius",
-              "default": "--tap-sys-spacing-4"
-            },
-            {
-              "name": "--tap-pinwheel-group-selector-background-color",
-              "default": "--tap-sys-color-surface-tertiary"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "The container that wraps the pinwheels.",
-              "name": "pinwheel-group"
-            },
-            {
-              "description": "The selector indicator that wraps selected row.",
-              "name": "pinwheel-selector-indicator"
-            }
-          ],
-          "slots": [
-            {
-              "description": "The default slot to get pinwheels.",
-              "name": ""
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "PinwheelGroup",
-            "module": "/src/pinwheel-group/pinwheel-group"
-          },
-          "summary": "Grouping pinwheel components and attach selector indicator to them.",
-          "tagName": "tap-pinwheel-group",
-          "customElement": true
-        }
-      ],
-      "exports": [
         {
           "kind": "js",
-          "name": "TapPinwheelGroup",
+          "name": "Input",
           "declaration": {
-            "name": "TapPinwheelGroup",
-            "module": "src/pinwheel-group/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-pinwheel-group",
-          "declaration": {
-            "name": "TapPinwheelGroup",
-            "module": "src/pinwheel-group/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/progress-indicator/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "### Example",
-          "name": "TapProgressIndicator",
-          "cssProperties": [
-            {
-              "description": "The gap between steps.",
-              "name": "--tap-progress-indicator-progressbar-color",
-              "default": "--tap-sys-spacing-3"
-            },
-            {
-              "description": "The height of each step.",
-              "name": "--tap-progress-indicator-step-height",
-              "default": "--tap-sys-spacing-3"
-            },
-            {
-              "description": "The background color of each step.",
-              "name": "--tap-progress-indicator-step-background-color",
-              "default": "--tap-sys-color-surface-tertiary"
-            },
-            {
-              "description": "The background color of active steps.",
-              "name": "--tap-progress-indicator-active-step-background-color",
-              "default": "--tap-sys-color-border-inverse-primary"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "The container for the progress bar.",
-              "name": "progressbar"
-            },
-            {
-              "description": "Each individual step in the progress bar.",
-              "name": "step"
-            }
-          ],
-          "members": [
-            {
-              "type": {
-                "text": "number"
-              },
-              "description": "The total number of steps.",
-              "name": "max",
-              "default": "2",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "number"
-              },
-              "description": "The current step index.",
-              "name": "current",
-              "default": "0",
-              "kind": "field"
-            }
-          ],
-          "superclass": {
-            "name": "ProgressIndicator",
-            "module": "/src/progress-indicator/progress-indicator.js"
-          },
-          "summary": "A progress indicator component displaying multiple steps.",
-          "tagName": "tap-progress-indicator",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapProgressIndicator",
-          "declaration": {
-            "name": "TapProgressIndicator",
-            "module": "src/progress-indicator/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-progress-indicator",
-          "declaration": {
-            "name": "TapProgressIndicator",
-            "module": "src/progress-indicator/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/radio/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapRadio",
-          "cssProperties": [
-            {
-              "description": "The border radius of the radio button.",
-              "name": "--tap-radio-border-radius",
-              "default": "--tap-sys-radius-full"
-            },
-            {
-              "description": "The height of the radio button.",
-              "name": "--tap-radio-height",
-              "default": "--tap-sys-spacing-7"
-            },
-            {
-              "description": "The width of the radio button.",
-              "name": "--tap-radio-width",
-              "default": "--tap-sys-spacing-7"
-            },
-            {
-              "description": "The background color of the radio button.",
-              "name": "--tap-radio-background-color",
-              "default": "--tap-sys-color-surface-primary"
-            },
-            {
-              "description": "The border color of the radio button.",
-              "name": "--tap-radio-border",
-              "default": "--tap-sys-color-border-inverse-primary"
-            },
-            {
-              "description": "The background color of the checked radio button.",
-              "name": "--tap-radio-checked-background-color",
-              "default": "--tap-sys-color-surface-inverse-primary"
-            },
-            {
-              "description": "The color of the content inside the checked radio button.",
-              "name": "--tap-radio-checked-color",
-              "default": "--tap-sys-color-content-on-inverse"
-            },
-            {
-              "description": "The background color of the disabled radio button.",
-              "name": "--tap-radio-disabled-background-color",
-              "default": "--tap-sys-color-surface-disabled"
-            },
-            {
-              "description": "The border color of the disabled radio button.",
-              "name": "--tap-radio-disabled-border-color",
-              "default": "--tap-sys-color-surface-disabled"
-            },
-            {
-              "description": "The color of the content inside the disabled radio button.",
-              "name": "--tap-radio-disabled-color",
-              "default": "--tap-sys-color-content-disabled"
-            },
-            {
-              "description": "The height of the radio button input.",
-              "name": "--tap-radio-input-height",
-              "default": "--tap-sys-spacing-7"
-            },
-            {
-              "description": "The width of the radio button input.",
-              "name": "--tap-radio-input-width",
-              "default": "--tap-sys-spacing-7"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "The main container for the radio button.",
-              "name": "radio"
-            }
-          ],
-          "members": [
-            {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicates whether the radio button is checked.",
-              "name": "checked",
-              "default": "false",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicates whether the radio button is disabled.",
-              "name": "disabled",
-              "default": "false",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "The value of the radio button.",
-              "name": "value",
-              "default": "''",
-              "kind": "field"
-            }
-          ],
-          "events": [
-            {
-              "description": "Fires when a radio option is selected",
-              "name": "radio-input-change"
-            }
-          ],
-          "superclass": {
-            "name": "Radio",
-            "module": "/src/radio/radio"
-          },
-          "summary": "A radio button component.",
-          "tagName": "tap-radio",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapRadio",
-          "declaration": {
-            "name": "TapRadio",
-            "module": "src/radio/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-radio",
-          "declaration": {
-            "name": "TapRadio",
-            "module": "src/radio/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/radio-group/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapRadioGroup",
-          "cssProperties": [
-            {
-              "description": "The padding around the radio group.",
-              "name": "--tap-radio-group-padding",
-              "default": "--tap-sys-spacing-3"
-            },
-            {
-              "description": "The gap between radio buttons.",
-              "name": "--tap-radio-group-gap",
-              "default": "--tap-sys-spacing-3"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "The main container for the radio group.",
-              "name": "radio-group"
-            }
-          ],
-          "members": [
-            {
-              "type": {
-                "text": "'horizontal' | 'vertical'"
-              },
-              "description": "The direction in which the radio buttons are laid out. Defaults to `vertical`.",
-              "name": "direction",
-              "default": "'vertical'",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "The value of the selected radio button.",
-              "name": "value",
-              "default": "''",
-              "kind": "field"
-            }
-          ],
-          "events": [
-            {
-              "description": "Dispatched when the selected radio button changes.",
-              "name": "radio-group-change"
-            }
-          ],
-          "superclass": {
-            "name": "RadioGroup",
-            "module": "/src/radio-group/radio-group"
-          },
-          "summary": "A group of radio buttons.",
-          "tagName": "tap-radio-group",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapRadioGroup",
-          "declaration": {
-            "name": "TapRadioGroup",
-            "module": "src/radio-group/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-radio-group",
-          "declaration": {
-            "name": "TapRadioGroup",
-            "module": "src/radio-group/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/route/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapRoute",
-          "cssProperties": [
-            {
-              "description": "The font family used in the row.",
-              "name": "--tap-font-family",
-              "default": "--tap-sys-font-family"
-            },
-            {
-              "description": "The background color of the row.",
-              "name": "--tap-row-background-color",
-              "default": "--tap-palette-white"
-            },
-            {
-              "description": "The vertical padding for the leading slot.",
-              "name": "--tap-row-leading-vertical-padding"
-            },
-            {
-              "description": "The horizontal padding for the leading slot.",
-              "name": "--tap-row-leading-horizontal-padding",
-              "default": "--tap-sys-spacing-4"
-            },
-            {
-              "description": "The padding for the content slot.",
-              "name": "--tap-row-content-padding",
-              "default": "--tap-sys-spacing-4"
-            },
-            {
-              "description": "The vertical padding for the trailing slot.",
-              "name": "--tap-row-trailing-vertical-padding"
-            },
-            {
-              "description": "The horizontal padding for the trailing slot.",
-              "name": "--tap-row-trailing-horizontal-padding",
-              "default": "--tap-sys-spacing-4"
-            },
-            {
-              "description": "The height of the standard size row.",
-              "name": "--tap-row-standard-height",
-              "default": "--tap-sys-spacing-13"
-            },
-            {
-              "description": "The height of the compact size row.",
-              "name": "--tap-row-compact-height",
-              "default": "--tap-sys-spacing-12"
-            }
-          ],
-          "slots": [
-            {
-              "description": "the content slot of the row",
-              "name": "content"
-            }
-          ],
-          "members": [
-            {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "The size of the row. Defaults to `standard`.",
-              "name": "editable",
-              "default": "false",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "'circle'|'square'|'plus'"
-              },
-              "description": "Indicates whether the row is navigable (clickable).",
-              "name": "leading-icon",
-              "default": "'circle'",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "'first'|'middle'|'last'"
-              },
-              "description": "Indicates whether the row is navigable (clickable).",
-              "name": "ordinal",
-              "default": "'first'",
-              "kind": "field"
-            }
-          ],
-          "events": [
-            {
-              "description": "Dispatched when the content of any slot changes.",
-              "name": "slotchange"
-            }
-          ],
-          "superclass": {
-            "name": "Route",
-            "module": "/src/route/route"
-          },
-          "summary": "A route component.",
-          "tagName": "tap-route",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapRoute",
-          "declaration": {
-            "name": "TapRoute",
-            "module": "src/route/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-route",
-          "declaration": {
-            "name": "TapRoute",
-            "module": "src/route/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/row/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapRow",
-          "cssProperties": [
-            {
-              "description": "The font family used in the row.",
-              "name": "--tap-font-family",
-              "default": "--tap-sys-font-family"
-            },
-            {
-              "description": "The background color of the row.",
-              "name": "--tap-row-background-color",
-              "default": "--tap-palette-white"
-            },
-            {
-              "description": "The vertical padding for the leading slot.",
-              "name": "--tap-row-leading-vertical-padding"
-            },
-            {
-              "description": "The horizontal padding for the leading slot.",
-              "name": "--tap-row-leading-horizontal-padding",
-              "default": "--tap-sys-spacing-4"
-            },
-            {
-              "description": "The padding for the content slot.",
-              "name": "--tap-row-content-padding",
-              "default": "--tap-sys-spacing-4"
-            },
-            {
-              "description": "The vertical padding for the trailing slot.",
-              "name": "--tap-row-trailing-vertical-padding"
-            },
-            {
-              "description": "The horizontal padding for the trailing slot.",
-              "name": "--tap-row-trailing-horizontal-padding",
-              "default": "--tap-sys-spacing-4"
-            },
-            {
-              "description": "The height of the standard size row.",
-              "name": "--tap-row-standard-height",
-              "default": "--tap-sys-spacing-13"
-            },
-            {
-              "description": "The height of the compact size row.",
-              "name": "--tap-row-compact-height",
-              "default": "--tap-sys-spacing-12"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "The main container for the row.",
-              "name": "row"
-            },
-            {
-              "description": "The container for the leading slot.",
-              "name": "leading"
-            },
-            {
-              "description": "The container for the content slot.",
-              "name": "content"
-            },
-            {
-              "description": "The container for the trailing slot.",
-              "name": "trailing"
-            },
-            {
-              "description": "The container for the navigable icon.",
-              "name": "navigable"
-            }
-          ],
-          "slots": [
-            {
-              "description": "the leading slot of the row",
-              "name": "leading"
-            },
-            {
-              "description": "the content slot of the row",
-              "name": "content"
-            },
-            {
-              "description": "the trailing slot of the row",
-              "name": "trailing"
-            }
-          ],
-          "members": [
-            {
-              "type": {
-                "text": "'standard' | 'compact'"
-              },
-              "description": "The size of the row. Defaults to `standard`.",
-              "name": "size",
-              "default": "'compact'",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Indicates whether the row is navigable (clickable).",
-              "name": "navigable",
-              "default": "false",
-              "kind": "field"
-            }
-          ],
-          "events": [
-            {
-              "description": "Dispatched when the content of any slot changes.",
-              "name": "slotchange"
-            }
-          ],
-          "superclass": {
-            "name": "Row",
-            "module": "/src/row/row"
-          },
-          "summary": "A flexible row component with leading, content, and trailing slots.",
-          "tagName": "tap-row",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapRow",
-          "declaration": {
-            "name": "TapRow",
-            "module": "src/row/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-row",
-          "declaration": {
-            "name": "TapRow",
-            "module": "src/row/index.ts"
+            "name": "Input",
+            "module": "./input"
           }
         }
       ]
@@ -3166,6 +3153,271 @@
           "declaration": {
             "name": "TapSegmentedButtonGroup",
             "module": "src/segmented-button-group/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/row/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapRow",
+          "cssProperties": [
+            {
+              "description": "The font family used in the row.",
+              "name": "--tap-font-family",
+              "default": "--tap-sys-font-family"
+            },
+            {
+              "description": "The background color of the row.",
+              "name": "--tap-row-background-color",
+              "default": "--tap-palette-white"
+            },
+            {
+              "description": "The vertical padding for the leading slot.",
+              "name": "--tap-row-leading-vertical-padding"
+            },
+            {
+              "description": "The horizontal padding for the leading slot.",
+              "name": "--tap-row-leading-horizontal-padding",
+              "default": "--tap-sys-spacing-4"
+            },
+            {
+              "description": "The padding for the content slot.",
+              "name": "--tap-row-content-padding",
+              "default": "--tap-sys-spacing-4"
+            },
+            {
+              "description": "The vertical padding for the trailing slot.",
+              "name": "--tap-row-trailing-vertical-padding"
+            },
+            {
+              "description": "The horizontal padding for the trailing slot.",
+              "name": "--tap-row-trailing-horizontal-padding",
+              "default": "--tap-sys-spacing-4"
+            },
+            {
+              "description": "The height of the standard size row.",
+              "name": "--tap-row-standard-height",
+              "default": "--tap-sys-spacing-13"
+            },
+            {
+              "description": "The height of the compact size row.",
+              "name": "--tap-row-compact-height",
+              "default": "--tap-sys-spacing-12"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The main container for the row.",
+              "name": "row"
+            },
+            {
+              "description": "The container for the leading slot.",
+              "name": "leading"
+            },
+            {
+              "description": "The container for the content slot.",
+              "name": "content"
+            },
+            {
+              "description": "The container for the trailing slot.",
+              "name": "trailing"
+            },
+            {
+              "description": "The container for the navigable icon.",
+              "name": "navigable"
+            }
+          ],
+          "slots": [
+            {
+              "description": "the leading slot of the row",
+              "name": "leading"
+            },
+            {
+              "description": "the content slot of the row",
+              "name": "content"
+            },
+            {
+              "description": "the trailing slot of the row",
+              "name": "trailing"
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "'standard' | 'compact'"
+              },
+              "description": "The size of the row. Defaults to `standard`.",
+              "name": "size",
+              "default": "'compact'",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Indicates whether the row is navigable (clickable).",
+              "name": "navigable",
+              "default": "false",
+              "kind": "field"
+            }
+          ],
+          "events": [
+            {
+              "description": "Dispatched when the content of any slot changes.",
+              "name": "slotchange"
+            }
+          ],
+          "superclass": {
+            "name": "Row",
+            "module": "/src/row/row"
+          },
+          "summary": "A flexible row component with leading, content, and trailing slots.",
+          "tagName": "tap-row",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapRow",
+          "declaration": {
+            "name": "TapRow",
+            "module": "src/row/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-row",
+          "declaration": {
+            "name": "TapRow",
+            "module": "src/row/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/route/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapRoute",
+          "cssProperties": [
+            {
+              "description": "The font family used in the row.",
+              "name": "--tap-font-family",
+              "default": "--tap-sys-font-family"
+            },
+            {
+              "description": "The background color of the row.",
+              "name": "--tap-row-background-color",
+              "default": "--tap-palette-white"
+            },
+            {
+              "description": "The vertical padding for the leading slot.",
+              "name": "--tap-row-leading-vertical-padding"
+            },
+            {
+              "description": "The horizontal padding for the leading slot.",
+              "name": "--tap-row-leading-horizontal-padding",
+              "default": "--tap-sys-spacing-4"
+            },
+            {
+              "description": "The padding for the content slot.",
+              "name": "--tap-row-content-padding",
+              "default": "--tap-sys-spacing-4"
+            },
+            {
+              "description": "The vertical padding for the trailing slot.",
+              "name": "--tap-row-trailing-vertical-padding"
+            },
+            {
+              "description": "The horizontal padding for the trailing slot.",
+              "name": "--tap-row-trailing-horizontal-padding",
+              "default": "--tap-sys-spacing-4"
+            },
+            {
+              "description": "The height of the standard size row.",
+              "name": "--tap-row-standard-height",
+              "default": "--tap-sys-spacing-13"
+            },
+            {
+              "description": "The height of the compact size row.",
+              "name": "--tap-row-compact-height",
+              "default": "--tap-sys-spacing-12"
+            }
+          ],
+          "slots": [
+            {
+              "description": "the content slot of the row",
+              "name": "content"
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "The size of the row. Defaults to `standard`.",
+              "name": "editable",
+              "default": "false",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "'circle'|'square'|'plus'"
+              },
+              "description": "Indicates whether the row is navigable (clickable).",
+              "name": "leading-icon",
+              "default": "'circle'",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "'first'|'middle'|'last'"
+              },
+              "description": "Indicates whether the row is navigable (clickable).",
+              "name": "ordinal",
+              "default": "'first'",
+              "kind": "field"
+            }
+          ],
+          "events": [
+            {
+              "description": "Dispatched when the content of any slot changes.",
+              "name": "slotchange"
+            }
+          ],
+          "superclass": {
+            "name": "Route",
+            "module": "/src/route/route"
+          },
+          "summary": "A route component.",
+          "tagName": "tap-route",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapRoute",
+          "declaration": {
+            "name": "TapRoute",
+            "module": "src/route/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-route",
+          "declaration": {
+            "name": "TapRoute",
+            "module": "src/route/index.ts"
           }
         }
       ]
@@ -3382,100 +3634,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/step-indicator/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapStepIndicator",
-          "cssProperties": [
-            {
-              "description": "The size of each step.",
-              "name": "--tap-step-indicator-step-size",
-              "default": "--tap-sys-spacing-5"
-            },
-            {
-              "description": "The border radius of each step.",
-              "name": "--tap-step-indicator-step-border-radius",
-              "default": "--tap-sys-radius-full"
-            },
-            {
-              "description": "The border color of each step.",
-              "name": "--tap-step-indicator-step-border-color",
-              "default": "--tap-sys-color-surface-primary"
-            },
-            {
-              "description": "The background color of each step.",
-              "name": "--tap-step-indicator-step-background-color",
-              "default": "--tap-sys-color-border-primary"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "The container for the steps.",
-              "name": "steps"
-            },
-            {
-              "description": "Each individual step.",
-              "name": "step"
-            }
-          ],
-          "members": [
-            {
-              "type": {
-                "text": "number"
-              },
-              "description": "The total number of steps. Defaults to 2.",
-              "name": "steps",
-              "default": "2",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "number"
-              },
-              "description": "The current step index. Defaults to 0.",
-              "name": "current",
-              "default": "0",
-              "kind": "field"
-            }
-          ],
-          "events": [
-            {
-              "description": "Step indicator change event",
-              "name": "tap-step-indicator-change"
-            }
-          ],
-          "superclass": {
-            "name": "StepIndicator",
-            "module": "/src/step-indicator/step-indicator.js"
-          },
-          "summary": "A step indicator component.",
-          "tagName": "tap-step-indicator",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapStepIndicator",
-          "declaration": {
-            "name": "TapStepIndicator",
-            "module": "src/step-indicator/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-step-indicator",
-          "declaration": {
-            "name": "TapStepIndicator",
-            "module": "src/step-indicator/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/stepper/index.ts",
       "declarations": [
         {
@@ -3628,93 +3786,94 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/switch/index.ts",
+      "path": "src/step-indicator/index.ts",
       "declarations": [
         {
           "kind": "class",
-          "description": "### Example\n\n##### Basic Usage\n\n```html\n<tap-switch></tap-switch>\n```\n\n##### Checked State\n\n```html\n<tap-switch checked></tap-switch>\n```\n\n##### Disabled State\n\n```html\n<tap-switch disabled></tap-switch>\n```",
-          "name": "TapSwitch",
+          "description": "",
+          "name": "TapStepIndicator",
           "cssProperties": [
             {
-              "description": "The background color of the switch.",
-              "name": "--tap-switch-background-color",
-              "default": "--tap-sys-color-surface-tertiary"
+              "description": "The size of each step.",
+              "name": "--tap-step-indicator-step-size",
+              "default": "--tap-sys-spacing-5"
             },
             {
-              "description": "The background color of the checked switch.",
-              "name": "--tap-switch-checked-background-color",
-              "default": "--tap-sys-color-surface-inverse-primary"
+              "description": "The border radius of each step.",
+              "name": "--tap-step-indicator-step-border-radius",
+              "default": "--tap-sys-radius-full"
             },
             {
-              "description": "The background color of the disabled switch.",
-              "name": "--tap-switch-disabled-background-color",
-              "default": "var(--tap-sys-color-surface-disabled)"
+              "description": "The border color of each step.",
+              "name": "--tap-step-indicator-step-border-color",
+              "default": "--tap-sys-color-surface-primary"
+            },
+            {
+              "description": "The background color of each step.",
+              "name": "--tap-step-indicator-step-background-color",
+              "default": "--tap-sys-color-border-primary"
             }
           ],
           "cssParts": [
             {
-              "description": "The container that wraps the switch component.",
-              "name": "switch"
+              "description": "The container for the steps.",
+              "name": "steps"
             },
             {
-              "description": "The input element that represents the switch's toggle functionality.",
-              "name": "input"
-            },
-            {
-              "description": "The slider element that visually represents the switch's state.",
-              "name": "slider"
+              "description": "Each individual step.",
+              "name": "step"
             }
           ],
           "members": [
             {
               "type": {
-                "text": "boolean"
+                "text": "number"
               },
-              "description": "Whether the switch is in the checked (on) state.",
-              "name": "checked",
+              "description": "The total number of steps. Defaults to 2.",
+              "name": "steps",
+              "default": "2",
               "kind": "field"
             },
             {
               "type": {
-                "text": "boolean"
+                "text": "number"
               },
-              "description": "Whether the switch is disabled and non-interactive.",
-              "name": "disabled",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "The value associated with the switch when it is checked.",
-              "name": "value",
+              "description": "The current step index. Defaults to 0.",
+              "name": "current",
+              "default": "0",
               "kind": "field"
             }
           ],
+          "events": [
+            {
+              "description": "Step indicator change event",
+              "name": "tap-step-indicator-change"
+            }
+          ],
           "superclass": {
-            "name": "Switch",
-            "module": "/src/switch/switch"
+            "name": "StepIndicator",
+            "module": "/src/step-indicator/step-indicator.js"
           },
-          "summary": "A switch component for toggling between on and off states.",
-          "tagName": "tap-switch",
+          "summary": "A step indicator component.",
+          "tagName": "tap-step-indicator",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapSwitch",
+          "name": "TapStepIndicator",
           "declaration": {
-            "name": "TapSwitch",
-            "module": "src/switch/index.ts"
+            "name": "TapStepIndicator",
+            "module": "src/step-indicator/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-switch",
+          "name": "tap-step-indicator",
           "declaration": {
-            "name": "TapSwitch",
-            "module": "src/switch/index.ts"
+            "name": "TapStepIndicator",
+            "module": "src/step-indicator/index.ts"
           }
         }
       ]
@@ -3904,6 +4063,14 @@
             {
               "description": "The caption for the text field.",
               "name": "caption"
+            },
+            {
+              "description": "The leading for the text field.",
+              "name": "leading"
+            },
+            {
+              "description": "The trailing for the text field.",
+              "name": "trailing"
             }
           ],
           "slots": [
@@ -3982,20 +4149,19 @@
             },
             {
               "type": {
-                "text": "string"
+                "text": "'none'|'text'|'tel'|'url'|'email'|'numeric'|'decimal'|'search'"
               },
               "description": "The input mode for the text field.",
               "name": "inputmode",
-              "default": "''",
               "kind": "field"
             },
             {
               "type": {
-                "text": "string"
+                "text": "'text'|'date'|'month'|'time'|'week'|'datetime-local'|'number'|'password'|'search'|'tel'|'url'|'email'"
               },
               "description": "The type of the text field.",
               "name": "type",
-              "default": "''",
+              "default": "'text'",
               "kind": "field"
             },
             {
@@ -4005,6 +4171,54 @@
               "description": "The autocomplete attribute for the text field.",
               "name": "autocomplete",
               "default": "''",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "number"
+              },
+              "description": "The maximum value of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.",
+              "name": "max",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "number"
+              },
+              "description": "The minimum value of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.",
+              "name": "min",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "number"
+              },
+              "description": "The maximum length of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.",
+              "name": "maxLength",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "number"
+              },
+              "description": "The minimum length of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.",
+              "name": "minLength",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The allowed regex pattern of the text field; only applying to text fields with these types: `text`, `search`, `url`, `tel`, `email`, `password`.",
+              "name": "pattern",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "number"
+              },
+              "description": "The step of the text field; only applying to text fields with these types: `date`, `month`, `week`, `time`, `datetime-local`, `number`.",
+              "name": "step",
               "kind": "field"
             }
           ],
@@ -4032,6 +4246,264 @@
           "declaration": {
             "name": "TapTextField",
             "module": "src/text-field/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/toast/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapToast",
+          "cssProperties": [
+            {
+              "description": "The vertical padding inside the toast.",
+              "name": "--tap-toast-vertical-padding",
+              "default": "--tap-sys-spacing-5"
+            },
+            {
+              "description": "The horizontal padding inside the toast.",
+              "name": "--tap-toast-horizontal-padding",
+              "default": "--tap-sys-spacing-5"
+            },
+            {
+              "description": "The default background color of the toast.",
+              "name": "--tap-toast-background-color-default",
+              "default": "--tap-sys-color-surface-inverse-secondary"
+            },
+            {
+              "description": "The default text color of the toast.",
+              "name": "--tap-toast-color-default",
+              "default": "--tap-sys-color-content-on-inverse"
+            },
+            {
+              "description": "The background color of the success variant.",
+              "name": "--tap-toast-background-color-success",
+              "default": "--tap-sys-color-surface-positive"
+            },
+            {
+              "description": "The text color of the success variant.",
+              "name": "--tap-toast-color-success",
+              "default": "--tap-sys-color-content-on-inverse"
+            },
+            {
+              "description": "The background color of the error variant.",
+              "name": "--tap-toast-background-color-error",
+              "default": "--tap-sys-color-surface-negative"
+            },
+            {
+              "description": "The text color of the error variant.",
+              "name": "--tap-toast-color-error",
+              "default": "--tap-sys-color-content-on-inverse"
+            },
+            {
+              "description": "The background color of the info variant.",
+              "name": "--tap-toast-background-color-info",
+              "default": "--tap-sys-color-surface-accent"
+            },
+            {
+              "description": "The text color of the info variant.",
+              "name": "--tap-toast-color-info",
+              "default": "--tap-sys-color-content-on-inverse"
+            },
+            {
+              "description": "The background color of the warning variant.",
+              "name": "--tap-toast-background-color-warning",
+              "default": "--tap-sys-color-surface-warning"
+            },
+            {
+              "description": "The text color of the warning variant.",
+              "name": "--tap-toast-color-warning",
+              "default": "--tap-sys-color-content-primary"
+            },
+            {
+              "description": "The background color of the inverse variant.",
+              "name": "--tap-toast-background-color-inverse",
+              "default": "--tap-sys-color-surface-inverse-secondary"
+            },
+            {
+              "description": "The text color of the inverse variant.",
+              "name": "--tap-toast-color-inverse",
+              "default": "--tap-sys-color-content-on-inverse"
+            },
+            {
+              "description": "The color of the dismiss button.",
+              "name": "--tap-toast-dismiss-color",
+              "default": "'inherit'"
+            },
+            {
+              "description": "The background color of the dismiss button.",
+              "name": "--tap-toast-dismiss-background-color",
+              "default": "transparent"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The main container for the toast notification.",
+              "name": "toast"
+            },
+            {
+              "description": "The container for the icon.",
+              "name": "icon"
+            },
+            {
+              "description": "The container for the message.",
+              "name": "message"
+            },
+            {
+              "description": "The container for the dismiss button.",
+              "name": "dismiss"
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Indicates whether to show the dismiss button.",
+              "name": "show-dismiss-button",
+              "default": "false",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "'success' | 'error' | 'info' | 'warning' | 'inverse'"
+              },
+              "description": "The variant of the toast notification. Defaults to `inverse`.",
+              "name": "variant",
+              "default": "'inverse'",
+              "kind": "field"
+            }
+          ],
+          "events": [
+            {
+              "description": "Fires when the toast dismiss button is clicked",
+              "name": "dismiss"
+            }
+          ],
+          "superclass": {
+            "name": "Toast",
+            "module": "/src/toast/toast"
+          },
+          "summary": "A toast notification component.",
+          "tagName": "tap-toast",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapToast",
+          "declaration": {
+            "name": "TapToast",
+            "module": "src/toast/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-toast",
+          "declaration": {
+            "name": "TapToast",
+            "module": "src/toast/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/tooltip/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "TapTooltip",
+          "slots": [
+            {
+              "type": {
+                "text": "label"
+              },
+              "description": "the label of the tooltip",
+              "name": ""
+            },
+            {
+              "type": {
+                "text": "target-element"
+              },
+              "description": "the tooltip's target element",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "'top'| 'top-start'| 'top-end'| 'right'| 'right-start'| 'right-end'| 'bottom'| 'bottom-start'| 'bottom-end'| 'left'| 'left-start'| 'left-end'"
+              },
+              "description": "the position of the tooltip",
+              "name": "placement",
+              "default": "'top'",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "is the tooltip dismissible?",
+              "name": "dismissible",
+              "default": "true",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "tooltip's width",
+              "name": "width",
+              "default": "'0'",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "tooltip's arrow offset",
+              "name": "arrow-offset",
+              "default": "''",
+              "kind": "field"
+            }
+          ],
+          "events": [
+            {
+              "description": "Fires when the toast dismiss button is clicked",
+              "name": "dismiss"
+            }
+          ],
+          "superclass": {
+            "name": "Tooltip",
+            "module": "/src/tooltip/tooltip"
+          },
+          "summary": "A tooltip component for showing more info",
+          "tagName": "tap-tooltip",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapTooltip",
+          "declaration": {
+            "name": "TapTooltip",
+            "module": "src/tooltip/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-tooltip",
+          "declaration": {
+            "name": "TapTooltip",
+            "module": "src/tooltip/index.ts"
           }
         }
       ]
@@ -4318,110 +4790,78 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/toast/index.ts",
+      "path": "src/radio/index.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TapToast",
+          "name": "TapRadio",
           "cssProperties": [
             {
-              "description": "The vertical padding inside the toast.",
-              "name": "--tap-toast-vertical-padding",
-              "default": "--tap-sys-spacing-5"
+              "description": "The border radius of the radio button.",
+              "name": "--tap-radio-border-radius",
+              "default": "--tap-sys-radius-full"
             },
             {
-              "description": "The horizontal padding inside the toast.",
-              "name": "--tap-toast-horizontal-padding",
-              "default": "--tap-sys-spacing-5"
+              "description": "The height of the radio button.",
+              "name": "--tap-radio-height",
+              "default": "--tap-sys-spacing-7"
             },
             {
-              "description": "The default background color of the toast.",
-              "name": "--tap-toast-background-color-default",
-              "default": "--tap-sys-color-surface-inverse-secondary"
+              "description": "The width of the radio button.",
+              "name": "--tap-radio-width",
+              "default": "--tap-sys-spacing-7"
             },
             {
-              "description": "The default text color of the toast.",
-              "name": "--tap-toast-color-default",
+              "description": "The background color of the radio button.",
+              "name": "--tap-radio-background-color",
+              "default": "--tap-sys-color-surface-primary"
+            },
+            {
+              "description": "The border color of the radio button.",
+              "name": "--tap-radio-border",
+              "default": "--tap-sys-color-border-inverse-primary"
+            },
+            {
+              "description": "The background color of the checked radio button.",
+              "name": "--tap-radio-checked-background-color",
+              "default": "--tap-sys-color-surface-inverse-primary"
+            },
+            {
+              "description": "The color of the content inside the checked radio button.",
+              "name": "--tap-radio-checked-color",
               "default": "--tap-sys-color-content-on-inverse"
             },
             {
-              "description": "The background color of the success variant.",
-              "name": "--tap-toast-background-color-success",
-              "default": "--tap-sys-color-surface-positive"
+              "description": "The background color of the disabled radio button.",
+              "name": "--tap-radio-disabled-background-color",
+              "default": "--tap-sys-color-surface-disabled"
             },
             {
-              "description": "The text color of the success variant.",
-              "name": "--tap-toast-color-success",
-              "default": "--tap-sys-color-content-on-inverse"
+              "description": "The border color of the disabled radio button.",
+              "name": "--tap-radio-disabled-border-color",
+              "default": "--tap-sys-color-surface-disabled"
             },
             {
-              "description": "The background color of the error variant.",
-              "name": "--tap-toast-background-color-error",
-              "default": "--tap-sys-color-surface-negative"
+              "description": "The color of the content inside the disabled radio button.",
+              "name": "--tap-radio-disabled-color",
+              "default": "--tap-sys-color-content-disabled"
             },
             {
-              "description": "The text color of the error variant.",
-              "name": "--tap-toast-color-error",
-              "default": "--tap-sys-color-content-on-inverse"
+              "description": "The height of the radio button input.",
+              "name": "--tap-radio-input-height",
+              "default": "--tap-sys-spacing-7"
             },
             {
-              "description": "The background color of the info variant.",
-              "name": "--tap-toast-background-color-info",
-              "default": "--tap-sys-color-surface-accent"
-            },
-            {
-              "description": "The text color of the info variant.",
-              "name": "--tap-toast-color-info",
-              "default": "--tap-sys-color-content-on-inverse"
-            },
-            {
-              "description": "The background color of the warning variant.",
-              "name": "--tap-toast-background-color-warning",
-              "default": "--tap-sys-color-surface-warning"
-            },
-            {
-              "description": "The text color of the warning variant.",
-              "name": "--tap-toast-color-warning",
-              "default": "--tap-sys-color-content-primary"
-            },
-            {
-              "description": "The background color of the inverse variant.",
-              "name": "--tap-toast-background-color-inverse",
-              "default": "--tap-sys-color-surface-inverse-secondary"
-            },
-            {
-              "description": "The text color of the inverse variant.",
-              "name": "--tap-toast-color-inverse",
-              "default": "--tap-sys-color-content-on-inverse"
-            },
-            {
-              "description": "The color of the dismiss button.",
-              "name": "--tap-toast-dismiss-color",
-              "default": "'inherit'"
-            },
-            {
-              "description": "The background color of the dismiss button.",
-              "name": "--tap-toast-dismiss-background-color",
-              "default": "transparent"
+              "description": "The width of the radio button input.",
+              "name": "--tap-radio-input-width",
+              "default": "--tap-sys-spacing-7"
             }
           ],
           "cssParts": [
             {
-              "description": "The main container for the toast notification.",
-              "name": "toast"
-            },
-            {
-              "description": "The container for the icon.",
-              "name": "icon"
-            },
-            {
-              "description": "The container for the message.",
-              "name": "message"
-            },
-            {
-              "description": "The container for the dismiss button.",
-              "name": "dismiss"
+              "description": "The main container for the radio button.",
+              "name": "radio"
             }
           ],
           "members": [
@@ -4429,147 +4869,153 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Indicates whether to show the dismiss button.",
-              "name": "show-dismiss-button",
+              "description": "Indicates whether the radio button is checked.",
+              "name": "checked",
               "default": "false",
               "kind": "field"
             },
             {
               "type": {
-                "text": "'success' | 'error' | 'info' | 'warning' | 'inverse'"
-              },
-              "description": "The variant of the toast notification. Defaults to `inverse`.",
-              "name": "variant",
-              "default": "'inverse'",
-              "kind": "field"
-            }
-          ],
-          "events": [
-            {
-              "description": "Fires when the toast dismiss button is clicked",
-              "name": "dismiss"
-            }
-          ],
-          "superclass": {
-            "name": "Toast",
-            "module": "/src/toast/toast"
-          },
-          "summary": "A toast notification component.",
-          "tagName": "tap-toast",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "TapToast",
-          "declaration": {
-            "name": "TapToast",
-            "module": "src/toast/index.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "tap-toast",
-          "declaration": {
-            "name": "TapToast",
-            "module": "src/toast/index.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/tooltip/index.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "TapTooltip",
-          "slots": [
-            {
-              "type": {
-                "text": "label"
-              },
-              "description": "the label of the tooltip",
-              "name": ""
-            },
-            {
-              "type": {
-                "text": "target-element"
-              },
-              "description": "the tooltip's target element",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "type": {
-                "text": "'top'| 'top-start'| 'top-end'| 'right'| 'right-start'| 'right-end'| 'bottom'| 'bottom-start'| 'bottom-end'| 'left'| 'left-start'| 'left-end'"
-              },
-              "description": "the position of the tooltip",
-              "name": "placement",
-              "default": "'top'",
-              "kind": "field"
-            },
-            {
-              "type": {
                 "text": "boolean"
               },
-              "description": "is the tooltip dismissible?",
-              "name": "dismissible",
-              "default": "true",
+              "description": "Indicates whether the radio button is disabled.",
+              "name": "disabled",
+              "default": "false",
               "kind": "field"
             },
             {
               "type": {
                 "text": "string"
               },
-              "description": "tooltip's width",
-              "name": "width",
-              "default": "'0'",
-              "kind": "field"
-            },
-            {
-              "type": {
-                "text": "string"
-              },
-              "description": "tooltip's arrow offset",
-              "name": "arrow-offset",
+              "description": "The value of the radio button.",
+              "name": "value",
               "default": "''",
               "kind": "field"
             }
           ],
           "events": [
             {
-              "description": "Fires when the toast dismiss button is clicked",
-              "name": "dismiss"
+              "description": "Fires when a radio option is selected",
+              "name": "radio-input-change"
             }
           ],
           "superclass": {
-            "name": "Tooltip",
-            "module": "/src/tooltip/tooltip"
+            "name": "Radio",
+            "module": "/src/radio/radio"
           },
-          "summary": "A tooltip component for showing more info",
-          "tagName": "tap-tooltip",
+          "summary": "A radio button component.",
+          "tagName": "tap-radio",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "TapTooltip",
+          "name": "TapRadio",
           "declaration": {
-            "name": "TapTooltip",
-            "module": "src/tooltip/index.ts"
+            "name": "TapRadio",
+            "module": "src/radio/index.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "tap-tooltip",
+          "name": "tap-radio",
           "declaration": {
-            "name": "TapTooltip",
-            "module": "src/tooltip/index.ts"
+            "name": "TapRadio",
+            "module": "src/radio/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/switch/index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "### Example\n\n##### Basic Usage\n\n```html\n<tap-switch></tap-switch>\n```\n\n##### Checked State\n\n```html\n<tap-switch checked></tap-switch>\n```\n\n##### Disabled State\n\n```html\n<tap-switch disabled></tap-switch>\n```",
+          "name": "TapSwitch",
+          "cssProperties": [
+            {
+              "description": "The background color of the switch.",
+              "name": "--tap-switch-background-color",
+              "default": "--tap-sys-color-surface-tertiary"
+            },
+            {
+              "description": "The background color of the checked switch.",
+              "name": "--tap-switch-checked-background-color",
+              "default": "--tap-sys-color-surface-inverse-primary"
+            },
+            {
+              "description": "The background color of the disabled switch.",
+              "name": "--tap-switch-disabled-background-color",
+              "default": "var(--tap-sys-color-surface-disabled)"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The container that wraps the switch component.",
+              "name": "switch"
+            },
+            {
+              "description": "The input element that represents the switch's toggle functionality.",
+              "name": "input"
+            },
+            {
+              "description": "The slider element that visually represents the switch's state.",
+              "name": "slider"
+            }
+          ],
+          "members": [
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the switch is in the checked (on) state.",
+              "name": "checked",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the switch is disabled and non-interactive.",
+              "name": "disabled",
+              "kind": "field"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The value associated with the switch when it is checked.",
+              "name": "value",
+              "kind": "field"
+            }
+          ],
+          "superclass": {
+            "name": "Switch",
+            "module": "/src/switch/switch"
+          },
+          "summary": "A switch component for toggling between on and off states.",
+          "tagName": "tap-switch",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TapSwitch",
+          "declaration": {
+            "name": "TapSwitch",
+            "module": "src/switch/index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "tap-switch",
+          "declaration": {
+            "name": "TapSwitch",
+            "module": "src/switch/index.ts"
           }
         }
       ]

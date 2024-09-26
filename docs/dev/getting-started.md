@@ -169,7 +169,7 @@ Each property has a **custom property name** and a **declaration value** with th
 
 The declaration value is Tapsi design system tokens and the custom property name can be set by component users. You need
 to set value for the custom property name is a global CSS file in your project. The list of these tokens are available
-in our [CSS Tokens Documentation](/references/components-tokens). Additionally, each component has it's own tokens in the "CSS Properties" section in
+in our [CSS Tokens Documentation](/dev/references/components-tokens). Additionally, each component has it's own tokens in the "CSS Properties" section in
 their documentation.
 
 ### CSS Parts
@@ -177,7 +177,7 @@ their documentation.
 
 Elements in this library components has the `part` attribute. This attribute let the users be able to modify the styles
 of a component from outside using the [`::part` CSS pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/::part).
-All you need to do is to visit our [CSS part documentation](/references/css-parts) and modify the style of the component. Also, the documentation
+All you need to do is to visit our [CSS part documentation](/dev/references/css-parts) and modify the style of the component. Also, the documentation
 of each component contains these CSS parts in "CSS Parts" section.
 
 Here is an example of modifying the style of the `modal` component using `part`:

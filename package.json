@@ -17,7 +17,7 @@
     "lint": "pnpm eslint ./src/**/* --fix",
     "fmt": "pnpm prettier src/**/* --write --fix",
     "docs:dev": "cp ./dist/custom-elements.json ./docs/dev/components/custom-elements.json && vitepress dev docs",
-    "docs:build": "vitepress build docs && cp ./dist/custom-elements.json ./docs/.vitepress/dist/components/custom-elements.json && cp ./docs/components/elements-config.json ./docs/.vitepress/dist/components/elements-config.json",
+    "docs:build": "vitepress build docs && cp ./dist/custom-elements.json ./docs/.vitepress/dist/dev/components/custom-elements.json && cp ./docs/dev/components/elements-config.json ./docs/.vitepress/dist/dev/components/elements-config.json",
     "docs:preview": "vitepress preview docs",
     "analyze": "cem analyze  --litelement --outdir dist --globs \"src/**/index.ts\""
   },
