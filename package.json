@@ -62,7 +62,6 @@
   "dependencies": {
     "@floating-ui/dom": "^1.6.4",
     "lit": "^3.1.2",
-    "tslib": "^2.4.0",
-    "vue": "^3.5.9"
+    "tslib": "^2.4.0"
   }
 }
