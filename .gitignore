@@ -65,3 +65,5 @@ storybook-static
 docs/.vitepress/dist
 docs/.vitepress/cache
 docs/components/custom-elements.json
+
+react-components
