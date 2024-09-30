@@ -1,10 +1,10 @@
-import getColorTokensReferenceContent from "../utils/getColorTokensReferenceContent";
-import getCssPartsReferenceContent from "../utils/getCssPartsReferenceContent";
-import getComponentsTokensReferenceContent from "../utils/getComponentsTokensReferenceContent";
-import getRadiusTokensReferenceContent from "../utils/getRadiusTokensReferenceContent";
-import getSpacingTokensReferenceContent from "../utils/getSpacingTokensReferenceContent";
-import getStrokeTokensReferenceContent from "../utils/getStrokeTokensReferenceContent";
-import getTypographyTokensReferenceContent from "../utils/getTypographyTokensReferenceContent";
+import getColorTokensReferenceContent from "../../utils/getColorTokensReferenceContent";
+import getCssPartsReferenceContent from "../../utils/getCssPartsReferenceContent";
+import getComponentsTokensReferenceContent from "../../utils/getComponentsTokensReferenceContent";
+import getRadiusTokensReferenceContent from "../../utils/getRadiusTokensReferenceContent";
+import getSpacingTokensReferenceContent from "../../utils/getSpacingTokensReferenceContent";
+import getStrokeTokensReferenceContent from "../../utils/getStrokeTokensReferenceContent";
+import getTypographyTokensReferenceContent from "../../utils/getTypographyTokensReferenceContent";
 
 export default {
   paths() {
