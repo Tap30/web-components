@@ -1,15 +1,15 @@
-import type {CustomElement, Package} from "custom-elements-manifest";
+import type { CustomElement, Package } from "custom-elements-manifest";
 import fs from "node:fs";
 
-const file = fs.readFileSync('dist/custom-elements.json');
+const file = fs.readFileSync("dist/custom-elements.json");
 const manifest = JSON.parse(file.toString()) as Package;
 
 const getComponentsTokensReferenceContent = () => {
-  let content = '# Components Tokens\n'
+  let content = "# Components Tokens\n";
 
   manifest.modules
-    .filter((module) => !!module.declarations?.length)
-    .forEach((module) => {
+    .filter(module => !!module.declarations?.length)
+    .forEach(module => {
       if (!module.exports)
         throw new Error(`Module has no export: ${module.path}`);
 
@@ -18,24 +18,22 @@ const getComponentsTokensReferenceContent = () => {
       if (
         !component ||
         !component.tagName ||
-        !component.tagName.startsWith('tap')
+        !component.tagName.startsWith("tap")
       ) {
         return;
       }
 
-
-      if (!!component.cssProperties?.length) {
+      if (component.cssProperties?.length) {
         content += `\n## \`${component.tagName}\`\n\n`;
-        content += '| Name | Default Value | Description |\n';
-        content += '| ---- | ---- | ---- |\n';
+        content += "| Name | Default Value | Description |\n";
+        content += "| ---- | ---- | ---- |\n";
 
-        component.cssProperties.forEach((cssPart) => {
-          content += `| \`${cssPart.name}\` | \`${cssPart.default}\`| ${cssPart.description || '-'} |\n`;
+        component.cssProperties.forEach(cssPart => {
+          content += `| \`${cssPart.name}\` | \`${cssPart.default}\`| ${cssPart.description || "-"} |\n`;
         });
       }
-
     });
   return content;
-}
+};
 
 export default getComponentsTokensReferenceContent;

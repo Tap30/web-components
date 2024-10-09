@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 /* variables:
  * --tap-notice-[property]
@@ -132,7 +132,7 @@ export default css`
     margin-top: var(--tap-notice-actions-margin-top, var(--tap-sys-spacing-4));
   }
 
-  :host([variant='inverse']) .notice {
+  :host([variant="inverse"]) .notice {
     color: var(
       --tap-notice-inverse-high-color,
       var(--tap-sys-color-content-on-inverse)
@@ -142,7 +142,7 @@ export default css`
       var(--tap-sys-color-surface-inverse-primary)
     );
   }
-  :host([variant='inverse'][priority='low']) .notice {
+  :host([variant="inverse"][priority="low"]) .notice {
     color: var(
       --tap-notice-inverse-low-color,
       var(--tap-sys-color-content-primary)
@@ -153,7 +153,7 @@ export default css`
     );
   }
 
-  :host([variant='success']) .notice {
+  :host([variant="success"]) .notice {
     color: var(
       --tap-notice-success-high-color,
       var(--tap-sys-color-content-on-inverse)
@@ -163,7 +163,7 @@ export default css`
       var(--tap-sys-color-surface-positive)
     );
   }
-  :host([variant='success'][priority='low']) .notice {
+  :host([variant="success"][priority="low"]) .notice {
     color: var(
       --tap-notice-success-low-color,
       var(--tap-sys-color-content-positive)
@@ -173,7 +173,7 @@ export default css`
       var(--tap-sys-color-surface-positive-light)
     );
   }
-  :host([variant='warning']) .notice {
+  :host([variant="warning"]) .notice {
     color: var(
       --tap-notice-warning-high-color,
       var(--tap-sys-color-content-primary)
@@ -183,7 +183,7 @@ export default css`
       var(--tap-sys-color-surface-warning)
     );
   }
-  :host([variant='warning'][priority='low']) .notice {
+  :host([variant="warning"][priority="low"]) .notice {
     color: var(
       --tap-notice-warning-low-color,
       var(--tap-sys-color-content-warning)
@@ -193,7 +193,7 @@ export default css`
       var(--tap-sys-color-surface-warning-light)
     );
   }
-  :host([variant='error']) .notice {
+  :host([variant="error"]) .notice {
     color: var(
       --tap-notice-error-high-color,
       var(--tap-sys-color-content-on-inverse)
@@ -203,7 +203,7 @@ export default css`
       var(--tap-sys-color-surface-negative)
     );
   }
-  :host([variant='error'][priority='low']) .notice {
+  :host([variant="error"][priority="low"]) .notice {
     color: var(
       --tap-notice-error-low-color,
       var(--tap-sys-color-content-negative)
@@ -213,7 +213,7 @@ export default css`
       var(--tap-sys-color-surface-negative-light)
     );
   }
-  :host([variant='info']) .notice {
+  :host([variant="info"]) .notice {
     color: var(
       --tap-notice-info-high-color,
       var(--tap-sys-color-content-on-inverse)
@@ -223,7 +223,7 @@ export default css`
       var(--tap-sys-color-surface-accent)
     );
   }
-  :host([variant='info'][priority='low']) .notice {
+  :host([variant="info"][priority="low"]) .notice {
     color: var(
       --tap-notice-info-low-color,
       var(--tap-sys-color-content-accent)
@@ -236,19 +236,19 @@ export default css`
 
   /* text style of the "low priority" mode is selected by a higher-priority selector */
   /* without this higher priority selector, the texts would be the same color as the icons */
-  :host([priority='low']) .notice > div.content-root > p.message {
+  :host([priority="low"]) .notice > div.content-root > p.message {
     color: var(
       --tap-notice-message-low-color,
       var(--tap-sys-color-content-secondary)
     );
   }
-  :host([priority='low']) .notice > button.dismiss {
+  :host([priority="low"]) .notice > button.dismiss {
     color: var(
       --tap-notice-dismiss-low-color,
       var(--tap-sys-color-content-secondary)
     );
   }
-  :host([priority='low']) .notice > div.content-root > p.title {
+  :host([priority="low"]) .notice > div.content-root > p.title {
     color: var(
       --tap-notice-title-low-color,
       var(--tap-sys-color-content-primary)

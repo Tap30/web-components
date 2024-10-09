@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "ES2020",
+    "outDir": "dist",
+    "noEmit": false,
+    "sourceMap": true,
+    "inlineSources": true,
+    "declaration": true,
+    "incremental": true,
+    "declarationMap": true
+  },
+  "include": ["src"],
+  "exclude": ["**/*.stories.ts", "**/*.test.ts", "node_modules", "dist"]
+}

@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Modal } from './modal';
-import styles from './modal.style';
+import { customElement } from "lit/decorators.js";
+import { Modal } from "./modal";
+import styles from "./modal.style";
 
 /**
  * @summary A modal dialog component.
@@ -44,13 +44,13 @@ import styles from './modal.style';
  * @slot [icon] - the icon slot of the modal dialog.
  * @slot [actions] - the actions slot of the modal dialog.
  */
-@customElement('tap-modal')
+@customElement("tap-modal")
 export class TapModal extends Modal {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-modal': TapModal;
+    "tap-modal": TapModal;
   }
 }

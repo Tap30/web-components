@@ -1,19 +1,20 @@
-import { html, TemplateResult } from 'lit';
-import '../radio';
-import '../row';
-import './index.js';
-import { Meta } from '@storybook/web-components';
+import { type Meta } from "@storybook/web-components";
+import { html, type TemplateResult } from "lit";
+import { ifDefined } from "lit/directives/if-defined";
+import "../radio";
+import "../row";
+import "./index.js";
 
-const radioGroupDirection: string[] = ['horizontal', 'vertical'];
+const radioGroupDirection: string[] = ["horizontal", "vertical"];
 
 export default {
-  title: 'Components/Radio Group',
-  component: 'tap-radio-group',
-  subcomponents: { Radio: 'tap-radio' },
+  title: "Components/Radio Group",
+  component: "tap-radio-group",
+  subcomponents: { Radio: "tap-radio" },
   argTypes: {
     direction: {
       options: radioGroupDirection,
-      control: { type: 'inline-radio' },
+      control: { type: "inline-radio" },
     },
   },
 } as Meta;
@@ -26,11 +27,14 @@ interface Story<T> {
 
 interface ArgTypes {
   value?: string;
-  direction?: 'vertical' | 'horizontal';
+  direction?: "vertical" | "horizontal";
 }
 
 const Template: Story<ArgTypes> = ({ value, direction }: ArgTypes) => html`
-  <tap-radio-group value="${value}" direction="${direction}">
+  <tap-radio-group
+    value="${ifDefined(value)}"
+    direction="${ifDefined(direction)}"
+  >
     <tap-row>
       <div slot="leading"><tap-radio value="1"></tap-radio></div>
       <div slot="content">
@@ -52,6 +56,6 @@ const Template: Story<ArgTypes> = ({ value, direction }: ArgTypes) => html`
 export const RadioGroup = Template.bind({});
 
 RadioGroup.args = {
-  direction: 'vertical',
-  value: '1',
+  direction: "vertical",
+  value: "1",
 };

@@ -1,46 +1,46 @@
-import { html, TemplateResult } from 'lit';
-import './index.js';
-import '../tooltip';
-import { Meta } from '@storybook/web-components';
+import type { Placement } from "@floating-ui/dom";
+import { type Meta } from "@storybook/web-components";
+import { html, type TemplateResult } from "lit";
+import "./index.js";
 
 export default {
-  title: 'Components/Tooltip',
-  component: 'tap-tooltip',
+  title: "Components/Tooltip",
+  component: "tap-tooltip",
   argTypes: {
     label: {
-      control: 'text',
-      description: 'The label text displayed inside the tooltip.',
+      control: "text",
+      description: "The label text displayed inside the tooltip.",
     },
     width: {
-      control: 'text',
-      description: 'The width of the tooltip container.',
+      control: "text",
+      description: "The width of the tooltip container.",
     },
     placement: {
       control: {
-        type: 'select',
+        type: "select",
         options: [
-          'top',
-          'top-start',
-          'top-end',
-          'bottom',
-          'bottom-start',
-          'bottom-end',
-          'left',
-          'left-start',
-          'left-end',
-          'right',
-          'right-start',
-          'right-end',
+          "top",
+          "top-start",
+          "top-end",
+          "bottom",
+          "bottom-start",
+          "bottom-end",
+          "left",
+          "left-start",
+          "left-end",
+          "right",
+          "right-start",
+          "right-end",
         ],
       },
-      description: 'The placement of the tooltip relative to its target.',
+      description: "The placement of the tooltip relative to its target.",
     },
     dismissible: {
-      control: 'boolean',
-      description: 'Should the Dismiss button be visible?',
+      control: "boolean",
+      description: "Should the Dismiss button be visible?",
     },
     arrowOffset: {
-      control: 'text',
+      control: "text",
       description:
         "The arrowOffset determines the distance of the tooltip arrow from the top or left of the container, depending on the tooltip's placement.",
     },
@@ -56,7 +56,7 @@ interface Story<T> {
 interface ArgTypes {
   label: string;
   width: string;
-  placement: string;
+  placement: Placement;
   dismissible: boolean;
   arrowOffset: string;
 }
@@ -72,7 +72,7 @@ const Template: Story<ArgTypes> = ({
     <tap-tooltip
       width=${width}
       placement=${placement}
-      dismissible=${dismissible}
+      ?dismissible=${dismissible}
       arrow-offset=${arrowOffset}
     >
       <span slot="label">${label}</span>
@@ -91,23 +91,23 @@ const Template: Story<ArgTypes> = ({
 
 export const Simple = Template.bind({});
 Simple.args = {
-  label: 'عنوان',
-  placement: 'left',
+  label: "عنوان",
+  placement: "left",
   dismissible: true,
 };
 
 export const CustomArrowOffset = Template.bind({});
 CustomArrowOffset.args = {
-  label: 'عنوان',
-  placement: 'top-start',
+  label: "عنوان",
+  placement: "top-start",
   dismissible: true,
-  arrowOffset: '15px',
+  arrowOffset: "15px",
 };
 
 export const FixedWidth = Template.bind({});
 FixedWidth.args = {
-  label: 'راهنما با عرض ثابت!',
-  placement: 'bottom',
+  label: "راهنما با عرض ثابت!",
+  placement: "bottom",
   dismissible: true,
-  width: '80px',
+  width: "80px",
 };

@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -7,7 +7,7 @@ export default css`
 
   .ordinal {
     :after {
-      content: '';
+      content: "";
       width: 2px;
       height: 120%;
       background-color: transparent;
@@ -18,7 +18,7 @@ export default css`
     }
 
     :before {
-      content: '';
+      content: "";
       width: 2px;
       height: 120%;
       background-color: transparent;
@@ -29,15 +29,15 @@ export default css`
     }
   }
 
-  :host([ordinal='first']) .ordinal,
-  :host([ordinal='middle']) .ordinal {
+  :host([ordinal="first"]) .ordinal,
+  :host([ordinal="middle"]) .ordinal {
     :after {
       background-color: var(--tap-palette-gray-200);
     }
   }
 
-  :host([ordinal='last']) .ordinal,
-  :host([ordinal='middle']) .ordinal {
+  :host([ordinal="last"]) .ordinal,
+  :host([ordinal="middle"]) .ordinal {
     :before {
       background-color: var(--tap-palette-gray-200);
     }

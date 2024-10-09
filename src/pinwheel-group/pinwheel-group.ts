@@ -1,7 +1,7 @@
-import { html, LitElement, nothing } from 'lit';
+import { html, LitElement, nothing } from "lit";
 
 export class PinwheelGroup extends LitElement {
-  render() {
+  protected override render() {
     return html`
       <div
         role="group"

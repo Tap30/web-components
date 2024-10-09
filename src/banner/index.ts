@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Banner } from './banner.js';
-import styles from './banner.style.js';
+import { customElement } from "lit/decorators.js";
+import { Banner } from "./banner.js";
+import styles from "./banner.style.js";
 
 /**
  * @summary Display a banner with optional heading, description, and action slot.
@@ -36,13 +36,13 @@ import styles from './banner.style.js';
  * @cssprop [--tap-sys-spacing-5] - Margin above the action slot.
  * @cssprop [--tap-sys-spacing-8] - Minimum height of the extra slot in the hero variant.
  */
-@customElement('tap-banner')
+@customElement("tap-banner")
 export class TapBanner extends Banner {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-banner': TapBanner;
+    "tap-banner": TapBanner;
   }
 }

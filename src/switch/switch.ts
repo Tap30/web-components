@@ -1,50 +1,55 @@
-import { LitElement, PropertyValues, html, nothing } from 'lit';
-import { property } from 'lit/decorators.js';
+import { LitElement, type PropertyValues, html, nothing } from "lit";
+import { property } from "lit/decorators.js";
 
 export class Switch extends LitElement {
-  static override shadowRootOptions: ShadowRootInit = {
+  public static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
-  @property({ type: Boolean, reflect: true }) checked = false;
+  @property({ type: Boolean, reflect: true })
+  public checked = false;
 
-  @property({ type: Boolean, reflect: true }) disabled = false;
+  @property({ type: Boolean, reflect: true })
+  public disabled = false;
 
-  @property() value = 'on';
+  @property()
+  public value = "on";
 
-  private internals: ElementInternals;
+  private _internals: ElementInternals;
 
   constructor() {
     super();
-    this.internals = this.attachInternals();
+    this._internals = this.attachInternals();
   }
 
-  get form() {
-    return this.internals.form;
+  public get form() {
+    return this._internals.form;
   }
 
-  get labels() {
-    return this.internals.labels;
+  public get labels() {
+    return this._internals.labels;
   }
 
-  private handleInput(event: Event) {
+  private _handleInput(event: Event) {
     const target = event.target as HTMLInputElement;
+
     this.checked = target.checked;
   }
 
-  private handleKeyDown(event: KeyboardEvent) {
-    if (event.key === ' ') {
+  private _handleKeyDown(event: KeyboardEvent) {
+    if (event.key === " ") {
       event.preventDefault();
       this.checked = !this.checked;
-      this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      this.dispatchEvent(new Event("input", { bubbles: true, composed: true }));
     }
   }
 
-  protected updated(changed: PropertyValues) {
-    if (changed.has('checked')) {
+  protected override updated(changed: PropertyValues) {
+    if (changed.has("checked")) {
       const value = this.checked ? this.value : null;
-      this.internals.setFormValue(value, String(this.checked));
+
+      this._internals.setFormValue(value, String(this.checked));
     }
   }
 
@@ -53,25 +58,31 @@ export class Switch extends LitElement {
   }
 
   formStateRestoreCallback(state: string) {
-    this.checked = state === 'true';
+    this.checked = state === "true";
   }
 
-  render() {
+  protected override render() {
     return html`
-      <label part="switch" class="switch">
+      <label
+        part="switch"
+        class="switch"
+      >
         <input
           role="switch"
           part="input"
           type="checkbox"
-          @input=${this.handleInput}
-          @keydown=${this.handleKeyDown}
-          aria-checked=${this.checked ? 'true' : 'false'}
+          @input=${this._handleInput}
+          @keydown=${this._handleKeyDown}
+          aria-checked=${this.checked ? "true" : "false"}
           aria-label=${nothing}
           aria-describedby=${nothing}
           ?disabled=${this.disabled}
           .checked=${this.checked}
         />
-        <span part="slider" class="slider"></span>
+        <span
+          part="slider"
+          class="slider"
+        ></span>
       </label>
     `;
   }

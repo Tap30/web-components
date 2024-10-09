@@ -1,7 +1,7 @@
-import { customElement } from 'lit/decorators.js';
-import { Button } from './button';
-import styles from './button.style';
-import { baseButtonStyles } from '../base-button';
+import { customElement } from "lit/decorators.js";
+import { baseButtonStyles } from "../base-button";
+import { Button } from "./button";
+import styles from "./button.style";
 
 /**
  * @summary A customizable button component with various styles and states.
@@ -57,13 +57,13 @@ import { baseButtonStyles } from '../base-button';
  * @cssprop [--tap-button-color-gradient-brand=--tap-sys-color-gradient-brand] - The gradient color for the brand variant.
  * @cssprop [--tap-sys-color-gradient-brand] - The gradient color for the brand variant.
  */
-@customElement('tap-button')
+@customElement("tap-button")
 export class TapButton extends Button {
-  static readonly styles = [baseButtonStyles, styles];
+  public static override readonly styles = [baseButtonStyles, styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-button': TapButton;
+    "tap-button": TapButton;
   }
 }

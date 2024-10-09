@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import styles from './chip-group.style';
-import { ChipGroup } from './chip-group';
+import { customElement } from "lit/decorators.js";
+import { ChipGroup } from "./chip-group";
+import styles from "./chip-group.style";
 
 /**
  * @summary A chip group component.
@@ -16,13 +16,13 @@ import { ChipGroup } from './chip-group';
  *
  */
 
-@customElement('tap-chip-group')
+@customElement("tap-chip-group")
 export class TapChipGroup extends ChipGroup {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-chip-group': TapChipGroup;
+    "tap-chip-group": TapChipGroup;
   }
 }

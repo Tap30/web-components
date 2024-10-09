@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Stepper } from './stepper.js';
-import styles from './stepper.style.js';
+import { customElement } from "lit/decorators.js";
+import { Stepper } from "./stepper.js";
+import styles from "./stepper.style.js";
 
 /**
  * @summary A form item that shows a value and can be increased or decreased by tw buttons
@@ -27,13 +27,13 @@ import styles from './stepper.style.js';
  * @cssprop [--tap-stepper-typography-label-sm-size=--tap-sys-typography-label-md-size]
  * @cssprop [--tap-stepper-typography-label-md-size=--tap-sys-typography-label-lg-size]
  */
-@customElement('tap-stepper')
+@customElement("tap-stepper")
 export class TapStepper extends Stepper {
-  static readonly styles = [styles];
+  static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-stepper': Stepper;
+    "tap-stepper": Stepper;
   }
 }

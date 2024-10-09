@@ -1,21 +1,21 @@
-import { html, TemplateResult } from 'lit';
-import './index.js';
-import '../bottom-navigation-item/index.js';
-import { Meta } from '@storybook/web-components';
+import { type Meta } from "@storybook/web-components";
+import { html, type TemplateResult } from "lit";
+import "../bottom-navigation-item/index.js";
+import "./index.js";
 
-import '@tapsioss/icons/dist/icons/person';
-import '@tapsioss/icons/dist/icons/person-fill';
-import '@tapsioss/icons/dist/icons/spark';
-import '@tapsioss/icons/dist/icons/spark-fill';
-import '@tapsioss/icons/dist/icons/coupon';
-import '@tapsioss/icons/dist/icons/coupon-fill';
-import '@tapsioss/icons/dist/icons/square-grid-rounded';
-import '@tapsioss/icons/dist/icons/square-grid-rounded-fill';
+import "@tapsioss/icons/dist/icons/coupon";
+import "@tapsioss/icons/dist/icons/coupon-fill";
+import "@tapsioss/icons/dist/icons/person";
+import "@tapsioss/icons/dist/icons/person-fill";
+import "@tapsioss/icons/dist/icons/spark";
+import "@tapsioss/icons/dist/icons/spark-fill";
+import "@tapsioss/icons/dist/icons/square-grid-rounded";
+import "@tapsioss/icons/dist/icons/square-grid-rounded-fill";
 
 export default {
-  title: 'Components/Bottom Navigation',
-  component: 'tap-bottom-navigation',
-  subcomponents: { 'Bottom Navigation Item': 'tap-bottom-navigation-item' },
+  title: "Components/Bottom Navigation",
+  component: "tap-bottom-navigation",
+  subcomponents: { "Bottom Navigation Item": "tap-bottom-navigation-item" },
   argTypes: {},
 } as Meta;
 
@@ -25,6 +25,7 @@ interface Story<T> {
   argTypes?: Record<string, unknown>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ArgTypes {}
 
 const Template: Story<ArgTypes> = () => html`

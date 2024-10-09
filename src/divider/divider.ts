@@ -1,11 +1,12 @@
-import { LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
+import { LitElement } from "lit";
+import { property } from "lit/decorators.js";
 
 export class Divider extends LitElement {
-  @property({ reflect: true }) type: 'thin' | 'medium' | 'bold' = 'medium';
+  @property({ reflect: true }) type: "thin" | "medium" | "bold" = "medium";
 
-  connectedCallback() {
+  public override connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('role', 'separator');
+
+    this.setAttribute("role", "separator");
   }
 }

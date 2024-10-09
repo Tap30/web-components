@@ -1,11 +1,11 @@
-import '../../dist/modal/index.js';
-import { fixture, expect } from '@open-wc/testing';
-import { TapModal } from './index';
-import { html } from 'lit';
-import sinon from 'sinon';
+import { expect, fixture } from "@open-wc/testing";
+import { html } from "lit";
+import sinon from "sinon";
+import "../../dist/modal/index.js";
+import { type TapModal } from "./index";
 
-describe('tap-modal component', () => {
-  it('should be hidden by default', async () => {
+describe("tap-modal component", () => {
+  it("should be hidden by default", async () => {
     const element = await fixture<TapModal>(
       html`<tap-modal .open=${false}></tap-modal>`,
     );
@@ -26,22 +26,22 @@ describe('tap-modal component', () => {
     const openSpy = sinon.spy();
     const closeSpy = sinon.spy();
 
-    element.addEventListener('open', openSpy);
+    element.addEventListener("open", openSpy);
     element.show();
     await element.updateComplete;
     expect(openSpy.calledOnce).to.be.true;
     expect(element.open).to.be.true;
 
-    element.addEventListener('close', closeSpy);
+    element.addEventListener("close", closeSpy);
     element.close();
     await element.updateComplete;
     expect(closeSpy.calledOnce).to.be.true;
     expect(element.open).to.be.false;
   });
 
-  it('should close when clicking on the overlay', async () => {
+  it("should close when clicking on the overlay", async () => {
     const element = await fixture<TapModal>(html`<tap-modal open></tap-modal>`);
-    const overlay = element.shadowRoot!.querySelector<HTMLElement>('#overlay');
+    const overlay = element.shadowRoot!.querySelector<HTMLElement>("#overlay");
 
     overlay?.click();
     await element.updateComplete;
@@ -49,19 +49,20 @@ describe('tap-modal component', () => {
     expect(element.open).to.be.false;
   });
 
-  it('should close when pressing the Escape key', async () => {
+  it("should close when pressing the Escape key", async () => {
     const element = await fixture<TapModal>(html`<tap-modal open></tap-modal>`);
 
-    const event = new KeyboardEvent('keydown', { key: 'Escape' });
+    const event = new KeyboardEvent("keydown", { key: "Escape" });
+
     element.dispatchEvent(event);
     await element.updateComplete;
 
     expect(element.open).to.be.false;
   });
 
-  it('should render title and description correctly', async () => {
-    const title = 'Title';
-    const description = 'Description';
+  it("should render title and description correctly", async () => {
+    const title = "Title";
+    const description = "Description";
     const element = await fixture(
       html`<tap-modal
         open
@@ -70,9 +71,9 @@ describe('tap-modal component', () => {
       ></tap-modal>`,
     );
 
-    const titleElement = element.shadowRoot!.querySelector('.title');
+    const titleElement = element.shadowRoot!.querySelector(".title");
     const descriptionElement =
-      element.shadowRoot!.querySelector('.description');
+      element.shadowRoot!.querySelector(".description");
 
     expect(titleElement).to.exist;
     expect(titleElement?.textContent).to.equal(title);

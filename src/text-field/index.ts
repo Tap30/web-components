@@ -1,7 +1,7 @@
-import { customElement } from 'lit/decorators.js';
-import { TextField } from './text-field';
-import styles from './text-field.style';
-import { inputStyles } from '../input';
+import { customElement } from "lit/decorators.js";
+import { inputStyles } from "../input";
+import { TextField } from "./text-field";
+import styles from "./text-field.style";
 
 /**
  * @summary A text field component.
@@ -66,13 +66,13 @@ import { inputStyles } from '../input';
  * @cssprop [--tap-input-disabled-container-color=--tap-sys-color-content-disabled] - The color of the text and elements when disabled.
  * @cssprop [--tap-input-caret-color=--tap-sys-color-surface-accent] - The color of the input caret.
  */
-@customElement('tap-text-field')
+@customElement("tap-text-field")
 export class TapTextField extends TextField {
-  static readonly styles = [inputStyles, styles];
+  public static override readonly styles = [inputStyles, styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-text-field': TapTextField;
+    "tap-text-field": TapTextField;
   }
 }

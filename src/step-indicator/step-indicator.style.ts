@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -51,7 +51,7 @@ export default css`
     );
   }
 
-  .step[aria-current='step'] {
+  .step[aria-current="step"] {
     background-color: var(--tap-sys-color-content-primary);
     width: var(--tap-step-indicator-step-size, var(--tap-sys-spacing-5));
   }

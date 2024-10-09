@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Divider } from './divider.js';
-import styles from './divider.style.js';
+import { customElement } from "lit/decorators.js";
+import { Divider } from "./divider.js";
+import styles from "./divider.style.js";
 
 /**
  * @summary A divider component used to separate content.
@@ -16,13 +16,13 @@ import styles from './divider.style.js';
  * @cssprop [--tap-divider-bold-background-color=--tap-sys-color-surface-secondary] - The background color of the bold divider.
  * @cssprop [--tap-divider-bold-height=--tap-sys-spacing-4] - The height of the bold divider.
  */
-@customElement('tap-divider')
+@customElement("tap-divider")
 export class TapDivider extends Divider {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-divider': TapDivider;
+    "tap-divider": TapDivider;
   }
 }

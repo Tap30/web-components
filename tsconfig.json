@@ -1,23 +1,34 @@
 {
   "compilerOptions": {
-    "target": "es2018",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "noEmitOnError": true,
-    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "allowJs": false,
+    "checkJs": false,
+
     "strict": true,
+    "pretty": true,
+    "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true,
     "experimentalDecorators": true,
-    "importHelpers": true,
-    "outDir": "dist",
-    "sourceMap": true,
-    "inlineSources": true,
-    "declaration": true,
-    "incremental": true,
-    "declarationMap": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "importHelpers": true
   },
-  "include": ["src"],
-  "exclude": ["src/**/*.stories.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["**/*/*.test.ts", "node_modules", "dist"]
 }

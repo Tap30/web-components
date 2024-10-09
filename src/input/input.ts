@@ -1,5 +1,11 @@
-import { LitElement, PropertyValues, TemplateResult, html, nothing } from 'lit';
-import { property } from 'lit/decorators.js';
+import {
+  LitElement,
+  type PropertyValues,
+  type TemplateResult,
+  html,
+  nothing,
+} from "lit";
+import { property } from "lit/decorators.js";
 
 export abstract class Input extends LitElement {
   static override shadowRootOptions: ShadowRootInit = {
@@ -7,51 +13,56 @@ export abstract class Input extends LitElement {
     delegatesFocus: true,
   };
 
-  static readonly formAssociated = true;
+  public static readonly formAssociated = true;
 
   @property({ type: String })
-  value = '';
+  public value = "";
 
   @property({ type: Boolean })
-  disabled = false;
+  public disabled = false;
 
-  @property({ type: Boolean }) error = false;
+  @property({ type: Boolean })
+  public error = false;
 
-  @property({ type: String }) caption?: string;
+  @property({ type: String })
+  public caption?: string;
 
-  @property({ type: String }) label?: string;
+  @property({ type: String })
+  public label?: string;
 
-  @property({ type: String }) name?: string;
+  @property({ type: String })
+  public name?: string;
 
-  @property({ type: String }) placeholder?: string;
+  @property({ type: String })
+  public placeholder?: string;
 
-  private internals: ElementInternals;
+  private _internals: ElementInternals;
 
-  get form() {
-    return this.internals.form;
+  public get form() {
+    return this._internals.form;
   }
 
-  get labels() {
-    return this.internals.labels;
+  public get labels() {
+    return this._internals.labels;
   }
 
   constructor() {
     super();
-    this.internals = this.attachInternals();
+    this._internals = this.attachInternals();
   }
 
-  protected updated(changed: PropertyValues) {
-    if (changed.has('value')) {
-      this.internals.setFormValue(this.value);
-    }
+  protected override updated(changed: PropertyValues) {
+    if (!changed.has("value")) return;
+
+    this._internals.setFormValue(this.value);
   }
 
-  formDisabledCallback(disabled: boolean) {
+  public formDisabledCallback(disabled: boolean) {
     this.disabled = disabled;
   }
 
-  formResetCallback() {
-    this.value = '';
+  public formResetCallback() {
+    this.value = "";
   }
 
   protected handleInput(event: InputEvent) {
@@ -59,21 +70,36 @@ export abstract class Input extends LitElement {
   }
 
   protected abstract renderInput(): TemplateResult;
+
   // TODO: check if using generic ids for caption and input is ok
-  render() {
+  protected override render() {
     return html`
-      <div part="field" class="field">
-        <label part="label" class="label" for="input" ?hidden=${!this.label}
-          >${this.label ?? nothing}</label
+      <div
+        part="field"
+        class="field"
+      >
+        <label
+          part="label"
+          class="label"
+          for="input"
+          ?hidden=${!this.label}
         >
-        <div part="container" class="container">${this.renderInput()}</div>
+          ${this.label ?? nothing}
+        </label>
+        <div
+          part="container"
+          class="container"
+        >
+          ${this.renderInput()}
+        </div>
         <span
           part="caption"
           class="caption"
           id="caption"
           ?hidden=${!this.caption}
-          >${this.caption ?? nothing}</span
         >
+          ${this.caption ?? nothing}
+        </span>
       </div>
     `;
   }

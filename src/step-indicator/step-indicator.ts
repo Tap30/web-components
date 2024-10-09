@@ -1,43 +1,50 @@
-import { html, LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
-import { range } from 'lit/directives/range.js';
-import { map } from 'lit/directives/map.js';
+import { html, LitElement } from "lit";
+import { property } from "lit/decorators.js";
+import { map } from "lit/directives/map";
+import { range } from "lit/directives/range";
 
 export class StepIndicator extends LitElement {
-  @property({ type: Number }) steps = 2;
+  @property({ type: Number })
+  public steps = 2;
 
-  @property({ type: Number, reflect: true }) current = 0;
+  @property({ type: Number, reflect: true })
+  public current = 0;
 
-  private get normalizedCurrent() {
+  private get _normalizedCurrent() {
     return Math.min(this.steps - 1, this.current);
   }
 
-  private handleClick(index: number) {
+  private _handleClick(index: number) {
     this.current = index;
     this.dispatchEvent(
-      new CustomEvent('tap-step-indicator-change', {
-        detail: { current: this.normalizedCurrent },
+      new CustomEvent("tap-step-indicator-change", {
+        detail: { current: this._normalizedCurrent },
         bubbles: true,
         composed: true,
       }),
     );
   }
 
-  render() {
+  protected override render() {
     return html`
-      <div class="steps" part="steps" role="list">
+      <div
+        class="steps"
+        part="steps"
+        role="list"
+      >
         ${map(
           range(this.steps),
-          (index) =>
-            html`<button
+          index => html`
+            <button
               type="button"
               class="step"
               part="step"
-              aria-current=${index === this.normalizedCurrent
-                ? 'step'
-                : 'false'}
-              @click="${() => this.handleClick(index)}"
-            ></button>`,
+              aria-current=${index === this._normalizedCurrent
+                ? "step"
+                : "false"}
+              @click="${() => this._handleClick(index)}"
+            ></button>
+          `,
         )}
       </div>
     `;

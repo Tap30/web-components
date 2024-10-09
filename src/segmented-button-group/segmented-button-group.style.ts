@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -31,14 +31,14 @@ export default css`
     );
   }
 
-  :host([size='sm']) .button-group {
+  :host([size="sm"]) .button-group {
     height: var(
       --tap-segmented-button-group-sm-height,
       var(--tap-sys-spacing-10)
     );
   }
 
-  :host([size='md']) .button-group {
+  :host([size="md"]) .button-group {
     height: var(
       --tap-segmented-button-group-md-height,
       var(--tap-sys-spacing-11)

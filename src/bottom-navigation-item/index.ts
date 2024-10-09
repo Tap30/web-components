@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { BottomNavigationItem } from './bottom-navigation-item.js';
-import styles from './bottom-navigation-item.style.js';
+import { customElement } from "lit/decorators.js";
+import { BottomNavigationItem } from "./bottom-navigation-item.js";
+import styles from "./bottom-navigation-item.style.js";
 
 /**
  * @summary Represents a single item in a bottom navigation bar.
@@ -20,13 +20,13 @@ import styles from './bottom-navigation-item.style.js';
  * @cssprop [--tap-bottom-navigation-item-font-size=--tap-sys-typography-label-xs-size] - The font size for the label.
  * @cssprop [--tap-bottom-navigation-item-font-weight=--tap-sys-typography-label-xs-weight] - The font weight for the label.
  */
-@customElement('tap-bottom-navigation-item')
+@customElement("tap-bottom-navigation-item")
 export class TapBottomNavigationItem extends BottomNavigationItem {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-bottom-navigation-item': TapBottomNavigationItem;
+    "tap-bottom-navigation-item": TapBottomNavigationItem;
   }
 }

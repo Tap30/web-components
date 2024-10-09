@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -44,7 +44,7 @@ export default css`
 
   .slider:before {
     position: absolute;
-    content: '';
+    content: "";
     height: 26px;
     width: 26px;
     right: 2px;

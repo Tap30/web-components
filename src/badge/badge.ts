@@ -1,15 +1,29 @@
-import { html, LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
-import { BadgePriority, BadgeType, BadgeValue, BadgeVariant } from './types';
+import { html, LitElement } from "lit";
+import { property } from "lit/decorators.js";
+import {
+  type BadgePriority,
+  type BadgeType,
+  type BadgeValue,
+  type BadgeVariant,
+} from "./types";
 
 export class Badge extends LitElement {
-  @property({ reflect: true }) value?: BadgeValue = '';
-  @property({ reflect: true }) type?: BadgeType = 'pill';
-  @property({ reflect: true }) variant?: BadgeVariant = 'inverse';
-  @property({ reflect: true }) priority?: BadgePriority = 'high';
-  @property({ type: Boolean }) leadingIcon? = false;
+  @property({ reflect: true })
+  public value?: BadgeValue = "";
 
-  private renderIcon() {
+  @property({ reflect: true })
+  public type?: BadgeType = "pill";
+
+  @property({ reflect: true })
+  public variant?: BadgeVariant = "inverse";
+
+  @property({ reflect: true })
+  public priority?: BadgePriority = "high";
+
+  @property({ type: Boolean })
+  public leadingIcon? = false;
+
+  private _renderIcon() {
     return html`
       <svg
         class="icon"
@@ -29,20 +43,21 @@ export class Badge extends LitElement {
     `;
   }
 
-  private renderDotBadge() {
+  private _renderDotBadge() {
     return html`<span class="badge"></span>`;
   }
 
-  private renderNormalBadge() {
+  private _renderNormalBadge() {
     return html`
       <span class="badge">
-        ${this.leadingIcon ? this.renderIcon() : null} ${this.value}
+        ${this.leadingIcon ? this._renderIcon() : null} ${this.value}
       </span>
     `;
   }
 
-  render() {
-    if (this.type === 'dot') return this.renderDotBadge();
-    else return this.renderNormalBadge();
+  protected override render() {
+    if (this.type === "dot") return this._renderDotBadge();
+
+    return this._renderNormalBadge();
   }
 }

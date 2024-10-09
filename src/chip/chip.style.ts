@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -47,7 +47,7 @@ export default css`
     min-width: var(--tap-chip-min-width, 72px);
   }
 
-  ::slotted([slot='icon']),
+  ::slotted([slot="icon"]),
   .chip {
     gap: var(--tap-chip-icon-gap, var(--tap-sys-spacing-4));
   }
@@ -84,11 +84,11 @@ export default css`
     );
   }
 
-  :host([size='sm']) .chip {
+  :host([size="sm"]) .chip {
     height: var(--tap-chip-group-sm-height, var(--tap-sys-spacing-9));
   }
 
-  :host([size='md']) .chip {
+  :host([size="md"]) .chip {
     height: var(--tap-chip-group-md-height, var(--tap-sys-spacing-10));
   }
 `;

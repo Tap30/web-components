@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Switch } from './switch';
-import styles from './switch.style';
+import { customElement } from "lit/decorators.js";
+import { Switch } from "./switch";
+import styles from "./switch.style";
 
 /**
  * ### Example
@@ -38,13 +38,13 @@ import styles from './switch.style';
  * @cssprop [--tap-switch-disabled-background-color=var(--tap-sys-color-surface-disabled)] - The background color of the disabled switch.
  */
 
-@customElement('tap-switch')
+@customElement("tap-switch")
 export class TapSwitch extends Switch {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-switch': TapSwitch;
+    "tap-switch": TapSwitch;
   }
 }

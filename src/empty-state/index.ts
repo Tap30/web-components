@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { EmptyState } from './empty-state';
-import styles from './empty-state.style';
+import { customElement } from "lit/decorators.js";
+import { EmptyState } from "./empty-state";
+import styles from "./empty-state.style";
 
 /**
  * @summary An empty state component with icon and actions slots.
@@ -35,13 +35,13 @@ import styles from './empty-state.style';
  * @prop {string} [description=''] - The description for the empty state.
  */
 
-@customElement('tap-empty-state')
+@customElement("tap-empty-state")
 export class TapEmptyState extends EmptyState {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-empty-state': TapEmptyState;
+    "tap-empty-state": TapEmptyState;
   }
 }

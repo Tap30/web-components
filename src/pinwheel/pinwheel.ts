@@ -1,33 +1,36 @@
-import { html, LitElement } from 'lit';
-import { property, state } from 'lit/decorators.js';
-import { debounce } from '../utils/utils';
-import { classMap } from 'lit/directives/class-map.js';
+import { html, LitElement } from "lit";
+import { property, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map";
+import { debounce } from "../utils";
 
 export class Pinwheel extends LitElement {
-  @state() private selectedIndex = 0;
-  @property({ type: Array, attribute: false }) items: Array<string> = [];
+  @state()
+  private _selectedIndex = 0;
 
-  private itemHeight = 48;
+  @property({ type: Array, attribute: false })
+  public items: Array<string> = [];
 
-  connectedCallback() {
+  private _itemHeight = 48;
+
+  public override connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('scroll', (event) =>
-      this.handleScroll(event.target as HTMLElement),
+    this.addEventListener("scroll", event =>
+      this._handleScroll(event.target as HTMLElement),
     );
   }
 
-  disconnectedCallback() {
-    this.removeEventListener('scroll', (event) =>
-      this.handleScroll(event.target as HTMLElement),
+  public override disconnectedCallback() {
+    this.removeEventListener("scroll", event =>
+      this._handleScroll(event.target as HTMLElement),
     );
     super.disconnectedCallback();
   }
 
-  private dispatchChangeEvent = () => {
+  private _dispatchChangeEvent = () => {
     this.dispatchEvent(
-      new CustomEvent('pinwheel-change', {
+      new CustomEvent("pinwheel-change", {
         detail: {
-          selectedIndex: this.selectedIndex,
+          selectedIndex: this._selectedIndex,
         },
         bubbles: true,
         composed: true,
@@ -35,44 +38,51 @@ export class Pinwheel extends LitElement {
     );
   };
 
-  private handleScroll = debounce((target: HTMLElement) => {
-    this.selectedIndex = Math.round(target?.scrollTop / this.itemHeight);
-    const isActiveElementInCenter = target?.scrollTop % this.itemHeight === 0;
+  private _handleScroll = debounce((target: HTMLElement) => {
+    this._selectedIndex = Math.round(target?.scrollTop / this._itemHeight);
+    const isActiveElementInCenter = target?.scrollTop % this._itemHeight === 0;
+
     if (!isActiveElementInCenter) {
-      this.scrollToActiveItem();
+      this._scrollToActiveItem();
     } else {
-      this.dispatchChangeEvent();
+      this._dispatchChangeEvent();
     }
   }, 100);
 
-  private handleClickItem = (index: number) => {
-    this.selectedIndex = index;
-    this.scrollToActiveItem();
+  private _handleClickItem = (index: number) => {
+    this._selectedIndex = index;
+    this._scrollToActiveItem();
   };
 
-  private scrollToActiveItem = () => {
-    const scrollTopPosition = this.selectedIndex * this.itemHeight;
-    this.scrollTo({ top: scrollTopPosition, behavior: 'smooth' });
+  private _scrollToActiveItem = () => {
+    const scrollTopPosition = this._selectedIndex * this._itemHeight;
+
+    this.scrollTo({ top: scrollTopPosition, behavior: "smooth" });
   };
 
-  private renderItem = (item: string, index: number) => {
-    return html`<div
-      part="pinwheel-item"
-      class=${classMap({
-        item: true,
-        active: this.selectedIndex === index,
-      })}
-      @click="${() => this.handleClickItem(index)}"
-      tabindex="0"
-    >
-      ${item}
-    </div>`;
-  };
+  private _renderItems() {
+    return this.items.map((item, idx) => {
+      return html`<div
+        part="pinwheel-item"
+        class=${classMap({
+          item: true,
+          active: this._selectedIndex === idx,
+        })}
+        @click="${() => this._handleClickItem(idx)}"
+        tabindex="0"
+      >
+        ${item}
+      </div>`;
+    });
+  }
 
-  render() {
+  protected override render() {
     return html`
-      <div class="pinwheel" part="pinwheel">
-        ${this.items.map(this.renderItem)}
+      <div
+        class="pinwheel"
+        part="pinwheel"
+      >
+        ${this._renderItems()}
       </div>
     `;
   }

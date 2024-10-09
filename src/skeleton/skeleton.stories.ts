@@ -1,32 +1,32 @@
-import { html, TemplateResult } from 'lit';
-import { SkeletonAnimation, SkeletonVariant } from './types';
-import { Meta } from '@storybook/web-components';
-import './';
+import { type Meta } from "@storybook/web-components";
+import { html, type TemplateResult } from "lit";
+import "./";
+import { type SkeletonAnimation, type SkeletonVariant } from "./types";
 
-const SkeletonVariants = ['line', 'rect', 'circle'];
-const SkeletonAnimationMode = ['progress', 'none', 'pulse'];
+const SkeletonVariants = ["line", "rect", "circle"];
+const SkeletonAnimationMode = ["progress", "none", "pulse"];
 
 export default {
-  title: 'Components/Skeleton',
-  component: 'tap-skelton',
+  title: "Components/Skeleton",
+  component: "tap-skelton",
   argTypes: {
     variant: {
       options: SkeletonVariants,
-      control: { type: 'inline-radio' },
-      description: 'Skeleton Variant',
+      control: { type: "inline-radio" },
+      description: "Skeleton Variant",
     },
     animationMode: {
       options: SkeletonAnimationMode,
-      control: { type: 'inline-radio' },
-      description: 'Skeleton Animation Mode',
+      control: { type: "inline-radio" },
+      description: "Skeleton Animation Mode",
     },
     height: {
-      control: 'text',
-      description: 'Skeleton Height',
+      control: "text",
+      description: "Skeleton Height",
     },
     width: {
-      control: 'text',
-      description: 'Skeleton Width',
+      control: "text",
+      description: "Skeleton Width",
     },
   },
 } as Meta;
@@ -60,6 +60,6 @@ const Template: Story<ArgTypes> = ({
 export const Skeleton = Template.bind({});
 
 Skeleton.args = {
-  variant: 'line',
-  animationMode: 'progress',
+  variant: "line",
+  animationMode: "progress",
 };

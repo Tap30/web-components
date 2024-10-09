@@ -1,63 +1,68 @@
-import { LitElement, html, nothing } from 'lit';
-import { property, queryAssignedElements } from 'lit/decorators.js';
-import { Radio } from '../radio/radio';
+import { LitElement, html, nothing } from "lit";
+import { property, queryAssignedElements } from "lit/decorators.js";
+import { Radio } from "../radio/radio";
 
 export class RadioGroup extends LitElement {
-  @property({ reflect: true }) direction: 'horizontal' | 'vertical' =
-    'vertical';
-  @property({ reflect: true }) value = '';
+  @property({ reflect: true })
+  public direction: "horizontal" | "vertical" = "vertical";
 
-  @queryAssignedElements() private elements!: Element[];
+  @property({ reflect: true })
+  public value = "";
 
-  connectedCallback() {
+  @queryAssignedElements()
+  private _elements!: Element[];
+
+  override connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('radio-input-change', this.handleRadioChangeClick);
+    this.addEventListener("radio-input-change", this._handleRadioChangeClick);
   }
 
   public get radios(): Radio[] {
     const findRadios = (nodes: Element[]): Radio[] => {
       let radios: Radio[] = [];
-      nodes.forEach((node) => {
+
+      nodes.forEach(node => {
         if (node instanceof Radio) {
           radios.push(node);
         } else if (node instanceof HTMLElement) {
           radios = radios.concat(
-            findRadios(Array.from(node.querySelectorAll('tap-radio'))),
+            findRadios(Array.from(node.querySelectorAll("tap-radio"))),
           );
         }
       });
       return radios;
     };
 
-    return findRadios(this.elements);
+    return findRadios(this._elements);
   }
 
-  private selectDefaultOption() {
+  private _handleSlotChange() {
     if (!this.value) return;
-    const selectedRadio = this.radios.find(
-      (radio) => radio.value == this.value,
-    );
+
+    const selectedRadio = this.radios.find(radio => radio.value === this.value);
+
     if (!selectedRadio) return;
     selectedRadio.checked = true;
   }
 
-  private handleRadioChangeClick(e: Event) {
+  private _handleRadioChangeClick = (e: Event) => {
     const index = this.radios.indexOf(e.target as Radio);
     const selectedRadio = this.radios[index];
 
-    if (!selectedRadio || selectedRadio.checked || selectedRadio.disabled)
+    if (!selectedRadio || selectedRadio.checked || selectedRadio.disabled) {
       return;
+    }
 
     selectedRadio.checked = true;
 
-    this.radios.forEach((radio) => {
+    this.radios.forEach(radio => {
       if (radio !== selectedRadio) {
         radio.checked = false;
       }
     });
 
     this.dispatchEvent(
-      new CustomEvent('radio-group-change', {
+      new CustomEvent("radio-group-change", {
         detail: {
           checked: selectedRadio,
           index,
@@ -66,9 +71,9 @@ export class RadioGroup extends LitElement {
         composed: true,
       }),
     );
-  }
+  };
 
-  render() {
+  protected override render() {
     return html`
       <div
         role="group"
@@ -76,7 +81,7 @@ export class RadioGroup extends LitElement {
         part="radio-group"
         aria-label=${nothing}
       >
-        <slot @slotchange="${this.selectDefaultOption}"></slot>
+        <slot @slotchange="${this._handleSlotChange}"></slot>
       </div>
     `;
   }

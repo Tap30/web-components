@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Badge } from './badge';
-import styles from './badge.style';
+import { customElement } from "lit/decorators.js";
+import { Badge } from "./badge";
+import styles from "./badge.style";
 
 /**
  *
@@ -47,13 +47,13 @@ import styles from './badge.style';
  * @cssprop [--tap-badge-warning-low-background-color=--tap-sys-color-surface-warning-light] - Background color for low priority warning variant.
  * @cssprop [--tap-badge-warning-low-color=--tap-sys-color-content-warning] - Text color for low priority warning variant.
  */
-@customElement('tap-badge')
+@customElement("tap-badge")
 export class TapBadge extends Badge {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-badge': TapBadge;
+    "tap-badge": TapBadge;
   }
 }

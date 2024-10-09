@@ -1,29 +1,29 @@
-import { html, TemplateResult } from 'lit';
-import './index.js';
+import { html, type TemplateResult } from "lit";
+import "./index.js";
 
 export default {
-  title: 'Components/TextArea',
-  component: 'tap-textarea',
+  title: "Components/TextArea",
+  component: "tap-textarea",
   argTypes: {
     label: {
-      control: 'text',
-      description: 'label',
+      control: "text",
+      description: "label",
     },
     caption: {
-      control: 'text',
-      description: 'hints on input',
+      control: "text",
+      description: "hints on input",
     },
     placeholder: {
-      control: 'text',
-      description: 'placeholder',
+      control: "text",
+      description: "placeholder",
     },
     disabled: {
-      control: 'boolean',
-      description: 'is input editable?',
+      control: "boolean",
+      description: "is input editable?",
     },
     error: {
-      control: 'boolean',
-      description: 'does the input value have an error?',
+      control: "boolean",
+      description: "does the input value have an error?",
     },
   },
 };
@@ -56,9 +56,9 @@ const Template: Story<ArgTypes> = ({ ...args }: ArgTypes) => html`
 export const TextArea = Template.bind({});
 
 TextArea.args = {
-  label: 'لیبل',
-  caption: 'توضیحات',
-  placeholder: 'متن',
+  label: "لیبل",
+  caption: "توضیحات",
+  placeholder: "متن",
   disabled: false,
   error: false,
 };

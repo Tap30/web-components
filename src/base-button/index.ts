@@ -1,2 +1,2 @@
-export { default as baseButtonStyles } from './base-button.style';
-export { BaseButton } from './base-button';
+export { BaseButton } from "./base-button";
+export { default as baseButtonStyles } from "./base-button.style";

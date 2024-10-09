@@ -1,48 +1,48 @@
-import { html, nothing, TemplateResult } from 'lit';
-import './index';
-import '../button';
-import '../checkbox';
-import '../radio';
-import '../badge';
-import '../avatar';
+import { html, nothing, type TemplateResult } from "lit";
+import "../avatar";
+import "../badge";
+import "../button";
+import "../checkbox";
+import "../radio";
+import "./index";
 
 export default {
-  title: 'Components/Route',
-  component: 'tap-route',
+  title: "Components/Route",
+  component: "tap-route",
   argTypes: {
     size: {
-      description: 'Route size',
-      control: { type: 'inline-radio' },
-      options: ['standard', 'compact'],
-      defaultValue: 'standard',
+      description: "Route size",
+      control: { type: "inline-radio" },
+      options: ["standard", "compact"],
+      defaultValue: "standard",
     },
     leadingIcon: {
-      description: 'Route leading icon type',
-      control: { type: 'select' },
-      options: ['circle', 'square', 'plus'],
-      defaultValue: 'circle',
+      description: "Route leading icon type",
+      control: { type: "select" },
+      options: ["circle", "square", "plus"],
+      defaultValue: "circle",
     },
     ordinal: {
-      description: 'Route position in order',
-      control: { type: 'select' },
-      options: ['first', 'middle', 'last'],
-      defaultValue: 'first',
+      description: "Route position in order",
+      control: { type: "select" },
+      options: ["first", "middle", "last"],
+      defaultValue: "first",
     },
     editable: {
-      description: 'Editable (Show Edit icon)',
-      control: { type: 'boolean' },
+      description: "Editable (Show Edit icon)",
+      control: { type: "boolean" },
       defaultValue: false,
     },
     disabled: {
-      description: 'Disable Row',
-      control: { type: 'boolean' },
+      description: "Disable Row",
+      control: { type: "boolean" },
       defaultValue: false,
     },
     content: {
-      description: 'Route content slot.',
-      control: { type: 'select' },
-      options: ['standard', 'reverse', 'address', 'customized', 'nothing'],
-      defaultValue: 'nothing',
+      description: "Route content slot.",
+      control: { type: "select" },
+      options: ["standard", "reverse", "address", "customized", "nothing"],
+      defaultValue: "nothing",
     },
   },
 };
@@ -55,9 +55,9 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  size: 'standard' | 'compact';
-  leadingIcon: 'circle' | 'square' | 'plus';
-  ordinal: 'first' | 'middle' | 'last';
+  size: "standard" | "compact";
+  leadingIcon: "circle" | "square" | "plus";
+  ordinal: "first" | "middle" | "last";
   editable: boolean;
   disabled: boolean;
   content: unknown;
@@ -65,19 +65,19 @@ interface ArgTypes {
 
 const renderExampleContentSlot = (example: unknown) => {
   switch (example) {
-    case 'customized':
+    case "customized":
       return html`<h1 slot="content">any content you want! 😉</h1>`;
-    case 'standard':
+    case "standard":
       return html` <div slot="content">
         <h3 style="margin: 0;">عنوان را وارد کنید</h3>
         <p style="margin: 0;">توضیحات لیست</p>
       </div>`;
-    case 'reverse':
+    case "reverse":
       return html` <div slot="content">
         <p style="margin: 0;">عنوان را وارد کنید</p>
         <h3 style="margin: 0;">توضیحات لیست</h3>
       </div>`;
-    case 'address':
+    case "address":
       return html`<p slot="content">سعادت‌آباد، بلوار بهزاد</p>`;
     default:
       return nothing;
@@ -106,12 +106,12 @@ const Template: Story<ArgTypes> = ({
 export const Raw = Template.bind({});
 
 Raw.args = {
-  size: 'standard',
-  leadingIcon: 'circle',
-  ordinal: 'first',
+  size: "standard",
+  leadingIcon: "circle",
+  ordinal: "first",
   editable: false,
   disabled: false,
-  content: 'standard',
+  content: "standard",
 };
 
 const GroupTemplate: Story<ArgTypes> = ({
@@ -161,10 +161,10 @@ const GroupTemplate: Story<ArgTypes> = ({
 export const Grouped = GroupTemplate.bind({});
 
 Grouped.args = {
-  size: 'standard',
-  leadingIcon: 'circle',
-  ordinal: 'first',
+  size: "standard",
+  leadingIcon: "circle",
+  ordinal: "first",
   editable: false,
   disabled: false,
-  content: 'standard',
+  content: "standard",
 };

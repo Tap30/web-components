@@ -32,8 +32,7 @@
       "variant": "info",
       "priority": "low"
     },
-    "slotKnobs": {
-    }
+    "slotKnobs": {}
   },
   "tap-toast": {
     "propertyDefaultValues": {
@@ -97,12 +96,12 @@
   "tap-badge-wrapper": {
     "slotKnobs": {
       "default": {
-        "Button":  "<tap-button slot=\"default\" title=\"Button\">عنوان دکمه</tap-button>",
+        "Button": "<tap-button slot=\"default\" title=\"Button\">عنوان دکمه</tap-button>",
         "Icon Button": "<tap-icon-button slot=\"default\" title=\"Icon Button\" size=\"medium\"><tap-icon-default></tap-icon-default></tap-icon-button>"
       },
       "badge": {
-        "Pill Badge":  "<tap-badge slot=\"badge\" value=\"‍۱۰\" variant=\"info\"></tap-badge>",
-        "Dot Badge":"<tap-badge slot=\"badge\" type=\"dot\" variant=\"info\"></tap-badge>"
+        "Pill Badge": "<tap-badge slot=\"badge\" value=\"‍۱۰\" variant=\"info\"></tap-badge>",
+        "Dot Badge": "<tap-badge slot=\"badge\" type=\"dot\" variant=\"info\"></tap-badge>"
       }
     }
   },
@@ -161,18 +160,18 @@
   "tap-pinwheel": {
     "propertyDefaultValues": {
       "items": [
-         "فروردین",
-         "اردیبهشت",
-         "خرداد",
-         "تیر",
-         "مرداد",
-         "شهریور",
-         "مهر",
-         "آبان",
-         "آذر",
-         "دی",
-         "بهمن",
-         "اسفند"
+        "فروردین",
+        "اردیبهشت",
+        "خرداد",
+        "تیر",
+        "مرداد",
+        "شهریور",
+        "مهر",
+        "آبان",
+        "آذر",
+        "دی",
+        "بهمن",
+        "اسفند"
       ]
     }
   },

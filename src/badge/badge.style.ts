@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   .wrapper {
@@ -29,8 +29,8 @@ export default css`
     margin: var(--tap-badge-icon-margin, var(--tap-sys-spacing-2));
   }
 
-  :host([type='pill']) .badge,
-  :host([type='numeral']) .badge {
+  :host([type="pill"]) .badge,
+  :host([type="numeral"]) .badge {
     border-radius: var(
       --tap-badge-pill-numeral-border-radius,
       var(--tap-sys-radius-4)
@@ -42,7 +42,7 @@ export default css`
       var(--tap-badge-pill-numeral-horizontal-padding, var(--tap-sys-spacing-4));
   }
 
-  :host([type='dot']) .badge {
+  :host([type="dot"]) .badge {
     /* FIXME: we dont have sizing tokens yet  */
     width: var(--tap-badge-dot-width, 6px);
     height: var(--tap-badge-dot-height, 6px);
@@ -50,7 +50,7 @@ export default css`
     margin: var(--tap-badge-dot-margin, 3px);
   }
 
-  :host([variant='info']) .badge {
+  :host([variant="info"]) .badge {
     background-color: var(
       --tap-badge-info-background-color,
       var(--tap-sys-color-surface-accent)
@@ -61,7 +61,7 @@ export default css`
     );
   }
 
-  :host([variant='success']) .badge {
+  :host([variant="success"]) .badge {
     background-color: var(
       --tap-badge-success-background-color,
       var(--tap-sys-color-surface-positive)
@@ -72,7 +72,7 @@ export default css`
     );
   }
 
-  :host([variant='error']) .badge {
+  :host([variant="error"]) .badge {
     background-color: var(
       --tap-badge-error-background-color,
       var(--tap-sys-color-surface-negative)
@@ -83,7 +83,7 @@ export default css`
     );
   }
 
-  :host([variant='warning']) .badge {
+  :host([variant="warning"]) .badge {
     background-color: var(
       --tap-badge-warning-background-color,
       var(--tap-sys-color-surface-warning)
@@ -94,7 +94,7 @@ export default css`
     );
   }
 
-  :host([variant='inverse']) .badge {
+  :host([variant="inverse"]) .badge {
     background-color: var(
       --tap-badge-inverse-background-color,
       var(--tap-sys-color-surface-disabled)
@@ -105,7 +105,7 @@ export default css`
     );
   }
 
-  :host([variant='info'][priority='low']) .badge {
+  :host([variant="info"][priority="low"]) .badge {
     background-color: var(
       --tap-badge-info-low-background-color,
       var(--tap-sys-color-surface-accent-light)
@@ -113,7 +113,7 @@ export default css`
     color: var(--tap-badge-info-low-color, var(--tap-sys-color-content-accent));
   }
 
-  :host([variant='success'][priority='low']) .badge {
+  :host([variant="success"][priority="low"]) .badge {
     background-color: var(
       --tap-badge-success-low-background-color,
       var(--tap-sys-color-surface-positive-light)
@@ -124,7 +124,7 @@ export default css`
     );
   }
 
-  :host([variant='error'][priority='low']) .badge {
+  :host([variant="error"][priority="low"]) .badge {
     background-color: var(
       --tap-badge-error-low-background-color,
       var(--tap-sys-color-surface-negative-light)
@@ -135,7 +135,7 @@ export default css`
     );
   }
 
-  :host([variant='warning'][priority='low']) .badge {
+  :host([variant="warning"][priority="low"]) .badge {
     background-color: var(
       --tap-badge-warning-low-background-color,
       var(--tap-sys-color-surface-warning-light)

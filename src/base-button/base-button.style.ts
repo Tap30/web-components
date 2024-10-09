@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -76,7 +76,7 @@ export default css`
     );
   }
 
-  :host([size='small']) .button {
+  :host([size="small"]) .button {
     line-height: var(
       --tap-button-typography-label-sm-height,
       var(--tap-sys-typography-label-sm-height)
@@ -91,7 +91,7 @@ export default css`
     );
   }
 
-  :host([size='medium']) .button {
+  :host([size="medium"]) .button {
     line-height: var(
       --tap-button-typography-label-md-height,
       var(--tap-sys-typography-label-sm-height)
@@ -106,7 +106,7 @@ export default css`
     );
   }
 
-  :host([size='large']) .button {
+  :host([size="large"]) .button {
     line-height: var(
       --tap-button-typography-label-lg-height,
       var(--tap-sys-typography-label-lg-height)
@@ -121,7 +121,7 @@ export default css`
     );
   }
 
-  :host([variant='primary']) .button {
+  :host([variant="primary"]) .button {
     background-color: var(
       --tap-button-color-surface-inverse-primary,
       var(--tap-sys-color-surface-inverse-primary)
@@ -132,7 +132,7 @@ export default css`
     );
   }
 
-  :host([variant='ghost']) .button {
+  :host([variant="ghost"]) .button {
     background-color: var(
       --tap-button-color-surface-tertiary,
       var(--tap-sys-color-surface-tertiary)
@@ -143,7 +143,7 @@ export default css`
     );
   }
 
-  :host([variant='naked']) .button {
+  :host([variant="naked"]) .button {
     background-color: transparent;
     color: var(
       --tap-button-color-content-primary,
@@ -151,7 +151,7 @@ export default css`
     );
   }
 
-  :host([variant='elevated']) .button {
+  :host([variant="elevated"]) .button {
     background-color: var(
       --tap-button-color-surface-primary,
       var(--tap-sys-color-surface-primary)
@@ -164,7 +164,7 @@ export default css`
     box-shadow: 0 4px 16px 0 #0000001a;
   }
 
-  :host([variant='destructive']) .button {
+  :host([variant="destructive"]) .button {
     background-color: var(
       --tap-button-color-surface-destructive,
       var(--tap-sys-color-surface-negative-light)
@@ -175,7 +175,7 @@ export default css`
     );
   }
 
-  :host([variant='brand']) .button {
+  :host([variant="brand"]) .button {
     background: var(
       --tap-button-color-gradient-brand,
       var(--tap-sys-color-gradient-brand)

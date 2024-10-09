@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Row } from './row';
-import styles from './row.style';
+import { customElement } from "lit/decorators.js";
+import { Row } from "./row";
+import styles from "./row.style";
 
 /**
  * @summary A flexible row component with leading, content, and trailing slots.
@@ -30,13 +30,13 @@ import styles from './row.style';
  *
  * @event slotchange - Dispatched when the content of any slot changes.
  */
-@customElement('tap-row')
+@customElement("tap-row")
 export class TapRow extends Row {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-row': TapRow;
+    "tap-row": TapRow;
   }
 }

@@ -1,56 +1,56 @@
-import { html, TemplateResult } from 'lit';
-import './index.js';
-import { spreadProps } from '@open-wc/lit-helpers';
-import { Meta } from '@storybook/web-components';
+import { spreadProps } from "@open-wc/lit-helpers";
+import { type Meta } from "@storybook/web-components";
+import { html, type TemplateResult } from "lit";
+import "./index.js";
 
-const stepperSizes: string[] = ['small', 'medium'];
+const stepperSizes: string[] = ["small", "medium"];
 
 export default {
-  title: 'Components/Stepper',
-  component: 'tap-stepper',
+  title: "Components/Stepper",
+  component: "tap-stepper",
   argTypes: {
     unit: {
-      control: 'text',
-      description: 'َUnit of steps',
-      defaultValue: 'دقیقه',
+      control: "text",
+      description: "َUnit of steps",
+      defaultValue: "دقیقه",
     },
     disabled: {
-      description: 'If true both button will be disabled',
-      control: { type: 'boolean' },
+      description: "If true both button will be disabled",
+      control: { type: "boolean" },
       defaultValue: false,
     },
     fullWidth: {
       description: 'If true width of the component will be "100%"',
-      control: { type: 'boolean' },
+      control: { type: "boolean" },
       defaultValue: false,
     },
     step: {
-      control: 'number',
-      description: 'Increasing or decreasing step size',
+      control: "number",
+      description: "Increasing or decreasing step size",
       defaultValue: 1,
     },
     min: {
-      control: 'number',
+      control: "number",
       description:
-        'Minimum amount of value (if value reaches the min the decrease button will be disabled)',
+        "Minimum amount of value (if value reaches the min the decrease button will be disabled)",
       defaultValue: 0,
     },
     max: {
-      control: 'number',
+      control: "number",
       description:
-        'Maximum amount of value (if value reaches the max the increase button will be disabled)',
+        "Maximum amount of value (if value reaches the max the increase button will be disabled)",
       defaultValue: 10,
     },
     size: {
       options: stepperSizes,
-      control: { type: 'inline-radio' },
+      control: { type: "inline-radio" },
       description:
-        'Size of the stepper (if size sets to medium, unit will be shown)',
+        "Size of the stepper (if size sets to medium, unit will be shown)",
       defaultValue: `"small"`,
     },
     value: {
-      control: 'number',
-      description: 'Value of stepper',
+      control: "number",
+      description: "Value of stepper",
       defaultValue: 2,
     },
   },
@@ -68,24 +68,24 @@ type ArgTypes = {
   step: number;
   min: number;
   max: number;
-  size: 'small' | 'medium';
+  size: "small" | "medium";
   value: number;
   disabled: boolean;
   fullWidth: boolean;
 };
 
 const defaultProps: ArgTypes = {
-  unit: '',
+  unit: "",
   step: 1,
   min: 0,
   max: 10,
-  size: 'medium',
+  size: "medium",
   value: 2,
   disabled: false,
   fullWidth: false,
 };
 
-const Template: Story<ArgTypes> = (props) => html`
+const Template: Story<ArgTypes> = props => html`
   <tap-stepper ${spreadProps(props)}></tap-stepper>
 `;
 
