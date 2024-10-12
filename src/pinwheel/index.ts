@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Pinwheel } from './pinwheel';
-import styles from './pinwheel.style';
+import { customElement } from "lit/decorators.js";
+import { Pinwheel } from "./pinwheel";
+import styles from "./pinwheel.style";
 
 /**
  * @summary A pinwheel component for selecting items by scrolling through a list.
@@ -29,13 +29,13 @@ import styles from './pinwheel.style';
  * @fires pinwheel-change - Fires when the pinwheel changes
  *
  */
-@customElement('tap-pinwheel')
+@customElement("tap-pinwheel")
 export class TapPinwheel extends Pinwheel {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-pinwheel': TapPinwheel;
+    "tap-pinwheel": TapPinwheel;
   }
 }

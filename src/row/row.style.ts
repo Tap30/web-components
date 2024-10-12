@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -55,11 +55,11 @@ export default css`
     justify-content: center;
   }
 
-  :host([size='standard']) .container {
+  :host([size="standard"]) .container {
     height: var(--tap-row-standard-height, var(--tap-sys-spacing-13));
   }
 
-  :host([size='compact']) .container {
+  :host([size="compact"]) .container {
     height: var(--tap-row-compact-height, var(--tap-sys-spacing-12));
   }
 

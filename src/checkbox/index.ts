@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Checkbox } from './checkbox';
-import styles from './checkbox.style';
+import { customElement } from "lit/decorators.js";
+import { Checkbox } from "./checkbox";
+import styles from "./checkbox.style";
 
 /**
  * @summary A checkbox component with support for checked and indeterminate states.
@@ -25,13 +25,13 @@ import styles from './checkbox.style';
  * @cssprop [--tap-checkbox-disabled-border-color=--tap-sys-color-surface-disabled] - The border color of the disabled checkbox.
  * @cssprop [--tap-checkbox-disabled-color=--tap-sys-color-content-disabled] - The color of the content inside the disabled checkbox.
  */
-@customElement('tap-checkbox')
+@customElement("tap-checkbox")
 export class TapCheckbox extends Checkbox {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-checkbox': TapCheckbox;
+    "tap-checkbox": TapCheckbox;
   }
 }

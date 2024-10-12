@@ -1,45 +1,47 @@
-import { LitElement, html } from 'lit';
-import { BottomNavigationItem } from '../bottom-navigation-item/bottom-navigation-item';
-import { queryAssignedElements } from 'lit/decorators.js';
+import { LitElement, html } from "lit";
+import { queryAssignedElements } from "lit/decorators.js";
+import { type BottomNavigationItem } from "../bottom-navigation-item/bottom-navigation-item";
 
 export class BottomNavigation extends LitElement {
-  @queryAssignedElements() private items!: BottomNavigationItem[];
+  @queryAssignedElements()
+  private _items!: BottomNavigationItem[];
 
-  connectedCallback() {
+  public override connectedCallback() {
     super.connectedCallback();
+
     this.addEventListener(
-      'bottom-navigation-item-click',
-      this.handleBottomNavigationItemClick,
+      "bottom-navigation-item-click",
+      this._handleBottomNavigationItemClick,
     );
   }
 
-  private get firstItem() {
-    return this.items[0];
+  private get _firstItem() {
+    return this._items[0];
   }
 
-  private handleBottomNavigationItemClick(e: Event) {
-    const clicked = this.items.find((item) => item === e.target);
+  private _handleBottomNavigationItemClick(e: Event) {
+    const clicked = this._items.find(item => item === e.target);
 
     if (!clicked || clicked.active) return;
 
     clicked.active = true;
 
-    this.items.forEach((item) => {
+    this._items.forEach(item => {
       if (item !== clicked) {
         item.active = false;
       }
     });
   }
 
-  private handleSlotChange() {
-    const active = this.items.find((item) => item.active);
+  private _handleSlotChange() {
+    const active = this._items.find(item => item.active);
 
-    if (!active && this.firstItem) {
-      this.firstItem.active = true;
+    if (!active && this._firstItem) {
+      this._firstItem.active = true;
     }
   }
 
-  render() {
+  protected override render() {
     return html`
       <nav
         role="navigation"
@@ -47,7 +49,7 @@ export class BottomNavigation extends LitElement {
         part="bottom-navigation"
         aria-label="bottom-navigation"
       >
-        <slot @slotchange=${this.handleSlotChange}></slot>
+        <slot @slotchange=${this._handleSlotChange}></slot>
       </nav>
     `;
   }

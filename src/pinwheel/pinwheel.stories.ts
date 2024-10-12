@@ -1,10 +1,10 @@
-import { html, TemplateResult } from 'lit';
-import './index.js';
-import { Meta } from '@storybook/web-components';
+import { type Meta } from "@storybook/web-components";
+import { html, type TemplateResult } from "lit";
+import "./index.js";
 
 export default {
-  title: 'Components/Pinwheel',
-  component: 'tap-pinwheel',
+  title: "Components/Pinwheel",
+  component: "tap-pinwheel",
   argTypes: {},
 } as Meta;
 
@@ -14,18 +14,19 @@ interface Story<T> {
   argTypes?: Record<string, unknown>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ArgTypes {}
 
 const items = [
-  'عنوان ۱',
-  'عنوان ۲',
-  'عنوان ۳',
-  'عنوان ۴',
-  'عنوان ۵',
-  'عنوان ۶',
-  'عنوان ۷',
-  'عنوان ۸',
-  'عنوان ۹',
+  "عنوان ۱",
+  "عنوان ۲",
+  "عنوان ۳",
+  "عنوان ۴",
+  "عنوان ۵",
+  "عنوان ۶",
+  "عنوان ۷",
+  "عنوان ۸",
+  "عنوان ۹",
 ];
 
 const Template: Story<ArgTypes> = () => html`

@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 // tokens
 // --tap-dialog-color-surface-overlay
@@ -60,7 +60,7 @@ export default css`
     );
   }
 
-  ::slotted([slot='banner']) {
+  ::slotted([slot="banner"]) {
     width: 100%;
     height: 100%;
   }

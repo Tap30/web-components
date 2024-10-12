@@ -1,23 +1,23 @@
-import { html, TemplateResult } from 'lit';
-import './index.js';
-import { Meta } from '@storybook/web-components';
+import { type Meta } from "@storybook/web-components";
+import { html, type TemplateResult } from "lit";
+import "./index.js";
 
-const spinnerVariants: string[] = ['default', 'primary', 'inverse'];
-const spinnerSize: string[] = ['small', 'medium', 'large'];
+const spinnerVariants: string[] = ["default", "primary", "inverse"];
+const spinnerSize: string[] = ["small", "medium", "large"];
 
 export default {
-  title: 'Components/Spinner',
-  component: 'tap-spinner',
+  title: "Components/Spinner",
+  component: "tap-spinner",
   argTypes: {
     variant: {
-      description: 'Spinner variant',
+      description: "Spinner variant",
       options: spinnerVariants,
-      control: { type: 'select' },
+      control: { type: "select" },
     },
     size: {
-      description: 'Spinner size',
+      description: "Spinner size",
       options: spinnerSize,
-      control: { type: 'select' },
+      control: { type: "select" },
     },
   },
   decorators: [
@@ -35,16 +35,19 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  variant: 'default' | 'primary' | 'inverse';
-  size: 'small' | 'medium' | 'large';
+  variant: "default" | "primary" | "inverse";
+  size: "small" | "medium" | "large";
 }
 
 const Template: Story<ArgTypes> = ({ variant, size }: ArgTypes) => html`
-  <tap-spinner variant=${variant} size=${size}></tap-spinner>
+  <tap-spinner
+    variant=${variant}
+    size=${size}
+  ></tap-spinner>
 `;
 
 export const Spinner = Template.bind({});
 
 Spinner.args = {
-  size: 'medium',
+  size: "medium",
 };

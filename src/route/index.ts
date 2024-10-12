@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Route } from './route';
-import styles from './route.style';
+import { customElement } from "lit/decorators.js";
+import { Route } from "./route";
+import styles from "./route.style";
 
 /**
  * @summary A route component.
@@ -23,13 +23,13 @@ import styles from './route.style';
  *
  * @event slotchange - Dispatched when the content of any slot changes.
  */
-@customElement('tap-route')
+@customElement("tap-route")
 export class TapRoute extends Route {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-route': TapRoute;
+    "tap-route": TapRoute;
   }
 }

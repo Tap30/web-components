@@ -1,12 +1,14 @@
-import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
+import { LitElement, html } from "lit";
+import { property } from "lit/decorators.js";
 
 export class Spinner extends LitElement {
-  @property({ reflect: true }) variant: 'primary' | 'inverse' | 'default' =
-    'default';
-  @property({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
+  @property({ reflect: true })
+  public variant?: "primary" | "inverse" | "default" = "default";
 
-  render() {
+  @property({ reflect: true })
+  public size?: "small" | "medium" | "large" = "medium";
+
+  protected override render() {
     return html`
       <svg
         part="svg"
@@ -16,14 +18,40 @@ export class Spinner extends LitElement {
         viewBox="0 0 600 600"
       >
         <defs>
-          <linearGradient id="Gradient1" gradientTransform="rotate(90)">
-            <stop offset="0%" stop-opacity="1" stop-color="currentColor" />
-            <stop offset="100%" stop-opacity="0.5" stop-color="currentColor" />
+          <linearGradient
+            id="Gradient1"
+            gradientTransform="rotate(90)"
+          >
+            <stop
+              offset="0%"
+              stop-opacity="1"
+              stop-color="currentColor"
+            />
+            <stop
+              offset="100%"
+              stop-opacity="0.5"
+              stop-color="currentColor"
+            />
           </linearGradient>
-          <linearGradient id="Gradient2" gradientTransform="rotate(90)">
-            <stop offset="0%" stop-opacity="0" stop-color="currentColor" />
-            <stop offset="90%" stop-opacity="0.5" stop-color="currentColor" />
-            <stop offset="100%" stop-opacity="0.65" stop-color="currentColor" />
+          <linearGradient
+            id="Gradient2"
+            gradientTransform="rotate(90)"
+          >
+            <stop
+              offset="0%"
+              stop-opacity="0"
+              stop-color="currentColor"
+            />
+            <stop
+              offset="90%"
+              stop-opacity="0.5"
+              stop-color="currentColor"
+            />
+            <stop
+              offset="100%"
+              stop-opacity="0.65"
+              stop-color="currentColor"
+            />
           </linearGradient>
           <pattern
             id="Pattern"

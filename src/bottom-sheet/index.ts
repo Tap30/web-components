@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { BottomSheet } from './bottom-sheet';
-import styles from './bottom-sheet.style';
+import { customElement } from "lit/decorators.js";
+import { BottomSheet } from "./bottom-sheet";
+import styles from "./bottom-sheet.style";
 
 /**
  * @summary Bottom sheet Element
@@ -27,13 +27,13 @@ import styles from './bottom-sheet.style';
  *
  * @fires close - Fires when the bottom sheet closes.
  */
-@customElement('tap-bottom-sheet')
+@customElement("tap-bottom-sheet")
 export class TapBottomSheet extends BottomSheet {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-bottom-sheet': TapBottomSheet;
+    "tap-bottom-sheet": TapBottomSheet;
   }
 }

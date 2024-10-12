@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Toast } from './toast';
-import styles from './toast.style';
+import { customElement } from "lit/decorators.js";
+import { Toast } from "./toast";
+import styles from "./toast.style";
 
 /**
  * @summary A toast notification component.
@@ -32,13 +32,13 @@ import styles from './toast.style';
  *
  * @fires dismiss - Fires when the toast dismiss button is clicked
  */
-@customElement('tap-toast')
+@customElement("tap-toast")
 export class TapToast extends Toast {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-toast': TapToast;
+    "tap-toast": TapToast;
   }
 }

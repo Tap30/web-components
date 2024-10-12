@@ -1,7 +1,8 @@
-import { customElement } from 'lit/decorators.js';
-import { Textarea } from './textarea';
-import styles from './textarea.style';
-import { inputStyles } from '../input';
+import { customElement } from "lit/decorators.js";
+import { inputStyles } from "../input";
+import { Textarea } from "./textarea";
+import styles from "./textarea.style";
+
 /**
  * @summary A textarea component.
  *
@@ -51,13 +52,13 @@ import { inputStyles } from '../input';
  * @cssprop [--tap-input-disabled-container-color=--tap-sys-color-content-disabled] - The color of the text and elements when disabled.
  * @cssprop [--tap-input-caret-color=--tap-sys-color-surface-accent] - The color of the input caret.
  */
-@customElement('tap-textarea')
+@customElement("tap-textarea")
 export class TapTextarea extends Textarea {
-  static readonly styles = [inputStyles, styles];
+  public static override readonly styles = [inputStyles, styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-textarea': TapTextarea;
+    "tap-textarea": TapTextarea;
   }
 }

@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -55,7 +55,7 @@ export default css`
     justify-content: center;
   }
 
-  :host([variant='success']) .toast {
+  :host([variant="success"]) .toast {
     background-color: var(
       --tap-toast-background-color-success,
       var(--tap-sys-color-surface-positive)
@@ -65,7 +65,7 @@ export default css`
       var(--tap-sys-color-content-on-inverse)
     );
   }
-  :host([variant='error']) .toast {
+  :host([variant="error"]) .toast {
     background-color: var(
       --tap-toast-background-color-error,
       var(--tap-sys-color-surface-negative)
@@ -75,14 +75,14 @@ export default css`
       var(--tap-sys-color-content-on-inverse)
     );
   }
-  :host([variant='info']) .toast {
+  :host([variant="info"]) .toast {
     background-color: var(
       --tap-toast-background-color-info,
       var(--tap-sys-color-surface-accent)
     );
     color: var(--tap-toast-color-info, var(--tap-sys-color-content-on-inverse));
   }
-  :host([variant='inverse']) .toast {
+  :host([variant="inverse"]) .toast {
     background-color: var(
       --tap-toast-background-color-inverse,
       var(--tap-sys-color-surface-inverse-secondary)
@@ -92,7 +92,7 @@ export default css`
       var(--tap-sys-color-content-on-inverse)
     );
   }
-  :host([variant='warning']) .toast {
+  :host([variant="warning"]) .toast {
     background-color: var(
       --tap-toast-background-color-warning,
       var(--tap-sys-color-surface-warning)

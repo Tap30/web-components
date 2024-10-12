@@ -1,42 +1,43 @@
-import { html, TemplateResult } from 'lit';
-import { Meta } from '@storybook/web-components';
-import './index.js';
-import '../tooltip';
+import { type Meta } from "@storybook/web-components";
+import { html, type TemplateResult } from "lit";
+import { ifDefined } from "lit/directives/if-defined";
+import "../tooltip";
+import "./index.js";
 
 export default {
-  title: 'Components/Bottom Sheet',
-  component: 'tap-bottom-sheet',
+  title: "Components/Bottom Sheet",
+  component: "tap-bottom-sheet",
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
   argTypes: {
     open: {
-      control: 'boolean',
+      control: "boolean",
       description:
-        'Controls the visibility of the bottom sheet. If true, the bottom sheet is visible.',
+        "Controls the visibility of the bottom sheet. If true, the bottom sheet is visible.",
     },
     dismissible: {
-      control: 'boolean',
+      control: "boolean",
       description:
-        'Determines whether the bottom sheet can be dismissed by the user. If true, a close button is displayed, allowing the bottom sheet to be closed.',
+        "Determines whether the bottom sheet can be dismissed by the user. If true, a close button is displayed, allowing the bottom sheet to be closed.",
     },
     hasDimmer: {
-      control: 'boolean',
-      description: 'Controls the presence of a dimmer overlay.',
+      control: "boolean",
+      description: "Controls the presence of a dimmer overlay.",
     },
     title: {
-      control: 'text',
+      control: "text",
       description:
-        'Specifies the title displayed in the header of the bottom sheet.',
+        "Specifies the title displayed in the header of the bottom sheet.",
     },
     expanded: {
-      control: 'boolean',
+      control: "boolean",
       description:
-        'If true, the bottom sheet expands to 90% of the viewport height (90vh).',
+        "If true, the bottom sheet expands to 90% of the viewport height (90vh).",
     },
     showGrabber: {
-      control: 'boolean',
-      description: 'Controls the visibility of the grabber element.',
+      control: "boolean",
+      description: "Controls the visibility of the grabber element.",
     },
   },
   decorators: [
@@ -71,7 +72,7 @@ interface ArgTypes {
 
 const Template: Story<ArgTypes> = ({ title, open, hasDimmer }) => {
   return html` <tap-bottom-sheet
-    title=${title}
+    title=${ifDefined(title)}
     ?open=${open}
     ?has-dimmer=${hasDimmer}
   >
@@ -86,7 +87,7 @@ const Template: Story<ArgTypes> = ({ title, open, hasDimmer }) => {
 
 export const Simple = Template.bind({});
 Simple.args = {
-  title: 'عنوان',
+  title: "عنوان",
   open: true,
   hasDimmer: true,
 };

@@ -1,14 +1,14 @@
-import { html, TemplateResult } from 'lit';
-import { Meta } from '@storybook/web-components';
-import '../button';
-import './index.js';
-import '@tapsioss/icons/dist/icons/circle-check-fill';
+import { type Meta } from "@storybook/web-components";
+import "@tapsioss/icons/dist/icons/circle-check-fill";
+import { html, type TemplateResult } from "lit";
+import "../button";
+import "./index.js";
 
 export default {
-  title: 'Components/Modal',
-  component: 'tap-modal',
+  title: "Components/Modal",
+  component: "tap-modal",
   argTypes: {
-    open: { control: 'boolean' },
+    open: { control: "boolean" },
   },
 } as Meta;
 
@@ -26,19 +26,36 @@ interface ArgTypes {
 }
 
 const renderActions = (layout: string) =>
-  layout === 'vertical'
+  layout === "vertical"
     ? html` <div
         slot="actions"
         style="display: flex; flex-direction: column; gap: 12px"
       >
-        <tap-button tabindex="0" style="width:100%">عنوان دکمه</tap-button>
-        <tap-button tabindex="0" style="width:100%" variant="ghost"
+        <tap-button
+          tabindex="0"
+          style="width:100%"
+          >عنوان دکمه</tap-button
+        >
+        <tap-button
+          tabindex="0"
+          style="width:100%"
+          variant="ghost"
           >عنوان دکمه</tap-button
         >
       </div>`
-    : html` <div slot="actions" style="display: flex; gap: 12px">
-        <tap-button tabindex="0" style="width:100%">عنوان دکمه</tap-button>
-        <tap-button tabindex="0" style="width:100%" variant="ghost"
+    : html` <div
+        slot="actions"
+        style="display: flex; gap: 12px"
+      >
+        <tap-button
+          tabindex="0"
+          style="width:100%"
+          >عنوان دکمه</tap-button
+        >
+        <tap-button
+          tabindex="0"
+          style="width:100%"
+          variant="ghost"
           >عنوان دکمه</tap-button
         >
       </div>`;
@@ -78,7 +95,7 @@ export const Modal = Template.bind({});
 
 Modal.args = {
   open: true,
-  alignment: 'right',
-  layout: 'horizontal',
+  alignment: "right",
+  layout: "horizontal",
   isBannerFullWidth: true,
 };

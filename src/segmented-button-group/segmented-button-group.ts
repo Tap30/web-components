@@ -1,25 +1,27 @@
-import { LitElement, html, nothing } from 'lit';
-import { property, queryAssignedElements } from 'lit/decorators.js';
-import { SegmentedButton } from '../segmented-button/segmented-button.js';
+import { LitElement, html, nothing } from "lit";
+import { property, queryAssignedElements } from "lit/decorators.js";
+import { type SegmentedButton } from "../segmented-button/segmented-button.js";
 
 export class SegmentedButtonGroup extends LitElement {
-  @property({ reflect: true }) size: 'sm' | 'md' = 'md';
+  @property({ reflect: true })
+  public size: "sm" | "md" = "md";
 
-  @queryAssignedElements() private buttons!: SegmentedButton[];
+  @queryAssignedElements()
+  private _buttons!: SegmentedButton[];
 
-  connectedCallback() {
+  public override connectedCallback() {
     super.connectedCallback();
     this.addEventListener(
-      'segmented-button-click',
-      this.handleSegmentedButtonClick,
+      "segmented-button-click",
+      this._handleSegmentedButtonClick,
     );
   }
 
-  private handleSlotChange() {
-    const selected = this.buttons.find((button) => button.selected);
+  private _handleSlotChange() {
+    const selected = this._buttons.find(button => button.selected);
 
     if (!selected) {
-      const button = this.buttons.find((button) => !button.disabled);
+      const button = this._buttons.find(button => !button.disabled);
 
       if (button) {
         button.selected = true;
@@ -27,22 +29,22 @@ export class SegmentedButtonGroup extends LitElement {
     }
   }
 
-  private handleSegmentedButtonClick(e: Event) {
-    const index = this.buttons.indexOf(e.target as SegmentedButton);
-    const clicked = this.buttons[index];
+  private _handleSegmentedButtonClick(e: Event) {
+    const index = this._buttons.indexOf(e.target as SegmentedButton);
+    const clicked = this._buttons[index];
 
     if (!clicked || clicked.selected || clicked.disabled) return;
 
     clicked.selected = true;
 
-    this.buttons.forEach((button) => {
+    this._buttons.forEach(button => {
       if (button !== clicked) {
         button.selected = false;
       }
     });
 
     this.dispatchEvent(
-      new CustomEvent('segmented-button-group-change', {
+      new CustomEvent("segmented-button-group-change", {
         detail: {
           selected: clicked,
           index,
@@ -53,7 +55,7 @@ export class SegmentedButtonGroup extends LitElement {
     );
   }
 
-  render() {
+  protected override render() {
     return html`
       <div
         role="group"
@@ -61,7 +63,7 @@ export class SegmentedButtonGroup extends LitElement {
         part="button-group"
         aria-label=${nothing}
       >
-        <slot @slotchange=${this.handleSlotChange}></slot>
+        <slot @slotchange=${this._handleSlotChange}></slot>
       </div>
     `;
   }

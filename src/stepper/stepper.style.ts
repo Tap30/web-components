@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -29,7 +29,7 @@ export default css`
     display: flex;
   }
 
-  :host([size='small']) .stepper {
+  :host([size="small"]) .stepper {
     gap: var(--tap-sys-spacing-4);
     font-size: var(
       --tap-stepper-typography-label-sm-size,
@@ -37,7 +37,7 @@ export default css`
     );
   }
 
-  :host([size='medium']) .stepper {
+  :host([size="medium"]) .stepper {
     gap: var(--tap-sys-spacing-8);
     font-size: var(
       --tap-stepper-typography-label-md-size,

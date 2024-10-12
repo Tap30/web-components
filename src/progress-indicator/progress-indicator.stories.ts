@@ -1,18 +1,18 @@
-import { html, TemplateResult } from 'lit';
-import './index.js';
-import { Meta } from '@storybook/web-components';
+import { type Meta } from "@storybook/web-components";
+import { html, type TemplateResult } from "lit";
+import "./index.js";
 
 export default {
-  title: 'Components/Progress Indicator',
-  component: 'tap-progress-indicator',
+  title: "Components/Progress Indicator",
+  component: "tap-progress-indicator",
   argTypes: {
     current: {
-      control: { type: 'range', min: 1, max: 10, step: 1 },
-      description: 'Progress indicator current value',
+      control: { type: "range", min: 1, max: 10, step: 1 },
+      description: "Progress indicator current value",
     },
     max: {
-      control: { type: 'range', min: 1, max: 10, step: 1 },
-      description: 'Progress indicator max value',
+      control: { type: "range", min: 1, max: 10, step: 1 },
+      description: "Progress indicator max value",
     },
   },
 } as Meta;

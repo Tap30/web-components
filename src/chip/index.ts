@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import styles from './chip.style';
-import { Chip } from './chip';
+import { customElement } from "lit/decorators.js";
+import { Chip } from "./chip";
+import styles from "./chip.style";
 
 /**
  * @summary A chip component.
@@ -34,13 +34,13 @@ import { Chip } from './chip';
  *
  */
 
-@customElement('tap-chip')
+@customElement("tap-chip")
 export class TapChip extends Chip {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-chip': TapChip;
+    "tap-chip": TapChip;
   }
 }

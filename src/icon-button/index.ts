@@ -1,7 +1,7 @@
-import { customElement } from 'lit/decorators.js';
-import { IconButton } from './icon-button';
-import styles from './icon-button.style';
-import { baseButtonStyles } from '../base-button';
+import { customElement } from "lit/decorators.js";
+import { baseButtonStyles } from "../base-button";
+import { IconButton } from "./icon-button";
+import styles from "./icon-button.style";
 
 /**
  * @summary A customizable icon button component with various styles and states.
@@ -52,13 +52,13 @@ import { baseButtonStyles } from '../base-button';
  * @cssprop [--tap-button-color-gradient-brand=--tap-sys-color-gradient-brand] - The gradient color for the brand variant.
  * @cssprop [--tap-sys-color-gradient-brand] - The gradient color for the brand variant.
  */
-@customElement('tap-icon-button')
+@customElement("tap-icon-button")
 export class TapIconButton extends IconButton {
-  static readonly styles = [baseButtonStyles, styles];
+  public static override readonly styles = [baseButtonStyles, styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-icon-button': TapIconButton;
+    "tap-icon-button": TapIconButton;
   }
 }

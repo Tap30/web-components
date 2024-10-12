@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Tooltip } from './tooltip';
-import styles from './tooltip.style';
+import { customElement } from "lit/decorators.js";
+import { Tooltip } from "./tooltip";
+import styles from "./tooltip.style";
 
 // TODO: update JSDoc
 /**
@@ -16,13 +16,13 @@ import styles from './tooltip.style';
  *
  * @fires dismiss - Fires when the toast dismiss button is clicked
  */
-@customElement('tap-tooltip')
+@customElement("tap-tooltip")
 export class TapTooltip extends Tooltip {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-tooltip': TapTooltip;
+    "tap-tooltip": TapTooltip;
   }
 }

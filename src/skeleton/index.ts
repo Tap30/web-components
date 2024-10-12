@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Skeleton } from './skeleton';
-import styles from './skeleton.style';
+import { customElement } from "lit/decorators.js";
+import { Skeleton } from "./skeleton";
+import styles from "./skeleton.style";
 
 /**
  * @summary Display Skeleton component with different styles and types.
@@ -22,13 +22,13 @@ import styles from './skeleton.style';
  * @cssprop [--tap-skeleton-circle-height=--tap-sys-spacing-10] - Height of the skeleton variant circle
  */
 
-@customElement('tap-skeleton')
+@customElement("tap-skeleton")
 export class TapSkeleton extends Skeleton {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-skeleton': TapSkeleton;
+    "tap-skeleton": TapSkeleton;
   }
 }

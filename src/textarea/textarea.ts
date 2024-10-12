@@ -1,10 +1,11 @@
-import { TemplateResult, html } from 'lit';
-import { live } from 'lit/directives/live.js';
-import { Input } from '../input';
-import { redispatchEvent } from '../utils/utils';
+import { type TemplateResult, html } from "lit";
+import { ifDefined } from "lit/directives/if-defined";
+import { live } from "lit/directives/live.js";
+import { Input } from "../input";
+import { redispatchEvent } from "../utils";
 
 export class Textarea extends Input {
-  private redispatchEvent(event: Event) {
+  private _handleChange(event: Event) {
     redispatchEvent(this, event);
   }
 
@@ -14,13 +15,13 @@ export class Textarea extends Input {
         class="input"
         id="textarea"
         .value=${live(this.value)}
-        placeholder=${this.placeholder}
+        placeholder=${ifDefined(this.placeholder)}
         ?disabled=${this.disabled}
-        aria-label=${this.label}
+        aria-label=${ifDefined(this.label)}
         aria-invalid=${this.error}
-        aria-disabled=${this.disabled ? 'true' : 'false'}
+        aria-disabled=${this.disabled ? "true" : "false"}
         @input=${this.handleInput}
-        @change=${this.redispatchEvent}
+        @change=${this._handleChange}
       >
       </textarea>
     `;

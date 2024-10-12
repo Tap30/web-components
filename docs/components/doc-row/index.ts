@@ -1,14 +1,14 @@
-import { customElement } from 'lit/decorators.js';
-import styles from './doc-row.style';
-import {Row} from "./doc-row";
+import { customElement } from "lit/decorators.js";
+import { Row } from "./doc-row";
+import styles from "./doc-row.style";
 
-@customElement('doc-row')
+@customElement("doc-row")
 export class DocRow extends Row {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'doc-row': DocRow;
+    "doc-row": DocRow;
   }
 }

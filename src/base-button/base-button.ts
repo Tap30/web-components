@@ -1,54 +1,87 @@
-import { html, LitElement, nothing } from 'lit';
-import { property } from 'lit/decorators.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
-import '../spinner';
+import { html, LitElement, nothing } from "lit";
+import { property } from "lit/decorators.js";
+import { ifDefined } from "lit/directives/if-defined.js";
+import "../spinner";
 
 export abstract class BaseButton extends LitElement {
-  static formAssociated = true;
-  static readonly shadowRootOptions = {
+  public static formAssociated = true;
+
+  public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
-  private readonly internals!: ElementInternals;
+  private readonly _internals!: ElementInternals;
 
-  @property({ reflect: true }) slot = '';
+  @property({ reflect: true })
+  public override slot = "";
 
-  @property({ type: Boolean, reflect: true }) disabled = false;
+  @property({ type: Boolean, reflect: true })
+  public disabled = false;
 
-  @property({ reflect: true }) type?: 'button' | 'submit' | 'reset';
+  @property({ reflect: true })
+  public type?: "button" | "submit" | "reset";
 
-  @property() value?: string;
+  @property()
+  public value?: string;
 
-  @property() name?: string;
+  @property()
+  public name?: string;
 
-  @property() label?: string;
+  @property()
+  public label?: string;
 
-  @property({ type: Boolean, reflect: true }) loading = false;
+  @property({ type: Boolean, reflect: true })
+  public loading = false;
 
-  @property({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
+  @property({ reflect: true })
+  public size: "small" | "medium" | "large" = "medium";
 
-  @property({ reflect: true }) variant:
-    | 'primary'
-    | 'ghost'
-    | 'naked'
-    | 'elevated'
-    | 'destructive'
-    | 'brand' = 'primary';
+  @property({ reflect: true })
+  public variant:
+    | "primary"
+    | "ghost"
+    | "naked"
+    | "elevated"
+    | "destructive"
+    | "brand" = "primary";
 
   constructor() {
     super();
-    this.internals = this.attachInternals();
+    this._internals = this.attachInternals();
   }
 
-  render() {
+  private _renderLoadingContent = () => {
+    return html`
+      <div class="spinner">
+        <tap-spinner
+          size=${ifDefined(this.size === "small" ? "small" : undefined)}
+        ></tap-spinner>
+      </div>
+      <div class="content">
+        <slot></slot>
+      </div>
+    `;
+  };
+
+  private _handleClick = () => {
+    if (this.type === "reset") {
+      return this._internals.form?.reset();
+    }
+
+    if (this.type === "submit") {
+      return this._internals.form?.requestSubmit();
+    }
+  };
+
+  protected override render() {
     return html`
       <button
         id="button"
         class="button"
         role="button"
         part="button"
-        @click=${this.handleClick}
+        @click=${this._handleClick}
         ?disabled=${this.disabled}
         type=${ifDefined(this.type)}
         name=${ifDefined(this.name)}
@@ -59,31 +92,8 @@ export abstract class BaseButton extends LitElement {
         aria-describedby=${nothing}
       >
         <span class="cover"></span>
-        ${this.loading ? this.renderLoadingContent() : html` <slot></slot>`}
+        ${this.loading ? this._renderLoadingContent() : html` <slot></slot>`}
       </button>
     `;
   }
-
-  private renderLoadingContent = () => {
-    return html`
-      <div class="spinner">
-        <tap-spinner
-          size=${this.size === 'small' ? 'small' : nothing}
-        ></tap-spinner>
-      </div>
-      <div class="content">
-        <slot></slot>
-      </div>
-    `;
-  };
-
-  private handleClick = () => {
-    if (this.type === 'reset') {
-      return this.internals.form?.reset();
-    }
-
-    if (this.type === 'submit') {
-      return this.internals.form?.requestSubmit();
-    }
-  };
 }

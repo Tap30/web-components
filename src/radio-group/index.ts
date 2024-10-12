@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { RadioGroup } from './radio-group';
-import styles from './radio-group.style';
+import { customElement } from "lit/decorators.js";
+import { RadioGroup } from "./radio-group";
+import styles from "./radio-group.style";
 
 /**
  * @summary A group of radio buttons.
@@ -15,13 +15,13 @@ import styles from './radio-group.style';
  *
  * @event radio-group-change - Dispatched when the selected radio button changes.
  */
-@customElement('tap-radio-group')
+@customElement("tap-radio-group")
 export class TapRadioGroup extends RadioGroup {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-radio-group': TapRadioGroup;
+    "tap-radio-group": TapRadioGroup;
   }
 }

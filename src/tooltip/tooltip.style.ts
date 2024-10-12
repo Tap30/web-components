@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   .tooltip {
@@ -28,21 +28,21 @@ export default css`
     display: inline-block;
   }
 
-  :host([placement='top']) .tooltip-icon,
-  :host([placement='top-start']) .tooltip-icon,
-  :host([placement='top-end']) .tooltip-icon {
+  :host([placement="top"]) .tooltip-icon,
+  :host([placement="top-start"]) .tooltip-icon,
+  :host([placement="top-end"]) .tooltip-icon {
     transform: rotate(-90deg);
   }
 
-  :host([placement='bottom']) .tooltip-icon,
-  :host([placement='bottom-start']) .tooltip-icon,
-  :host([placement='bottom-end']) .tooltip-icon {
+  :host([placement="bottom"]) .tooltip-icon,
+  :host([placement="bottom-start"]) .tooltip-icon,
+  :host([placement="bottom-end"]) .tooltip-icon {
     transform: rotate(90deg);
   }
 
-  :host([placement='left']) .tooltip-icon,
-  :host([placement='left-start']) .tooltip-icon,
-  :host([placement='left-end']) .tooltip-icon {
+  :host([placement="left"]) .tooltip-icon,
+  :host([placement="left-start"]) .tooltip-icon,
+  :host([placement="left-end"]) .tooltip-icon {
     transform: rotate(180deg);
   }
 

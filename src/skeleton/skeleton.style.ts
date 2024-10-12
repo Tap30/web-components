@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from "lit";
 
 export default css`
   :host {
@@ -31,11 +31,11 @@ export default css`
     will-change: transform;
   }
 
-  :host([variant='rect']) .skeleton {
+  :host([variant="rect"]) .skeleton {
     border-radius: var(--tap-skeleton-rect-radius, var(--tap-sys-spacing-0));
   }
 
-  :host([variant='circle']) .skeleton {
+  :host([variant="circle"]) .skeleton {
     width: var(--tap-skeleton-circle-width, var(--tap-sys-spacing-10));
     height: var(--tap-skeleton-circle-height, var(--tap-sys-spacing-10));
     border-radius: var(
@@ -44,7 +44,7 @@ export default css`
     );
   }
 
-  :host([animation-mode='progress']) .skeleton {
+  :host([animation-mode="progress"]) .skeleton {
     animation: progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     background-size: 200px 100%;
     background-image: linear-gradient(
@@ -54,7 +54,7 @@ export default css`
       color-mix(in srgb, var(--tap-sys-color-surface-white), transparent 100%)
     );
   }
-  :host([animation-mode='pulse']) .skeleton {
+  :host([animation-mode="pulse"]) .skeleton {
     animation: pulse 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.5s infinite;
   }
 
@@ -83,12 +83,12 @@ export default css`
 
   // Removing animation if user enabled the 'Reduce Motion' option.
   @media (prefers-reduced-motion: reduce) {
-    :host([animation-mode='progress']) .skeleton,
-    :host([animation-mode='pulse']) .skeleton {
+    :host([animation-mode="progress"]) .skeleton,
+    :host([animation-mode="pulse"]) .skeleton {
       animation: none;
     }
 
-    :host([animation-mode='progress']) .skeleton {
+    :host([animation-mode="progress"]) .skeleton {
       background: none;
     }
   }

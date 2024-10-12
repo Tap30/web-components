@@ -1,28 +1,127 @@
-import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import eslintLit from 'eslint-plugin-lit';
-import eslintWC from 'eslint-plugin-wc';
+import jsLint from "@eslint/js";
+import commentsPlugin from "eslint-plugin-eslint-comments";
+import importPlugin from "eslint-plugin-import";
+import litPlugin from "eslint-plugin-lit";
+import prettierRecommendedConfig from "eslint-plugin-prettier/recommended";
+import wcPlugin from "eslint-plugin-wc";
+import { config, configs as tsLintConfigs } from "typescript-eslint";
 
-export default tseslint.config(
-  eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
-  eslintPluginPrettierRecommended,
-  { plugins: { lit: eslintLit }, rules: eslintLit.configs.recommended.rules },
-  eslintWC.configs['flat/recommended'],
+export default config(
+  jsLint.configs.recommended,
+  ...tsLintConfigs.recommendedTypeChecked,
+  importPlugin.flatConfigs.recommended,
+  importPlugin.flatConfigs.typescript,
+  litPlugin.configs["flat/recommended"],
+  wcPlugin.configs["flat/recommended"],
+  prettierRecommendedConfig,
+  {
+    ignores: ["**/*.test.ts"],
+    files: ["*.ts"],
+  },
   {
     languageOptions: {
       parserOptions: {
-        project: true,
         tsconfigRootDir: import.meta.dirname,
+        project: true,
+        projectService: true,
+        sourceType: "module",
       },
     },
-    rules: {
-      "@typescript-eslint/unbound-method": "off"
-    }
   },
   {
-    files: ['*.js'],
-    ...tseslint.configs.disableTypeChecked,
+    plugins: { "eslint-comments": commentsPlugin },
+    rules: {
+      "eslint-comments/disable-enable-pair": "error",
+      "eslint-comments/no-aggregating-enable": "error",
+      "eslint-comments/no-duplicate-disable": "error",
+      "eslint-comments/no-unlimited-disable": "error",
+      "eslint-comments/no-unused-enable": "error",
+      "eslint-comments/no-unused-disable": "error",
+    },
+  },
+  {
+    rules: {
+      "no-alert": "error",
+      "no-console": "warn",
+      "prefer-const": "error",
+      "default-case": "error",
+      "eol-last": "error",
+      "object-shorthand": "error",
+      "require-atomic-updates": "error",
+      "no-unused-private-class-members": "warn",
+      "no-promise-executor-return": "error",
+      "no-unmodified-loop-condition": "warn",
+      eqeqeq: ["error", "smart"],
+      "no-duplicate-imports": [
+        "error",
+        {
+          includeExports: true,
+        },
+      ],
+      "@typescript-eslint/unbound-method": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        {
+          fixStyle: "inline-type-imports",
+        },
+      ],
+      "padding-line-between-statements": [
+        "error",
+        {
+          blankLine: "always",
+          prev: [
+            "const",
+            "let",
+            "var",
+            "directive",
+            "import",
+            "function",
+            "class",
+            "block",
+            "block-like",
+            "multiline-block-like",
+          ],
+          next: "*",
+        },
+        {
+          blankLine: "any",
+          prev: ["import"],
+          next: ["import"],
+        },
+        {
+          blankLine: "any",
+          prev: ["directive"],
+          next: ["directive"],
+        },
+        {
+          blankLine: "any",
+          prev: ["const", "let", "var"],
+          next: ["const", "let", "var"],
+        },
+        {
+          blankLine: "always",
+          prev: ["multiline-const", "multiline-let"],
+          next: "*",
+        },
+      ],
+    },
+    settings: {
+      "import/resolver": {
+        typescript: {
+          project: "tsconfig.json",
+        },
+      },
+    },
+  },
+  {
+    files: ["*.js", "*.mjs"],
+    ...tsLintConfigs.disableTypeChecked,
   },
 );

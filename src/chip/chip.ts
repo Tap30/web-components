@@ -1,38 +1,42 @@
-import { LitElement, html, nothing } from 'lit';
-import { property } from 'lit/decorators.js';
+import { LitElement, html, nothing } from "lit";
+import { property } from "lit/decorators.js";
 
 export class Chip extends LitElement {
-  static readonly shadowRootOptions = {
+  public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
-  @property({ reflect: true, type: Boolean }) selected = false;
+  @property({ reflect: true, type: Boolean })
+  public selected = false;
 
-  @property({ type: Boolean }) disabled = false;
+  @property({ type: Boolean })
+  public disabled = false;
 
-  @property({ reflect: true, type: Boolean }) hasIcon = false;
+  @property({ reflect: true, type: Boolean })
+  public hasIcon = false;
 
-  @property({ reflect: true }) size: 'sm' | 'md' = 'md';
+  @property({ reflect: true })
+  public size: "sm" | "md" = "md";
 
-  private handleClick() {
+  private _handleClick() {
     this.dispatchEvent(
-      new Event('chip-click', {
+      new Event("chip-click", {
         bubbles: true,
         composed: true,
       }),
     );
   }
 
-  render() {
+  protected override render() {
     const { ariaLabel } = this;
 
     return html`
       <button
         class="chip"
         ?disabled=${this.disabled}
-        tabindex="${this.disabled ? '-1' : '0'}"
-        @click="${this.handleClick}"
+        tabindex="${this.disabled ? "-1" : "0"}"
+        @click="${this._handleClick}"
         aria-label=${ariaLabel || nothing}
         aria-pressed=${this.selected}
       >

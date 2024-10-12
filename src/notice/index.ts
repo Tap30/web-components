@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Notice } from './notice';
-import styles from './notice.style';
+import { customElement } from "lit/decorators.js";
+import { Notice } from "./notice";
+import styles from "./notice.style";
 
 /**
  * @summary A notice/alert component is a user interface element that displays important messages or alerts to inform or warn users about specific events or actions.
@@ -45,13 +45,13 @@ import styles from './notice.style';
  * @fires dismiss - Fires when the dismiss button is clicked (if dismissable).
  */
 
-@customElement('tap-notice')
+@customElement("tap-notice")
 export class TapNotice extends Notice {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-notice': TapNotice;
+    "tap-notice": TapNotice;
   }
 }

@@ -1,11 +1,11 @@
-import { html, TemplateResult } from 'lit';
-import './index.js';
-import '../button/index.js';
-import { Meta } from '@storybook/web-components';
+import { type Meta } from "@storybook/web-components";
+import { html, type TemplateResult } from "lit";
+import "../button/index.js";
+import "./index.js";
 
 export default {
-  title: 'Components/Banner',
-  component: 'tap-banner',
+  title: "Components/Banner",
+  component: "tap-banner",
   argTypes: {},
 } as Meta;
 
@@ -15,6 +15,7 @@ interface Story<T> {
   argTypes?: Record<string, unknown>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ArgTypes {}
 
 const Template: Story<ArgTypes> = () => html`
@@ -36,7 +37,11 @@ const Template: Story<ArgTypes> = () => html`
     background-color="rgb(255, 213, 194)"
     text-color="rgb(66, 46, 40)"
   >
-    <tap-button size="small" slot="extra">majid</tap-button>
+    <tap-button
+      size="small"
+      slot="extra"
+      >majid</tap-button
+    >
     <tap-button size="small">دریافت تخفیف</tap-button>
   </tap-banner>
   <br />

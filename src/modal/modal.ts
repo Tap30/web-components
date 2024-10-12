@@ -1,104 +1,98 @@
-import { LitElement, PropertyValues, html, nothing } from 'lit';
-import { property, query } from 'lit/decorators.js';
+import { LitElement, type PropertyValues, html, nothing } from "lit";
+import { property, query } from "lit/decorators.js";
 
 export class Modal extends LitElement implements HTMLDialogElement {
-  static readonly shadowRootOptions = {
+  public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
+
   @property({ type: Boolean, reflect: true })
-  open: boolean = false;
+  public open: boolean = false;
 
   @property({ type: String })
-  title: string = '';
+  public override title: string = "";
 
   @property({ type: String })
-  description: string = '';
+  public description: string = "";
 
   @property({ type: String })
-  alignment: 'left' | 'center' | 'right' = 'right';
+  public alignment: "left" | "center" | "right" = "right";
 
   @property({ type: Boolean })
-  isBannerFullWidth = true;
+  public isBannerFullWidth = true;
 
-  @query('#dialog')
-  private dialog?: HTMLElement | null;
+  @query("#dialog")
+  private _dialog?: HTMLElement | null;
 
-  @query('#overlay')
-  private overlay?: HTMLElement | null;
+  @query("#overlay")
+  private _overlay?: HTMLElement | null;
 
-  returnValue: string = '';
+  returnValue: string = "";
 
   constructor() {
     super();
+
     this.show = this.show.bind(this);
     this.showModal = this.showModal.bind(this);
     this.close = this.close.bind(this);
   }
 
-  connectedCallback() {
+  public override connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('keydown', this.handleKeydown);
-    this.addEventListener('click', this.handleClick);
+    this.addEventListener("keydown", this._handleKeydown);
+    this.addEventListener("click", this._handleClick);
   }
 
-  protected updated(changed: PropertyValues<this>): void {
-    const oldValue = changed.get('open');
+  protected override updated(changed: PropertyValues<this>): void {
+    const oldValue = changed.get("open");
     const newValue = this.open;
     const openChanged = oldValue !== undefined && oldValue !== newValue;
 
-    if (openChanged) {
-      if (newValue) {
-        this.dialog?.focus();
+    if (!openChanged) return;
 
-        this.dispatchEvent(
-          new Event('open', {
-            bubbles: true,
-            composed: true,
-            cancelable: true,
-          }),
-        );
-      } else {
-        this.dispatchEvent(
-          new Event('close', {
-            bubbles: true,
-            composed: true,
-            cancelable: true,
-          }),
-        );
-      }
+    if (newValue) {
+      this._dialog?.focus();
+
+      this.dispatchEvent(
+        new Event("open", {
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        }),
+      );
+    } else {
+      this.dispatchEvent(
+        new Event("close", {
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        }),
+      );
     }
   }
 
-  private handleClick(event: MouseEvent) {
-    const { open, overlay, dialog } = this;
-    if (open) {
-      const path = event.composedPath();
-      if (path.includes(overlay!) && !path.includes(dialog!)) {
-        event.preventDefault();
-        this.close();
-      }
-    }
-  }
+  private _handleClick(event: MouseEvent) {
+    const { open, _overlay: overlay, _dialog: dialog } = this;
 
-  private handleKeydown(event: KeyboardEvent) {
-    // TODO: handle `Tab`, `Shift + Tab`.
-    if (['Escape', 'Esc'].includes(event.key)) {
+    if (!open) return;
+
+    const path = event.composedPath();
+
+    if (path.includes(overlay!) && !path.includes(dialog!)) {
+      event.preventDefault();
       this.close();
     }
   }
 
-  private getBannerClassname(): string {
-    return this.isBannerFullWidth ? 'image-container' : 'icon-container';
-  }
-
-  close(returnValue?: string): void {
-    if (returnValue) {
-      this.returnValue = returnValue;
+  private _handleKeydown(event: KeyboardEvent) {
+    // TODO: handle `Tab`, `Shift + Tab`.
+    if (["Escape", "Esc"].includes(event.key)) {
+      this.close();
     }
-
-    this.open = false;
   }
+
+  close(_returnValue?: string): void {}
 
   show(): void {
     this.open = true;
@@ -108,7 +102,11 @@ export class Modal extends LitElement implements HTMLDialogElement {
     this.show();
   }
 
-  render() {
+  override render() {
+    const containerClassName = this.isBannerFullWidth
+      ? "image-container"
+      : "icon-container";
+
     return html`
       <section ?hidden=${!this.open}>
         <div
@@ -129,22 +127,41 @@ export class Modal extends LitElement implements HTMLDialogElement {
           aria-labelledby=${nothing}
           aria-describedby=${nothing}
         >
-          <div class="${this.getBannerClassname()}" part="container">
-            <slot name="banner" part="banner"></slot>
+          <div
+            class="${containerClassName}"
+            part="container"
+          >
+            <slot
+              name="banner"
+              part="banner"
+            ></slot>
           </div>
-          <div class="content ${this.alignment}" part="content">
+          <div
+            class="content ${this.alignment}"
+            part="content"
+          >
             ${this.title
-              ? html`<span id="title" class="title" part="title"
+              ? html`<span
+                  id="title"
+                  class="title"
+                  part="title"
                   >${this.title}</span
                 >`
               : nothing}
             ${this.description
-              ? html`<p id="description" class="description" part="description">
+              ? html`<p
+                  id="description"
+                  class="description"
+                  part="description"
+                >
                   ${this.description}
                 </p>`
               : nothing}
           </div>
-          <div class="actions" part="actions">
+          <div
+            class="actions"
+            part="actions"
+          >
             <slot name="actions"></slot>
           </div>
         </div>

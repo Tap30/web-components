@@ -1,39 +1,42 @@
-import { LitElement, PropertyValues, html, nothing } from 'lit';
-import { property } from 'lit/decorators.js';
-import { redispatchEvent } from '../utils/utils';
+import { LitElement, type PropertyValues, html, nothing } from "lit";
+import { property } from "lit/decorators.js";
+import { redispatchEvent } from "../utils";
 
 export class Radio extends LitElement {
-  static override shadowRootOptions: ShadowRootInit = {
+  public static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
-  static readonly formAssociated = true;
 
-  @property({ type: Boolean, reflect: true }) checked = false;
+  public static readonly formAssociated = true;
+
+  @property({ type: Boolean, reflect: true })
+  public checked = false;
 
   @property({ type: Boolean })
-  disabled = false;
+  public disabled = false;
 
-  @property() value = '';
+  @property()
+  public value = "";
 
-  private internals: ElementInternals;
+  private _internals: ElementInternals;
 
   constructor() {
     super();
-    this.internals = this.attachInternals();
+    this._internals = this.attachInternals();
   }
 
-  get form() {
-    return this.internals.form;
+  public get form() {
+    return this._internals.form;
   }
 
-  get labels() {
-    return this.internals.labels;
+  public get labels() {
+    return this._internals.labels;
   }
 
-  private handleInput() {
+  private _handleInput() {
     this.dispatchEvent(
-      new CustomEvent('radio-input-change', {
+      new CustomEvent("radio-input-change", {
         detail: {
           selected: this.value,
         },
@@ -43,10 +46,11 @@ export class Radio extends LitElement {
     );
   }
 
-  protected updated(changed: PropertyValues) {
-    if (changed.has('checked')) {
+  protected override updated(changed: PropertyValues) {
+    if (changed.has("checked")) {
       const value = this.checked ? this.value : null;
-      this.internals.setFormValue(value, String(this.checked));
+
+      this._internals.setFormValue(value, String(this.checked));
     }
   }
 
@@ -55,14 +59,34 @@ export class Radio extends LitElement {
   }
 
   formStateRestoreCallback(state: string) {
-    this.checked = state === 'true';
+    this.checked = state === "true";
   }
 
-  private redispatchEvent(event: Event) {
+  private _handleChange(event: Event) {
     redispatchEvent(this, event);
   }
 
-  render() {
+  private _renderCheckIcon() {
+    if (!this.checked) return nothing;
+
+    return html` <svg
+      ?hidden=${!this.checked}
+      width="12"
+      height="9"
+      viewBox="0 0 12 9"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M11.3333 1.40704L4.07958 8.66667L0.666664 5.37617L2.07919 3.96913L4.07958 5.85258L9.9208 0L11.3333 1.40704Z"
+        fill="currentColor"
+      />
+    </svg>`;
+  }
+
+  protected override render() {
     return html`
       <input
         id="input"
@@ -70,36 +94,16 @@ export class Radio extends LitElement {
         role="radio"
         part="radio"
         class="input"
-        aria-checked=${this.checked ? 'true' : 'false'}
+        aria-checked=${this.checked ? "true" : "false"}
         aria-label=${nothing}
         aria-describedby=${nothing}
-        tabindex=${this.disabled ? '-1' : '0'}
+        tabindex=${this.disabled ? "-1" : "0"}
         ?disabled=${this.disabled}
         .checked=${this.checked}
-        @input=${this.handleInput}
-        @change=${this.redispatchEvent}
+        @input=${this._handleInput}
+        @change=${this._handleChange}
       />
-      ${this.renderCheckIcon()}
+      ${this._renderCheckIcon()}
     `;
-  }
-
-  private renderCheckIcon() {
-    if (this.checked) {
-      return html` <svg
-        ?hidden=${!this.checked}
-        width="12"
-        height="9"
-        viewBox="0 0 12 9"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M11.3333 1.40704L4.07958 8.66667L0.666664 5.37617L2.07919 3.96913L4.07958 5.85258L9.9208 0L11.3333 1.40704Z"
-          fill="currentColor"
-        />
-      </svg>`;
-    }
   }
 }

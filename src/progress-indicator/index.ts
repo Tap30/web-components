@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { ProgressIndicator } from './progress-indicator.js';
-import styles from './progress-indicator.style.js';
+import { customElement } from "lit/decorators.js";
+import { ProgressIndicator } from "./progress-indicator.js";
+import styles from "./progress-indicator.style.js";
 
 /**
  * ### Example
@@ -17,13 +17,13 @@ import styles from './progress-indicator.style.js';
  * @cssprop [--tap-progress-indicator-step-background-color=--tap-sys-color-surface-tertiary] - The background color of each step.
  * @cssprop [--tap-progress-indicator-active-step-background-color=--tap-sys-color-border-inverse-primary] - The background color of active steps.
  */
-@customElement('tap-progress-indicator')
+@customElement("tap-progress-indicator")
 export class TapProgressIndicator extends ProgressIndicator {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-progress-indicator': TapProgressIndicator;
+    "tap-progress-indicator": TapProgressIndicator;
   }
 }

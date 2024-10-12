@@ -1,8 +1,21 @@
-import { html, LitElement, nothing } from 'lit';
-import { property } from 'lit/decorators.js';
+import { html, LitElement, nothing } from "lit";
+import { property } from "lit/decorators.js";
 
 export class Notice extends LitElement {
-  private renderCloseIcon() {
+  @property({ type: String, attribute: "notice-title" })
+  public noticeTitle? = "";
+
+  @property()
+  public variant?: "success" | "error" | "info" | "warning" | "inverse" =
+    "inverse";
+
+  @property()
+  public priority?: "high" | "low" = "high";
+
+  @property({ type: Boolean, attribute: "dismissable" })
+  public dismissable? = false;
+
+  private _renderCloseIcon() {
     return html`
       <svg
         width="25"
@@ -21,7 +34,7 @@ export class Notice extends LitElement {
     `;
   }
 
-  private renderSuccessIcon() {
+  private _renderSuccessIcon() {
     return html`
       <svg
         width="25"
@@ -40,7 +53,7 @@ export class Notice extends LitElement {
     `;
   }
 
-  private renderErrorIcon() {
+  private _renderErrorIcon() {
     return html`
       <svg
         width="25"
@@ -59,7 +72,7 @@ export class Notice extends LitElement {
     `;
   }
 
-  private renderInfoIcon() {
+  private _renderInfoIcon() {
     return html`
       <svg
         width="25"
@@ -78,7 +91,7 @@ export class Notice extends LitElement {
     `;
   }
 
-  private renderWarningIcon() {
+  private _renderWarningIcon() {
     return html`
       <svg
         width="25"
@@ -97,7 +110,7 @@ export class Notice extends LitElement {
     `;
   }
 
-  private renderDefaultIcon() {
+  private _renderDefaultIcon() {
     return html`
       <svg
         width="25"
@@ -122,25 +135,30 @@ export class Notice extends LitElement {
     `;
   }
 
-  private renderIcon() {
-    if (this.variant === 'success') return this.renderSuccessIcon();
-    if (this.variant === 'error') return this.renderErrorIcon();
-    if (this.variant === 'info') return this.renderInfoIcon();
-    if (this.variant === 'warning') return this.renderWarningIcon();
-    return this.renderDefaultIcon();
+  private _renderIcon() {
+    if (this.variant === "success") return this._renderSuccessIcon();
+    if (this.variant === "error") return this._renderErrorIcon();
+    if (this.variant === "info") return this._renderInfoIcon();
+    if (this.variant === "warning") return this._renderWarningIcon();
+
+    return this._renderDefaultIcon();
   }
 
-  private renderTitle() {
-    if (this.noticeTitle)
-      return html`<p id="title" part="title" class="title">
-        ${this.noticeTitle}
-      </p>`;
-    return nothing;
+  private _renderTitle() {
+    if (!this.noticeTitle) return nothing;
+
+    return html`<p
+      id="title"
+      part="title"
+      class="title"
+    >
+      ${this.noticeTitle}
+    </p>`;
   }
 
-  private dispatchDismissEvent() {
+  private _handleDismissClick() {
     this.dispatchEvent(
-      new CustomEvent('dismiss', {
+      new CustomEvent("dismiss", {
         bubbles: true,
         composed: true,
       }),
@@ -153,33 +171,44 @@ export class Notice extends LitElement {
         part="dismiss"
         class="dismiss"
         id="dismiss"
-        @click=${this.dispatchDismissEvent}
+        @click=${this._handleDismissClick}
       >
-        ${this.renderCloseIcon()}
+        ${this._renderCloseIcon()}
       </button>`;
     return nothing;
   }
 
-  @property({ type: String, attribute: 'notice-title' })
-  noticeTitle? = '';
-
-  @property() variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse' =
-    'inverse';
-  @property() priority?: 'high' | 'low' = 'high';
-
-  @property({ type: Boolean, attribute: 'dismissable' })
-  dismissable? = false;
-
-  render() {
+  protected override render() {
     return html`
-      <div part="notice" id="notice" class="notice" role="notice">
-        <span class="icon" id="icon" part="icon"> ${this.renderIcon()} </span>
-        <div id="content-root" part="content-root" class="content-root">
-          ${this.renderTitle()}
-          <p id="message" part="message" class="message">
+      <div
+        part="notice"
+        id="notice"
+        class="notice"
+      >
+        <span
+          class="icon"
+          id="icon"
+          part="icon"
+        >
+          ${this._renderIcon()}
+        </span>
+        <div
+          id="content-root"
+          part="content-root"
+          class="content-root"
+        >
+          ${this._renderTitle()}
+          <p
+            id="message"
+            part="message"
+            class="message"
+          >
             <slot></slot>
           </p>
-          <slot name="actions" part="actions"></slot>
+          <slot
+            name="actions"
+            part="actions"
+          ></slot>
         </div>
         ${this.renderDismiss()}
       </div>

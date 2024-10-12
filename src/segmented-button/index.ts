@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { SegmentedButton } from './segmented-button';
-import styles from './segmented-button.style';
+import { customElement } from "lit/decorators.js";
+import { SegmentedButton } from "./segmented-button";
+import styles from "./segmented-button.style";
 
 /**
  * @summary A segmented button component.
@@ -20,13 +20,13 @@ import styles from './segmented-button.style';
  * @cssprop [--tap-segmented-button-font-weight=--tap-sys-typography-label-sm-weight] - The font weight of the button text.
  * @cssprop [--tap-segmented-button-selected-background-color=--tap-sys-color-surface-primary] - The background color of the selected button.
  */
-@customElement('tap-segmented-button')
+@customElement("tap-segmented-button")
 export class TapSegmentedButton extends SegmentedButton {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-segmented-button': TapSegmentedButton;
+    "tap-segmented-button": TapSegmentedButton;
   }
 }

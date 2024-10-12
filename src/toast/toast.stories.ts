@@ -1,35 +1,34 @@
-import { html, TemplateResult } from 'lit';
-import { Meta } from '@storybook/web-components';
-import { ifDefined } from 'lit/directives/if-defined.js';
-import { TapToast } from './index.js';
-import './index.js';
-import '../button';
+import { type Meta } from "@storybook/web-components";
+import { html, type TemplateResult } from "lit";
+import { ifDefined } from "lit/directives/if-defined.js";
+import "../button";
+import { type TapToast } from "./index.js";
 
-const toastVariants: TapToast['variant'][] = [
-  'success',
-  'error',
-  'info',
-  'inverse',
-  'warning',
+const toastVariants: TapToast["variant"][] = [
+  "success",
+  "error",
+  "info",
+  "inverse",
+  "warning",
 ];
 
 export default {
-  title: 'Components/Toast',
-  component: 'tap-toast',
+  title: "Components/Toast",
+  component: "tap-toast",
   argTypes: {
     toastContent: {
-      control: 'text',
-      description: 'Toast Content',
+      control: "text",
+      description: "Toast Content",
     },
     variant: {
       options: toastVariants,
-      control: { type: 'inline-radio' },
-      description: 'The toast variant',
+      control: { type: "inline-radio" },
+      description: "The toast variant",
       defaultValue: `"inverse"`,
     },
     showDismissButton: {
-      description: 'Should the Dismiss button be visible?',
-      control: { type: 'boolean' },
+      description: "Should the Dismiss button be visible?",
+      control: { type: "boolean" },
       defaultValue: false,
     },
   },
@@ -43,7 +42,7 @@ interface Story<T> {
 
 interface ArgTypes {
   toastContent: string;
-  variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse';
+  variant?: "success" | "error" | "info" | "warning" | "inverse";
   showDismissButton?: boolean;
 }
 
@@ -52,9 +51,10 @@ const Template: Story<ArgTypes> = ({
   toastContent,
   showDismissButton,
 }) => {
-  document.addEventListener('DOMContentLoaded', () => {
-    const toastElement = document.getElementById('toast-story');
-    toastElement?.addEventListener('dismiss', () => {
+  document.addEventListener("DOMContentLoaded", () => {
+    const toastElement = document.getElementById("toast-story");
+
+    toastElement?.addEventListener("dismiss", () => {
       toastElement.remove();
     });
   });
@@ -73,7 +73,7 @@ const Template: Story<ArgTypes> = ({
 const VariantTemplate: Story<Record<string, never>> = () => {
   return html`
     ${toastVariants.map(
-      (variant) => html`
+      variant => html`
         <tap-toast variant=${ifDefined(variant)}>${variant}</tap-toast>
       `,
     )}
@@ -82,7 +82,7 @@ const VariantTemplate: Story<Record<string, never>> = () => {
 
 export const Simple = Template.bind({});
 Simple.args = {
-  toastContent: 'a simple toast',
+  toastContent: "a simple toast",
 };
 
 export const Variants = VariantTemplate.bind({});
@@ -90,6 +90,6 @@ Variants.args = {};
 
 export const DismissButton = Template.bind({});
 DismissButton.args = {
-  toastContent: 'A toast with dismiss button',
+  toastContent: "A toast with dismiss button",
   showDismissButton: true,
 };

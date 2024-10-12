@@ -1,6 +1,6 @@
-import { customElement } from 'lit/decorators.js';
-import { Spinner } from './spinner';
-import styles from './spinner.style';
+import { customElement } from "lit/decorators.js";
+import { Spinner } from "./spinner";
+import styles from "./spinner.style";
 
 /**
  * @summary Display spinner.
@@ -17,14 +17,13 @@ import styles from './spinner.style';
  * @cssprop [--tap-spinner-lg-size=--tap-sys-spacing-10]
  * @cssprop [--tap-spinner-padding=--tap-sys-spacing-2]
  */
-
-@customElement('tap-spinner')
+@customElement("tap-spinner")
 export class TapSpinner extends Spinner {
-  static readonly styles = [styles];
+  public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'tap-spinner': TapSpinner;
+    "tap-spinner": TapSpinner;
   }
 }

@@ -1,14 +1,21 @@
-import { html, LitElement, nothing } from 'lit';
-import { property } from 'lit/decorators.js';
+import { html, LitElement, nothing } from "lit";
+import { property } from "lit/decorators.js";
 
 // TODO: after implementing the icon library, add the `icon` property to this component.
 export class Toast extends LitElement {
-  static readonly shadowRootOptions = {
+  public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
-  private renderSuccessIcon() {
+  @property({ type: Boolean, attribute: "show-dismiss-button" })
+  public showDismissButton? = false;
+
+  @property({ reflect: true })
+  public variant?: "success" | "error" | "info" | "warning" | "inverse" =
+    "inverse";
+
+  private _renderSuccessIcon() {
     return html`
       <svg
         width="25"
@@ -27,7 +34,7 @@ export class Toast extends LitElement {
     `;
   }
 
-  private renderErrorIcon() {
+  private _renderErrorIcon() {
     return html`
       <svg
         width="25"
@@ -46,7 +53,7 @@ export class Toast extends LitElement {
     `;
   }
 
-  private renderInfoIcon() {
+  private _renderInfoIcon() {
     return html`
       <svg
         width="25"
@@ -65,7 +72,7 @@ export class Toast extends LitElement {
     `;
   }
 
-  private renderWarningIcon() {
+  private _renderWarningIcon() {
     return html`
       <svg
         width="25"
@@ -84,7 +91,7 @@ export class Toast extends LitElement {
     `;
   }
 
-  private renderDefaultIcon() {
+  private _renderDefaultIcon() {
     return html`
       <svg
         width="25"
@@ -109,7 +116,7 @@ export class Toast extends LitElement {
     `;
   }
 
-  private renderCloseIcon() {
+  private _renderCloseIcon() {
     return html`
       <svg
         width="25"
@@ -128,30 +135,24 @@ export class Toast extends LitElement {
     `;
   }
 
-  private renderIcon() {
-    if (this.variant === 'success') return this.renderSuccessIcon();
-    if (this.variant === 'error') return this.renderErrorIcon();
-    if (this.variant === 'info') return this.renderInfoIcon();
-    if (this.variant === 'warning') return this.renderWarningIcon();
-    return this.renderDefaultIcon();
+  private _renderIcon() {
+    if (this.variant === "success") return this._renderSuccessIcon();
+    if (this.variant === "error") return this._renderErrorIcon();
+    if (this.variant === "info") return this._renderInfoIcon();
+    if (this.variant === "warning") return this._renderWarningIcon();
+    return this._renderDefaultIcon();
   }
 
-  @property({ type: Boolean, attribute: 'show-dismiss-button' })
-  showDismissButton? = false;
-
-  @property({ reflect: true })
-  variant?: 'success' | 'error' | 'info' | 'warning' | 'inverse' = 'inverse';
-
-  private dispatchDismissEvent() {
+  private _handleDismissClick() {
     this.dispatchEvent(
-      new CustomEvent('dismiss', {
+      new CustomEvent("dismiss", {
         bubbles: true,
         composed: true,
       }),
     );
   }
 
-  render() {
+  protected override render() {
     return html`
       <div
         part="toast"
@@ -162,17 +163,26 @@ export class Toast extends LitElement {
         aria-labelledby=${nothing}
         aria-describedby=${nothing}
       >
-        <span class="icon" id="icon" part="icon"> ${this.renderIcon()} </span>
-        <span id="message" part="message">
+        <span
+          class="icon"
+          id="icon"
+          part="icon"
+        >
+          ${this._renderIcon()}
+        </span>
+        <span
+          id="message"
+          part="message"
+        >
           <slot></slot>
         </span>
         <button
           part="dismiss"
           class="dismiss"
           id="dismiss"
-          @click=${this.dispatchDismissEvent}
+          @click=${this._handleDismissClick}
         >
-          ${this.renderCloseIcon()}
+          ${this._renderCloseIcon()}
         </button>
       </div>
     `;

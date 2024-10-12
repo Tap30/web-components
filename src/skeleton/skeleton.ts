@@ -1,15 +1,21 @@
-import { html, LitElement, nothing } from 'lit';
-import { property } from 'lit/decorators.js';
-import { SkeletonAnimation, SkeletonVariant } from './types';
+import { html, LitElement, nothing } from "lit";
+import { property } from "lit/decorators.js";
+import { type SkeletonAnimation, type SkeletonVariant } from "./types";
 
 export class Skeleton extends LitElement {
-  @property({ reflect: true }) variant?: SkeletonVariant = 'line';
-  @property({ reflect: true, attribute: 'animation-mode' })
-  animationMode?: SkeletonAnimation = 'progress';
-  @property({ reflect: true }) width?: string = '100%';
-  @property({ reflect: true }) height?: string = '20px';
+  @property({ reflect: true })
+  public variant?: SkeletonVariant = "line";
 
-  render() {
+  @property({ reflect: true, attribute: "animation-mode" })
+  public animationMode?: SkeletonAnimation = "progress";
+
+  @property({ reflect: true })
+  public width?: string = "100%";
+
+  @property({ reflect: true })
+  public height?: string = "20px";
+
+  protected override render() {
     return html`<div
       part="skeleton"
       class="skeleton"

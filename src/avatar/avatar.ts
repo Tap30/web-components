@@ -1,48 +1,61 @@
-import { LitElement, PropertyValues, html } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { LitElement, type PropertyValues, html } from "lit";
+import { property, state } from "lit/decorators.js";
 
 export class Avatar extends LitElement {
-  @state() private hasError = false;
+  @state()
+  private _hasError = false;
 
-  @property() image = '';
+  @property()
+  public image = "";
 
-  @property() label = '';
+  @property()
+  public label = "";
 
-  @property() loading: 'eager' | 'lazy' = 'eager';
+  @property()
+  public loading: "eager" | "lazy" = "eager";
 
-  @property() size: 'xSmall' | 'small' | 'medium' | 'large' | 'xLarge' =
-    'medium';
+  @property()
+  public size: "xSmall" | "small" | "medium" | "large" | "xLarge" = "medium";
 
-  protected updated(changed: PropertyValues) {
-    if (changed.has('image')) {
-      this.hasError = false;
+  protected override updated(changed: PropertyValues) {
+    if (changed.has("image")) {
+      this._hasError = false;
     }
   }
 
-  private renderImage() {
+  private _renderImage() {
     return html`
       <img
         alt=""
         part="image"
         src="${this.image}"
         loading="${this.loading}"
-        @error="${() => (this.hasError = true)}"
+        @error="${() => (this._hasError = true)}"
       />
     `;
   }
 
-  private renderPlaceholder() {
-    return html` <div part="placeholder" aria-hidden="true" class="placeholder">
+  private _renderPlaceholder() {
+    return html` <div
+      part="placeholder"
+      aria-hidden="true"
+      class="placeholder"
+    >
       <slot></slot>
     </div>`;
   }
 
-  render() {
+  protected override render() {
     return html`
-      <div role="img" aria-label=${this.label} part="avatar" class="avatar">
-        ${this.image && !this.hasError
-          ? this.renderImage()
-          : this.renderPlaceholder()}
+      <div
+        role="img"
+        aria-label=${this.label}
+        part="avatar"
+        class="avatar"
+      >
+        ${this.image && !this._hasError
+          ? this._renderImage()
+          : this._renderPlaceholder()}
       </div>
     `;
   }

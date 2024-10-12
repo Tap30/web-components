@@ -1,4 +1,4 @@
-import {css} from "lit";
+import { css } from "lit";
 
 export default css`
   :host {
@@ -33,7 +33,6 @@ export default css`
     width: 100%;
   }
 
-
   @media (max-width: 1100px) {
     .guideline-section {
       flex-direction: column;
@@ -49,4 +48,4 @@ export default css`
       margin: auto;
     }
   }
-`
+`;

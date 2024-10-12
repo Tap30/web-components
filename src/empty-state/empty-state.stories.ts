@@ -1,18 +1,17 @@
-import { html, TemplateResult } from 'lit';
-import './index';
-import '../button';
-import '../icons';
-import '../avatar';
-import { Meta } from '@storybook/web-components';
+import { type Meta } from "@storybook/web-components";
+import { html, type TemplateResult } from "lit";
+import "../avatar";
+import "../button";
+import "./index";
 
 export default {
-  title: 'Components/EmptyState',
-  component: 'tap-empty-state',
+  title: "Components/EmptyState",
+  component: "tap-empty-state",
   argTypes: {
     icon: {
-      description: 'Empty State Icon Slot',
-      control: { type: 'select' },
-      options: ['default', 'person', 'success', 'custom'],
+      description: "Empty State Icon Slot",
+      control: { type: "select" },
+      options: ["default", "person", "success", "custom"],
     },
   },
 } as Meta;
@@ -29,20 +28,20 @@ interface ArgTypes {
 
 const renderExampleIconSlot = (example: unknown) => {
   switch (example) {
-    case 'success':
+    case "success":
       return html` <tap-icon-circle-check-fill
         height="64"
         width="64"
         color="var(--tap-palette-green-300)"
         slot="icon"
       ></tap-icon-circle-check-fill>`;
-    case 'custom':
+    case "custom":
       return html` <tap-avatar
         size="large"
         slot="icon"
         image="https://picsum.photos/100"
       ></tap-avatar>`;
-    case 'person':
+    case "person":
       return html` <tap-icon-person-two
         height="64"
         width="64"
@@ -70,5 +69,5 @@ const Template: Story<ArgTypes> = ({ icon }: ArgTypes) => html`
 export const EmptyState = Template.bind({});
 
 EmptyState.args = {
-  icon: '',
+  icon: "",
 };

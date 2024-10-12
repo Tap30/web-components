@@ -1,115 +1,135 @@
-import { html, LitElement, PropertyValues, nothing } from 'lit';
-import { property, query, queryAssignedElements } from 'lit/decorators.js';
 import {
-  computePosition,
   arrow,
+  computePosition,
+  type MiddlewareData,
   offset,
-  MiddlewareData,
-} from '@floating-ui/dom';
-import '@tapsioss/icons/dist/icons/cross';
-import '../icon-button';
+  type Side,
+} from "@floating-ui/dom";
+import "@tapsioss/icons/dist/icons/cross";
+import { html, LitElement, nothing, type PropertyValues } from "lit";
+import { property, query, queryAssignedElements } from "lit/decorators.js";
+import "../icon-button";
 
 export class Tooltip extends LitElement {
-  @property({ type: String, reflect: true }) placement:
-    | 'top'
-    | 'top-start'
-    | 'top-end'
-    | 'right'
-    | 'right-start'
-    | 'right-end'
-    | 'bottom'
-    | 'bottom-start'
-    | 'bottom-end'
-    | 'left'
-    | 'left-start'
-    | 'left-end' = 'top';
-  @property({ type: Boolean, reflect: true }) dismissible: boolean = true;
-  @property({ type: String, reflect: true }) width: string = '0';
-  @property({ type: String, reflect: true, attribute: 'arrow-offset' })
-  arrowOffset: string = '';
+  @property({ type: String, reflect: true })
+  public placement:
+    | "top"
+    | "top-start"
+    | "top-end"
+    | "right"
+    | "right-start"
+    | "right-end"
+    | "bottom"
+    | "bottom-start"
+    | "bottom-end"
+    | "left"
+    | "left-start"
+    | "left-end" = "top";
 
-  @query('#tooltip')
-  private tooltipElement?: HTMLElement | null;
+  @property({ type: Boolean, reflect: true })
+  public dismissible = true;
 
-  @query('#arrow')
-  private arrowElement?: HTMLElement | null;
+  @property({ type: String, reflect: true })
+  public width: string = "0";
 
-  @queryAssignedElements({ slot: 'target-element' })
-  private targetElement?: Array<HTMLElement> | [];
+  @property({ type: String, reflect: true, attribute: "arrow-offset" })
+  public arrowOffset: string = "";
 
-  connectedCallback() {
+  @query("#tooltip")
+  private _tooltipElement?: HTMLElement | null;
+
+  @query("#arrow")
+  private _arrowElement?: HTMLElement | null;
+
+  @queryAssignedElements({ slot: "target-element" })
+  private _targetElement?: Array<HTMLElement> | [];
+
+  override connectedCallback() {
     super.connectedCallback();
+
     window.requestAnimationFrame(() => {
-      if (this.tooltipElement && this.arrowElement && this.targetElement?.[0]) {
-        computePosition(this.targetElement[0], this.tooltipElement, {
+      if (
+        this._tooltipElement &&
+        this._arrowElement &&
+        this._targetElement?.[0]
+      ) {
+        computePosition(this._targetElement[0], this._tooltipElement, {
           placement: this.placement,
-          middleware: [arrow({ element: this.arrowElement }), offset(8)],
+          middleware: [arrow({ element: this._arrowElement }), offset(8)],
         })
           .then(({ x, y, middlewareData }) => {
-            if (this.tooltipElement) {
-              this.tooltipElement.style.left = `${x}px`;
-              this.tooltipElement.style.top = `${y}px`;
+            if (this._tooltipElement) {
+              this._tooltipElement.style.left = `${x}px`;
+              this._tooltipElement.style.top = `${y}px`;
             }
-            this.arrowElement &&
-              this.calculateArrowPosition(middlewareData, this.arrowElement);
+
+            if (this._arrowElement) {
+              this._calculateArrowPosition(middlewareData, this._arrowElement);
+            }
           })
-          .catch((error) => console.error(error));
+          // eslint-disable-next-line no-console
+          .catch(error => console.error(error));
       }
     });
 
-    if (this.hasAttribute('dismissible')) {
-      this.dismissible = this.getAttribute('dismissible') !== 'false';
+    if (this.hasAttribute("dismissible")) {
+      this.dismissible = this.getAttribute("dismissible") !== "false";
     }
   }
 
-  protected updated(changed: PropertyValues): void {
-    if (changed.has('width')) {
-      this.style.setProperty('--tap-tooltip-width', this.width);
+  protected override updated(changed: PropertyValues): void {
+    if (changed.has("width")) {
+      this.style.setProperty("--tap-tooltip-width", this.width);
     }
   }
 
-  private calculateArrowPosition(
+  private _calculateArrowPosition(
     middlewareData: MiddlewareData,
     arrowEl: HTMLElement,
   ) {
-    const side = this.placement.split('-')[0];
-    const staticSide: string =
-      {
-        top: 'bottom',
-        right: 'left',
-        bottom: 'top',
-        left: 'right',
-      }[side] || 'top';
+    const side = (this.placement.split("-") as Side[])[0];
+
+    const sidesMap: Record<Side, Side> = {
+      top: "bottom",
+      right: "left",
+      bottom: "top",
+      left: "right",
+    };
+
+    const staticSide = typeof side === "undefined" ? "top" : sidesMap[side];
 
     if (middlewareData.arrow) {
       const { x, y } = middlewareData.arrow;
+
       Object.assign(arrowEl.style, {
-        left: x != null ? `${x}px` : '',
-        top: y != null ? `${y}px` : '',
+        left: x != null ? `${x}px` : "",
+        top: y != null ? `${y}px` : "",
         [staticSide]: `${-arrowEl.offsetWidth / 2}px`,
       });
     }
+
     if (this.arrowOffset) {
-      if (side === 'top' || side === 'bottom') {
+      if (side === "top" || side === "bottom") {
         arrowEl.style.left = `${this.arrowOffset}`;
-      } else if (side === 'left' || side === 'right') {
+      } else if (side === "left" || side === "right") {
         arrowEl.style.top = `${this.arrowOffset}`;
       }
     }
   }
 
-  private handleDismiss() {
+  private _handleDismiss() {
     const tooltipElement = this.renderRoot.querySelector(
-      '#tooltip',
+      "#tooltip",
     ) as HTMLElement;
+
     tooltipElement.remove();
   }
 
-  private renderDismissButton() {
+  private _renderDismissButton() {
     return this.dismissible
       ? html`
           <tap-icon-button
-            @click=${() => this.handleDismiss()}
+            @click=${() => this._handleDismiss()}
             type="button"
             size="small"
             variant="naked"
@@ -121,7 +141,7 @@ export class Tooltip extends LitElement {
       : nothing;
   }
 
-  private renderArrow() {
+  private _renderArrow() {
     return html`
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -138,11 +158,19 @@ export class Tooltip extends LitElement {
     `;
   }
 
-  render() {
+  protected override render() {
     return html`
-      <div id="tooltip" class="tooltip">
-        ${this.renderDismissButton()}
-        <div id="arrow" class="tooltip-icon">${this.renderArrow()}</div>
+      <div
+        id="tooltip"
+        class="tooltip"
+      >
+        ${this._renderDismissButton()}
+        <div
+          id="arrow"
+          class="tooltip-icon"
+        >
+          ${this._renderArrow()}
+        </div>
         <div class="tooltip-label">
           <slot name="label"></slot>
         </div>
