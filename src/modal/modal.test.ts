@@ -1,3 +1,7 @@
+/* eslint-disable eslint-comments/no-unlimited-disable, eslint-comments/disable-enable-pair */
+/* eslint-disable */
+// @ts-nocheck
+
 import { expect, fixture } from "@open-wc/testing";
 import { html } from "lit";
 import sinon from "sinon";

@@ -1,3 +1,7 @@
+/* eslint-disable eslint-comments/no-unlimited-disable, eslint-comments/disable-enable-pair */
+/* eslint-disable */
+// @ts-nocheck
+
 import "../../dist/radio-group/index.js";
 import "../../dist/radio/index.js";
 

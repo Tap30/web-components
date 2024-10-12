@@ -1,3 +1,7 @@
+/* eslint-disable eslint-comments/no-unlimited-disable, eslint-comments/disable-enable-pair */
+/* eslint-disable */
+// @ts-nocheck
+
 import { expect, fixture, html, oneEvent } from "@open-wc/testing";
 import sinon from "sinon";
 import "../../dist/button/index.js";

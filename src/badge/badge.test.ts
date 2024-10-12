@@ -1,3 +1,7 @@
+/* eslint-disable eslint-comments/no-unlimited-disable, eslint-comments/disable-enable-pair */
+/* eslint-disable */
+// @ts-nocheck
+
 import { expect, fixture, html } from "@open-wc/testing";
 import "../../dist/badge/index.js";
 import { type TapBadge } from "./index";

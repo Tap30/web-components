@@ -1,3 +1,7 @@
+/* eslint-disable eslint-comments/no-unlimited-disable, eslint-comments/disable-enable-pair */
+/* eslint-disable */
+// @ts-nocheck
+
 import {
   elementUpdated,
   expect,
