@@ -1,6 +1,6 @@
 import { type Meta } from "@storybook/web-components";
 import { html, type TemplateResult } from "lit";
-import { ifDefined } from "lit/directives/if-defined";
+import { ifDefined } from "lit/directives/if-defined.js";
 import "../tooltip";
 import "./index.js";
 

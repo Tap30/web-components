@@ -1,7 +1,7 @@
 import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
-import { map } from "lit/directives/map";
-import { range } from "lit/directives/range";
+import { map } from "lit/directives/map.js";
+import { range } from "lit/directives/range.js";
 
 export class StepIndicator extends LitElement {
   @property({ type: Number })

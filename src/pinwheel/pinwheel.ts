@@ -1,6 +1,6 @@
 import { html, LitElement } from "lit";
 import { property, state } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map";
+import { classMap } from "lit/directives/class-map.js";
 import { debounce } from "../utils";
 
 export class Pinwheel extends LitElement {
