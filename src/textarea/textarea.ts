@@ -1,5 +1,5 @@
 import { type TemplateResult, html } from "lit";
-import { ifDefined } from "lit/directives/if-defined";
+import { ifDefined } from "lit/directives/if-defined.js";
 import { live } from "lit/directives/live.js";
 import { Input } from "../input";
 import { redispatchEvent } from "../utils";
