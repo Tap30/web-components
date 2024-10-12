@@ -64,6 +64,9 @@ export class TapButton extends Button {
 
 declare global {
   interface HTMLElementTagNameMap {
+    // TODO: investigate this
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     "tap-button": TapButton;
   }
 }
