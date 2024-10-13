@@ -11,11 +11,11 @@ const styles = css`
   }
 
   :host([avatar-src]) {
-    --chat-bubble-driver-leading-space: 0;
+    --chat-bubble-out-leading-space: 0;
   }
 
   :host(:not([avatar-src])) {
-    --chat-bubble-driver-leading-space: var(--tap-sys-spacing-11);
+    --chat-bubble-out-leading-space: var(--tap-sys-spacing-11);
   }
 
   .${ROOT} {
@@ -24,7 +24,7 @@ const styles = css`
   }
 
   .${ROOT} tap-chat-bubble-base {
-    margin-left: var(--chat-bubble-driver-leading-space);
+    margin-left: var(--chat-bubble-out-leading-space);
   }
 
   .${ROOT}__avatar {

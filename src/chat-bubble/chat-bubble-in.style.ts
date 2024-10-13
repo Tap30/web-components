@@ -11,11 +11,11 @@ const styles = css`
   }
 
   :host([status="seen"]) {
-    --chat-bubble-passenger-icon-color: var(--tap-sys-color-content-accent);
+    --chat-bubble-in-icon-color: var(--tap-sys-color-content-accent);
   }
 
   :host(:not([status="seen"])) {
-    --chat-bubble-passenger-icon-color: currentColor;
+    --chat-bubble-in-icon-color: currentColor;
   }
 
   :host(:not([status="failed"])) tap-chat-bubble-base {
@@ -51,7 +51,7 @@ const styles = css`
     width: 18px;
     height: 18px;
 
-    fill: var(--chat-bubble-passenger-icon-color);
+    fill: var(--chat-bubble-in-icon-color);
   }
 `;
 

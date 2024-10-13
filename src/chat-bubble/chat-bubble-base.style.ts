@@ -14,26 +14,26 @@ const styles = css`
     --chat-bubble-base-radius: var(--tap-sys-radius-5);
   }
 
-  :host([author="passenger"]) {
+  :host([author="in"]) {
     --chat-bubble-base-bg-color: var(--tap-sys-color-surface-tertiary);
     --chat-bubble-base-color: var(--tap-sys-color-content-primary);
     --chat-bubble-base-footer-color: var(--tap-sys-color-content-tertiary);
     --chat-bubble-base-footer-flex-direction: row;
   }
 
-  :host([author="driver"]) {
+  :host([author="out"]) {
     --chat-bubble-base-bg-color: var(--tap-sys-color-surface-accent);
     --chat-bubble-base-color: var(--tap-sys-color-content-on-accent);
     --chat-bubble-base-footer-color: var(--chat-bubble-base-color);
     --chat-bubble-base-footer-flex-direction: row-reverse;
   }
 
-  :host(:not([fully-rounded])[author="passenger"]) {
+  :host(:not([fully-rounded])[author="in"]) {
     --chat-bubble-base-radius: var(--tap-sys-radius-5) var(--tap-sys-radius-1)
       var(--tap-sys-radius-5) var(--tap-sys-radius-5);
   }
 
-  :host(:not([fully-rounded])[author="driver"]) {
+  :host(:not([fully-rounded])[author="out"]) {
     --chat-bubble-base-radius: var(--tap-sys-radius-1) var(--tap-sys-radius-5)
       var(--tap-sys-radius-5) var(--tap-sys-radius-5);
   }

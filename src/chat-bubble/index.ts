@@ -1,10 +1,10 @@
 import { customElement } from "lit/decorators.js";
 import { ChatBubbleBase } from "./chat-bubble-base";
 import baseStyles from "./chat-bubble-base.style";
-import { ChatBubbleDriver } from "./chat-bubble-driver";
-import driverStyles from "./chat-bubble-driver.style";
-import { ChatBubblePassenger } from "./chat-bubble-passanger";
-import passengerStyles from "./chat-bubble-passenger.style";
+import { ChatBubbleIn } from "./chat-bubble-in";
+import inStyles from "./chat-bubble-in.style";
+import { ChatBubbleOut } from "./chat-bubble-out";
+import outStyles from "./chat-bubble-out.style";
 
 export { Parts, Slots } from "./constants";
 
@@ -13,19 +13,19 @@ export class TapChatBubbleBase extends ChatBubbleBase {
   public static override readonly styles = [baseStyles];
 }
 
-@customElement("tap-chat-bubble-passenger")
-export class TapChatBubblePassenger extends ChatBubblePassenger {
-  public static override readonly styles = [passengerStyles];
+@customElement("tap-chat-bubble-in")
+export class TapChatBubbleIn extends ChatBubbleIn {
+  public static override readonly styles = [inStyles];
 }
 
-@customElement("tap-chat-bubble-driver")
-export class TapChatBubbleDriver extends ChatBubbleDriver {
-  public static override readonly styles = [driverStyles];
+@customElement("tap-chat-bubble-out")
+export class TapChatBubbleOut extends ChatBubbleOut {
+  public static override readonly styles = [outStyles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-chat-bubble-passenger": TapChatBubblePassenger;
-    "tap-chat-bubble-driver": TapChatBubbleDriver;
+    "tap-chat-bubble-in": TapChatBubbleIn;
+    "tap-chat-bubble-out": TapChatBubbleOut;
   }
 }

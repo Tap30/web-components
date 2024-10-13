@@ -2,9 +2,9 @@ import "../avatar";
 
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
-import { BASENAME, BaseSlots, DriverParts } from "./constants";
+import { BASENAME, BaseSlots, OutParts } from "./constants";
 
-export class ChatBubbleDriver extends LitElement {
+export class ChatBubbleOut extends LitElement {
   @property({ type: String, reflect: true })
   public timestamp!: string;
 
@@ -20,7 +20,7 @@ export class ChatBubbleDriver extends LitElement {
     return html`
       <div
         class="${BASENAME}__avatar"
-        part=${DriverParts.AVATAR}
+        part=${OutParts.AVATAR}
       >
         <tap-avatar
           image=${this.avatarSrc}
@@ -34,18 +34,15 @@ export class ChatBubbleDriver extends LitElement {
     return html`
       <div
         class="${BASENAME}"
-        part=${DriverParts.ROOT}
+        part=${OutParts.ROOT}
       >
         ${this._renderAvatar()}
         <tap-chat-bubble-base
-          author="driver"
+          author="out"
           ?fully-rounded=${this.fullyRounded}
           timestamp=${this.timestamp}
         >
-          <slot
-            name=${BaseSlots.BODY}
-            slot=${BaseSlots.BODY}
-          ></slot>
+          <slot slot=${BaseSlots.BODY}></slot>
         </tap-chat-bubble-base>
       </div>
     `;

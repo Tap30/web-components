@@ -1,16 +1,14 @@
-import "../avatar";
-
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import {
   BASENAME,
   BaseSlots,
-  PassengerParts,
+  InParts,
   STATUS_TO_ICON_MAP,
   STATUS_TO_LOCALE_MAP,
 } from "./constants";
 
-export class ChatBubblePassenger extends LitElement {
+export class ChatBubbleIn extends LitElement {
   @property({ type: String, reflect: true })
   public timestamp!: string;
 
@@ -28,7 +26,7 @@ export class ChatBubblePassenger extends LitElement {
     return html`
       <div
         class="${BASENAME}__failure-indicator"
-        part=${PassengerParts.FAILURE_INDICATOR}
+        part=${InParts.FAILURE_INDICATOR}
       >
         ${icon}
       </div>
@@ -45,7 +43,7 @@ export class ChatBubblePassenger extends LitElement {
       <div
         slot=${BaseSlots.FOOTER}
         class="${BASENAME}__status"
-        part=${PassengerParts.STATUS}
+        part=${InParts.STATUS}
       >
         ${icon}
         <span>${stateMessage}</span>
@@ -57,18 +55,15 @@ export class ChatBubblePassenger extends LitElement {
     return html`
       <div
         class="${BASENAME}"
-        part=${PassengerParts.ROOT}
+        part=${InParts.ROOT}
       >
         ${this._renderFailureIndicator()}
         <tap-chat-bubble-base
-          author="passenger"
+          author="in"
           ?fully-rounded=${this.fullyRounded}
           timestamp=${this.timestamp}
         >
-          <slot
-            name=${BaseSlots.BODY}
-            slot=${BaseSlots.BODY}
-          ></slot>
+          <slot slot=${BaseSlots.BODY}></slot>
           ${this._renderStatus()}
         </tap-chat-bubble-base>
       </div>

@@ -1,7 +1,7 @@
 import type { TemplateResult } from "lit";
 import * as Icons from "./icons";
 
-export const AUTHORS = ["driver", "passenger"] as const;
+export const AUTHORS = ["in", "out"] as const;
 export const STATES = ["sent", "seen", "pending", "failed"] as const;
 
 export const BASENAME = "chat-bubble";
@@ -20,15 +20,15 @@ export enum BaseParts {
   TIMESTAMP = `${BASE_BASENAME}-timestamp`,
 }
 
-export enum DriverParts {
-  ROOT = `${BASENAME}-driver-root`,
-  AVATAR = `${BASENAME}-driver-avatar`,
+export enum OutParts {
+  ROOT = `${BASENAME}-out-root`,
+  AVATAR = `${BASENAME}-out-avatar`,
 }
 
-export enum PassengerParts {
-  ROOT = `${BASENAME}-passenger-root`,
-  STATUS = `${BASENAME}-passenger-status`,
-  FAILURE_INDICATOR = `${BASENAME}-passenger-failure-indicator`,
+export enum InParts {
+  ROOT = `${BASENAME}-in-root`,
+  STATUS = `${BASENAME}-in-status`,
+  FAILURE_INDICATOR = `${BASENAME}-in-failure-indicator`,
 }
 
 export const Slots = {
@@ -37,8 +37,8 @@ export const Slots = {
 
 export const Parts = {
   base: BaseParts,
-  driver: DriverParts,
-  passenger: PassengerParts,
+  out: OutParts,
+  in: InParts,
 };
 
 export const STATUS_TO_LOCALE_MAP: Record<
