@@ -6,6 +6,7 @@ import {
   InParts,
   STATUS_TO_ICON_MAP,
   STATUS_TO_LOCALE_MAP,
+  type STATES,
 } from "./constants";
 
 export class ChatBubbleIn extends LitElement {
@@ -13,7 +14,7 @@ export class ChatBubbleIn extends LitElement {
   public timestamp!: string;
 
   @property({ type: String, reflect: true })
-  public status?: "sent" | "seen" | "pending" | "failed";
+  public status?: (typeof STATES)[number];
 
   @property({ type: Boolean, reflect: true, attribute: "fully-rounded" })
   public fullyRounded: boolean = false;
