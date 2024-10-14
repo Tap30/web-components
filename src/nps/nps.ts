@@ -1,10 +1,9 @@
-import "@tapsioss/icons/dist/icons/minus";
-import "@tapsioss/icons/dist/icons/plus";
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import "../icon-button";
 import { BASENAME, GradientColorClass, Parts } from "./constants";
+import NpsChangeEvent from "./events";
 
 export class Nps extends LitElement {
   @property({ type: Number })
@@ -56,16 +55,7 @@ export class Nps extends LitElement {
   private _emitValueChange = (newValue: number) => {
     this.value = newValue;
 
-    this.dispatchEvent(
-      // TODO: use base class
-      new CustomEvent("nps-change", {
-        detail: {
-          value: this.value,
-        },
-        bubbles: true,
-        composed: true,
-      }),
-    );
+    this.dispatchEvent(new NpsChangeEvent(this.value));
   };
 
   private _handleIncrease = () => {
@@ -108,8 +98,9 @@ export class Nps extends LitElement {
     };
 
     return html`<div
+      part=${Parts.GRADIENT}
       class=${classMap({
-        [`${BASENAME}__gradient`]: true,
+        [Parts.GRADIENT]: true,
         [`${BASENAME}__rounded_end`]: this.value === this.max,
         [getGradientColor()]: true,
       })}
@@ -119,14 +110,14 @@ export class Nps extends LitElement {
 
   private _renderDot() {
     return html`<div
-      class="${BASENAME}__dot"
+      class="${Parts.DOT}"
       part="${Parts.DOT}"
     ></div>`;
   }
 
   private _renderRateLabel(rate: number) {
     return html`<div
-      class="${BASENAME}__label"
+      class="${Parts.LABEL}"
       part="${Parts.LABEL}"
     >
       ${rate}
@@ -139,10 +130,13 @@ export class Nps extends LitElement {
 
     const isRateOutOfBounds = ![this.min, this.max].includes(rate);
 
-    return html`<div class="${BASENAME}__rate_wrapper">
+    return html`<div
+      class="${Parts.RATE_WRAPPER}"
+      part="${Parts.RATE_WRAPPER}"
+    >
       <button
         part="${Parts.RATE}"
-        class="${BASENAME}__rate"
+        class="${Parts.RATE}"
         @click=${() => this._handleClick(rate)}
       >
         ${isRateOutOfBounds || isValueAtLimit ? this._renderDot() : rate}
@@ -157,7 +151,7 @@ export class Nps extends LitElement {
     return html`
       <div
         role="slider"
-        class="${BASENAME}__container"
+        class="${Parts.CONTAINER}"
         part="${Parts.CONTAINER}"
         aria-valuemin=${this.min}
         aria-valuenow=${this.value}
@@ -170,7 +164,8 @@ export class Nps extends LitElement {
           .map(rate => this._renderRate(rate))}
 
         <input
-          class="${BASENAME}__slider"
+          class="${Parts.SLIDER}"
+          part="${Parts.SLIDER}"
           type="range"
           min=${this.min}
           max=${this.max}

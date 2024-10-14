@@ -1,7 +1,15 @@
 import { css, unsafeCSS } from "lit";
-import { BASENAME } from "./constants";
+import {BASENAME, Parts} from "./constants";
 
 const ROOT = unsafeCSS(BASENAME);
+
+const container = unsafeCSS(Parts.CONTAINER);
+const dot = unsafeCSS(Parts.DOT);
+const slider = unsafeCSS(Parts.SLIDER);
+const label = unsafeCSS(Parts.LABEL);
+const rate = unsafeCSS(Parts.RATE);
+const rateWrapper = unsafeCSS(Parts.RATE_WRAPPER);
+const gradient = unsafeCSS(Parts.GRADIENT);
 
 export default css`
   :host {
@@ -19,7 +27,7 @@ export default css`
     display: none !important;
   }
 
-  .${ROOT}__container {
+  .${container} {
     font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
     position: relative;
     width: max-content;
@@ -45,7 +53,7 @@ export default css`
     --nps-gradient-color: var(--tap-palette-yellow-100);
   }
 
-  .${ROOT}__gradient {
+  .${gradient} {
     transition:
       width 0.1s,
       background-color 0.3s,
@@ -58,7 +66,7 @@ export default css`
     border-radius: var(--tap-sys-radius-5) 0 0 var(--tap-sys-radius-5);
   }
 
-  .${ROOT}__gradient::after {
+  .${gradient}::after {
     content: "";
     top: 0;
     position: absolute;
@@ -78,14 +86,14 @@ export default css`
     border-radius: var(--tap-sys-radius-5);
   }
 
-  .${ROOT}__rate_wrapper {
+  .${rateWrapper} {
     position: relative;
     width: 100%;
     display: flex;
     align-items: stretch;
   }
 
-  .${ROOT}__rate {
+  .${rate} {
     min-width: 28px;
     background: transparent;
     outline: none;
@@ -98,7 +106,7 @@ export default css`
     justify-content: center;
   }
 
-  .${ROOT}__label {
+  .${label} {
     position: absolute;
     bottom: 50%;
     left: 50%;
@@ -113,7 +121,7 @@ export default css`
     justify-content: center;
     border-radius: var(--tap-sys-radius-3);
   }
-  .${ROOT}__slider {
+  .${slider} {
     width: 100%;
     top: 0;
     left: 0;
@@ -125,7 +133,7 @@ export default css`
     opacity: 0;
   }
 
-  .${ROOT}__dot {
+  .${dot} {
     width: 3px;
     height: 3px;
     background-color: var(--tap-sys-color-content-disabled);

@@ -12,4 +12,7 @@ export enum Parts {
   DOT = `${BASENAME}-dot`,
   LABEL = `${BASENAME}-label`,
   RATE = `${BASENAME}-rate`,
+  RATE_WRAPPER = `${BASENAME}-rate-wrapper`,
+  GRADIENT = `${BASENAME}-gradient`,
+  SLIDER = `${BASENAME}-slider`,
 }
