@@ -1,12 +1,16 @@
-abstract class BaseEvent<T> extends Event {
-  private _details?: T;
+type Config<T> = EventInit & {
+  details: T;
+};
 
-  public get details(): T | undefined {
+abstract class BaseEvent<T> extends Event {
+  private _details: T;
+
+  public get details(): T {
     return this._details;
   }
 
-  constructor(name: string, eventInit?: EventInit & { details?: T }) {
-    const { details, ...init } = eventInit ?? {};
+  constructor(name: string, config: Config<T>) {
+    const { details, ...init } = config;
 
     super(name, init);
 
