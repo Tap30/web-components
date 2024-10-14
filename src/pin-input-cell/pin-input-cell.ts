@@ -35,7 +35,7 @@ export class PinInputCell extends LitElement {
 
   @property({ type: Number }) index: number = null!;
 
-  protected updated(changed: PropertyValues) {
+  protected override updated(changed: PropertyValues) {
     if (changed.has('value') && !Number.isNaN(this.value)) {
       //
     }
@@ -124,13 +124,15 @@ export class PinInputCell extends LitElement {
 
     if (typeof inputValue === 'string' && inputValue.length >= 1) {
       const lastCharacterIndex = inputValue.length - 1;
+      if( inputValue[lastCharacterIndex]){
       await this.updateInputValue(inputValue[lastCharacterIndex]);
+      }
     } else {
       await this.updateInputValue('');
     }
   }
 
-  protected firstUpdated(_changedProperties: PropertyValues) {
+  protected override firstUpdated(_changedProperties: PropertyValues) {
     super.firstUpdated(_changedProperties);
 
     if (this.autoFocus) {
@@ -193,7 +195,7 @@ export class PinInputCell extends LitElement {
       e.preventDefault();
     }
 
-    if (text?.length > 1) {
+    if (text?.length > 1 && text[0]) {
       await this.updateInputValue(text[0]);
       await this.emitOverflowedValue(text.slice(1));
       e.preventDefault();
@@ -245,17 +247,17 @@ export class PinInputCell extends LitElement {
     await this.updateComplete;
   }
 
-  render() {
+  override render() {
     return html`
       <input
         ?disabled=${this.disabled}
-        role="pin-input-cell"
         aria-label=${this.label}
         @input=${(e: InputEvent) => this.handleInput(e)}
         @paste=${(e: ClipboardEvent) => this.handlePaste(e)}
         @focus=${(e: FocusEvent) => this.handleFocus(e)}
         @keydown=${(e: KeyboardEvent) => this.validatePressedKey(e)}
-        class="cell ${classMap({
+        part="pin-input-cell"
+        class="pin-input-cell cell ${classMap({
           'cell-sm': this.size === 'small',
           'cell-md': this.size === 'medium',
           'cell-lg': this.size === 'large',

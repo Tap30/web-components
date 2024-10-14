@@ -1,9 +1,8 @@
 import { html, LitElement, nothing } from 'lit';
-import { property, queryAll } from 'lit/decorators.js';
+import { property, queryAll, state } from 'lit/decorators.js';
 import { range } from 'lit/directives/range.js';
 import { repeat } from 'lit/directives/repeat.js';
 import '../pin-input-cell';
-import { PinInputCell } from '../pin-input-cell/pin-input-cell';
 import {
   PinInputCellArrowKeyPressed,
   PinInputCellCleared,
@@ -11,6 +10,7 @@ import {
   PinInputCellFilled,
   PinInputCellOverflowValue,
 } from '../pin-input-cell/events';
+import { PinInputCell } from '../pin-input-cell/pin-input-cell';
 import { PinInputFilled } from './events';
 
 export class PinInput extends LitElement {
@@ -32,11 +32,11 @@ export class PinInput extends LitElement {
   @property({ type: Boolean, attribute: 'auto-focus' })
   autoFocus: boolean = true;
 
-  @property({ reflect: true, type: String }) _value = '';
+  @state() private _value = '';
 
   @property() label = '';
 
-  @property() title = '';
+  @property() override title = '';
 
   @property() description = '';
 
@@ -44,7 +44,7 @@ export class PinInput extends LitElement {
 
   @property() size: 'small' | 'medium' | 'large' = 'medium';
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
     super.connectedCallback();
   }
 
@@ -89,7 +89,7 @@ export class PinInput extends LitElement {
 
     if (isNotFirstItem) {
       await this.clearCellsUntil(currentIndex);
-      this._cells?.[0].focus();
+      this._cells?.[0]?.focus();
     }
   }
 
@@ -119,7 +119,7 @@ export class PinInput extends LitElement {
       let index = 0;
       for (const char of value.split('')) {
         const pos = index + startingAt;
-        await this._cells[pos].setValue(char);
+        await this._cells[pos]?.setValue(char);
         index++;
       }
     }
@@ -214,20 +214,20 @@ export class PinInput extends LitElement {
   private focusNextElementByIndex(current: number) {
     const nextIndex = current + 1;
     if (this.checkIndexIsInRange(current) && !this.checkIndexIsLast(current)) {
-      this._cells[nextIndex].focus();
+      this._cells[nextIndex]?.focus();
     }
   }
 
   private async clearCellsUntil(index: number) {
     for (let i = 0; i <= index; i++) {
-      await this._cells?.[i].clearValue();
+      await this._cells?.[i]?.clearValue();
     }
   }
 
   private focusPrevElementByIndex(current: number) {
     const nextIndex = current - 1;
     if (this.checkIndexIsInRange(current) && !this.checkIndexIsFirst(current)) {
-      this._cells[nextIndex].focus();
+      this._cells[nextIndex]?.focus();
     }
   }
 
@@ -249,7 +249,7 @@ export class PinInput extends LitElement {
 
   private renderTitle() {
     if (typeof this.title === 'string' && this.title.length) {
-      return html` <div class="title">${this.title}</div> `;
+      return html` <div part="title" class="title">${this.title}</div> `;
     }
     return nothing;
   }
@@ -257,13 +257,14 @@ export class PinInput extends LitElement {
   private renderInputCells() {
     if (typeof this.title === 'string' && this.title.length) {
       return html`
-        <div class="input-cells">
+        <div class="input-cells" part="input-cells">
           ${repeat(
             range(this.count),
             (count) => count,
             (_, index) => {
               return html` <tap-pin-input-cell
                 class="pin-input-cell"
+                part="pin-input-cell"
                 index=${index}
                 ?disabled=${this.disabled}
                 ?has-error=${this.hasError}
@@ -290,14 +291,14 @@ export class PinInput extends LitElement {
 
   private renderDescription() {
     if (typeof this.title === 'string' && this.title.length) {
-      return html` <div class="description">${this.description}</div> `;
+      return html` <div part="description" class="description">${this.description}</div> `;
     }
     return nothing;
   }
 
-  render() {
+  override render() {
     return html`
-      <div class="pin-input pin-input-wrapper">
+      <div class="pin-input" part="pin-input">
         ${this.renderTitle()} ${this.renderInputCells()}
         ${this.renderDescription()}
       </div>

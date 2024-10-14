@@ -6,7 +6,7 @@ export * from './constants.js';
 
 @customElement('tap-pin-input-cell')
 export class TapPinInputCell extends PinInputCell {
-  static readonly styles = [styles];
+  static override readonly styles = [styles];
 }
 
 declare global {

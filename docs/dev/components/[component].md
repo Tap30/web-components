@@ -44,6 +44,8 @@ import '../../../src/toast';
 import '../../../src/tooltip';
 import '../../../src/empty-state';
 import '../../../src/button';
+import '../../../src/pin-input';
+import '../../../src/pin-input-cell';
 import '../../../styles/theme.css';
 import '@tapsioss/icons/dist/icons';
 import "cemnama"

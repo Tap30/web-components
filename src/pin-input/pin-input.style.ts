@@ -85,7 +85,7 @@ export default css`
   .pin-input {
   }
 
-  .pin-input-wrapper {
+  .pin-input {
     display: flex;
     row-gap: var(--tap-input-input-vertical-gap);
     flex-direction: column;
