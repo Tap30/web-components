@@ -5,7 +5,6 @@ export const AUTHORS = ["in", "out"] as const;
 export const STATES = ["sent", "seen", "pending", "failed"] as const;
 
 export const BASENAME = "chat-bubble";
-
 export const BASE_BASENAME = `${BASENAME}-base`;
 
 export enum BaseSlots {
@@ -14,25 +13,24 @@ export enum BaseSlots {
 }
 
 export enum BaseParts {
-  ROOT = `${BASE_BASENAME}-root`,
-  BODY = `${BASE_BASENAME}-body`,
-  FOOTER = `${BASE_BASENAME}-footer`,
-  TIMESTAMP = `${BASE_BASENAME}-timestamp`,
+  ROOT = "root",
+  BODY = "body",
+  FOOTER = "footer",
 }
 
 export enum OutParts {
-  ROOT = `${BASENAME}-out-root`,
-  AVATAR = `${BASENAME}-out-avatar`,
+  ROOT = "root",
+  AVATAR = "avatar",
 }
 
 export enum InParts {
-  ROOT = `${BASENAME}-in-root`,
-  STATUS = `${BASENAME}-in-status`,
-  FAILURE_INDICATOR = `${BASENAME}-in-failure-indicator`,
+  ROOT = "root",
+  STATUS = "status",
+  FAILURE_INDICATOR = "failure-indicator",
 }
 
 export const Slots = {
-  base: BaseSlots,
+  default: "",
 };
 
 export const Parts = {

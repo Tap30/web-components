@@ -1,7 +1,8 @@
 import { css, unsafeCSS } from "lit";
-import { BASENAME } from "./constants";
+import { OutParts } from "./constants";
 
-const ROOT = unsafeCSS(BASENAME);
+const root = unsafeCSS(OutParts.ROOT);
+const avatar = unsafeCSS(OutParts.AVATAR);
 
 const styles = css`
   *,
@@ -18,16 +19,16 @@ const styles = css`
     --chat-bubble-out-leading-space: var(--tap-sys-spacing-11);
   }
 
-  .${ROOT} {
+  .${root} {
     display: flex;
     flex-direction: row-reverse;
   }
 
-  .${ROOT} tap-chat-bubble-base {
+  .${root} tap-chat-bubble-base {
     margin-left: var(--chat-bubble-out-leading-space);
   }
 
-  .${ROOT}__avatar {
+  .${avatar} {
     margin-right: var(--tap-sys-spacing-4);
     margin-left: var(--tap-sys-spacing-4);
   }

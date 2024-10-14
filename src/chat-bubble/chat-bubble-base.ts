@@ -1,7 +1,7 @@
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { logger } from "../utils";
-import { AUTHORS, BASE_BASENAME, BaseParts, BaseSlots } from "./constants";
+import { AUTHORS, BaseParts, BaseSlots } from "./constants";
 
 export class ChatBubbleBase extends LitElement {
   @property({ type: String, reflect: true })
@@ -30,11 +30,11 @@ export class ChatBubbleBase extends LitElement {
 
     return html`
       <div
-        class="${BASE_BASENAME}__footer"
+        class=${BaseParts.FOOTER}
         part=${BaseParts.FOOTER}
       >
         <slot name=${BaseSlots.FOOTER}></slot>
-        <span part=${BaseParts.TIMESTAMP}>${this.timestamp}</span>
+        <span>${this.timestamp}</span>
       </div>
     `;
   }
@@ -52,11 +52,11 @@ export class ChatBubbleBase extends LitElement {
 
     return html`
       <div
-        class=${BASE_BASENAME}
+        class=${BaseParts.ROOT}
         part=${BaseParts.ROOT}
       >
         <div
-          class="${BASE_BASENAME}__body"
+          class=${BaseParts.BODY}
           part=${BaseParts.BODY}
         >
           <slot name=${BaseSlots.BODY}></slot>
