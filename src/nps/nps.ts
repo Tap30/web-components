@@ -1,6 +1,7 @@
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 import "../icon-button";
 import { Classes, Parts } from "./constants";
 import NpsChangeEvent from "./events";
@@ -127,7 +128,8 @@ export class Nps extends LitElement {
       <button
         part="${Parts.RATE}"
         class="${Parts.RATE}"
-        @click=${() => this._handleClick(rate)}
+        data-rate="${rate}"
+        @click=${this._handleClick}
       >
         ${isRateOutOfBounds || isValueAtLimit
           ? this._renderDot(rate === this.value)
@@ -161,7 +163,7 @@ export class Nps extends LitElement {
           type="range"
           min=${this.min}
           max=${this.max}
-          value=${this.value}
+          value=${ifDefined(this.value)}
           @input=${(e: Event) =>
             this._handleClick(parseInt((e.target as HTMLInputElement).value))}
         />
