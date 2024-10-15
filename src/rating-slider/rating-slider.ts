@@ -4,10 +4,10 @@ import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import "../icon-button";
 import { Classes, Parts } from "./constants";
-import NpsChangeEvent from "./events";
+import RatingSliderChangeEvent from "./events";
 import { getGradientColor } from "./utils";
 
-export class Nps extends LitElement {
+export class RatingSlider extends LitElement {
   @property({ type: Number })
   public min = 0;
 
@@ -57,7 +57,7 @@ export class Nps extends LitElement {
   private _emitValueChange = (newValue: number) => {
     this.value = newValue;
 
-    this.dispatchEvent(new NpsChangeEvent(this.value));
+    this.dispatchEvent(new RatingSliderChangeEvent(this.value));
   };
 
   private _handleIncrease = () => {

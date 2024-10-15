@@ -1,8 +1,8 @@
 import { BaseEvent } from "../utils";
 
-export default class NpsChangeEvent extends BaseEvent<{ value: number }> {
+export default class RatingSliderChangeEvent extends BaseEvent<{ value: number }> {
   constructor(value: number) {
-    super("npschange", {
+    super("rating-sliderchange", {
       details: {
         value,
       },

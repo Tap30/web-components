@@ -1,4 +1,4 @@
-export const BASENAME = "nps";
+export const BASENAME = "rating-slider";
 
 export enum GradientColorClasses {
   RED = `${BASENAME}__gradient_red`,

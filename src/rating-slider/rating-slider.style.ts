@@ -1,7 +1,6 @@
 import { css, unsafeCSS } from "lit";
-import { BASENAME, Classes, GradientColorClasses, Parts } from "./constants";
+import { Classes, GradientColorClasses, Parts } from "./constants";
 
-const ROOT = unsafeCSS(BASENAME);
 
 const container = unsafeCSS(Parts.CONTAINER);
 const dot = unsafeCSS(Parts.DOT);
@@ -46,19 +45,19 @@ export default css`
   }
 
   .${gradientRed} {
-    --nps-gradient-color: var(--tap-palette-red-100);
+    --rating-slider-gradient-color: var(--tap-palette-red-100);
   }
 
   .${gradientGreen} {
-    --nps-gradient-color: var(--tap-palette-green-100);
+    --rating-slider-gradient-color: var(--tap-palette-green-100);
   }
 
   .${gradientGray} {
-    --nps-gradient-color: var(--tap-palette-gray-100);
+    --rating-slider-gradient-color: var(--tap-palette-gray-100);
   }
 
   .${gradientYellow} {
-    --nps-gradient-color: var(--tap-palette-yellow-100);
+    --rating-slider-gradient-color: var(--tap-palette-yellow-100);
   }
 
   .${gradient} {
@@ -70,7 +69,7 @@ export default css`
     top: 0;
     bottom: 0;
     z-index: 0;
-    background: var(--nps-gradient-color, transparent);
+    background: var(--rating-slider-gradient-color, transparent);
     border-radius: var(--tap-sys-radius-5) 0 0 var(--tap-sys-radius-5);
   }
 
