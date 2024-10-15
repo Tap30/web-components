@@ -1,5 +1,5 @@
 import { css, unsafeCSS } from "lit";
-import {BASENAME, Parts} from "./constants";
+import { BASENAME, Classes, GradientColorClasses, Parts } from "./constants";
 
 const ROOT = unsafeCSS(BASENAME);
 
@@ -10,6 +10,14 @@ const label = unsafeCSS(Parts.LABEL);
 const rate = unsafeCSS(Parts.RATE);
 const rateWrapper = unsafeCSS(Parts.RATE_WRAPPER);
 const gradient = unsafeCSS(Parts.GRADIENT);
+
+const gradientRounded = unsafeCSS(Classes.GRADIENT_ROUNDED);
+const dotSelected = unsafeCSS(Classes.DOT_SELECTED);
+
+const gradientRed = unsafeCSS(GradientColorClasses.RED);
+const gradientYellow = unsafeCSS(GradientColorClasses.YELLOW);
+const gradientGray = unsafeCSS(GradientColorClasses.GRAY);
+const gradientGreen = unsafeCSS(GradientColorClasses.GREEN);
 
 export default css`
   :host {
@@ -37,19 +45,19 @@ export default css`
     display: flex;
   }
 
-  .${ROOT}__gradient_red {
+  .${gradientRed} {
     --nps-gradient-color: var(--tap-palette-red-100);
   }
 
-  .${ROOT}__gradient_green {
+  .${gradientGreen} {
     --nps-gradient-color: var(--tap-palette-green-100);
   }
 
-  .${ROOT}__gradient_gray {
+  .${gradientGray} {
     --nps-gradient-color: var(--tap-palette-gray-100);
   }
 
-  .${ROOT}__gradient_yellow {
+  .${gradientYellow} {
     --nps-gradient-color: var(--tap-palette-yellow-100);
   }
 
@@ -82,7 +90,7 @@ export default css`
     border-radius: var(--tap-sys-radius-5) 0 0 var(--tap-sys-radius-5);
   }
 
-  .${ROOT}__rounded_end {
+  .${gradientRounded} {
     border-radius: var(--tap-sys-radius-5);
   }
 
@@ -121,6 +129,7 @@ export default css`
     justify-content: center;
     border-radius: var(--tap-sys-radius-3);
   }
+
   .${slider} {
     width: 100%;
     top: 0;
@@ -134,9 +143,15 @@ export default css`
   }
 
   .${dot} {
+    transition: transform 0.1s;
     width: 3px;
     height: 3px;
     background-color: var(--tap-sys-color-content-disabled);
     border-radius: var(--tap-sys-radius-full);
+  }
+
+  .${dotSelected} {
+    transform: scale(2);
+    background-color: var(--tap-palette-black);
   }
 `;

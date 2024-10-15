@@ -2,7 +2,7 @@ import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import "../icon-button";
-import { BASENAME, GradientColorClass, Parts } from "./constants";
+import { Classes, GradientColorClasses, Parts } from "./constants";
 import NpsChangeEvent from "./events";
 
 export class Nps extends LitElement {
@@ -88,29 +88,32 @@ export class Nps extends LitElement {
 
       const rangeLength = this.max - this.min;
 
-      if (this.value < rangeLength / 2) return GradientColorClass.RED;
+      if (this.value < rangeLength / 2) return GradientColorClasses.RED;
 
-      if (this.value < rangeLength * 0.65) return GradientColorClass.YELLOW;
+      if (this.value < rangeLength * 0.65) return GradientColorClasses.YELLOW;
 
-      if (this.value < rangeLength * 0.85) return GradientColorClass.GRAY;
+      if (this.value < rangeLength * 0.85) return GradientColorClasses.GRAY;
 
-      return GradientColorClass.GREEN;
+      return GradientColorClasses.GREEN;
     };
 
     return html`<div
       part=${Parts.GRADIENT}
       class=${classMap({
         [Parts.GRADIENT]: true,
-        [`${BASENAME}__rounded_end`]: this.value === this.max,
+        [Classes.GRADIENT_ROUNDED]: this.value === this.max,
         [getGradientColor()]: true,
       })}
       style="width: ${gradientWidth}%;"
     ></div>`;
   };
 
-  private _renderDot() {
+  private _renderDot(isSelected: boolean) {
     return html`<div
-      class="${Parts.DOT}"
+      class="${classMap({
+        [Parts.DOT]: true,
+        [Classes.DOT_SELECTED]: isSelected,
+      })}"
       part="${Parts.DOT}"
     ></div>`;
   }
@@ -139,7 +142,9 @@ export class Nps extends LitElement {
         class="${Parts.RATE}"
         @click=${() => this._handleClick(rate)}
       >
-        ${isRateOutOfBounds || isValueAtLimit ? this._renderDot() : rate}
+        ${isRateOutOfBounds || isValueAtLimit
+          ? this._renderDot(rate === this.value)
+          : rate}
       </button>
       ${this.value !== undefined && this.value === rate
         ? this._renderRateLabel(rate)
