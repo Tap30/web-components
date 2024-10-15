@@ -147,7 +147,7 @@ export class Nps extends LitElement {
         part="${Parts.CONTAINER}"
         aria-valuemin=${this.min}
         aria-valuenow=${this.value}
-        aria-valuemax=${this.min}
+        aria-valuemax=${this.max}
       >
         ${this._renderGradient()}
         ${Array(this.max - this.min + 1)
