@@ -2,8 +2,9 @@ import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import "../icon-button";
-import { Classes, GradientColorClasses, Parts } from "./constants";
+import { Classes, Parts } from "./constants";
 import NpsChangeEvent from "./events";
+import { getGradientColor } from "./utils";
 
 export class Nps extends LitElement {
   @property({ type: Number })
@@ -13,7 +14,7 @@ export class Nps extends LitElement {
   public max = 10;
 
   @property({ type: Number, reflect: true })
-  public value?: number | undefined = undefined;
+  public value?: number = undefined;
 
   public override connectedCallback() {
     super.connectedCallback();
@@ -83,26 +84,12 @@ export class Nps extends LitElement {
             100,
           );
 
-    const getGradientColor = () => {
-      if (this.value === undefined) return "transparent";
-
-      const rangeLength = this.max - this.min;
-
-      if (this.value < rangeLength / 2) return GradientColorClasses.RED;
-
-      if (this.value < rangeLength * 0.65) return GradientColorClasses.YELLOW;
-
-      if (this.value < rangeLength * 0.85) return GradientColorClasses.GRAY;
-
-      return GradientColorClasses.GREEN;
-    };
-
     return html`<div
       part=${Parts.GRADIENT}
       class=${classMap({
         [Parts.GRADIENT]: true,
         [Classes.GRADIENT_ROUNDED]: this.value === this.max,
-        [getGradientColor()]: true,
+        [getGradientColor(this.min, this.max, this.value)]: true,
       })}
       style="width: ${gradientWidth}%;"
     ></div>`;
