@@ -4,10 +4,10 @@ import * as Icons from "./icons";
 export const AUTHORS = ["in", "out"] as const;
 export const STATES = ["sent", "seen", "pending", "failed"] as const;
 
-export enum BaseSlots {
-  BODY = "body",
-  FOOTER = "footer",
-}
+export const BaseSlots = {
+  BODY: "body",
+  FOOTER: "footer",
+};
 
 export const Slots = {
   DEFAULT: "",
