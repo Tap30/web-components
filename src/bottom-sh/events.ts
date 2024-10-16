@@ -3,8 +3,10 @@ import { BaseEvent } from "../utils";
 export class OpenChangeEvent extends BaseEvent<{
   open: boolean;
 }> {
+  public static type = "openchange";
+
   constructor(openState: boolean) {
-    super("openchange", {
+    super(OpenChangeEvent.type, {
       bubbles: true,
       cancelable: true,
       composed: true,

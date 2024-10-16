@@ -8,6 +8,7 @@ export enum Parts {
   OVERLAY = "overlay",
   GRABBER = "grabber",
   DISMISS = "dismiss",
+  DISMISS_ICON = "dismiss-icon",
 }
 
 export enum Slots {

@@ -1,7 +1,9 @@
 import "../icon-button";
 
 import { html, LitElement, nothing } from "lit";
-import { property } from "lit/decorators.js";
+import { property, state } from "lit/decorators.js";
+import { ref, type Ref } from "lit/directives/ref.js";
+import { getBoundingClientRect } from "../utils";
 import { Parts, Slots } from "./constants";
 import { OpenChangeEvent } from "./events";
 import { dismiss } from "./icons";
@@ -15,9 +17,6 @@ export class BottomSheet extends LitElement {
   @property({ type: Boolean })
   public open = false;
 
-  @property({ type: Boolean })
-  public expanded = false;
-
   @property({ type: String, reflect: true, attribute: "dismiss-strategy" })
   public dismissStrategy: "grabber" | "button" = "button";
 
@@ -25,24 +24,73 @@ export class BottomSheet extends LitElement {
   public overlayVisibility: "on-expansion" | "visible" | "hidden" =
     "on-expansion";
 
-  private _handleDismissButtonClick() {
-    const newOpenState = !this.open;
-    const openChangeEvent = new OpenChangeEvent(newOpenState);
+  @state()
+  private _isDragStarted = false;
 
-    this.open = newOpenState;
-    this.dispatchEvent(openChangeEvent);
+  @state()
+  private _minHeight = 0;
+
+  @state()
+  private _maxHeight = 0;
+
+  private _rootRef?: Ref<HTMLElement>;
+
+  constructor() {
+    super();
+
+    this._handleDragEnd = this._handleDragEnd.bind(this);
+    this._handleDragStart = this._handleDragStart.bind(this);
+    this._handleDragging = this._handleDragging.bind(this);
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    if (this.dismissStrategy === "grabber") {
+      document.addEventListener("mouseup", this._handleDragEnd);
+      document.addEventListener("touchend", this._handleDragEnd);
+
+      document.addEventListener("mousemove", this._handleDragging);
+      document.addEventListener("touchmove", this._handleDragging);
+    }
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    if (this.dismissStrategy === "grabber") {
+      document.removeEventListener("mouseup", this._handleDragEnd);
+      document.removeEventListener("touchend", this._handleDragEnd);
+
+      document.removeEventListener("mousemove", this._handleDragging);
+      document.removeEventListener("touchmove", this._handleDragging);
+    }
+  }
+
+  private _emitExpandChange(): void {}
+
+  private _emitOpenChange(newOpenState: boolean): void {
+    this.dispatchEvent(new OpenChangeEvent(newOpenState));
+  }
+
+  private _handleDismissButtonClick(): void {
+    this._emitOpenChange(!this.open);
   }
 
   private _renderDismissButton() {
     return html`
       <tap-icon-button
-        class="dismiss"
+        class=${Parts.DISMISS}
         part=${Parts.DISMISS}
         size="small"
         variant="ghost"
         @click=${this._handleDismissButtonClick}
       >
-        ${dismiss}
+        <span
+          class=${Parts.DISMISS_ICON}
+          part=${Parts.DISMISS_ICON}
+          >${dismiss}</span
+        >
       </tap-icon-button>
     `;
   }
@@ -50,7 +98,7 @@ export class BottomSheet extends LitElement {
   private _renderGrabber() {
     return html`
       <div
-        class="grabber"
+        class=${Parts.GRABBER}
         part=${Parts.GRABBER}
       ></div>
     `;
@@ -62,7 +110,7 @@ export class BottomSheet extends LitElement {
     return html`
       <div
         part=${Parts.OVERLAY}
-        class="overlay"
+        class=${Parts.OVERLAY}
       ></div>
     `;
   }
@@ -73,29 +121,75 @@ export class BottomSheet extends LitElement {
     return this._renderDismissButton();
   }
 
+  private _getClientY(event: MouseEvent | TouchEvent) {
+    return event.type === "touchmove"
+      ? (event as TouchEvent).touches[0]?.clientY ?? 0
+      : (event as MouseEvent).clientY;
+  }
+
+  private _getRootBoundingRect() {
+    if (!this._rootRef?.value) return null;
+
+    return getBoundingClientRect(this._rootRef.value);
+  }
+
+  private _handleDragStart(event: MouseEvent | TouchEvent): void {
+    this._isDragStarted = true;
+  }
+
+  private _handleDragEnd(event: MouseEvent | TouchEvent): void {
+    this._isDragStarted = false;
+  }
+
+  private _handleDragging(event: MouseEvent | TouchEvent): void {
+    if (!this._isDragStarted) return;
+
+    const rect = this._getRootBoundingRect();
+
+    if (!rect) return;
+
+    if (event.cancelable) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    let clientY = this._getClientY(event);
+
+    clientY = clientY - rect.top;
+
+    if (clientY === 0) return;
+
+    if (clientY > 0) {
+      // TODO: increase the height and emit expanding
+    } else {
+      // TODO: decrease the height and emit expanding
+    }
+  }
+
   protected override render() {
     return html`
       <div
+        ${ref(this._rootRef)}
         part=${Parts.ROOT}
-        class="root"
+        class=${Parts.ROOT}
       >
-        ${this._renderOverlay()}
+        OpenState: ${this.open}${this._renderOverlay()}
         <div
           part=${Parts.HEADER}
-          class="header"
+          class=${Parts.HEADER}
         >
           ${this._renderDismissAction()}
           <slot name=${Slots.HEADER}></slot>
         </div>
         <div
           part=${Parts.BODY}
-          class="body"
+          class=${Parts.BODY}
         >
           <slot name=${Slots.BODY}></slot>
         </div>
         <div
           part=${Parts.ACTION_BAR}
-          class="action-bar"
+          class=${Parts.ACTION_BAR}
         >
           <slot name=${Slots.ACTION_BAR}></slot>
         </div>
