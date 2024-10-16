@@ -60,6 +60,11 @@
   --tap-sys-color-brand: var(--tap-palette-orange-400);
 
   /* gradient */
-  --tap-sys-color-gradient-brand: linear-gradient(91.39deg, #ff7733 0%, #ff5722 50.15%, #e64917 100%);
+  --tap-sys-color-gradient-brand: linear-gradient(
+    91.39deg,
+    #ff7733 0%,
+    #ff5722 50.15%,
+    #e64917 100%
+  );
   /* TODO: add other gradient tokens */
 }
