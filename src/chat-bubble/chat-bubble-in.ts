@@ -1,3 +1,5 @@
+import "./chat-bubble-base";
+
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
@@ -17,9 +19,11 @@ export class ChatBubbleIn extends LitElement {
 
   /**
    * The status of the chat element.
+   *
+   * @default "sent"
    */
   @property({ type: String })
-  public status?: (typeof STATES)[number];
+  public status: (typeof STATES)[number] = "sent";
 
   /**
    * Whether or not the bubble should be fully rounded.
@@ -45,7 +49,7 @@ export class ChatBubbleIn extends LitElement {
   }
 
   private _renderStatus() {
-    if (!this.status || this.status === "failed") return nothing;
+    if (this.status === "failed") return nothing;
 
     const stateMessage = STATUS_TO_LOCALE_MAP[this.status];
     const icon = STATUS_TO_ICON_MAP[this.status];
