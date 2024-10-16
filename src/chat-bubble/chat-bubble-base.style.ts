@@ -1,9 +1,4 @@
-import { css, unsafeCSS } from "lit";
-import { BaseParts } from "./constants";
-
-const root = unsafeCSS(BaseParts.ROOT);
-const footer = unsafeCSS(BaseParts.FOOTER);
-const body = unsafeCSS(BaseParts.BODY);
+import { css } from "lit";
 
 const styles = css`
   *,
@@ -40,7 +35,7 @@ const styles = css`
       var(--tap-sys-radius-5) var(--tap-sys-radius-5);
   }
 
-  .${root} {
+  .root {
     display: flex;
     flex-direction: column;
 
@@ -54,7 +49,7 @@ const styles = css`
     max-width: 17rem;
   }
 
-  .${body} {
+  .body {
     font-family: var(--tap-sys-typography-body-sm-font);
     font-size: var(--tap-sys-typography-body-sm-size);
     line-height: var(--tap-sys-typography-body-sm-height);
@@ -63,7 +58,7 @@ const styles = css`
     color: var(--chat-bubble-base-color);
   }
 
-  .${footer} {
+  .footer {
     font-family: var(--tap-sys-typography-body-xs-font);
     font-size: var(--tap-sys-typography-body-xs-size);
     line-height: var(--tap-sys-typography-body-xs-height);

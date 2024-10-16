@@ -6,7 +6,7 @@ import inStyles from "./chat-bubble-in.style";
 import { ChatBubbleOut } from "./chat-bubble-out";
 import outStyles from "./chat-bubble-out.style";
 
-export { Parts, Slots } from "./constants";
+export { Slots } from "./constants";
 
 @customElement("tap-chat-bubble-base")
 export class TapChatBubbleBase extends ChatBubbleBase {

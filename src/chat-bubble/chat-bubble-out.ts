@@ -2,7 +2,7 @@ import "../avatar";
 
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
-import { BaseSlots, OutParts } from "./constants";
+import { BaseSlots } from "./constants";
 
 export class ChatBubbleOut extends LitElement {
   @property({ type: String, reflect: true })
@@ -19,8 +19,8 @@ export class ChatBubbleOut extends LitElement {
 
     return html`
       <div
-        class=${OutParts.AVATAR}
-        part=${OutParts.AVATAR}
+        class="avatar"
+        part="avatar"
       >
         <tap-avatar
           image=${this.avatarSrc}
@@ -33,8 +33,8 @@ export class ChatBubbleOut extends LitElement {
   protected override render() {
     return html`
       <div
-        class=${OutParts.ROOT}
-        part=${OutParts.ROOT}
+        class="root"
+        part="root"
       >
         ${this._renderAvatar()}
         <tap-chat-bubble-base

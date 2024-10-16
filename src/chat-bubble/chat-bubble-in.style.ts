@@ -1,9 +1,4 @@
-import { css, unsafeCSS } from "lit";
-import { InParts } from "./constants";
-
-const root = unsafeCSS(InParts.ROOT);
-const status = unsafeCSS(InParts.STATUS);
-const failureIndicator = unsafeCSS(InParts.FAILURE_INDICATOR);
+import { css } from "lit";
 
 const styles = css`
   *,
@@ -24,11 +19,11 @@ const styles = css`
     margin-right: var(--tap-sys-spacing-4);
   }
 
-  .${root} {
+  .root {
     display: flex;
   }
 
-  .${failureIndicator} {
+  .failure-indicator {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -42,14 +37,14 @@ const styles = css`
     fill: var(--tap-sys-color-content-negative);
   }
 
-  .${status} {
+  .status {
     display: flex;
     align-items: center;
 
     gap: var(--tap-sys-spacing-3);
   }
 
-  .${status} > svg {
+  .status > svg {
     width: 18px;
     height: 18px;
 

@@ -4,39 +4,13 @@ import * as Icons from "./icons";
 export const AUTHORS = ["in", "out"] as const;
 export const STATES = ["sent", "seen", "pending", "failed"] as const;
 
-export const BASENAME = "chat-bubble";
-export const BASE_BASENAME = `${BASENAME}-base`;
-
 export enum BaseSlots {
   BODY = "body",
   FOOTER = "footer",
 }
 
-export enum BaseParts {
-  ROOT = "root",
-  BODY = "body",
-  FOOTER = "footer",
-}
-
-export enum OutParts {
-  ROOT = "root",
-  AVATAR = "avatar",
-}
-
-export enum InParts {
-  ROOT = "root",
-  STATUS = "status",
-  FAILURE_INDICATOR = "failure-indicator",
-}
-
 export const Slots = {
-  default: "",
-};
-
-export const Parts = {
-  base: BaseParts,
-  out: OutParts,
-  in: InParts,
+  DEFAULT: "",
 };
 
 export const STATUS_TO_LOCALE_MAP: Record<

@@ -2,7 +2,6 @@ import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import {
   BaseSlots,
-  InParts,
   STATUS_TO_ICON_MAP,
   STATUS_TO_LOCALE_MAP,
   type STATES,
@@ -25,8 +24,8 @@ export class ChatBubbleIn extends LitElement {
 
     return html`
       <div
-        class=${InParts.FAILURE_INDICATOR}
-        part=${InParts.FAILURE_INDICATOR}
+        class="failure-indicator"
+        part="failure-indicator"
       >
         ${icon}
       </div>
@@ -42,8 +41,8 @@ export class ChatBubbleIn extends LitElement {
     return html`
       <div
         slot=${BaseSlots.FOOTER}
-        class=${InParts.STATUS}
-        part=${InParts.STATUS}
+        class="status"
+        part="status"
       >
         ${icon}
         <span>${stateMessage}</span>
@@ -54,8 +53,8 @@ export class ChatBubbleIn extends LitElement {
   protected override render() {
     return html`
       <div
-        class=${InParts.ROOT}
-        part=${InParts.ROOT}
+        class="root"
+        part="root"
       >
         ${this._renderFailureIndicator()}
         <tap-chat-bubble-base
