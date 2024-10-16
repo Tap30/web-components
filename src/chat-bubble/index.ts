@@ -10,7 +10,7 @@ export { Slots } from "./constants";
  * @summary Display chat-bubble-in element
  *
  * @prop {string} timestamp - The timestamp of chat element.
- * @prop {"sent" | "seen" | "pending" | "failed"} [status] - The status of the chat element.
+ * @prop {"sent" | "seen" | "pending" | "failed"} [status="sent"] - The status of the chat element.
  * @prop {boolean} [fullyRounded=false] - Whether or not the bubble should be fully rounded.
  *
  * @csspart [root] - The root of the element.
