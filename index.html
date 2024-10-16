@@ -6,13 +6,25 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
+    <link
+      rel="stylesheet"
+      href="./styles/font.css"
+    />
+    <link
+      rel="stylesheet"
+      href="./styles/theme.css"
+    />
   </head>
-  <body>
+  <body dir="rtl">
     <div id="root"></div>
     <script type="module">
       import { html, render } from "lit";
 
-      render(html` <div></div> `, document.querySelector("#root"));
+      const root = document.getElementById("root");
+
+      if (!root) throw new Error("Expects a root element.");
+
+      render(html``, root);
     </script>
   </body>
 </html>
