@@ -19,6 +19,13 @@
       "max": 60
     }
   },
+  "tap-rating-slider": {
+    "propertyDefaultValues": {
+      "value": 5,
+      "min": 0,
+      "max": 10
+    }
+  },
   "tap-skeleton": {
     "propertyDefaultValues": {
       "width": "100px",
