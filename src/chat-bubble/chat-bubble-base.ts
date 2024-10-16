@@ -1,10 +1,14 @@
 import { html, LitElement, nothing } from "lit";
-import { property } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { logger } from "../utils";
+import styles from "./chat-bubble-base.style";
 import { AUTHORS, BaseSlots } from "./constants";
 
+@customElement("tap-chat-bubble-base")
 export class ChatBubbleBase extends LitElement {
+  public static override readonly styles = [styles];
+
   @property({ type: String })
   public author!: (typeof AUTHORS)[number];
 
