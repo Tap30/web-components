@@ -1,4 +1,5 @@
 import "../avatar";
+import "./chat-bubble-base";
 
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
