@@ -17,7 +17,7 @@ const styles = css`
     --chat-bubble-in-icon-color: var(--tap-sys-color-content-accent);
   }
 
-  .root:not(.failed) tap-chat-bubble-base {
+  .root:not(.failed) .base {
     margin-right: var(--tap-sys-spacing-4);
   }
 

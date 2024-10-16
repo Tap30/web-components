@@ -6,14 +6,25 @@ import { classMap } from "lit/directives/class-map.js";
 import { BaseSlots } from "./constants";
 
 export class ChatBubbleOut extends LitElement {
+  /**
+   * The timestamp of chat element.
+   */
   @property({ type: String })
   public timestamp!: string;
 
-  @property({ type: Boolean, attribute: "fully-rounded" })
-  public fullyRounded: boolean = false;
-
+  /**
+   * The source of the avatar image.
+   */
   @property({ type: String, attribute: "avatar-src" })
   public avatarSrc?: string;
+
+  /**
+   * Whether or not the bubble should be fully rounded.
+   *
+   * @default false
+   */
+  @property({ type: Boolean, attribute: "fully-rounded" })
+  public fullyRounded: boolean = false;
 
   private _renderAvatar() {
     if (!this.avatarSrc) return nothing;
@@ -43,6 +54,8 @@ export class ChatBubbleOut extends LitElement {
       >
         ${this._renderAvatar()}
         <tap-chat-bubble-base
+          class="base"
+          part="base"
           author="out"
           ?fully-rounded=${this.fullyRounded}
           timestamp=${this.timestamp}

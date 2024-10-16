@@ -9,12 +9,23 @@ import {
 } from "./constants";
 
 export class ChatBubbleIn extends LitElement {
+  /**
+   * The timestamp of chat element.
+   */
   @property({ type: String })
   public timestamp!: string;
 
+  /**
+   * The status of the chat element.
+   */
   @property({ type: String })
   public status?: (typeof STATES)[number];
 
+  /**
+   * Whether or not the bubble should be fully rounded.
+   *
+   * @default false
+   */
   @property({ type: Boolean, attribute: "fully-rounded" })
   public fullyRounded: boolean = false;
 
@@ -63,6 +74,8 @@ export class ChatBubbleIn extends LitElement {
       >
         ${this._renderFailureIndicator()}
         <tap-chat-bubble-base
+          class="base"
+          part="base"
           author="in"
           ?fully-rounded=${this.fullyRounded}
           timestamp=${this.timestamp}

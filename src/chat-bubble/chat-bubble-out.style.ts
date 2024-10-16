@@ -18,7 +18,7 @@ const styles = css`
     --chat-bubble-out-leading-space: 0;
   }
 
-  .root tap-chat-bubble-base {
+  .root .base {
     margin-left: var(--chat-bubble-out-leading-space);
   }
 
