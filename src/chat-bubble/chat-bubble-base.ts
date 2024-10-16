@@ -1,16 +1,17 @@
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import { logger } from "../utils";
 import { AUTHORS, BaseSlots } from "./constants";
 
 export class ChatBubbleBase extends LitElement {
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   public author!: (typeof AUTHORS)[number];
 
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   public timestamp!: string;
 
-  @property({ type: Boolean, reflect: true, attribute: "fully-rounded" })
+  @property({ type: Boolean, attribute: "fully-rounded" })
   public fullyRounded: boolean = false;
 
   constructor() {
@@ -50,9 +51,15 @@ export class ChatBubbleBase extends LitElement {
       return nothing;
     }
 
+    const rootClasses = classMap({
+      "fully-rounded": this.fullyRounded,
+      in: this.author === "in",
+      out: this.author === "out",
+    });
+
     return html`
       <div
-        class="root"
+        class="root ${rootClasses}"
         part="root"
       >
         <div

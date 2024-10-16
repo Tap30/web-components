@@ -7,20 +7,18 @@ const styles = css`
     box-sizing: border-box;
   }
 
-  :host([status="seen"]) {
+  .root {
+    --chat-bubble-in-icon-color: currentColor;
+
+    display: flex;
+  }
+
+  .root.seen {
     --chat-bubble-in-icon-color: var(--tap-sys-color-content-accent);
   }
 
-  :host(:not([status="seen"])) {
-    --chat-bubble-in-icon-color: currentColor;
-  }
-
-  :host(:not([status="failed"])) tap-chat-bubble-base {
+  .root:not(.failed) tap-chat-bubble-base {
     margin-right: var(--tap-sys-spacing-4);
-  }
-
-  .root {
-    display: flex;
   }
 
   .failure-indicator {

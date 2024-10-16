@@ -1,5 +1,6 @@
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import {
   BaseSlots,
   STATUS_TO_ICON_MAP,
@@ -8,13 +9,13 @@ import {
 } from "./constants";
 
 export class ChatBubbleIn extends LitElement {
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   public timestamp!: string;
 
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   public status?: (typeof STATES)[number];
 
-  @property({ type: Boolean, reflect: true, attribute: "fully-rounded" })
+  @property({ type: Boolean, attribute: "fully-rounded" })
   public fullyRounded: boolean = false;
 
   private _renderFailureIndicator() {
@@ -51,9 +52,13 @@ export class ChatBubbleIn extends LitElement {
   }
 
   protected override render() {
+    const rootClasses = classMap({
+      [String(this.status)]: Boolean(this.status),
+    });
+
     return html`
       <div
-        class="root"
+        class="root ${rootClasses}"
         part="root"
       >
         ${this._renderFailureIndicator()}

@@ -7,17 +7,15 @@ const styles = css`
     box-sizing: border-box;
   }
 
-  :host([avatar-src]) {
-    --chat-bubble-out-leading-space: 0;
-  }
-
-  :host(:not([avatar-src])) {
-    --chat-bubble-out-leading-space: var(--tap-sys-spacing-11);
-  }
-
   .root {
+    --chat-bubble-out-leading-space: var(--tap-sys-spacing-11);
+
     display: flex;
     flex-direction: row-reverse;
+  }
+
+  .root.has-avatar {
+    --chat-bubble-out-leading-space: 0;
   }
 
   .root tap-chat-bubble-base {

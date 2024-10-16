@@ -2,16 +2,17 @@ import "../avatar";
 
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import { BaseSlots } from "./constants";
 
 export class ChatBubbleOut extends LitElement {
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   public timestamp!: string;
 
-  @property({ type: Boolean, reflect: true, attribute: "fully-rounded" })
+  @property({ type: Boolean, attribute: "fully-rounded" })
   public fullyRounded: boolean = false;
 
-  @property({ type: String, reflect: true, attribute: "avatar-src" })
+  @property({ type: String, attribute: "avatar-src" })
   public avatarSrc?: string;
 
   private _renderAvatar() {
@@ -31,9 +32,13 @@ export class ChatBubbleOut extends LitElement {
   }
 
   protected override render() {
+    const rootClasses = classMap({
+      "has-avatar": Boolean(this.avatarSrc),
+    });
+
     return html`
       <div
-        class="root"
+        class="root ${rootClasses}"
         part="root"
       >
         ${this._renderAvatar()}

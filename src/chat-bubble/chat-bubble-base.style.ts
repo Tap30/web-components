@@ -7,34 +7,6 @@ const styles = css`
     box-sizing: border-box;
   }
 
-  :host([fully-rounded]) {
-    --chat-bubble-base-radius: var(--tap-sys-radius-5);
-  }
-
-  :host([author="in"]) {
-    --chat-bubble-base-bg-color: var(--tap-sys-color-surface-tertiary);
-    --chat-bubble-base-color: var(--tap-sys-color-content-primary);
-    --chat-bubble-base-footer-color: var(--tap-sys-color-content-tertiary);
-    --chat-bubble-base-footer-flex-direction: row;
-  }
-
-  :host([author="out"]) {
-    --chat-bubble-base-bg-color: var(--tap-sys-color-surface-accent);
-    --chat-bubble-base-color: var(--tap-sys-color-content-on-accent);
-    --chat-bubble-base-footer-color: var(--chat-bubble-base-color);
-    --chat-bubble-base-footer-flex-direction: row-reverse;
-  }
-
-  :host(:not([fully-rounded])[author="in"]) {
-    --chat-bubble-base-radius: var(--tap-sys-radius-5) var(--tap-sys-radius-1)
-      var(--tap-sys-radius-5) var(--tap-sys-radius-5);
-  }
-
-  :host(:not([fully-rounded])[author="out"]) {
-    --chat-bubble-base-radius: var(--tap-sys-radius-1) var(--tap-sys-radius-5)
-      var(--tap-sys-radius-5) var(--tap-sys-radius-5);
-  }
-
   .root {
     display: flex;
     flex-direction: column;
@@ -47,6 +19,34 @@ const styles = css`
 
     min-width: 6rem;
     max-width: 17rem;
+  }
+
+  .root.fully-rounded {
+    --chat-bubble-base-radius: var(--tap-sys-radius-5);
+  }
+
+  .root.in {
+    --chat-bubble-base-bg-color: var(--tap-sys-color-surface-tertiary);
+    --chat-bubble-base-color: var(--tap-sys-color-content-primary);
+    --chat-bubble-base-footer-color: var(--tap-sys-color-content-tertiary);
+    --chat-bubble-base-footer-flex-direction: row;
+  }
+
+  .root.out {
+    --chat-bubble-base-bg-color: var(--tap-sys-color-surface-accent);
+    --chat-bubble-base-color: var(--tap-sys-color-content-on-accent);
+    --chat-bubble-base-footer-color: var(--chat-bubble-base-color);
+    --chat-bubble-base-footer-flex-direction: row-reverse;
+  }
+
+  .root:not(.fully-rounded).in {
+    --chat-bubble-base-radius: var(--tap-sys-radius-5) var(--tap-sys-radius-1)
+      var(--tap-sys-radius-5) var(--tap-sys-radius-5);
+  }
+
+  .root:not(.fully-rounded).out {
+    --chat-bubble-base-radius: var(--tap-sys-radius-1) var(--tap-sys-radius-5)
+      var(--tap-sys-radius-5) var(--tap-sys-radius-5);
   }
 
   .body {
