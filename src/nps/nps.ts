@@ -71,9 +71,14 @@ export class Nps extends LitElement {
     }
   };
 
-  private _handleClick = (value: number) => {
+  private _handleSliderInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const value = Number(target.value);
+
+    if (Number.isNaN(value)) return;
+
     this._emitValueChange(value);
-  };
+  }
 
   private _renderGradient = () => {
     const gradientWidth =
@@ -124,16 +129,15 @@ export class Nps extends LitElement {
       class="rate-cell"
       part="rate-cell"
     >
-      <button
+      <div
         part="rate"
         class="rate"
         data-rate="${rate}"
-        @click=${this._handleClick}
       >
         ${isRateOutOfBounds || isValueAtLimit
           ? this._renderDot(rate === this.value)
           : rate}
-      </button>
+      </div>
       ${this.value !== undefined && this.value === rate
         ? this._renderRateLabel(rate)
         : nothing}
@@ -163,8 +167,7 @@ export class Nps extends LitElement {
           min=${this.min}
           max=${this.max}
           value=${ifDefined(this.value)}
-          @input=${(e: Event) =>
-            this._handleClick(parseInt((e.target as HTMLInputElement).value))}
+          @input=${(e: Event) => this._handleSliderInput(e)}
         />
       </div>
     `;
