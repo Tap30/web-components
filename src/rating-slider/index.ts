@@ -9,7 +9,7 @@ import styles from "./rating-slider.style";
  * @prop {number} [max=10] - The maximum value for the slider.
  * @prop {number} value - The current value of the slider.
  *
- * @fires rating-sliderchange - Fired when the rating slider value changes.
+ * @fires npschange - Fired when the rating slider value changes.
  *
  * @csspart [rating-slider-container] - The container that wraps the component.
  * @csspart [rating-slider-dot] - The dot that represents the selected value on the slider.

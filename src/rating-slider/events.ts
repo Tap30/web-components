@@ -1,8 +1,12 @@
 import { BaseEvent } from "../utils";
 
-export default class RatingSliderChangeEvent extends BaseEvent<{ value: number }> {
+export default class ValueChangeEvent extends BaseEvent<{
+  value: number;
+}> {
+  public static type = "valuechange";
+
   constructor(value: number) {
-    super("rating-sliderchange", {
+    super(ValueChangeEvent.type, {
       details: {
         value,
       },

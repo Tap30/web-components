@@ -4,7 +4,7 @@ import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import "../icon-button";
 import { Classes, Parts } from "./constants";
-import RatingSliderChangeEvent from "./events";
+import ValueChangeEvent from "./events";
 import { getGradientColor } from "./utils";
 
 export class RatingSlider extends LitElement {
@@ -57,7 +57,7 @@ export class RatingSlider extends LitElement {
   private _emitValueChange = (newValue: number) => {
     this.value = newValue;
 
-    this.dispatchEvent(new RatingSliderChangeEvent(this.value));
+    this.dispatchEvent(new ValueChangeEvent(this.value));
   };
 
   private _handleIncrease = () => {
