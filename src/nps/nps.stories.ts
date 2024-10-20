@@ -4,8 +4,8 @@ import { html, type TemplateResult } from "lit";
 import "./index.js";
 
 export default {
-  title: "Components/RatingSlider",
-  component: "tap-rating-slider",
+  title: "Components/NPS",
+  component: "tap-nps",
   argTypes: {
     min: {
       control: "number",
@@ -39,9 +39,9 @@ const defaultProps: ArgTypes = {
 };
 
 const Template: Story<ArgTypes> = props => html`
-  <tap-rating-slider ${spreadProps(props)}></tap-rating-slider>
+  <tap-nps ${spreadProps(props)}></tap-nps>
 `;
 
-export const RatingSlider = Template.bind({});
+export const Nps = Template.bind({});
 
-RatingSlider.args = defaultProps;
+Nps.args = defaultProps;

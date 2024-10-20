@@ -1,22 +1,4 @@
-import { css, unsafeCSS } from "lit";
-import { Classes, GradientColorClasses, Parts } from "./constants";
-
-
-const container = unsafeCSS(Parts.CONTAINER);
-const dot = unsafeCSS(Parts.DOT);
-const slider = unsafeCSS(Parts.SLIDER);
-const label = unsafeCSS(Parts.LABEL);
-const rate = unsafeCSS(Parts.RATE);
-const rateWrapper = unsafeCSS(Parts.RATE_WRAPPER);
-const gradient = unsafeCSS(Parts.GRADIENT);
-
-const gradientRounded = unsafeCSS(Classes.GRADIENT_ROUNDED);
-const dotSelected = unsafeCSS(Classes.DOT_SELECTED);
-
-const gradientRed = unsafeCSS(GradientColorClasses.RED);
-const gradientYellow = unsafeCSS(GradientColorClasses.YELLOW);
-const gradientGray = unsafeCSS(GradientColorClasses.GRAY);
-const gradientGreen = unsafeCSS(GradientColorClasses.GREEN);
+import { css } from "lit";
 
 export default css`
   :host {
@@ -34,7 +16,7 @@ export default css`
     display: none !important;
   }
 
-  .${container} {
+  .root {
     font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
     position: relative;
     width: max-content;
@@ -44,23 +26,23 @@ export default css`
     display: flex;
   }
 
-  .${gradientRed} {
-    --rating-slider-gradient-color: var(--tap-palette-red-100);
+  .gradient-red {
+    --nps-gradient-color: var(--tap-palette-red-100);
   }
 
-  .${gradientGreen} {
-    --rating-slider-gradient-color: var(--tap-palette-green-100);
+  .gradient-green {
+    --nps-gradient-color: var(--tap-palette-green-100);
   }
 
-  .${gradientGray} {
-    --rating-slider-gradient-color: var(--tap-palette-gray-100);
+  .gradient-gray {
+    --nps-gradient-color: var(--tap-palette-gray-100);
   }
 
-  .${gradientYellow} {
-    --rating-slider-gradient-color: var(--tap-palette-yellow-100);
+  .gradient-yellow {
+    --nps-gradient-color: var(--tap-palette-yellow-100);
   }
 
-  .${gradient} {
+  .gradient {
     transition:
       width 0.1s,
       background-color 0.3s,
@@ -69,11 +51,11 @@ export default css`
     top: 0;
     bottom: 0;
     z-index: 0;
-    background: var(--rating-slider-gradient-color, transparent);
+    background: var(--nps-gradient-color, transparent);
     border-radius: var(--tap-sys-radius-5) 0 0 var(--tap-sys-radius-5);
   }
 
-  .${gradient}::after {
+  .gradient::after {
     content: "";
     top: 0;
     position: absolute;
@@ -89,18 +71,18 @@ export default css`
     border-radius: var(--tap-sys-radius-5) 0 0 var(--tap-sys-radius-5);
   }
 
-  .${gradientRounded} {
+  .gradient-rounded {
     border-radius: var(--tap-sys-radius-5);
   }
 
-  .${rateWrapper} {
+  .rate-cell {
     position: relative;
     width: 100%;
     display: flex;
     align-items: stretch;
   }
 
-  .${rate} {
+  .rate {
     min-width: 28px;
     background: transparent;
     outline: none;
@@ -113,7 +95,7 @@ export default css`
     justify-content: center;
   }
 
-  .${label} {
+  .label {
     position: absolute;
     bottom: 50%;
     left: 50%;
@@ -129,7 +111,7 @@ export default css`
     border-radius: var(--tap-sys-radius-3);
   }
 
-  .${slider} {
+  .slider {
     width: 100%;
     top: 0;
     left: 0;
@@ -141,7 +123,7 @@ export default css`
     opacity: 0;
   }
 
-  .${dot} {
+  .dot {
     transition: transform 0.1s;
     width: 3px;
     height: 3px;
@@ -149,7 +131,7 @@ export default css`
     border-radius: var(--tap-sys-radius-full);
   }
 
-  .${dotSelected} {
+  .dot-selected {
     transform: scale(2);
     background-color: var(--tap-palette-black);
   }

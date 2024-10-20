@@ -19,7 +19,7 @@
       "max": 60
     }
   },
-  "tap-rating-slider": {
+  "tap-nps": {
     "propertyDefaultValues": {
       "value": 5,
       "min": 0,

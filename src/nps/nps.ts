@@ -3,11 +3,10 @@ import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import "../icon-button";
-import { Classes, Parts } from "./constants";
 import ValueChangeEvent from "./events";
 import { getGradientColor } from "./utils";
 
-export class RatingSlider extends LitElement {
+export class Nps extends LitElement {
   @property({ type: Number })
   public min = 0;
 
@@ -86,10 +85,10 @@ export class RatingSlider extends LitElement {
           );
 
     return html`<div
-      part=${Parts.GRADIENT}
+      part="gradient"
       class=${classMap({
-        [Parts.GRADIENT]: true,
-        [Classes.GRADIENT_ROUNDED]: this.value === this.max,
+        gradient: true,
+        "gradient-rounded": this.value === this.max,
         [getGradientColor(this.min, this.max, this.value)]: true,
       })}
       style="width: ${gradientWidth}%;"
@@ -99,17 +98,17 @@ export class RatingSlider extends LitElement {
   private _renderDot(isSelected: boolean) {
     return html`<div
       class="${classMap({
-        [Parts.DOT]: true,
-        [Classes.DOT_SELECTED]: isSelected,
+        dot: true,
+        "dot-selected": isSelected,
       })}"
-      part="${Parts.DOT}"
+      part="dot"
     ></div>`;
   }
 
   private _renderRateLabel(rate: number) {
     return html`<div
-      class="${Parts.LABEL}"
-      part="${Parts.LABEL}"
+      class="label"
+      part="label"
     >
       ${rate}
     </div>`;
@@ -122,12 +121,12 @@ export class RatingSlider extends LitElement {
     const isRateOutOfBounds = ![this.min, this.max].includes(rate);
 
     return html`<div
-      class="${Parts.RATE_WRAPPER}"
-      part="${Parts.RATE_WRAPPER}"
+      class="rate-cell"
+      part="rate-cell"
     >
       <button
-        part="${Parts.RATE}"
-        class="${Parts.RATE}"
+        part="rate"
+        class="rate"
         data-rate="${rate}"
         @click=${this._handleClick}
       >
@@ -145,8 +144,8 @@ export class RatingSlider extends LitElement {
     return html`
       <div
         role="slider"
-        class="${Parts.CONTAINER}"
-        part="${Parts.CONTAINER}"
+        class="root"
+        part="root"
         aria-valuemin=${this.min}
         aria-valuenow=${this.value}
         aria-valuemax=${this.max}
@@ -158,8 +157,8 @@ export class RatingSlider extends LitElement {
           .map(rate => this._renderRate(rate))}
 
         <input
-          class="${Parts.SLIDER}"
-          part="${Parts.SLIDER}"
+          class="slider"
+          part="slider"
           type="range"
           min=${this.min}
           max=${this.max}
