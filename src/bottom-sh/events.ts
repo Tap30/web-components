@@ -24,22 +24,33 @@ export class ClosingEvent extends BaseEvent<object> {
   }
 }
 
-export class OpenEvent extends BaseEvent<object> {
-  public static type = "open";
+export class CloseEvent extends BaseEvent<object> {
+  public static type = "close";
 
   constructor() {
-    super(OpenEvent.type, {
+    super(CloseEvent.type, {
       composed: true,
       details: {},
     });
   }
 }
 
-export class CloseEvent extends BaseEvent<object> {
-  public static type = "close";
+export class OpenedEvent extends BaseEvent<object> {
+  public static type = "opened";
 
   constructor() {
-    super(CloseEvent.type, {
+    super(OpenedEvent.type, {
+      composed: true,
+      details: {},
+    });
+  }
+}
+
+export class ClosedEvent extends BaseEvent<object> {
+  public static type = "closed";
+
+  constructor() {
+    super(ClosedEvent.type, {
       composed: true,
       details: {},
     });
@@ -68,22 +79,11 @@ export class GrabEndEvent extends BaseEvent<object> {
   }
 }
 
-export class GrabMoveEvent extends BaseEvent<object> {
-  public static type = "grabmove";
+export class GrabbingEvent extends BaseEvent<object> {
+  public static type = "grabbing";
 
   constructor() {
-    super(GrabMoveEvent.type, {
-      composed: true,
-      details: {},
-    });
-  }
-}
-
-export class SizeChangeEvent extends BaseEvent<object> {
-  public static type = "sizechange";
-
-  constructor() {
-    super(SizeChangeEvent.type, {
+    super(GrabbingEvent.type, {
       composed: true,
       details: {},
     });
