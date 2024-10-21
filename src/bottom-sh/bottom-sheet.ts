@@ -1,18 +1,19 @@
 import "../icon-button";
 
 import { html, LitElement, type PropertyValues } from "lit";
-import { property, query, state } from "lit/decorators.js";
+import { property, query, queryAssignedNodes } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { KeyboardKeys } from "../internals";
 import { AnimationController, getBoundingClientRect } from "../utils";
 import { Slots } from "./constants";
 import {
+  ClosedEvent,
   CloseEvent,
   ClosingEvent,
+  GrabbingEvent,
   GrabEndEvent,
-  GrabMoveEvent,
   GrabStartEvent,
-  OpenEvent,
+  OpenedEvent,
   OpeningEvent,
 } from "./events";
 import { dismiss } from "./icons";
@@ -31,8 +32,7 @@ export class BottomSheet extends LitElement {
 
     this._open = openState;
 
-    if (openState) void this._show();
-    else void this._hide();
+    void this._toggleOpenState(openState);
   }
 
   get open() {
@@ -51,8 +51,14 @@ export class BottomSheet extends LitElement {
   @property({ type: String, attribute: "overlay-visibility" })
   public overlayVisibility: "auto" | "visible" | "hidden" = "visible";
 
-  @state()
-  private _isHeaderSlotted = false;
+  @queryAssignedNodes({ slot: "header" })
+  private _headerAssignedNodes!: Array<Node>;
+
+  @queryAssignedNodes({ slot: "body" })
+  private _bodyAssignedNodes!: Array<Node>;
+
+  @queryAssignedNodes({ slot: "action-bar" })
+  private _actionBarAssignedNodes!: Array<Node>;
 
   private _isDragStarted = false;
 
@@ -70,7 +76,6 @@ export class BottomSheet extends LitElement {
     this._handleDragEnd = this._handleDragEnd.bind(this);
     this._handleDragStart = this._handleDragStart.bind(this);
     this._handleDragging = this._handleDragging.bind(this);
-    this._handleTransitionEnd = this._handleTransitionEnd.bind(this);
     this._handleKeyDown = this._handleKeyDown.bind(this);
   }
 
@@ -119,96 +124,6 @@ export class BottomSheet extends LitElement {
     super.update(changedProperties);
   }
 
-  private _emitOpenChange(newOpenState: boolean): void {
-    if (newOpenState) {
-      this.dispatchEvent(new OpenEvent());
-    } else {
-      this.dispatchEvent(new CloseEvent());
-    }
-  }
-
-  private _renderDismissButton() {
-    if (this.dismissStrategy !== "button") return null;
-
-    return html`
-      <tap-icon-button
-        class="dismiss"
-        part="dismiss"
-        size="small"
-        variant="ghost"
-        @click=${() => this._emitOpenChange(!this.open)}
-      >
-        <span
-          class="dismiss-icon"
-          part="dismiss-icon"
-          >${dismiss}</span
-        >
-      </tap-icon-button>
-    `;
-  }
-
-  private _renderGrabber() {
-    if (this.dismissStrategy !== "grabber") return null;
-
-    return html`
-      <div
-        class="grabber"
-        part="grabber"
-      ></div>
-    `;
-  }
-
-  private _renderOverlay() {
-    if (this.overlayVisibility === "hidden") return null;
-
-    return html`
-      <div
-        part="overlay"
-        class="overlay"
-        @click=${() => this._emitOpenChange(!this.open)}
-      ></div>
-    `;
-  }
-
-  private _renderHeadingTitle() {
-    if (!this.headingTitle) return null;
-
-    return html`
-      <span
-        class="heading-title"
-        part="heading-title"
-      >
-        ${this.headingTitle}
-      </span>
-    `;
-  }
-
-  private _renderHeadingDescription() {
-    if (!this.headingDescription) return null;
-
-    return html`
-      <span
-        class="heading-description"
-        part="heading-description"
-      >
-        ${this.headingDescription}
-      </span>
-    `;
-  }
-
-  private _renderHeading() {
-    if (this._isHeaderSlotted) return null;
-
-    return html`
-      <div
-        class="heading"
-        part="heading"
-      >
-        ${this._renderHeadingTitle()}${this._renderHeadingDescription()}
-      </div>
-    `;
-  }
-
   private _getClientY(event: MouseEvent | TouchEvent) {
     return event.type === "touchmove"
       ? (event as TouchEvent).touches[0]?.clientY ?? 0
@@ -225,7 +140,7 @@ export class BottomSheet extends LitElement {
     if (event.key === KeyboardKeys.ESCAPE) {
       event.preventDefault();
 
-      this._emitOpenChange(false);
+      this.dispatchEvent(new CloseEvent());
     }
   }
 
@@ -269,91 +184,143 @@ export class BottomSheet extends LitElement {
       // TODO: decrease the height and emit expanding
     }
 
-    const grabMoveEvent = new GrabMoveEvent();
+    const grabMoveEvent = new GrabbingEvent();
 
     this.dispatchEvent(grabMoveEvent);
   }
 
-  private _handleHeaderSlotChange(event: Event): void {
-    const slot = event.currentTarget as HTMLSlotElement;
-
-    if (!slot) this._isHeaderSlotted = false;
-    else this._isHeaderSlotted = slot.assignedNodes().length > 0;
-  }
-
-  private _handleTransitionEnd(event: TransitionEvent) {
-    console.log(event);
-    this._animationController.finish();
-  }
-
-  private async _show() {
+  private async _toggleOpenState(openState: boolean) {
     if (!this.isConnected) return;
 
     await this.updateComplete;
 
     if (!this._root) return;
 
-    this._root.addEventListener("transitionend", this._handleTransitionEnd);
+    const handleTransitionEnd = () => {
+      this._animationController.finish();
+    };
+
+    this._root.addEventListener("transitionend", handleTransitionEnd);
     this._animationController.start();
 
-    const openingSuccess = this.dispatchEvent(new OpeningEvent());
-
-    if (!openingSuccess) {
-      this.open = false;
+    const cleanup = () => {
       this._animationController.finish();
+      this._root!.removeEventListener("transitionend", handleTransitionEnd);
+    };
 
-      return;
+    const eventAllowed = this.dispatchEvent(
+      openState ? new OpeningEvent() : new ClosingEvent(),
+    );
+
+    // The event is prevented
+    if (!eventAllowed) {
+      this.open = !openState;
+
+      return cleanup();
     }
 
     const animationComplete = await this._animationController.promise;
 
-    if (!animationComplete) {
-      this.open = false;
-      this._animationController.finish();
+    // The animation is aborted
+    if (!animationComplete) return cleanup();
 
-      return;
-    }
+    this.open = openState;
+    this.dispatchEvent(openState ? new OpenedEvent() : new ClosedEvent());
 
-    this.open = true;
-    this._emitOpenChange(true);
-    this._animationController.finish();
-    this._root.removeEventListener("transitionend", this._handleTransitionEnd);
+    cleanup();
   }
 
-  private async _hide() {
-    if (!this.isConnected) return;
+  private _renderDismissButton() {
+    if (this.dismissStrategy !== "button") return null;
 
-    await this.updateComplete;
+    return html`
+      <tap-icon-button
+        class="dismiss"
+        part="dismiss"
+        size="small"
+        variant="ghost"
+        @click=${() => {
+          this.dispatchEvent(new CloseEvent());
+        }}
+      >
+        <span
+          class="dismiss-icon"
+          part="dismiss-icon"
+          >${dismiss}</span
+        >
+      </tap-icon-button>
+    `;
+  }
 
-    if (!this._root) return;
+  private _renderGrabber() {
+    if (this.dismissStrategy !== "grabber") return null;
 
-    this._root.addEventListener("transitionend", this._handleTransitionEnd);
-    this._animationController.start();
+    return html`
+      <div
+        class="grabber"
+        part="grabber"
+      ></div>
+    `;
+  }
 
-    const closingSuccess = this.dispatchEvent(new ClosingEvent());
+  private _renderOverlay() {
+    if (this.overlayVisibility === "hidden") return null;
 
-    if (!closingSuccess) {
-      this._animationController.finish();
+    return html`
+      <div
+        part="overlay"
+        class="overlay"
+        @click=${() => {
+          this.dispatchEvent(new CloseEvent());
+        }}
+      ></div>
+    `;
+  }
 
-      return;
-    }
+  private _renderHeadingTitle() {
+    if (!this.headingTitle) return null;
 
-    const animationComplete = await this._animationController.promise;
+    return html`
+      <span
+        class="heading-title"
+        part="heading-title"
+      >
+        ${this.headingTitle}
+      </span>
+    `;
+  }
 
-    if (!animationComplete) {
-      this._animationController.finish();
+  private _renderHeadingDescription() {
+    if (!this.headingDescription) return null;
 
-      return;
-    }
+    return html`
+      <span
+        class="heading-description"
+        part="heading-description"
+      >
+        ${this.headingDescription}
+      </span>
+    `;
+  }
 
-    this.open = false;
-    this._emitOpenChange(false);
-    this._root.removeEventListener("transitionend", this._handleTransitionEnd);
+  private _renderHeading() {
+    if (this._headerAssignedNodes.length > 0) return null;
+
+    return html`
+      <div
+        class="heading"
+        part="heading"
+      >
+        ${this._renderHeadingTitle()}${this._renderHeadingDescription()}
+      </div>
+    `;
   }
 
   protected override render() {
     const rootClasses = classMap({
       open: this.open,
+      "has-body": this._bodyAssignedNodes.length > 0,
+      "has-action-bar": this._actionBarAssignedNodes.length > 0,
     });
 
     return html`
@@ -377,10 +344,7 @@ export class BottomSheet extends LitElement {
               part="header-container"
             >
               ${this._renderHeading()}
-              <slot
-                name=${Slots.HEADER}
-                @slotchange="${this._handleHeaderSlotChange}"
-              ></slot>
+              <slot name=${Slots.HEADER}></slot>
               ${this._renderDismissButton()}
             </div>
           </div>

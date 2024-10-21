@@ -37,6 +37,18 @@ const styles = css`
     visibility: visible;
   }
 
+  .root:not(.has-body) .body {
+    display: none;
+  }
+
+  .root:not(.has-action-bar) .action-bar {
+    display: none;
+  }
+
+  .root.has-action-bar.has-body .action-bar {
+    margin-top: calc(-1 * var(--tap-sys-spacing-9));
+  }
+
   .overlay {
     position: fixed;
     top: 0;
@@ -153,7 +165,6 @@ const styles = css`
 
   .action-bar {
     padding: var(--tap-sys-spacing-6);
-    margin-top: calc(-1 * var(--tap-sys-spacing-9));
 
     box-shadow: inset 0 1px 0 0 var(--tap-sys-color-border-primary);
     background-color: var(--tap-sys-color-surface-primary);
