@@ -1,17 +1,17 @@
 import { customElement } from "lit/decorators.js";
 import { BottomSheet } from "./bottom-sheet";
 import styles from "./bottom-sheet.style";
-import { BASENAME, Parts, Slots } from "./constants";
+import { Slots } from "./constants";
 
-export { Parts, Slots };
+export { Slots };
 
-@customElement(BASENAME)
+@customElement("bottom-sheet")
 export class TapBottomSheet extends BottomSheet {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    [BASENAME]: TapBottomSheet;
+    "bottom-sheet": TapBottomSheet;
   }
 }
