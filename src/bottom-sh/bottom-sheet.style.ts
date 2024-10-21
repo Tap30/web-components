@@ -1,26 +1,43 @@
-import { css, unsafeCSS } from "lit";
-import { Parts } from "./constants";
-
-const root = unsafeCSS(Parts.ROOT);
-const body = unsafeCSS(Parts.BODY);
-const header = unsafeCSS(Parts.HEADER);
-const overlay = unsafeCSS(Parts.OVERLAY);
-const actionBar = unsafeCSS(Parts.ACTION_BAR);
-const dismiss = unsafeCSS(Parts.DISMISS);
-const dismissIcon = unsafeCSS(Parts.DISMISS_ICON);
-const grabber = unsafeCSS(Parts.GRABBER);
+import { css } from "lit";
+import { Z_INDEXES } from "../internals";
 
 const styles = css`
-  .${root} {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  .root {
+    --bottom-sheet-dy: 100%;
+
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
 
-    z-index: var(--tap-sys-z-5);
+    opacity: 0;
+    visibility: hidden;
+
+    -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    z-index: ${Z_INDEXES[5]};
+
+    transition:
+      opacity 240ms ease,
+      visibility 240ms ease;
   }
 
-  .${overlay} {
+  .root.open {
+    --bottom-sheet-dy: 0;
+
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -32,26 +49,61 @@ const styles = css`
     background-color: var(--tap-sys-color-surface-overlay-light);
   }
 
-  .${header} {
+  .container {
+    transform: translateY(var(--bottom-sheet-dy));
+    transition: transform 240ms ease;
+  }
+
+  .header {
     position: relative;
 
     display: flex;
-    align-items: center;
+    flex-direction: column;
 
-    padding-left: var(--tap-sys-spacing-6);
-    padding-right: var(--tap-sys-spacing-6);
-    min-height: 52px;
+    padding: var(--tap-sys-spacing-5) var(--tap-sys-spacing-6);
 
     border-top-left-radius: var(--tap-sys-radius-5);
     border-top-right-radius: var(--tap-sys-radius-5);
 
+    box-shadow: inset 0 -1px 0 0 var(--tap-sys-color-border-primary);
     background-color: var(--tap-sys-color-surface-primary);
   }
 
-  .${dismiss} {
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .${dismissIcon} {
+  .heading {
+    margin-right: auto;
+    margin-left: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .heading-title {
+    font-family: var(--tap-sys-typography-label-md-font);
+    font-size: var(--tap-sys-typography-label-md-size);
+    line-height: var(--tap-sys-typography-label-md-height);
+    font-weight: var(--tap-sys-typography-label-md-weight);
+    color: var(--tap-sys-color-content-primary);
+  }
+
+  .heading-description {
+    font-family: var(--tap-sys-typography-body-sm-font);
+    font-size: var(--tap-sys-typography-body-sm-size);
+    line-height: var(--tap-sys-typography-body-sm-height);
+    font-weight: var(--tap-sys-typography-body-sm-weight);
+    color: var(--tap-sys-color-content-tertiary);
+  }
+
+  .dismiss {
+  }
+
+  .dismiss-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -62,28 +114,25 @@ const styles = css`
     color: var(--tap-sys-color-content-primary);
   }
 
-  .${dismissIcon} > svg {
+  .dismiss-icon > svg {
     width: 20px;
     height: 20px;
 
     fill: currentColor;
   }
 
-  .${grabber} {
+  .grabber {
     cursor: grab;
-    height: 12px;
 
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    height: 12px;
+    width: 100%;
 
     display: flex;
     justify-content: center;
     align-items: flex-end;
   }
 
-  .${grabber}::after {
+  .grabber::after {
     content: "";
     display: block;
 
@@ -95,10 +144,19 @@ const styles = css`
     background-color: var(--tap-sys-color-surface-overlay-light);
   }
 
-  .${body} {
+  .body {
+    padding-top: var(--tap-sys-spacing-6);
+    padding-bottom: var(--tap-sys-spacing-9);
+
+    background-color: var(--tap-sys-color-surface-primary);
   }
 
-  .${actionBar} {
+  .action-bar {
+    padding: var(--tap-sys-spacing-6);
+    margin-top: calc(-1 * var(--tap-sys-spacing-9));
+
+    box-shadow: inset 0 1px 0 0 var(--tap-sys-color-border-primary);
+    background-color: var(--tap-sys-color-surface-primary);
   }
 `;
 
