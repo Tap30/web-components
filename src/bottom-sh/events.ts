@@ -1,91 +1,108 @@
-import { BaseEvent } from "../utils";
+import { BaseEvent, type ResizeSensorSizeChangeProps } from "../utils";
 
-export class OpeningEvent extends BaseEvent<object> {
+export class OpeningEvent extends BaseEvent<null> {
   public static type = "opening";
 
   constructor() {
     super(OpeningEvent.type, {
       composed: true,
       cancelable: true,
-      details: {},
+      details: null,
     });
   }
 }
 
-export class ClosingEvent extends BaseEvent<object> {
+export class ClosingEvent extends BaseEvent<null> {
   public static type = "closing";
 
   constructor() {
     super(ClosingEvent.type, {
       composed: true,
       cancelable: true,
-      details: {},
+      details: null,
     });
   }
 }
 
-export class CloseEvent extends BaseEvent<object> {
+export class CloseEvent extends BaseEvent<null> {
   public static type = "close";
 
   constructor() {
     super(CloseEvent.type, {
       composed: true,
-      details: {},
+      details: null,
     });
   }
 }
 
-export class OpenedEvent extends BaseEvent<object> {
+export class OpenedEvent extends BaseEvent<null> {
   public static type = "opened";
 
   constructor() {
     super(OpenedEvent.type, {
       composed: true,
-      details: {},
+      details: null,
     });
   }
 }
 
-export class ClosedEvent extends BaseEvent<object> {
+export class ClosedEvent extends BaseEvent<null> {
   public static type = "closed";
 
   constructor() {
     super(ClosedEvent.type, {
       composed: true,
-      details: {},
+      details: null,
     });
   }
 }
 
-export class GrabStartEvent extends BaseEvent<object> {
+type GrabEventDetails = {
+  originEvent: MouseEvent | TouchEvent;
+};
+
+export class GrabStartEvent extends BaseEvent<GrabEventDetails> {
   public static type = "grabstart";
 
-  constructor() {
+  constructor(details: GrabEventDetails) {
     super(GrabStartEvent.type, {
       composed: true,
-      details: {},
+      details,
     });
   }
 }
 
-export class GrabEndEvent extends BaseEvent<object> {
+export class GrabEndEvent extends BaseEvent<GrabEventDetails> {
   public static type = "grabend";
 
-  constructor() {
+  constructor(details: GrabEventDetails) {
     super(GrabEndEvent.type, {
       composed: true,
-      details: {},
+      details,
     });
   }
 }
 
-export class GrabbingEvent extends BaseEvent<object> {
+export class GrabbingEvent extends BaseEvent<GrabEventDetails> {
   public static type = "grabbing";
 
-  constructor() {
+  constructor(details: GrabEventDetails) {
     super(GrabbingEvent.type, {
       composed: true,
-      details: {},
+      details,
+    });
+  }
+}
+
+type ResizeEventDetails = Omit<ResizeSensorSizeChangeProps, "element">;
+
+export class ResizeEvent extends BaseEvent<ResizeEventDetails> {
+  public static type = "resize";
+
+  constructor(details: ResizeEventDetails) {
+    super(ResizeEvent.type, {
+      composed: true,
+      details,
     });
   }
 }
