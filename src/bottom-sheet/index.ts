@@ -29,6 +29,7 @@ export { Slots } from "./constants";
  * @fires grabend - Triggered when grabbing ends.
  * @fires grabbing - Triggered during the grabbing of the sheet.
  * @fires expand - Triggered when the sheet expands to its maximum height.
+ * @fires resize - Triggered when the sheet resizes.
  */
 @customElement("tap-bottom-sheet")
 export class TapBottomSheet extends BottomSheet {
