@@ -1,13 +1,17 @@
+/**
+ * Clears any user selected content.
+ */
 const clearSelection = () => {
+  // Get the current text selection
   const selection = window.getSelection();
 
   if (!selection) return;
 
   if (selection.empty) {
-    // Chrome, Edge, Safari
+    // Clear selection for Chrome, Edge, Safari
     selection.empty();
   } else if (selection.removeAllRanges) {
-    // Firefox
+    // Clear selection for Firefox
     selection.removeAllRanges();
   }
 };

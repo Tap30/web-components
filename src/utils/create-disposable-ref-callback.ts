@@ -16,7 +16,9 @@ const createDisposableRefCallback = (
 ): DisposableRefCallback => {
   let cleanup: CleanupFunction | null = null;
 
+  // Define the disposable ref callback function
   const disposableRefCallback = (element?: Element) => {
+    // If there's an existing cleanup function, call it and reset to null
     if (cleanup !== null) {
       cleanup();
       cleanup = null;
@@ -24,9 +26,11 @@ const createDisposableRefCallback = (
 
     if (!element) return;
 
+    // Call the callback with the element and store the cleanup function
     cleanup = callback(element) ?? null;
   };
 
+  // Return the ref directive with the disposable ref callback
   return ref(disposableRefCallback);
 };
 
