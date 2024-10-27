@@ -95,7 +95,7 @@ export class GrabbingEvent extends BaseEvent<GrabEventDetails> {
 }
 
 export class ExpandEvent extends BaseEvent<null> {
-  public static type = "grabbing";
+  public static type = "expand";
 
   constructor() {
     super(ExpandEvent.type, {
