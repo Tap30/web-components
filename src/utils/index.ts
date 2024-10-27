@@ -14,6 +14,7 @@ export { default as kebabToCamel } from "./kebab-to-camel";
 export { default as logger } from "./logger";
 export {
   default as ResizeSensor,
+  isResizeSensorSupported,
   type SizeChangeProps as ResizeSensorSizeChangeProps,
 } from "./ResizeSensor";
 export { default as SystemError } from "./SystemError";

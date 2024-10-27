@@ -6,6 +6,8 @@ export type SizeChangeProps = {
   element: Element;
 };
 
+export const isResizeSensorSupported = () => "ResizeObserver" in window;
+
 /**
  * Handles resize events using ResizeObserver.
  */

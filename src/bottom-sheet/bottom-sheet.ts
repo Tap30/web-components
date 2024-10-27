@@ -1,6 +1,6 @@
 import "../icon-button";
 
-import { html, LitElement, type PropertyValues } from "lit";
+import { html, isServer, LitElement, type PropertyValues } from "lit";
 import {
   eventOptions,
   property,
@@ -16,6 +16,7 @@ import {
   clearSelection,
   createDisposableRefCallback,
   createScrollGuard,
+  isResizeSensorSupported,
   logger,
   ResizeSensor,
   runAfterRepaint,
@@ -158,7 +159,7 @@ export class BottomSheet extends LitElement {
   private _rootRefCallback: DisposableRefCallback | undefined;
   private _scrollGuard = createScrollGuard();
 
-  private _resizeSensor!: ResizeSensor;
+  private _resizeSensor: ResizeSensor | null = null;
 
   constructor() {
     super();
@@ -168,14 +169,16 @@ export class BottomSheet extends LitElement {
     this._handleDragging = this._handleDragging.bind(this);
     this._handleKeyDown = this._handleKeyDown.bind(this);
 
-    this._resizeSensor = new ResizeSensor(sizeDetails => {
-      const { element, width, height } = sizeDetails;
+    if (!isServer && isResizeSensorSupported()) {
+      this._resizeSensor = new ResizeSensor(sizeDetails => {
+        const { element, width, height } = sizeDetails;
 
-      if (element === this._root) {
-        this._updateInitialTranslateY();
-        this.dispatchEvent(new ResizeEvent({ width, height }));
-      }
-    }, 250);
+        if (element === this._root) {
+          this._updateInitialTranslateY();
+          this.dispatchEvent(new ResizeEvent({ width, height }));
+        }
+      }, 250);
+    }
   }
 
   private _attachGlobalEvents() {
@@ -209,10 +212,10 @@ export class BottomSheet extends LitElement {
 
     // Observe root element on mount
     this._rootRefCallback = createDisposableRefCallback(elememt => {
-      this._resizeSensor.observe(elememt);
+      this._resizeSensor?.observe(elememt);
 
       return () => {
-        this._resizeSensor.unobserve(elememt);
+        this._resizeSensor?.unobserve(elememt);
       };
     });
   }
@@ -222,7 +225,7 @@ export class BottomSheet extends LitElement {
 
     if (!this.open) this._detachGlobalEvents();
 
-    this._resizeSensor.disconnect();
+    this._resizeSensor?.disconnect();
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
@@ -471,8 +474,6 @@ export class BottomSheet extends LitElement {
       openState ? new OpeningEvent() : new ClosingEvent(),
     );
 
-    this._containerStatus = openState ? "opening" : "closing";
-
     // If the event is prevented, revert the open state and cleanup
     if (!eventAllowed) {
       this.open = !openState;
@@ -480,6 +481,8 @@ export class BottomSheet extends LitElement {
 
       return cleanup();
     }
+
+    this._containerStatus = openState ? "opening" : "closing";
 
     // Wait for the animation to complete
     const animationComplete = await this._animationController.promise;
