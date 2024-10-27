@@ -94,6 +94,17 @@ export class GrabbingEvent extends BaseEvent<GrabEventDetails> {
   }
 }
 
+export class ExpandEvent extends BaseEvent<null> {
+  public static type = "grabbing";
+
+  constructor() {
+    super(ExpandEvent.type, {
+      composed: true,
+      details: null,
+    });
+  }
+}
+
 type ResizeEventDetails = Omit<ResizeSensorSizeChangeProps, "element">;
 
 export class ResizeEvent extends BaseEvent<ResizeEventDetails> {
