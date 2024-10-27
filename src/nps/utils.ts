@@ -1,13 +1,21 @@
-export const getGradientColor = (min: number, max: number, value?: number) => {
-  if (value === undefined) return "transparent";
+import { classMap } from "lit/directives/class-map.js";
+
+export const getGradientClass = (min: number, max: number, value?: number) => {
+  const classes: Record<string, boolean> = {
+    gradient: true,
+  };
+
+  if (value === undefined) {
+    return classMap(classes);
+  }
 
   const rangeLength = max - min;
 
-  if (value < rangeLength / 2) return "gradient-red";
+  if (value < rangeLength / 2) classes.red = true;
+  else if (value < rangeLength * 0.65) classes.yellow = true;
+  else if (value < rangeLength * 0.85) classes.gray = true;
+  else classes.green = true;
+  if (value === max) classes.rounded = true;
 
-  if (value < rangeLength * 0.65) return "gradient-yellow";
-
-  if (value < rangeLength * 0.85) return "gradient-gray";
-
-  return "gradient-green";
+  return classMap(classes);
 };

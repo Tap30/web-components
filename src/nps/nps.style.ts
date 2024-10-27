@@ -26,22 +26,6 @@ export default css`
     display: flex;
   }
 
-  .gradient-red {
-    --nps-gradient-color: var(--tap-palette-red-100);
-  }
-
-  .gradient-green {
-    --nps-gradient-color: var(--tap-palette-green-100);
-  }
-
-  .gradient-gray {
-    --nps-gradient-color: var(--tap-palette-gray-100);
-  }
-
-  .gradient-yellow {
-    --nps-gradient-color: var(--tap-palette-yellow-100);
-  }
-
   .gradient {
     transition:
       width 0.1s,
@@ -53,6 +37,22 @@ export default css`
     z-index: 0;
     background: var(--nps-gradient-color, transparent);
     border-radius: var(--tap-sys-radius-5) 0 0 var(--tap-sys-radius-5);
+  }
+
+  .gradient.red {
+    --nps-gradient-color: var(--tap-palette-red-100);
+  }
+
+  .gradient.green {
+    --nps-gradient-color: var(--tap-palette-green-100);
+  }
+
+  .gradient.gray {
+    --nps-gradient-color: var(--tap-palette-gray-100);
+  }
+
+  .gradient.yellow {
+    --nps-gradient-color: var(--tap-palette-yellow-100);
   }
 
   .gradient::after {
@@ -71,7 +71,7 @@ export default css`
     border-radius: var(--tap-sys-radius-5) 0 0 var(--tap-sys-radius-5);
   }
 
-  .gradient-rounded {
+  .gradient.rounded {
     border-radius: var(--tap-sys-radius-5);
   }
 

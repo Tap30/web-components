@@ -4,7 +4,7 @@ import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import "../icon-button";
 import ValueChangeEvent from "./events";
-import { getGradientColor } from "./utils";
+import { getGradientClass } from "./utils";
 
 export class Nps extends LitElement {
   @property({ type: Number })
@@ -13,7 +13,7 @@ export class Nps extends LitElement {
   @property({ type: Number })
   public max = 10;
 
-  @property({ type: Number, reflect: true })
+  @property({ type: Number })
   public value?: number = undefined;
 
   public override connectedCallback() {
@@ -27,26 +27,22 @@ export class Nps extends LitElement {
   }
 
   private _handleKeyDown = (event: KeyboardEvent) => {
-    switch (event.code) {
+    switch (event.key) {
       case "ArrowDown":
         this._handleDecrease();
         event.preventDefault();
-        event.stopPropagation();
         break;
       case "ArrowUp":
         this._handleIncrease();
         event.preventDefault();
-        event.stopPropagation();
         break;
       case "Home":
         this._emitValueChange(this.min);
         event.preventDefault();
-        event.stopPropagation();
         break;
       case "End":
         this._emitValueChange(this.max);
         event.preventDefault();
-        event.stopPropagation();
         break;
       default:
         break;
@@ -91,11 +87,7 @@ export class Nps extends LitElement {
 
     return html`<div
       part="gradient"
-      class=${classMap({
-        gradient: true,
-        "gradient-rounded": this.value === this.max,
-        [getGradientColor(this.min, this.max, this.value)]: true,
-      })}
+      class=${getGradientClass(this.min, this.max, this.value)}
       style="width: ${gradientWidth}%;"
     ></div>`;
   };
@@ -144,6 +136,12 @@ export class Nps extends LitElement {
     </div>`;
   }
 
+  private _renderRates() {
+    return Array.from({ length: this.max - this.min + 1 })
+      .map((_, i) => i + this.min)
+      .map(rate => this._renderRate(rate));
+  }
+
   protected override render() {
     return html`
       <div
@@ -154,11 +152,7 @@ export class Nps extends LitElement {
         aria-valuenow=${this.value}
         aria-valuemax=${this.max}
       >
-        ${this._renderGradient()}
-        ${Array(this.max - this.min + 1)
-          .fill(0)
-          .map((_, i) => i + this.min)
-          .map(rate => this._renderRate(rate))}
+        ${this._renderGradient()} ${this._renderRates()}
 
         <input
           class="slider"
