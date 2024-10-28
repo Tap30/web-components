@@ -1,6 +1,6 @@
 {
   "name": "@tapsioss/web-components",
-  "version": "0.0.0-alpha-7",
+  "version": "0.0.0",
   "files": [
     "dist/**/*.js",
     "dist/**/*.js.map",
@@ -8,6 +8,7 @@
     "dist/**/*.css"
   ],
   "type": "module",
+  "private": true,
   "scripts": {
     "release": "pnpm build && pnpm publish",
     "build": "rm -rf dist && tsc --project tsconfig.build.json && pnpm analyze && cp -r ./tokens ./dist && cp -r ./styles ./dist",
@@ -55,8 +56,6 @@
     "eslint-plugin-lit": "^1.15.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-wc": "^2.2.0",
-    "lerna": "^8.1.8",
-    "nx": "^20.0.6",
     "prettier": "^3.2.5",
     "prettier-plugin-organize-imports": "^4.1.0",
     "sinon": "^18.0.0",
