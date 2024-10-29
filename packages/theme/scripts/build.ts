@@ -1,7 +1,7 @@
-import * as fs from "node:fs/promises";
+/* eslint-disable no-console */
+import { exec } from "node:child_process";
 import * as path from "node:path";
-import { rimraf } from "rimraf";
-import * as sass from "sass";
+import { promisify } from "node:util";
 import { fileURLToPath } from "url";
 import {
   createMainPackage,
@@ -9,29 +9,21 @@ import {
   ensureDirExists,
 } from "../../../scripts/utils";
 
+const execCmd = promisify(exec);
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const packageDir = path.resolve(__dirname, "..");
 const distPath = path.join(packageDir, "dist");
-
-/* eslint-disable no-console */
-const compile = async () => {
-  console.log("> compiling...");
-  await ensureDirExists(distPath);
-
-  const entryPoint = path.join(packageDir, "src/index.scss");
-  const output = path.join(distPath, "index.css");
-
-  const { css } = sass.compile(entryPoint);
-
-  await fs.writeFile(output, css, { encoding: "utf-8", flag: "w" });
-};
+const entryPoint = path.join(packageDir, "src/index.css");
+const output = path.join(distPath, "index.css");
 
 void (async () => {
   console.time("build");
-  await rimraf(distPath);
-  await compile();
+  await execCmd(["shx", "rm", "-rf", distPath].join(" "));
+  await ensureDirExists(distPath);
+  await execCmd(["shx", "cp", "-r", entryPoint, output].join(" "));
   await createMainPackage(packageDir, distPath, {
     main: "index.css",
   });
