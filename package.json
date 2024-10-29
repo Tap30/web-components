@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "clear:dist": "shx rm -rf dist",
-    "web-ui:build": "tsx ./packages/web-ui/scripts/build.ts",
-    "web-ui:release": "tsx ./scripts/release.ts --package-name @tapsioss/rasti-web-ui",
+    "web-components:build": "tsx ./packages/web-components/scripts/build.ts",
+    "web-components:release": "tsx ./scripts/release.ts --package-name @tapsioss/rasti-web-components",
     "theme:build": "tsx ./packages/theme/scripts/build.ts",
     "theme:release": "tsx ./scripts/release.ts --package-name @tapsioss/rasti-theme",
     "dev:transpile": "tsc --project tsconfig.dev.json --watch --preserveWatchOutput",
@@ -27,7 +27,7 @@
     "docs:dev": "run-s analyze docs:custom-elements:dev docs:vitepress:dev",
     "docs:build": "run-s analyze docs:vitepress:build docs:custom-elements:prod docs:elements-config:prod",
     "docs:preview": "run-s docs:vitepress:preview",
-    "analyze": "cem analyze --litelement --outdir dist --globs \"packages/web-ui/src/**/index.ts\""
+    "analyze": "cem analyze --litelement --outdir dist --globs \"packages/web-components/src/**/index.ts\""
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.2",
