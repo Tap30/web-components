@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 import { rimraf } from "rimraf";
 import { minify as minifyModule } from "terser";
+import { createMainPackage, createNPMRC } from "../../../scripts/utils";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -65,58 +66,6 @@ const createModulePackages = async () => {
   }
 };
 
-const createMainPackage = async () => {
-  console.log("> creating main package...");
-  const originalPackageJSONPath = path.join(packageDir, "package.json");
-  const distPackageJSONPath = path.join(distPath, "package.json");
-
-  type PackageJSON = Record<string, unknown>;
-
-  const packageJSON = JSON.parse(
-    await fs.readFile(originalPackageJSONPath, "utf-8"),
-  ) as PackageJSON;
-
-  await fs.writeFile(
-    distPackageJSONPath,
-    JSON.stringify(
-      {
-        sideEffects: false,
-        engines: packageJSON.engines,
-        name: packageJSON.name,
-        type: packageJSON.type,
-        version: packageJSON.version,
-        license: packageJSON.license,
-        homepage: packageJSON.homepage,
-        description: packageJSON.description,
-        keywords: packageJSON.keywords,
-        repository: packageJSON.repository,
-        dependencies: packageJSON.dependencies,
-        peerDependencies: packageJSON.peerDependencies,
-        peerDependenciesMeta: packageJSON.peerDependenciesMeta,
-      },
-      null,
-      2,
-    ),
-  );
-};
-
-const createNPMRC = async () => {
-  console.log("> making package publishable...");
-  const npmrcPath = path.join(distPath, ".npmrc");
-  const npmignorePath = path.join(distPath, ".npmignore");
-
-  await fs.writeFile(
-    npmrcPath,
-    [
-      "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}",
-      "registry=https://registry.npmjs.org/",
-      "always-auth=true",
-    ].join("\n"),
-  );
-
-  await fs.writeFile(npmignorePath, ".npmrc");
-};
-
 const minify = async () => {
   console.log("> minifying...");
   const files = await glob(path.join(distPath, "**/*.js"));
@@ -139,8 +88,8 @@ void (async () => {
   await rimraf(distPath);
   await transpile();
   await createModulePackages();
-  await createMainPackage();
-  await createNPMRC();
+  await createMainPackage(packageDir, distPath);
+  await createNPMRC(distPath);
   await minify();
   console.timeEnd("build");
 })();
