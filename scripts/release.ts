@@ -13,9 +13,27 @@ const __dirname = path.dirname(__filename);
 const workspaceDir = path.resolve(__dirname, "..");
 
 const PACKAGES_MAP = {
-  "@tapsioss/rasti-icons": path.resolve(workspaceDir, "packages/icons"),
-  "@tapsioss/rasti-react-ui": path.resolve(workspaceDir, "packages/react-ui"),
-  "@tapsioss/rasti-web-ui": path.resolve(workspaceDir, "packages/web-ui"),
+  // For icons we will have seperate distributions:
+  // 1. [@tapsioss/rasti-react-icons][icons/dist/react]
+  // 2. [@tapsioss/rasti-web-icons][icons/dist/web]
+  "@tapsioss/rasti-icons": {
+    "@tapsioss/rasti-react-icons": path.resolve(
+      workspaceDir,
+      "packages/icons/dist/react",
+    ),
+    "@tapsioss/rasti-web-icons": path.resolve(
+      workspaceDir,
+      "packages/icons/dist/web",
+    ),
+  },
+  "@tapsioss/rasti-react-components": path.resolve(
+    workspaceDir,
+    "packages/react-components",
+  ),
+  "@tapsioss/rasti-web-components": path.resolve(
+    workspaceDir,
+    "packages/web-components",
+  ),
   "@tapsioss/rasti-theme": path.resolve(workspaceDir, "packages/theme"),
 } as const;
 
@@ -51,9 +69,8 @@ if (!packageName || !(packageName in PACKAGES_MAP)) {
 const execCmd = promisify(exec);
 
 const packageDirPath = PACKAGES_MAP[packageName as PackageNames];
-const packageDistPath = path.join(packageDirPath, "./dist");
 
-void (async () => {
+const publishPackage = async (packageDistPath: string) => {
   const distPackageJSONPath = path.join(packageDistPath, "package.json");
   let distPackageJSON: Record<string, unknown>;
 
@@ -96,5 +113,21 @@ void (async () => {
 
   console.log({ stdout });
   console.error({ stderr });
+};
+
+void (async () => {
+  const packageDistPaths: string[] = [];
+
+  if (typeof packageDirPath === "string") {
+    packageDistPaths.push(path.join(packageDirPath, "./dist"));
+  } else {
+    packageDistPaths.push(
+      ...Object.values(packageDirPath).map(packageDirPath =>
+        path.join(packageDirPath, "./dist"),
+      ),
+    );
+  }
+
+  await Promise.all(packageDistPaths.map(publishPackage));
 })();
 /* eslint-enable no-console */
