@@ -2,7 +2,12 @@
   "name": "@tapsioss/rasti-web-ui",
   "version": "0.1.0",
   "type": "module",
-  "scripts": {},
-  "devDependencies": {},
-  "dependencies": {}
+  "scripts": {
+    "build": "tsx ./scripts/build.ts"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "^1.6.11",
+    "lit": "^3.2.1",
+    "tslib": "^2.8.0"
+  }
 }
