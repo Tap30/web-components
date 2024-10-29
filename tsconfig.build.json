@@ -5,11 +5,8 @@
     "module": "ES2020",
     "outDir": "dist",
     "noEmit": false,
-    "sourceMap": true,
-    "inlineSources": true,
     "declaration": true,
     "incremental": true,
-    "declarationMap": true,
     "noEmitOnError": true
   },
   "include": ["src"],

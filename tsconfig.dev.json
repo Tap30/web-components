@@ -1,6 +1,9 @@
 {
   "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "noEmitOnError": false
+    "noEmitOnError": false,
+    "sourceMap": true,
+    "inlineSources": true,
+    "declarationMap": true
   }
 }
