@@ -9,6 +9,5 @@
     "incremental": true,
     "noEmitOnError": true
   },
-  "include": ["src"],
   "exclude": ["**/*.stories.ts", "**/*.test.ts", "node_modules", "dist"]
 }

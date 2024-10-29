@@ -4,6 +4,7 @@
     "noEmitOnError": false,
     "sourceMap": true,
     "inlineSources": true,
-    "declarationMap": true
-  }
+    "declaration": false
+  },
+  "include": ["packages/*/src/**/*"]
 }
