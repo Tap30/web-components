@@ -9,6 +9,8 @@
     "web-components:release": "tsx ./scripts/release.ts --package-name @tapsioss/rasti-web-components",
     "theme:build": "tsx ./packages/theme/scripts/build.ts",
     "theme:release": "tsx ./scripts/release.ts --package-name @tapsioss/rasti-theme",
+    "icons:build": "tsx ./packages/icons/scripts/build.ts",
+    "icons:release": "tsx ./scripts/release.ts --package-name @tapsioss/rasti-icons",
     "dev:transpile": "tsc --project tsconfig.dev.json --watch --preserveWatchOutput",
     "dev": "clear:dist dev:transpile & wds",
     "build:packages": "pnpm run -r --parallel build",
