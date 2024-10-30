@@ -1,6 +1,15 @@
-import fs from "node:fs";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const spacingFile = fs.readFileSync("tokens/spacing.css");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const workspaceDir = path.resolve(__dirname, "../..");
+
+const spacingFile = fs.readFileSync(
+  path.resolve(workspaceDir, "packages/theme/src/tokens/spacing.css"),
+);
 
 const getSpacingTokensReferenceContent = () => {
   let content = "";

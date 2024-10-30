@@ -45,7 +45,7 @@ import '../../../packages/web-components/src/toast';
 import '../../../packages/web-components/src/tooltip';
 import '../../../packages/web-components/src/empty-state';
 import '../../../packages/web-components/src/button';
-import '../../../styles/theme.css';
+import '../../../packages/theme/src/index.css';
 import '@tapsioss/icons/dist/icons';
 import "cemnama"
 

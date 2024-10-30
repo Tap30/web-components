@@ -1,5 +1,5 @@
 import type { CustomElement, Package } from "custom-elements-manifest";
-import fs from "node:fs";
+import * as fs from "node:fs";
 
 const file = fs.readFileSync("dist/custom-elements.json");
 const manifest = JSON.parse(file.toString()) as Package;
