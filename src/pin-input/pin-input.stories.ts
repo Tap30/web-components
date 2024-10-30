@@ -20,7 +20,7 @@ const Template: Story<ArgTypes> = (/*{}: ArgTypes*/) => html`
   <tap-pin-input
     title="عنوان"
     description="توضیحات"
-    @input-filled=${(e: Error) => console.log(e)}
+    @filled=${(e: Error) => console.log(e)}
   ></tap-pin-input>
 `;
 
@@ -41,7 +41,7 @@ const TemplateWithForm: Story<ArgTypes> = (/*{}: ArgTypes*/) => html`
     <tap-pin-input
       title="عنوان"
       description="توضیحات"
-      @input-filled=${(e: Error) => console.log(e)}
+      @filled=${(e: Error) => console.log(e)}
     ></tap-pin-input>
     <button type="submit">Submit</button>
   </form>

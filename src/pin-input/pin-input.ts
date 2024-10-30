@@ -1,48 +1,40 @@
-import { html, LitElement, nothing } from 'lit';
-import { property, queryAll, state } from 'lit/decorators.js';
-import { range } from 'lit/directives/range.js';
-import { repeat } from 'lit/directives/repeat.js';
-import '../pin-input-cell';
+import { html, LitElement, nothing } from "lit";
+import { property, queryAll } from "lit/decorators.js";
+import { range } from "lit/directives/range.js";
+import { repeat } from "lit/directives/repeat.js";
+import "../pin-input-cell";
 import {
-  PinInputCellArrowKeyPressed,
-  PinInputCellCleared,
-  PinInputCellClearedAll,
-  PinInputCellFilled,
-  PinInputCellOverflowValue,
-} from '../pin-input-cell/events';
-import { PinInputCell } from '../pin-input-cell/pin-input-cell';
-import { PinInputFilled } from './events';
+  type CellArrowKeyPressed,
+  type CellCleared,
+  type CellClearedAll,
+  type CellFilled,
+  type CellOverflowValue,
+} from "../pin-input-cell/events";
+import { type PinInputCell } from "../pin-input-cell/pin-input-cell";
+import { withElementInternals, withFormAssociated } from "../utils/index.js";
+import { internals } from "../utils/mixins/with-element-internals";
+import { getFormValue } from "../utils/mixins/with-form-associated";
+import { Filled } from "./events";
 
-export class PinInput extends LitElement {
-  private internals_: ElementInternals;
-  static formAssociated = true;
+const BaseClass = withFormAssociated(withElementInternals(LitElement));
 
-  constructor() {
-    super();
-    this.internals_ = this.attachInternals();
-  }
+export class PinInput extends BaseClass {
+  @queryAll(".pin-input-cell") _cells!: PinInputCell[];
 
-  @queryAll('.pin-input-cell') _cells!: PinInputCell[];
+  @property({ type: Boolean, reflect: true }) override disabled: boolean =
+    false;
 
-  @property({ type: Boolean, reflect: true }) disabled: boolean = false;
-
-  @property({ type: Boolean, reflect: true, attribute: 'has-error' })
+  @property({ type: Boolean, reflect: true, attribute: "has-error" })
   hasError = false;
 
-  @property({ type: Boolean, attribute: 'auto-focus' })
+  @property({ type: Boolean, attribute: "auto-focus" })
   autoFocus: boolean = true;
 
-  @state() private _value = '';
-
-  @property() label = '';
-
-  @property() override title = '';
-
-  @property() description = '';
+  @property() description = "";
 
   @property({ reflect: true, type: Number }) count = 5;
 
-  @property() size: 'small' | 'medium' | 'large' = 'medium';
+  @property() size: "small" | "medium" | "large" = "medium";
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -52,22 +44,23 @@ export class PinInput extends LitElement {
     return this.autoFocus && index === 0;
   }
 
-  private handleCellFilled(event: PinInputCellFilled) {
+  private handleCellFilled(event: CellFilled) {
     this.focusNextElementByIndex(event.details.index);
     this.handleCellsFilled();
   }
 
-  private handleCellCleared(event: PinInputCellCleared) {
+  private handleCellCleared(event: CellCleared) {
     this.focusPrevElementByIndex(event.details.index);
   }
 
   private handleCellsFilled() {
-    if (this.inputValue) {
+    if (this.value) {
+      this.handleFormValidity(this.value);
       this.emitPinInputFilled();
     }
   }
 
-  private async handleOverflowedCell(event: PinInputCellOverflowValue) {
+  private async handleOverflowedCell(event: CellOverflowValue) {
     let overflowedText = event.details.value;
     const cellIndex = event.details.index;
     const isLongerThanRemainingCells =
@@ -80,7 +73,7 @@ export class PinInput extends LitElement {
     await this.fillCells(overflowedText, cellIndex + 1);
   }
 
-  private async handleClearPrevCells(event: PinInputCellClearedAll) {
+  private async handleClearPrevCells(event: CellClearedAll) {
     await this.updateComplete;
     const currentIndex = event.details.index;
 
@@ -93,17 +86,17 @@ export class PinInput extends LitElement {
     }
   }
 
-  private async handleArrowKeyPressed(event: PinInputCellArrowKeyPressed) {
+  private async handleArrowKeyPressed(event: CellArrowKeyPressed) {
     await this.updateComplete;
     const currentIndex = event.details.index;
 
     const shouldPrevItemFocus =
-      event.details.value === 'left' &&
+      event.details.value === "left" &&
       this.checkIndexIsInRange(currentIndex) &&
       !this.checkIndexIsFirst(currentIndex);
 
     const shouldNextItemFocus =
-      event.details.value === 'right' &&
+      event.details.value === "right" &&
       this.checkIndexIsInRange(currentIndex) &&
       !this.checkIndexIsLast(currentIndex);
 
@@ -117,8 +110,10 @@ export class PinInput extends LitElement {
   private async fillCells(value: string, startingAt: number = 0) {
     if (startingAt <= this.lastCellIndex) {
       let index = 0;
-      for (const char of value.split('')) {
+
+      for (const char of value.split("")) {
         const pos = index + startingAt;
+
         await this._cells[pos]?.setValue(char);
         index++;
       }
@@ -126,9 +121,9 @@ export class PinInput extends LitElement {
   }
 
   private emitPinInputFilled() {
-    const value = this.inputValue!;
-    const event = new PinInputFilled('PinInput Filled.', {
-      value: value,
+    const value = this.value;
+    const event = new Filled({
+      value,
       cellCount: this.count,
       displayValue: value,
     });
@@ -137,31 +132,34 @@ export class PinInput extends LitElement {
   }
 
   private handleFormValidity(value: string) {
-    if (typeof value === 'string' && value.length < this.count) {
-      this.internals_.setValidity(
+    if (typeof value === "string" && value.length < this.count) {
+      this[internals].setValidity(
         { customError: true },
-        'Value is less than required',
+        "Value is less than required",
       );
     } else {
-      this.internals_.setValidity({});
+      this[internals].setValidity({});
     }
   }
 
   get cellValues() {
-    return [...this._cells].map((_cell) => _cell.value);
+    return [...this._cells].map(_cell => _cell.value);
   }
 
-  get inputValue() {
-    const result = this.cellValues.join('');
-    this.internals_.setFormValue(result);
-    this._value = result;
-    this.handleFormValidity(result);
+  get value() {
+    const result = this.cellValues.join("");
+
+    this[internals].setFormValue(result);
 
     if (result.length === this.count) {
       return result;
     }
 
-    return null;
+    return "";
+  }
+
+  override [getFormValue]() {
+    return this.value;
   }
 
   set value(value: string) {
@@ -170,49 +168,44 @@ export class PinInput extends LitElement {
     }
   }
 
-  async formResetCallback() {
-    await this.fillCells('');
-    void this.emitPinInputFilled();
+  override formResetCallback() {
+    void (async () => {
+      await this.fillCells("");
+      this.emitPinInputFilled();
+    })();
   }
 
-  formStateRestoreCallback(state: string) {
-    this.internals_.setFormValue(state);
-  }
-
-  get value() {
-    return this._value;
-  }
-
-  get form() {
-    return this.internals_.form;
+  override formStateRestoreCallback(state: string) {
+    this[internals].setFormValue(state);
   }
 
   get type() {
-    return 'pin-input';
+    return "pin-input";
   }
 
   get validity() {
-    return this.internals_.validity;
+    return this[internals].validity;
   }
 
   get validationMessage() {
-    return this.internals_.validationMessage;
+    return this[internals].validationMessage;
   }
 
   get willValidate() {
-    return this.internals_.willValidate;
+    return this[internals].willValidate;
   }
 
   checkValidity() {
-    return this.internals_.checkValidity();
+    return this[internals].checkValidity();
   }
 
   reportValidity() {
-    return this.internals_.reportValidity();
+    return this[internals].reportValidity();
   }
 
   private focusNextElementByIndex(current: number) {
     const nextIndex = current + 1;
+
     if (this.checkIndexIsInRange(current) && !this.checkIndexIsLast(current)) {
       this._cells[nextIndex]?.focus();
     }
@@ -226,6 +219,7 @@ export class PinInput extends LitElement {
 
   private focusPrevElementByIndex(current: number) {
     const nextIndex = current - 1;
+
     if (this.checkIndexIsInRange(current) && !this.checkIndexIsFirst(current)) {
       this._cells[nextIndex]?.focus();
     }
@@ -248,19 +242,30 @@ export class PinInput extends LitElement {
   }
 
   private renderTitle() {
-    if (typeof this.title === 'string' && this.title.length) {
-      return html` <div part="title" class="title">${this.title}</div> `;
+    if (typeof this.title === "string" && this.title.length) {
+      return html`
+        <div
+          part="title"
+          class="title"
+        >
+          ${this.title}
+        </div>
+      `;
     }
+
     return nothing;
   }
 
   private renderInputCells() {
-    if (typeof this.title === 'string' && this.title.length) {
+    if (typeof this.title === "string" && this.title.length) {
       return html`
-        <div class="input-cells" part="input-cells">
+        <div
+          class="input-cells"
+          part="input-cells"
+        >
           ${repeat(
             range(this.count),
-            (count) => count,
+            count => count,
             (_, index) => {
               return html` <tap-pin-input-cell
                 class="pin-input-cell"
@@ -268,15 +273,13 @@ export class PinInput extends LitElement {
                 index=${index}
                 ?disabled=${this.disabled}
                 ?has-error=${this.hasError}
-                @cell-filled=${(e: PinInputCellFilled) =>
-                  this.handleCellFilled(e)}
-                @cell-cleared=${(e: PinInputCellCleared) =>
-                  this.handleCellCleared(e)}
-                @overflow-value=${(e: PinInputCellOverflowValue) =>
+                @cell-filled=${(e: CellFilled) => this.handleCellFilled(e)}
+                @cell-cleared=${(e: CellCleared) => this.handleCellCleared(e)}
+                @overflow-value=${(e: CellOverflowValue) =>
                   this.handleOverflowedCell(e)}
-                @cell-cleared-all-with-meta-key=${(e: PinInputCellClearedAll) =>
+                @cell-cleared-all-with-meta-key=${(e: CellClearedAll) =>
                   this.handleClearPrevCells(e)}
-                @arrow-key-pressed=${(e: PinInputCellArrowKeyPressed) =>
+                @arrow-key-pressed=${(e: CellArrowKeyPressed) =>
                   this.handleArrowKeyPressed(e)}
                 ?auto-focus=${this.isFirstCellShouldAutoFocus(index)}
                 .size=${this.size}
@@ -286,19 +289,31 @@ export class PinInput extends LitElement {
         </div>
       `;
     }
+
     return nothing;
   }
 
   private renderDescription() {
-    if (typeof this.title === 'string' && this.title.length) {
-      return html` <div part="description" class="description">${this.description}</div> `;
+    if (typeof this.title === "string" && this.title.length) {
+      return html`
+        <div
+          part="description"
+          class="description"
+        >
+          ${this.description}
+        </div>
+      `;
     }
+
     return nothing;
   }
 
   override render() {
     return html`
-      <div class="pin-input" part="pin-input">
+      <div
+        class="pin-input"
+        part="pin-input"
+      >
         ${this.renderTitle()} ${this.renderInputCells()}
         ${this.renderDescription()}
       </div>

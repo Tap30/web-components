@@ -1,1 +1,1 @@
-export const PIN_INPUT_FILLED_TYPE = 'input-filled';
+export const PIN_INPUT_FILLED_TYPE = 'filled';

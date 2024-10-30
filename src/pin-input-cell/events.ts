@@ -1,3 +1,4 @@
+import { BaseEvent } from '../utils';
 import {
   PIN_INPUT_CELL_ARROW_KEY_PRESSED_TYPE,
   PIN_INPUT_CELL_CLEARED_ALL_TYPE,
@@ -7,116 +8,46 @@ import {
 } from './constants';
 import { ValueChangedEventParams } from './types';
 
-export class PinInputCellFilled extends Event {
-  public message: string;
-  public details: ValueChangedEventParams;
-
-  constructor(
-    message: string,
-    details: ValueChangedEventParams,
-    eventInitDict: EventInit = {},
-  ) {
-    const _eventInitDict = {
-      bubbles: true,
-      composed: false,
-      ...eventInitDict,
-    };
-    const type = PIN_INPUT_CELL_FILLED_TYPE;
-    super(type, _eventInitDict);
-
-    this.details = details;
-    this.message = message;
+export class CellFilled extends BaseEvent<ValueChangedEventParams> {
+  static type = PIN_INPUT_CELL_FILLED_TYPE;
+  constructor(details: ValueChangedEventParams){
+    super(CellFilled.type, {details})
   }
 }
 
-export class PinInputCellCleared extends Event {
-  public message: string;
-  public details: ValueChangedEventParams;
-
+export class CellCleared extends BaseEvent<ValueChangedEventParams> {
+  static type = PIN_INPUT_CELL_CLEARED_TYPE;
   constructor(
-    message: string,
     details: ValueChangedEventParams,
-    eventInitDict: EventInit = {},
   ) {
-    const _eventInitDict = {
-      bubbles: true,
-      composed: false,
-      ...eventInitDict,
-    };
-
-    const type = PIN_INPUT_CELL_CLEARED_TYPE;
-    super(type, _eventInitDict);
-
-    this.details = details;
-    this.message = message;
+    super(CellCleared.type, {details});
   }
 }
 
-export class PinInputCellClearedAll extends Event {
-  public message: string;
-  public details: ValueChangedEventParams;
-
+export class CellClearedAll extends BaseEvent<ValueChangedEventParams> {
+  static type = PIN_INPUT_CELL_CLEARED_ALL_TYPE;
   constructor(
-    message: string,
     details: ValueChangedEventParams,
-    eventInitDict: EventInit = {},
   ) {
-    const _eventInitDict = {
-      bubbles: true,
-      composed: false,
-      ...eventInitDict,
-    };
 
-    const type = PIN_INPUT_CELL_CLEARED_ALL_TYPE;
-    super(type, _eventInitDict);
-
-    this.details = details;
-    this.message = message;
+    super(CellClearedAll.type, {details});
   }
 }
 
-export class PinInputCellArrowKeyPressed<T = 'left' | 'right'> extends Event {
-  public message: string;
-  public details: ValueChangedEventParams<T>;
-
+export class CellArrowKeyPressed<T = 'left' | 'right'> extends BaseEvent<ValueChangedEventParams<T>> {
+  static type = PIN_INPUT_CELL_ARROW_KEY_PRESSED_TYPE;
   constructor(
-    message: string,
     details: ValueChangedEventParams<T>,
-    eventInitDict: EventInit = {},
   ) {
-    const _eventInitDict = {
-      bubbles: true,
-      composed: false,
-      ...eventInitDict,
-    };
-
-    const type = PIN_INPUT_CELL_ARROW_KEY_PRESSED_TYPE;
-    super(type, _eventInitDict);
-
-    this.details = details;
-    this.message = message;
+    super(CellArrowKeyPressed.type, {details});
   }
 }
 
-export class PinInputCellOverflowValue extends Event {
-  public message: string;
-  public details: ValueChangedEventParams;
-
+export class CellOverflowValue extends BaseEvent<ValueChangedEventParams> {
+  static type = PIN_INPUT_CELL_OVERFLOW_VALUE_TYPE;
   constructor(
-    message: string,
     details: ValueChangedEventParams,
-    eventInitDict: EventInit = {},
   ) {
-    const _eventInitDict = {
-      bubbles: true,
-      composed: false,
-      ...eventInitDict,
-    };
-
-    const type = PIN_INPUT_CELL_OVERFLOW_VALUE_TYPE;
-    super(type, _eventInitDict);
-
-    this.details = details;
-    this.message = message;
+    super(CellOverflowValue.type, {details});
   }
 }

@@ -9,11 +9,11 @@ import {
   persianToEnglish,
 } from './util';
 import {
-  PinInputCellArrowKeyPressed,
-  PinInputCellCleared,
-  PinInputCellClearedAll,
-  PinInputCellFilled,
-  PinInputCellOverflowValue,
+  CellArrowKeyPressed,
+  CellCleared,
+  CellClearedAll,
+  CellFilled,
+  CellOverflowValue,
 } from './events';
 
 export class PinInputCell extends LitElement {
@@ -56,7 +56,7 @@ export class PinInputCell extends LitElement {
 
   private async emitValueChanged() {
     await this.updateComplete;
-    const event = new PinInputCellFilled('PinInputCell filled', {
+    const event = new CellFilled({
       cell: this,
       index: this.index,
       value: this.value,
@@ -67,7 +67,7 @@ export class PinInputCell extends LitElement {
 
   private async emitValueCleared() {
     await this.updateComplete;
-    const event = new PinInputCellCleared('PinInputCell cleared', {
+    const event = new CellCleared({
       cell: this,
       index: this.index,
       value: this.value,
@@ -78,7 +78,7 @@ export class PinInputCell extends LitElement {
 
   private async emitDeletionWithMetaKeys() {
     await this.updateComplete;
-    const event = new PinInputCellClearedAll('PinInputCell cleared all', {
+    const event = new CellClearedAll({
       cell: this,
       index: this.index,
       value: this.value,
@@ -90,8 +90,7 @@ export class PinInputCell extends LitElement {
   private async emitArrowKeyPressed(key: 'ArrowLeft' | 'ArrowRight') {
     await this.updateComplete;
 
-    const event = new PinInputCellArrowKeyPressed<'left' | 'right'>(
-      'PinInputCell arrow key pressed',
+    const event = new CellArrowKeyPressed(
       {
         cell: this,
         index: this.index,
@@ -104,9 +103,7 @@ export class PinInputCell extends LitElement {
 
   private async emitOverflowedValue(value: string) {
     await this.updateComplete;
-    const event = new PinInputCellOverflowValue(
-      'PinInputCell Overflowed value',
-      {
+    const event = new CellOverflowValue({
         cell: this,
         index: this.index,
         value: value,
