@@ -11,6 +11,7 @@ import '../../../src/badge-wrapper';
 import '../../../src/banner';
 import '../../../src/base-button';
 import '../../../src/bottom-navigation';
+import '../../../src/nps';
 import '../../../src/bottom-navigation-item';
 import '../../../src/bottom-sheet';
 import '../../../src/base-button';
