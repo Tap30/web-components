@@ -48,7 +48,6 @@ export const createMainPackage = async (
     distPackageJSONPath,
     JSON.stringify(
       {
-        ...packageJSONOptions,
         sideEffects: false,
         engines: packageJSON.engines,
         name: packageJSON.name,
@@ -62,6 +61,7 @@ export const createMainPackage = async (
         dependencies: packageJSON.dependencies,
         peerDependencies: packageJSON.peerDependencies,
         peerDependenciesMeta: packageJSON.peerDependenciesMeta,
+        ...packageJSONOptions,
       },
       null,
       2,
