@@ -2,7 +2,11 @@
   "name": "@tapsioss/rasti-theme",
   "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "build": "tsx ./scripts/build.ts"
+    "build": "tsx ./scripts/build.ts",
+    "release": "pnpm publish ./dist --tag latest --access public"
   }
 }

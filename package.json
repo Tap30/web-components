@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "type": "module",
   "private": true,
+  "packageManager": "pnpm@9.12.0",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "clear:dist": "shx rm -rf dist",
-    "web-components:build": "tsx ./packages/web-components/scripts/build.ts",
-    "web-components:release": "tsx ./scripts/release.ts --package-name @tapsioss/rasti-web-components",
-    "theme:build": "tsx ./packages/theme/scripts/build.ts",
-    "theme:release": "tsx ./scripts/release.ts --package-name @tapsioss/rasti-theme",
+    "web-components:build": "pnpm --filter @tapsioss/rasti-web-components run build",
+    "web-components:release": "pnpm --filter @tapsioss/rasti-web-components run release",
+    "theme:build": "pnpm --filter @tapsioss/rasti-theme run build",
+    "theme:release": "pnpm --filter @tapsioss/rasti-theme run release",
     "dev:transpile": "tsc --project tsconfig.dev.json --watch --preserveWatchOutput",
     "dev": "clear:dist dev:transpile & wds",
     "build:packages": "pnpm run -r --parallel build",
