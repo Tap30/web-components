@@ -9,7 +9,7 @@ import styles from "./nps.style";
  * @prop {number} [max=10] - The maximum value for the slider.
  * @prop {number} value - The current value of the slider.
  *
- * @fires npschange - Fired when the rating slider value changes.
+ * @fires valuechange - Fired when the rating slider value changes.
  *
  * @csspart [container] - The container that wraps the component.
  * @csspart [dot] - The dot that represents the selected value on the slider.
