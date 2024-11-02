@@ -1,0 +1,13 @@
+import BaseIcon from "./base-icon";
+
+class {{name}} extends BaseIcon {
+  constructor() {
+    super();
+
+    this.paths = "{{paths}}";
+  }
+}
+
+customElements.define(rasti-{{elementTag}}, {{name}});
+
+export default {{name}};
