@@ -1,8 +1,8 @@
-import DefaultTheme from 'vitepress/theme'
-import './custom.css'
-import '../../components'
-import '../../../styles/theme.css'
+import DefaultTheme from "vitepress/theme";
+import "../../../packages/theme/src/index.css";
+import "../../components";
+import "./custom.css";
 
 export default {
   extends: DefaultTheme,
-}
+};

@@ -1,6 +1,15 @@
-import fs from "node:fs";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const typographyFile = fs.readFileSync("tokens/typography.css");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const workspaceDir = path.resolve(__dirname, "../..");
+
+const typographyFile = fs.readFileSync(
+  path.resolve(workspaceDir, "packages/theme/src/tokens/colors.css"),
+);
 
 const getTypographyTokensReferenceContent = () => {
   let content = "";
