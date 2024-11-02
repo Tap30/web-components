@@ -19,7 +19,7 @@ export default css`
   .root {
     font-family: var(--tap-font-family, var(--tap-sys-font-family)), serif;
     position: relative;
-    width: max-content;
+    width: inherit;
     border: var(--tap-sys-stroke-1) solid var(--tap-palette-black);
     height: var(--tap-sys-spacing-12);
     border-radius: var(--tap-sys-radius-5);
