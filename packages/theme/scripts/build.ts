@@ -1,11 +1,7 @@
 /* eslint-disable no-console */
 import { exec } from "node:child_process";
-import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { promisify } from "node:util";
-import postcss from "postcss";
-import dedupSelectors from "postcss-combine-duplicated-selectors";
-import atImport from "postcss-import";
 import { fileURLToPath } from "url";
 import {
   createMainPackage,
@@ -28,19 +24,23 @@ const compile = async () => {
 
   await execCmd(["shx", "rm", "-rf", distPath].join(" "));
   await ensureDirExists(distPath);
-  await execCmd(["shx", "cp", "-r", entryPoint, outputPath].join(" "));
 
-  const entryContent = await fs.readFile(entryPoint, { encoding: "utf-8" });
+  const { stderr, stdout } = await execCmd(
+    [
+      "postcss",
+      entryPoint,
+      "-o",
+      outputPath,
+      "--use",
+      "postcss-import",
+      "--use",
+      "postcss-combine-duplicated-selectors",
+      "--no-map",
+    ].join(" "),
+  );
 
-  // TODO: apparently `postcss-merge-rules` can't resolve `:root` selectors
-  // Requires further investigation
-  const { css } = await postcss([atImport(), dedupSelectors()])
-    .process(entryContent, {
-      from: entryPoint,
-    })
-    .async();
-
-  await fs.writeFile(outputPath, css, { encoding: "utf-8", flag: "w" });
+  if (stdout) console.log(stdout);
+  if (stderr) console.error(stderr);
 };
 
 void (async () => {
