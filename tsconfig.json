@@ -12,6 +12,7 @@
     "noEmit": true,
     "allowJs": false,
     "checkJs": false,
+    "jsx": "preserve",
 
     "strict": true,
     "pretty": true,
@@ -28,6 +29,6 @@
     "useDefineForClassFields": false,
     "importHelpers": true
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }
