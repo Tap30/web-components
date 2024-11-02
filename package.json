@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "type": "module",
   "private": true,
+  "packageManager": "pnpm@9.12.0",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "clear:dist": "shx rm -rf dist",
-    "web-components:build": "tsx ./packages/web-components/scripts/build.ts",
-    "web-components:release": "tsx ./scripts/release.ts --package-name @tapsioss/rasti-web-components",
-    "theme:build": "tsx ./packages/theme/scripts/build.ts",
-    "theme:release": "tsx ./scripts/release.ts --package-name @tapsioss/rasti-theme",
+    "web-components:build": "pnpm --filter @tapsioss/rasti-web-components run build",
+    "web-components:release": "pnpm --filter @tapsioss/rasti-web-components run release",
+    "theme:build": "pnpm --filter @tapsioss/rasti-theme run build",
+    "theme:release": "pnpm --filter @tapsioss/rasti-theme run release",
     "icons:build": "tsx ./packages/icons/scripts/build.ts",
     "icons:release": "tsx ./scripts/release.ts --package-name @tapsioss/rasti-icons",
     "dev:transpile": "tsc --project tsconfig.dev.json --watch --preserveWatchOutput",
@@ -64,6 +68,7 @@
     "mustache": "^4.2.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.47",
+    "postcss-cli": "^11.0.0",
     "postcss-combine-duplicated-selectors": "^10.0.3",
     "postcss-import": "^16.1.0",
     "prettier": "^3.2.5",
