@@ -65,7 +65,3 @@ storybook-static
 docs/.vitepress/dist
 docs/.vitepress/cache
 docs/dev/components/custom-elements.json
-
-# NX and Lerna
-.nx/cache
-.nx/workspace-data
