@@ -157,6 +157,8 @@ importers:
 
   packages/react-components: {}
 
+  packages/react-icons: {}
+
   packages/theme: {}
 
   packages/web-components:
@@ -170,6 +172,12 @@ importers:
       tslib:
         specifier: ^2.8.0
         version: 2.8.0
+
+  packages/web-icons:
+    dependencies:
+      '@tapsioss/rasti-icons':
+        specifier: workspace:*
+        version: link:../icons
 
 packages:
 
