@@ -18,7 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const packageDir = path.resolve(__dirname, "..");
-const iconsDir = path.join(packageDir, "src/svgs");
+const iconsDir = path.join(packageDir, "src");
 const distDir = path.join(packageDir, "dist");
 const templatesDir = path.join(packageDir, "templates");
 
