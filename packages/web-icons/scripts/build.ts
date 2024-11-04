@@ -1,16 +1,13 @@
 /* eslint-disable no-console */
 import icons from "@tapsioss/rasti-icons";
+import globAsync from "fast-glob";
 import Mustache from "mustache";
 import { exec } from "node:child_process";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
-import {
-  createMainPackage,
-  createNPMRC,
-  ensureDirExists,
-} from "../../../scripts/utils";
+import { ensureDirExists } from "../../../scripts/utils";
 
 const execCmd = promisify(exec);
 
@@ -24,6 +21,16 @@ const templatesDir = path.join(packageDir, "templates");
 const iconTemplate = path.join(templatesDir, "web-icon.txt");
 const tsconfigFile = path.join(packageDir, "tsconfig.build.json");
 const baseIconFile = path.join(packageDir, "src/base-icon.ts");
+
+const doesFileExist = async (filePath: string) => {
+  try {
+    await fs.stat(filePath);
+
+    return true;
+  } catch {
+    return false;
+  }
+};
 
 const generateComponents = async () => {
   console.log("> generating web components...");
@@ -84,23 +91,41 @@ const generateComponents = async () => {
     await execCmd(["shx", "cp", baseIconFile, distDir].join(" ")),
     await execCmd(["tsc", "--project", tsconfigFile].join(" ")),
   ]);
+};
 
-  await execCmd(`shx ls ${distDir}/*.ts | grep -v '\\.d\\.ts$' | xargs rm`);
+const createModulePackages = async () => {
+  console.log("> creating module packages...");
+
+  const moduleDirectories = globAsync
+    .sync(path.join(distDir, "**/index.js"))
+    .map(p => path.dirname(p));
+
+  for (const moduleDirectory of moduleDirectories) {
+    const typesPath = path.join(moduleDirectory, "index.d.ts");
+    const typesExist = await doesFileExist(typesPath);
+
+    const packageJsonPath = path.join(moduleDirectory, "package.json");
+
+    await fs.writeFile(
+      packageJsonPath,
+      JSON.stringify(
+        {
+          sideEffects: false,
+          types: typesExist ? "./index.d.ts" : undefined,
+          main: "./index.js",
+        },
+        null,
+        2,
+      ),
+    );
+  }
 };
 
 void (async () => {
   console.time("build");
   await execCmd(["shx", "rm", "-rf", distDir].join(" "));
-
   await generateComponents();
-
-  await Promise.all([
-    createMainPackage(packageDir, distDir, {
-      main: "index.js",
-      types: "index.d.ts",
-    }),
-    createNPMRC(distDir),
-  ]);
+  await createModulePackages();
   console.timeEnd("build");
 })();
 /* eslint-enable no-console */
