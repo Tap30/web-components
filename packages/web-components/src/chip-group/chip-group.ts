@@ -12,9 +12,22 @@ export class ChipGroup extends LitElement {
   @queryAssignedElements()
   private chips!: Chip[];
 
+  constructor() {
+    super();
+
+    this._handleChipClick = this._handleChipClick.bind(this);
+  }
+
   public override connectedCallback() {
     super.connectedCallback();
-    this.addEventListener("chip-click", this._handleChipClick);
+
+    this.addEventListener("click", this._handleChipClick);
+  }
+
+  public override disconnectedCallback() {
+    super.disconnectedCallback();
+
+    this.removeEventListener("click", this._handleChipClick);
   }
 
   private _handleChipClick(e: Event) {
