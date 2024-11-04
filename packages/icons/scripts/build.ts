@@ -6,11 +6,7 @@ import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
-import {
-  createMainPackage,
-  createNPMRC,
-  ensureDirExists,
-} from "../../../scripts/utils";
+import { ensureDirExists } from "../../../scripts/utils";
 
 const execCmd = promisify(exec);
 
@@ -46,6 +42,16 @@ const toPascalCase = (str: string, splitRegex: RegExp | string) => {
   return baseCase
     .map(part => part.charAt(0).toUpperCase() + part.substring(1))
     .join("");
+};
+
+const doesFileExist = async (filePath: string) => {
+  try {
+    await fs.stat(filePath);
+
+    return true;
+  } catch {
+    return false;
+  }
 };
 
 const extractPathsInfo = (svgData: string) => {
@@ -135,103 +141,42 @@ const generatePaths = async () => {
   const entryCode = Mustache.render(entryTemplateStr, {});
 
   await fs.writeFile(entryFile, entryCode, { encoding: "utf-8", flag: "w" });
-
   await execCmd(["tsc", "--project", tsconfigFile].join(" "));
-  await execCmd(["shx", "rm", entryFile].join(" "));
 };
 
-// const generateComponents = async () => {
-//   console.log("> generating components...");
+const createModulePackages = async () => {
+  console.log("> creating module packages...");
 
-//   const pathsData = await fs.readFile(pathsJSONFile, { encoding: "utf-8" });
-//   const pathsJSON = JSON.parse(pathsData) as Record<string, SVGIconInfo>;
+  const moduleDirectories = globAsync
+    .sync(path.join(distDir, "**/index.js"))
+    .map(p => path.dirname(p));
 
-//   const generateWebComponents = async () => {
-//     console.log("> generating web components...");
+  for (const moduleDirectory of moduleDirectories) {
+    const typesPath = path.join(moduleDirectory, "index.d.ts");
+    const typesExist = await doesFileExist(typesPath);
 
-//     await ensureDirExists(webDistDir);
-//     await ensureDirExists(webTempDir);
+    const packageJsonPath = path.join(moduleDirectory, "package.json");
 
-//     const webIconTemplate = await fs.readFile(
-//       path.join(templatesDir, "web-icon.txt"),
-//       { encoding: "utf-8" },
-//     );
-
-//     const names = Object.keys(pathsJSON);
-
-//     for (const name of names) {
-//       const iconInfo = pathsJSON[name]!;
-
-//       const paths = iconInfo.paths.map(
-//         ({ d, clipRule, fillRule, xlinkHref }) => {
-//           const props = [
-//             `d=${d}`,
-//             clipRule ? `clip-rule=${clipRule}` : null,
-//             fillRule ? `fill-rule=${fillRule}` : null,
-//             xlinkHref ? `xlink:href=${xlinkHref}` : null,
-//           ];
-
-//           return `<path ${props.filter(Boolean).join(" ")} />`;
-//         },
-//       );
-
-//       const webIcon = Mustache.render(webIconTemplate, {
-//         name,
-//         paths: paths.join(),
-//         elementTag: iconInfo.kebabName,
-//       });
-
-//       console.log(webIcon);
-//     }
-//   };
-
-//   const generateReactComponents = async () => {
-//     console.log("> generating react components...");
-
-//     await ensureDirExists(reactDistDir);
-//     await ensureDirExists(reactTempDir);
-//   };
-
-//   return Promise.all([generateWebComponents(), generateReactComponents()]);
-// };
-
-// const createModulePackages = async () => {
-//   console.log("> creating module packages...");
-
-//   const moduleDirectories = globAsync
-//     .sync(path.join(distDir, "**/index.ts"))
-//     .map(p => path.dirname(p));
-
-//   for (const moduleDirectory of moduleDirectories) {
-//     const typesPath = path.join(moduleDirectory, "index.d.ts");
-//     const typesExist = await doesFileExist(typesPath);
-
-//     const packageJsonPath = path.join(moduleDirectory, "package.json");
-
-//     await fs.writeFile(
-//       packageJsonPath,
-//       JSON.stringify(
-//         {
-//           sideEffects: false,
-//           types: typesExist ? "./index.d.ts" : undefined,
-//           main: "./index.js",
-//         },
-//         null,
-//         2,
-//       ),
-//     );
-//   }
-// };
+    await fs.writeFile(
+      packageJsonPath,
+      JSON.stringify(
+        {
+          sideEffects: false,
+          types: typesExist ? "./index.d.ts" : undefined,
+          main: "./index.js",
+        },
+        null,
+        2,
+      ),
+    );
+  }
+};
 
 void (async () => {
   console.time("build");
   await execCmd(["shx", "rm", "-rf", distDir].join(" "));
   await generatePaths();
-  await createMainPackage(packageDir, distDir, {
-    main: "index.js",
-    types: "index.d.ts",
-  });
-  await createNPMRC(distDir);
+  await createModulePackages();
   console.timeEnd("build");
 })();
 /* eslint-enable no-console */
