@@ -14,7 +14,7 @@
     "theme:build": "pnpm --filter @tapsioss/rasti-theme run build",
     "theme:release": "pnpm --filter @tapsioss/rasti-theme run release",
     "dev:transpile": "tsc --project tsconfig.dev.json --watch --preserveWatchOutput",
-    "dev": "clear:dist dev:transpile & wds",
+    "dev": "pnpm clear:dist && pnpm dev:transpile & wds",
     "build:packages": "pnpm run -r --parallel build",
     "test": "pnpm run -r --parallel test",
     "lint:ts": "tsc --project tsconfig.json",
