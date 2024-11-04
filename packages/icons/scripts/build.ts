@@ -142,6 +142,7 @@ const generatePaths = async () => {
 
   await fs.writeFile(entryFile, entryCode, { encoding: "utf-8", flag: "w" });
   await execCmd(["tsc", "--project", tsconfigFile].join(" "));
+  await execCmd(["shx", "rm", entryFile].join(" "));
 };
 
 const createModulePackages = async () => {
