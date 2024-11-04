@@ -243,12 +243,9 @@
     }
   },
   "tap-chip": {
-    "propertyDefaultValues": {
-      "selected": false
-    },
     "slotKnobs": {
       "default": {
-        "simple": "<tap-icon-default slot=\"icon\"></tap-icon-default> عنوان"
+        "simple": "عنوان"
       }
     }
   },
