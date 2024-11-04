@@ -112,15 +112,15 @@ class BaseIcon extends HTMLElement {
           fill: currentcolor;
           width: ${width};
           height: ${height};
-          min-width: ${minWidth};
-          min-height: ${minHeight};
+          ${minWidth ? `min-width: ${minWidth};` : ""}
+          ${minHeight ? `min-height: ${minHeight};` : ""}
         }
       </style>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="${this._viewBox}"
         aria-hidden="${this._srTitle ? "false" : "true"}"
-        role="${this._srTitle ? "img" : ""}"
+        ${this._srTitle ? 'role="img"' : ""}
         focusable="false"
       >
         ${this._renderContent()}
