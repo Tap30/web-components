@@ -2,6 +2,8 @@ import { customElement } from "lit/decorators.js";
 import { Chip } from "./chip";
 import styles from "./chip.style";
 
+export { Slots } from "./constants";
+
 /**
  * @summary A chip component.
  *
