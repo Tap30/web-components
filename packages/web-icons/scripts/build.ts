@@ -46,10 +46,10 @@ const generateComponents = async () => {
 
     const paths = iconInfo.paths.map(({ d, clipRule, fillRule, xlinkHref }) => {
       const props = [
-        `d=${d}`,
-        clipRule ? `clip-rule=${clipRule}` : null,
-        fillRule ? `fill-rule=${fillRule}` : null,
-        xlinkHref ? `xlink:href=${xlinkHref}` : null,
+        `d="${d}"`,
+        clipRule ? `clip-rule="${clipRule}"` : null,
+        fillRule ? `fill-rule="${fillRule}"` : null,
+        xlinkHref ? `xlink:href="${xlinkHref}"` : null,
       ];
 
       return `<path ${props.filter(Boolean).join(" ")} />`;
@@ -91,6 +91,8 @@ const generateComponents = async () => {
     await execCmd(["shx", "cp", baseIconFile, distDir].join(" ")),
     await execCmd(["tsc", "--project", tsconfigFile].join(" ")),
   ]);
+
+  await execCmd(`shx ls ${distDir}/*.ts | grep -v '\\.d\\.ts$' | xargs rm`);
 };
 
 const createModulePackages = async () => {
