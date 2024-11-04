@@ -4,7 +4,7 @@ class {{name}} extends BaseIcon {
   constructor() {
     super();
 
-    this.paths = "{{paths}}";
+    this.paths = '{{paths}}';
   }
 }
 
