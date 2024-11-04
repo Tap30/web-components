@@ -165,6 +165,7 @@ const createModulePackages = async () => {
           sideEffects: false,
           types: typesExist ? "./index.d.ts" : undefined,
           main: "./index.js",
+          type: "module",
         },
         null,
         2,
