@@ -1,35 +1,34 @@
 import { css } from "lit";
 
 export default css`
-  :host {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
-    width: 100%;
-  }
-
-  :host *,
-  :host *::before,
-  :host *::after {
-    box-sizing: inherit;
   }
 
   [hidden] {
     display: none !important;
   }
 
-  .chip-group {
+  :host {
+    width: 100%;
+  }
+
+  .root {
     display: inline-flex;
-    gap: var(--tap-chip-group-gap, var(--tap-sys-spacing-5));
-    justify-content: space-between;
+    align-items: center;
+
+    gap: var(--tap-sys-spacing-5);
+
+    width: 100%;
+
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
 
-  .chip-group::-webkit-scrollbar {
+  .root::-webkit-scrollbar {
     display: none;
-  }
-
-  :host([fullwidth]) .chip-group {
-    display: flex;
   }
 `;
