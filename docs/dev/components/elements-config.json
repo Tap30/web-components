@@ -222,12 +222,13 @@
     "slotKnobs": {
       "leading": {
         "empty": "<div></div>",
-        "icon": "<tap-icon-default color=\"black\" slot=\"leading\"></tap-icon-default>"
+        "icon": "<tap-icon-default slot=\"leading-icon\"></tap-icon-default>"
       },
       "trailing": {
         "empty": "<div></div>",
         "suffix": "<p slot=\"trailing\">تومان</tap-button>",
-        "icon": "<tap-icon-default color=\"black\" slot=\"trailing\"></tap-icon-default>"
+        "icon": "<tap-icon-default slot=\"trailing\"></tap-icon-default>",
+        "button": "<tap-icon-button variant=\"naked\" size=\"small\" slot=\"trailing\"><tap-icon-default></tap-icon-default></tap-icon-button>"
       }
     },
     "propertyDefaultValues": {
