@@ -67,3 +67,10 @@ export const getBoundingClientRect = (
     y: clientRect.top / scaleY,
   };
 };
+
+export const getRenderRootSlot = (
+  renderRoot: DocumentFragment | HTMLElement,
+  slotName: string,
+) => {
+  return renderRoot.querySelector<HTMLSlotElement>(`slot[name="${slotName}"]`);
+};
