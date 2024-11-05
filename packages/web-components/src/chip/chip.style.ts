@@ -11,10 +11,6 @@ export default css`
     display: none !important;
   }
 
-  :host([full-width]) {
-    flex: 1 1 0;
-  }
-
   .root.disabled {
     --chip-color: var(--tap-sys-color-content-disabled);
   }

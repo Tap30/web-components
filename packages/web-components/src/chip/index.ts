@@ -13,7 +13,6 @@ export { Slots } from "./constants";
  *
  * @prop {boolean} [disabled=false] - Whether the chip is disabled or not.
  * @prop {boolean} [selected=false] - Whether the chip is selected or not.
- * @prop {boolean} [full-width=false] - Indicates if the chip should be full width.
  * @prop {"small" | "medium"} [size='medium'] - The size of the chip.
  */
 
