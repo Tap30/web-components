@@ -103,7 +103,7 @@ export class TextField extends Input {
         aria-describedby=${this.captionId}
         aria-invalid=${this.error}
         aria-label=${ifDefined(this.label)}
-        aria-disabled=${this.disabled ? "true" : "false"}
+        ?required=${!!this.required}
         ?disabled=${this.disabled}
         inputmode=${ifDefined(this.inputMode)}
         placeholder=${ifDefined(this.placeholder)}
