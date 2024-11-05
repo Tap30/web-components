@@ -11,6 +11,10 @@ export default css`
     display: none !important;
   }
 
+  :host([full-width]) {
+    flex: 1 1 0;
+  }
+
   .root.disabled {
     --chip-color: var(--tap-sys-color-content-disabled);
   }
@@ -65,6 +69,7 @@ export default css`
 
     padding: 0 var(--chip-spacing);
     min-width: 4.5rem;
+    width: 100%;
     height: var(--chip-height);
   }
 

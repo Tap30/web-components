@@ -16,6 +16,9 @@ export class Chip extends LitElement {
   @property({ type: Boolean, reflect: true })
   public disabled = false;
 
+  @property({ type: Boolean, attribute: "full-width" })
+  public fullWidth = false;
+
   @property({ type: String })
   public size: "small" | "medium" = "medium";
 
@@ -53,6 +56,7 @@ export class Chip extends LitElement {
       [this.size]: true,
       disabled: this.disabled,
       selected: this.selected,
+      "full-width": this.fullWidth,
       "has-leading-icon": this._hasLeadingIcon,
       "has-trailing-icon": this._hasTrailingIcon,
     });
