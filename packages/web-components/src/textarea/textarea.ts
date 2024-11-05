@@ -1,4 +1,4 @@
-import { type TemplateResult, html } from "lit";
+import { type PropertyValues, type TemplateResult, html } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
@@ -13,6 +13,12 @@ export class Textarea extends Input {
   @property({ type: Number, attribute: "minlength" })
   public minLength?: number;
 
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+
+    if (changed.has("id") && this.id) this.inputId = this.id;
+  }
+
   private _handleChange(event: Event) {
     redispatchEvent(this, event);
   }
@@ -26,11 +32,12 @@ export class Textarea extends Input {
     return html`
       <textarea
         class="${inputClasses}"
-        id="textarea"
+        id=${this.inputId}
         .value=${live(this.value)}
         placeholder=${ifDefined(this.placeholder)}
         ?required=${!!this.required}
         ?disabled=${this.disabled}
+        ?autofocus=${this.autofocus}
         aria-describedby=${this.captionId}
         aria-label=${ifDefined(this.label)}
         aria-invalid=${this.error}
