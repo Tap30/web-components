@@ -252,7 +252,7 @@
   "tap-chip-group": {
     "slotKnobs": {
       "default": {
-        "simple": "<tap-chip size=\"md\" selected>مسافر</tap-chip>\n  <tap-chip>راننده</tap-chip>"
+        "simple": "<tap-chip selected>مسافر</tap-chip>\n<tap-chip>راننده</tap-chip>"
       }
     }
   },
