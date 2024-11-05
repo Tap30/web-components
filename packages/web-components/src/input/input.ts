@@ -5,7 +5,10 @@ import {
   html,
   nothing,
 } from "lit";
-import { property } from "lit/decorators.js";
+import { property, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import { redispatchEvent } from "../utils";
+import { CAPTION_ID, INPUT_ID } from "./constants";
 
 export abstract class Input extends LitElement {
   static override shadowRootOptions: ShadowRootInit = {
@@ -46,8 +49,13 @@ export abstract class Input extends LitElement {
     return this._internals.labels;
   }
 
+  @state()
+  protected inputId = INPUT_ID;
+  protected readonly captionId = CAPTION_ID;
+
   constructor() {
     super();
+
     this._internals = this.attachInternals();
   }
 
@@ -67,21 +75,28 @@ export abstract class Input extends LitElement {
 
   protected handleInput(event: InputEvent) {
     this.value = (event.target as HTMLInputElement).value;
+
+    redispatchEvent(this, event);
   }
 
   protected abstract renderInput(): TemplateResult;
 
-  // TODO: check if using generic ids for caption and input is ok
   protected override render() {
+    const fieldClasses = classMap({
+      field: true,
+      error: this.error,
+      disabled: this.disabled,
+    });
+
     return html`
       <div
         part="field"
-        class="field"
+        class="${fieldClasses}"
       >
         <label
           part="label"
           class="label"
-          for="input"
+          for=${this.inputId}
           ?hidden=${!this.label}
         >
           ${this.label ?? nothing}
@@ -95,7 +110,7 @@ export abstract class Input extends LitElement {
         <span
           part="caption"
           class="caption"
-          id="caption"
+          id=${this.captionId}
           ?hidden=${!this.caption}
         >
           ${this.caption ?? nothing}
