@@ -1,10 +1,14 @@
 import { LitElement, html } from "lit";
 import { property, queryAssignedElements } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import { type Chip } from "../chip/chip";
 
 export class ChipGroup extends LitElement {
   @property({ type: String, attribute: "select-mode" })
   public selectMode: "single" | "multiple" = "single";
+
+  @property({ type: Boolean, attribute: "full-width" })
+  public fullWidth = false;
 
   @queryAssignedElements()
   private _chips!: Chip[];
@@ -55,10 +59,15 @@ export class ChipGroup extends LitElement {
   }
 
   protected override render() {
+    const rootClasses = classMap({
+      root: true,
+      "full-width": this.fullWidth,
+    });
+
     return html`
       <div
         role="group"
-        class="root"
+        class="${rootClasses}"
         part="root"
       >
         <slot></slot>

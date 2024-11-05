@@ -11,8 +11,12 @@ export default css`
     display: none !important;
   }
 
-  :host {
+  :host([full-width]) {
     width: 100%;
+  }
+
+  .root.full-width ::slotted(tap-chip) {
+    flex: 1 1 0;
   }
 
   .root {
