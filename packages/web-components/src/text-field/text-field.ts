@@ -57,6 +57,8 @@ export class TextField extends Input {
   }
 
   protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+
     if (changed.has("id") && this.id) this.inputId = this.id;
 
     runAfterRepaint(() => {
@@ -105,6 +107,7 @@ export class TextField extends Input {
         aria-label=${ifDefined(this.label)}
         ?required=${!!this.required}
         ?disabled=${this.disabled}
+        ?autofocus=${this.autofocus}
         inputmode=${ifDefined(this.inputMode)}
         placeholder=${ifDefined(this.placeholder)}
         autocomplete=${ifDefined(this.autoComplete)}
