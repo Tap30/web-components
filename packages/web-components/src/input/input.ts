@@ -7,7 +7,7 @@ import {
 } from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { redispatchEvent } from "../utils";
+import { redispatchEvent, runAfterRepaint } from "../utils";
 import { CAPTION_ID, INPUT_ID } from "./constants";
 
 export abstract class Input extends LitElement {
@@ -62,10 +62,28 @@ export abstract class Input extends LitElement {
     this._internals = this.attachInternals();
   }
 
-  protected override updated(changed: PropertyValues) {
-    if (!changed.has("value")) return;
+  protected override firstUpdated(changed: PropertyValues<this>): void {
+    super.firstUpdated(changed);
 
-    this._internals.setFormValue(this.value);
+    runAfterRepaint(() => {
+      if (!this.autofocus) return;
+
+      const input = this.renderRoot.querySelector<HTMLInputElement>(
+        `#${this.inputId}`,
+      );
+
+      if (!input) return;
+
+      input.focus();
+    });
+  }
+
+  protected override updated(changed: PropertyValues<this>) {
+    super.updated(changed);
+
+    if (changed.has("value")) {
+      this._internals.setFormValue(this.value);
+    }
   }
 
   public formDisabledCallback(disabled: boolean) {
