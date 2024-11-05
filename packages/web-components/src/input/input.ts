@@ -39,6 +39,9 @@ export abstract class Input extends LitElement {
   @property({ type: String })
   public placeholder?: string;
 
+  @property({ type: Boolean })
+  public required?: boolean;
+
   private _internals: ElementInternals;
 
   public get form() {
