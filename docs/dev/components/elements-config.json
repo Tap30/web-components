@@ -222,12 +222,13 @@
     "slotKnobs": {
       "leading": {
         "empty": "<div></div>",
-        "icon": "<tap-icon-default color=\"black\" slot=\"leading\"></tap-icon-default>"
+        "icon": "<tap-icon-default slot=\"leading-icon\"></tap-icon-default>"
       },
       "trailing": {
         "empty": "<div></div>",
         "suffix": "<p slot=\"trailing\">تومان</tap-button>",
-        "icon": "<tap-icon-default color=\"black\" slot=\"trailing\"></tap-icon-default>"
+        "icon": "<tap-icon-default slot=\"trailing\"></tap-icon-default>",
+        "button": "<tap-icon-button variant=\"naked\" size=\"small\" slot=\"trailing\"><tap-icon-default></tap-icon-default></tap-icon-button>"
       }
     },
     "propertyDefaultValues": {
@@ -243,19 +244,16 @@
     }
   },
   "tap-chip": {
-    "propertyDefaultValues": {
-      "selected": false
-    },
     "slotKnobs": {
       "default": {
-        "simple": "<tap-icon-default slot=\"icon\"></tap-icon-default> عنوان"
+        "simple": "عنوان"
       }
     }
   },
   "tap-chip-group": {
     "slotKnobs": {
       "default": {
-        "simple": "<tap-chip size=\"md\" selected>مسافر</tap-chip>\n  <tap-chip>راننده</tap-chip>"
+        "simple": "<tap-chip selected>مسافر</tap-chip>\n<tap-chip>راننده</tap-chip>"
       }
     }
   },

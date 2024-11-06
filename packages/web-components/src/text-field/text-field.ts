@@ -1,22 +1,13 @@
-import { type TemplateResult, html } from "lit";
-import { property } from "lit/decorators.js";
+import { type PropertyValues, type TemplateResult, html } from "lit";
+import { property, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { live } from "lit/directives/live.js";
 import { Input } from "../input";
-import { redispatchEvent } from "../utils";
+import { getRenderRootSlot, redispatchEvent, runAfterRepaint } from "../utils";
+import { Slots } from "./constants";
 
 export class TextField extends Input {
-  @property({ type: String })
-  public inputmode?:
-    | "none"
-    | "text"
-    | "tel"
-    | "url"
-    | "email"
-    | "numeric"
-    | "decimal"
-    | "search";
-
   @property({ type: String })
   public type:
     | "text"
@@ -38,10 +29,10 @@ export class TextField extends Input {
   @property({ type: Number })
   public min?: number;
 
-  @property({ type: Number })
+  @property({ type: Number, attribute: "maxlength" })
   public maxLength?: number;
 
-  @property({ type: Number })
+  @property({ type: Number, attribute: "minlength" })
   public minLength?: number;
 
   @property({ type: String })
@@ -50,32 +41,76 @@ export class TextField extends Input {
   @property({ type: Number })
   public step?: number;
 
-  @property({ type: String })
-  public autocomplete?: HTMLInputElement["autocomplete"]; // TODO: add type
+  @property({ type: String, attribute: "autocomplete" })
+  public autoComplete?: HTMLInputElement["autocomplete"];
 
-  private _redispatchEvent(event: Event) {
+  @state()
+  private _hasTrailingSlot = false;
+
+  @state()
+  private _hasLeadingIconSlot = false;
+
+  constructor() {
+    super();
+
+    if (this.id) this.inputId = this.id;
+  }
+
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+
+    if (changed.has("id") && this.id) this.inputId = this.id;
+
+    runAfterRepaint(() => {
+      const leadingSlot = getRenderRootSlot(
+        this.renderRoot,
+        Slots.LEADING_ICON,
+      );
+
+      const trailingSlot = getRenderRootSlot(this.renderRoot, Slots.TRAILING);
+
+      if (!leadingSlot || !trailingSlot) return;
+
+      this._hasLeadingIconSlot = leadingSlot.assignedNodes().length > 0;
+      this._hasTrailingSlot = trailingSlot.assignedNodes().length > 0;
+    });
+  }
+
+  private _handleChange(event: Event) {
     redispatchEvent(this, event);
   }
 
-  // TODO: check if using generic ids for caption and input is ok
+  private _handleSelect(event: Event) {
+    redispatchEvent(this, event);
+  }
+
   protected renderInput(): TemplateResult {
+    const inputClasses = classMap({
+      input: true,
+      disabled: this.disabled,
+    });
+
     return html`
-      <slot
-        part="leading"
-        name="leading"
-      ></slot>
+      <div
+        class=${Slots.LEADING_ICON}
+        part=${Slots.LEADING_ICON}
+        ?hidden=${!this._hasLeadingIconSlot}
+      >
+        <slot name=${Slots.LEADING_ICON}></slot>
+      </div>
       <input
-        id="input"
-        class="input"
+        id=${this.inputId}
+        class="${inputClasses}"
         part="input"
-        aria-describedby="caption"
+        aria-describedby=${this.captionId}
         aria-invalid=${this.error}
         aria-label=${ifDefined(this.label)}
-        aria-disabled=${this.disabled ? "true" : "false"}
+        ?required=${!!this.required}
         ?disabled=${this.disabled}
-        inputmode=${ifDefined(this.inputmode)}
+        ?autofocus=${this.autofocus}
+        inputmode=${ifDefined(this.inputMode)}
         placeholder=${ifDefined(this.placeholder)}
-        autocomplete=${ifDefined(this.autocomplete)}
+        autocomplete=${ifDefined(this.autoComplete)}
         max=${ifDefined(this.min)}
         min=${ifDefined(this.max)}
         maxlength=${ifDefined(this.maxLength)}
@@ -85,13 +120,16 @@ export class TextField extends Input {
         type=${this.type}
         .value=${live(this.value)}
         @input=${this.handleInput}
-        @change=${this._redispatchEvent}
-        @select=${this._redispatchEvent}
+        @change=${this._handleChange}
+        @select=${this._handleSelect}
       />
-      <slot
-        part="trailing"
-        name="trailing"
-      ></slot>
+      <div
+        class=${Slots.TRAILING}
+        part=${Slots.TRAILING}
+        ?hidden=${!this._hasTrailingSlot}
+      >
+        <slot name=${Slots.TRAILING}></slot>
+      </div>
     `;
   }
 }
