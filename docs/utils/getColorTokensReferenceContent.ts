@@ -1,7 +1,19 @@
-import fs from "node:fs";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const colorsFile = fs.readFileSync("tokens/colors.css");
-const paletteFile = fs.readFileSync("tokens/pallete.css");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const workspaceDir = path.resolve(__dirname, "../..");
+
+const colorsFile = fs.readFileSync(
+  path.resolve(workspaceDir, "packages/theme/src/tokens/colors.css"),
+);
+
+const paletteFile = fs.readFileSync(
+  path.resolve(workspaceDir, "packages/theme/src/tokens/palette.css"),
+);
 
 const getColorTokensReferenceContent = () => {
   let content = "";

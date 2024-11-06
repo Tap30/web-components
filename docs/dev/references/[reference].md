@@ -2,7 +2,7 @@
 outline: 'deep'
 ---
 <script>
-import '../../../tokens/colors.css';
-import '../../../tokens/pallete.css';
+import '../../../packages/theme/src/tokens/colors.css';
+import '../../../packages/theme/src/tokens/palette.css';
 </script>
 <!-- @content -->
