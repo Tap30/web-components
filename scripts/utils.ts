@@ -58,4 +58,12 @@ export const createModulePackages = (distDir: string) => {
 
   return Promise.all(promises);
 };
+
+export const toPascalCase = (str: string, splitRegex: RegExp | string) => {
+  const baseCase = str.split(splitRegex);
+
+  return baseCase
+    .map(part => part.charAt(0).toUpperCase() + part.substring(1))
+    .join("");
+};
 /* eslint-enable no-console */
