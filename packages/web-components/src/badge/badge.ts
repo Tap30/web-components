@@ -1,7 +1,8 @@
-import { html, LitElement } from "lit";
+import { html, LitElement, type PropertyValues } from "lit";
 import type { DirectiveResult } from "lit/async-directive";
-import { property } from "lit/decorators.js";
+import { property, state } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
+import { getRenderRootSlot, runAfterRepaint } from "../utils";
 import { Slots } from "./constants";
 
 type ClassMap = DirectiveResult<typeof ClassMapDirective>;
@@ -23,20 +24,48 @@ export class Badge extends LitElement {
   @property({ type: String })
   public size: "medium" | "small" = "medium";
 
+  @state()
+  private _hasIcon = false;
+
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+
+    runAfterRepaint(() => {
+      const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
+
+      if (!iconSlot) return;
+
+      this._hasIcon = iconSlot.assignedNodes().length > 0;
+    });
+  }
+
   private _renderDotBadge(rootClasses: ClassMap) {
-    return html`<div class="${rootClasses}"></div>`;
+    return html`<div
+      class=${rootClasses}
+      part="root"
+    ></div>`;
   }
 
   private _renderNumeralBadge(rootClasses: ClassMap) {
-    return html`<div class="${rootClasses}">${this.value ?? 0}</div>`;
+    return html`<div
+      class=${rootClasses}
+      part="root"
+    >
+      ${this.value ?? 0}
+    </div>`;
   }
 
   private _renderPillBadge(rootClasses: ClassMap) {
+    console.log(this._hasIcon);
     return html`
-      <div class="${rootClasses}">
+      <div
+        class=${rootClasses}
+        part="root"
+      >
         <div
           class=${Slots.ICON}
           part=${Slots.ICON}
+          ?hidden=${!this._hasIcon}
         >
           <slot name=${Slots.ICON}></slot>
         </div>

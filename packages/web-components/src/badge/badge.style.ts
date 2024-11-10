@@ -7,6 +7,14 @@ export default css`
     box-sizing: border-box;
   }
 
+  [hidden] {
+    display: none !important;
+  }
+
+  :host {
+    display: inline-flex;
+  }
+
   .root:not(.dot).medium {
     height: 1.5rem;
     min-width: 1.5rem;
@@ -88,8 +96,5 @@ export default css`
 
     padding-right: var(--tap-sys-spacing-3-1);
     padding-left: var(--tap-sys-spacing-3-1);
-  }
-
-  .icon {
   }
 `;
