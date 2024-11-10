@@ -2,15 +2,13 @@
 import { exec } from "node:child_process";
 import * as path from "node:path";
 import { promisify } from "node:util";
-import { fileURLToPath } from "url";
-import { ensureDirExists } from "../../../scripts/utils";
+import { ensureDirExists, getFileMeta } from "../../../scripts/utils";
 
 const execCmd = promisify(exec);
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const { dirname } = getFileMeta(import.meta.url);
 
-const packageDir = path.resolve(__dirname, "..");
+const packageDir = path.resolve(dirname, "..");
 const distPath = path.join(packageDir, "dist");
 const entryPoint = path.join(packageDir, "src/index.css");
 const outputPath = path.join(distPath, "index.css");
