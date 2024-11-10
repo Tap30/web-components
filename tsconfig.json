@@ -12,6 +12,7 @@
     "noEmit": true,
     "allowJs": false,
     "checkJs": false,
+    "jsx": "preserve",
 
     "strict": true,
     "pretty": true,
@@ -26,8 +27,13 @@
     "noUncheckedIndexedAccess": true,
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
-    "importHelpers": true
+    "importHelpers": true,
+
+    "paths": {
+      "@tapsioss/rasti-icons": ["./packages/icons/dist"],
+      "@tapsioss/rasti-icons/*": ["./packages/icons/dist/*"]
+    }
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }
