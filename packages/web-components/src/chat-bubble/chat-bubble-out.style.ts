@@ -23,6 +23,9 @@ const styles = css`
   }
 
   .avatar {
+    display: flex;
+    flex-direction: column-reverse;
+
     margin-right: var(--tap-sys-spacing-4);
     margin-left: var(--tap-sys-spacing-4);
   }

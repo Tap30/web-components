@@ -15,7 +15,7 @@ export class ChatBubbleIn extends LitElement {
    * The timestamp of chat element.
    */
   @property({ type: String })
-  public timestamp!: string;
+  public timestamp = "";
 
   /**
    * The status of the chat element.
@@ -31,7 +31,7 @@ export class ChatBubbleIn extends LitElement {
    * @default false
    */
   @property({ type: Boolean, attribute: "fully-rounded" })
-  public fullyRounded: boolean = false;
+  public fullyRounded = false;
 
   private _renderFailureIndicator() {
     if (this.status !== "failed") return nothing;
