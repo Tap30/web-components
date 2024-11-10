@@ -3,11 +3,7 @@ import { exec } from "node:child_process";
 import * as path from "node:path";
 import { promisify } from "node:util";
 import { fileURLToPath } from "url";
-import {
-  createMainPackage,
-  createNPMRC,
-  ensureDirExists,
-} from "../../../scripts/utils";
+import { ensureDirExists } from "../../../scripts/utils";
 
 const execCmd = promisify(exec);
 
@@ -46,10 +42,6 @@ const compile = async () => {
 void (async () => {
   console.time("build");
   await compile();
-  await createMainPackage(packageDir, distPath, {
-    main: "index.css",
-  });
-  await createNPMRC(distPath);
   console.timeEnd("build");
 })();
 /* eslint-enable no-console */
