@@ -25,6 +25,6 @@
   },
   "scripts": {
     "build": "tsx ./scripts/build.ts",
-    "release": "pnpm publish ./dist --tag latest --access public"
+    "release": "pnpm publish . --tag latest --access public"
   }
 }

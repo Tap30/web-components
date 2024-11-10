@@ -31,7 +31,9 @@
 
     "paths": {
       "@tapsioss/rasti-icons": ["./packages/icons/dist"],
-      "@tapsioss/rasti-icons/*": ["./packages/icons/dist/*"]
+      "@tapsioss/rasti-icons/*": ["./packages/icons/dist/*"],
+
+      "@tapsioss/rasti-web-components/*": ["./packages/web-components/dist/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

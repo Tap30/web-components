@@ -22,6 +22,7 @@
     "dev:transpile": "tsc --project tsconfig.dev.json --watch --preserveWatchOutput",
     "dev": "pnpm clear:dist && pnpm dev:transpile & wds",
     "build:packages": "pnpm run -r --parallel build",
+    "release:packages": "pnpm run -r release",
     "test": "pnpm run -r --parallel test",
     "lint:ts": "tsc --project tsconfig.json",
     "lint:ecma": "eslint packages/*/src/**/* --fix",
