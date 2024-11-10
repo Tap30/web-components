@@ -56,7 +56,6 @@ export class Badge extends LitElement {
   }
 
   private _renderPillBadge(rootClasses: ClassMap) {
-    console.log(this._hasIcon);
     return html`
       <div
         class=${rootClasses}
