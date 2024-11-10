@@ -5,7 +5,7 @@ import { Slots } from "./constants";
 
 export class BadgeWrapper extends LitElement {
   @property({ type: String, attribute: "anchor-shape" })
-  public anchorShape: "rectangular" | "circular" = "rectangular";
+  public anchorShape: "rectangle" | "circle" | "pill" = "rectangle";
 
   @property({ type: String, attribute: "badge-side" })
   public badgeSide: "left" | "right" = "right";

@@ -9,43 +9,59 @@ export default css`
     transform: translate(50%, -50%);
   }
 
-  .root.rectangular.top .badge {
+  .root.rectangle.top .badge {
     top: 0;
   }
 
-  .root.rectangular.middle .badge {
+  .root.rectangle.middle .badge {
     top: 50%;
   }
 
-  .root.rectangular.left .badge {
+  .root.rectangle.left .badge {
     left: 0;
   }
 
-  .root.rectangular.right .badge {
+  .root.rectangle.right .badge {
     right: 0;
   }
 
-  .root.circular.top .badge {
-    top: 15px;
+  .root.circle.top .badge {
+    top: 14.5%;
   }
 
-  .root.circular.middle .badge {
+  .root.circle.middle .badge {
     top: 50%;
   }
 
-  .root.circular:not(.middle).left .badge {
-    left: 15px;
+  .root.circle:not(.middle).left .badge {
+    left: 14.5%;
   }
 
-  .root.circular:not(.middle).right .badge {
-    right: 15px;
+  .root.circle:not(.middle).right .badge {
+    right: 14.5%;
   }
 
-  .root.circular.middle.left .badge {
+  .root.pill.top .badge {
+    top: 6px;
+  }
+
+  .root.pill.middle .badge {
+    top: 50%;
+  }
+
+  .root.pill:not(.middle).left .badge {
+    left: 6px;
+  }
+
+  .root.pill:not(.middle).right .badge {
+    right: 6px;
+  }
+
+  .root.pill.middle.left .badge {
     left: 0;
   }
 
-  .root.circular.middle.right .badge {
+  .root.pill.middle.right .badge {
     right: 0;
   }
 

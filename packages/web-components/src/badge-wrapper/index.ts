@@ -7,7 +7,7 @@ export { Slots } from "./constants";
 /**
  * @summary A wrapper component to position a badge relative to an anchor.
  *
- * @prop {"rectangular" | "circular"} [anchor-shape="rectangular"] - The shape of the anchor.
+ * @prop {"rectangle" | "circle" | "pill"} [anchor-shape="rectangle"] - The shape of the anchor.
  * @prop {"left" | "right"} [badge-side="right"] - The horizontal placement of the badge.
  * @prop {"top" | "middle"} [badge-alignment="alignment"] - The vertical alignment of the badge.
  *
