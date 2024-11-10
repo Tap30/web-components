@@ -9,8 +9,8 @@
   },
   "scripts": {
     "clear:dist": "shx rm -rf dist",
-    "web-components:build": "pnpm --filter @tapsioss/rasti-web-components run build",
-    "web-components:release": "pnpm --filter @tapsioss/rasti-web-components run release",
+    "web-components:build": "pnpm --filter @tapsioss/web-components run build",
+    "web-components:release": "pnpm --filter @tapsioss/web-components run release",
     "theme:build": "pnpm --filter @tapsioss/rasti-theme run build",
     "theme:release": "pnpm --filter @tapsioss/rasti-theme run release",
     "icons:build": "pnpm --filter @tapsioss/rasti-icons run build",
