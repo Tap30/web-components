@@ -11,13 +11,13 @@ export class ChatBubbleOut extends LitElement {
    * The timestamp of chat element.
    */
   @property({ type: String })
-  public timestamp!: string;
+  public timestamp = "";
 
   /**
    * The source of the avatar image.
    */
   @property({ type: String, attribute: "avatar-src" })
-  public avatarSrc?: string;
+  public avatarSrc = "";
 
   /**
    * Whether or not the bubble should be fully rounded.
@@ -25,7 +25,7 @@ export class ChatBubbleOut extends LitElement {
    * @default false
    */
   @property({ type: Boolean, attribute: "fully-rounded" })
-  public fullyRounded: boolean = false;
+  public fullyRounded = false;
 
   private _renderAvatar() {
     if (!this.avatarSrc) return nothing;

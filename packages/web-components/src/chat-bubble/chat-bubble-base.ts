@@ -10,17 +10,13 @@ export class ChatBubbleBase extends LitElement {
   public static override readonly styles = [styles];
 
   @property({ type: String })
-  public author!: (typeof AUTHORS)[number];
+  public author: (typeof AUTHORS)[number] = "in";
 
   @property({ type: String })
-  public timestamp!: string;
+  public timestamp = "";
 
   @property({ type: Boolean, attribute: "fully-rounded" })
-  public fullyRounded: boolean = false;
-
-  constructor() {
-    super();
-  }
+  public fullyRounded = false;
 
   private _renderFooter() {
     if (!this.timestamp) {
@@ -57,8 +53,7 @@ export class ChatBubbleBase extends LitElement {
 
     const rootClasses = classMap({
       "fully-rounded": this.fullyRounded,
-      in: this.author === "in",
-      out: this.author === "out",
+      [this.author]: true,
     });
 
     return html`

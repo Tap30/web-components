@@ -26,27 +26,27 @@ const styles = css`
   }
 
   .root.in {
-    --chat-bubble-base-bg-color: var(--tap-sys-color-surface-tertiary);
-    --chat-bubble-base-color: var(--tap-sys-color-content-primary);
-    --chat-bubble-base-footer-color: var(--tap-sys-color-content-tertiary);
+    --chat-bubble-base-bg-color: var(--tap-sys-color-surface-inverse-secondary);
+    --chat-bubble-base-color: var(--tap-sys-color-content-on-inverse);
+    --chat-bubble-base-footer-color: var(--tap-sys-color-content-disabled);
     --chat-bubble-base-footer-flex-direction: row;
   }
 
   .root.out {
-    --chat-bubble-base-bg-color: var(--tap-sys-color-surface-accent);
-    --chat-bubble-base-color: var(--tap-sys-color-content-on-accent);
+    --chat-bubble-base-bg-color: var(--tap-sys-color-surface-secondary);
+    --chat-bubble-base-color: var(--tap-sys-color-content-primary);
     --chat-bubble-base-footer-color: var(--chat-bubble-base-color);
     --chat-bubble-base-footer-flex-direction: row-reverse;
   }
 
   .root:not(.fully-rounded).in {
-    --chat-bubble-base-radius: var(--tap-sys-radius-5) var(--tap-sys-radius-1)
-      var(--tap-sys-radius-5) var(--tap-sys-radius-5);
+    --chat-bubble-base-radius: var(--tap-sys-radius-5) var(--tap-sys-radius-5)
+      var(--tap-sys-radius-1) var(--tap-sys-radius-5);
   }
 
   .root:not(.fully-rounded).out {
-    --chat-bubble-base-radius: var(--tap-sys-radius-1) var(--tap-sys-radius-5)
-      var(--tap-sys-radius-5) var(--tap-sys-radius-5);
+    --chat-bubble-base-radius: var(--tap-sys-radius-5) var(--tap-sys-radius-5)
+      var(--tap-sys-radius-5) var(--tap-sys-radius-1);
   }
 
   .body {

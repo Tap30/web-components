@@ -14,7 +14,7 @@ const styles = css`
   }
 
   .root.seen {
-    --chat-bubble-in-icon-color: var(--tap-sys-color-content-accent);
+    --chat-bubble-in-icon-color: var(--tap-sys-color-content-on-inverse);
   }
 
   .root:not(.failed) .base {
@@ -31,6 +31,7 @@ const styles = css`
 
     margin-right: var(--tap-sys-spacing-4);
     margin-left: var(--tap-sys-spacing-4);
+    margin-top: auto;
 
     fill: var(--tap-sys-color-content-negative);
   }
