@@ -159,7 +159,7 @@ importers:
 
   packages/react-icons:
     dependencies:
-      '@tapsioss/rasti-icons':
+      '@tapsioss/icons':
         specifier: workspace:*
         version: link:../icons
 
@@ -179,7 +179,7 @@ importers:
 
   packages/web-icons:
     dependencies:
-      '@tapsioss/rasti-icons':
+      '@tapsioss/icons':
         specifier: workspace:*
         version: link:../icons
 

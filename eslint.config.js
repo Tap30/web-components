@@ -29,7 +29,9 @@ export default config(
     },
   },
   {
-    plugins: { "eslint-comments": commentsPlugin },
+    plugins: {
+      "eslint-comments": commentsPlugin,
+    },
     rules: {
       "eslint-comments/disable-enable-pair": "error",
       "eslint-comments/no-aggregating-enable": "error",

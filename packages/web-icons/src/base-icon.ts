@@ -72,7 +72,7 @@ class BaseIcon extends HTMLElement {
     if (!hasValidSize) {
       // eslint-disable-next-line no-console
       console.error(
-        `[RASTI][Icon]: Invalid size provided! (provided size: \`size=${
+        `[TAPSI][Icon]: Invalid size provided! (provided size: \`size=${
           typeof size === "number" ? `${size}` : `${String(size)}`
         }\`)`,
       );

@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: Rasti
+  name: TDS
   text: Tapsi Design System
 
   actions:
