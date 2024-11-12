@@ -29,11 +29,12 @@
     "useDefineForClassFields": false,
     "importHelpers": true,
 
+    "baseUrl": ".",
     "paths": {
-      "@tapsioss/rasti-icons": ["./packages/icons/dist"],
-      "@tapsioss/rasti-icons/*": ["./packages/icons/dist/*"],
+      "@tapsioss/icons": ["./packages/icons/dist"],
+      "@tapsioss/icons/*": ["./packages/icons/dist/*"],
 
-      "@tapsioss/rasti-web-components/*": ["./packages/web-components/dist/*"]
+      "@tapsioss/web-components/*": ["./packages/web-components/dist/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

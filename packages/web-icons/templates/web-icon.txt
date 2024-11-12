@@ -8,6 +8,6 @@ class {{name}} extends BaseIcon {
   }
 }
 
-customElements.define("rasti-{{elementTag}}", {{name}});
+customElements.define("tap-{{elementTag}}", {{name}});
 
 export default {{name}};

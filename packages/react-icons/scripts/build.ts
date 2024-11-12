@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import icons from "@tapsioss/rasti-icons";
+import icons from "@tapsioss/icons";
 import Mustache from "mustache";
 import { exec } from "node:child_process";
 import * as fs from "node:fs/promises";

@@ -1,6 +1,6 @@
 {
   "sideEffects": false,
-  "name": "@tapsioss/rasti-react-icons",
+  "name": "@tapsioss/react-icons",
   "version": "0.1.0",
   "type": "module",
   "engines": {
@@ -28,6 +28,6 @@
     "release": "pnpm publish . --tag latest --access public"
   },
   "dependencies": {
-    "@tapsioss/rasti-icons": "workspace:*"
+    "@tapsioss/icons": "workspace:*"
   }
 }

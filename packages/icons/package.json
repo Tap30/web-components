@@ -1,6 +1,6 @@
 {
   "sideEffects": false,
-  "name": "@tapsioss/rasti-icons",
+  "name": "@tapsioss/icons",
   "version": "0.1.0",
   "type": "module",
   "engines": {
