@@ -31,10 +31,19 @@
 
     "baseUrl": ".",
     "paths": {
+      // Icons metadata
       "@tapsioss/icons": ["./packages/icons/dist"],
       "@tapsioss/icons/*": ["./packages/icons/dist/*"],
-
-      "@tapsioss/web-components/*": ["./packages/web-components/dist/*"]
+      // Web Component Icons
+      "@tapsioss/web-icons": ["./packages/web-icons/dist"],
+      "@tapsioss/web-icons/*": ["./packages/web-icons/dist/*"],
+      // React Icons
+      "@tapsioss/react-icons": ["./packages/react-icons/dist"],
+      "@tapsioss/react-icons/*": ["./packages/react-icons/dist/*"],
+      // Web Components
+      "@tapsioss/web-components/*": ["./packages/web-components/dist/*"],
+      // Tokens
+      "@tapsioss/theme": ["./packages/theme/dist/index.css"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
