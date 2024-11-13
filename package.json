@@ -37,7 +37,7 @@
     "docs:dev": "run-s analyze docs:custom-elements:dev docs:vitepress:dev",
     "docs:build": "run-s analyze docs:vitepress:build docs:custom-elements:prod docs:elements-config:prod",
     "docs:preview": "run-s docs:vitepress:preview",
-    "analyze": "cem analyze --litelement --outdir dist --globs \"packages/web-components/src/**/index.ts\""
+    "analyze": "tsx ./scripts/generate-cem.ts"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.2",
