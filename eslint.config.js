@@ -23,7 +23,10 @@ export default config(
       parserOptions: {
         tsconfigRootDir: import.meta.dirname,
         project: true,
-        projectService: true,
+        projectService: {
+          defaultProject: "./tsconfig.json",
+          allowDefaultProject: ["dev/vite.config.ts"],
+        },
         sourceType: "module",
       },
     },

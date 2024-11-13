@@ -2,6 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/vite.svg"
+    />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0"
@@ -21,19 +26,19 @@
     />
     <link
       rel="stylesheet"
-      href="./packages/theme/src/index.css"
+      href="../packages/theme/src/index.css"
     />
+    <link
+      rel="stylesheet"
+      href="./src/index.css"
+    />
+    <script
+      type="module"
+      src="/src/index.ts"
+    ></script>
+    <title>Vite + Lit + TS</title>
   </head>
-  <body dir="rtl">
-    <div id="root"></div>
-    <script type="module">
-      import { html, render } from "lit";
-
-      const root = document.getElementById("root");
-
-      if (!root) throw new Error("Expects a root element.");
-
-      render(html``, root);
-    </script>
+  <body>
+    <h1>Vite + Lit</h1>
   </body>
 </html>

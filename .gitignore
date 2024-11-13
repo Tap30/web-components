@@ -44,8 +44,15 @@ jspm_packages/
 .pnp.*
 
 ## Editors
+.vscode/*
+!.vscode/extensions.json
 .idea
-.vscode
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 ## System files
 .DS_Store
@@ -56,7 +63,9 @@ jspm_packages/
 # Build output
 _site
 dist
+dist-ssr
 out-tsc
+*.local
 
 # Storybook
 storybook-static
