@@ -53,6 +53,9 @@ importers:
       '@types/sinon':
         specifier: ^17.0.3
         version: 17.0.3
+      '@vitejs/plugin-react':
+        specifier: ^4.3.3
+        version: 4.3.3(vite@5.4.11(@types/node@20.17.6))
       '@web/dev-server-esbuild':
         specifier: ^1.0.3
         version: 1.0.3
