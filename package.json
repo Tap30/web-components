@@ -19,8 +19,7 @@
     "web-icons:release": "pnpm --filter @tapsioss/web-icons run release",
     "react-icons:build": "pnpm --filter @tapsioss/react-icons run build",
     "react-icons:release": "pnpm --filter @tapsioss/react-icons run release",
-    "dev:transpile": "tsc --project tsconfig.dev.json --watch --preserveWatchOutput",
-    "dev": "pnpm clear:dist && pnpm dev:transpile & wds",
+    "dev": "pnpm --filter @tapsioss/dev run dev",
     "build:packages": "pnpm run -r --parallel build",
     "release:packages": "pnpm run -r release",
     "test": "pnpm run -r --parallel test",
@@ -55,8 +54,7 @@
     "@types/react-dom": "^18.3.1",
     "@types/semver": "^7.5.8",
     "@types/sinon": "^17.0.3",
-    "@web/dev-server": "^0.4.2",
-    "@web/dev-server-esbuild": "^1.0.2",
+    "@web/dev-server-esbuild": "^1.0.3",
     "@web/test-runner": "^0.18.0",
     "cemnama": "0.0.0-alpha-5",
     "custom-elements-manifest": "^2.1.0",
@@ -87,6 +85,8 @@
     "tsx": "^4.19.2",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.8.1",
+    "vite": "^5.4.11",
+    "vite-tsconfig-paths": "^5.1.2",
     "vitepress": "^1.1.4"
   }
 }
