@@ -31,8 +31,8 @@ export const getFileMeta = (fileURL: string | URL) => {
   return { filename: __filename, dirname: __dirname };
 };
 
-export const createModulePackages = (distDir: string) => {
-  console.log("> creating module packages...");
+export const createModulePackages = async (distDir: string) => {
+  console.log("🔧 creating module packages...");
 
   const moduleDirs = glob
     .sync(path.join(distDir, "**/index.js"))
@@ -56,7 +56,8 @@ export const createModulePackages = (distDir: string) => {
     );
   });
 
-  return Promise.all(promises);
+  await Promise.all(promises);
+  console.log("✅ module packages created.");
 };
 
 export const toPascalCase = (str: string, splitRegex: RegExp | string) => {
