@@ -24,7 +24,7 @@ const tsconfigFile = path.join(packageDir, "tsconfig.build.json");
 const baseIconFile = path.join(packageDir, "src/base-icon.tsx");
 
 const generateComponents = async () => {
-  console.log("> generating web components...");
+  console.log("🧩 generating react icons...");
 
   await ensureDirExists(distDir);
 
@@ -83,6 +83,8 @@ const generateComponents = async () => {
   ]);
 
   await execCmd(`shx ls ${distDir}/*.tsx | xargs rm`);
+
+  console.log("✅ react icons generated.");
 };
 
 void (async () => {

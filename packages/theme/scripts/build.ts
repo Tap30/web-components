@@ -14,7 +14,7 @@ const entryPoint = path.join(packageDir, "src/index.css");
 const outputPath = path.join(distPath, "index.css");
 
 const compile = async () => {
-  console.log("> compiling...");
+  console.log("👾 compiling...");
 
   await execCmd(["shx", "rm", "-rf", distPath].join(" "));
   await ensureDirExists(distPath);
@@ -35,6 +35,8 @@ const compile = async () => {
 
   if (stdout) console.log(stdout);
   if (stderr) console.error(stderr);
+
+  console.log("✅ compilation completed.");
 };
 
 void (async () => {

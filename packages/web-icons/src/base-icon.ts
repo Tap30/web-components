@@ -18,7 +18,8 @@ class BaseIcon extends HTMLElement {
    *
    * @default "auto"
    */
-  private _size: number | "auto" = "auto";
+  private _size: number | `${number}` | "auto" = "auto";
+
   protected paths?: string;
 
   constructor() {
@@ -49,7 +50,8 @@ class BaseIcon extends HTMLElement {
         break;
 
       case "size":
-        this._size = newValue === "auto" ? "auto" : parseInt(newValue, 10);
+        if (newValue == null) this._size = "auto";
+        else this._size = newValue === "auto" ? "auto" : parseInt(newValue, 10);
 
         break;
 
@@ -64,14 +66,14 @@ class BaseIcon extends HTMLElement {
     this.render();
   }
 
-  private _getSizeStyles(size: number | "auto") {
+  private _getSizeStyles(size: typeof this._size) {
     const hasValidSize =
-      (typeof size === "number" && !Number.isNaN(size)) ||
-      (typeof size === "string" && size === "auto");
+      (typeof size === "string" &&
+        (size === "auto" || !Number.isNaN(Number(size)))) ||
+      (typeof size === "number" && !Number.isNaN(size));
 
     if (!hasValidSize) {
-      // eslint-disable-next-line no-console
-      console.error(
+      throw new Error(
         `[TAPSI][Icon]: Invalid size provided! (provided size: \`size=${
           typeof size === "number" ? `${size}` : `${String(size)}`
         }\`)`,
@@ -84,10 +86,10 @@ class BaseIcon extends HTMLElement {
           height: "100%",
         }
       : {
-          width: `${size / 16}rem`,
-          height: `${size / 16}rem`,
-          minWidth: `${size / 16}rem`,
-          minHeight: `${size / 16}rem`,
+          width: `${Number(size) / 16}rem`,
+          height: `${Number(size) / 16}rem`,
+          minWidth: `${Number(size) / 16}rem`,
+          minHeight: `${Number(size) / 16}rem`,
         };
   }
 

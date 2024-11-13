@@ -5,6 +5,5 @@
     "sourceMap": true,
     "inlineSources": true,
     "declaration": false
-  },
-  "include": ["packages/*/src/**/*"]
+  }
 }
