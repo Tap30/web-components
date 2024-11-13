@@ -36,8 +36,9 @@
   "tap-badge": {
     "propertyDefaultValues": {
       "value": "درخواست",
-      "variant": "info",
-      "priority": "low"
+      "color": "info",
+      "priority": "low",
+      "variant": "pill"
     },
     "slotKnobs": {}
   },
@@ -107,8 +108,8 @@
         "Icon Button": "<tap-icon-button slot=\"default\" title=\"Icon Button\" size=\"medium\"><tap-icon-default></tap-icon-default></tap-icon-button>"
       },
       "badge": {
-        "Pill Badge": "<tap-badge slot=\"badge\" value=\"‍۱۰\" variant=\"info\"></tap-badge>",
-        "Dot Badge": "<tap-badge slot=\"badge\" type=\"dot\" variant=\"info\"></tap-badge>"
+        "Pill Badge": "<tap-badge slot=\"badge\" variant=\"numeral\" value=\"‍۱۰\" color=\"info\"></tap-badge>",
+        "Dot Badge": "<tap-badge slot=\"badge\" variant=\"dot\" color=\"info\"></tap-badge>"
       }
     }
   },

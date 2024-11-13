@@ -1,0 +1,16 @@
+import pathsJSON from "./paths.json";
+
+type SVGPathInfo = {
+  clipRule?: string;
+  fillRule?: string;
+  xlinkHref?: string;
+  d: string;
+};
+
+type SVGIconInfo = {
+  kebabName: string;
+  pascalName: string;
+  paths: SVGPathInfo[];
+};
+
+export default pathsJSON as Record<string, SVGIconInfo>;

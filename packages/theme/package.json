@@ -1,12 +1,21 @@
 {
-  "name": "@tapsioss/rasti-theme",
+  "name": "@tapsioss/theme",
   "version": "0.1.0",
   "type": "module",
   "engines": {
     "node": ">=20"
   },
+  "files": [
+    "./dist/**/*.css"
+  ],
+  "main": "./dist/index.css",
+  "exports": {
+    ".": {
+      "default": "./dist/index.css"
+    }
+  },
   "scripts": {
     "build": "tsx ./scripts/build.ts",
-    "release": "pnpm publish ./dist --tag latest --access public"
+    "release": "pnpm publish . --tag latest --access public"
   }
 }

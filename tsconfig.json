@@ -12,6 +12,7 @@
     "noEmit": true,
     "allowJs": false,
     "checkJs": false,
+    "jsx": "preserve",
 
     "strict": true,
     "pretty": true,
@@ -26,8 +27,25 @@
     "noUncheckedIndexedAccess": true,
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
-    "importHelpers": true
+    "importHelpers": true,
+
+    "baseUrl": ".",
+    "paths": {
+      // Icons metadata
+      "@tapsioss/icons": ["./packages/icons/dist"],
+      "@tapsioss/icons/*": ["./packages/icons/dist/*"],
+      // Web Component Icons
+      "@tapsioss/web-icons": ["./packages/web-icons/dist"],
+      "@tapsioss/web-icons/*": ["./packages/web-icons/dist/*"],
+      // React Icons
+      "@tapsioss/react-icons": ["./packages/react-icons/dist"],
+      "@tapsioss/react-icons/*": ["./packages/react-icons/dist/*"],
+      // Web Components
+      "@tapsioss/web-components/*": ["./packages/web-components/dist/*"],
+      // Tokens
+      "@tapsioss/theme": ["./packages/theme/dist/index.css"]
+    }
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }

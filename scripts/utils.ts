@@ -1,6 +1,18 @@
 /* eslint-disable no-console */
+import glob from "fast-glob";
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { fileURLToPath } from "node:url";
+
+export const fileExists = (filePath: string) => {
+  try {
+    fs.lstatSync(filePath);
+
+    return true;
+  } catch {
+    return false;
+  }
+};
 
 export const dirExists = (dirPath: string) => {
   return fs.existsSync(dirPath) && fs.lstatSync(dirPath).isDirectory();
@@ -12,60 +24,47 @@ export const ensureDirExists = (dirPath: string) => {
   return fs.promises.mkdir(dirPath, { recursive: true });
 };
 
-export const createNPMRC = async (dirPath: string) => {
-  console.log("> making package publishable...");
-  const npmrcPath = path.join(dirPath, ".npmrc");
-  const npmignorePath = path.join(dirPath, ".npmignore");
+export const getFileMeta = (fileURL: string | URL) => {
+  const __filename = fileURLToPath(fileURL);
+  const __dirname = path.dirname(__filename);
 
-  await fs.promises.writeFile(
-    npmrcPath,
-    [
-      "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}",
-      "registry=https://registry.npmjs.org/",
-      "always-auth=true",
-    ].join("\n"),
-  );
-
-  await fs.promises.writeFile(npmignorePath, ".npmrc");
+  return { filename: __filename, dirname: __dirname };
 };
 
-export const createMainPackage = async (
-  packageDir: string,
-  distDir: string,
-  packageJSONOptions: Record<string, unknown> = {},
-) => {
-  console.log("> creating main package...");
-  const originalPackageJSONPath = path.join(packageDir, "package.json");
-  const distPackageJSONPath = path.join(distDir, "package.json");
+export const createModulePackages = async (distDir: string) => {
+  console.log("🔧 creating module packages...");
 
-  type PackageJSON = Record<string, unknown>;
+  const moduleDirs = glob
+    .sync(path.join(distDir, "**/index.js"))
+    .map(p => path.dirname(p));
 
-  const packageJSON = JSON.parse(
-    await fs.promises.readFile(originalPackageJSONPath, "utf-8"),
-  ) as PackageJSON;
+  const promises = moduleDirs.map(async moduleDir => {
+    const typesPath = path.join(moduleDir, "index.d.ts");
+    const packageJSONPath = path.join(moduleDir, "package.json");
 
-  await fs.promises.writeFile(
-    distPackageJSONPath,
-    JSON.stringify(
-      {
-        sideEffects: false,
-        engines: packageJSON.engines,
-        name: packageJSON.name,
-        type: packageJSON.type,
-        version: packageJSON.version,
-        license: packageJSON.license,
-        homepage: packageJSON.homepage,
-        description: packageJSON.description,
-        keywords: packageJSON.keywords,
-        repository: packageJSON.repository,
-        dependencies: packageJSON.dependencies,
-        peerDependencies: packageJSON.peerDependencies,
-        peerDependenciesMeta: packageJSON.peerDependenciesMeta,
-        ...packageJSONOptions,
-      },
-      null,
-      2,
-    ),
-  );
+    return fs.promises.writeFile(
+      packageJSONPath,
+      JSON.stringify(
+        {
+          sideEffects: false,
+          types: fileExists(typesPath) ? "./index.d.ts" : undefined,
+          main: "./index.js",
+        },
+        null,
+        2,
+      ),
+    );
+  });
+
+  await Promise.all(promises);
+  console.log("✅ module packages created.");
+};
+
+export const toPascalCase = (str: string, splitRegex: RegExp | string) => {
+  const baseCase = str.split(splitRegex);
+
+  return baseCase
+    .map(part => part.charAt(0).toUpperCase() + part.substring(1))
+    .join("");
 };
 /* eslint-enable no-console */

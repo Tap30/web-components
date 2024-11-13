@@ -23,13 +23,18 @@ export default config(
       parserOptions: {
         tsconfigRootDir: import.meta.dirname,
         project: true,
-        projectService: true,
+        projectService: {
+          defaultProject: "./tsconfig.json",
+          allowDefaultProject: ["playground/vite.config.ts"],
+        },
         sourceType: "module",
       },
     },
   },
   {
-    plugins: { "eslint-comments": commentsPlugin },
+    plugins: {
+      "eslint-comments": commentsPlugin,
+    },
     rules: {
       "eslint-comments/disable-enable-pair": "error",
       "eslint-comments/no-aggregating-enable": "error",

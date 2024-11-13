@@ -1,0 +1,33 @@
+{
+  "sideEffects": false,
+  "name": "@tapsioss/web-icons",
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "./dist/**/*.js",
+    "./dist/**/*.d.ts",
+    "./dist/**/package.json"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "scripts": {
+    "build": "tsx ./scripts/build.ts",
+    "release": "pnpm publish . --tag latest --access public"
+  },
+  "dependencies": {
+    "@tapsioss/icons": "workspace:*"
+  }
+}

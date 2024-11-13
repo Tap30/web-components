@@ -9,12 +9,9 @@ export { Slots } from "./constants";
 /**
  * @summary Display chat-bubble-in element
  *
- * @prop {string} timestamp - The timestamp of chat element.
+ * @prop {string} [timestamp=""] - The timestamp of chat element.
  * @prop {"sent" | "seen" | "pending" | "failed"} [status="sent"] - The status of the chat element.
- * @prop {boolean} [fullyRounded=false] - Whether or not the bubble should be fully rounded.
- *
- * @csspart [root] - The root of the element.
- * @csspart [base] - The base-bubble element.
+ * @prop {boolean} [fully-rounded=false] - Whether or not the bubble should be fully rounded.
  */
 @customElement("tap-chat-bubble-in")
 export class TapChatBubbleIn extends ChatBubbleIn {
@@ -24,13 +21,9 @@ export class TapChatBubbleIn extends ChatBubbleIn {
 /**
  * @summary Display chat-bubble-out element
  *
- * @prop {string} timestamp - The timestamp of chat element.
- * @prop {string} [avatarSrc] - The source of the avatar image.
- * @prop {boolean} [fullyRounded=false] - Whether or not the bubble should be fully rounded.
- *
- * @csspart [root] - The root of the element.
- * @csspart [avatar] - The avatar element.
- * @csspart [base] - The base-bubble element.
+ * @prop {string} [timestamp=""] - The timestamp of chat element.
+ * @prop {string} [avatar-src=""] - The source of the avatar image.
+ * @prop {boolean} [fully-rounded=false] - Whether or not the bubble should be fully rounded.
  */
 @customElement("tap-chat-bubble-out")
 export class TapChatBubbleOut extends ChatBubbleOut {
