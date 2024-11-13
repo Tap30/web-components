@@ -25,7 +25,7 @@ export default config(
         project: true,
         projectService: {
           defaultProject: "./tsconfig.json",
-          allowDefaultProject: ["dev/vite.config.ts"],
+          allowDefaultProject: ["playground/vite.config.ts"],
         },
         sourceType: "module",
       },
