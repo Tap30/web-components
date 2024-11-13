@@ -82,7 +82,7 @@ const extractPathsInfo = (svgData: string) => {
 };
 
 const generatePaths = async () => {
-  console.log("🧱 generating paths...");
+  console.log("🧩 generating paths...");
 
   await ensureDirExists(distDir);
   await fs.writeFile(pathsJSONFile, "{", { encoding: "utf-8" });
