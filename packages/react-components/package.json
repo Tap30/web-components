@@ -2,7 +2,16 @@
   "name": "@tapsioss/react-components",
   "version": "0.1.0",
   "type": "module",
-  "scripts": {},
-  "devDependencies": {},
-  "dependencies": {}
+  "scripts": {
+    "generate": "tsx ./scripts/generate.ts",
+    "build": "",
+    "release": "pnpm publish . --tag latest --access public"
+  },
+  "peerDependencies": {
+    "react": ">=16.8"
+  },
+  "dependencies": {
+    "@lit/react": "^1.0.6",
+    "@tapsioss/web-components": "*"
+  }
 }
