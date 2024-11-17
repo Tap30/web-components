@@ -18,7 +18,9 @@
   },
   "scripts": {
     "generate": "tsx ./scripts/generate.ts",
+    "prebuild": "pnpm generate",
     "build": "tsx ./scripts/build.ts",
+    "prerelease": "pnpm build",
     "release": "pnpm publish . --tag latest --access public"
   },
   "peerDependencies": {
