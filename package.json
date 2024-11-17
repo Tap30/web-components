@@ -23,6 +23,7 @@
     "react-icons:release": "pnpm --filter @tapsioss/react-icons run release",
     "packages:dev": "pnpm run -r --parallel dev",
     "packages:build": "pnpm run -r --filter=!@tapsioss/playground build",
+    "prepackages:release": "pnpm packages:build",
     "packages:release": "pnpm run -r --filter=!@tapsioss/playground release",
     "dev": "pnpm run packages:dev",
     "test": "pnpm run -r --parallel test",
