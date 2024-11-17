@@ -12,15 +12,15 @@ export default css`
   }
 
   :host {
-    display: inline-flex;
+    display: inline-block;
   }
 
-  .root:not(.dot).medium {
+  .root:not(.dot).md {
     height: 1.5rem;
     min-width: 1.5rem;
   }
 
-  .root:not(.dot).small {
+  .root:not(.dot).sm {
     height: 1.25rem;
     min-width: 1.25rem;
   }
@@ -81,6 +81,8 @@ export default css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
+    vertical-align: middle;
 
     gap: var(--tap-sys-spacing-2);
 

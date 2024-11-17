@@ -22,7 +22,7 @@ export class Badge extends LitElement {
   public priority: "high" | "low" = "high";
 
   @property({ type: String })
-  public size: "medium" | "small" = "medium";
+  public size: "md" | "sm" = "md";
 
   @state()
   private _hasIcon = false;
