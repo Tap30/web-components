@@ -1,0 +1,6 @@
+const __{{componentName}} = createComponent({
+  tagName: "{{elementTag}}",
+  elementClass: {{elementClass}},
+  react: React,
+  events: {{events}},
+});
