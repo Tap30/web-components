@@ -176,8 +176,8 @@ importers:
         specifier: ^1.0.6
         version: 1.0.6(@types/react@18.3.12)
       '@tapsioss/web-components':
-        specifier: '*'
-        version: 0.1.0
+        specifier: workspace:*
+        version: link:../web-components
       react:
         specifier: '>=16.8'
         version: 18.3.1
@@ -1132,10 +1132,6 @@ packages:
 
   '@tapsioss/icons@0.0.0-alpha-8':
     resolution: {integrity: sha512-IJzQhda1Y4QgBGxBn2u+Lrv8T7WfpCPmGjzuZ/yK7eVJJw0fufEQ/HBDmDAvoXnh3veCY5C0UV30pg25EQcHqw==}
-
-  '@tapsioss/web-components@0.1.0':
-    resolution: {integrity: sha512-lIhZ0S1+wyC6DTejesZz/nsNQMuNhsRk4ZKSSPay+e0nbxgpseDqFVBq6ixXTPIi5wcUzZJ98VhfuLOhW2V8Wg==}
-    engines: {node: '>=20'}
 
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
@@ -4718,12 +4714,6 @@ snapshots:
       - supports-color
       - typescript
       - vite
-
-  '@tapsioss/web-components@0.1.0':
-    dependencies:
-      '@floating-ui/dom': 1.6.12
-      lit: 3.2.1
-      tslib: 2.8.1
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
