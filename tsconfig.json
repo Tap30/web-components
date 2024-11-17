@@ -42,6 +42,9 @@
       "@tapsioss/react-icons/*": ["./packages/react-icons/dist/*"],
       // Web Components
       "@tapsioss/web-components/*": ["./packages/web-components/dist/*"],
+      // React Components
+      "@tapsioss/react-components": ["./packages/react-components/dist"],
+      "@tapsioss/react-components/*": ["./packages/react-components/dist/*"],
       // Tokens
       "@tapsioss/theme": ["./packages/theme/dist/index.css"]
     }

@@ -2,7 +2,32 @@
   "name": "@tapsioss/react-components",
   "version": "0.1.0",
   "type": "module",
-  "scripts": {},
-  "devDependencies": {},
-  "dependencies": {}
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "./dist/**/*.js",
+    "./dist/**/*.d.ts",
+    "./dist/**/package.json"
+  ],
+  "exports": {
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "scripts": {
+    "generate": "tsx ./scripts/generate.ts",
+    "prebuild": "pnpm generate",
+    "build": "tsx ./scripts/build.ts",
+    "prerelease": "pnpm build",
+    "release": "pnpm publish . --tag latest --access public"
+  },
+  "peerDependencies": {
+    "react": ">=16.8"
+  },
+  "dependencies": {
+    "@lit/react": "^1.0.6",
+    "@tapsioss/web-components": "workspace:*"
+  }
 }
