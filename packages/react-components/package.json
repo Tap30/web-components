@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "generate": "tsx ./scripts/generate.ts",
-    "build": "",
+    "build": "tsx ./scripts/build.ts",
     "release": "pnpm publish . --tag latest --access public"
   },
   "peerDependencies": {
