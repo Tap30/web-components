@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
 import { exec } from "node:child_process";
 import * as path from "node:path";
+import { cwd } from "node:process";
 import { promisify } from "node:util";
 import { getFileMeta } from "./utils";
 
 const { dirname } = getFileMeta(import.meta.url);
 
 const workspaceDir = path.resolve(dirname, "..");
-const distDir = path.relative(workspaceDir, "dist");
+const distDir = path.relative(cwd(), path.join(workspaceDir, "dist"));
 
 const entrypoint = path.resolve(workspaceDir, "./packages/web-components/src");
 
