@@ -2,6 +2,20 @@
   "name": "@tapsioss/react-components",
   "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "./dist/**/*.js",
+    "./dist/**/*.d.ts",
+    "./dist/**/package.json"
+  ],
+  "exports": {
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
   "scripts": {
     "generate": "tsx ./scripts/generate.ts",
     "build": "tsx ./scripts/build.ts",
