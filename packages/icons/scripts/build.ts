@@ -6,7 +6,6 @@ import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { promisify } from "node:util";
 import {
-  createModulePackages,
   ensureDirExists,
   getFileMeta,
   toPascalCase,
@@ -84,7 +83,9 @@ const extractPathsInfo = (svgData: string) => {
 const generatePaths = async () => {
   console.log("🧩 generating paths...");
 
+  await execCmd(["shx", "rm", "-rf", distDir].join(" "));
   await ensureDirExists(distDir);
+
   await fs.writeFile(pathsJSONFile, "{", { encoding: "utf-8" });
 
   const svgs = await globAsync(path.join(iconsDir, "**/*.svg"));
@@ -134,9 +135,7 @@ const generatePaths = async () => {
 
 void (async () => {
   console.time("build");
-  await execCmd(["shx", "rm", "-rf", distDir].join(" "));
   await generatePaths();
-  await createModulePackages(distDir);
   console.timeEnd("build");
 })();
 /* eslint-enable no-console */

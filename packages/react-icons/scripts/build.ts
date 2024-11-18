@@ -5,11 +5,7 @@ import { exec } from "node:child_process";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { promisify } from "node:util";
-import {
-  createModulePackages,
-  ensureDirExists,
-  getFileMeta,
-} from "../../../scripts/utils";
+import { ensureDirExists, getFileMeta } from "../../../scripts/utils";
 
 const execCmd = promisify(exec);
 
@@ -26,6 +22,7 @@ const baseIconFile = path.join(packageDir, "src/base-icon.tsx");
 const generateComponents = async () => {
   console.log("🧩 generating react icons...");
 
+  await execCmd(["shx", "rm", "-rf", distDir].join(" "));
   await ensureDirExists(distDir);
 
   const iconTemplateStr = await fs.readFile(iconTemplate, {
@@ -89,9 +86,7 @@ const generateComponents = async () => {
 
 void (async () => {
   console.time("build");
-  await execCmd(["shx", "rm", "-rf", distDir].join(" "));
   await generateComponents();
-  await createModulePackages(distDir);
   console.timeEnd("build");
 })();
 /* eslint-enable no-console */
