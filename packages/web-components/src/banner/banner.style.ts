@@ -1,72 +1,80 @@
 import { css } from "lit";
 
 export default css`
-  :host {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
-  }
-
-  :host *,
-  :host *::before,
-  :host *::after {
-    box-sizing: inherit;
   }
 
   [hidden] {
     display: none !important;
   }
 
-  .banner {
-    padding: var(--tap-sys-spacing-6);
-    background-color: var(--tap-banner-color-surface);
-    border-radius: var(--tap-sys-radius-4);
-    text-align: right;
+  :host {
+    display: block;
+  }
 
-    background-image: var(--tap-banner-background-image);
+  .root {
+    --banner-content-width: calc(100% - 7.75rem);
+
+    background-color: var(--banner-color-surface);
+    border-radius: var(--tap-sys-radius-4);
+
+    vertical-align: middle;
+
+    background-image: var(--banner-background-image);
     background-position: left bottom;
-    background-size: 30% auto;
+    background-size: contain;
     background-repeat: no-repeat;
 
-    margin: var(--tap-sys-spacing-4, --tap-sys-spacing-6);
+    padding: var(--tap-sys-spacing-6);
+
+    height: 9.25rem;
   }
 
-  .hero {
+  .root.hero {
+    --banner-content-width: calc(100% - 7.5rem);
+
     border-radius: 0;
-    margin: 0;
+
+    height: auto;
+    min-height: 10rem;
   }
 
-  .banner h4 {
-    color: var(--tap-banner-color-content);
-    font-family: var(
-      --tap-sys-typography-headline-xs-font,
-      --tap-sys-font-family
-    );
+  .heading {
+    color: var(--banner-color-content);
+    font-family: var(--tap-sys-font-family);
     line-height: var(--tap-sys-typography-headline-xs-height);
     font-size: var(--tap-sys-typography-headline-xs-size);
     font-weight: var(--tap-sys-typography-headline-xs-weight);
-    margin: 0 0 var(--tap-sys-spacing-3);
   }
 
-  .banner p {
-    color: var(--tap-banner-color-content);
-    font-family: var(--tap-sys-typography-body-xs-font, --tap-sys-font-family);
+  .description {
+    color: var(--banner-color-content);
+    font-family: var(--tap-sys-font-family);
     line-height: var(--tap-sys-typography-body-xs-height);
     font-size: var(--tap-sys-typography-body-xs-size);
     font-weight: var(--tap-sys-typography-body-xs-weight);
-    margin: 0;
+  }
+
+  .heading + .description {
+    margin-top: var(--tap-sys-spacing-3);
   }
 
   .content {
-    width: 75%;
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    width: var(--banner-content-width);
   }
 
-  /* TODO: remove style if not slotted */
-  .action {
+  .root.hero * + .action {
     margin-top: var(--tap-sys-spacing-5);
   }
 
-  .extra {
-    display: flex;
-    margin-bottom: var(--tap-sys-spacing-4);
-    min-height: var(--tap-sys-spacing-8);
+  .action {
+    margin-top: auto;
   }
 `;
