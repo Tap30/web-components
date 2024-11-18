@@ -1,70 +1,139 @@
-import { LitElement, type PropertyValues, html, nothing } from "lit";
-import { property } from "lit/decorators.js";
+import { LitElement, type PropertyValues, html } from "lit";
+import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
+import { getRenderRootSlot, runAfterRepaint } from "../utils";
+import {
+  DEFAULT_BACKGROUND_COLOR,
+  DEFAULT_TEXT_COLOR,
+  Slots,
+} from "./constants";
 
 export class Banner extends LitElement {
+  /**
+   * The heading text to display in the banner.
+   */
   @property()
   public heading?: string;
 
+  /**
+   * The description text to display in the banner.
+   */
   @property()
   public description?: string;
 
+  /**
+   * The URL of the background image to display in the banner.
+   */
   @property()
   public image?: string;
 
-  @property({ type: Boolean, attribute: "full-width" })
-  public fullWidth = false;
-
+  /**
+   * The variant style of the banner.
+   */
   @property()
   public variant: "default" | "hero" = "default";
 
+  /**
+   * The background color of the banner.
+   */
   @property({ attribute: "background-color" })
-  public backgroundColor?: string;
+  public backgroundColor?: string = DEFAULT_BACKGROUND_COLOR;
 
+  /**
+   * The text color of the banner.
+   */
   @property({ attribute: "text-color" })
-  public textColor?: string;
+  public textColor?: string = DEFAULT_TEXT_COLOR;
 
-  protected override updated(changed: PropertyValues): void {
-    if (changed.has("backgroundColor") && !!this.backgroundColor) {
+  @state()
+  private _hasAction = false;
+
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+
+    if (changed.has("backgroundColor")) {
+      const token = "--banner-color-surface";
+
       this.style.setProperty(
-        "--tap-banner-color-surface",
-        this.backgroundColor,
+        token,
+        this.backgroundColor ? this.backgroundColor : DEFAULT_BACKGROUND_COLOR,
       );
     }
 
-    if (changed.has("textColor") && !!this.textColor) {
-      this.style.setProperty("--tap-banner-color-content", this.textColor);
-    }
+    if (changed.has("textColor")) {
+      const token = "--banner-color-content";
 
-    if (changed.has("image") && !!this.image) {
       this.style.setProperty(
-        "--tap-banner-background-image",
-        `url(${this.image})`,
+        token,
+        this.textColor ? this.textColor : DEFAULT_TEXT_COLOR,
       );
     }
+
+    if (changed.has("image")) {
+      const token = "--banner-background-image";
+
+      if (this.image) {
+        this.style.setProperty(token, `url(${this.image})`);
+      } else {
+        this.style.removeProperty(token);
+      }
+    }
+
+    runAfterRepaint(() => {
+      const actionSlot = getRenderRootSlot(this.renderRoot, Slots.ACTION);
+
+      if (!actionSlot) return;
+
+      this._hasAction = actionSlot.assignedNodes().length > 0;
+    });
+  }
+
+  private _renderHeading() {
+    if (!this.heading) return null;
+
+    return html`
+      <strong
+        class="heading"
+        part="heading"
+      >
+        ${this.heading}
+      </strong>
+    `;
+  }
+
+  private _renderDescription() {
+    if (!this.description) return null;
+
+    return html`
+      <div
+        class="description"
+        part="description"
+      >
+        ${this.description}
+      </div>
+    `;
   }
 
   protected override render() {
+    const rootClasses = classMap({
+      root: true,
+      [this.variant]: true,
+    });
+
     return html`
       <div
         role="banner"
-        class=${classMap({
-          banner: true,
-          hero: this.variant === "hero",
-        })}
+        class=${rootClasses}
+        part="root"
       >
-        ${this.variant === "hero"
-          ? html`
-              <div class="extra">
-                <slot name="extra"></slot>
-              </div>
-            `
-          : nothing}
         <div class="content">
-          ${this.heading ? html`<h4>${this.heading}</h4>` : nothing}
-          ${this.description ? html`<p>${this.description}</p>` : nothing}
-          <div class="action">
-            <slot></slot>
+          ${this._renderHeading()}${this._renderDescription()}
+          <div
+            class=${Slots.ACTION}
+            part=${Slots.ACTION}
+            ?hidden=${!this._hasAction}
+          >
+            <slot name=${Slots.ACTION}></slot>
           </div>
         </div>
       </div>
