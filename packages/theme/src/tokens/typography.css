@@ -24,6 +24,11 @@
   --tap-sys-typography-body-lg-weight: 400;
 
   /* label */
+  --tap-sys-typography-label-xxs-font: var(--tap-sys-font-family);
+  --tap-sys-typography-label-xxs-size: 0.625rem;
+  --tap-sys-typography-label-xxs-height: 1.6;
+  --tap-sys-typography-label-xxs-weight: 500;
+
   --tap-sys-typography-label-xs-font: var(--tap-sys-font-family);
   --tap-sys-typography-label-xs-size: 0.75rem;
   --tap-sys-typography-label-xs-height: 2;
