@@ -17,9 +17,10 @@
     }
   },
   "scripts": {
+    "clear": "shx rm -rf dist",
     "generate": "tsx ./scripts/generate.ts",
-    "prebuild": "pnpm generate",
-    "build": "tsx ./scripts/build.ts",
+    "prebuild": "run-p clear generate",
+    "build": "tsc --project ./tsconfig.build.json",
     "prerelease": "pnpm build",
     "release": "pnpm publish . --tag latest --access public"
   },
