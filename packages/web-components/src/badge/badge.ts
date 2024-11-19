@@ -8,19 +8,34 @@ import { Slots } from "./constants";
 type ClassMap = DirectiveResult<typeof ClassMapDirective>;
 
 export class Badge extends LitElement {
+  /**
+   * The value of the badge.
+   */
   @property({ type: String })
   public value: string | number = "";
 
+  /**
+   * The variant of the badge.
+   */
   @property({ type: String })
   public variant: "pill" | "numeral" | "dot" = "pill";
 
+  /**
+   * The color of the badge.
+   */
   @property({ type: String })
   public color: "success" | "error" | "info" | "warning" | "neutral" =
     "neutral";
 
+  /**
+   * The priority level of the badge.
+   */
   @property({ type: String })
   public priority: "high" | "low" = "high";
 
+  /**
+   * The size of the badge.
+   */
   @property({ type: String })
   public size: "md" | "sm" = "md";
 
