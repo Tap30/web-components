@@ -1,5 +1,6 @@
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import "../spinner";
 
@@ -35,7 +36,7 @@ export abstract class BaseButton extends LitElement {
   public loading = false;
 
   @property({ reflect: true })
-  public size: "small" | "medium" | "large" = "medium";
+  public size: "sm" | "md" | "lg" = "md";
 
   @property({ reflect: true })
   public variant:
@@ -52,16 +53,22 @@ export abstract class BaseButton extends LitElement {
   }
 
   private _renderLoadingContent = () => {
+    // TODO: rename the variant names of spinner component
     return html`
       <div class="spinner">
         <tap-spinner
-          size=${ifDefined(this.size === "small" ? "small" : undefined)}
+          size=${ifDefined(this.size === "sm" ? "small" : undefined)}
         ></tap-spinner>
       </div>
       <div class="content">
         <slot></slot>
       </div>
     `;
+  };
+
+  private _renderContent = () => {
+    if (this.loading) return this._renderLoadingContent();
+    return html`<div class="content"><slot></slot></div>`;
   };
 
   private _handleClick = () => {
@@ -75,11 +82,17 @@ export abstract class BaseButton extends LitElement {
   };
 
   protected override render() {
+    const rootClasses = classMap({
+      root: true,
+      loading: this.loading,
+      [this.size]: true,
+      [this.variant]: true,
+    });
+
     return html`
       <button
         id="button"
-        class="button"
-        role="button"
+        class=${rootClasses}
         part="button"
         @click=${this._handleClick}
         ?disabled=${this.disabled}
@@ -91,8 +104,8 @@ export abstract class BaseButton extends LitElement {
         aria-labelledby=${nothing}
         aria-describedby=${nothing}
       >
-        <span class="cover"></span>
-        ${this.loading ? this._renderLoadingContent() : html` <slot></slot>`}
+        <span class="overlay"></span>
+        ${this._renderContent()}
       </button>
     `;
   }

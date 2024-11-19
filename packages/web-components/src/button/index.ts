@@ -12,7 +12,7 @@ import styles from "./button.style";
  * @prop {string} [name] - The name associated with the button.
  * @prop {string} [label] - The accessible label for the button.
  * @prop {boolean} [loading=false] - Whether the button is in a loading state.
- * @prop {'small' | 'medium' | 'large'} [size='medium'] - The size of the button.
+ * @prop {'sm' | 'md' | 'lg'} [size='md'] - The size of the button.
  * @prop {'primary' | 'ghost' | 'naked' | 'elevated' | 'destructive' | 'brand'} [variant='primary'] - The variant style of the button.
  *
  * @slot - buttons content
