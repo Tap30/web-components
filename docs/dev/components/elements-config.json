@@ -195,9 +195,6 @@
       "icon": {
         "profile": "<tap-icon-person slot=\"icon\"></tap-icon-person>"
       },
-      "active-icon": {
-        "profile": "<tap-icon-person-fill slot=\"active-icon\"></tap-icon-person-fill>"
-      },
       "default": {
         "profile": "پروفایل"
       }
@@ -206,7 +203,7 @@
   "tap-bottom-navigation": {
     "slotKnobs": {
       "default": {
-        "sample": "<tap-bottom-navigation-item>\n      پروفایل\n      <tap-icon-person slot=\"icon\"></tap-icon-person>\n      <tap-icon-person-fill slot=\"active-icon\"></tap-icon-person-fill>\n    </tap-bottom-navigation-item>\n    <tap-bottom-navigation-item>\n      باشگاه مشتریان\n      <tap-icon-spark slot=\"icon\"></tap-icon-spark>\n      <tap-icon-spark-fill slot=\"active-icon\"></tap-icon-spark-fill>\n    </tap-bottom-navigation-item>\n    <tap-bottom-navigation-item>\n      تخفیف\u200Cها\n      <tap-icon-coupon slot=\"icon\"></tap-icon-coupon>\n      <tap-icon-coupon-fill slot=\"active-icon\"></tap-icon-coupon-fill>\n    </tap-bottom-navigation-item>\n    <tap-bottom-navigation-item>\n      سرویس\u200Cها\n      <tap-icon-square-grid-rounded slot=\"icon\"></tap-icon-square-grid-rounded>\n      <tap-icon-square-grid-rounded-fill\n        slot=\"active-icon\"\n      ></tap-icon-square-grid-rounded-fill>\n    </tap-bottom-navigation-item>"
+        "sample": "<tap-bottom-navigation-item value=\"1\">پروفایل<tap-icon-person slot=\"icon\"></tap-icon-person></tap-bottom-navigation-item><tap-bottom-navigation-item value=\"2\">باشگاه مشتریان<tap-icon-spark slot=\"icon\"></tap-icon-spark>"
       }
     }
   },
