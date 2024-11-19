@@ -4,12 +4,21 @@ import { classMap } from "lit/directives/class-map.js";
 import { Slots } from "./constants";
 
 export class BadgeWrapper extends LitElement {
+  /**
+   * The shape of the anchor.
+   */
   @property({ type: String, attribute: "anchor-shape" })
   public anchorShape: "rectangle" | "circle" | "pill" = "rectangle";
 
+  /**
+   * The horizontal placement of the badge.
+   */
   @property({ type: String, attribute: "badge-side" })
   public badgeSide: "left" | "right" = "right";
 
+  /**
+   * The vertical alignment of the badge.
+   */
   @property({ type: String, attribute: "badge-alignment" })
   public badgeAlignment: "top" | "middle" = "top";
 
