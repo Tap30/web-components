@@ -72,5 +72,8 @@ export const getRenderRootSlot = (
   renderRoot: DocumentFragment | HTMLElement,
   slotName: string,
 ) => {
-  return renderRoot.querySelector<HTMLSlotElement>(`slot[name="${slotName}"]`);
+  const query =
+    slotName === "" ? "slot:not([name])" : `slot[name="${slotName}"]`;
+
+  return renderRoot.querySelector<HTMLSlotElement>(query);
 };
