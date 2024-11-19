@@ -1,25 +1,53 @@
 import { customElement } from "lit/decorators.js";
-import { BottomNavigation } from "./bottom-navigation.js";
-import styles from "./bottom-navigation.style.js";
+import { BottomNavigation } from "./bottom-navigation";
+import bottomNavigationStyles from "./bottom-navigation.style";
+import {
+  ActivateEvent,
+  BottomNavigationItem,
+  DeactivateEvent,
+  Slots as ItemSlots,
+} from "./item";
+import itemStyles from "./item/item.style";
+
+export { Slots } from "./constants";
+export { ActivateEvent, DeactivateEvent, ItemSlots };
 
 /**
- * @summary A bottom navigation bar that contains multiple navigation items.
+ * @summary Represents a single item in a bottom navigation bar.
  *
- * @slot - The default slot for adding `tap-bottom-navigation-item` elements.
+ * @tag tap-bottom-navigation-item
  *
- * @csspart [bottom-navigation] - The main container for the bottom navigation bar.
+ * @slot icon - The slot for the icon element.
+ * @slot - The default slot for the content/label.
  *
- * @cssprop [--tap-bottom-navigation-background=--tap-sys-color-surface-secondary] - The background color of the navigation bar.
- * @cssprop [--tap-bottom-navigation-border-top-width=--tap-sys-stroke-1] - The width of the top border of the navigation bar.
- * @cssprop [--tap-bottom-navigation-border-top-color=--tap-sys-color-border-primary] - The color of the top border of the navigation bar.
+ * @fires {ActivateEvent} activate
+ * @fires {DeactivateEvent} deactivate
+ *
+ * @prop {boolean} [active=false] - Indicates whether the navigation item is active or not.
+ * @prop {string} value - The value associated with the item. This value has to be unique among sibling items.
+ */
+@customElement("tap-bottom-navigation-item")
+export class TapBottomNavigationItem extends BottomNavigationItem {
+  public static override readonly styles = [itemStyles];
+}
+
+/**
+ * @summary The bottom navigation bar that contains multiple navigation items.
+ *
+ * @tag tap-bottom-navigation
+ *
+ * @slot - The default slot for navigation items.
+ *
+ * @prop {string} [screen-reader-label] - The label used for screen readers.
  */
 @customElement("tap-bottom-navigation")
 export class TapBottomNavigation extends BottomNavigation {
-  public static override readonly styles = [styles];
+  public static override readonly styles = [bottomNavigationStyles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
     "tap-bottom-navigation": TapBottomNavigation;
+    "tap-bottom-navigation-item": TapBottomNavigationItem;
   }
 }
