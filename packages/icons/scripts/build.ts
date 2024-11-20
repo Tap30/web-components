@@ -46,6 +46,8 @@ const extractPathsInfo = (svgData: string) => {
     .replace(/<\/svg>/g, "")
     // Ensure proper closing tags with spaces
     .replace(/"\/>/g, '" />')
+    // Normalize closing tags for <path>
+    .replace(/<path([^>]*)><\/path>/g, "<path$1 />")
     // Remove fill attributes to make them more generic
     .replace(/ fill=".+?"/g, "")
     // Remove fill-opacity attributes
@@ -58,7 +60,7 @@ const extractPathsInfo = (svgData: string) => {
   const pathsAsString = paths.trim();
 
   // Split paths into individual path elements
-  const pathElements = pathsAsString.split(/<\/path>/).filter(Boolean);
+  const pathElements = pathsAsString.split(/\/>/).filter(Boolean);
 
   const svgPathDataArray: SVGPathInfo[] = pathElements.map(element => {
     const dMatch = element.match(/ d="([^"]+)"/);
