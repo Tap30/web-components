@@ -47,7 +47,7 @@ const generateComponents = async () => {
       iconTemplateStr,
       {
         name: iconInfo.pascalName,
-        paths: paths.join(),
+        paths: paths.join(""),
         elementTag: iconInfo.kebabName,
       },
       {},
