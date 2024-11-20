@@ -19,6 +19,10 @@ const packageDir = path.resolve(dirname, "..");
 const workspaceDir = path.resolve(packageDir, "../../");
 const srcDir = path.join(packageDir, "src");
 const templatesDir = path.join(packageDir, "templates");
+const webComponentsSrcDir = path.join(
+  workspaceDir,
+  "packages/web-components/src",
+);
 
 const barrelFilePath = path.join(srcDir, "index.ts");
 const cemGeneratorPath = path.join(workspaceDir, "scripts/generate-cem.ts");
@@ -78,7 +82,8 @@ const transformToComponentData = new Transform({
 
       const moduleSrc = module.path;
       const moduleDir = path.dirname(moduleSrc);
-      const moduleBasename = path.basename(moduleDir);
+      const relativePath = path.relative(webComponentsSrcDir, moduleDir);
+
       const ceDefinitions = (module.exports ?? []).filter(
         ex => ex.kind === "custom-element-definition",
       );
@@ -89,7 +94,7 @@ const transformToComponentData = new Transform({
         continue;
       }
 
-      const webComponentResolutionPath = `@tapsioss/web-components/${moduleBasename}`;
+      const webComponentResolutionPath = `@tapsioss/web-components/${relativePath}`;
 
       for (const ceDefinition of ceDefinitions) {
         const elementTag = ceDefinition.name;
