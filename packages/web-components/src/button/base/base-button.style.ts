@@ -111,8 +111,8 @@ export default css`
   }
 
   .root:focus-visible {
-    outline: 2px solid var(--tap-sys-color-border-accent);
-    outline-offset: 1px;
+    outline: 0.125rem solid var(--tap-sys-color-border-accent);
+    outline-offset: 0.0625rem;
   }
 
   .overlay {

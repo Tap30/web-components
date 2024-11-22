@@ -13,7 +13,7 @@ import { Button, standardButtonStyles } from "./standard";
  * @prop {boolean} [disabled=false] - Whether the button is disabled.
  * @prop {'button' | 'submit' | 'reset'} [type] - The type of the button.
  * @prop {string} [value] - The value associated with the button.
- * @prop {string} [name] - The name associat  ed with the button.
+ * @prop {string} [name] - The name associated with the button.
  * @prop {string} [label] - The accessible label for the button.
  * @prop {boolean} [loading=false] - Whether the button is in a loading state.
  * @prop {'sm' | 'md' | 'lg'} [size='md'] - The size of the button.
