@@ -78,13 +78,11 @@ export abstract class BaseButton extends LitElement {
 
   /**
    * The method for rendering the content of the button.
-   * @protected
    */
   protected abstract renderContent(): TemplateResult;
 
   /**
    * The method for rendering the loading state of the button.
-   * @protected
    */
   protected abstract renderLoading(): TemplateResult;
 
