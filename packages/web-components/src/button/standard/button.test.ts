@@ -4,7 +4,7 @@
 
 import { expect, fixture, html, oneEvent } from "@open-wc/testing";
 import sinon from "sinon";
-import "../../dist/button/index.js";
+import "@tapsioss/web-components/button";
 import { type TapButton } from "./index";
 
 describe("Test tap-button", () => {

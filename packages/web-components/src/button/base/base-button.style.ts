@@ -1,14 +1,11 @@
 import { css } from "lit";
 
 export default css`
-  :host {
-    box-sizing: border-box;
-  }
-
+  :host,
   :host *,
   :host *::before,
   :host *::after {
-    box-sizing: inherit;
+    box-sizing: border-box;
   }
 
   [hidden] {
@@ -28,25 +25,20 @@ export default css`
 
   :host([disabled]) {
     cursor: not-allowed;
+  }
+
+  .root:disabled {
     pointer-events: none;
   }
 
-  .root.sm .content {
-    --button-line-height: var(--tap-sys-typography-label-sm-height);
-    --button-font-size: var(--tap-sys-typography-label-sm-size);
-    --button-font-weight: var(--tap-sys-typography-label-sm-weight);
+  .root.sm .icon {
+    --button-icon-size: 1.25rem;
   }
-
-  .root.md .content {
-    --button-line-height: var(--tap-sys-typography-label-sm-height);
-    --button-font-size: var(--tap-sys-typography-label-sm-size);
-    --button-font-weight: var(--tap-sys-typography-label-sm-weight);
+  .root.md .icon {
+    --button-icon-size: 1.5rem;
   }
-
-  .root.lg .content {
-    --button-line-height: var(--tap-sys-typography-label-lg-height);
-    --button-font-size: var(--tap-sys-typography-label-lg-size);
-    --button-font-weight: var(--tap-sys-typography-label-lg-weight);
+  .root.lg .icon {
+    --button-icon-size: 1.5rem;
   }
 
   .root.primary {
@@ -67,7 +59,7 @@ export default css`
   .root.elevated {
     --button-background: var(--tap-sys-color-surface-primary);
     --button-color: var(--tap-sys-color-content-primary);
-    box-shadow: 0 4px 16px 0 #0000001a;
+    box-shadow: 0 0.25rem 1rem 0 #0000001a;
   }
 
   .root.destructive {
@@ -100,7 +92,7 @@ export default css`
 
   .root {
     position: relative;
-    cursor: inherit;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -110,7 +102,7 @@ export default css`
     background: transparent;
     text-decoration: none;
     font: inherit;
-    gap: inherit;
+    gap: 1rem;
     width: 100%;
     background: var(--button-background);
     color: var(--button-color);
@@ -132,26 +124,21 @@ export default css`
     opacity: 1;
   }
 
-  .spinner {
-    position: absolute;
+  .icon {
     display: flex;
     align-items: center;
+    justify-content: center;
+    z-index: 2;
+    height: var(--button-icon-size);
+    max-height: var(--button-icon-size);
+    width: var(--button-icon-size);
+    max-width: var(--button-icon-size);
+  }
+
+  .spinner {
+    position: absolute;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-  }
-
-  .content {
-    line-height: var(--button-line-height);
-    font-size: var(--button-font-size);
-    font-weight: var(--button-font-weight);
-    z-index: 2;
-  }
-
-  .root.loading .spinner {
-    visibility: visible;
-  }
-  .root.loading .content {
-    visibility: hidden;
+    transform: translate(-50%, -50%);
   }
 `;

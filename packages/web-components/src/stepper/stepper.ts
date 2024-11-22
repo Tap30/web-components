@@ -2,7 +2,7 @@ import "@tapsioss/icons/dist/icons/minus";
 import "@tapsioss/icons/dist/icons/plus";
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
-import "../icon-button";
+import "../button/iconed";
 
 export class Stepper extends LitElement {
   @property({ type: String })
