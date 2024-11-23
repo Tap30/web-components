@@ -7,17 +7,15 @@ const styles = css`
     box-sizing: border-box;
   }
 
-  .root {
+  :host {
     --chat-bubble-in-icon-color: currentColor;
-
-    display: flex;
   }
 
   .root.seen {
     --chat-bubble-in-icon-color: var(--tap-sys-color-content-on-inverse);
   }
 
-  .root:not(.failed) .base {
+  .root:not(.failed) .content {
     margin-right: var(--tap-sys-spacing-4);
   }
 
@@ -26,8 +24,8 @@ const styles = css`
     align-items: center;
     justify-content: center;
 
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
 
     margin-right: var(--tap-sys-spacing-4);
     margin-left: var(--tap-sys-spacing-4);

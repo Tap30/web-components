@@ -1,5 +1,5 @@
 import { createComponent } from "@lit/react";
-import { TapBottomNavigationItem } from "@tapsioss/web-components/bottom-navigation-item";
+import { TapBottomNavigationItem } from "@tapsioss/web-components/bottom-navigation";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */

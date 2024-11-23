@@ -1,5 +1,5 @@
 import { createComponent } from "@lit/react";
-import { TapChatBubbleOut } from "@tapsioss/web-components/chat-bubble";
+import { TapChatBubbleOut } from "@tapsioss/web-components/chat-bubble/out";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */

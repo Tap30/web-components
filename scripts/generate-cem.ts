@@ -14,6 +14,7 @@ const entrypoint = path.resolve(workspaceDir, "./packages/web-components/src");
 
 const globs: string[] = [
   `${entrypoint}/**/index.ts`,
+  `${entrypoint}/**/*/index.ts`,
   `!${entrypoint}/utils/**`,
   `!${entrypoint}/internals/**`,
 ];
