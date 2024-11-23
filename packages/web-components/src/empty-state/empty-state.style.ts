@@ -7,6 +7,10 @@ export default css`
     box-sizing: border-box;
   }
 
+  [hidden] {
+    display: none !important;
+  }
+
   .root.auto {
     --empty-state-alignment: start;
   }
