@@ -37,6 +37,7 @@ export default css`
   .root.loading .icon {
     visibility: visible;
   }
+
   .root.loading .content {
     visibility: hidden;
   }

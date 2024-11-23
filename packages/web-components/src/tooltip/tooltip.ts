@@ -8,7 +8,7 @@ import {
 import "@tapsioss/icons/dist/icons/cross";
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property, query, queryAssignedElements } from "lit/decorators.js";
-import "../button/iconed";
+import "../button/icon-button";
 
 export class Tooltip extends LitElement {
   @property({ type: String, reflect: true })

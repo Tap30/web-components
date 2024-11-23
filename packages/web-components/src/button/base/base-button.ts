@@ -19,6 +19,8 @@ export abstract class BaseButton extends LitElement {
 
   /**
    * Whether the button is disabled.
+   *
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
@@ -49,18 +51,21 @@ export abstract class BaseButton extends LitElement {
 
   /**
    * Whether the button is in a loading state.
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public loading = false;
 
   /**
    * The size of the button.
+   * @default "md"
    */
   @property({ reflect: true })
   public size: "sm" | "md" | "lg" = "md";
 
   /**
    * The variant style of the button.
+   * @default "primary"
    */
   @property({ reflect: true })
   public variant:
@@ -86,6 +91,9 @@ export abstract class BaseButton extends LitElement {
    */
   protected abstract renderLoading(): TemplateResult;
 
+  /**
+   * The method for rendering the spinner for loading state.
+   */
   protected renderSpinner() {
     // TODO: rename the variant names of spinner component
     return html`

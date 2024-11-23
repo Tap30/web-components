@@ -10,7 +10,6 @@ const styles = css`
   .root {
     --chat-bubble-out-leading-space: var(--tap-sys-spacing-11);
 
-    display: flex;
     flex-direction: row-reverse;
   }
 

@@ -122,6 +122,7 @@ export default css`
     border-radius: inherit;
     background-color: var(--button-overlay-color);
     z-index: 1;
+    transition: opacity 0.1s;
   }
 
   .root:active .overlay,
@@ -134,6 +135,13 @@ export default css`
     align-items: center;
     justify-content: center;
     z-index: 2;
+    height: var(--button-icon-size);
+    max-height: var(--button-icon-size);
+    width: var(--button-icon-size);
+    max-width: var(--button-icon-size);
+  }
+
+  .icon ::slotted(*) {
     height: var(--button-icon-size);
     max-height: var(--button-icon-size);
     width: var(--button-icon-size);
