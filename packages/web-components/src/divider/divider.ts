@@ -2,7 +2,11 @@ import { LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
 export class Divider extends LitElement {
-  @property({ reflect: true }) type: "thin" | "medium" | "bold" = "medium";
+  /**
+   * The thickness of the divider.
+   */
+  @property({ type: String })
+  public variant: "thin" | "medium" | "thick" = "thin";
 
   public override connectedCallback() {
     super.connectedCallback();
