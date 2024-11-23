@@ -109,13 +109,19 @@ class BaseIcon extends HTMLElement {
 
     this.shadowRoot!.innerHTML = `
       <style>
-        svg {
-          color: currentcolor;
-          fill: currentcolor;
+        :host {
+          color: currentColor;
+
+          display: inline-block;
+
           width: ${width};
           height: ${height};
           ${minWidth ? `min-width: ${minWidth};` : ""}
           ${minHeight ? `min-height: ${minHeight};` : ""}
+        }
+        svg {
+          color: currentcolor;
+          fill: currentcolor;
         }
       </style>
       <svg
