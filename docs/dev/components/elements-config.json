@@ -96,8 +96,8 @@
       "icon": {
         "simple icon": "<tap-icon-target-slash slot=\"icon\" width=\"120\" height=\"120\" color=\"#ff7733\"></tap-icon-map>"
       },
-      "actions": {
-        "multiple action": "<tap-button slot=\"actions\" variant=\"primary\">روشن کن</tap-button>"
+      "action": {
+        "button": "<tap-button slot=\"action\">روشن کن</tap-button>"
       }
     }
   },
