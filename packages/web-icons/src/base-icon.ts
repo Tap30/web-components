@@ -88,8 +88,8 @@ class BaseIcon extends HTMLElement {
       : {
           width: `${Number(size) / 16}rem`,
           height: `${Number(size) / 16}rem`,
-          minWidth: `${Number(size) / 16}rem`,
-          minHeight: `${Number(size) / 16}rem`,
+          maxWidth: `${Number(size) / 16}rem`,
+          maxHeight: `${Number(size) / 16}rem`,
         };
   }
 
@@ -103,19 +103,25 @@ class BaseIcon extends HTMLElement {
   }
 
   protected render() {
-    const { width, height, minWidth, minHeight } = this._getSizeStyles(
+    const { width, height, maxWidth, maxHeight } = this._getSizeStyles(
       this._size,
     );
 
     this.shadowRoot!.innerHTML = `
       <style>
+        :host {
+          color: currentColor;
+
+          display: inline-block;
+
+          width: ${width};
+          height: ${height};
+          ${maxWidth ? `max-width: ${maxWidth};` : ""}
+          ${maxHeight ? `max-height: ${maxHeight};` : ""}
+        }
         svg {
           color: currentcolor;
           fill: currentcolor;
-          width: ${width};
-          height: ${height};
-          ${minWidth ? `min-width: ${minWidth};` : ""}
-          ${minHeight ? `min-height: ${minHeight};` : ""}
         }
       </style>
       <svg
