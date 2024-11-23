@@ -15,21 +15,38 @@ export default css`
     width: 100%;
   }
 
-  .root.full-width ::slotted(tap-chip) {
-    flex: 1 1 0;
+  :host {
+    display: inline-block;
+  }
+
+  .root.horizontal ::slotted(tap-chip) {
+    flex-shrink: 0;
+  }
+
+  .root.vertical ::slotted(tap-chip) {
+    --chip-basis: calc(50% - (var(--tap-sys-spacing-5) / 2));
+
+    flex: 0 0 var(--chip-basis);
+    max-width: var(--chip-basis);
+  }
+
+  .root.horizontal {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .root.vertical {
+    flex-wrap: wrap;
   }
 
   .root {
     display: inline-flex;
     align-items: center;
 
-    gap: var(--tap-sys-spacing-5);
-
     width: 100%;
 
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    gap: var(--tap-sys-spacing-5);
   }
 
   .root::-webkit-scrollbar {
