@@ -11,8 +11,18 @@ export default css`
     display: none !important;
   }
 
+  :host([disabled]) {
+    cursor: not-allowed;
+  }
+
+  :host {
+    display: inline-block;
+  }
+
   .root.disabled {
     --chip-color: var(--tap-sys-color-content-disabled);
+
+    pointer-events: none;
   }
 
   .root.selected {
@@ -32,16 +42,21 @@ export default css`
     --chip-leading-icon-display: flex;
   }
 
-  .root.small {
+  .root.sm {
     --chip-height: 2rem;
     --chip-icon-size: 1.25rem;
     --chip-spacing: var(--tap-sys-spacing-3-1);
   }
 
-  .root.medium {
+  .root.md {
     --chip-height: 2.5rem;
     --chip-icon-size: 1.5rem;
     --chip-spacing: var(--tap-sys-spacing-4);
+  }
+
+  .root:focus-visible {
+    outline: 2px solid var(--tap-sys-color-content-accent);
+    outline-offset: 1px;
   }
 
   .root {
@@ -70,15 +85,18 @@ export default css`
   }
 
   .content {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    flex-shrink: 0;
+    max-width: 100%;
 
     padding: 0 var(--chip-spacing);
 
     font-family: var(--tap-sys-font-family);
     font-size: var(--tap-sys-typography-body-sm-size);
     line-height: var(--tap-sys-typography-body-sm-height);
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .icon {
@@ -90,6 +108,13 @@ export default css`
     max-width: var(--chip-icon-size);
     max-height: var(--chip-icon-size);
     text-align: center;
+  }
+
+  .icon ::slotted(svg) {
+    width: var(--chip-icon-size);
+    height: var(--chip-icon-size);
+    max-width: var(--chip-icon-size);
+    max-height: var(--chip-icon-size);
   }
 
   .icon.leading-icon {
