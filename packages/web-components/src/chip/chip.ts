@@ -1,8 +1,10 @@
-import { LitElement, html, nothing, type PropertyValues } from "lit";
+import { LitElement, html, type PropertyValues } from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { runAfterRepaint } from "../utils";
+import { ifDefined } from "lit/directives/if-defined.js";
+import { getRenderRootSlot, runAfterRepaint } from "../utils";
 import { Slots } from "./constants";
+import Controller from "./Controller";
 
 export class Chip extends LitElement {
   public static override readonly shadowRootOptions = {
@@ -10,14 +12,32 @@ export class Chip extends LitElement {
     delegatesFocus: true,
   };
 
+  /**
+   * Whether the chip is selected or not.
+   */
   @property({ type: Boolean, reflect: true })
   public selected = false;
 
+  /**
+   * Whether the chip is disabled or not.
+   */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
 
+  /**
+   * The size of the chip.
+   */
   @property({ type: String })
-  public size: "small" | "medium" = "medium";
+  public size: "sm" | "md" = "md";
+
+  /**
+   * The value associated with the chip.
+   *
+   * Use it when chips are children of chip-group.
+   * This value has to be unique among sibling chips.
+   */
+  @property({ type: String })
+  public value: string = "";
 
   @state()
   private _hasTrailingIcon = false;
@@ -25,18 +45,20 @@ export class Chip extends LitElement {
   @state()
   private _hasLeadingIcon = false;
 
+  private readonly _controller = new Controller(this);
+
   protected override updated(changedProperties: PropertyValues): void {
     super.updated(changedProperties);
 
     runAfterRepaint(() => {
-      const root = this.renderRoot.querySelector<HTMLElement>(".root");
-
-      const leadingIconSlot = root?.querySelector<HTMLSlotElement>(
-        `slot[name="${Slots.LEADING_ICON}"]`,
+      const leadingIconSlot = getRenderRootSlot(
+        this.renderRoot,
+        Slots.LEADING_ICON,
       );
 
-      const trailingIconSlot = root?.querySelector<HTMLSlotElement>(
-        `slot[name="${Slots.TRAILING_ICON}"]`,
+      const trailingIconSlot = getRenderRootSlot(
+        this.renderRoot,
+        Slots.TRAILING_ICON,
       );
 
       if (!leadingIconSlot || !trailingIconSlot) return;
@@ -46,10 +68,13 @@ export class Chip extends LitElement {
     });
   }
 
-  protected override render() {
-    const { ariaLabel } = this;
+  override focus(options?: FocusOptions): void {
+    this.renderRoot.querySelector<HTMLElement>("#root")?.focus(options);
+  }
 
-    const classes = classMap({
+  protected override render() {
+    const rootClasses = classMap({
+      root: true,
       [this.size]: true,
       disabled: this.disabled,
       selected: this.selected,
@@ -59,12 +84,15 @@ export class Chip extends LitElement {
 
     return html`
       <button
-        class="root ${classes}"
+        id="root"
+        class=${rootClasses}
         part="root"
         ?disabled=${this.disabled}
         tabindex="${this.disabled ? "-1" : "0"}"
-        aria-label=${ariaLabel ?? nothing}
+        aria-label=${ifDefined(this.ariaLabel ?? undefined)}
         aria-pressed=${this.selected}
+        @click=${this._controller.handleClick}
+        @keydown=${this._controller.handleKeyDown}
       >
         <div
           class="icon leading-icon"
