@@ -3,7 +3,7 @@ import { baseButtonStyles } from "../base";
 import { IconButton } from "./icon-button";
 import iconButtonStyles from "./icon-button.style";
 
-export { Slots as IconButtonSlots } from "./constants";
+export { Slots } from "./constants";
 
 /**
  * @summary A customizable icon button component with various styles and states.

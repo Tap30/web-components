@@ -4,7 +4,7 @@ import standardButtonStyles from "./button.style";
 
 import { Button } from "./button";
 
-export { Slots as ButtonSlots } from "./constants";
+export { Slots } from "./constants";
 
 /**
  * @summary A customizable button component with various styles and states.

@@ -1,11 +1,9 @@
 import { css } from "lit";
 
 export default css`
-  :host,
-  :host *,
-  :host *::before,
-  :host *::after {
+  * {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
   }
 
   [hidden] {
@@ -13,14 +11,8 @@ export default css`
   }
 
   :host {
-    cursor: pointer;
     display: inline-flex;
-    user-select: none;
-    text-overflow: ellipsis;
-    place-content: center;
-    place-items: center;
-    position: relative;
-    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
   }
 
   :host([disabled]) {
@@ -31,14 +23,22 @@ export default css`
     pointer-events: none;
   }
 
-  .root.sm .icon {
+  .root.sm {
+    --button-height: 2rem;
     --button-icon-size: 1.25rem;
+    --button-root-padding: 0 var(--tap-sys-spacing-3-1);
   }
-  .root.md .icon {
+
+  .root.md {
+    --button-height: 2.5rem;
     --button-icon-size: 1.5rem;
+    --button-root-padding: 0 var(--tap-sys-spacing-4);
   }
-  .root.lg .icon {
+
+  .root.lg {
     --button-icon-size: 1.5rem;
+    --button-height: 3rem;
+    --button-root-padding: 0 var(--tap-sys-spacing-5);
   }
 
   .root.primary {
@@ -91,28 +91,43 @@ export default css`
   }
 
   .root {
-    position: relative;
     cursor: pointer;
+    user-select: none;
+    text-overflow: ellipsis;
+    position: relative;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     border: none;
     outline: none;
     vertical-align: middle;
     background: transparent;
     text-decoration: none;
-    font: inherit;
+
     gap: 1rem;
     width: 100%;
+    height: var(--button-height);
+    padding: var(--button-root-padding);
+
     background: var(--button-background);
     color: var(--button-color);
-    font-family: var(--tap-font-family, var(--tap-sys-font-family));
+    font-family: var(--tap-sys-font-family);
     border-radius: var(--tap-sys-radius-full);
   }
 
   .root:focus-visible {
-    outline: 0.125rem solid var(--tap-sys-color-content-accent);
-    outline-offset: 0.0625rem;
+    outline: var(--tap-sys-stroke-2) solid var(--tap-sys-color-content-accent);
+    outline-offset: var(--tap-sys-spacing-2);
+  }
+
+  .body {
+    line-height: var(--button-line-height);
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    width: 100%;
   }
 
   .overlay {
@@ -139,6 +154,7 @@ export default css`
     max-height: var(--button-icon-size);
     width: var(--button-icon-size);
     max-width: var(--button-icon-size);
+    font-size: var(--button-icon-size);
   }
 
   .icon ::slotted(*) {
