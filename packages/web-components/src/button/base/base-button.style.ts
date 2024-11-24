@@ -27,7 +27,7 @@ export default css`
     cursor: not-allowed;
   }
 
-  .root:disabled {
+  .root.disabled {
     pointer-events: none;
   }
 
@@ -72,21 +72,21 @@ export default css`
     --button-color: var(--tap-sys-color-content-on-inverse);
   }
 
-  .root:not(.naked):disabled {
+  .root:not(.naked).disabled {
     --button-background: var(--tap-sys-color-surface-disabled);
     --button-color: var(--tap-sys-color-content-disabled);
   }
 
-  .root.naked:disabled {
+  .root.naked.disabled {
     --button-background: transparent;
     --button-color: var(--tap-sys-color-content-disabled);
   }
 
-  .root:not(.primary):active .overlay {
+  .root:not(.disabled):not(.primary):active .overlay {
     --button-overlay-color: var(--tap-sys-color-surface-overlay-light);
   }
 
-  .root.primary:active .overlay {
+  .root:not(.disabled).primary:active .overlay {
     --button-overlay-color: var(--tap-sys-color-surface-inverse-secondary);
   }
 
@@ -111,7 +111,7 @@ export default css`
   }
 
   .root:focus-visible {
-    outline: 0.125rem solid var(--tap-sys-color-border-accent);
+    outline: 0.125rem solid var(--tap-sys-color-content-accent);
     outline-offset: 0.0625rem;
   }
 
@@ -126,7 +126,7 @@ export default css`
   }
 
   .root:active .overlay,
-  .root:disabled .overlay {
+  .root.disabled .overlay {
     opacity: 1;
   }
 

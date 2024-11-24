@@ -1,2 +1,31 @@
-export { IconButton } from "./icon-button";
-export { default as iconButtonStyles } from "./icon-button.style";
+import { customElement } from "lit/decorators.js";
+import { baseButtonStyles } from "../base";
+import { IconButton } from "./icon-button";
+import iconButtonStyles from "./icon-button.style";
+
+export { Slots as IconButtonSlots } from "./constants";
+
+/**
+ * @summary A customizable icon button component with various styles and states.
+ *
+ * @tag tap-icon-button
+ *
+ * @slot - Icon button's content.
+ *
+ * @prop {boolean} [disabled=false] - Whether the button is disabled.
+ * @prop {'button' | 'submit' | 'reset'} [type] - The type of the button.
+ * @prop {string} [label] - The accessible label for the button.
+ * @prop {boolean} [loading=false] - Whether the button is in a loading state.
+ * @prop {'sm' | 'md' | 'lg'} [size='md'] - The size of the button.
+ * @prop {'primary' | 'ghost' | 'naked' | 'elevated' | 'destructive' | 'brand'} [variant='primary'] - The variant style of the button.
+ */
+@customElement("tap-icon-button")
+export class TapIconButton extends IconButton {
+  public static override readonly styles = [baseButtonStyles, iconButtonStyles];
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "tap-icon-button": TapIconButton;
+  }
+}

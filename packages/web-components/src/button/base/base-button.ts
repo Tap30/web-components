@@ -3,19 +3,28 @@ import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import "../../spinner";
+import {
+  type FormSubmitter,
+  type FormSubmitterType,
+  setupFormSubmitter,
+  withElementInternals,
+} from "../../utils";
+import { internals } from "../../utils/mixins/with-element-internals";
 
-export abstract class BaseButton extends LitElement {
+const BaseClass = withElementInternals(LitElement);
+
+export abstract class BaseButton extends BaseClass implements FormSubmitter {
+  static {
+    setupFormSubmitter(BaseButton);
+  }
+
   public static formAssociated = true;
 
-  public static override readonly shadowRootOptions = {
+  public static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
+    mode: "open",
   };
-
-  private readonly _internals!: ElementInternals;
-
-  @property({ reflect: true })
-  public override slot = "";
 
   /**
    * Whether the button is disabled.
@@ -28,20 +37,8 @@ export abstract class BaseButton extends LitElement {
   /**
    * The type of the button.
    */
-  @property({ reflect: true })
-  public type?: "button" | "submit" | "reset";
-
-  /**
-   * The value associated with the button.
-   */
   @property()
-  public value?: string;
-
-  /**
-   * The name associated with the button.
-   */
-  @property()
-  public name?: string;
+  public type: FormSubmitterType = "submit";
 
   /**
    * The accessible label for the button.
@@ -60,14 +57,14 @@ export abstract class BaseButton extends LitElement {
    * The size of the button.
    * @default "md"
    */
-  @property({ reflect: true })
+  @property()
   public size: "sm" | "md" | "lg" = "md";
 
   /**
    * The variant style of the button.
    * @default "primary"
    */
-  @property({ reflect: true })
+  @property()
   public variant:
     | "primary"
     | "ghost"
@@ -78,7 +75,10 @@ export abstract class BaseButton extends LitElement {
 
   constructor() {
     super();
-    this._internals = this.attachInternals();
+  }
+
+  public get form() {
+    return this[internals].form;
   }
 
   /**
@@ -105,45 +105,50 @@ export abstract class BaseButton extends LitElement {
     `;
   }
 
-  private _renderButtonContent() {
+  private _renderBody() {
     if (this.loading) return this.renderLoading();
     return this.renderContent();
   }
 
-  private _handleClick() {
-    if (this.type === "reset") {
-      return this._internals.form?.reset();
+  private _handleClick(e: MouseEvent) {
+    if (this.loading || this.disabled) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      return;
     }
+  }
 
-    if (this.type === "submit") {
-      return this._internals.form?.requestSubmit();
-    }
+  override focus(options?: FocusOptions) {
+    this.renderRoot.querySelector<HTMLElement>("#root")?.focus(options);
+  }
+
+  override blur() {
+    this.renderRoot.querySelector<HTMLElement>("#root")?.blur();
   }
 
   protected override render() {
     const rootClasses = classMap({
       root: true,
       loading: this.loading,
+      disabled: this.disabled,
       [this.size]: true,
       [this.variant]: true,
     });
 
     return html`
       <button
-        id="button"
+        id="root"
         class=${rootClasses}
         part="button"
         @click=${this._handleClick}
         ?disabled=${this.disabled}
         type=${ifDefined(this.type)}
-        name=${ifDefined(this.name)}
-        value=${ifDefined(this.value)}
         aria-label=${ifDefined(this.label)}
         aria-labelledby=${nothing}
         aria-describedby=${nothing}
       >
         <span class="overlay"></span>
-        ${this._renderButtonContent()}
+        ${this._renderBody()}
       </button>
     `;
   }

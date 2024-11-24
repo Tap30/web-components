@@ -67,7 +67,7 @@ describe("Test tap-button", () => {
     expect(spinner).to.exist;
 
     // Check if the content slot is still rendered when loading is true
-    const content = el.shadowRoot!.querySelector(".content");
+    const content = el.shadowRoot!.querySelector(".body");
 
     expect(content).to.exist;
 
