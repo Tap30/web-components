@@ -7,6 +7,7 @@
 
 import type { LitElement, PropertyDeclaration } from "lit";
 import { property } from "lit/decorators.js";
+import SystemError from "../SystemError";
 import type { MixinBase, MixinReturn } from "./types";
 import { internals, type WithElementInternals } from "./with-element-internals";
 
@@ -108,6 +109,72 @@ export interface FormAssociated {
   formAssociatedCallback?(form: HTMLFormElement | null): void;
 }
 
+/**
+ * Mixes in form-associated behavior for a class. This allows an element to add
+ * values to `<form>` elements.
+ *
+ * Implementing classes should provide a `[formValue]` to return the current
+ * value of the element, as well as reset and restore callbacks.
+ *
+ * @example
+ * ```ts
+ * const base = withFormAssociated(withElementInternals(LitElement));
+ *
+ * class MyControl extends base {
+ *   \@property()
+ *   value = '';
+ *
+ *   override [getFormValue]() {
+ *     return this.value;
+ *   }
+ *
+ *   override formResetCallback() {
+ *     const defaultValue = this.getAttribute('value');
+ *     this.value = defaultValue;
+ *   }
+ *
+ *   override formStateRestoreCallback(state: string) {
+ *     this.value = state;
+ *   }
+ * }
+ * ```
+ *
+ * Elements may optionally provide a `[formState]` if their values do not
+ * represent the state of the component.
+ *
+ * @example
+ * ```ts
+ * const base = withFormAssociated(withElementInternals(LitElement));
+ *
+ * class MyCheckbox extends base {
+ *   \@property()
+ *   value = 'on';
+ *
+ *   \@property({type: Boolean})
+ *   checked = false;
+ *
+ *   override [getFormValue]() {
+ *     return this.checked ? this.value : null;
+ *   }
+ *
+ *   override [getFormState]() {
+ *     return String(this.checked);
+ *   }
+ *
+ *   override formResetCallback() {
+ *     const defaultValue = this.hasAttribute('checked');
+ *     this.checked = defaultValue;
+ *   }
+ *
+ *   override formStateRestoreCallback(state: string) {
+ *     this.checked = Boolean(state);
+ *   }
+ * }
+ * ```
+ *
+ * @param base The class to mix functionality into. The base class must use
+ * `withElementInternals()`.
+ */
 const withFormAssociated = <
   T extends MixinBase<LitElement & WithElementInternals>,
 >(
@@ -208,7 +275,10 @@ const withFormAssociated = <
     }
 
     public [getFormValue](): FormValue | null {
-      throw new Error("Method not implemented. Implement [getFormValue].");
+      throw new SystemError(
+        "Method not implemented. Implement [getFormValue].",
+        "mixins/with-form-associated",
+      );
     }
 
     public [getFormState](): FormValue | null {
