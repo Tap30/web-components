@@ -41,8 +41,8 @@ export class Button extends BaseButton {
         part="body"
       >
         <div
-          part="leading-icon"
-          class=${Slots.LEADING_ICON}
+          class="icon"
+          part=${Slots.LEADING_ICON}
           ?hidden=${!this._hasLeadingIcon}
         >
           <slot name=${Slots.LEADING_ICON}></slot>
