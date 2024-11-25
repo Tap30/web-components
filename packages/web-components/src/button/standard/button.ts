@@ -1,7 +1,6 @@
-import { runAfterRepaint } from "../../utils";
 import { html, type TemplateResult } from "lit";
 import { state } from "lit/decorators.js";
-import { getRenderRootSlot } from "../../utils";
+import { getRenderRootSlot, runAfterRepaint } from "../../utils";
 import { BaseButton } from "../base";
 import { Slots } from "./constants";
 
@@ -37,18 +36,26 @@ export class Button extends BaseButton {
 
   protected override renderContent(): TemplateResult {
     return html`
-      <div class="body">
+      <div
+        class="body"
+        part="body"
+      >
         <div
-          class="icon"
+          part="leading-icon"
+          class=${Slots.LEADING_ICON}
           ?hidden=${!this._hasLeadingIcon}
         >
           <slot name=${Slots.LEADING_ICON}></slot>
         </div>
-        <div class="content">
+        <div
+          class="content"
+          part="content"
+        >
           <slot></slot>
         </div>
         <div
           class="icon"
+          part=${Slots.TRAILING_ICON}
           ?hidden=${!this._hasTrailingIcon}
         >
           <slot name=${Slots.TRAILING_ICON}></slot>

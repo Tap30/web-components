@@ -138,8 +138,8 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     return html`
       <button
         id="root"
+        part="root"
         class=${rootClasses}
-        part="button"
         @click=${this._handleClick}
         ?disabled=${this.disabled}
         type=${ifDefined(this.type)}

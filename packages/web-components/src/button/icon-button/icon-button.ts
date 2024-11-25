@@ -20,6 +20,11 @@ export class IconButton extends BaseButton {
   }
 
   protected override renderContent(): TemplateResult {
-    return html`<div class="icon"><slot></slot></div>`;
+    return html`<div
+      class="icon"
+      part="icon"
+    >
+      <slot></slot>
+    </div>`;
   }
 }
