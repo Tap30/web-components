@@ -1,2 +1,3 @@
-export const CAPTION_ID = "caption";
-export const INPUT_ID = "input";
+export const DEFAULT_CAPTION_ID = "caption";
+export const DEFAULT_LABEL_ID = "label";
+export const DEFAULT_INPUT_ID = "input";
