@@ -12,4 +12,7 @@ export {
   getFormValue,
   default as withFormAssociated,
 } from "./with-form-associated";
-export { default as withOnReportValidity } from "./with-on-report-validity";
+export {
+  onReportValidity,
+  default as withOnReportValidity,
+} from "./with-on-report-validity";

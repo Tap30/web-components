@@ -5,7 +5,7 @@ import {
   type PropertyValues,
 } from "lit";
 import SystemError from "../SystemError";
-import type { Validator } from "../validators";
+import type Validator from "../Validator";
 import type { MixinBase, MixinReturn } from "./types";
 import { internals, type WithElementInternals } from "./with-element-internals";
 import { type FormAssociated } from "./with-form-associated";

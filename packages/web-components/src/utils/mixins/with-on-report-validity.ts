@@ -332,7 +332,7 @@ const withOnReportValidity = <
       }
     }
 
-    [onReportValidity](_invalidEvent: Event | null) {
+    public [onReportValidity](_invalidEvent: Event | null) {
       throw new SystemError(
         "Method not implemented. Implement [onReportValidity].",
         "mixins/with-on-report-validity",
