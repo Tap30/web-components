@@ -20,7 +20,7 @@ export type ValidityAndMessage = {
  * change.
  *
  * @template State The expected interface of properties relevant to constraint
- *     validation.
+ * validation.
  */
 abstract class Validator<State> {
   private _prevState?: State;
@@ -102,8 +102,8 @@ abstract class Validator<State> {
    * Creates a copy of a state. This is used to cache state and check if it
    * changes.
    *
-   * Note: do NOT spread the {...state} to copy it. The actual state object is
-   * a web component, and trying to spread its getter/setter properties won't
+   * Note: do NOT spread the {...state} to copy it. The actual state object could
+   * be a web component, and trying to spread its getter/setter properties won't
    * work.
    *
    * @param state The state to copy.
