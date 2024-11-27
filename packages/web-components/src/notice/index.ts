@@ -5,13 +5,17 @@ import styles from "./notice.style";
 /**
  * @summary A notice/alert component is a user interface element that displays important messages or alerts to inform or warn users about specific events or actions.
  *
- * @prop {'success' | 'error' | 'info' | 'warning' | 'inverse'} [variant='inverse'] - The variant of the notice. Defaults to `inverse`.
+ * @prop {'success' | 'error' | 'info' | 'warning'} [variant] - The variant of the notice. Defaults to `inverse`.
  * @prop {'high' | 'low'} [priority='high'] - The priority of the notice. Defaults to `high`. Bolder colors are used with `high` priority whereas lighter colors are used for 'low' priority notices.
+ * @prop {'none' | 'icon' | 'custom'} [artwork='icon'] - The artwork of the notice component; Defaults to `icon`. The `none` value will hide the artwork, the `icon` will show a default icon based on the `variant` of the notice, the `custom` will show the `artwork` slot for this component
+ * @prop {'standard' | 'compact'} [size='standard'] - The notice size
  * @prop {boolean} [dismissable=false] - Indicates whether the notice can be dismissed or not. When dismissable, the dismiss button is rendered and emits 'dismiss' event upon click.
- * @prop {string} [noticeTitle=] - The title of the notice that won't be rendered upon passing empty string.
+ * @prop {string} [noticeTitle] - The title of the notice that won't be rendered upon passing empty string.
+ * @prop {string} [noticeTitle] - The title of the notice that won't be rendered upon passing empty string.
  *
  * @slot - notice text
- * @slot actions - slot actions
+ * @slot actions - the actions to the notice component. usually a collection of some `tap-button` components.
+ * @slot artwork - the custom artwork slot for the notice component. For showing this property, the value of `artwork` property should be equal to `custom`
  *
  * @csspart [notice] - The root container of the notice component a `div`.
  * @csspart [icon] - The container of the icon, a `span`.
