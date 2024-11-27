@@ -1,7 +1,10 @@
-import { html, LitElement, nothing } from "lit";
-import { property } from "lit/decorators.js";
+import { html, LitElement, nothing, type PropertyValues } from "lit";
+import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import "../button";
+import { getRenderRootSlot, logger, runAfterRepaint } from "../utils";
+import { Slots } from "./constants";
+import { DismissEvent } from "./events";
 import { close, error, info, success, warning } from "./icons";
 
 export class Notice extends LitElement {
@@ -16,10 +19,59 @@ export class Notice extends LitElement {
   public priority: "high" | "low" = "high";
 
   @property()
-  public size: "standard" | "compacted" = "standard";
+  public artwork: "none" | "icon" | "custom" = "icon";
+
+  @property()
+  public size: "standard" | "compact" = "standard";
 
   @property({ type: Boolean, attribute: "dismissable" })
-  public dismissable? = false;
+  public dismissable = false;
+
+  @state()
+  private _hasCustomArtworkSlot = false;
+
+  @state()
+  private _hasActionsSlot = false;
+
+  protected override updated(changedProperties: PropertyValues) {
+    super.updated(changedProperties);
+
+    runAfterRepaint(() => {
+      const customArtworkSlot = getRenderRootSlot(
+        this.renderRoot,
+        Slots.ARTWORK,
+      );
+
+      const actionsSlot = getRenderRootSlot(this.renderRoot, Slots.ACTIONS);
+
+      if (customArtworkSlot)
+        this._hasCustomArtworkSlot =
+          customArtworkSlot.assignedNodes().length > 0;
+
+      if (actionsSlot)
+        this._hasActionsSlot = actionsSlot.assignedNodes().length > 0;
+    });
+
+    this._logWarnings();
+  }
+
+  private _logWarnings() {
+    if (this.artwork === "custom" && !this._hasCustomArtworkSlot) {
+      logger(
+        `Notice component with \`custom\` artwork property should have a \`${Slots.ARTWORK}\` slot`,
+        "Notice",
+        "warning",
+      );
+    }
+
+    if (this.artwork !== "custom" && this._hasCustomArtworkSlot) {
+      logger(
+        `Notice component with \`${this.artwork}\` artwork property shouldn't have a \`${Slots.ARTWORK}\` slot`,
+        "Notice",
+        "warning",
+      );
+    }
+  }
 
   private _renderDefaultIcon() {
     return html`
@@ -46,7 +98,7 @@ export class Notice extends LitElement {
     `;
   }
 
-  private _renderIcon() {
+  private _renderIconArtwork() {
     if (this.variant === "success") return success;
     if (this.variant === "error") return error;
     if (this.variant === "info") return info;
@@ -68,22 +120,18 @@ export class Notice extends LitElement {
   }
 
   private _handleDismissClick() {
-    this.dispatchEvent(
-      new CustomEvent("dismiss", {
-        bubbles: true,
-        composed: true,
-      }),
-    );
+    this.dispatchEvent(new DismissEvent());
   }
 
   private _renderDismiss() {
     if (this.dismissable)
       return html`<tap-icon-button
         part="dismiss"
-        class="dismiss"
         size="sm"
         variant="naked"
+        label="dismiss"
         id="dismiss"
+        class="dismiss"
         @click=${this._handleDismissClick}
       >
         ${close}
@@ -92,9 +140,33 @@ export class Notice extends LitElement {
     return nothing;
   }
 
+  private _renderMessage() {
+    if (this.size === "compact") {
+      return nothing;
+    }
+
+    return html`<p
+      id="message"
+      part="message"
+      class="message"
+    >
+      <slot></slot>
+    </p>`;
+  }
+
+  private _renderArtwork() {
+    if (this.artwork === "custom")
+      return html`<slot name=${Slots.ARTWORK}></slot>`;
+
+    if (this.artwork === "icon") return this._renderIconArtwork();
+
+    return nothing;
+  }
+
   protected override render() {
     const rootClasses = classMap({
       root: true,
+      dismissable: this.dismissable,
       [this.variant]: true,
       [this.priority]: true,
       [this.size]: true,
@@ -102,34 +174,34 @@ export class Notice extends LitElement {
 
     return html`
       <div
+        role=${this.priority === "high" ? "alert" : "status"}
         part="notice"
         id="notice"
         class=${rootClasses}
+        aria-label=${this.noticeTitle}
       >
         <span
           class="icon"
           id="icon"
           part="icon"
         >
-          ${this._renderIcon()}
+          ${this._renderArtwork()}
         </span>
         <div
-          id="content-root"
-          part="content-root"
-          class="content-root"
+          id="content"
+          part="content"
+          class="content"
         >
-          ${this._renderTitle()}
-          <p
-            id="message"
-            part="message"
-            class="message"
+          ${this._renderTitle()} ${this._renderMessage()}
+          <div
+            class="actions"
+            ?hidden=${!this._hasActionsSlot || this.size === "compact"}
           >
-            <slot></slot>
-          </p>
-          <slot
-            name="actions"
-            part="actions"
-          ></slot>
+            <slot
+              name=${Slots.ACTIONS}
+              part=${Slots.ACTIONS}
+            ></slot>
+          </div>
         </div>
         ${this._renderDismiss()}
       </div>
