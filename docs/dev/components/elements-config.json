@@ -42,17 +42,6 @@
     },
     "slotKnobs": {}
   },
-  "tap-toast": {
-    "propertyDefaultValues": {
-      "show-dismiss-button": false,
-      "variant": "warning"
-    },
-    "slotKnobs": {
-      "default": {
-        "text": "برای تجربه کاربری بهتر VPN را خاموش کنید"
-      }
-    }
-  },
   "tap-tooltip": {
     "propertyDefaultValues": {
       "width": "100px"
