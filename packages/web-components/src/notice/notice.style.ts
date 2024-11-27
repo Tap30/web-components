@@ -86,6 +86,8 @@ export default css`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    color: var(--notice-icon-color);
   }
 
   .title {
@@ -94,6 +96,8 @@ export default css`
     font-size: var(--notice-title-font-size);
     line-height: var(--notice-title-line-height);
     font-weight: var(--notice-title-font-weight);
+
+    color: var(--notice-title-color);
 
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -110,14 +114,14 @@ export default css`
     line-height: var(--notice-message-line-height);
     font-weight: var(--notice-message-font-weight);
 
-    color: var(--notice-message-color, var(--notice-color));
+    color: var(--notice-message-color, var(--notice-title-color));
 
     margin: 0;
     padding: 0;
   }
 
   .dismiss svg {
-    color: var(--notice-color);
+    color: var(--notice-title-color);
   }
 
   .actions {
@@ -125,22 +129,26 @@ export default css`
   }
 
   .root.inverse.high {
-    --notice-color: var(--tap-sys-color-content-on-inverse);
+    --notice-icon-color: var(--tap-sys-color-content-on-inverse);
+    --notice-title-color: var(--tap-sys-color-content-on-inverse);
     --notice-background-color: var(--tap-sys-color-surface-inverse-primary);
   }
   .root.inverse.low {
-    --notice-color: var(--tap-sys-color-content-primary);
+    --notice-icon-color: var(--tap-sys-color-content-primary);
+    --notice-title-color: var(--tap-sys-color-content-primary);
     --notice-background-color: var(--tap-sys-color-surface-primary);
   }
 
   .root.success.high {
-    --notice-color: var(--tap-sys-color-content-on-inverse);
+    --notice-icon-color: var(--tap-sys-color-content-on-inverse);
+    --notice-title-color: var(--tap-sys-color-content-on-inverse);
     --notice-background-color: var(--tap-sys-color-surface-positive);
 
     --button-background: var(--tap-palette-green-100);
   }
   .root.success.low {
-    --notice-color: var(--tap-sys-color-content-positive);
+    --notice-icon-color: var(--tap-sys-color-content-positive);
+    --notice-title-color: var(--tap-sys-color-content-primary);
     --notice-background-color: var(--tap-sys-color-surface-positive-light);
     --notice-message-color: var(--tap-sys-color-content-secondary);
 
@@ -148,14 +156,16 @@ export default css`
   }
 
   .root.warning.high {
-    --notice-color: var(--tap-sys-color-content-primary);
+    --notice-icon-color: var(--tap-sys-color-content-primary);
+    --notice-title-color: var(--tap-sys-color-content-primary);
     --notice-background-color: var(--tap-sys-color-surface-warning);
     --notice-message-color: var(--tap-sys-color-content-secondary);
 
     --button-background: var(--tap-palette-yellow-200);
   }
   .root.warning.low {
-    --notice-color: var(--tap-sys-color-content-warning);
+    --notice-icon-color: var(--tap-sys-color-content-warning);
+    --notice-title-color: var(--tap-sys-color-content-primary);
     --notice-background-color: var(--tap-sys-color-surface-warning-light);
     --notice-message-color: var(--tap-sys-color-content-secondary);
 
@@ -163,14 +173,15 @@ export default css`
   }
 
   .root.error.high {
-    --notice-color: var(--tap-sys-color-content-on-inverse);
+    --notice-icon-color: var(--tap-sys-color-content-on-inverse);
+    --notice-title-color: var(--tap-sys-color-content-on-inverse);
     --notice-background-color: var(--tap-sys-color-surface-negative);
 
     --button-background: var(--tap-palette-red-100);
   }
-
   .root.error.low {
-    --notice-color: var(--tap-sys-color-content-negative);
+    --notice-icon-color: var(--tap-sys-color-content-negative);
+    --notice-title-color: var(--tap-sys-color-content-primary);
     --notice-background-color: var(--tap-sys-color-surface-negative-light);
     --notice-message-color: var(--tap-sys-color-content-secondary);
 
@@ -178,13 +189,15 @@ export default css`
   }
 
   .root.info.high {
-    --notice-color: var(--tap-sys-color-content-on-inverse);
+    --notice-icon-color: var(--tap-sys-color-content-on-inverse);
+    --notice-title-color: var(--tap-sys-color-content-on-inverse);
     --notice-background-color: var(--tap-sys-color-surface-accent);
 
     --button-background: var(--tap-palette-blue-100);
   }
   .root.info.low {
-    --notice-color: var(--tap-sys-color-content-accent);
+    --notice-icon-color: var(--tap-sys-color-content-accent);
+    --notice-title-color: var(--tap-sys-color-content-primary);
     --notice-background-color: var(--tap-sys-color-surface-accent-light);
     --notice-message-color: var(--tap-sys-color-content-secondary);
 
