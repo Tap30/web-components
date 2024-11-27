@@ -11,28 +11,20 @@ export default css`
     display: none !important;
   }
 
-  .field.error {
+  .root.error {
     --input-caption-color: var(--tap-sys-color-content-negative);
-    --input-control-bg-color: var(--tap-sys-color-surface-negative-light);
-    --input-control-border-color: var(--tap-sys-color-border-negative);
   }
 
-  .field.disabled {
+  .root.disabled {
     --input-label-color: var(--tap-sys-color-content-disabled);
     --input-caption-color: var(--tap-sys-color-content-disabled);
-    --input-control-bg-color: var(--tap-sys-color-surface-disabled);
-    --input-control-border-color: transparent;
+
+    cursor: not-allowed;
   }
 
-  .field.readonly {
-    --input-control-bg-color: var(--tap-sys-color-surface-disabled);
-  }
-
-  .field {
+  .root {
     --input-label-color: var(--tap-sys-color-content-primary);
     --input-caption-color: var(--tap-sys-color-content-tertiary);
-    --input-control-bg-color: var(--tap-sys-color-surface-tertiary);
-    --input-control-border-color: transparent;
 
     direction: rtl;
     font-family: var(--tap-sys-font-family);
@@ -59,29 +51,31 @@ export default css`
     font-weight: var(--tap-sys-typography-body-sm-weight);
   }
 
-  .control {
+  .control-wrapper {
+    display: flex;
+
+    gap: var(--tap-sys-spacing-4);
+  }
+
+  /* .control {
     height: 3.25rem;
     padding: 0 var(--tap-sys-spacing-6);
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 
     gap: var(--tap-sys-spacing-4);
 
     background-color: var(--input-control-bg-color);
     border-radius: var(--tap-sys-radius-3);
     border: var(--tap-sys-stroke-2) solid var(--input-control-border-color);
-  }
+  } */
 
-  .control input,
+  /* .control input,
   .control textarea {
     caret-color: var(--tap-sys-color-surface-accent);
-  }
+  } */
 
-  .field:not(.no-control-focus-border) .control:focus-within {
+  /* .root:not(.no-control-focus-border) .control:focus-within {
     background-color: var(--tap-sys-color-surface-secondary);
     border: var(--tap-sys-stroke-2) solid
       var(--tap-sys-color-border-inverse-primary);
-  }
+  } */
 `;
