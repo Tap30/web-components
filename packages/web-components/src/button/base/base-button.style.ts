@@ -111,8 +111,8 @@ export default css`
     height: var(--button-height);
     padding: var(--button-root-padding);
 
-    background: var(--button-background);
-    color: var(--button-color);
+    background: var(--button-custom-background, var(--button-background));
+    color: var(--button-custom-color, var(--button-color));
     font-family: var(--tap-sys-font-family);
     border-radius: var(--tap-sys-radius-full);
   }
@@ -135,7 +135,7 @@ export default css`
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background-color: var(--button-overlay-color);
+    background-color: var(--button-custom-overlay-color, var(--button-overlay-color));
     z-index: 1;
     transition: opacity 0.1s;
   }
