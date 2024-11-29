@@ -140,7 +140,7 @@ export class Notice extends LitElement {
   }
 
   private _handleDismissClick() {
-    this.dispatchEvent(new DismissEvent());
+    this.dispatchEvent(new DismissEvent(null));
   }
 
   private _renderDismiss() {
