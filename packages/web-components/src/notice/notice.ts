@@ -8,6 +8,12 @@ import { DismissEvent } from "./events";
 import { close, error, info, success, warning } from "./icons";
 
 export class Notice extends LitElement {
+  public static override readonly shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+    mode: "open",
+  };
+
   @property({ type: String, attribute: "notice-title" })
   public noticeTitle? = "";
 
@@ -33,6 +39,9 @@ export class Notice extends LitElement {
   @state()
   private _hasActionsSlot = false;
 
+  @state()
+  private _hasDescriptionSlot = false;
+
   protected override updated(changedProperties: PropertyValues) {
     super.updated(changedProperties);
 
@@ -42,14 +51,25 @@ export class Notice extends LitElement {
         Slots.ARTWORK,
       );
 
-      const actionsSlot = getRenderRootSlot(this.renderRoot, Slots.ACTIONS);
+      const actionsSlot = getRenderRootSlot(this.renderRoot, Slots.ACTION);
 
-      if (customArtworkSlot)
+      const descriptionSlot = getRenderRootSlot(
+        this.renderRoot,
+        Slots.DESCRIPTION,
+      );
+
+      if (customArtworkSlot) {
         this._hasCustomArtworkSlot =
           customArtworkSlot.assignedNodes().length > 0;
+      }
 
-      if (actionsSlot)
+      if (actionsSlot) {
         this._hasActionsSlot = actionsSlot.assignedNodes().length > 0;
+      }
+
+      if (descriptionSlot) {
+        this._hasDescriptionSlot = descriptionSlot.assignedNodes().length > 0;
+      }
     });
 
     this._logWarnings();
@@ -140,33 +160,46 @@ export class Notice extends LitElement {
     return nothing;
   }
 
-  private _renderMessage() {
+  private _renderDescription() {
     if (this.size === "compact") {
       return nothing;
     }
 
     return html`<p
-      id="message"
-      part="message"
-      class="message"
+      ?hidden=${!this._hasDescriptionSlot}
+      class="description"
+      part=${Slots.DESCRIPTION}
     >
-      <slot></slot>
+      <slot name=${Slots.DESCRIPTION}></slot>
     </p>`;
   }
 
   private _renderArtwork() {
     if (this.artwork === "custom")
-      return html`<slot name=${Slots.ARTWORK}></slot>`;
+      return html` <slot name=${Slots.ARTWORK}></slot> `;
 
     if (this.artwork === "icon") return this._renderIconArtwork();
 
     return nothing;
   }
 
+  private _renderActions() {
+    return html`<div
+      class="actions"
+      ?hidden=${!this._hasActionsSlot || this.size === "compact"}
+    >
+      <slot
+        name=${Slots.ACTION}
+        part=${Slots.ACTION}
+      ></slot>
+    </div>`;
+  }
+
   protected override render() {
     const rootClasses = classMap({
       root: true,
       dismissable: this.dismissable,
+      [`${this.artwork}-artwork`]: true,
       [this.variant]: true,
       [this.priority]: true,
       [this.size]: true,
@@ -181,9 +214,9 @@ export class Notice extends LitElement {
         aria-label=${this.noticeTitle}
       >
         <span
-          class="icon"
-          id="icon"
-          part="icon"
+          class="artwork"
+          id="artwork"
+          part="artwork"
         >
           ${this._renderArtwork()}
         </span>
@@ -192,16 +225,8 @@ export class Notice extends LitElement {
           part="content"
           class="content"
         >
-          ${this._renderTitle()} ${this._renderMessage()}
-          <div
-            class="actions"
-            ?hidden=${!this._hasActionsSlot || this.size === "compact"}
-          >
-            <slot
-              name=${Slots.ACTIONS}
-              part=${Slots.ACTIONS}
-            ></slot>
-          </div>
+          ${this._renderTitle()} ${this._renderDescription()}
+          ${this._renderActions()}
         </div>
         ${this._renderDismiss()}
       </div>
