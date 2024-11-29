@@ -8,7 +8,7 @@ export class DismissEvent extends BaseEvent<EventDetails> {
   constructor(details?: EventDetails) {
     super(DismissEvent.type, {
       details,
-      bubbles: true,
+      bubbles: false,
       composed: true,
     });
   }
