@@ -7,6 +7,8 @@ export const close = html`
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    focusable="false"
+    aria-hidden="true"
   >
     <path
       fill-rule="evenodd"
@@ -24,6 +26,8 @@ export const success = html`
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    focusable="false"
+    aria-hidden="true"
   >
     <path
       fill-rule="evenodd"
@@ -41,6 +45,8 @@ export const error = html`
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    focusable="false"
+    aria-hidden="true"
   >
     <path
       fill-rule="evenodd"
@@ -58,6 +64,8 @@ export const info = html`
     viewBox="0 0 25 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    focusable="false"
+    aria-hidden="true"
   >
     <path
       fill-rule="evenodd"
@@ -75,6 +83,8 @@ export const warning = html`
     viewBox="0 0 25 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    focusable="false"
+    aria-hidden="true"
   >
     <path
       fill-rule="evenodd"
