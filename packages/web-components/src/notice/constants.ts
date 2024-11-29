@@ -1,5 +1,5 @@
 export const Slots = {
-  DEFAULT: "",
+  DESCRIPTION: "description",
   ARTWORK: "artwork",
-  ACTIONS: "actions",
+  ACTION: "action",
 } as const;
