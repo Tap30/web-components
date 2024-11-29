@@ -187,10 +187,11 @@ export class Notice extends LitElement {
     return html`<div
       class="actions"
       ?hidden=${!this._hasActionsSlot || this.size === "compact"}
+      part="actions"
     >
       <slot
-        name=${Slots.ACTION}
         part=${Slots.ACTION}
+        name=${Slots.ACTION}
       ></slot>
     </div>`;
   }
@@ -208,8 +209,8 @@ export class Notice extends LitElement {
     return html`
       <div
         role=${this.priority === "high" ? "alert" : "status"}
-        part="notice"
-        id="notice"
+        part="root"
+        id="root"
         class=${rootClasses}
         aria-label=${this.noticeTitle}
       >
