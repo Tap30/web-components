@@ -21,6 +21,8 @@ export default css`
 
   .root.disabled {
     pointer-events: none;
+    background: var(--button-disabled-background);
+    color: var(--button-disabled-color);
   }
 
   .root.sm {
@@ -73,13 +75,13 @@ export default css`
   }
 
   .root:not(.naked).disabled {
-    --button-background: var(--tap-sys-color-surface-disabled);
-    --button-color: var(--tap-sys-color-content-disabled);
+    --button-disabled-background: var(--tap-sys-color-surface-disabled);
+    --button-disabled-color: var(--tap-sys-color-content-disabled);
   }
 
   .root.naked.disabled {
-    --button-background: transparent;
-    --button-color: var(--tap-sys-color-content-disabled);
+    --button-disabled-background: transparent;
+    --button-disabled-color: var(--tap-sys-color-content-disabled);
   }
 
   .root:not(.disabled):not(.primary):active .overlay {
@@ -135,7 +137,10 @@ export default css`
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background-color: var(--button-custom-overlay-color, var(--button-overlay-color));
+    background-color: var(
+      --button-custom-overlay-color,
+      var(--button-overlay-color)
+    );
     z-index: 1;
     transition: opacity 0.1s;
   }

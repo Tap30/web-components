@@ -217,6 +217,8 @@ export default css`
   .root.success.high .actions {
     --button-custom-background: var(--tap-palette-green-500);
     --button-custom-color: var(--notice-title-color);
+    --button-disabled-background: var(--tap-sys-color-surface-disabled);
+    --button-disabled-color: var(--tap-sys-color-content-disabled);
   }
   .root.success.low .actions {
     --button-custom-background: var(--tap-palette-green-100);
