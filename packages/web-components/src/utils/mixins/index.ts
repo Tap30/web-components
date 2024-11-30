@@ -7,6 +7,7 @@ export {
   internals,
   default as withElementInternals,
 } from "./with-element-internals";
+export { isFocusable, default as withFocusable } from "./with-focusable";
 export {
   getFormState,
   getFormValue,
