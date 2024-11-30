@@ -4,9 +4,8 @@ import {
   type PropertyValues,
   type TemplateResult,
 } from "lit";
-import type { DirectiveResult } from "lit/async-directive.js";
-import { property, state } from "lit/decorators.js";
-import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
+import { property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import { KeyboardKeys } from "../internals";
 import {
   getValidityAnchor,
@@ -17,11 +16,6 @@ import {
   withFormAssociated,
   withOnReportValidity,
 } from "../utils";
-import {
-  DEFAULT_INPUT_ID,
-  DEFAULT_LABEL_ID,
-  DEFAULT_SUPPORTING_TEXT_ID,
-} from "./constants";
 
 const BaseClass = withOnReportValidity(
   withConstraintValidation(
@@ -42,48 +36,6 @@ export abstract class BaseInput extends BaseClass {
   public value = "";
 
   /**
-   * Gets or sets whether or not the input is in a visually invalid state.
-   *
-   * This error state overrides the error state controlled by
-   * `reportValidity()`.
-   */
-  @property({ type: Boolean, reflect: true })
-  public error = false;
-
-  /**
-   * The error message that replaces supporting text when `error` is true. If
-   * `errorText` is an empty string, then the supporting text will continue to
-   * show.
-   *
-   * This error message overrides the error message displayed by
-   * `reportValidity()`.
-   */
-  @property({ attribute: "error-text" })
-  public errorText = "";
-
-  /**
-   * Conveys additional information below the input, such as how it should
-   * be used.
-   */
-  @property({ type: String, attribute: "supporting-text" })
-  public supportingText = "";
-
-  /**
-   * The label of the input.
-   *
-   * Displays a bound `label` element when `showLabel` is `true`.
-   * Otherwise, sets an `aria-label` attribute.
-   */
-  @property({ type: String })
-  public label = "";
-
-  /**
-   * Whether or not the label is visible.
-   */
-  @property({ type: Boolean, attribute: "show-label" })
-  public showLabel = true;
-
-  /**
    * Indicates that the user must specify a value for the input before the
    * owning form can be submitted and will render an error state when
    * `reportValidity()` is invoked when value is empty.
@@ -93,11 +45,11 @@ export abstract class BaseInput extends BaseClass {
   @property({ type: Boolean, reflect: true })
   public required = false;
 
-  // /**
-  //  * Indicates whether or not a user should be able to edit the input's value.
-  //  *
-  //  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
-  //  */
+  /**
+   * Indicates whether or not a user should be able to edit the input's value.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
+   */
   // @property({ type: Boolean, reflect: true })
   // public readOnly = false;
 
@@ -105,34 +57,45 @@ export abstract class BaseInput extends BaseClass {
   public override inputMode = "";
 
   /**
+   * Gets or sets whether or not the input is in a visually invalid state.
+   *
+   * This error state overrides the error state controlled by
+   * `reportValidity()`.
+   */
+  // @property({ type: Boolean, reflect: true })
+  // public error = false;
+
+  /**
+   * The error message that replaces supporting text when `error` is true. If
+   * `errorText` is an empty string, then the supporting text will continue to
+   * show.
+   *
+   * This error message overrides the error message displayed by
+   * `reportValidity()`.
+   */
+  // @property({ attribute: "error-text" })
+  // public errorText = "";
+
+  /**
    * Whether or not a native error has been reported via `reportValidity()`.
    */
-  @state()
-  private _nativeError = false;
+  // @state()
+  // private _nativeError = false;
 
-  @state()
-  protected inputId = DEFAULT_INPUT_ID;
+  /**
+   * Conveys additional information below the input, such as how it should
+   * be used.
+   */
+  // @property({ type: String, attribute: "supporting-text" })
+  // public supportingText = "";
 
-  protected readonly supportingTextId = DEFAULT_SUPPORTING_TEXT_ID;
-  protected readonly labelId = DEFAULT_LABEL_ID;
-
-  constructor() {
-    super();
-
-    if (this.id) this.inputId = this.id;
-  }
-
-  protected abstract renderInput(): TemplateResult | null;
   protected abstract renderTrailingContent(): TemplateResult | null;
-  protected abstract getControlClassMap(): DirectiveResult<
-    typeof ClassMapDirective
-  >;
-
-  protected getInputElement() {
-    if (!this.renderRoot) return null;
-
-    return this.renderRoot.querySelector<HTMLInputElement>(`#${this.inputId}`);
-  }
+  protected abstract renderLeadingContent(): TemplateResult | null;
+  protected abstract renderControl(): TemplateResult | null;
+  protected abstract getInputElement():
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | null;
 
   public override [getValidityAnchor]() {
     return this.getInputElement();
@@ -162,8 +125,6 @@ export abstract class BaseInput extends BaseClass {
     if (changed.has("value")) {
       this[internals].setFormValue(this.value);
     }
-
-    if (changed.has("id")) this.inputId = this.id ?? DEFAULT_INPUT_ID;
   }
 
   public override formDisabledCallback(disabled: boolean) {
@@ -184,62 +145,18 @@ export abstract class BaseInput extends BaseClass {
     }
   }
 
-  private _renderLabel() {
-    if (!this.showLabel) return null;
-    if (!this.label) return null;
-
-    return html`
-      <label
-        part="label"
-        class="label"
-        for=${this.inputId}
-      >
-        ${this.label}
-      </label>
-    `;
-  }
-
-  private _renderSupportingText() {
-    if (!this.supportingText) return null;
-
-    return html`
-      <span
-        part="supporting-text"
-        class="supporting-text"
-        id=${this.supportingTextId}
-      >
-        ${this.supportingText}
-      </span>
-    `;
-  }
-
   protected override render() {
     const rootClasses = classMap({
       root: true,
-      error: !this.disabled && this.error,
       disabled: this.disabled,
     });
-
-    const controlClasses = this.getControlClassMap();
 
     return html`
       <div
         part="root"
         class=${rootClasses}
       >
-        <div
-          class="control-wrapper"
-          ?inert=${this.disabled}
-        >
-          ${this._renderLabel()}
-          <div
-            part="control"
-            class=${controlClasses}
-          >
-            ${this.renderInput()}
-          </div>
-        </div>
-        ${this.renderTrailingContent()}
+        ${this.renderLeadingContent()}${this.renderControl()}${this.renderTrailingContent()}
       </div>
     `;
   }
