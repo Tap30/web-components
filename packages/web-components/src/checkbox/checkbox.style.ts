@@ -52,8 +52,8 @@ export default css`
 
     border-radius: var(--tap-sys-radius-1);
 
-    height: var(--tap-sys-spacing-7);
-    width: var(--tap-sys-spacing-7);
+    height: 1.25rem;
+    width: 1.25rem;
 
     color: var(--input-control-color);
     background-color: var(--input-control-bg-color);

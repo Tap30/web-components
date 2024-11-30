@@ -95,6 +95,9 @@ export class Checkbox extends BaseInput {
 
     return html`
       <svg
+        part="indeterminate-icon"
+        aria-hidden
+        focusable="false"
         width="8"
         height="2"
         viewBox="0 0 8 2"
@@ -115,6 +118,9 @@ export class Checkbox extends BaseInput {
 
     return html`
       <svg
+        part="check-icon"
+        aria-hidden
+        focusable="false"
         width="12"
         height="9"
         viewBox="0 0 12 9"
