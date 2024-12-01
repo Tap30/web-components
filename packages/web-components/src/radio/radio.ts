@@ -1,19 +1,24 @@
-import { html, LitElement, nothing } from "lit";
-import type { DirectiveResult } from "lit/async-directive.js";
+import { html, isServer, LitElement, nothing, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
-import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
+import { classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
+import { KeyboardKeys } from "../internals";
 import {
   createValidator,
   getFormState,
   getFormValue,
+  isActivationClick,
+  isFocusable,
+  logger,
   onReportValidity,
   redispatchEvent,
+  waitAMicrotask,
+  withFocusable,
 } from "../utils";
 import SingleSelectionController from "./Controller";
 import RadioValidator from "./Validator";
 
-export class Radio extends BaseInput {
+export class Radio extends withFocusable(BaseInput) {
   public static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
@@ -29,7 +34,7 @@ export class Radio extends BaseInput {
     return this._checked;
   }
 
-  set checked(isChecked: boolean) {
+  public set checked(isChecked: boolean) {
     const prevChecked = this.checked;
 
     if (prevChecked === isChecked) return;
@@ -47,12 +52,93 @@ export class Radio extends BaseInput {
   @property()
   public override value = "on";
 
+  /**
+   * Defines a string value that can be used to name radio input.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   */
+  @property({ type: String })
+  public label = "";
+
+  /**
+   * Identifies the element (or elements) that labels the radio input.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   */
+  @property({ type: String })
+  public labelledBy = "";
+
   private readonly _controller = new SingleSelectionController(this);
 
   constructor() {
     super();
 
     this.addController(this._controller);
+
+    if (!isServer) {
+      this._handleClick = this._handleClick.bind(this);
+      this._handleKeyDown = this._handleKeyDown.bind(this);
+
+      this.addEventListener("click", event => void this._handleClick(event));
+      this.addEventListener(
+        "keydown",
+        event => void this._handleKeyDown(event),
+      );
+    }
+  }
+
+  public override connectedCallback() {
+    super.connectedCallback();
+
+    this._updateFocusability();
+  }
+
+  protected override updated(changed: PropertyValues<this>) {
+    super.updated(changed);
+
+    if (changed.has("disabled")) this._updateFocusability();
+  }
+
+  private _updateFocusability() {
+    if (this.disabled) {
+      this.removeAttribute("tabindex");
+      this[isFocusable] = false;
+    } else this[isFocusable] = true;
+  }
+
+  protected override getInputElement() {
+    if (!this.renderRoot) return null;
+
+    return this.renderRoot.querySelector<HTMLInputElement>(
+      'input[type="radio"]',
+    );
+  }
+
+  private async _handleKeyDown(event: KeyboardEvent) {
+    // allow event to propagate to user code after a microtask.
+    await waitAMicrotask();
+
+    if (event.key !== KeyboardKeys.SPACE || event.defaultPrevented) return;
+
+    this.click();
+  }
+
+  private async _handleClick(event: MouseEvent) {
+    if (this.disabled) return;
+
+    // allow event to propagate to user code after a microtask.
+    await waitAMicrotask();
+
+    if (event.defaultPrevented) return;
+
+    if (isActivationClick(event)) this.focus();
+
+    this.checked = true;
+
+    this.dispatchEvent(new Event("change", { bubbles: true }));
+    this.dispatchEvent(
+      new InputEvent("input", { bubbles: true, composed: true }),
+    );
   }
 
   private _handleInput(event: Event) {
@@ -141,34 +227,53 @@ export class Radio extends BaseInput {
     return null;
   }
 
-  protected override getControlClassMap(): DirectiveResult<
-    typeof ClassMapDirective
-  > {
-    return classMap({
+  protected override renderLeadingContent() {
+    return null;
+  }
+
+  protected override renderControl() {
+    const hasValidLabel = Boolean(this.label || this.labelledBy);
+
+    if (!hasValidLabel) {
+      logger(
+        "Expected a valid `label` or `labelledby` attribute, received none.",
+        "radio",
+        "error",
+      );
+    }
+
+    const controlClasses = classMap({
       control: true,
       checked: this.checked,
     });
-  }
-
-  protected override renderInput() {
-    const tabIndex = this.disabled ? -1 : (this.tabIndex ?? 0);
 
     return html`
-      <input
-        id=${this.inputId}
-        type="radio"
-        part="input"
-        class="input"
-        aria-label=${this.showLabel ? nothing : this.label}
-        aria-invalid=${this.error}
-        tabindex=${tabIndex}
-        ?disabled=${this.disabled}
-        .checked=${this.checked}
-        @keydown=${this.handleInputKeyDown}
-        @input=${this._handleInput}
-        @change=${this._handleChange}
-      />
-      ${this._renderCheckIcon()}
+      <div
+        class=${controlClasses}
+        part="control"
+        ?inert=${this.disabled}
+      >
+        <input
+          type="radio"
+          part="input"
+          class="input"
+          aria-label=${this.label || nothing}
+          aria-labelledby=${this.label ? nothing : this.labelledBy || nothing}
+          tabindex=${this.tabIndex}
+          ?disabled=${this.disabled}
+          .checked=${this.checked}
+          @keydown=${this.handleInputKeyDown}
+          @input=${this._handleInput}
+          @change=${this._handleChange}
+        />
+        <div
+          aria-hidden="true"
+          part="box"
+          class="box"
+        >
+          ${this._renderCheckIcon()}
+        </div>
+      </div>
     `;
   }
 }
