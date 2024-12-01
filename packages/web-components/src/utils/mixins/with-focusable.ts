@@ -36,9 +36,9 @@ const withFocusable = <T extends MixinBase<LitElement>>(
 ): MixinReturn<T, Focusable> => {
   abstract class WithFocusable extends base implements Focusable {
     @property({ type: Number, noAccessor: true })
-    public override tabIndex!: number;
+    declare tabIndex: number;
 
-    private _isFocusable = false;
+    private _isFocusable = true;
     private _externalTabIndex: number | null = null;
     private _isUpdatingTabIndex = false;
 

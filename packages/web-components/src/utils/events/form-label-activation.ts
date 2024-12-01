@@ -1,3 +1,5 @@
+import waitAMicrotask from "../wait-a-microtask";
+
 /**
  * Dispatches a click event to the given element that triggers a native action,
  * but is not composed and therefore is not seen outside the element.
@@ -75,9 +77,7 @@ const squelchEventsForMicrotask = async () => {
   isSquelchingEvents = true;
 
   // Need to pause for just one microtask.
-  await new Promise<void>(resolve => {
-    resolve();
-  });
+  await waitAMicrotask();
 
   isSquelchingEvents = false;
 };
