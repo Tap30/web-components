@@ -1,4 +1,4 @@
-import { LitElement, html, isServer } from "lit";
+import { LitElement, html, isServer, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
@@ -10,6 +10,7 @@ import {
   getFormState,
   getFormValue,
   isActivationClick,
+  logger,
   onReportValidity,
   redispatchEvent,
 } from "../utils";
@@ -34,6 +35,22 @@ export class Switch extends BaseInput {
    */
   @property()
   public override value = "on";
+
+  /**
+   * Defines a string value that can be used to name switch input.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   */
+  @property({ type: String })
+  public label = "";
+
+  /**
+   * Identifies the element (or elements) that labels the switch input.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   */
+  @property({ type: String })
+  public labelledBy = "";
 
   constructor() {
     super();
@@ -152,6 +169,16 @@ export class Switch extends BaseInput {
   }
 
   protected override renderControl() {
+    const hasValidLabel = Boolean(this.label || this.labelledBy);
+
+    if (!hasValidLabel) {
+      logger(
+        "Expected a valid `label` or `labelledby` attribute, received none.",
+        "switch",
+        "error",
+      );
+    }
+
     const controlClasses = classMap({
       control: true,
       selected: this.selected,
@@ -168,6 +195,8 @@ export class Switch extends BaseInput {
           part="input"
           type="checkbox"
           class="input"
+          aria-label=${this.label || nothing}
+          aria-labelledby=${this.label ? nothing : this.labelledBy || nothing}
           ?disabled=${this.disabled}
           .checked=${this.selected}
           @keydown=${this._handleKeyDown}
