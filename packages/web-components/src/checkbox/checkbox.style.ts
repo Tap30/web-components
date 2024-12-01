@@ -13,51 +13,35 @@ export default css`
   }
 
   :host {
-    --input-control-bg-color: var(--tap-sys-color-surface-primary);
-    --input-control-border-color: var(--tap-sys-color-surface-inverse-primary);
+    --input-box-bg-color: var(--tap-sys-color-surface-primary);
+    --input-box-border-color: var(--tap-sys-color-surface-inverse-primary);
     --input-control-color: var(--tap-sys-color-content-on-inverse);
 
     display: inline-block;
     vertical-align: middle;
   }
 
-  .root.error {
-    --input-control-bg-color: var(--tap-sys-color-surface-negative-light);
-    --input-control-border-color: var(--tap-sys-color-border-negative);
-  }
-
   .root.disabled {
-    --input-control-bg-color: var(--tap-sys-color-surface-disabled);
-    --input-control-border-color: var(--tap-sys-color-surface-disabled);
+    --input-box-bg-color: var(--tap-sys-color-surface-disabled);
+    --input-box-border-color: var(--tap-sys-color-surface-disabled);
     --input-control-color: var(--tap-sys-color-content-disabled);
   }
 
   .root:not(.disabled) .control.checked,
   .root:not(.disabled) .control.indeterminate {
-    --input-control-bg-color: var(--tap-sys-color-surface-inverse-primary);
+    --input-box-bg-color: var(--tap-sys-color-surface-inverse-primary);
     --input-control-color: var(--tap-sys-color-content-on-inverse);
   }
-
-  .label {
-    order: 2;
-  }
-
   .control {
-    order: 1;
-
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: var(--tap-sys-radius-1);
-
-    height: 1.25rem;
-    width: 1.25rem;
+    height: 2.5rem;
+    width: 2.5rem;
 
     color: var(--input-control-color);
-    background-color: var(--input-control-bg-color);
-    box-shadow: 0 0 0 1px var(--input-control-border-color);
   }
 
   .input {
@@ -75,8 +59,22 @@ export default css`
     z-index: 1;
   }
 
-  .input:focus-visible {
+  .input:focus-visible + .box {
     outline: ${FOCUS_RING_LINE};
     outline-offset: ${FOCUS_RING_OFFSET};
+  }
+
+  .box {
+    height: 1.25rem;
+    width: 1.25rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: var(--tap-sys-radius-1);
+
+    background-color: var(--input-box-bg-color);
+    box-shadow: 0 0 0 1px var(--input-box-border-color);
   }
 `;

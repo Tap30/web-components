@@ -1,12 +1,14 @@
-import { LitElement, html, nothing } from "lit";
-import type { DirectiveResult } from "lit/async-directive";
+import { LitElement, html, isServer, nothing } from "lit";
 import { property } from "lit/decorators.js";
-import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
+import { classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
 import {
   createValidator,
+  dispatchActivationClick,
   getFormState,
   getFormValue,
+  isActivationClick,
+  logger,
   onReportValidity,
   redispatchEvent,
 } from "../utils";
@@ -40,6 +42,38 @@ export class Checkbox extends BaseInput {
   @property()
   public override value = "on";
 
+  /**
+   * Defines a string value that can be used to name checkbox input.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   */
+  @property({ type: String })
+  public label = "";
+
+  /**
+   * Identifies the element (or elements) that labels the checkbox input.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   */
+  @property({ type: String })
+  public labelledBy = "";
+
+  constructor() {
+    super();
+
+    if (!isServer) {
+      this.addEventListener("click", event => {
+        const input = this.getInputElement();
+
+        if (!isActivationClick(event) || !input) return;
+
+        this.focus();
+
+        dispatchActivationClick(input);
+      });
+    }
+  }
+
   private _handleInput(event: Event) {
     if (this.disabled) return;
 
@@ -55,6 +89,14 @@ export class Checkbox extends BaseInput {
     if (this.disabled) return;
     // <input> 'change' event is not composed, re-dispatch it.
     redispatchEvent(this, event);
+  }
+
+  protected override getInputElement() {
+    if (!this.renderRoot) return null;
+
+    return this.renderRoot.querySelector<HTMLInputElement>(
+      'input[type="checkbox"]',
+    );
   }
 
   public override [getFormValue]() {
@@ -140,34 +182,54 @@ export class Checkbox extends BaseInput {
     return null;
   }
 
-  protected override getControlClassMap(): DirectiveResult<
-    typeof ClassMapDirective
-  > {
-    return classMap({
+  protected override renderLeadingContent() {
+    return null;
+  }
+
+  protected override renderControl() {
+    const hasValidLabel = Boolean(this.label || this.labelledBy);
+
+    if (!hasValidLabel) {
+      logger(
+        "Expected a valid `label` or `labelledby` attribute, received none.",
+        "checkbox",
+        "error",
+      );
+    }
+
+    const controlClasses = classMap({
       control: true,
       checked: this.checked,
       indeterminate: this.indeterminate,
     });
-  }
 
-  protected override renderInput() {
     return html`
-      <input
-        id=${this.inputId}
-        part="input"
-        type="checkbox"
-        class="input"
-        aria-checked=${this.indeterminate ? "mixed" : nothing}
-        aria-label=${this.showLabel ? nothing : this.label}
-        aria-invalid=${this.error}
-        ?disabled=${this.disabled}
-        .indeterminate=${this.indeterminate}
-        .checked=${this.checked}
-        @keydown=${this.handleInputKeyDown}
-        @input=${this._handleInput}
-        @change=${this._handleChange}
-      />
-      ${this._renderCheckIcon()} ${this._renderIndeterminateIcon()}
+      <div
+        class=${controlClasses}
+        part="control"
+        ?inert=${this.disabled}
+      >
+        <input
+          part="input"
+          type="checkbox"
+          class="input"
+          aria-label=${this.label || nothing}
+          aria-labelledby=${this.label ? nothing : this.labelledBy || nothing}
+          ?disabled=${this.disabled}
+          .indeterminate=${this.indeterminate}
+          .checked=${this.checked}
+          @keydown=${this.handleInputKeyDown}
+          @input=${this._handleInput}
+          @change=${this._handleChange}
+        />
+        <div
+          aria-hidden="true"
+          part="box"
+          class="box"
+        >
+          ${this._renderCheckIcon()} ${this._renderIndeterminateIcon()}
+        </div>
+      </div>
     `;
   }
 }
