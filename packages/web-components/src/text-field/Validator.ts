@@ -1,6 +1,6 @@
 import { Validator } from "../utils";
 
-export type InputState = {
+export type State = {
   /**
    * The current value.
    */
@@ -55,9 +55,9 @@ export type InputState = {
  */
 export type TextFieldState = {
   /**
-   * The input state to validate.
+   * The state to validate.
    */
-  state: InputState;
+  state: State;
 
   /**
    * The `<input>` that is rendered on the page.
