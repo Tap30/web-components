@@ -214,7 +214,9 @@ export abstract class BaseTextInput extends BaseInput {
   protected override getInputElement() {
     if (!this.renderRoot) return null;
 
-    return this.renderRoot.querySelector<HTMLInputElement>("#input");
+    return this.renderRoot.querySelector<
+      HTMLInputElement | HTMLTextAreaElement
+    >("#input");
   }
 
   protected handleInput(event: InputEvent) {
