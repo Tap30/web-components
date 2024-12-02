@@ -157,7 +157,7 @@ export class TextField extends BaseTextInput {
           "Expected a valid `label` or `labelledby` attribute, received none.",
           "If you want to hide the label, provide both `label` and `hidelabel` attributes.",
         ].join(" "),
-        "textfield",
+        "text-field",
         "error",
       );
     }
