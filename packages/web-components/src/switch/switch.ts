@@ -13,6 +13,7 @@ import {
   logger,
   onReportValidity,
   redispatchEvent,
+  waitAMicrotask,
 } from "../utils";
 
 export class Switch extends BaseInput {
@@ -57,7 +58,15 @@ export class Switch extends BaseInput {
 
     if (isServer) return;
 
-    this.addEventListener("click", (event: MouseEvent) => {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    this.addEventListener("click", async (event: MouseEvent) => {
+      if (this.disabled) return;
+
+      // allow event to propagate to user code after a microtask.
+      await waitAMicrotask();
+
+      if (event.defaultPrevented) return;
+
       const input = this.getInputElement();
 
       if (!isActivationClick(event) || !input) return;
@@ -84,7 +93,7 @@ export class Switch extends BaseInput {
     redispatchEvent(this, event);
   }
 
-  private _handleKeyDown(event: KeyboardEvent) {
+  private async _handleKeyDown(event: KeyboardEvent) {
     if (this.disabled) {
       event.preventDefault();
 
@@ -92,6 +101,9 @@ export class Switch extends BaseInput {
     }
 
     if (event.key === KeyboardKeys.ENTER) {
+      // allow event to propagate to user code after a microtask.
+      await waitAMicrotask();
+
       if (event.defaultPrevented) return;
 
       this.getInputElement()?.click();

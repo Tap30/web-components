@@ -2,7 +2,6 @@ import { html, isServer, LitElement, nothing, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
-import { KeyboardKeys } from "../internals";
 import {
   createValidator,
   getFormState,
@@ -76,14 +75,8 @@ export class Radio extends withFocusable(BaseInput) {
     this.addController(this._controller);
 
     if (!isServer) {
-      this._handleClick = this._handleClick.bind(this);
-      this._handleKeyDown = this._handleKeyDown.bind(this);
-
-      this.addEventListener("click", event => void this._handleClick(event));
-      this.addEventListener(
-        "keydown",
-        event => void this._handleKeyDown(event),
-      );
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      this.addEventListener("click", this._handleClick.bind(this));
     }
   }
 
@@ -112,15 +105,6 @@ export class Radio extends withFocusable(BaseInput) {
     return this.renderRoot.querySelector<HTMLInputElement>(
       'input[type="radio"]',
     );
-  }
-
-  private async _handleKeyDown(event: KeyboardEvent) {
-    // allow event to propagate to user code after a microtask.
-    await waitAMicrotask();
-
-    if (event.key !== KeyboardKeys.SPACE || event.defaultPrevented) return;
-
-    this.click();
   }
 
   private async _handleClick(event: MouseEvent) {
@@ -262,9 +246,9 @@ export class Radio extends withFocusable(BaseInput) {
           tabindex=${this.tabIndex}
           ?disabled=${this.disabled}
           .checked=${this.checked}
-          @keydown=${this.handleInputKeyDown}
           @input=${this._handleInput}
           @change=${this._handleChange}
+          @keydown=${this.handleFormSubmitWithEnter}
         />
         <div
           aria-hidden="true"

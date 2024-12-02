@@ -32,6 +32,7 @@ export default css`
     --input-box-bg-color: var(--tap-sys-color-surface-inverse-primary);
     --input-control-color: var(--tap-sys-color-content-on-inverse);
   }
+
   .control {
     position: relative;
     display: flex;

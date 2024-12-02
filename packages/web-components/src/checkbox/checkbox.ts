@@ -11,6 +11,7 @@ import {
   logger,
   onReportValidity,
   redispatchEvent,
+  waitAMicrotask,
 } from "../utils";
 import CheckboxValidator from "./Validator";
 
@@ -62,7 +63,15 @@ export class Checkbox extends BaseInput {
     super();
 
     if (!isServer) {
-      this.addEventListener("click", event => {
+      /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+      this.addEventListener("click", async event => {
+        if (this.disabled) return;
+
+        // allow event to propagate to user code after a microtask.
+        await waitAMicrotask();
+
+        if (event.defaultPrevented) return;
+
         const input = this.getInputElement();
 
         if (!isActivationClick(event) || !input) return;
@@ -218,9 +227,9 @@ export class Checkbox extends BaseInput {
           ?disabled=${this.disabled}
           .indeterminate=${this.indeterminate}
           .checked=${this.checked}
-          @keydown=${this.handleInputKeyDown}
           @input=${this._handleInput}
           @change=${this._handleChange}
+          @keydown=${this.handleFormSubmitWithEnter}
         />
         <div
           aria-hidden="true"
