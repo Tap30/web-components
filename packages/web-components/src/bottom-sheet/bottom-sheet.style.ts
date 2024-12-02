@@ -1,122 +1,221 @@
 import { css } from "lit";
+import { Z_INDEXES } from "../internals";
 
-export default css`
-  :host {
-    display: flex;
-    justify-content: center;
-  }
-
-  .bottom-sheet {
-    position: absolute;
-    bottom: 0;
-    max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-    transition: 0.3s;
-    direction: rtl;
-    max-width: 440px;
-    width: 100%;
-    background-color: var(
-      --tap-bottom-sheet-background,
-      var(--tap-sys-color-surface-primary)
-    );
+const styles = css`
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
-    font-family: var(--tap-font-family, var(--tap-sys-font-family));
-    border-radius: 20px 20px 0 0;
-    border: 1px solid var(--tap-palette-gray-200);
-    border-bottom: 0;
   }
 
-  .bottom-sheet-dimmer {
+  .root {
+    --bottom-sheet-body-pb: var(--tap-sys-spacing-9);
+    --bottom-sheet-container-dy: 100%;
+    --bottom-sheet-container-overflow: auto;
+    --bottom-sheet-actionbar-position: relative;
+    --bottom-sheet-grabber-height: 12px;
+    --bottom-sheet-grabber-y: 0;
+    --bottom-sheet-grabber-bottom: 0;
+
     position: fixed;
-    width: 100vw;
-    height: 100vh;
     bottom: 0;
-    background-color: #33323b4b;
-    animation: fade-in 0.3s ease-in-out;
+    left: 0;
+    right: 0;
+
+    opacity: 0;
+    visibility: hidden;
+
+    -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    z-index: ${Z_INDEXES[5]};
+
+    transition:
+      opacity 240ms ease,
+      visibility 240ms ease;
   }
 
-  .bottom-sheet-body {
-    display: flex;
-    width: 100%;
-    background-color: inherit;
-    flex-grow: 1;
-    overflow-x: auto;
-    overflow-y: var(--tap-bottom-sheet-content-overflow-y, scroll);
+  .root.open {
+    --bottom-sheet-container-dy: 0;
+
+    opacity: 1;
+    visibility: visible;
   }
 
-  .bottom-sheet-header {
-    display: flex;
-    align-items: center;
-    padding-top: var(--tap-bottom-sheet-header-padding, 0);
-    border-bottom: 1px solid var(--tap-palette-gray-200);
+  .root.sticky-actionbar {
+    --bottom-sheet-actionbar-position: sticky;
   }
 
-  .title {
-    height: 52px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    flex-grow: 1;
-    align-items: center;
+  .root.expanded-grabber {
+    --bottom-sheet-grabber-height: 20px;
+    --bottom-sheet-grabber-y: 50%;
+    --bottom-sheet-grabber-bottom: 50%;
   }
 
-  .close-button {
-    background-color: var(--tap-palette-gray-100);
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    position: absolute;
-    left: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    -webkit-tap-highlight-color: transparent;
+  .root.opened:not(.expanded) {
+    --bottom-sheet-container-overflow: hidden;
+  }
+
+  .root:not(.has-body) .body {
+    display: none;
+  }
+
+  .root:not(.has-actionbar) .actionbar {
+    display: none;
+  }
+
+  .root.has-actionbar.has-body {
+    --bottom-sheet-body-pb: var(--tap-sys-spacing-6);
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: -1;
+
+    background-color: var(--tap-sys-color-surface-overlay-light);
+  }
+
+  .container {
+    z-index: 1;
+    position: relative;
+    overflow: var(--bottom-sheet-container-overflow);
+
+    max-height: calc(90 * var(--bottom-sheet-dvh));
+
+    border-top-left-radius: var(--tap-sys-radius-5);
+    border-top-right-radius: var(--tap-sys-radius-5);
+
+    background-color: var(--tap-sys-color-surface-primary);
+    transform: translateY(var(--bottom-sheet-container-dy));
+
+    transition:
+      transform 240ms ease,
+      max-height 240ms ease;
   }
 
   .grabber {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+
+    height: var(--bottom-sheet-grabber-height);
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--tap-sys-color-surface-primary);
+
+    transition: height 240ms ease;
+  }
+
+  .grabber-event-capturer {
+    cursor: grab;
+
+    display: block;
+    appearance: none;
+
+    width: 100%;
+    height: calc(100% + 32px);
+  }
+
+  .grabber::after {
+    content: "";
+    display: block;
+
+    position: absolute;
+    bottom: var(--bottom-sheet-grabber-bottom);
+    transform: translateY(var(--bottom-sheet-grabber-y));
+
     width: 44px;
     height: 4px;
-    border-radius: 2px;
-    position: absolute;
-    top: 8px;
-    background-color: rgba(0, 0, 0, 0.12);
-    right: 50%;
-    transform: translateX(50%);
+
+    border-radius: var(--tap-sys-radius-full);
+
+    background-color: var(--tap-sys-color-surface-overlay-light);
+
+    transition:
+      bottom 240ms ease,
+      transform 240ms ease;
   }
 
-  .close {
-    animation: slide-down 0.3s ease-in forwards;
+  .header {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: var(--tap-sys-spacing-5) var(--tap-sys-spacing-6);
+
+    box-shadow: inset 0 -1px 0 0 var(--tap-sys-color-border-primary);
   }
 
-  .open {
-    animation: slide-up 0.3s ease-in forwards;
+  .heading {
+    margin-right: auto;
+    margin-left: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  @keyframes slide-down {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(100%);
-    }
+  .heading-title {
+    font-family: var(--tap-sys-typography-label-md-font);
+    font-size: var(--tap-sys-typography-label-md-size);
+    line-height: var(--tap-sys-typography-label-md-height);
+    font-weight: var(--tap-sys-typography-label-md-weight);
+    color: var(--tap-sys-color-content-primary);
   }
 
-  @keyframes slide-up {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
+  .heading-description {
+    font-family: var(--tap-sys-typography-body-sm-font);
+    font-size: var(--tap-sys-typography-body-sm-size);
+    line-height: var(--tap-sys-typography-body-sm-height);
+    font-weight: var(--tap-sys-typography-body-sm-weight);
+    color: var(--tap-sys-color-content-tertiary);
   }
 
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  .dismiss-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    vertical-align: middle;
+
+    color: var(--tap-sys-color-content-primary);
+  }
+
+  .dismiss-icon > svg {
+    width: 20px;
+    height: 20px;
+
+    fill: currentColor;
+  }
+
+  .body {
+    padding-top: var(--tap-sys-spacing-6);
+    padding-bottom: var(--bottom-sheet-body-pb);
+  }
+
+  .actionbar {
+    position: var(--bottom-sheet-actionbar-position);
+    bottom: 0;
+
+    z-index: 2;
+    padding: var(--tap-sys-spacing-6);
+
+    background-color: var(--tap-sys-color-surface-primary);
+    box-shadow: inset 0 1px 0 0 var(--tap-sys-color-border-primary);
   }
 `;
+
+export default styles;
