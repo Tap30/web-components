@@ -1,5 +1,6 @@
 import {
   html,
+  isServer,
   LitElement,
   type PropertyValues,
   type TemplateResult,
@@ -8,7 +9,9 @@ import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { KeyboardKeys } from "../internals";
 import {
+  dispatchActivationClick,
   getValidityAnchor,
+  isActivationClick,
   runAfterRepaint,
   waitAMicrotask,
   withConstraintValidation,
@@ -46,8 +49,52 @@ export abstract class BaseInput extends BaseClass {
   @property({ type: Boolean, reflect: true })
   public required = false;
 
+  /**
+   * Defines a string value that can be used to name input.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   */
+  @property({ type: String })
+  public label = "";
+
+  /**
+   * Identifies the element (or elements) that labels the input.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   */
+  @property({ type: String })
+  public labelledBy = "";
+
   @property({ type: String })
   public override inputMode = "";
+
+  constructor() {
+    super();
+
+    if (!isServer) {
+      /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+      this.addEventListener("click", async event => {
+        if (this.disabled) return;
+
+        // allow event to propagate to user code after a microtask.
+        await waitAMicrotask();
+
+        if (event.defaultPrevented) return;
+
+        const input = this.getInputElement();
+
+        if (!isActivationClick(event) || !input) return;
+
+        this.focus();
+
+        dispatchActivationClick(input);
+      });
+    }
+  }
+
+  protected hasValidLabel() {
+    return Boolean(this.label || this.labelledBy);
+  }
 
   protected abstract renderTrailingContent(): TemplateResult | null;
   protected abstract renderLeadingContent(): TemplateResult | null;
