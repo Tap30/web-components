@@ -1,7 +1,6 @@
 import { customElement } from "lit/decorators.js";
-import { inputStyles } from "../input";
+import { baseTextInputStyles } from "../base-text-input";
 import { TextField } from "./text-field";
-import styles from "./text-field.style";
 
 /**
  * @summary The text field component.
@@ -27,7 +26,7 @@ import styles from "./text-field.style";
  */
 @customElement("tap-text-field")
 export class TapTextField extends TextField {
-  public static override readonly styles = [inputStyles, styles];
+  public static override readonly styles = [...baseTextInputStyles];
 }
 
 declare global {
