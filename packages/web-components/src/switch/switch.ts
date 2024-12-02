@@ -1,4 +1,4 @@
-import { LitElement, html, isServer, nothing } from "lit";
+import { LitElement, html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
@@ -6,10 +6,8 @@ import CheckboxValidator from "../checkbox/Validator";
 import { KeyboardKeys } from "../internals";
 import {
   createValidator,
-  dispatchActivationClick,
   getFormState,
   getFormValue,
-  isActivationClick,
   logger,
   onReportValidity,
   redispatchEvent,
@@ -36,46 +34,6 @@ export class Switch extends BaseInput {
    */
   @property()
   public override value = "on";
-
-  /**
-   * Defines a string value that can be used to name switch input.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
-   */
-  @property({ type: String })
-  public label = "";
-
-  /**
-   * Identifies the element (or elements) that labels the switch input.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
-   */
-  @property({ type: String })
-  public labelledBy = "";
-
-  constructor() {
-    super();
-
-    if (isServer) return;
-
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    this.addEventListener("click", async (event: MouseEvent) => {
-      if (this.disabled) return;
-
-      // allow event to propagate to user code after a microtask.
-      await waitAMicrotask();
-
-      if (event.defaultPrevented) return;
-
-      const input = this.getInputElement();
-
-      if (!isActivationClick(event) || !input) return;
-
-      this.focus();
-
-      dispatchActivationClick(input);
-    });
-  }
 
   private _handleInput(event: InputEvent) {
     if (this.disabled) return;
@@ -181,9 +139,7 @@ export class Switch extends BaseInput {
   }
 
   protected override renderControl() {
-    const hasValidLabel = Boolean(this.label || this.labelledBy);
-
-    if (!hasValidLabel) {
+    if (!this.hasValidLabel()) {
       logger(
         "Expected a valid `label` or `labelledby` attribute, received none.",
         "switch",

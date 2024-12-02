@@ -1,4 +1,4 @@
-import { html, isServer, LitElement, nothing, type PropertyValues } from "lit";
+import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
@@ -6,12 +6,10 @@ import {
   createValidator,
   getFormState,
   getFormValue,
-  isActivationClick,
   isFocusable,
   logger,
   onReportValidity,
   redispatchEvent,
-  waitAMicrotask,
   withFocusable,
 } from "../utils";
 import SingleSelectionController from "./Controller";
@@ -51,33 +49,12 @@ export class Radio extends withFocusable(BaseInput) {
   @property()
   public override value = "on";
 
-  /**
-   * Defines a string value that can be used to name radio input.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
-   */
-  @property({ type: String })
-  public label = "";
-
-  /**
-   * Identifies the element (or elements) that labels the radio input.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
-   */
-  @property({ type: String })
-  public labelledBy = "";
-
   private readonly _controller = new SingleSelectionController(this);
 
   constructor() {
     super();
 
     this.addController(this._controller);
-
-    if (!isServer) {
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      this.addEventListener("click", this._handleClick.bind(this));
-    }
   }
 
   public override connectedCallback() {
@@ -104,24 +81,6 @@ export class Radio extends withFocusable(BaseInput) {
 
     return this.renderRoot.querySelector<HTMLInputElement>(
       'input[type="radio"]',
-    );
-  }
-
-  private async _handleClick(event: MouseEvent) {
-    if (this.disabled) return;
-
-    // allow event to propagate to user code after a microtask.
-    await waitAMicrotask();
-
-    if (event.defaultPrevented) return;
-
-    if (isActivationClick(event)) this.focus();
-
-    this.checked = true;
-
-    this.dispatchEvent(new Event("change", { bubbles: true }));
-    this.dispatchEvent(
-      new InputEvent("input", { bubbles: true, composed: true }),
     );
   }
 
@@ -216,9 +175,7 @@ export class Radio extends withFocusable(BaseInput) {
   }
 
   protected override renderControl() {
-    const hasValidLabel = Boolean(this.label || this.labelledBy);
-
-    if (!hasValidLabel) {
+    if (!this.hasValidLabel()) {
       logger(
         "Expected a valid `label` or `labelledby` attribute, received none.",
         "radio",
