@@ -1,4 +1,4 @@
-import { LitElement, html, nothing } from "lit";
+import { html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
@@ -13,11 +13,6 @@ import {
 import CheckboxValidator from "./Validator";
 
 export class Checkbox extends BaseInput {
-  public static override shadowRootOptions: ShadowRootInit = {
-    ...LitElement.shadowRootOptions,
-    delegatesFocus: true,
-  };
-
   /**
    * Whether or not the checkbox is selected.
    */

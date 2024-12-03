@@ -1,4 +1,4 @@
-import { LitElement, html, nothing } from "lit";
+import { html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
@@ -15,12 +15,6 @@ import {
 } from "../utils";
 
 export class Switch extends BaseInput {
-  public static override shadowRootOptions: ShadowRootInit = {
-    ...LitElement.shadowRootOptions,
-    mode: "open",
-    delegatesFocus: true,
-  };
-
   /**
    * Whether or not the switch is selected.
    */

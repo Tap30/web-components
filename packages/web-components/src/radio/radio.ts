@@ -1,4 +1,4 @@
-import { html, LitElement, nothing, type PropertyValues } from "lit";
+import { html, nothing, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
@@ -16,11 +16,6 @@ import SingleSelectionController from "./Controller";
 import RadioValidator from "./Validator";
 
 export class Radio extends withFocusable(BaseInput) {
-  public static override shadowRootOptions: ShadowRootInit = {
-    ...LitElement.shadowRootOptions,
-    delegatesFocus: true,
-  };
-
   private _checked = false;
 
   /**
