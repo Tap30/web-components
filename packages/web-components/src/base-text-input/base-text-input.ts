@@ -15,7 +15,7 @@ import { stringConverter } from "./utils";
 
 export abstract class BaseTextInput extends BaseInput {
   /**
-   * The maximum number of characters a user can enter into the text field. Set
+   * The maximum number of characters a user can enter into the text input. Set
    * to -1 for none.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength
@@ -24,7 +24,7 @@ export abstract class BaseTextInput extends BaseInput {
   public maxLength = -1;
 
   /**
-   * The minimum number of characters a user can enter into the text field. Set
+   * The minimum number of characters a user can enter into the text input. Set
    * to -1 for none.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#minlength
@@ -58,7 +58,7 @@ export abstract class BaseTextInput extends BaseInput {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
    */
   @property({ type: String })
-  public autocomplete: HTMLInputElement["autocomplete"] = "";
+  public autocomplete: AutoFill = "";
 
   /**
    * Conveys additional information below the text input, such as how it should

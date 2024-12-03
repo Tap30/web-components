@@ -1,9 +1,10 @@
 import { customElement } from "lit/decorators.js";
 import { baseTextInputStyles } from "../base-text-input";
-import { TextField } from "./text-field";
+import { TextArea } from "./text-area";
+import styles from "./text-area.style";
 
 /**
- * @summary The text-field component.
+ * @summary The text-area component.
  *
  * @prop {string} [value=""] - The current value of the input. It is always a string.
  * @prop {string} [name=""] - The HTML name to use in form submission.
@@ -67,56 +68,27 @@ import { TextField } from "./text-field";
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
  * @prop {boolean} [hide-label=false] - Whether to hide the label or not.
- * @prop {string} [type="text"] -
- * The `<input>` type to use, defaults to "text". The type greatly changes how
- * the text field behaves.
+ * @prop {number} [rows=2] -
+ * The number of rows to display for the text input.
+ * Defaults to 2.
  *
- * Text fields support a limited number of `<input>` types:
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#rows
+ * @prop {number} [cols=20] -
+ * The number of cols to display for the text input.
+ * Defaults to 20.
  *
- * - text
- * - email
- * - number
- * - password
- * - search
- * - tel
- * - url
- *
- * See
- * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
- * for more details on each input type.
- * @prop {string} [max=""] -
- * Defines the greatest value in the range of permitted values.
- *
- * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
- * @prop {string} [min=""] -
- * Defines the most negative value in the range of permitted values.
- *
- * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
- * @prop {string} [pattern=""] -
- * A regular expression that the text field's value must match to pass
- * constraint validation.
- *
- * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#pattern
- * @prop {boolean} [multiple=false] -
- * Indicates that input accepts multiple email addresses.
- *
- * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#multiple
- * @prop {string} [step=""] -
- * Returns or sets the element's step attribute, which works with min and max
- * to limit the increments at which a numeric or date-time value can be set.
- *
- * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#cols
  *
  * @slot leading-icon - the leading icon slot of the text-area
  * @slot trailing - the trailing slot of the text-area
  */
-@customElement("tap-text-field")
-export class TapTextField extends TextField {
-  public static override readonly styles = [...baseTextInputStyles];
+@customElement("tap-text-area")
+export class TapTextArea extends TextArea {
+  public static override readonly styles = [...baseTextInputStyles, styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-text-field": TapTextField;
+    "tap-text-area": TapTextArea;
   }
 }

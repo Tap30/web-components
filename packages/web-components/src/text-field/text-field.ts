@@ -6,6 +6,24 @@ import { createValidator, logger, type Validator } from "../utils";
 import TextFieldValidator from "./Validator";
 
 export class TextField extends BaseTextInput {
+  /**
+   * The `<input>` type to use, defaults to "text". The type greatly changes how
+   * the text field behaves.
+   *
+   * Text fields support a limited number of `<input>` types:
+   *
+   * - text
+   * - email
+   * - number
+   * - password
+   * - search
+   * - tel
+   * - url
+   *
+   * See
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+   * for more details on each input type.
+   */
   @property({ type: String, reflect: true })
   public type:
     | "email"
@@ -57,17 +75,6 @@ export class TextField extends BaseTextInput {
    */
   @property({ type: String })
   public step = "";
-
-  /**
-   * The label of the text field.
-   * - If the `hideLabel` property is true, the label will be hidden visually
-   * but still accessible to screen readers.
-   * - Otherwise, a visible label element will be rendered.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
-   */
-  @property({ type: String })
-  public override label = "";
 
   /**
    * The text field's value as a number.
