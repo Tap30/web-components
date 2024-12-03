@@ -183,13 +183,6 @@
       ]
     }
   },
-  "tap-radio-group": {
-    "slotKnobs": {
-      "default": {
-        "text": "<tap-radio value=\"1\"></tap-radio>\n  <tap-radio value=\"2\"></tap-radio>"
-      }
-    }
-  },
   "tap-bottom-navigation-item": {
     "slotKnobs": {
       "icon": {
@@ -218,12 +211,12 @@
   },
   "tap-text-field": {
     "slotKnobs": {
-      "leading": {
-        "empty": "<div></div>",
+      "leading-icon": {
+        "empty": "",
         "icon": "<tap-icon-default slot=\"leading-icon\"></tap-icon-default>"
       },
       "trailing": {
-        "empty": "<div></div>",
+        "empty": "",
         "suffix": "<p slot=\"trailing\">تومان</tap-button>",
         "icon": "<tap-icon-default slot=\"trailing\"></tap-icon-default>",
         "button": "<tap-icon-button variant=\"naked\" size=\"small\" slot=\"trailing\"><tap-icon-default></tap-icon-default></tap-icon-button>"
@@ -231,14 +224,26 @@
     },
     "propertyDefaultValues": {
       "label": "نام گیرنده",
-      "caption": "لطفا نام و نام خانوادگی کامل خود را وارد نمایید"
+      "supporting-text": "لطفا نام و نام خانوادگی کامل خود را وارد نمایید"
     }
   },
-  "tap-textarea": {
+  "tap-text-area": {
+    "slotKnobs": {
+      "leading-icon": {
+        "empty": "",
+        "icon": "<tap-icon-default slot=\"leading-icon\"></tap-icon-default>"
+      },
+      "trailing": {
+        "empty": "",
+        "suffix": "<p slot=\"trailing\">تومان</tap-button>",
+        "icon": "<tap-icon-default slot=\"trailing\"></tap-icon-default>",
+        "button": "<tap-icon-button variant=\"naked\" size=\"small\" slot=\"trailing\"><tap-icon-default></tap-icon-default></tap-icon-button>"
+      }
+    },
     "propertyDefaultValues": {
       "label": "توضیحات سفارش (اختیاری)",
       "placeholder": "مثلا بسته با احتیاط حمل شود...",
-      "caption": "در صورت پر بودن این فیلد، متن آن برای راننده نمایش داده خواهد شد"
+      "supporting-text": "در صورت پر بودن این فیلد، متن آن برای راننده نمایش داده خواهد شد"
     }
   },
   "tap-chip": {

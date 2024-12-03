@@ -1,89 +1,183 @@
-import { LitElement, type PropertyValues, html, nothing } from "lit";
+import { html, nothing } from "lit";
 import { property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import BaseInput from "../base-input";
+import CheckboxValidator from "../checkbox/Validator";
+import { KeyboardKeys } from "../internals";
+import {
+  createValidator,
+  getFormState,
+  getFormValue,
+  logger,
+  onReportValidity,
+  redispatchEvent,
+  waitAMicrotask,
+} from "../utils";
 
-export class Switch extends LitElement {
-  public static override shadowRootOptions: ShadowRootInit = {
-    ...LitElement.shadowRootOptions,
-    delegatesFocus: true,
-  };
+export class Switch extends BaseInput {
+  /**
+   * Whether or not the switch is selected.
+   */
+  @property({ type: Boolean })
+  public selected = false;
 
-  @property({ type: Boolean, reflect: true })
-  public checked = false;
-
-  @property({ type: Boolean, reflect: true })
-  public disabled = false;
-
+  /**
+   * The value of the switch that is submitted with a form when selected.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#value
+   */
   @property()
-  public value = "on";
+  public override value = "on";
 
-  private _internals: ElementInternals;
+  private _handleInput(event: InputEvent) {
+    if (this.disabled) return;
 
-  constructor() {
-    super();
-    this._internals = this.attachInternals();
-  }
-
-  public get form() {
-    return this._internals.form;
-  }
-
-  public get labels() {
-    return this._internals.labels;
-  }
-
-  private _handleInput(event: Event) {
     const target = event.target as HTMLInputElement;
 
-    this.checked = target.checked;
+    this.selected = target.checked;
+
+    // <input> 'input' event bubbles and is composed, don't re-dispatch it.
   }
 
-  private _handleKeyDown(event: KeyboardEvent) {
-    if (event.key === " ") {
+  private _handleChange(event: Event) {
+    if (this.disabled) return;
+    // <input> 'change' event is not composed, re-dispatch it.
+    redispatchEvent(this, event);
+  }
+
+  private async _handleKeyDown(event: KeyboardEvent) {
+    if (this.disabled) {
       event.preventDefault();
-      this.checked = !this.checked;
-      this.dispatchEvent(new Event("input", { bubbles: true, composed: true }));
+
+      return;
+    }
+
+    if (event.key === KeyboardKeys.ENTER) {
+      // allow event to propagate to user code after a microtask.
+      await waitAMicrotask();
+
+      if (event.defaultPrevented) return;
+
+      this.getInputElement()?.click();
     }
   }
 
-  protected override updated(changed: PropertyValues) {
-    if (changed.has("checked")) {
-      const value = this.checked ? this.value : null;
+  public override [getFormValue]() {
+    if (!this.selected) return null;
 
-      this._internals.setFormValue(value, String(this.checked));
-    }
+    return this.value;
   }
 
-  formResetCallback() {
-    this.checked = false;
+  public override [getFormState]() {
+    return String(this.selected);
   }
 
-  formStateRestoreCallback(state: string) {
-    this.checked = state === "true";
+  public override formResetCallback() {
+    // The selected property does not reflect, so the original attribute set by
+    // the user is used to determine the default value.
+    this.selected = this.hasAttribute("selected");
   }
 
-  protected override render() {
+  public override formStateRestoreCallback(state: string) {
+    if (state === "on") return;
+
+    this.selected = state === "true";
+  }
+
+  public override [createValidator]() {
+    return new CheckboxValidator(() => ({
+      checked: this.selected,
+      required: this.required,
+    }));
+  }
+
+  public override [onReportValidity]() {
+    // Perform the default behavior (showing pop-up)
+  }
+
+  protected override getInputElement() {
+    if (!this.renderRoot) return null;
+
+    return this.renderRoot.querySelector<HTMLInputElement>(
+      'input[role="switch"]',
+    );
+  }
+
+  private _renderCheckIcon() {
+    if (!this.selected) return null;
+
     return html`
-      <label
-        part="switch"
-        class="switch"
+      <svg
+        focusable="false"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill="currentColor"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M20 8.11057L9.11938 19L4 14.0643L6.11879 11.9537L9.11938 14.7789L17.8812 6L20 8.11057Z"
+        />
+      </svg>
+    `;
+  }
+
+  protected override renderTrailingContent() {
+    return null;
+  }
+
+  protected override renderLeadingContent() {
+    return null;
+  }
+
+  protected override renderControl() {
+    if (!this.hasValidLabel()) {
+      logger(
+        "Expected a valid `label` or `labelledby` attribute, received none.",
+        "switch",
+        "error",
+      );
+    }
+
+    const controlClasses = classMap({
+      control: true,
+      selected: this.selected,
+    });
+
+    return html`
+      <div
+        class=${controlClasses}
+        part="control"
+        ?inert=${this.disabled}
       >
         <input
           role="switch"
           part="input"
           type="checkbox"
-          @input=${this._handleInput}
-          @keydown=${this._handleKeyDown}
-          aria-checked=${this.checked ? "true" : "false"}
-          aria-label=${nothing}
-          aria-describedby=${nothing}
+          class="input"
+          aria-label=${this.label || nothing}
+          aria-labelledby=${this.label ? nothing : this.labelledBy || nothing}
           ?disabled=${this.disabled}
-          .checked=${this.checked}
+          .checked=${this.selected}
+          @keydown=${this._handleKeyDown}
+          @input=${this._handleInput}
+          @change=${this._handleChange}
         />
-        <span
-          part="slider"
-          class="slider"
-        ></span>
-      </label>
+        <div
+          aria-hidden="true"
+          part="track"
+          class="track"
+        ></div>
+        <div
+          aria-hidden="true"
+          part="knob"
+          class="knob"
+        >
+          ${this._renderCheckIcon()}
+        </div>
+      </div>
     `;
   }
 }
