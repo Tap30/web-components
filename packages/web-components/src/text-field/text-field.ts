@@ -73,7 +73,7 @@ export class TextField extends BaseTextInput {
    * The text field's value as a number.
    */
   public get valueAsNumber() {
-    const input = this.getInputElement();
+    const input = this.getInputElement() as HTMLInputElement | null;
 
     if (!input) return NaN;
 
@@ -81,7 +81,7 @@ export class TextField extends BaseTextInput {
   }
 
   public set valueAsNumber(value: number) {
-    const input = this.getInputElement();
+    const input = this.getInputElement() as HTMLInputElement | null;
 
     if (!input) return;
 
@@ -93,7 +93,7 @@ export class TextField extends BaseTextInput {
    * The text field's value as a Date.
    */
   public get valueAsDate() {
-    const input = this.getInputElement();
+    const input = this.getInputElement() as HTMLInputElement | null;
 
     if (!input) return null;
 
@@ -101,7 +101,7 @@ export class TextField extends BaseTextInput {
   }
 
   public set valueAsDate(value: Date | null) {
-    const input = this.getInputElement();
+    const input = this.getInputElement() as HTMLInputElement | null;
 
     if (!input) return;
 
@@ -118,7 +118,7 @@ export class TextField extends BaseTextInput {
    * @param stepDecrement The number of steps to decrement, defaults to 1.
    */
   public stepDown(stepDecrement?: number) {
-    const input = this.getInputElement();
+    const input = this.getInputElement() as HTMLInputElement | null;
 
     if (!input) return;
 
@@ -135,7 +135,7 @@ export class TextField extends BaseTextInput {
    * @param stepIncrement The number of steps to increment, defaults to 1.
    */
   public stepUp(stepIncrement?: number) {
-    const input = this.getInputElement();
+    const input = this.getInputElement() as HTMLInputElement | null;
 
     if (!input) return;
 
@@ -146,7 +146,7 @@ export class TextField extends BaseTextInput {
   public override [createValidator](): Validator<unknown> {
     return new TextFieldValidator(() => ({
       state: this,
-      control: this.getInputElement(),
+      control: this.getInputElement() as HTMLInputElement | null,
     }));
   }
 
