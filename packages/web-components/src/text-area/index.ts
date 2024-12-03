@@ -1,7 +1,9 @@
 import { customElement } from "lit/decorators.js";
-import { baseTextInputStyles } from "../base-text-input";
+import { BaseTextInputSlots, baseTextInputStyles } from "../base-text-input";
 import { TextArea } from "./text-area";
 import styles from "./text-area.style";
+
+export { BaseTextInputSlots as Slots };
 
 /**
  * @summary The text-area component.

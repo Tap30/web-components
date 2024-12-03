@@ -1,6 +1,8 @@
 import { customElement } from "lit/decorators.js";
-import { baseTextInputStyles } from "../base-text-input";
+import { BaseTextInputSlots, baseTextInputStyles } from "../base-text-input";
 import { TextField } from "./text-field";
+
+export { BaseTextInputSlots as Slots };
 
 /**
  * @summary The text-field component.
