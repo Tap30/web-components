@@ -4,7 +4,7 @@
 
 import { expect, fixture, html, oneEvent } from "@open-wc/testing";
 import sinon from "sinon";
-import "../../dist/button/index.js";
+import "@tapsioss/web-components/button";
 import { type TapButton } from "./index";
 
 describe("Test tap-button", () => {
@@ -67,7 +67,7 @@ describe("Test tap-button", () => {
     expect(spinner).to.exist;
 
     // Check if the content slot is still rendered when loading is true
-    const content = el.shadowRoot!.querySelector(".content");
+    const content = el.shadowRoot!.querySelector(".body");
 
     expect(content).to.exist;
 
