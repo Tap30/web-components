@@ -296,7 +296,10 @@ export class Stepper extends BaseClass {
     this.valueAsNumber = newValue;
 
     const eventAllowed = this.dispatchEvent(
-      new Event("change", { bubbles: true }),
+      new Event("change", {
+        bubbles: true,
+        cancelable: true,
+      }),
     );
 
     // Revert the chagne since the event is prevented.
