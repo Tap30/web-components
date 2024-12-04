@@ -1,7 +1,9 @@
 export * from "./controllers";
 export * from "./dom";
 export * from "./events";
+export * from "./math";
 export * from "./mixins";
+export * from "./numbers";
 export * from "./repaint";
 
 export { default as debounce } from "./debounce";
