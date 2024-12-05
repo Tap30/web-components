@@ -132,15 +132,6 @@
       }
     }
   },
-  "tap-route": {
-    "slotKnobs": {
-      "content": {
-        "standard": "<div slot=\"content\">\n    <h3 style=\"margin: 0;\">عنوان را وارد کنید</h3>\n    <p style=\"margin: 0;\">توضیحات لیست</p>\n  </div>",
-        "reverse": "<div slot=\"content\">\n    <p style=\"margin: 0;\">عنوان را وارد کنید</p>\n    <h3 style=\"margin: 0;\">توضیحات لیست</h3>\n  </div>",
-        "address": "<p slot=\"content\">سعادت\u200Cآباد، بلوار بهزاد</p>"
-      }
-    }
-  },
   "tap-segmented-button": {
     "propertyDefaultValues": {
       "selected": true

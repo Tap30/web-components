@@ -21,7 +21,6 @@ export { default as Pinwheel } from "./Pinwheel";
 export { default as PinwheelGroup } from "./PinwheelGroup";
 export { default as ProgressIndicator } from "./ProgressIndicator";
 export { default as Radio } from "./Radio";
-export { default as Route } from "./Route";
 export { default as Row } from "./Row";
 export { default as SegmentedButton } from "./SegmentedButton";
 export { default as SegmentedButtonGroup } from "./SegmentedButtonGroup";
