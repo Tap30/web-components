@@ -113,25 +113,6 @@
       }
     }
   },
-  "tap-row": {
-    "slotKnobs": {
-      "leading": {
-        "checkbox": "<tap-checkbox slot=\"leading\"></tap-checkbox>",
-        "radio": "<tap-radio slot=\"leading\"></tap-radio>",
-        "avatar": "<tap-avatar slot=\"leading\" size=\"sm\" image=\"https://picsum.photos/100\"></tap-avatar>"
-      },
-      "trailing": {
-        "button": "<tap-button slot=\"trailing\">پرداخت</tap-button>",
-        "badge": "<tap-badge slot=\"trailing\" value=\"1\" color=\"error\" variant=\"numeral\"></tap-badge>",
-        "icon": "<tap-icon-default color=\"black\" slot=\"trailing\"></tap-icon-default>",
-        "price": "<p color=\"black\" slot=\"trailing\">۱۵۷٬۰۰۰ تومان</p>"
-      },
-      "content": {
-        "address": "<p color=\"black\" slot=\"content\">انتخاب آدرس</p>",
-        "simple text": "<p color=\"black\" slot=\"content\">متن ساده</p>"
-      }
-    }
-  },
   "tap-segmented-button": {
     "propertyDefaultValues": {
       "selected": true
