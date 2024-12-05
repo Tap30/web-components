@@ -23,7 +23,6 @@ import '../../../packages/web-components/src/pinwheel';
 import '../../../packages/web-components/src/pinwheel-group';
 import '../../../packages/web-components/src/progress-indicator';
 import '../../../packages/web-components/src/radio';
-import '../../../packages/web-components/src/row';
 import '../../../packages/web-components/src/segmented-button';
 import '../../../packages/web-components/src/segmented-button-group';
 import '../../../packages/web-components/src/chip';
