@@ -3,13 +3,13 @@ import { logger } from "../../utils";
 import { BaseButton } from "../base";
 
 export class IconButton extends BaseButton {
-  protected override updated(changedProperties: PropertyValues) {
-    super.updated(changedProperties);
+  protected override updated(changed: PropertyValues<this>) {
+    super.updated(changed);
 
     if (!this.label) {
       logger(
         "Icon buttons should include the `label` for better accessibility",
-        "IconButton",
+        "icon-button",
         "warning",
       );
     }
