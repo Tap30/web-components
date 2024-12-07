@@ -139,8 +139,10 @@ class SegmentedViewItemController implements ReactiveController {
   private _handleKeyDown(event: KeyboardEvent) {
     const isLeft = event.key === KeyboardKeys.LEFT;
     const isRight = event.key === KeyboardKeys.RIGHT;
+    const isHome = event.key === KeyboardKeys.HOME;
+    const isEnd = event.key === KeyboardKeys.END;
 
-    if (!isLeft && !isRight) return;
+    if (!isLeft && !isRight && !isHome && !isEnd) return;
 
     const siblings = this.items;
 
@@ -152,10 +154,17 @@ class SegmentedViewItemController implements ReactiveController {
     event.preventDefault();
 
     const isRtl = getComputedStyle(this._host).direction === "rtl";
-    const forwards = isRtl ? isLeft : isRight;
-
     const hostIndex = siblings.indexOf(this._host);
-    let nextIndex = forwards ? hostIndex + 1 : hostIndex - 1;
+
+    let nextIndex: number;
+    let forwards = true;
+
+    if (isHome || isEnd) {
+      nextIndex = isHome ? 0 : siblings.length - 1;
+    } else {
+      forwards = isRtl ? isLeft : isRight;
+      nextIndex = forwards ? hostIndex + 1 : hostIndex - 1;
+    }
 
     // Search for the next sibling that is not disabled to select.
     // If we return to the host index, there is nothing to select.
