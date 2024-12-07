@@ -1,6 +1,6 @@
 import { LitElement, html, isServer } from "lit";
 import { property } from "lit/decorators.js";
-import { getRenderRootSlot } from "../utils";
+import { getRenderRootSlot, logger } from "../utils";
 import { Slots } from "./constants";
 import { ActivateEvent, BottomNavigationItem, DeactivateEvent } from "./item";
 
@@ -41,7 +41,7 @@ export class BottomNavigation extends LitElement {
    * The label used for screen readers.
    */
   @property({ type: String, attribute: "screen-reader-label" })
-  public screenReaderLabel = "Bottombar navigation";
+  public screenReaderLabel = "";
 
   constructor() {
     super();
@@ -134,6 +134,14 @@ export class BottomNavigation extends LitElement {
   }
 
   protected override render() {
+    if (!this.screenReaderLabel) {
+      logger(
+        "Set `screen-reader-label` attribute for better accessibility.",
+        "bottom-navigation",
+        "warning",
+      );
+    }
+
     return html`
       <nav
         role="navigation"
