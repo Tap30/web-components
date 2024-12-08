@@ -1,9 +1,8 @@
-import { html, LitElement, nothing } from "lit";
+import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { map } from "lit/directives/map.js";
 import { range } from "lit/directives/range.js";
-import { logger } from "../utils";
 
 export class ProgressIndicator extends LitElement {
   /**
@@ -17,14 +16,6 @@ export class ProgressIndicator extends LitElement {
    */
   @property({ type: Number })
   public current = 0;
-
-  /**
-   * The description of the progress indicator.
-   *
-   * https://w3c.github.io/aria/#progressbar
-   */
-  @property({ type: String })
-  public describedBy = "";
 
   private _renderSteps() {
     return map(range(this.max), index => {
@@ -41,16 +32,6 @@ export class ProgressIndicator extends LitElement {
   }
 
   protected override render() {
-    if (!this.describedBy) {
-      logger(
-        "Provide a `describedBy` of `description` attribute for better accessibility",
-        "ProgressIndicator",
-        "warning",
-      );
-    }
-
-    const ariaDescribedBy = this.describedBy || nothing;
-
     return html`
       <div
         class="root"
@@ -59,7 +40,6 @@ export class ProgressIndicator extends LitElement {
         aria-valuemin="0"
         aria-valuemax=${this.max}
         aria-valuenow=${this.current}
-        aria-describedby=${ariaDescribedBy}
       >
         ${this._renderSteps()}
       </div>

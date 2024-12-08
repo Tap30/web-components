@@ -9,7 +9,7 @@ export default css`
     display: none !important;
   }
 
-  .progressbar {
+  .root {
     display: flex;
     align-items: center;
     gap: var(--tap-sys-spacing-3);
