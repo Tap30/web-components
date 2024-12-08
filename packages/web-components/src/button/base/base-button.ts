@@ -95,12 +95,9 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
    * The method for rendering the spinner for loading state.
    */
   protected renderSpinner() {
-    // TODO: rename the variant names of spinner component
     return html`
       <div class="icon spinner">
-        <tap-spinner
-          size=${ifDefined(this.size === "sm" ? "small" : undefined)}
-        ></tap-spinner>
+        <tap-spinner></tap-spinner>
       </div>
     `;
   }
@@ -144,6 +141,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
         ?disabled=${this.disabled}
         type=${ifDefined(this.type)}
         aria-label=${ifDefined(this.label)}
+        aria-busy=${this.loading}
         aria-labelledby=${nothing}
         aria-describedby=${nothing}
       >
