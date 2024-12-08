@@ -6,6 +6,7 @@ export { default as BottomNavigation } from "./BottomNavigation";
 export { default as BottomNavigationItem } from "./BottomNavigationItem";
 export { default as BottomSheet } from "./BottomSheet";
 export { default as Button } from "./Button";
+export { default as ButtonGroup } from "./ButtonGroup";
 export { default as ChatBubbleIn } from "./ChatBubbleIn";
 export { default as ChatBubbleOut } from "./ChatBubbleOut";
 export { default as Checkbox } from "./Checkbox";
