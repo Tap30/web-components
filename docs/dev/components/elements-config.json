@@ -42,17 +42,6 @@
     },
     "slotKnobs": {}
   },
-  "tap-toast": {
-    "propertyDefaultValues": {
-      "show-dismiss-button": false,
-      "variant": "warning"
-    },
-    "slotKnobs": {
-      "default": {
-        "text": "برای تجربه کاربری بهتر VPN را خاموش کنید"
-      }
-    }
-  },
   "tap-tooltip": {
     "propertyDefaultValues": {
       "width": "100px"
@@ -76,14 +65,19 @@
   "tap-notice": {
     "propertyDefaultValues": {
       "variant": "error",
-      "priority": "low"
+      "noticeTitle": "عنوان را وارد کنید"
     },
     "slotKnobs": {
       "default": {
         "simple": "متن شما در اینجا قرار می‌گیرد"
       },
       "actions": {
-        "button": "<tap-button slot=\"actions\" title=\"Button\">عنوان دکمه</tap-button>"
+        "empty": "",
+        "one button": "<div slot=\"actions\"><tap-button>عنوان دکمه</tap-button></div>",
+        "two buttons": "<div slot=\"actions\"><tap-button style=\"margin-left: 12px\">عنوان دکمه</tap-button><tap-button>عنوان دکمه</tap-button></div>"
+      },
+      "artwork": {
+        "sample": "<svg slot=\"artwork\" width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1.23947 35.2061L19.2616 3.96775C19.5619 3.40992 20.3772 3.40992 20.7205 3.96775L38.7855 35.2061C39.0859 35.7639 38.6997 36.4504 38.056 36.4504H1.92602C1.28238 36.4504 0.896188 35.7639 1.23947 35.2061Z\" fill=\"#FFC043\"/><path d=\"M6.25977 33.1465L19.9909 9.37445L33.722 33.1465H6.25977Z\" fill=\"black\"/><path d=\"M19.9909 27.3964C20.3342 27.3964 20.6345 27.5251 20.892 27.7826C21.1495 28.04 21.2782 28.3404 21.2782 28.6837C21.2782 29.0269 21.1495 29.3273 20.892 29.5848C20.6345 29.8422 20.3342 29.971 19.9909 29.971C19.6476 29.971 19.3043 29.8422 19.0898 29.5848C18.8323 29.3273 18.7036 29.0269 18.7036 28.6837C18.7036 28.3404 18.8323 28.04 19.0898 27.7826C19.3473 27.5251 19.6476 27.3964 19.9909 27.3964ZM19.004 26.2807L18.8323 17.0551H21.1924L20.9778 26.2807H19.004Z\" fill=\"white\"/></svg>"
       }
     }
   },

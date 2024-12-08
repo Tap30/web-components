@@ -1,113 +1,114 @@
-import { html, LitElement, nothing } from "lit";
-import { property } from "lit/decorators.js";
+import { html, LitElement, nothing, type PropertyValues } from "lit";
+import { property, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import "../button";
+import { getRenderRootSlot, logger, runAfterRepaint } from "../utils";
+import { Slots } from "./constants";
+import { DismissEvent } from "./events";
+import { close, error, info, success, warning } from "./icons";
 
 export class Notice extends LitElement {
+  public static override readonly shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+    mode: "open",
+  };
+
+  /**
+   * The title of the notice. If an empty string is passed, the title will not be rendered.
+   */
   @property({ type: String, attribute: "notice-title" })
   public noticeTitle? = "";
 
+  /**
+   * The variant of the notice, indicating the type of message. Defaults to `inverse`.
+   */
   @property()
-  public variant?: "success" | "error" | "info" | "warning" | "inverse" =
+  public variant: "success" | "error" | "info" | "warning" | "inverse" =
     "inverse";
 
+  /**
+   * The priority level of the notice. Defaults to `high`. High priority uses bolder colors and the role of `alert` for screen readers, while low priority uses lighter colors and the role of `status`.
+   */
   @property()
-  public priority?: "high" | "low" = "high";
+  public priority: "high" | "low" = "high";
 
-  @property({ type: Boolean, attribute: "dismissable" })
-  public dismissable? = false;
+  /**
+   * The artwork of the notice component. Defaults to `icon`. Setting to `none` hides the artwork. The `icon` value shows a default icon based on the variant, and `custom` enables the use of the `artwork` slot.
+   */
+  @property()
+  public artwork: "none" | "icon" | "custom" = "icon";
 
-  private _renderCloseIcon() {
-    return html`
-      <svg
-        width="25"
-        height="24"
-        viewBox="0 0 25 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M18.1568 7.75735L13.9142 12L18.1568 16.2426L16.7426 17.6568L12.5 13.4142L8.25735 17.6568L6.84314 16.2426L11.0858 12L6.84314 7.75735L8.25735 6.34314L12.5 10.5858L16.7426 6.34314L18.1568 7.75735Z"
-          fill="currentColor"
-        />
-      </svg>
-    `;
+  /**
+   * The size of the notice. Defaults to `standard`.
+   */
+  @property()
+  public size: "standard" | "compact" = "standard";
+
+  /**
+   * Indicates whether the notice can be dismissed. If true, a dismiss button is rendered, emitting a 'dismiss' event when clicked.
+   */
+  @property({ type: Boolean })
+  public dismissible = false;
+
+  @state()
+  private _hasCustomArtworkSlot = false;
+
+  @state()
+  private _hasActionsSlot = false;
+
+  @state()
+  private _hasDescriptionSlot = false;
+
+  protected override updated(changedProperties: PropertyValues) {
+    super.updated(changedProperties);
+
+    runAfterRepaint(() => {
+      const customArtworkSlot = getRenderRootSlot(
+        this.renderRoot,
+        Slots.ARTWORK,
+      );
+
+      const actionsSlot = getRenderRootSlot(this.renderRoot, Slots.ACTION);
+
+      const descriptionSlot = getRenderRootSlot(
+        this.renderRoot,
+        Slots.DESCRIPTION,
+      );
+
+      if (customArtworkSlot) {
+        this._hasCustomArtworkSlot =
+          customArtworkSlot.assignedNodes().length > 0;
+      }
+
+      if (actionsSlot) {
+        this._hasActionsSlot = actionsSlot.assignedNodes().length > 0;
+      }
+
+      if (descriptionSlot) {
+        this._hasDescriptionSlot = descriptionSlot.assignedNodes().length > 0;
+      }
+    });
+
+    this._logWarnings();
   }
 
-  private _renderSuccessIcon() {
-    return html`
-      <svg
-        width="25"
-        height="24"
-        viewBox="0 0 25 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M12.5 2C18.02 2 22.5 6.48 22.5 12C22.5 17.52 18.02 22 12.5 22C6.98 22 2.5 17.52 2.5 12C2.5 6.48 6.98 2 12.5 2ZM16.7929 8.29297L11.5 13.5859L9.20712 11.293L7.79291 12.7072L11.5 16.4143L18.2071 9.70718L16.7929 8.29297Z"
-          fill="currentColor"
-        />
-      </svg>
-    `;
-  }
+  private _logWarnings() {
+    if (this.artwork === "custom" && !this._hasCustomArtworkSlot) {
+      logger(
+        `Notice component with \`custom\` artwork property should have a \`${Slots.ARTWORK}\` slot`,
+        "notice",
+        "warning",
+      );
+    }
 
-  private _renderErrorIcon() {
-    return html`
-      <svg
-        width="25"
-        height="24"
-        viewBox="0 0 25 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M12.5 22C18.02 22 22.5 17.52 22.5 12C22.5 6.48 18.02 2 12.5 2C6.98 2 2.5 6.48 2.5 12C2.5 17.52 6.98 22 12.5 22ZM11.5 7H13.5V13H11.5V7ZM11.5 15H13.5V17H11.5V15Z"
-          fill="currentColor"
-        />
-      </svg>
-    `;
-  }
-
-  private _renderInfoIcon() {
-    return html`
-      <svg
-        width="25"
-        height="24"
-        viewBox="0 0 25 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M12.5 2C18.02 2 22.5 6.48 22.5 12C22.5 17.52 18.02 22 12.5 22C6.98 22 2.5 17.52 2.5 12C2.5 6.48 6.98 2 12.5 2ZM11.5 17H13.5V11H11.5V17ZM11.5 9H13.5V7H11.5V9Z"
-          fill="currentColor"
-        />
-      </svg>
-    `;
-  }
-
-  private _renderWarningIcon() {
-    return html`
-      <svg
-        width="25"
-        height="24"
-        viewBox="0 0 25 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M14.7603 5.09648L14.8686 5.24257L21.9919 15.5147C22.3229 15.9919 22.5 16.5572 22.5 17.1362C22.5 18.6613 21.2964 19.908 19.7788 19.9951L19.6089 20H5.39137C4.8088 20 4.23981 19.8257 3.75898 19.4998C2.49183 18.6411 2.13108 16.9604 2.90668 15.6718L3.00522 15.5192L10.0994 5.2471C10.2604 5.01391 10.4552 4.80593 10.6771 4.62968L10.8486 4.50355L11.0025 4.40565C12.2498 3.66573 13.8641 3.96249 14.7603 5.09648ZM13.4662 14.8628H11.4724V16.8378H13.4662V14.8628ZM13.4662 8.44386H11.4724V12.8877H13.4662V8.44386Z"
-          fill="currentColor"
-        />
-      </svg>
-    `;
+    if (this.artwork !== "custom" && this._hasCustomArtworkSlot) {
+      logger(
+        `Notice component with \`${this.artwork}\` artwork property shouldn't have a \`${Slots.ARTWORK}\` slot`,
+        "notice",
+        "warning",
+      );
+    }
   }
 
   private _renderDefaultIcon() {
@@ -135,11 +136,11 @@ export class Notice extends LitElement {
     `;
   }
 
-  private _renderIcon() {
-    if (this.variant === "success") return this._renderSuccessIcon();
-    if (this.variant === "error") return this._renderErrorIcon();
-    if (this.variant === "info") return this._renderInfoIcon();
-    if (this.variant === "warning") return this._renderWarningIcon();
+  private _renderIconArtwork() {
+    if (this.variant === "success") return success;
+    if (this.variant === "error") return error;
+    if (this.variant === "info") return info;
+    if (this.variant === "warning") return warning;
 
     return this._renderDefaultIcon();
   }
@@ -157,60 +158,96 @@ export class Notice extends LitElement {
   }
 
   private _handleDismissClick() {
-    this.dispatchEvent(
-      new CustomEvent("dismiss", {
-        bubbles: true,
-        composed: true,
-      }),
-    );
+    if (this.dismissible) this.dispatchEvent(new DismissEvent(null));
   }
 
-  private renderDismiss() {
-    if (this.dismissable)
-      return html`<button
+  private _renderDismiss() {
+    if (this.dismissible)
+      return html`<tap-icon-button
         part="dismiss"
-        class="dismiss"
+        size="sm"
+        variant="naked"
+        label="dismiss"
         id="dismiss"
+        class="dismiss"
         @click=${this._handleDismissClick}
       >
-        ${this._renderCloseIcon()}
-      </button>`;
+        ${close}
+      </tap-icon-button>`;
+
     return nothing;
   }
 
+  private _renderDescription() {
+    if (this.size === "compact") {
+      return nothing;
+    }
+
+    return html`<p
+      ?hidden=${!this._hasDescriptionSlot}
+      class="description"
+      part=${Slots.DESCRIPTION}
+    >
+      <slot name=${Slots.DESCRIPTION}></slot>
+    </p>`;
+  }
+
+  private _renderArtwork() {
+    if (this.artwork === "custom")
+      return html` <slot name=${Slots.ARTWORK}></slot> `;
+
+    if (this.artwork === "icon") return this._renderIconArtwork();
+
+    return nothing;
+  }
+
+  private _renderActions() {
+    return html`<div
+      class="actions"
+      ?hidden=${!this._hasActionsSlot || this.size === "compact"}
+      part="actions"
+    >
+      <slot
+        part=${Slots.ACTION}
+        name=${Slots.ACTION}
+      ></slot>
+    </div>`;
+  }
+
   protected override render() {
+    const rootClasses = classMap({
+      root: true,
+      dismissible: this.dismissible,
+      [`${this.artwork}-artwork`]: true,
+      [this.variant]: true,
+      [this.priority]: true,
+      [this.size]: true,
+    });
+
     return html`
       <div
-        part="notice"
-        id="notice"
-        class="notice"
+        role=${this.priority === "high" ? "alert" : "status"}
+        part="root"
+        id="root"
+        class=${rootClasses}
+        aria-label=${this.noticeTitle}
       >
         <span
-          class="icon"
-          id="icon"
-          part="icon"
+          class="artwork"
+          id="artwork"
+          part="artwork"
         >
-          ${this._renderIcon()}
+          ${this._renderArtwork()}
         </span>
         <div
-          id="content-root"
-          part="content-root"
-          class="content-root"
+          id="content"
+          part="content"
+          class="content"
         >
-          ${this._renderTitle()}
-          <p
-            id="message"
-            part="message"
-            class="message"
-          >
-            <slot></slot>
-          </p>
-          <slot
-            name="actions"
-            part="actions"
-          ></slot>
+          ${this._renderTitle()} ${this._renderDescription()}
+          ${this._renderActions()}
         </div>
-        ${this.renderDismiss()}
+        ${this._renderDismiss()}
       </div>
     `;
   }
