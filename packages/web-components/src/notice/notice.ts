@@ -97,7 +97,7 @@ export class Notice extends LitElement {
     if (this.artwork === "custom" && !this._hasCustomArtworkSlot) {
       logger(
         `Notice component with \`custom\` artwork property should have a \`${Slots.ARTWORK}\` slot`,
-        "Notice",
+        "notice",
         "warning",
       );
     }
@@ -105,7 +105,7 @@ export class Notice extends LitElement {
     if (this.artwork !== "custom" && this._hasCustomArtworkSlot) {
       logger(
         `Notice component with \`${this.artwork}\` artwork property shouldn't have a \`${Slots.ARTWORK}\` slot`,
-        "Notice",
+        "notice",
         "warning",
       );
     }
