@@ -7,7 +7,7 @@ import { Slots } from "./constants";
 
 export class BottomNavigationItem extends LitElement {
   /**
-   * Indicates whether the navigation item is active or not.
+   * Indicates whether the item is active or not.
    */
   @property({ type: Boolean, reflect: true })
   public active = false;
@@ -30,7 +30,7 @@ export class BottomNavigationItem extends LitElement {
     if (!this.value) {
       throw new SystemError(
         `Expected a valid \`value\` property/attribute. Received \`${this.value}\`.`,
-        "BottomNavigationItem",
+        "bottom-navigation-item",
       );
     }
 
@@ -41,6 +41,14 @@ export class BottomNavigationItem extends LitElement {
 
       this._hasIcon = iconSlot.assignedNodes().length > 0;
     });
+  }
+
+  public override focus(options?: FocusOptions): void {
+    this.renderRoot?.querySelector<HTMLElement>("#root")?.focus(options);
+  }
+
+  public override blur(): void {
+    this.renderRoot?.querySelector<HTMLElement>("#root")?.blur();
   }
 
   protected override render() {

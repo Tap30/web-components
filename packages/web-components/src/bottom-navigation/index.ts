@@ -23,8 +23,8 @@ export { ActivateEvent, DeactivateEvent, ItemSlots };
  * @fires {ActivateEvent} activate
  * @fires {DeactivateEvent} deactivate
  *
- * @prop {boolean} [active=false] - Indicates whether the navigation item is active or not.
- * @prop {string} value - The value associated with the item. This value has to be unique among sibling items.
+ * @prop {boolean} [active=false] - Indicates whether the item is active or not.
+ * @prop {string} [value=""] - The value associated with the item. This value has to be unique among sibling items.
  */
 @customElement("tap-bottom-navigation-item")
 export class TapBottomNavigationItem extends BottomNavigationItem {

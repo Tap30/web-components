@@ -1,17 +1,25 @@
-import { html, LitElement, nothing, type TemplateResult } from "lit";
+import "../../spinner";
+
+import {
+  html,
+  LitElement,
+  nothing,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { ifDefined } from "lit/directives/if-defined.js";
-import "../../spinner";
 import {
   type FormSubmitter,
   type FormSubmitterType,
+  internals,
+  isFocusable,
   setupFormSubmitter,
   withElementInternals,
+  withFocusable,
 } from "../../utils";
-import { internals } from "../../utils/mixins/with-element-internals";
 
-const BaseClass = withElementInternals(LitElement);
+const BaseClass = withElementInternals(withFocusable(LitElement));
 
 export abstract class BaseButton extends BaseClass implements FormSubmitter {
   static {
@@ -38,13 +46,13 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
    * The type of the button.
    */
   @property()
-  public type: FormSubmitterType = "submit";
+  public type: FormSubmitterType = "button";
 
   /**
    * The accessible label for the button.
    */
   @property()
-  public label?: string;
+  public label: string = "";
 
   /**
    * Whether the button is in a loading state.
@@ -73,12 +81,27 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     | "destructive"
     | "brand" = "primary";
 
-  constructor() {
-    super();
-  }
-
   public get form() {
     return this[internals].form;
+  }
+
+  private _updateFocusability() {
+    if (this.disabled) {
+      this.removeAttribute("tabindex");
+      this[isFocusable] = false;
+    } else this[isFocusable] = true;
+  }
+
+  public override connectedCallback() {
+    super.connectedCallback();
+
+    this._updateFocusability();
+  }
+
+  protected override updated(changed: PropertyValues<this>) {
+    super.updated(changed);
+
+    if (changed.has("disabled")) this._updateFocusability();
   }
 
   /**
@@ -137,13 +160,12 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
         id="root"
         part="root"
         class=${rootClasses}
+        tabindex=${this.tabIndex}
         @click=${this._handleClick}
         ?disabled=${this.disabled}
-        type=${ifDefined(this.type)}
-        aria-label=${ifDefined(this.label)}
+        type=${this.type}
+        aria-label=${this.label || nothing}
         aria-busy=${this.loading}
-        aria-labelledby=${nothing}
-        aria-describedby=${nothing}
       >
         <span class="overlay"></span>
         ${this._renderBody()}
