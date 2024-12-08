@@ -84,7 +84,7 @@ export default css`
     --notice-align-items: center;
   }
 
-  .root.compact.dismissable {
+  .root.compact.dismissible {
     --notice-padding: var(--tap-sys-spacing-2) var(--tap-sys-spacing-4)
       var(--tap-sys-spacing-2) var(--tap-sys-spacing-2);
   }

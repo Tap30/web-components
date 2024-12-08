@@ -3,29 +3,31 @@ import { Notice } from "./notice";
 import styles from "./notice.style";
 
 /**
- * @summary A Notice component is a user interface element that displays important messages or alerts to inform or warn users about specific events or actions.
+ * @summary A versatile Notice component for displaying important messages or alerts to inform or warn users about specific events or actions.
  *
- * @prop {'success' | 'error' | 'info' | 'warning'} [variant] - The variant of the notice. Defaults to `inverse`.
- * @prop {'high' | 'low'} [priority='high'] - The priority of the notice. Defaults to `high`. Bolder colors are used with `high` priority whereas lighter colors are used for 'low' priority notices.
- * @prop {'none' | 'icon' | 'custom'} [artwork='icon'] - The artwork of the notice component; Defaults to `icon`. The `none` value will hide the artwork, the `icon` will show a default icon based on the `variant` of the notice, the `custom` will show the `artwork` slot for this component
- * @prop {'standard' | 'compact'} [size='standard'] - The notice size
- * @prop {boolean} [dismissable=false] - Indicates whether the notice can be dismissed or not. When dismissable, the dismiss button is rendered and emits 'dismiss' event upon click.
- * @prop {string} [noticeTitle] - The title of the notice that won't be rendered upon passing empty string.
+ * @tag tap-notice
  *
- * @slot description- notice text
- * @slot actions - the actions to the notice component. usually a collection of some `tap-button` components.
- * @slot artwork - the custom artwork slot for the notice component. For showing this property, the value of `artwork` property should be equal to `custom`
+ * @prop {string} [noticeTitle] - The title of the notice. If an empty string is passed, the title will not be rendered.
+ * @prop {'success' | 'error' | 'info' | 'warning'} [variant='inverse'] - The variant of the notice, indicating the type of message. Defaults to `inverse`.
+ * @prop {'high' | 'low'} [priority='high'] - The priority level of the notice. Defaults to `high`. High priority uses bolder colors and the role of `alert` for screen readers, while low priority uses lighter colors and the role of `status`.
+ * @prop {'none' | 'icon' | 'custom'} [artwork='icon'] - The artwork of the notice component. Defaults to `icon`. Setting to `none` hides the artwork. The `icon` value shows a default icon based on the variant, and `custom` enables the use of the `artwork` slot.
+ * @prop {'standard' | 'compact'} [size='standard'] - The size of the notice. Defaults to `standard`.
+ * @prop {boolean} [dismissible=false] - Indicates whether the notice can be dismissed. If true, a dismiss button is rendered, emitting a 'dismiss' event when clicked.
  *
- * @csspart [root] - The root container of the notice component.
- * @csspart [artwork] - The container of notice icon.
- * @csspart [content] - The wrapper around title, message and actions.
- * @csspart [title] - The title element.
- * @csspart [description] - The message element.
- * @csspart [actions] - The actions container.
- * @csspart [action] - Each action slot.
- * @csspart [dismiss] - The dismiss button.
+ * @slot description - The content of the notice text.
+ * @slot actions - The actions associated with the notice component, typically a collection of `tap-button` components.
+ * @slot artwork - The custom artwork slot for the notice component. To display this slot, set the `artwork` property to `custom`.
  *
- * @fires {DismissEvent} dismiss - Fires when the dismiss button is clicked (if dismissable).
+ * @csspart root - The root container of the notice component.
+ * @csspart artwork - The container for the notice icon.
+ * @csspart content - The wrapper around the title, message, and actions.
+ * @csspart title - The title element.
+ * @csspart description - The message element.
+ * @csspart actions - The actions container.
+ * @csspart action - Each action slot.
+ * @csspart dismiss - The dismiss button.
+ *
+ * @fires {CustomEvent} dismiss - Fires when the dismiss button is clicked (if dismissible).
  */
 
 @customElement("tap-notice")
