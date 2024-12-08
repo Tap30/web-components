@@ -1,171 +1,252 @@
-import { LitElement, type PropertyValues, html, nothing } from "lit";
-import { property, query } from "lit/decorators.js";
+import {
+  html,
+  LitElement,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
+import { property, query, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import { KeyboardKeys } from "../internals";
+import {
+  AnimationController,
+  createScrollGuard,
+  FocusTrapper,
+  getRenderRootSlot,
+  runAfterRepaint,
+  waitAMicrotask,
+} from "../utils";
+import { Slots } from "./constants";
+import { HideEvent, ShowEvent } from "./events";
 
-export class Modal extends LitElement implements HTMLDialogElement {
+export class Modal extends LitElement {
   public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
+  /**
+   * Indicates whether the modal is open or not.
+   */
   @property({ type: Boolean, reflect: true })
-  public open: boolean = false;
+  public open = false;
 
-  @property({ type: String })
-  public override title: string = "";
+  /**
+   * Sets the title of the modal.
+   */
+  @property()
+  public heading = "";
 
-  @property({ type: String })
-  public description: string = "";
+  /**
+   * Sets the description text for the modal.
+   */
+  @property()
+  public description = "";
 
-  @property({ type: String })
-  public alignment: "left" | "center" | "right" = "right";
+  /**
+   * Determines the alignment of the modal's content.
+   */
+  @property()
+  public alignment: "start" | "center" = "start";
 
-  @property({ type: Boolean })
-  public isBannerFullWidth = true;
+  @state()
+  private _hasImage = false;
 
-  @query("#dialog")
-  private _dialog?: HTMLElement | null;
+  @query("#root")
+  private _root!: HTMLElement | null;
 
-  @query("#overlay")
-  private _overlay?: HTMLElement | null;
+  private readonly _focusTrapper = new FocusTrapper(this);
+  private readonly _scrollGuard = createScrollGuard();
+  private readonly _animationController = new AnimationController();
 
-  returnValue: string = "";
+  private _previouslyFocusedElement: HTMLElement | null = null;
 
   constructor() {
     super();
 
-    this.show = this.show.bind(this);
-    this.showModal = this.showModal.bind(this);
-    this.close = this.close.bind(this);
+    this._handleDocumentKeyDown = this._handleDocumentKeyDown.bind(this);
   }
 
-  public override connectedCallback() {
+  private _attachGlobalEvents() {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    document.addEventListener("keydown", this._handleDocumentKeyDown);
+  }
+
+  private _detachGlobalEvents() {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    document.removeEventListener("keydown", this._handleDocumentKeyDown);
+  }
+
+  public override connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener("keydown", this._handleKeydown);
-    this.addEventListener("click", this._handleClick);
+
+    if (this.open) this._attachGlobalEvents();
   }
 
-  protected override updated(changed: PropertyValues<this>): void {
-    const oldValue = changed.get("open");
-    const newValue = this.open;
-    const openChanged = oldValue !== undefined && oldValue !== newValue;
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
 
-    if (!openChanged) return;
+    if (!this.open) this._detachGlobalEvents();
+  }
 
-    if (newValue) {
-      this._dialog?.focus();
+  protected override updated(changed: PropertyValues<this>) {
+    super.updated(changed);
 
-      this.dispatchEvent(
-        new Event("open", {
-          bubbles: true,
-          composed: true,
-          cancelable: true,
-        }),
-      );
-    } else {
-      this.dispatchEvent(
-        new Event("close", {
-          bubbles: true,
-          composed: true,
-          cancelable: true,
-        }),
-      );
+    if (changed.has("open")) {
+      if (this.open) {
+        this._previouslyFocusedElement =
+          document.activeElement as HTMLElement | null;
+
+        this._attachGlobalEvents();
+        this._scrollGuard.enable();
+
+        if (!this._root) return;
+
+        this._root.addEventListener(
+          "transitionend",
+          // Finish the animation when transition ends
+          this._animationController.finish,
+        );
+        // Start the animation
+        this._animationController.start();
+
+        if (!this._animationController.promise) return;
+
+        // Wait for the animation to complete
+        this._animationController.promise
+          .then(() => {
+            this._focusTrapper.trap();
+          })
+          .catch(() => void 0);
+      } else {
+        this._detachGlobalEvents();
+        this._scrollGuard.disable();
+        this._previouslyFocusedElement?.focus();
+      }
     }
+
+    runAfterRepaint(() => {
+      const imageSlot = getRenderRootSlot(this.renderRoot, Slots.IMAGE);
+
+      if (!imageSlot) return;
+
+      this._hasImage = imageSlot.assignedNodes().length > 0;
+    });
   }
 
-  private _handleClick(event: MouseEvent) {
-    const { open, _overlay: overlay, _dialog: dialog } = this;
+  public show() {
+    if (this.open) return;
 
-    if (!open) return;
-
-    const path = event.composedPath();
-
-    if (path.includes(overlay!) && !path.includes(dialog!)) {
-      event.preventDefault();
-      this.close();
-    }
-  }
-
-  private _handleKeydown(event: KeyboardEvent) {
-    // TODO: handle `Tab`, `Shift + Tab`.
-    if (["Escape", "Esc"].includes(event.key)) {
-      this.close();
-    }
-  }
-
-  close(_returnValue?: string): void {}
-
-  show(): void {
     this.open = true;
+
+    const eventAllowed = this.dispatchEvent(new ShowEvent());
+
+    if (!eventAllowed) this.open = false;
   }
 
-  showModal(): void {
-    this.show();
+  public hide() {
+    if (!this.open) return;
+
+    this.open = false;
+
+    const eventAllowed = this.dispatchEvent(new HideEvent());
+
+    if (!eventAllowed) this.open = true;
   }
 
-  override render() {
-    const containerClassName = this.isBannerFullWidth
-      ? "image-container"
-      : "icon-container";
+  private _handleOverlayClick() {
+    this.hide();
+  }
 
+  private async _handleDocumentKeyDown(event: KeyboardEvent) {
+    if (!this.open) return;
+
+    // allow event to propagate to user code after a microtask.
+    await waitAMicrotask();
+
+    if (event.defaultPrevented) return;
+    if (event.key !== KeyboardKeys.ESCAPE) return;
+
+    event.preventDefault();
+
+    this.hide();
+  }
+
+  private _renderContainer() {
     return html`
-      <section ?hidden=${!this.open}>
+      <div
+        id="container"
+        class="container"
+        part="container"
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="title"
+        aria-describedby="description"
+      >
         <div
-          ?hidden=${!this.open}
-          class="overlay"
-          id="overlay"
-          part="overlay"
-        ></div>
+          ?hidden=${!this._hasImage}
+          aria-hidden="true"
+          class="image"
+          part="image"
+        >
+          <slot name=${Slots.IMAGE}></slot>
+        </div>
         <div
-          ?hidden=${!this.open}
-          id="dialog"
-          part="dialog"
-          class="dialog"
-          tabindex="0"
-          role="dialog"
-          aria-modal="true"
-          aria-label=${nothing}
-          aria-labelledby=${nothing}
-          aria-describedby=${nothing}
+          class="body"
+          part="body"
         >
           <div
-            class="${containerClassName}"
-            part="container"
+            id="title"
+            class="title"
+            part="title"
           >
-            <slot
-              name="banner"
-              part="banner"
-            ></slot>
+            ${this.heading}
           </div>
           <div
-            class="content ${this.alignment}"
-            part="content"
+            id="description"
+            class="description"
+            part="description"
           >
-            ${this.title
-              ? html`<span
-                  id="title"
-                  class="title"
-                  part="title"
-                  >${this.title}</span
-                >`
-              : nothing}
-            ${this.description
-              ? html`<p
-                  id="description"
-                  class="description"
-                  part="description"
-                >
-                  ${this.description}
-                </p>`
-              : nothing}
-          </div>
-          <div
-            class="actions"
-            part="actions"
-          >
-            <slot name="actions"></slot>
+            ${this.description}
           </div>
         </div>
-      </section>
+        <div
+          class="actions"
+          part="actions"
+        >
+          <slot name=${Slots.ACTION_BAR}></slot>
+        </div>
+      </div>
+    `;
+  }
+
+  protected override render() {
+    const rootClasses = classMap({
+      root: true,
+      open: this.open,
+      [this.alignment]: true,
+    });
+
+    const container: TemplateResult = this._focusTrapper.wrap(
+      this._renderContainer(),
+    );
+
+    return html`
+      <div
+        class=${rootClasses}
+        id="root"
+        part="root"
+        role="presentation"
+        tabindex="-1"
+        ?inert=${!this.open}
+      >
+        <div
+          aria-hidden="true"
+          class="overlay"
+          part="overlay"
+          @click=${this._handleOverlayClick}
+        ></div>
+        ${container}
+      </div>
     `;
   }
 }

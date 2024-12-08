@@ -1,137 +1,100 @@
 import { css } from "lit";
 
-// tokens
-// --tap-dialog-color-surface-overlay
-// --tap-dialog-color-surface-primary
-// --tap-dialog-padding
-// --tap-dialog-radius
-
 export default css`
-  :host {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
-  }
-
-  :host *,
-  :host *::before,
-  :host *::after {
-    box-sizing: inherit;
   }
 
   [hidden] {
     display: none !important;
   }
-  .overlay {
-    background-color: var(
-      --tap-dialog-color-surface-overlay,
-      var(--tap-sys-color-surface-overlay-dark)
-    );
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+
+  .root.open {
+    visibility: visible;
+    opacity: 1;
   }
 
-  .dialog {
-    position: fixed;
-    left: var(--tap-dialog-left, var(--tap-sys-spacing-6));
-    right: var(--tap-dialog-right, var(--tap-sys-spacing-6));
-    bottom: var(--tap-dialog-bottom, var(--tap-sys-spacing-6));
-    background-color: var(
-      --tap-dialog-color-surface-primary,
-      var(--tap-sys-color-surface-primary)
-    );
-    font-family: var(--tap-dialog-font, var(--tap-sys-font-family));
-    border-radius: var(--tap-dialog-radius, var(--tap-sys-radius-6));
-    overflow: hidden;
+  .root.open .container {
+    transform: translateY(0);
   }
 
-  .icon-container {
-    margin-top: var(--tap-dialog-icon-top-margin, var(--tap-sys-spacing-8));
-    display: flex;
-    justify-content: center;
+  .root.start .body {
+    text-align: start;
   }
 
-  .image-container {
-    height: 200px;
-    background-color: var(
-      --tap-dialog-image-container-background-color,
-      var(--tap-palette-gray-100)
-    );
-  }
-
-  ::slotted([slot="banner"]) {
-    width: 100%;
-    height: 100%;
-  }
-
-  .content {
-    padding: var(
-        --tap-dialog-content-vertical-padding,
-        var(--tap-sys-spacing-4)
-      )
-      var(--tap-dialog-content-horizontal-padding, var(--tap-sys-spacing-6));
-    margin: var(--tap-dialog-content-vertical-margin, var(--tap-sys-spacing-6))
-      var(--tap-dialog-content-horizontal-margin, 0);
-  }
-
-  .center {
+  .root.center {
     text-align: center;
   }
 
-  .right {
-    text-align: right;
+  .root {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition:
+      visibility 120ms ease,
+      opacity 120ms ease;
   }
 
-  .left {
-    text-align: left;
+  .overlay {
+    background-color: var(--tap-sys-color-surface-overlay-dark);
+
+    position: fixed;
+    inset: 0;
   }
 
-  .left {
-    text-align: left;
+  .container {
+    transform: translateY(2rem);
+
+    position: fixed;
+    left: var(--tap-sys-spacing-6);
+    right: var(--tap-sys-spacing-6);
+    bottom: var(--tap-sys-spacing-6);
+
+    background-color: var(--tap-sys-color-surface-primary);
+    font-family: var(--tap-sys-font-family);
+    border-radius: var(--tap-sys-radius-6);
+    overflow: hidden;
+
+    transition: transform 240ms ease;
   }
 
-  .left {
-    text-align: left;
+  .body {
+    margin-top: var(--tap-sys-spacing-6);
+    margin-bottom: var(--tap-sys-spacing-6);
+    padding: var(--tap-sys-spacing-4) var(--tap-sys-spacing-6);
   }
 
   .title {
-    font-size: var(
-      --tap-dialog-title-size,
-      var(--tap-sys-typography-headline-sm-size)
-    );
-    font-weight: var(
-      --tap-dialog-title-weight,
-      var(--tap-sys-typography-headline-sm-weight)
-    );
-    line-height: var(
-      --tap-dialog-title-line-height,
-      var(--tap-sys-typography-headline-sm-height)
-    );
+    color: var(--tap-sys-color-content-primary);
+
+    font-size: var(--tap-sys-typography-headline-sm-size);
+    font-weight: var(--tap-sys-typography-headline-sm-weight);
+    line-height: var(--tap-sys-typography-headline-sm-height);
   }
 
   .description {
-    margin: var(--tap-dialog-description-margin, 0);
-    padding-top: var(
-      --tap-dialog-description-padding-top,
-      var(--tap-sys-spacing-4)
-    );
-    font-size: var(
-      --tap-dialog-description-font-size,
-      var(--tap-sys-typography-body-md-size)
-    );
-    font-weight: var(
-      --tap-dialog-description-font-weight,
-      var(--tap-sys-typography-body-md-weight)
-    );
-    line-height: var(
-      --tap-dialog-description-line-height,
-      var(--tap-sys-typography-body-md-height)
-    );
-    color: var(--tap-dialog-description-color, var(--tap-palette-gray-500));
+    color: var(--tap-sys-color-content-tertiary);
+
+    font-size: var(--tap-sys-typography-body-md-size);
+    font-weight: var(--tap-sys-typography-body-md-weight);
+    line-height: var(--tap-sys-typography-body-md-height);
+  }
+
+  .title + .description {
+    margin-top: var(--tap-sys-spacing-4);
   }
 
   .actions {
-    padding: var(--tap-dialog-actions-padding, var(--tap-sys-spacing-6));
+    padding: var(--tap-sys-spacing-6);
+  }
+
+  .actions ::slotted(*) {
+    width: 100%;
   }
 `;
