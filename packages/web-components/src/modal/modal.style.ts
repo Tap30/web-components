@@ -37,8 +37,8 @@ export default css`
     opacity: 0;
 
     transition:
-      visibility 120ms ease,
-      opacity 120ms ease;
+      visibility 240ms ease,
+      opacity 240ms ease;
   }
 
   .overlay {

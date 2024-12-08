@@ -237,6 +237,7 @@ export class Modal extends LitElement {
         part="root"
         role="presentation"
         tabindex="-1"
+        aria-hidden=${!this.open}
         ?inert=${!this.open}
       >
         <div
