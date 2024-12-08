@@ -14,24 +14,42 @@ export class Notice extends LitElement {
     mode: "open",
   };
 
+  /**
+   * The title of the notice. If an empty string is passed, the title will not be rendered.
+   */
   @property({ type: String, attribute: "notice-title" })
   public noticeTitle? = "";
 
+  /**
+   * The variant of the notice, indicating the type of message. Defaults to `inverse`.
+   */
   @property()
   public variant: "success" | "error" | "info" | "warning" | "inverse" =
     "inverse";
 
+  /**
+   * The priority level of the notice. Defaults to `high`. High priority uses bolder colors and the role of `alert` for screen readers, while low priority uses lighter colors and the role of `status`.
+   */
   @property()
   public priority: "high" | "low" = "high";
 
+  /**
+   * The artwork of the notice component. Defaults to `icon`. Setting to `none` hides the artwork. The `icon` value shows a default icon based on the variant, and `custom` enables the use of the `artwork` slot.
+   */
   @property()
   public artwork: "none" | "icon" | "custom" = "icon";
 
+  /**
+   * The size of the notice. Defaults to `standard`.
+   */
   @property()
   public size: "standard" | "compact" = "standard";
 
-  @property({ type: Boolean, attribute: "dismissable" })
-  public dismissable = false;
+  /**
+   * Indicates whether the notice can be dismissed. If true, a dismiss button is rendered, emitting a 'dismiss' event when clicked.
+   */
+  @property({ type: Boolean })
+  public dismissible = false;
 
   @state()
   private _hasCustomArtworkSlot = false;
@@ -140,11 +158,11 @@ export class Notice extends LitElement {
   }
 
   private _handleDismissClick() {
-    this.dispatchEvent(new DismissEvent(null));
+    if (this.dismissible) this.dispatchEvent(new DismissEvent(null));
   }
 
   private _renderDismiss() {
-    if (this.dismissable)
+    if (this.dismissible)
       return html`<tap-icon-button
         part="dismiss"
         size="sm"
@@ -199,7 +217,7 @@ export class Notice extends LitElement {
   protected override render() {
     const rootClasses = classMap({
       root: true,
-      dismissable: this.dismissable,
+      dismissible: this.dismissible,
       [`${this.artwork}-artwork`]: true,
       [this.variant]: true,
       [this.priority]: true,
