@@ -1,70 +1,60 @@
 import { css } from "lit";
 
-export default css`
-  :host {
+const styles = css`
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
-  :host *,
-  :host *::before,
-  :host *::after {
-    box-sizing: inherit;
-  }
-
-  [hidden] {
-    display: none;
-  }
-
-  .skeleton {
-    position: relative;
-    overflow: hidden;
-    outline: none;
-    background: var(
-        --tap-skeleton-background,
-        var(--tap-sys-color-surface-tertiary)
-      )
-      no-repeat;
-    border-radius: var(--tap-skeleton-radius, var(--tap-sys-radius-2));
-    width: var(--tap-skeleton-width, 100%);
-    height: var(--tap-skeleton-height, var(--tap-sys-spacing-8));
+  :host {
     display: inline-block;
-    will-change: transform;
+    vertical-align: middle;
   }
 
-  :host([variant="rect"]) .skeleton {
-    border-radius: var(--tap-skeleton-rect-radius, var(--tap-sys-spacing-0));
+  .root {
+    display: block;
+
+    background-color: var(--tap-sys-color-surface-tertiary);
+
+    height: 1.2em;
+
+    animation-name: pulse;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0.5s;
+    animation-iteration-count: infinite;
   }
 
-  :host([variant="circle"]) .skeleton {
-    width: var(--tap-skeleton-circle-width, var(--tap-sys-spacing-10));
-    height: var(--tap-skeleton-circle-height, var(--tap-sys-spacing-10));
-    border-radius: var(
-      --tap-skeleton-circle-radius,
-      var(--tap-sys-radius-full)
-    );
+  .root.text {
+    margin: 0;
+
+    height: auto;
+
+    transform-origin: 0 55%;
+    transform: scale(1, 0.6);
+
+    border-radius: var(--tap-sys-radius-2);
   }
 
-  :host([animation-mode="progress"]) .skeleton {
-    animation: progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    background-size: 200px 100%;
-    background-image: linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--tap-sys-color-surface-white), transparent 100%),
-      color-mix(in srgb, var(--tap-sys-color-surface-white), transparent 40%),
-      color-mix(in srgb, var(--tap-sys-color-surface-white), transparent 100%)
-    );
-  }
-  :host([animation-mode="pulse"]) .skeleton {
-    animation: pulse 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.5s infinite;
+  .root.text::before {
+    content: " ";
   }
 
-  @keyframes progress {
-    from {
-      background-position: -200px 0%;
-    }
-    to {
-      background-position: calc(200px + 100%) 0;
-    }
+  .root.circular {
+    border-radius: 50%;
+  }
+
+  .root.pill {
+    border-radius: var(--tap-sys-radius-full);
+  }
+
+  .root.rectangular {
+    border-radius: var(--tap-sys-radius-3);
+  }
+
+  .root ::slotted(*) {
+    visibility: hidden;
   }
 
   @keyframes pulse {
@@ -83,13 +73,10 @@ export default css`
 
   // Removing animation if user enabled the 'Reduce Motion' option.
   @media (prefers-reduced-motion: reduce) {
-    :host([animation-mode="progress"]) .skeleton,
-    :host([animation-mode="pulse"]) .skeleton {
+    .root {
       animation: none;
-    }
-
-    :host([animation-mode="progress"]) .skeleton {
-      background: none;
     }
   }
 `;
+
+export default styles;
