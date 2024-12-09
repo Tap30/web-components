@@ -1,28 +1,77 @@
-import { html, LitElement, nothing } from "lit";
+import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
-import { type SkeletonAnimation, type SkeletonVariant } from "./types";
+import { classMap } from "lit/directives/class-map.js";
+import { styleMap, type StyleInfo } from "lit/directives/style-map.js";
+import { logger } from "../utils";
 
 export class Skeleton extends LitElement {
-  @property({ reflect: true })
-  public variant?: SkeletonVariant = "line";
+  /**
+   * The type of content that will be rendered.
+   */
+  @property()
+  public variant: "rectangular" | "circular" | "pill" | "text" = "rectangular";
 
-  @property({ reflect: true, attribute: "animation-mode" })
-  public animationMode?: SkeletonAnimation = "progress";
+  /**
+   * Width of the skeleton.
+   */
+  @property()
+  public width = "";
 
-  @property({ reflect: true })
-  public width?: string = "100%";
+  /**
+   * Height of the skeleton.
+   */
+  @property()
+  public height = "";
 
-  @property({ reflect: true })
-  public height?: string = "20px";
+  /**
+   * The ratio of the width to the height.
+   * If the value is invalid, it will default to 1.
+   *
+   * Only works when `variant="rectangular"`.
+   */
+  @property({ type: Number })
+  public ratio = NaN;
 
   protected override render() {
-    return html`<div
-      part="skeleton"
-      class="skeleton"
-      aria-label="Loading"
-      aria-labeledby=${nothing}
-      aria-describedby=${nothing}
-      style="height: ${this.height}; width: ${this.width};"
-    ></div>`;
+    const styleInfo: StyleInfo = {};
+
+    if (this.width) styleInfo.width = this.width;
+    if (this.height) styleInfo.height = this.height;
+
+    if (this.ratio && this.variant === "rectangular") {
+      const ratio = Number.isNaN(Number(this.ratio)) ? 1 : Number(this.ratio);
+
+      styleInfo.height = 0;
+      styleInfo.paddingTop = `${100 / ratio}%`;
+    } else if (this.ratio && this.variant !== "rectangular") {
+      logger(
+        'You can only use `ratio` when `variant="rectangular"`.',
+        "skeleton",
+        "error",
+      );
+    }
+
+    if (this.variant === "text") {
+      styleInfo.width = "fit-content";
+      styleInfo.height = "auto";
+    }
+
+    const rootStyles = styleMap(styleInfo);
+
+    const rootClasses = classMap({
+      root: true,
+      [this.variant]: true,
+    });
+
+    return html`
+      <div
+        id="root"
+        class=${rootClasses}
+        style=${rootStyles}
+        part="root"
+      >
+        <slot></slot>
+      </div>
+    `;
   }
 }
