@@ -9,16 +9,15 @@ import {
 } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { ifDefined } from "lit/directives/if-defined.js";
 import {
   type FormSubmitter,
   type FormSubmitterType,
+  internals,
   isFocusable,
   setupFormSubmitter,
   withElementInternals,
   withFocusable,
 } from "../../utils";
-import { internals } from "../../utils/mixins/with-element-internals";
 
 const BaseClass = withElementInternals(withFocusable(LitElement));
 
@@ -119,12 +118,9 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
    * The method for rendering the spinner for loading state.
    */
   protected renderSpinner() {
-    // TODO: rename the variant names of spinner component
     return html`
       <div class="icon spinner">
-        <tap-spinner
-          size=${ifDefined(this.size === "sm" ? "small" : undefined)}
-        ></tap-spinner>
+        <tap-spinner></tap-spinner>
       </div>
     `;
   }
@@ -169,6 +165,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
         ?disabled=${this.disabled}
         type=${this.type}
         aria-label=${this.label || nothing}
+        aria-busy=${this.loading}
       >
         <span class="overlay"></span>
         ${this._renderBody()}
