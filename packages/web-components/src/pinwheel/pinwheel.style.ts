@@ -1,6 +1,29 @@
 import { css } from "lit";
 
 export default css`
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  :host {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  :host([disabled]) {
+    cursor: not-allowed;
+  }
+
+  .root.disabled {
+    pointer-events: none;
+  }
+
+  .root {
+    height: 9rem;
+  }
+
   :host {
     display: inline-flex;
     /* FIXME: we dont have sizing tokens yet  */
