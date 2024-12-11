@@ -1,12 +1,15 @@
 import { css } from "lit";
 
 export default css`
-  * {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
   :host {
-    display: flex;
+    display: inline-block;
+    vertical-align: middle;
   }
 
   .root {

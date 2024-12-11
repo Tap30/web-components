@@ -7,9 +7,10 @@ import styles from "./spinner.style";
  *
  * @tag tap-spinner
  *
- * @prop {number | `${number}` | 'auto'} [size='auto'] - Determines the size of the spinner. When set to 'auto', it inherits the size of its parent element. Otherwise, you can specify the size in pixels.
- *
- * @csspart root - The SVG element that represents the spinner component.
+ * @prop {number | `${number}` | 'auto'} [size='auto'] -
+ * Determines the size of the spinner.
+ * When set to 'auto', it inherits the size of its parent element.
+ * Otherwise, you can specify the size in pixels.
  */
 @customElement("tap-spinner")
 export class TapSpinner extends Spinner {
