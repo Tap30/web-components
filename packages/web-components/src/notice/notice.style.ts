@@ -1,27 +1,8 @@
 import { css } from "lit";
 
-/* variables:
- * --tap-notice-[property]
- * --tap-notice-[part]-[property] for parts: title | message | actions
- *
- * variants: inverse | success | info | error | warning
- * priority: high | low
- * --tap-notice-[variant]-[priority]-color
- * --tap-notice-[variant]-[priority]-bg-color
- *   --tap-notice-title-low-color
- *   --tap-notice-message-low-color
- *   --tap-notice-dismiss-low-color
- * */
-
 export default css`
-  :host {
+  * {
     box-sizing: border-box;
-  }
-
-  :host *,
-  :host *::before,
-  :host *::after {
-    box-sizing: inherit;
   }
 
   [hidden] {
@@ -32,226 +13,242 @@ export default css`
     display: inline-flex;
     user-select: none;
     text-overflow: ellipsis;
-    place-content: center;
-    place-items: center;
-    position: relative;
+    min-width: 328px;
+
+    --notice-border-radius: var(--tap-sys-radius-3);
+    --notice-padding: var(--tap-sys-spacing-6) var(--tap-sys-spacing-5);
+    --notice-title-font-size: var(--tap-sys-typography-label-md-size);
+    --notice-title-line-height: var(--tap-sys-typography-body-lg-height);
+    --notice-title-font-weight: var(--tap-sys-typography-label-md-weight);
+    --notice-description-font-size: var(--tap-sys-typography-body-sm-size);
+    --notice-description-line-height: var(--tap-sys-typography-body-lg-height);
+    --notice-description-font-weight: var(--tap-sys-typography-body-sm-weight);
+    --notice-align-items: flex-start;
+    --notice-icon-color: var(--tap-sys-color-content-on-inverse);
+    --notice-title-color: var(--tap-sys-color-content-on-inverse);
+    --notice-background-color: var(--tap-sys-color-surface-inverse-primary);
   }
 
-  .notice {
-    /* alignment */
+  .root {
+    display: inline-flex;
+    user-select: none;
+    text-overflow: ellipsis;
     position: relative;
     cursor: inherit;
-    display: inline-flex;
-    align-items: flex-start;
+    align-items: var(--notice-align-items);
     justify-content: flex-start;
     vertical-align: middle;
-    /* spacing and border */
-    width: var(--tap-notice-width, 100%);
-    height: var(--tap-notice-height, auto);
-    gap: var(--tap-notice-gap, var(--tap-sys-spacing-5));
-    border-radius: var(--tap-notice-radius, var(--tap-sys-radius-3));
-    padding: var(--tap-notice-vertical-padding, var(--tap-sys-spacing-6))
-      var(--tap-notice-horizontal-padding, var(--tap-sys-spacing-5));
-    /* text and font */
+
+    width: 100%;
+    height: auto;
+    border-radius: var(--notice-border-radius);
+    padding: var(--notice-padding);
+
     text-decoration: none;
-    font: inherit;
-    font-family: var(--tap-font-family, var(--tap-sys-font-family));
-    /* default = inverse high */
-    color: var(
-      --tap-notice-inverse-high-color,
-      var(--tap-sys-color-content-on-inverse)
-    );
-    background-color: var(
-      --tap-notice-inverse-high-bg-color,
-      var(--tap-sys-color-surface-inverse-primary)
-    );
+    font-family: var(--tap-sys-font-family);
+
+    color: var(--notice-color);
+    background-color: var(--notice-background-color);
+
+    --button-custom-overlay-color: var(--tap-sys-color-surface-overlay-light);
   }
 
-  /* removing default margin of the div element*/
-  :host .content-root {
+  .root.standard {
+    --notice-border-radius: var(--tap-sys-radius-3);
+    --notice-padding: var(--tap-sys-spacing-6) var(--tap-sys-spacing-5);
+
+    --notice-title-font-size: var(--tap-sys-typography-label-md-size);
+    --notice-title-line-height: var(--tap-sys-typography-body-lg-height);
+    --notice-title-font-weight: var(--tap-sys-typography-label-md-weight);
+
+    --notice-description-font-size: var(--tap-sys-typography-body-sm-size);
+    --notice-description-line-height: var(--tap-sys-typography-body-lg-height);
+    --notice-description-font-weight: var(--tap-sys-typography-body-sm-weight);
+
+    --notice-align-items: flex-start;
+  }
+
+  .root.compact {
+    min-height: 36px;
+    --notice-border-radius: var(--tap-sys-radius-full);
+    --notice-padding: var(--tap-sys-spacing-2) var(--tap-sys-spacing-4);
+
+    --notice-title-font-size: var(--tap-sys-typography-body-sm-size);
+    --notice-title-line-height: var(--tap-sys-typography-body-sm-height);
+    --notice-title-font-weight: var(--tap-sys-typography-body-sm-weight);
+
+    --notice-description-font-size: var(--tap-sys-typography-body-sm-size);
+    --notice-description-line-height: var(--tap-sys-typography-body-sm-height);
+    --notice-description-font-weight: var(--tap-sys-typography-body-sm-weight);
+
+    --notice-align-items: center;
+  }
+
+  .root.compact.dismissible {
+    --notice-padding: var(--tap-sys-spacing-2) var(--tap-sys-spacing-4)
+      var(--tap-sys-spacing-2) var(--tap-sys-spacing-2);
+  }
+
+  .root.icon-artwork.standard {
+    --notice-justify-content: flex-start;
+  }
+
+  .content {
     margin: 0;
-    padding: 0;
+    padding: 0 var(--tap-sys-spacing-5);
+    overflow: hidden;
+    flex-grow: 1;
   }
 
-  /* removing default margin of the p element*/
-  :host .content-root p {
-    margin: 0;
-    padding: 0;
-  }
-
-  :host .title {
-    display: block;
-    font-size: var(
-      --tap-notice-title-font-size,
-      var(--tap-sys-typography-label-md-size)
-    );
-    line-height: var(
-      --tap-notice-title-line-height,
-      var(--tap-sys-typography-label-md-height)
-    );
-    font-weight: var(
-      --tap-notice-title-font-weight,
-      var(--tap-sys-typography-label-md-weight)
-    );
-  }
-
-  :host .message {
-    display: block;
-    font-size: var(
-      --tap-notice-message-font-size,
-      var(--tap-sys-typography-body-sm-size)
-    );
-    line-height: var(
-      --tap-notice-message-line-height,
-      var(--tap-sys-typography-body-sm-height)
-    );
-    font-weight: var(
-      --tap-notice-message-font-weight,
-      var(--tap-sys-typography-body-sm-weight)
-    );
-  }
-
-  :host .icon {
+  .artwork {
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    justify-content: var(--notice-justify-content, center);
+
+    color: var(--notice-icon-color);
   }
 
-  :host .dismiss {
-    background: transparent;
-    border: none;
-    padding: 0; /* set button padding to 0 because padding is already provided by flex gap */
-    color: inherit;
-  }
-  :host .dismiss:hover {
-    cursor: pointer;
+  .title {
+    display: block;
+
+    font-size: var(--notice-title-font-size);
+    line-height: var(--notice-title-line-height);
+    font-weight: var(--notice-title-font-weight);
+
+    color: var(--notice-title-color);
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    margin: 0;
+    padding: 0;
   }
 
-  /* actions section is the adjacent sibling of the message */
-  :host .message + ::slotted(*) {
-    margin-top: var(--tap-notice-actions-margin-top, var(--tap-sys-spacing-4));
+  .description {
+    display: block;
+
+    font-size: var(--notice-description-font-size);
+    line-height: var(--notice-description-line-height);
+    font-weight: var(--notice-description-font-weight);
+
+    color: var(--notice-description-color, var(--notice-title-color));
+
+    margin: 0;
+    padding: 0;
   }
 
-  :host([variant="inverse"]) .notice {
-    color: var(
-      --tap-notice-inverse-high-color,
-      var(--tap-sys-color-content-on-inverse)
-    );
-    background-color: var(
-      --tap-notice-inverse-high-bg-color,
-      var(--tap-sys-color-surface-inverse-primary)
-    );
-  }
-  :host([variant="inverse"][priority="low"]) .notice {
-    color: var(
-      --tap-notice-inverse-low-color,
-      var(--tap-sys-color-content-primary)
-    );
-    background-color: var(
-      --tap-notice-inverse-low-bg-color,
-      var(--tap-sys-color-surface-primary)
-    );
+  .description ::slotted(p) {
+    margin: 0;
   }
 
-  :host([variant="success"]) .notice {
-    color: var(
-      --tap-notice-success-high-color,
-      var(--tap-sys-color-content-on-inverse)
-    );
-    background-color: var(
-      --tap-notice-success-high-bg-color,
-      var(--tap-sys-color-surface-positive)
-    );
-  }
-  :host([variant="success"][priority="low"]) .notice {
-    color: var(
-      --tap-notice-success-low-color,
-      var(--tap-sys-color-content-positive)
-    );
-    background-color: var(
-      --tap-notice-success-low-bg-color,
-      var(--tap-sys-color-surface-positive-light)
-    );
-  }
-  :host([variant="warning"]) .notice {
-    color: var(
-      --tap-notice-warning-high-color,
-      var(--tap-sys-color-content-primary)
-    );
-    background-color: var(
-      --tap-notice-warning-high-bg-color,
-      var(--tap-sys-color-surface-warning)
-    );
-  }
-  :host([variant="warning"][priority="low"]) .notice {
-    color: var(
-      --tap-notice-warning-low-color,
-      var(--tap-sys-color-content-warning)
-    );
-    background-color: var(
-      --tap-notice-warning-low-bg-color,
-      var(--tap-sys-color-surface-warning-light)
-    );
-  }
-  :host([variant="error"]) .notice {
-    color: var(
-      --tap-notice-error-high-color,
-      var(--tap-sys-color-content-on-inverse)
-    );
-    background-color: var(
-      --tap-notice-error-high-bg-color,
-      var(--tap-sys-color-surface-negative)
-    );
-  }
-  :host([variant="error"][priority="low"]) .notice {
-    color: var(
-      --tap-notice-error-low-color,
-      var(--tap-sys-color-content-negative)
-    );
-    background-color: var(
-      --tap-notice-error-low-bg-color,
-      var(--tap-sys-color-surface-negative-light)
-    );
-  }
-  :host([variant="info"]) .notice {
-    color: var(
-      --tap-notice-info-high-color,
-      var(--tap-sys-color-content-on-inverse)
-    );
-    background-color: var(
-      --tap-notice-info-high-bg-color,
-      var(--tap-sys-color-surface-accent)
-    );
-  }
-  :host([variant="info"][priority="low"]) .notice {
-    color: var(
-      --tap-notice-info-low-color,
-      var(--tap-sys-color-content-accent)
-    );
-    background-color: var(
-      --tap-notice-info-low-bg-color,
-      var(--tap-sys-color-surface-accent-light)
-    );
+  .dismiss svg {
+    color: var(--notice-title-color);
   }
 
-  /* text style of the "low priority" mode is selected by a higher-priority selector */
-  /* without this higher priority selector, the texts would be the same color as the icons */
-  :host([priority="low"]) .notice > div.content-root > p.message {
-    color: var(
-      --tap-notice-message-low-color,
-      var(--tap-sys-color-content-secondary)
-    );
+  .actions {
+    padding-top: var(--tap-sys-spacing-5);
+    display: flex;
+    gap: var(--tap-sys-spacing-5);
   }
-  :host([priority="low"]) .notice > button.dismiss {
-    color: var(
-      --tap-notice-dismiss-low-color,
-      var(--tap-sys-color-content-secondary)
-    );
+
+  .root.inverse.high {
+    --notice-icon-color: var(--tap-sys-color-content-on-inverse);
+    --notice-title-color: var(--tap-sys-color-content-on-inverse);
+    --notice-background-color: var(--tap-sys-color-surface-inverse-primary);
   }
-  :host([priority="low"]) .notice > div.content-root > p.title {
-    color: var(
-      --tap-notice-title-low-color,
-      var(--tap-sys-color-content-primary)
-    );
+  .root.inverse.low {
+    --notice-icon-color: var(--tap-sys-color-content-primary);
+    --notice-title-color: var(--tap-sys-color-content-primary);
+    --notice-background-color: var(--tap-sys-color-surface-primary);
+  }
+
+  .root.success.high {
+    --notice-icon-color: var(--tap-sys-color-content-on-inverse);
+    --notice-title-color: var(--tap-sys-color-content-on-inverse);
+    --notice-background-color: var(--tap-sys-color-surface-positive);
+  }
+  .root.success.low {
+    --notice-icon-color: var(--tap-sys-color-content-positive);
+    --notice-title-color: var(--tap-sys-color-content-primary);
+    --notice-background-color: var(--tap-sys-color-surface-positive-light);
+    --notice-description-color: var(--tap-sys-color-content-secondary);
+  }
+
+  .root.warning.high {
+    --notice-icon-color: var(--tap-sys-color-content-primary);
+    --notice-title-color: var(--tap-sys-color-content-primary);
+    --notice-background-color: var(--tap-sys-color-surface-warning);
+    --notice-description-color: var(--tap-sys-color-content-secondary);
+  }
+  .root.warning.low {
+    --notice-icon-color: var(--tap-sys-color-content-warning);
+    --notice-title-color: var(--tap-sys-color-content-primary);
+    --notice-background-color: var(--tap-sys-color-surface-warning-light);
+    --notice-description-color: var(--tap-sys-color-content-secondary);
+  }
+
+  .root.error.high {
+    --notice-icon-color: var(--tap-sys-color-content-on-inverse);
+    --notice-title-color: var(--tap-sys-color-content-on-inverse);
+    --notice-background-color: var(--tap-sys-color-surface-negative);
+  }
+  .root.error.low {
+    --notice-icon-color: var(--tap-sys-color-content-negative);
+    --notice-title-color: var(--tap-sys-color-content-primary);
+    --notice-background-color: var(--tap-sys-color-surface-negative-light);
+    --notice-description-color: var(--tap-sys-color-content-secondary);
+  }
+
+  .root.info.high {
+    --notice-icon-color: var(--tap-sys-color-content-on-inverse);
+    --notice-title-color: var(--tap-sys-color-content-on-inverse);
+    --notice-background-color: var(--tap-sys-color-surface-accent);
+  }
+  .root.info.low {
+    --notice-icon-color: var(--tap-sys-color-content-accent);
+    --notice-title-color: var(--tap-sys-color-content-primary);
+    --notice-background-color: var(--tap-sys-color-surface-accent-light);
+    --notice-description-color: var(--tap-sys-color-content-secondary);
+  }
+
+  .root.success.high .actions {
+    --button-custom-background: var(--tap-palette-green-500);
+    --button-custom-color: var(--notice-title-color);
+    --button-disabled-background: var(--tap-sys-color-surface-disabled);
+    --button-disabled-color: var(--tap-sys-color-content-disabled);
+  }
+  .root.success.low .actions {
+    --button-custom-background: var(--tap-palette-green-100);
+    --button-custom-color: var(--notice-title-color);
+  }
+
+  .root.warning.high .actions {
+    --button-custom-background: var(--tap-palette-yellow-200);
+    --button-custom-color: var(--notice-title-color);
+  }
+  .root.warning.low .actions {
+    --button-custom-background: var(--tap-palette-yellow-200);
+    --button-custom-color: var(--notice-title-color);
+  }
+
+  .root.error.high .actions {
+    --button-custom-background: var(--tap-palette-red-500);
+    --button-custom-color: var(--notice-title-color);
+  }
+  .root.error.low .actions {
+    --button-custom-background: var(--tap-palette-red-100);
+    --button-custom-color: var(--notice-title-color);
+  }
+
+  .root.info.high .actions {
+    --button-custom-background: var(--tap-palette-blue-500);
+    --button-custom-color: var(--notice-title-color);
+  }
+  .root.info.low .actions {
+    --button-custom-background: var(--tap-palette-blue-100);
+    --button-custom-color: var(--notice-title-color);
   }
 `;
