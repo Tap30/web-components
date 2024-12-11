@@ -1,7 +1,9 @@
 import { css } from "lit";
 
 export default css`
-  * {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
@@ -9,20 +11,25 @@ export default css`
     display: none !important;
   }
 
+  :host {
+    display: block;
+  }
+
   .root {
     display: flex;
     align-items: center;
+
     gap: var(--tap-sys-spacing-3);
   }
 
   .step {
-    display: block;
-    height: 0.25rem;
-    flex: 1;
-
     --progress-indicator-step-background-color: var(
       --tap-sys-color-surface-tertiary
     );
+
+    height: 0.25rem;
+    flex: 1;
+
     background-color: var(--progress-indicator-step-background-color);
   }
 

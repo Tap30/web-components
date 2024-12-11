@@ -5,11 +5,21 @@ import styles from "./progress-indicator.style.js";
 /**
  * @summary A progress indicator component displaying multiple steps.
  *
- * @prop {number} [max=2] - The total number of steps.
- * @prop {number} [current=0] - The current step index.
+ * @tag tap-progress-indicator
  *
- * @csspart [progressbar] - The container for the progress bar.
- * @csspart [step] - Each individual step in the progress bar.
+ * @prop {string} [steps="2"] -
+ * The total number of steps.
+ * Defaults to "2".
+ * @prop {string} [current="0"] -
+ * The current step index.
+ * Defaults to "0".
+ * @prop {string} [screen-reader-label=""] -
+ * Provides an accessible label for screen readers.
+ * This is used to describe the indicator.
+ * @prop {string} [valuetext=""] -
+ * Defines the human-readable text alternative of value.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext
  */
 @customElement("tap-progress-indicator")
 export class TapProgressIndicator extends ProgressIndicator {
