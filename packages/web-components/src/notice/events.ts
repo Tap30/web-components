@@ -1,15 +1,25 @@
 import { BaseEvent } from "../utils";
 
-type EventDetails = null;
+export class HideEvent extends BaseEvent<null> {
+  public static type = "hide";
 
-export class DismissEvent extends BaseEvent<EventDetails> {
-  public static type = "dismiss";
-
-  constructor(details: EventDetails) {
-    super(DismissEvent.type, {
-      details,
-      bubbles: false,
+  constructor() {
+    super(HideEvent.type, {
       composed: true,
+      cancelable: true,
+      details: null,
+    });
+  }
+}
+
+export class ShowEvent extends BaseEvent<null> {
+  public static type = "show";
+
+  constructor() {
+    super(ShowEvent.type, {
+      composed: true,
+      cancelable: true,
+      details: null,
     });
   }
 }
