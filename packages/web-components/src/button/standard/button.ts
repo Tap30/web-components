@@ -1,4 +1,4 @@
-import { html, type TemplateResult } from "lit";
+import { html, type PropertyValues, type TemplateResult } from "lit";
 import { state } from "lit/decorators.js";
 import { getRenderRootSlot, runAfterRepaint } from "../../utils";
 import { BaseButton } from "../base";
@@ -11,7 +11,9 @@ export class Button extends BaseButton {
   @state()
   private _hasTrailingIcon = false;
 
-  protected override updated(): void {
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+
     runAfterRepaint(() => {
       const leadingIconSlot = getRenderRootSlot(
         this.renderRoot,

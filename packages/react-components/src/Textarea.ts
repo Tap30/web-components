@@ -1,16 +1,16 @@
 import { createComponent } from "@lit/react";
-import { TapTextarea } from "@tapsioss/web-components/textarea";
+import { TapTextArea } from "@tapsioss/web-components/text-area";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
-const __Textarea = createComponent({
-  tagName: "tap-textarea",
-  elementClass: TapTextarea,
+const __TextArea = createComponent({
+  tagName: "tap-text-area",
+  elementClass: TapTextArea,
   react: React,
   events: {},
 });
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
-const Textarea = __Textarea;
+const TextArea = __TextArea;
 
-export default Textarea;
+export default TextArea;

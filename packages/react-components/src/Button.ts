@@ -1,5 +1,5 @@
 import { createComponent } from "@lit/react";
-import { TapButton } from "@tapsioss/web-components/button";
+import { TapButton } from "@tapsioss/web-components/button/standard";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */

@@ -129,6 +129,7 @@ export default css`
   .body {
     line-height: var(--button-line-height);
     display: flex;
+    justify-content: center;
     align-items: center;
     z-index: 2;
     width: 100%;

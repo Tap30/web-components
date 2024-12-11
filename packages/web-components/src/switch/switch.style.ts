@@ -1,87 +1,110 @@
 import { css } from "lit";
+import { FOCUS_RING_LINE, FOCUS_RING_OFFSET } from "../internals";
 
 export default css`
-  :host {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
-  }
-
-  :host *,
-  :host *::before,
-  :host *::after {
-    box-sizing: inherit;
   }
 
   [hidden] {
     display: none !important;
   }
 
-  .switch {
-    position: relative;
+  :host {
+    --input-control-track-bg-color: var(--tap-sys-color-surface-tertiary);
+    --input-control-knob-bg-color: var(--tap-sys-color-surface-primary);
+    --input-control-color: var(--tap-sys-color-content-primary);
+
     display: inline-block;
-    width: 44px;
-    height: 30px;
+    vertical-align: middle;
   }
 
-  .switch input {
-    opacity: 0;
-    position: absolute;
+  .root.disabled {
+    --input-control-track-bg-color: var(--tap-sys-color-surface-disabled);
+    --input-control-knob-bg-color: var(--tap-sys-color-surface-primary);
+    --input-control-color: var(--tap-sys-color-content-disabled);
   }
 
-  .slider {
-    position: absolute;
+  .root:not(.disabled) .control.selected {
+    --input-control-track-bg-color: var(
+      --tap-sys-color-surface-inverse-primary
+    );
+    --input-control-knob-bg-color: var(--tap-sys-color-surface-primary);
+    --input-control-color: var(--tap-sys-color-content-primary);
+  }
+
+  .control {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 2.5rem;
+    width: 3rem;
+
+    color: var(--input-control-color);
+  }
+
+  .input {
+    appearance: none;
+    margin: 0;
+    outline: none;
+    border: none;
+
+    border-radius: var(--tap-sys-radius-full);
+
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(
-      --tap-switch-background-color,
-      var(--tap-sys-color-surface-tertiary)
-    );
-    transition: background-color 0.4s;
-    border-radius: 15px;
-  }
 
-  .slider:before {
     position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    right: 2px;
-    bottom: 2px;
-    background-color: #fff;
-    transition: transform 0.4s ease;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .input:focus-visible + .track {
+    outline: ${FOCUS_RING_LINE};
+    outline-offset: ${FOCUS_RING_OFFSET};
+  }
+
+  .track {
+    width: 100%;
+    height: 1.875rem;
+    border-radius: var(--tap-sys-radius-full);
+
+    background-color: var(--input-control-track-bg-color);
+
+    transition: background-color 240ms ease;
+  }
+
+  .knob {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 1.625rem;
+    height: 1.625rem;
+
     border-radius: 50%;
-    box-shadow: 0px 4px 16px 0px #0000001a;
+
+    position: absolute;
+
+    background-color: var(--input-control-knob-bg-color);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+
+    transform: translateX(0.5625rem);
+
+    transition:
+      transform 240ms ease,
+      box-shadow 240ms ease;
   }
 
-  input:checked + .slider {
-    background-color: var(
-      --tap-switch-checked-background-color,
-      var(--tap-sys-color-surface-inverse-primary)
-    );
-  }
-
-  input:checked + .slider:before {
-    transform: translateX(-14px);
-    background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 8.11057L9.11938 19L4 14.0643L6.11879 11.9537L9.11938 14.7789L17.8812 6L20 8.11057Z" fill="black"/></svg>');
-    background-repeat: no-repeat;
-    background-position: 5px 5px;
-  }
-
-  :host([disabled]) .slider {
-    background-color: var(
-      --tap-switch-disabled-background-color,
-      var(--tap-sys-color-surface-disabled)
-    );
-    cursor: not-allowed;
-  }
-
-  :host([disabled]) .slider:before {
+  .root.disabled .knob {
     box-shadow: none;
   }
 
-  :host([disabled]) input:checked + .slider:before {
-    background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 8.11057L9.11938 19L4 14.0643L6.11879 11.9537L9.11938 14.7789L17.8812 6L20 8.11057Z" fill="%23b1b2b2"/></svg>');
+  .control.selected .knob {
+    box-shadow: none;
+    transform: translateX(-0.5625rem);
   }
 `;
