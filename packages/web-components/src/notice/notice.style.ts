@@ -104,8 +104,9 @@ export default css`
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 100%;
     justify-content: var(--notice-justify-content, center);
+
+    height: 100%;
 
     color: var(--notice-icon-color);
   }
@@ -138,10 +139,6 @@ export default css`
 
     margin: 0;
     padding: 0;
-  }
-
-  .description ::slotted(p) {
-    margin: 0;
   }
 
   .dismiss svg {
