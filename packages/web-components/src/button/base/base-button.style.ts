@@ -1,7 +1,9 @@
 import { css } from "lit";
 
 export default css`
-  * {
+  *,
+  *:before,
+  *:after {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
   }

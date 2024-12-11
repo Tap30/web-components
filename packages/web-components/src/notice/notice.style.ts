@@ -1,7 +1,9 @@
 import { css } from "lit";
 
 export default css`
-  * {
+  *,
+  *:before,
+  *:after {
     box-sizing: border-box;
   }
 
@@ -10,9 +12,7 @@ export default css`
   }
 
   :host {
-    display: inline-flex;
-    user-select: none;
-    text-overflow: ellipsis;
+    display: inline-block;
     min-width: 328px;
 
     --notice-border-radius: var(--tap-sys-radius-3);

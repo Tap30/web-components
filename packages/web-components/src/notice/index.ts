@@ -18,16 +18,7 @@ import styles from "./notice.style";
  * @slot actions - The actions associated with the notice component, typically a collection of `tap-button` components.
  * @slot artwork - The custom artwork slot for the notice component. To display this slot, set the `artwork` property to `custom`.
  *
- * @csspart root - The root container of the notice component.
- * @csspart artwork - The container for the notice icon.
- * @csspart content - The wrapper around the title, message, and actions.
- * @csspart title - The title element.
- * @csspart description - The message element.
- * @csspart actions - The actions container.
- * @csspart action - Each action slot.
- * @csspart dismiss - The dismiss button.
- *
- * @fires {CustomEvent} dismiss - Fires when the dismiss button is clicked (if dismissible).
+ * @fires {DismissEvent} dismiss - Fires when the dismiss button is clicked (if dismissible).
  */
 
 @customElement("tap-notice")
