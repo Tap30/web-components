@@ -1,37 +1,89 @@
-import { html, LitElement } from "lit";
+import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { map } from "lit/directives/map.js";
 import { range } from "lit/directives/range.js";
+import { logger } from "../utils";
 
 export class ProgressIndicator extends LitElement {
-  @property({ type: Number })
-  public max = 2;
+  /**
+   * The total number of steps.
+   * Defaults to "2".
+   */
+  @property()
+  public steps = "2";
 
-  @property({ type: Number })
-  public current = 0;
+  /**
+   * The current step index.
+   * Defaults to "0".
+   */
+  @property()
+  public current = "0";
+
+  /**
+   * Provides an accessible label for screen readers.
+   * This is used to describe the indicator.
+   */
+  @property({ attribute: "screen-reader-label" })
+  public screenReaderLabel = "";
+
+  /**
+   * Defines the human-readable text alternative of value.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext
+   */
+  @property({ type: String })
+  public valueText = "";
+
+  private _renderSteps() {
+    const steps = Number(this.steps);
+
+    if (Number.isNaN(steps)) return null;
+
+    return map(range(steps), idx => {
+      const stepClasses = classMap({
+        step: true,
+        active: idx < Number(this.current) || 0,
+      });
+
+      return html`
+        <div
+          class=${stepClasses}
+          part="step"
+        ></div>
+      `;
+    });
+  }
 
   protected override render() {
+    if (!this.screenReaderLabel) {
+      logger(
+        "Set `screen-reader-label` attribute for better accessibility.",
+        "progress-indicator",
+        "warning",
+      );
+    }
+
+    if (!this.valueText) {
+      logger(
+        "Set `valuetext` attribute for better accessibility.",
+        "progress-indicator",
+        "warning",
+      );
+    }
+
     return html`
       <div
-        class="progressbar"
-        part="progressbar"
+        class="root"
+        part="root"
         role="progressbar"
+        aria-label=${this.screenReaderLabel || nothing}
         aria-valuemin="0"
-        aria-valuemax=${this.max}
-        aria-valuenow=${this.current}
+        aria-valuemax=${this.steps || nothing}
+        aria-valuenow=${this.current || nothing}
+        aria-valuetext=${this.valueText}
       >
-        ${map(
-          range(this.max),
-          index =>
-            html`<div
-              class=${classMap({
-                step: true,
-                active: index < this.current,
-              })}
-              part="step"
-            ></div>`,
-        )}
+        ${this._renderSteps()}
       </div>
     `;
   }
