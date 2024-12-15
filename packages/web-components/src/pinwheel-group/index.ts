@@ -2,18 +2,21 @@ import { customElement } from "lit/decorators.js";
 import { PinwheelGroup } from "./pinwheel-group";
 import styles from "./pinwheel-group.style";
 
+export { Slots } from "./constants";
+
 /**
- * @summary Grouping pinwheel components and attach selector indicator to them.
+ * @summary The pinwheel group component.
  *
- * @slot - The default slot to get pinwheels.
+ * @tag tap-pinwheel-group
  *
- * @csspart [pinwheel-group] - The container that wraps the pinwheels.
- * @csspart [pinwheel-selector-indicator] - The selector indicator that wraps selected row.
+ * @prop {string} [label=""] -
+ * Defines a string value that can be used to set a label
+ * for assistive technologies.
  *
- * @cssprop [--tap-pinwheel-group-selector-radius=--tap-sys-spacing-4]
- *
- * @cssprop [--tap-pinwheel-group-selector-background-color=--tap-sys-color-surface-tertiary]
- *
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+ * @prop {string} [value=""] -
+ * The value of the currently selected items.
+ * It's not an attribute and will only work in CSR.
  */
 @customElement("tap-pinwheel-group")
 export class TapPinwheelGroup extends PinwheelGroup {
