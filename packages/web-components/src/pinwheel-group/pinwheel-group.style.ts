@@ -26,7 +26,7 @@ const styles = css`
 
     position: absolute;
 
-    width: calc(100% - var(--tap-sys-spacing-9));
+    width: 100%;
     height: 3rem;
     z-index: -1;
 
