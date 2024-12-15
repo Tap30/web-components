@@ -5,7 +5,9 @@ import { requestFormSubmit } from "../base-input/utils";
 import { KeyboardKeys } from "../internals";
 import {
   clamp,
+  debounce,
   dispatchActivationClick,
+  getBoundingClientRect,
   getFormValue,
   getRenderRootSlot,
   isActivationClick,
@@ -70,8 +72,14 @@ export class Pinwheel extends BaseClass {
     valueText: "",
   };
 
+  @state()
+  private _cachedItems: PinwheelItem[] | null = null;
+
   @query("#root")
   private _root!: HTMLElement | null;
+
+  @query("#container")
+  private _container!: HTMLElement | null;
 
   private _value = "";
 
@@ -101,15 +109,17 @@ export class Pinwheel extends BaseClass {
   public override connectedCallback() {
     super.connectedCallback();
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    /* eslint-disable @typescript-eslint/no-misused-promises */
     this.addEventListener("keydown", this._handleKeyDown);
+    /* eslint-enable @typescript-eslint/no-misused-promises */
   }
 
   public override disconnectedCallback() {
     super.disconnectedCallback();
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    /* eslint-disable @typescript-eslint/no-misused-promises */
     this.removeEventListener("keydown", this._handleKeyDown);
+    /* eslint-enable @typescript-eslint/no-misused-promises */
   }
 
   protected override firstUpdated(changed: PropertyValues<this>) {
@@ -128,14 +138,34 @@ export class Pinwheel extends BaseClass {
   protected override updated(changed: PropertyValues<this>) {
     super.updated(changed);
 
-    runAfterRepaint(() => {
-      const selected = this._items.find(item => item.selected) ?? null;
+    if (changed.has("value")) {
+      runAfterRepaint(() => {
+        const selected = this._items.find(item => item.selected) ?? null;
 
-      this._spinArias = {
-        valueNow: selected?.value ?? "",
-        valueText: selected?.textContent?.trim() ?? "",
-      };
-    });
+        this._spinArias = {
+          valueNow: selected?.value ?? "",
+          valueText: selected?.textContent?.trim() ?? "",
+        };
+      });
+    }
+  }
+
+  /**
+   * Locks the frame on a specific item based on its value.
+   *
+   * @param {string} itemValue - The value of the item to lock onto.
+   */
+  public lockOnItem(itemValue: string): void {
+    // Invalidate cache since this function will only be called programmatically
+    // and we need to get the latest items every time.
+    this._cachedItems = null;
+
+    const itemIdx = this._items.findIndex(item => item.value === itemValue);
+
+    if (itemIdx === -1) return;
+
+    // Lock the frame on the found item.
+    this._lockFrameOnItem(itemIdx);
   }
 
   public override focus(options?: FocusOptions) {
@@ -154,13 +184,18 @@ export class Pinwheel extends BaseClass {
     return this._value;
   }
 
-  public set value(value: string) {
+  public set value(newValue: string) {
     if (isSSR()) return;
+    if (newValue === this._value) return;
 
-    this._select(value);
+    this._value = newValue;
+
+    this._select(newValue);
   }
 
   private get _items() {
+    if (this._cachedItems) return this._cachedItems;
+
     const itemsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
 
     if (!itemsSlot) return [];
@@ -169,10 +204,16 @@ export class Pinwheel extends BaseClass {
       .assignedNodes()
       .filter(node => node instanceof PinwheelItem);
 
+    this._cachedItems = items;
+
     return items;
   }
 
   private _select(itemValue: string) {
+    // Invalidate cache since this function will only be called
+    // programatically and we need to get the latest items every time.
+    this._cachedItems = null;
+
     const items = this._items;
 
     const targetItem = items.find(item => {
@@ -190,7 +231,7 @@ export class Pinwheel extends BaseClass {
   }
 
   private _emitValueChange(newValue: string) {
-    if (this.disabled) return;
+    if (this.disabled) return false;
 
     const prevValue = this.value;
 
@@ -205,9 +246,15 @@ export class Pinwheel extends BaseClass {
 
     // Revert the change since the event is prevented.
     if (!eventAllowed) this.value = prevValue;
+
+    return eventAllowed;
   }
 
   private _handleItemsSlotChange() {
+    // Invalidate cache since this function will only be called
+    // when items have changed and we have to get the latest ones.
+    this._cachedItems = null;
+
     const items = this._items;
 
     const firstItem = items[0];
@@ -216,6 +263,64 @@ export class Pinwheel extends BaseClass {
     if (hasActiveItem || !firstItem) return;
 
     firstItem.selected = true;
+    this._value = firstItem.value;
+  }
+
+  private _handleScroll = debounce(() => {
+    if (!this._root) return;
+
+    const frameNumber = this._getClosestFrameNumber();
+    const item = this._items[frameNumber];
+
+    if (!item) return;
+
+    this._emitValueChange(item.value);
+    this._lockFrameOnItem(frameNumber);
+  }, 120);
+
+  private _lockFrameOnItem(itemIdx: number) {
+    if (!this._container || !this._root) return;
+    if (this._items.length <= 1) return;
+
+    const containerRect = getBoundingClientRect(this._container);
+
+    const itemHeight =
+      containerRect.height / (this._items.length + /* Two placeholders */ 2);
+
+    const dy = itemHeight * itemIdx;
+
+    this._root.scrollTop = dy;
+  }
+
+  private _getClosestFrameNumber() {
+    if (!this._container || !this._root) return 0;
+
+    const containerRect = getBoundingClientRect(this._container);
+
+    const blockCount = this._items.length + /* Two placeholders */ 2;
+    const itemHeight = containerRect.height / blockCount;
+    const dy = this._root.scrollTop;
+
+    let reached = 0;
+
+    for (let i = 0; i < blockCount; i++) {
+      reached += itemHeight;
+
+      if (reached >= dy + itemHeight / 2) return i;
+    }
+
+    return 0;
+  }
+
+  private _handleClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    if (!(target instanceof PinwheelItem)) return;
+
+    const itemIdx = this._items.findIndex(item => item.value === target.value);
+    const emitted = this._emitValueChange(target.value);
+
+    if (emitted && itemIdx >= 0) this._lockFrameOnItem(itemIdx);
   }
 
   private async _handleKeyDown(event: KeyboardEvent) {
@@ -241,12 +346,16 @@ export class Pinwheel extends BaseClass {
         if (items.length === 0) return;
 
         const idx = items.findIndex(item => item.selected);
-        const nextIdx = clamp(idx + 1, 0, items.length);
+        const nextIdx = idx === -1 ? 0 : clamp(idx - 1, 0, items.length - 1);
         const newValue = items[nextIdx]?.value;
 
         if (!newValue) return;
 
-        return this._emitValueChange(newValue);
+        const emitted = this._emitValueChange(newValue);
+
+        if (emitted) this._lockFrameOnItem(nextIdx);
+
+        return;
       }
 
       case KeyboardKeys.DOWN: {
@@ -255,32 +364,46 @@ export class Pinwheel extends BaseClass {
         if (items.length === 0) return;
 
         const idx = items.findIndex(item => item.selected);
-        const nextIdx = idx === -1 ? 0 : clamp(idx - 1, 0, items.length);
+        const nextIdx = clamp(idx + 1, 0, items.length - 1);
         const newValue = items[nextIdx]?.value;
 
         if (!newValue) return;
 
-        return this._emitValueChange(newValue);
+        const emitted = this._emitValueChange(newValue);
+
+        if (emitted) this._lockFrameOnItem(nextIdx);
+
+        return;
       }
 
       case KeyboardKeys.HOME: {
         event.preventDefault();
 
-        const newValue = items[0]?.value;
+        const nextIdx = 0;
+        const newValue = items[nextIdx]?.value;
 
         if (!newValue) return;
 
-        return this._emitValueChange(newValue);
+        const emitted = this._emitValueChange(newValue);
+
+        if (emitted) this._lockFrameOnItem(nextIdx);
+
+        return;
       }
 
       case KeyboardKeys.END: {
         event.preventDefault();
 
-        const newValue = items[items.length - 1]?.value;
+        const nextIdx = items.length - 1;
+        const newValue = items[nextIdx]?.value;
 
         if (!newValue) return;
 
-        return this._emitValueChange(newValue);
+        const emitted = this._emitValueChange(newValue);
+
+        if (emitted) this._lockFrameOnItem(nextIdx);
+
+        return;
       }
 
       default:
@@ -317,6 +440,10 @@ export class Pinwheel extends BaseClass {
 
     const ariaLabelledBy = this.label ? nothing : this.labelledBy || nothing;
 
+    const containerClasses = classMap({
+      container: true,
+    });
+
     const rootClasses = classMap({
       root: true,
       disabled: this.disabled,
@@ -337,94 +464,24 @@ export class Pinwheel extends BaseClass {
         aria-valuemin=${this.valueMin || nothing}
         aria-valuenow=${this._spinArias.valueNow || nothing}
         aria-valuetext=${this._spinArias.valueText || nothing}
+        @click=${this._handleClick}
+        @scroll=${this._handleScroll}
       >
-        <slot @slotchange=${this._handleItemsSlotChange}></slot>
+        <div
+          id="container"
+          class=${containerClasses}
+        >
+          <div
+            aria-hidden="true"
+            class="placeholder"
+          ></div>
+          <slot @slotchange=${this._handleItemsSlotChange}></slot>
+          <div
+            aria-hidden="true"
+            class="placeholder"
+          ></div>
+        </div>
       </div>
     `;
   }
 }
-
-// export class Pinwheel extends LitElement {
-//   @state()
-//   private _selectedIndex = 0;
-
-//   @property({ type: Array, attribute: false })
-//   public items: Array<string> = [];
-
-//   private _itemHeight = 48;
-
-//   public override connectedCallback() {
-//     super.connectedCallback();
-//     this.addEventListener("scroll", event =>
-//       this._handleScroll(event.target as HTMLElement),
-//     );
-//   }
-
-//   public override disconnectedCallback() {
-//     this.removeEventListener("scroll", event =>
-//       this._handleScroll(event.target as HTMLElement),
-//     );
-//     super.disconnectedCallback();
-//   }
-
-//   private _dispatchChangeEvent = () => {
-//     this.dispatchEvent(
-//       new CustomEvent("pinwheel-change", {
-//         detail: {
-//           selectedIndex: this._selectedIndex,
-//         },
-//         bubbles: true,
-//         composed: true,
-//       }),
-//     );
-//   };
-
-//   private _handleScroll = debounce((target: HTMLElement) => {
-//     this._selectedIndex = Math.round(target?.scrollTop / this._itemHeight);
-//     const isActiveElementInCenter = target?.scrollTop % this._itemHeight === 0;
-
-//     if (!isActiveElementInCenter) {
-//       this._scrollToActiveItem();
-//     } else {
-//       this._dispatchChangeEvent();
-//     }
-//   }, 100);
-
-//   private _handleClickItem = (index: number) => {
-//     this._selectedIndex = index;
-//     this._scrollToActiveItem();
-//   };
-
-//   private _scrollToActiveItem = () => {
-//     const scrollTopPosition = this._selectedIndex * this._itemHeight;
-
-//     this.scrollTo({ top: scrollTopPosition, behavior: "smooth" });
-//   };
-
-//   private _renderItems() {
-//     return this.items.map((item, idx) => {
-//       return html`<div
-//         part="pinwheel-item"
-//         class=${classMap({
-//           item: true,
-//           active: this._selectedIndex === idx,
-//         })}
-//         @click="${() => this._handleClickItem(idx)}"
-//         tabindex="0"
-//       >
-//         ${item}
-//       </div>`;
-//     });
-//   }
-
-//   protected override render() {
-//     return html`
-//       <div
-//         class="pinwheel"
-//         part="pinwheel"
-//       >
-//         ${this._renderItems()}
-//       </div>
-//     `;
-//   }
-// }

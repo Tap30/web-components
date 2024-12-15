@@ -10,6 +10,9 @@ const styles = css`
   :host {
     display: inline-block;
     vertical-align: middle;
+
+    width: 100%;
+    overflow: hidden;
   }
 
   .root.selected {
@@ -23,6 +26,9 @@ const styles = css`
     align-items: center;
     justify-content: center;
 
+    flex-shrink: 0;
+    cursor: pointer;
+
     height: 3rem;
     width: 100%;
     padding-right: var(--tap-sys-spacing-6);
@@ -35,6 +41,10 @@ const styles = css`
     font-size: var(--tap-sys-typography-body-md-size);
     line-height: var(--tap-sys-typography-body-md-height);
     font-weight: var(--tap-sys-typography-body-md-weight);
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 `;
 
