@@ -19,6 +19,7 @@ export { default as Modal } from "./Modal";
 export { default as Notice } from "./Notice";
 export { default as Pinwheel } from "./Pinwheel";
 export { default as PinwheelGroup } from "./PinwheelGroup";
+export { default as PinwheelItem } from "./PinwheelItem";
 export { default as ProgressIndicator } from "./ProgressIndicator";
 export { default as Radio } from "./Radio";
 export { default as RateSlider } from "./RateSlider";

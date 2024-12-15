@@ -1,33 +1,52 @@
 import { customElement } from "lit/decorators.js";
+import { PinwheelItem } from "./item";
+import itemStyles from "./item/item.style";
 import { Pinwheel } from "./pinwheel";
 import styles from "./pinwheel.style";
 
+export { Slots } from "./constants";
+
 /**
- * @summary A pinwheel component for selecting items by scrolling through a list.
+ * @summary The pinwheel item component.
  *
- * @prop {string[]} [items=[]] - An array of strings that contains pinwheel items.
+ * @tag tap-pinwheel-item
  *
- * @csspart [pinwheel] - The container that wraps the pinwheel component.
- * @csspart [pinwheel-item] - The item that rendered in pinwheel.
+ * @prop {boolean} [selected=false] - Indicates whether the item is selected or not.
+ * @prop {string} [value=""] -
+ * The value associated with the item.
+ * This value has to be unique among sibling items.
+ */
+@customElement("tap-pinwheel-item")
+export class TapPinwheelItem extends PinwheelItem {
+  public static override readonly styles = [itemStyles];
+}
+
+/**
+ * @summary The pinwheel component.
  *
- * @cssprop [--tap-pinwheel-vertical-padding=--tap-sys-spacing-0]
- * @cssprop [--tap-pinwheel-horizontal-padding=--tap-sys-spacing-6]
+ * @tag tap-pinwheel
  *
- * @cssprop [--tap-pinwheel-item-height=--tap-sys-spacing-11]
+ * @prop {string} [valuemin=""] -
+ * Defines the minimum allowed value for pinwheel.
+ * Use it when your items' values are sequential numbers.
  *
- * @cssprop [--tap-font-family=--tap-sys-font-family]
- * @cssprop [--tap-pinwheel-typography-body-md-height=--tap-sys-typography-body-md-height]
- * @cssprop [--tap-pinwheel-typography-body-md-size=--tap-sys-typography-body-md-size]
- * @cssprop [--tap-pinwheel-typography-body-md-weight=--tap-sys-typography-body-md-weight]
- * @cssprop [--tap-pinwheel-item-color=--tap-sys-color-content-tertiary]
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemin
+ * @prop {string} [valuemax=""] -
+ * Defines the maximum allowed value for pinwheel.
+ * Use it when your items' values are sequential numbers.
  *
- * @cssprop [--tap-pinwheel-typography-label-md-height=--tap-sys-typography-label-md-height]
- * @cssprop [--tap-pinwheel-typography-label-md-size=--tap-sys-typography-label-md-size]
- * @cssprop [--tap-pinwheel-typography-label-md-weight=--tap-sys-typography-label-md-weight]
- * @cssprop [--tap-pinwheel-active-item-color=--tap-sys-color-content-primary]
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemax
+ * @prop {string} [label=""] -
+ * Defines a string value that can be used to set a label
+ * for assistive technologies.
  *
- * @fires pinwheel-change - Fires when the pinwheel changes
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+ * @prop {string} [labelledby=""] -
+ * Identifies the element (or elements) that labels the pinwheel.
  *
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+ *
+ * @fires change - Fires when the pinwheel selected state changes.
  */
 @customElement("tap-pinwheel")
 export class TapPinwheel extends Pinwheel {
@@ -37,5 +56,6 @@ export class TapPinwheel extends Pinwheel {
 declare global {
   interface HTMLElementTagNameMap {
     "tap-pinwheel": TapPinwheel;
+    "tap-pinwheel-item": TapPinwheelItem;
   }
 }
