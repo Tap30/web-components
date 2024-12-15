@@ -4,6 +4,8 @@ import itemStyles from "./item/item.style";
 import { Pinwheel } from "./pinwheel";
 import styles from "./pinwheel.style";
 
+export { Slots } from "./constants";
+
 /**
  * @summary The pinwheel item component.
  *
@@ -23,6 +25,26 @@ export class TapPinwheelItem extends PinwheelItem {
  * @summary The pinwheel component.
  *
  * @tag tap-pinwheel
+ *
+ * @prop {string} [valuemin=""] -
+ * Defines the minimum allowed value for pinwheel.
+ * Use it when your items' values are sequential numbers.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemin
+ * @prop {string} [valuemax=""] -
+ * Defines the maximum allowed value for pinwheel.
+ * Use it when your items' values are sequential numbers.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemax
+ * @prop {string} [label=""] -
+ * Defines a string value that can be used to set a label
+ * for assistive technologies.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+ * @prop {string} [labelledby=""] -
+ * Identifies the element (or elements) that labels the pinwheel.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
  *
  * @fires change - Fires when the pinwheel selected state changes.
  */

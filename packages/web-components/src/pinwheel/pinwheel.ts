@@ -83,6 +83,8 @@ export class Pinwheel extends BaseClass {
 
   private _value = "";
 
+  private _isProgrammaticallyScrolling = false;
+
   constructor() {
     super();
 
@@ -164,6 +166,7 @@ export class Pinwheel extends BaseClass {
 
     if (itemIdx === -1) return;
 
+    this._isProgrammaticallyScrolling = true;
     // Lock the frame on the found item.
     this._lockFrameOnItem(itemIdx);
   }
@@ -174,23 +177,6 @@ export class Pinwheel extends BaseClass {
 
   public override blur() {
     this._root?.blur();
-  }
-
-  /**
-   * The value of the currently selected item.
-   */
-  @property({ type: String, attribute: false })
-  public get value() {
-    return this._value;
-  }
-
-  public set value(newValue: string) {
-    if (isSSR()) return;
-    if (newValue === this._value) return;
-
-    this._value = newValue;
-
-    this._select(newValue);
   }
 
   private get _items() {
@@ -209,7 +195,24 @@ export class Pinwheel extends BaseClass {
     return items;
   }
 
-  private _select(itemValue: string) {
+  /**
+   * The value of the currently selected item.
+   */
+  @property({ attribute: false })
+  public get value() {
+    return this._value;
+  }
+
+  public set value(newValue: string) {
+    if (isSSR()) return;
+    if (newValue === this._value) return;
+
+    this._value = newValue;
+
+    this._setSelectedItem(newValue);
+  }
+
+  private _setSelectedItem(itemValue: string) {
     // Invalidate cache since this function will only be called
     // programatically and we need to get the latest items every time.
     this._cachedItems = null;
@@ -226,7 +229,6 @@ export class Pinwheel extends BaseClass {
       if (item !== targetItem) item.selected = false;
     });
 
-    this.value = itemValue;
     targetItem.selected = true;
   }
 
@@ -234,6 +236,8 @@ export class Pinwheel extends BaseClass {
     if (this.disabled) return false;
 
     const prevValue = this.value;
+
+    if (newValue === prevValue) return;
 
     this.value = newValue;
 
@@ -251,10 +255,6 @@ export class Pinwheel extends BaseClass {
   }
 
   private _handleItemsSlotChange() {
-    // Invalidate cache since this function will only be called
-    // when items have changed and we have to get the latest ones.
-    this._cachedItems = null;
-
     const items = this._items;
 
     const firstItem = items[0];
@@ -268,6 +268,12 @@ export class Pinwheel extends BaseClass {
 
   private _handleScroll = debounce(() => {
     if (!this._root) return;
+
+    if (this._isProgrammaticallyScrolling) {
+      this._isProgrammaticallyScrolling = false;
+
+      return;
+    }
 
     const frameNumber = this._getClosestFrameNumber();
     const item = this._items[frameNumber];
@@ -321,6 +327,8 @@ export class Pinwheel extends BaseClass {
     const emitted = this._emitValueChange(target.value);
 
     if (emitted && itemIdx >= 0) this._lockFrameOnItem(itemIdx);
+
+    this._isProgrammaticallyScrolling = true;
   }
 
   private async _handleKeyDown(event: KeyboardEvent) {
@@ -355,6 +363,8 @@ export class Pinwheel extends BaseClass {
 
         if (emitted) this._lockFrameOnItem(nextIdx);
 
+        this._isProgrammaticallyScrolling = true;
+
         return;
       }
 
@@ -373,6 +383,8 @@ export class Pinwheel extends BaseClass {
 
         if (emitted) this._lockFrameOnItem(nextIdx);
 
+        this._isProgrammaticallyScrolling = true;
+
         return;
       }
 
@@ -388,6 +400,8 @@ export class Pinwheel extends BaseClass {
 
         if (emitted) this._lockFrameOnItem(nextIdx);
 
+        this._isProgrammaticallyScrolling = true;
+
         return;
       }
 
@@ -402,6 +416,8 @@ export class Pinwheel extends BaseClass {
         const emitted = this._emitValueChange(newValue);
 
         if (emitted) this._lockFrameOnItem(nextIdx);
+
+        this._isProgrammaticallyScrolling = true;
 
         return;
       }

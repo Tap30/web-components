@@ -46,6 +46,12 @@ const styles = css`
     text-overflow: ellipsis;
     overflow: hidden;
   }
+
+  .root ::slotted(*) {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 `;
 
 export default styles;
