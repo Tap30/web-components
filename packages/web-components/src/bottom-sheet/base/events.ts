@@ -1,4 +1,4 @@
-import { BaseEvent, type ResizeSensorSizeChangeProps } from "../utils";
+import { BaseEvent, type ResizeSensorSizeChangeProps } from "../../utils";
 
 export class OpeningEvent extends BaseEvent<null> {
   public static type = "opening";

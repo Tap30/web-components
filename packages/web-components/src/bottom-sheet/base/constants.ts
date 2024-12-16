@@ -1,5 +1,5 @@
 export const Slots = {
   HEADER: "header",
   BODY: "body",
-  ACTIONBAR: "actionbar",
+  ACTION_BAR: "action-bar",
 } as const;

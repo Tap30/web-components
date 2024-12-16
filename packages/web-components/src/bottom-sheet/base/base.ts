@@ -1,28 +1,23 @@
-import "../icon-button";
+import "../../button/icon-button";
 
 import { html, isServer, LitElement, type PropertyValues } from "lit";
-import {
-  eventOptions,
-  property,
-  query,
-  queryAssignedNodes,
-  state,
-} from "lit/decorators.js";
+import { eventOptions, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap } from "lit/directives/style-map.js";
-import { KeyboardKeys } from "../internals";
+import { KeyboardKeys } from "../../internals";
 import {
   AnimationController,
   clearSelection,
   createDisposableRefCallback,
   createScrollGuard,
+  getRenderRootSlot,
   isResizeSensorSupported,
   logger,
   ResizeSensor,
   runAfterRepaint,
   throttle,
   type DisposableRefCallback,
-} from "../utils";
+} from "../../utils";
 import { Slots } from "./constants";
 import {
   ClosedEvent,
@@ -38,7 +33,7 @@ import {
 } from "./events";
 import { dismiss } from "./icons";
 
-export class BottomSheet extends LitElement {
+export abstract class BaseBottomSheet extends LitElement {
   public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
@@ -95,10 +90,10 @@ export class BottomSheet extends LitElement {
   public hasOverlay = true;
 
   /**
-   * Determines whether the actionbar should be sticky or not.
+   * Determines whether the action bar should be sticky or not.
    */
-  @property({ type: Boolean, attribute: "sticky-actionbar" })
-  public isActionbarSticky = false;
+  @property({ type: Boolean, attribute: "sticky-action-bar" })
+  public hasStickyActionBar = false;
 
   /**
    * The threshold for grab-end movement to trigger expansion or closure. (in pixels)
@@ -108,23 +103,23 @@ export class BottomSheet extends LitElement {
   @property({ type: Number, attribute: "expansion-threshold" })
   public expansionThreshold = 75;
 
-  @query(".root")
-  private _root!: HTMLElement | null;
+  @query("#root")
+  protected _root!: HTMLElement | null;
 
-  @query(".container")
-  private _container!: HTMLElement | null;
+  @query("#container")
+  protected _container!: HTMLElement | null;
 
-  @query(".grabber")
-  private _grabber!: HTMLElement | null;
+  @query("#grabber")
+  protected _grabber!: HTMLElement | null;
 
-  @queryAssignedNodes({ slot: Slots.HEADER })
-  private _headerAssignedNodes!: Array<Node>;
+  @state()
+  private _hasHeaderSlot = false;
 
-  @queryAssignedNodes({ slot: Slots.BODY })
-  private _bodyAssignedNodes!: Array<Node>;
+  @state()
+  private _hasBodySlot = false;
 
-  @queryAssignedNodes({ slot: Slots.ACTIONBAR })
-  private _actionbarAssignedNodes!: Array<Node>;
+  @state()
+  private _hasActionBarSlot = false;
 
   @state()
   private _forceBlockContentScroll = false;
@@ -148,7 +143,7 @@ export class BottomSheet extends LitElement {
   private _dragInitiator: "grabber" | "sheet" | "none" = "none";
 
   @state()
-  private _containerStatus:
+  protected _containerStatus:
     | "opened"
     | "closed"
     | "opening"
@@ -250,6 +245,20 @@ export class BottomSheet extends LitElement {
           this.dispatchEvent(new ExpandEvent());
         }
       }
+
+      const actionBarSlot = getRenderRootSlot(
+        this.renderRoot,
+        Slots.ACTION_BAR,
+      );
+
+      const bodySlot = getRenderRootSlot(this.renderRoot, Slots.BODY);
+      const headerSlot = getRenderRootSlot(this.renderRoot, Slots.HEADER);
+
+      this._hasActionBarSlot =
+        (actionBarSlot?.assignedNodes() ?? []).length > 0;
+
+      this._hasBodySlot = (bodySlot?.assignedNodes() ?? []).length > 0;
+      this._hasHeaderSlot = (headerSlot?.assignedNodes() ?? []).length > 0;
     });
   }
 
@@ -274,11 +283,10 @@ export class BottomSheet extends LitElement {
   }
 
   private _validateInputProps() {
-    const hasHeaderSlot = this._headerAssignedNodes.length > 0;
     const hasHeadingTitle = typeof this.headingTitle !== "undefined";
     const hasHeadingDesc = typeof this.headingDescription !== "undefined";
 
-    if (hasHeaderSlot) {
+    if (this._hasHeaderSlot) {
       if (!hasHeadingTitle && !hasHeadingDesc) return;
 
       logger(
@@ -286,7 +294,7 @@ export class BottomSheet extends LitElement {
           `Both \`${Slots.HEADER}\` slot and \`heading-title\` or \`heading-description\` are provided.`,
           "Please use only one to avoid conflicts.",
         ].join(" "),
-        "BottomSheet",
+        "bottom-sheet",
         "warning",
       );
     } else {
@@ -297,7 +305,7 @@ export class BottomSheet extends LitElement {
           "No header provided.",
           `Please opt-in by using either the \`heading-title\` property or the \`${Slots.HEADER}\` slot.`,
         ].join(" "),
-        "BottomSheet",
+        "bottom-sheet",
         "error",
       );
     }
@@ -549,6 +557,7 @@ export class BottomSheet extends LitElement {
 
     return html`
       <div
+        id="grabber"
         class="grabber"
         part="grabber"
       >
@@ -602,7 +611,7 @@ export class BottomSheet extends LitElement {
   }
 
   private _renderHeading() {
-    if (this._headerAssignedNodes.length > 0) return null;
+    if (!this._hasHeaderSlot) return null;
 
     return html`
       <div
@@ -644,9 +653,9 @@ export class BottomSheet extends LitElement {
       opening: this._containerStatus === "opening",
       closing: this._containerStatus === "closing",
       "expanded-grabber": this._expandGrabber,
-      "sticky-actionbar": this.isActionbarSticky,
-      "has-body": this._bodyAssignedNodes.length > 0,
-      "has-actionbar": this._actionbarAssignedNodes.length > 0,
+      "sticky-actionbar": this.hasStickyActionBar,
+      "has-body": this._hasBodySlot,
+      "has-actionbar": this._hasActionBarSlot,
     });
 
     const containerStyles = styleMap({
@@ -658,12 +667,14 @@ export class BottomSheet extends LitElement {
     return html`
       <div
         ${this._rootRefCallback}
+        id="root"
         class="root ${rootClasses}"
         part="root"
         ?inert=${!this.open}
       >
         ${this._renderOverlay()}
         <div
+          id="container"
           part="container"
           class="container"
           style=${containerStyles}
@@ -680,16 +691,16 @@ export class BottomSheet extends LitElement {
             ${this._renderDismissButton()}
           </div>
           <div
-            part="body"
-            class="body"
+            part=${Slots.BODY}
+            class=${Slots.BODY}
           >
             <slot name=${Slots.BODY}></slot>
           </div>
           <div
-            part="actionbar"
-            class="actionbar"
+            part=${Slots.ACTION_BAR}
+            class=${Slots.ACTION_BAR}
           >
-            <slot name=${Slots.ACTIONBAR}></slot>
+            <slot name=${Slots.ACTION_BAR}></slot>
           </div>
         </div>
       </div>

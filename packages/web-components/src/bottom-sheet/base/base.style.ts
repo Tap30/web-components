@@ -1,5 +1,5 @@
 import { css } from "lit";
-import { Z_INDEXES } from "../internals";
+import { Z_INDEXES } from "../../internals";
 
 const styles = css`
   *,
@@ -8,11 +8,14 @@ const styles = css`
     box-sizing: border-box;
   }
 
+  :host {
+  }
+
   .root {
     --bottom-sheet-body-pb: var(--tap-sys-spacing-9);
     --bottom-sheet-container-dy: 100%;
     --bottom-sheet-container-overflow: auto;
-    --bottom-sheet-actionbar-position: relative;
+    --bottom-sheet-action-bar-position: relative;
     --bottom-sheet-grabber-height: 12px;
     --bottom-sheet-grabber-y: 0;
     --bottom-sheet-grabber-bottom: 0;
@@ -43,8 +46,8 @@ const styles = css`
     visibility: visible;
   }
 
-  .root.sticky-actionbar {
-    --bottom-sheet-actionbar-position: sticky;
+  .root.sticky-action-bar {
+    --bottom-sheet-action-bar-position: sticky;
   }
 
   .root.expanded-grabber {
@@ -61,11 +64,11 @@ const styles = css`
     display: none;
   }
 
-  .root:not(.has-actionbar) .actionbar {
+  .root:not(.has-action-bar) .action-bar {
     display: none;
   }
 
-  .root.has-actionbar.has-body {
+  .root.has-action-bar.has-body {
     --bottom-sheet-body-pb: var(--tap-sys-spacing-6);
   }
 
@@ -206,8 +209,8 @@ const styles = css`
     padding-bottom: var(--bottom-sheet-body-pb);
   }
 
-  .actionbar {
-    position: var(--bottom-sheet-actionbar-position);
+  .action-bar {
+    position: var(--bottom-sheet-action-bar-position);
     bottom: 0;
 
     z-index: 2;
