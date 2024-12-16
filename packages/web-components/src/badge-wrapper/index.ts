@@ -7,6 +7,8 @@ export { Slots } from "./constants";
 /**
  * @summary A wrapper component to position a badge relative to an anchor.
  *
+ * @tag tap-badge-wrapper
+ *
  * @prop {"rectangle" | "circle" | "pill"} [anchor-shape="rectangle"] - The shape of the anchor.
  * @prop {"left" | "right"} [badge-side="right"] - The horizontal placement of the badge.
  * @prop {"top" | "middle"} [badge-alignment="top"] - The vertical alignment of the badge.

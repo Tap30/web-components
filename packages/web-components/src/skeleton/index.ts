@@ -2,24 +2,22 @@ import { customElement } from "lit/decorators.js";
 import { Skeleton } from "./skeleton";
 import styles from "./skeleton.style";
 
+export { Slots } from "./constants";
+
 /**
- * @summary Display Skeleton component with different styles and types.
+ * @summary The skeleton component.
  *
- * @prop {"line" | "rect" | "circle"} [variant="line"] - The variant of the skeleton.
- * @prop {"progress" | "pulse" | "none"} [animation-mode="progress"] - The animation mode of the skeleton.
- * @prop {string} [width="100%"] - The width value of the skeleton.
- * @prop {string} [height="20px"] - The height value of the skeleton.
+ * @tag tap-skeleton
  *
- * @csspart [skeleton] - The skeleton element
+ * @prop {"rectangular" | "circular" | "pill" | "text"} [variant="rectangular"] -
+ * The type of content that will be rendered.
+ * @prop {string} [width=""] - Width of the skeleton.
+ * @prop {string} [height=""] - Height of the skeleton.
+ * @prop {number} [ratio=NaN] -
+ * The ratio of the width to the height.
+ * If the value is invalid, it will default to 1.
  *
- * @cssprop [--tap-skeleton-background=--tap-sys-color-surface-tertiary] - Background color of the skeleton
- * @cssprop [--tap-skeleton-radius=--tap-sys-radius-2] - Border radius of the skeleton
- * @cssprop [--tap-skeleton-width=100%] - Width of the skeleton
- * @cssprop [--tap-skeleton-height=--tap-sys-spacing-8] - Height of the skeleton
- * @cssprop [--tap-skeleton-rect-radius=--tap-sys-spacing-0] - Border radius of the skeleton variant rect
- * @cssprop [--tap-skeleton-circle-radius=--tap-sys-radius-full] - Border radius of the skeleton variant circle
- * @cssprop [--tap-skeleton-circle-width=--tap-sys-spacing-10] - Width of the skeleton variant circle
- * @cssprop [--tap-skeleton-circle-height=--tap-sys-spacing-10] - Height of the skeleton variant circle
+ * Only works when `variant="rectangular"`.
  */
 
 @customElement("tap-skeleton")

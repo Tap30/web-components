@@ -1,21 +1,61 @@
-import { LitElement, html } from "lit";
+import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
+import { SystemError } from "../utils";
 
 export class Spinner extends LitElement {
-  @property({ reflect: true })
-  public variant?: "primary" | "inverse" | "default" = "default";
+  /**
+   * Determines the size of the spinner.
+   * When set to 'auto', it inherits the size of its parent element.
+   * Otherwise, you can specify the size in pixels.
+   */
+  @property()
+  public size: number | `${number}` | "auto" = "auto";
 
-  @property({ reflect: true })
-  public size?: "small" | "medium" | "large" = "medium";
+  private _getSizeStyles(size: typeof this.size) {
+    const hasValidSize =
+      (typeof size === "string" &&
+        (size === "auto" || !Number.isNaN(Number(size)))) ||
+      (typeof size === "number" && !Number.isNaN(size));
+
+    if (!hasValidSize) {
+      throw new SystemError(
+        `Invalid size provided! (provided size: \`size=${
+          typeof size === "number" ? `${size}` : `${String(size)}`
+        }\`)`,
+        "spinner",
+      );
+    }
+
+    return size === "auto"
+      ? {
+          width: "100%",
+          height: "100%",
+        }
+      : {
+          width: `${Number(size) / 16}rem`,
+          height: `${Number(size) / 16}rem`,
+          maxWidth: `${Number(size) / 16}rem`,
+          maxHeight: `${Number(size) / 16}rem`,
+        };
+  }
 
   protected override render() {
+    const { width, height, maxWidth, maxHeight } = this._getSizeStyles(
+      this.size,
+    );
+
+    this.style.width = width;
+    this.style.height = height;
+    this.style.maxWidth = maxWidth || "";
+    this.style.maxHeight = maxHeight || "";
+
     return html`
       <svg
-        part="svg"
-        class="spinner"
+        part="root"
+        class="root"
         xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
         viewBox="0 0 600 600"
+        aria-hidden="true"
       >
         <defs>
           <linearGradient

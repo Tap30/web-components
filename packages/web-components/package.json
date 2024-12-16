@@ -1,6 +1,6 @@
 {
   "name": "@tapsioss/web-components",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -17,8 +17,11 @@
     }
   },
   "scripts": {
-    "build": "tsx ./scripts/build.ts",
-    "dev": "tsx ./scripts/dev.ts",
+    "clear": "shx rm -rf dist",
+    "prebuild": "pnpm run clear",
+    "build": "tsc --project ./tsconfig.build.json",
+    "predev": "pnpm run clear",
+    "dev": "tsc --watch --project ./tsconfig.dev.json",
     "release": "pnpm publish . --tag latest --access public"
   },
   "dependencies": {

@@ -1,33 +1,27 @@
 import { customElement } from "lit/decorators.js";
+import baseInputStyle from "../base-input/base-input.style";
 import { Checkbox } from "./checkbox";
 import styles from "./checkbox.style";
 
 /**
- * @summary A checkbox component with support for checked and indeterminate states.
+ * @summary A checkbox component.
  *
  * @prop {boolean} [checked=false] - Indicates whether the checkbox is checked.
  * @prop {boolean} [indeterminate=false] - Indicates whether the checkbox is in an indeterminate state.
  * @prop {boolean} [disabled=false] - Indicates whether the checkbox is disabled.
  * @prop {string} [value='on'] - The value of the checkbox when it is checked.
- *
- * @csspart [checkbox] - The main container for the checkbox.
- *
- * @cssprop [--tap-checkbox-border-radius=--tap-sys-radius-1] - The border radius of the checkbox.
- * @cssprop [--tap-checkbox-height=--tap-sys-spacing-7] - The height of the checkbox.
- * @cssprop [--tap-checkbox-width=--tap-sys-spacing-7] - The width of the checkbox.
- * @cssprop [--tap-checkbox-input-height=--tap-sys-spacing-7] - The height of the checkbox input.
- * @cssprop [--tap-checkbox-input-width=--tap-sys-spacing-7] - The width of the checkbox input.
- * @cssprop [--tap-checkbox-background-color=--tap-sys-color-surface-primary] - The background color of the checkbox.
- * @cssprop [--tap-checkbox-border=--tap-sys-color-border-inverse-primary] - The border color of the checkbox.
- * @cssprop [--tap-checkbox-checked-background-color=--tap-sys-color-surface-inverse-primary] - The background color of the checked or indeterminate checkbox.
- * @cssprop [--tap-checkbox-checked-color=--tap-sys-color-content-on-inverse] - The color of the content inside the checked or indeterminate checkbox.
- * @cssprop [--tap-checkbox-checked-color=--tap-sys-color-surface-disabled] - The background color of the disabled checkbox.
- * @cssprop [--tap-checkbox-disabled-border-color=--tap-sys-color-surface-disabled] - The border color of the disabled checkbox.
- * @cssprop [--tap-checkbox-disabled-color=--tap-sys-color-content-disabled] - The color of the content inside the disabled checkbox.
+ * @prop {string} label - Defines a string value that can be used to name checkbox input.\
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+ * @prop {string} labelledby - Identifies the element (or elements) that labels the checkbox input.\
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+ * @prop {boolean} [required=false] - Indicates that the user must specify a value for the input before the
+ * owning form can be submitted and will render an error state when
+ * `reportValidity()` is invoked when value is empty.\
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required
  */
 @customElement("tap-checkbox")
 export class TapCheckbox extends Checkbox {
-  public static override readonly styles = [styles];
+  public static override readonly styles = [baseInputStyle, styles];
 }
 
 declare global {

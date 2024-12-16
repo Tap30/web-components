@@ -42,17 +42,6 @@
     },
     "slotKnobs": {}
   },
-  "tap-toast": {
-    "propertyDefaultValues": {
-      "show-dismiss-button": false,
-      "variant": "warning"
-    },
-    "slotKnobs": {
-      "default": {
-        "text": "برای تجربه کاربری بهتر VPN را خاموش کنید"
-      }
-    }
-  },
   "tap-tooltip": {
     "propertyDefaultValues": {
       "width": "100px"
@@ -76,14 +65,19 @@
   "tap-notice": {
     "propertyDefaultValues": {
       "variant": "error",
-      "priority": "low"
+      "noticeTitle": "عنوان را وارد کنید"
     },
     "slotKnobs": {
       "default": {
         "simple": "متن شما در اینجا قرار می‌گیرد"
       },
       "actions": {
-        "button": "<tap-button slot=\"actions\" title=\"Button\">عنوان دکمه</tap-button>"
+        "empty": "",
+        "one button": "<div slot=\"actions\"><tap-button>عنوان دکمه</tap-button></div>",
+        "two buttons": "<div slot=\"actions\"><tap-button style=\"margin-left: 12px\">عنوان دکمه</tap-button><tap-button>عنوان دکمه</tap-button></div>"
+      },
+      "artwork": {
+        "sample": "<svg slot=\"artwork\" width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M1.23947 35.2061L19.2616 3.96775C19.5619 3.40992 20.3772 3.40992 20.7205 3.96775L38.7855 35.2061C39.0859 35.7639 38.6997 36.4504 38.056 36.4504H1.92602C1.28238 36.4504 0.896188 35.7639 1.23947 35.2061Z\" fill=\"#FFC043\"/><path d=\"M6.25977 33.1465L19.9909 9.37445L33.722 33.1465H6.25977Z\" fill=\"black\"/><path d=\"M19.9909 27.3964C20.3342 27.3964 20.6345 27.5251 20.892 27.7826C21.1495 28.04 21.2782 28.3404 21.2782 28.6837C21.2782 29.0269 21.1495 29.3273 20.892 29.5848C20.6345 29.8422 20.3342 29.971 19.9909 29.971C19.6476 29.971 19.3043 29.8422 19.0898 29.5848C18.8323 29.3273 18.7036 29.0269 18.7036 28.6837C18.7036 28.3404 18.8323 28.04 19.0898 27.7826C19.3473 27.5251 19.6476 27.3964 19.9909 27.3964ZM19.004 26.2807L18.8323 17.0551H21.1924L20.9778 26.2807H19.004Z\" fill=\"white\"/></svg>"
       }
     }
   },
@@ -96,8 +90,8 @@
       "icon": {
         "simple icon": "<tap-icon-target-slash slot=\"icon\" width=\"120\" height=\"120\" color=\"#ff7733\"></tap-icon-map>"
       },
-      "actions": {
-        "multiple action": "<tap-button slot=\"actions\" variant=\"primary\">روشن کن</tap-button>"
+      "action": {
+        "button": "<tap-button slot=\"action\">روشن کن</tap-button>"
       }
     }
   },
@@ -118,11 +112,11 @@
       "leading": {
         "checkbox": "<tap-checkbox slot=\"leading\"></tap-checkbox>",
         "radio": "<tap-radio slot=\"leading\"></tap-radio>",
-        "avatar": "<tap-avatar slot=\"leading\" size=\"small\" image=\"https://picsum.photos/100\"></tap-avatar>"
+        "avatar": "<tap-avatar slot=\"leading\" size=\"sm\" image=\"https://picsum.photos/100\"></tap-avatar>"
       },
       "trailing": {
         "button": "<tap-button slot=\"trailing\">پرداخت</tap-button>",
-        "badge": "<tap-badge slot=\"trailing\" value=\"1\" variant=\"error\" type=\"numeral\"></tap-badge>",
+        "badge": "<tap-badge slot=\"trailing\" value=\"1\" color=\"error\" variant=\"numeral\"></tap-badge>",
         "icon": "<tap-icon-default color=\"black\" slot=\"trailing\"></tap-icon-default>",
         "price": "<p color=\"black\" slot=\"trailing\">۱۵۷٬۰۰۰ تومان</p>"
       },
@@ -183,20 +177,10 @@
       ]
     }
   },
-  "tap-radio-group": {
-    "slotKnobs": {
-      "default": {
-        "text": "<tap-radio value=\"1\"></tap-radio>\n  <tap-radio value=\"2\"></tap-radio>"
-      }
-    }
-  },
   "tap-bottom-navigation-item": {
     "slotKnobs": {
       "icon": {
         "profile": "<tap-icon-person slot=\"icon\"></tap-icon-person>"
-      },
-      "active-icon": {
-        "profile": "<tap-icon-person-fill slot=\"active-icon\"></tap-icon-person-fill>"
       },
       "default": {
         "profile": "پروفایل"
@@ -206,7 +190,7 @@
   "tap-bottom-navigation": {
     "slotKnobs": {
       "default": {
-        "sample": "<tap-bottom-navigation-item>\n      پروفایل\n      <tap-icon-person slot=\"icon\"></tap-icon-person>\n      <tap-icon-person-fill slot=\"active-icon\"></tap-icon-person-fill>\n    </tap-bottom-navigation-item>\n    <tap-bottom-navigation-item>\n      باشگاه مشتریان\n      <tap-icon-spark slot=\"icon\"></tap-icon-spark>\n      <tap-icon-spark-fill slot=\"active-icon\"></tap-icon-spark-fill>\n    </tap-bottom-navigation-item>\n    <tap-bottom-navigation-item>\n      تخفیف\u200Cها\n      <tap-icon-coupon slot=\"icon\"></tap-icon-coupon>\n      <tap-icon-coupon-fill slot=\"active-icon\"></tap-icon-coupon-fill>\n    </tap-bottom-navigation-item>\n    <tap-bottom-navigation-item>\n      سرویس\u200Cها\n      <tap-icon-square-grid-rounded slot=\"icon\"></tap-icon-square-grid-rounded>\n      <tap-icon-square-grid-rounded-fill\n        slot=\"active-icon\"\n      ></tap-icon-square-grid-rounded-fill>\n    </tap-bottom-navigation-item>"
+        "sample": "<tap-bottom-navigation-item value=\"1\">پروفایل<tap-icon-person slot=\"icon\"></tap-icon-person></tap-bottom-navigation-item><tap-bottom-navigation-item value=\"2\">باشگاه مشتریان<tap-icon-spark slot=\"icon\"></tap-icon-spark>"
       }
     }
   },
@@ -221,12 +205,12 @@
   },
   "tap-text-field": {
     "slotKnobs": {
-      "leading": {
-        "empty": "<div></div>",
+      "leading-icon": {
+        "empty": "",
         "icon": "<tap-icon-default slot=\"leading-icon\"></tap-icon-default>"
       },
       "trailing": {
-        "empty": "<div></div>",
+        "empty": "",
         "suffix": "<p slot=\"trailing\">تومان</tap-button>",
         "icon": "<tap-icon-default slot=\"trailing\"></tap-icon-default>",
         "button": "<tap-icon-button variant=\"naked\" size=\"small\" slot=\"trailing\"><tap-icon-default></tap-icon-default></tap-icon-button>"
@@ -234,14 +218,26 @@
     },
     "propertyDefaultValues": {
       "label": "نام گیرنده",
-      "caption": "لطفا نام و نام خانوادگی کامل خود را وارد نمایید"
+      "supporting-text": "لطفا نام و نام خانوادگی کامل خود را وارد نمایید"
     }
   },
-  "tap-textarea": {
+  "tap-text-area": {
+    "slotKnobs": {
+      "leading-icon": {
+        "empty": "",
+        "icon": "<tap-icon-default slot=\"leading-icon\"></tap-icon-default>"
+      },
+      "trailing": {
+        "empty": "",
+        "suffix": "<p slot=\"trailing\">تومان</tap-button>",
+        "icon": "<tap-icon-default slot=\"trailing\"></tap-icon-default>",
+        "button": "<tap-icon-button variant=\"naked\" size=\"small\" slot=\"trailing\"><tap-icon-default></tap-icon-default></tap-icon-button>"
+      }
+    },
     "propertyDefaultValues": {
       "label": "توضیحات سفارش (اختیاری)",
       "placeholder": "مثلا بسته با احتیاط حمل شود...",
-      "caption": "در صورت پر بودن این فیلد، متن آن برای راننده نمایش داده خواهد شد"
+      "supporting-text": "در صورت پر بودن این فیلد، متن آن برای راننده نمایش داده خواهد شد"
     }
   },
   "tap-chip": {

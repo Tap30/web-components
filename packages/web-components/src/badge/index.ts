@@ -7,11 +7,15 @@ export { Slots } from "./constants";
 /**
  * @summary The badge component.
  *
+ * @tag tap-badge
+ *
+ * @slot icon - The slot for icon element.
+ *
  * @prop {string | number} [value=''] - The value of the badge.
  * @prop {'pill' | 'numeral' | 'dot'} [variant='pill'] - The variant of the badge.
  * @prop {'success' | 'error' | 'info' | 'warning' | 'neutral'} [color='neutral'] - The color of the badge.
  * @prop {'high' | 'low'} [priority='high'] - The priority level of the badge.
- * @prop {'medium' | 'small'} [size='medium'] - The size of the badge.
+ * @prop {'md' | 'sm'} [size='md'] - The size of the badge.
  */
 @customElement("tap-badge")
 export class TapBadge extends Badge {

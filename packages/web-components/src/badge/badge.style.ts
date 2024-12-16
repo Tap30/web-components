@@ -12,22 +12,50 @@ export default css`
   }
 
   :host {
-    display: inline-flex;
+    display: inline-block;
   }
 
-  .root:not(.dot).medium {
-    height: 1.5rem;
-    min-width: 1.5rem;
+  .root:not(.dot).md {
+    --badge-height: 1.5rem;
   }
 
-  .root:not(.dot).small {
-    height: 1.25rem;
-    min-width: 1.25rem;
+  .root:not(.dot).sm {
+    --badge-height: 1.25rem;
+  }
+
+  .root.pill.md {
+    --badge-min-width: 2rem;
+    --badge-font-size: var(--tap-sys-typography-body-xs-size);
+    --badge-font-height: var(--tap-sys-typography-body-xs-height);
+    --badge-font-weight: var(--tap-sys-typography-body-xs-weight);
+  }
+
+  .root.pill.sm {
+    --badge-min-width: 2rem;
+    --badge-font-size: var(--tap-sys-typography-label-xxs-size);
+    --badge-font-height: var(--tap-sys-typography-label-xxs-height);
+    --badge-font-weight: var(--tap-sys-typography-label-xxs-weight);
+  }
+
+  .root.numeral.md {
+    --badge-min-width: 1.5rem;
+    --badge-font-size: var(--tap-sys-typography-label-md-size);
+    --badge-font-height: var(--tap-sys-typography-label-md-height);
+    --badge-font-weight: var(--tap-sys-typography-label-md-weight);
+  }
+
+  .root.numeral.sm {
+    --badge-min-width: 1.25rem;
+    --badge-font-size: var(--tap-sys-typography-label-xs-size);
+    --badge-font-height: var(--tap-sys-typography-label-xs-height);
+    --badge-font-weight: var(--tap-sys-typography-label-xs-weight);
   }
 
   .root.dot {
+    --badge-height: 0.375rem;
+    --badge-min-width: unset;
+
     width: 0.375rem;
-    height: 0.375rem;
 
     padding: 0;
   }
@@ -78,16 +106,25 @@ export default css`
   }
 
   .root {
+    --badge-font-size: var(--tap-sys-typography-body-xs-size);
+    --badge-font-height: var(--tap-sys-typography-body-xs-height);
+    --badge-font-weight: var(--tap-sys-typography-body-xs-weight);
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
+    vertical-align: middle;
+
     gap: var(--tap-sys-spacing-2);
 
+    height: var(--badge-height);
+    min-width: var(--badge-min-width);
+
     font-family: var(--tap-sys-font-family);
-    line-height: var(--tap-sys-typography-body-xs-height);
-    font-size: var(--tap-sys-typography-body-xs-size);
-    font-weight: var(--tap-sys-typography-body-xs-weight);
+    line-height: var(--badge-font-height);
+    font-size: var(--badge-font-size);
+    font-weight: var(--badge-font-weight);
 
     border-radius: var(--tap-sys-radius-full);
 

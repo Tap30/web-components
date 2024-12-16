@@ -6,7 +6,6 @@ import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { promisify } from "node:util";
 import {
-  createModulePackages,
   ensureDirExists,
   getFileMeta,
   toPascalCase,
@@ -47,6 +46,8 @@ const extractPathsInfo = (svgData: string) => {
     .replace(/<\/svg>/g, "")
     // Ensure proper closing tags with spaces
     .replace(/"\/>/g, '" />')
+    // Normalize closing tags for <path>
+    .replace(/<path([^>]*)><\/path>/g, "<path$1 />")
     // Remove fill attributes to make them more generic
     .replace(/ fill=".+?"/g, "")
     // Remove fill-opacity attributes
@@ -59,7 +60,7 @@ const extractPathsInfo = (svgData: string) => {
   const pathsAsString = paths.trim();
 
   // Split paths into individual path elements
-  const pathElements = pathsAsString.split(/<\/path>/).filter(Boolean);
+  const pathElements = pathsAsString.split(/\/>/).filter(Boolean);
 
   const svgPathDataArray: SVGPathInfo[] = pathElements.map(element => {
     const dMatch = element.match(/ d="([^"]+)"/);
@@ -84,7 +85,9 @@ const extractPathsInfo = (svgData: string) => {
 const generatePaths = async () => {
   console.log("🧩 generating paths...");
 
+  await execCmd(["shx", "rm", "-rf", distDir].join(" "));
   await ensureDirExists(distDir);
+
   await fs.writeFile(pathsJSONFile, "{", { encoding: "utf-8" });
 
   const svgs = await globAsync(path.join(iconsDir, "**/*.svg"));
@@ -134,9 +137,7 @@ const generatePaths = async () => {
 
 void (async () => {
   console.time("build");
-  await execCmd(["shx", "rm", "-rf", distDir].join(" "));
   await generatePaths();
-  await createModulePackages(distDir);
   console.timeEnd("build");
 })();
 /* eslint-enable no-console */

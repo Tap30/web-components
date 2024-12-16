@@ -53,6 +53,9 @@ importers:
       '@types/sinon':
         specifier: ^17.0.3
         version: 17.0.3
+      '@types/stream-json':
+        specifier: ^1.7.7
+        version: 1.7.7
       '@vitejs/plugin-react':
         specifier: ^4.3.3
         version: 4.3.3(vite@5.4.11(@types/node@20.17.6))
@@ -137,6 +140,12 @@ importers:
       sinon:
         specifier: ^18.0.0
         version: 18.0.1
+      stream-chain:
+        specifier: ^3.3.2
+        version: 3.3.2
+      stream-json:
+        specifier: ^1.9.1
+        version: 1.9.1
       tslib:
         specifier: ^2.8.0
         version: 2.8.1
@@ -161,7 +170,17 @@ importers:
 
   packages/icons: {}
 
-  packages/react-components: {}
+  packages/react-components:
+    dependencies:
+      '@lit/react':
+        specifier: ^1.0.6
+        version: 1.0.6(@types/react@18.3.12)
+      '@tapsioss/web-components':
+        specifier: workspace:*
+        version: link:../web-components
+      react:
+        specifier: '>=16.8'
+        version: 18.3.1
 
   packages/react-icons:
     dependencies:
@@ -907,6 +926,11 @@ packages:
   '@lit-labs/ssr-dom-shim@1.2.1':
     resolution: {integrity: sha512-wx4aBmgeGvFmOKucFKY+8VFJSYZxs9poN3SDNQFF6lT6NrQUnHiPB2PWz2sc4ieEcAaYYzN+1uWahEeTq2aRIQ==}
 
+  '@lit/react@1.0.6':
+    resolution: {integrity: sha512-QIss8MPh6qUoFJmuaF4dSHts3qCsA36S3HcOLiNPShxhgYPr4XJRnCBKPipk85sR9xr6TQrOcDMfexwbNdJHYA==}
+    peerDependencies:
+      '@types/react': 17 || 18
+
   '@lit/reactive-element@2.0.4':
     resolution: {integrity: sha512-GFn91inaUa2oHLak8awSIigYz0cU0Payr1rcFsrkf5OJ5eSPxElyZfKh0f2p9FsTiZWXQdWGJeXZICEfXXYSXQ==}
 
@@ -1273,6 +1297,12 @@ packages:
 
   '@types/sinonjs__fake-timers@8.1.5':
     resolution: {integrity: sha512-mQkU2jY8jJEF7YHjHvsQO8+3ughTL1mcnn96igfhONmR+fUPSKIkefQYpSe8bsly2Ep7oQbn/6VG5/9/0qcArQ==}
+
+  '@types/stream-chain@2.1.0':
+    resolution: {integrity: sha512-guDyAl6s/CAzXUOWpGK2bHvdiopLIwpGu8v10+lb9hnQOyo4oj/ZUQFOvqFjKGsE3wJP1fpIesCcMvbXuWsqOg==}
+
+  '@types/stream-json@1.7.7':
+    resolution: {integrity: sha512-hHG7cLQ09H/m9i0jzL6UJAeLLxIWej90ECn0svO4T8J0nGcl89xZDQ2ujT4WKlvg0GWkcxJbjIDzW/v7BYUM6Q==}
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
@@ -3439,6 +3469,15 @@ packages:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
 
+  stream-chain@2.2.5:
+    resolution: {integrity: sha512-1TJmBx6aSWqZ4tx7aTpBDXK0/e2hhcNSTV8+CbFJtDjbb+I1mZ8lHit0Grw9GRT+6JbIrrDd8esncgBi8aBXGA==}
+
+  stream-chain@3.3.2:
+    resolution: {integrity: sha512-YvRznt2X9tLSQlQXkYxp9FGcp6uUwBG9VAyjgo53Ov+Ctk36R49xB6NUia37T7owHyi3UtvI6achAj4ufBSaNg==}
+
+  stream-json@1.9.1:
+    resolution: {integrity: sha512-uWkjJ+2Nt/LO9Z/JyKZbMusL8Dkh97uUBTv3AJQ74y07lVahLY4eEFsPsE97pxYBwr8nnjMAIch5eqI0gPShyw==}
+
   streamx@2.20.1:
     resolution: {integrity: sha512-uTa0mU6WUC65iUvzKH4X9hEdvSW7rbPxPtwfWiLMSj3qTdQbAiUboZTxauKfpFuGIGa1C2BYijZ7wgdUXICJhA==}
 
@@ -4459,6 +4498,10 @@ snapshots:
 
   '@lit-labs/ssr-dom-shim@1.2.1': {}
 
+  '@lit/react@1.0.6(@types/react@18.3.12)':
+    dependencies:
+      '@types/react': 18.3.12
+
   '@lit/reactive-element@2.0.4':
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.2.1
@@ -4869,6 +4912,15 @@ snapshots:
       '@types/sinonjs__fake-timers': 8.1.5
 
   '@types/sinonjs__fake-timers@8.1.5': {}
+
+  '@types/stream-chain@2.1.0':
+    dependencies:
+      '@types/node': 20.17.6
+
+  '@types/stream-json@1.7.7':
+    dependencies:
+      '@types/node': 20.17.6
+      '@types/stream-chain': 2.1.0
 
   '@types/trusted-types@2.0.7': {}
 
@@ -7446,6 +7498,14 @@ snapshots:
   statuses@1.5.0: {}
 
   statuses@2.0.1: {}
+
+  stream-chain@2.2.5: {}
+
+  stream-chain@3.3.2: {}
+
+  stream-json@1.9.1:
+    dependencies:
+      stream-chain: 2.2.5
 
   streamx@2.20.1:
     dependencies:

@@ -1,29 +1,44 @@
 import { css } from "lit";
 
-export default css`
+const styles = css`
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   :host {
-    display: inline-flex;
+    display: block;
   }
 
-  .pinwheel-group {
+  .root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     position: relative;
+
+    width: 100%;
   }
 
-  .selector-indicator {
-    /* FIXME: we dont have sizing tokens yet */
-    height: var(--tap-pinwheel-item-height, 48px);
-    background-color: var(
-      --tap-pinwheel-group-selector-background-color,
-      var(--tap-sys-color-surface-tertiary)
-    );
-    border-radius: var(
-      --tap-pinwheel-group-selector-radius,
-      var(--tap-sys-spacing-4)
-    );
+  .root::after {
+    content: "";
+
     position: absolute;
-    top: calc(50% - 24px);
-    left: 0;
-    right: 0;
+
+    width: 100%;
+    height: 3rem;
     z-index: -1;
+
+    border-radius: var(--tap-sys-radius-3);
+
+    background-color: var(--tap-sys-color-surface-tertiary);
+  }
+
+  .root ::slotted(tap-pinwheel) {
+    flex: 1 1 0;
+    min-width: 0;
   }
 `;
+
+export default styles;

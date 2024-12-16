@@ -2,6 +2,8 @@ import { customElement } from "lit/decorators.js";
 import { Chip } from "./chip";
 import styles from "./chip.style";
 
+export * from "./events";
+
 export { Slots } from "./constants";
 
 /**
@@ -13,7 +15,9 @@ export { Slots } from "./constants";
  *
  * @prop {boolean} [disabled=false] - Whether the chip is disabled or not.
  * @prop {boolean} [selected=false] - Whether the chip is selected or not.
- * @prop {"small" | "medium"} [size='medium'] - The size of the chip.
+ * @prop {"sm" | "md"} [size='md'] - The size of the chip.
+ * @prop {string} [value] - The value associated with the chip.\
+ * Use it when chips are children of chip-group. This value has to be unique among sibling chips.
  */
 
 @customElement("tap-chip")

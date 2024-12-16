@@ -7,6 +7,14 @@ export interface WithElementInternals {
   [internals]: ElementInternals;
 }
 
+/**
+ * Mixes in an attached `ElementInternals` instance.
+ *
+ * This mixin is only needed when other shared code needs access to a
+ * component's `ElementInternals`, such as form-associated mixins.
+ *
+ * @param base The class to mix functionality into.
+ */
 const withElementInternals = <T extends MixinBase<LitElement>>(
   BaseClass: T,
 ): MixinReturn<T, WithElementInternals> => {

@@ -1,64 +1,110 @@
 import { css } from "lit";
 
 export default css`
-  .tooltip {
-    display: inline-flex;
-    position: absolute;
-    flex-direction: row;
-    align-items: center;
-    background-color: var(
-      --tap-tooltip-background,
-      var(--tap-palette-gray-700)
-    );
-    border-radius: var(--tap-tooltip-radius, var(--tap-sys-radius-3));
-    width: var(--tap-tooltip-width, auto);
-    padding: var(--tap-sys-spacing-3) var(--tap-sys-spacing-4);
-    justify-content: space-between;
-    font-family: var(--tap-font-family, var(--tap-sys-font-family));
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
-  .tooltip-icon {
-    position: absolute;
-    display: flex;
-    width: 10px;
-    height: 10px;
+  [hidden] {
+    display: none !important;
   }
 
   :host {
-    display: inline-block;
+    position: absolute;
   }
 
-  :host([placement="top"]) .tooltip-icon,
-  :host([placement="top-start"]) .tooltip-icon,
-  :host([placement="top-end"]) .tooltip-icon {
+  .root.visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .root {
+    display: flex;
+    align-items: flex-start;
+
+    max-width: 20.5rem;
+    min-height: 2.25rem;
+    padding: var(--tap-sys-spacing-3-1) var(--tap-sys-spacing-4);
+    gap: var(--tap-sys-spacing-3);
+
+    border-radius: var(--tap-sys-radius-3);
+
+    background-color: var(--tap-sys-color-surface-inverse-secondary);
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .text {
+    color: var(--tap-sys-color-content-on-inverse);
+
+    font-family: var(--tap-sys-font-family);
+    font-size: var(--tap-sys-typography-body-sm-size);
+    font-weight: var(--tap-sys-typography-body-sm-weight);
+    line-height: var(--tap-sys-typography-body-sm-height);
+  }
+
+  .dismiss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+
+    margin-right: auto;
+    margin-left: calc(-1 * var(--tap-sys-spacing-4));
+    margin-top: calc(-1 * var(--tap-sys-spacing-3-1));
+    margin-bottom: calc(-1 * var(--tap-sys-spacing-3-1));
+
+    width: 2.25rem;
+    height: 2.25rem;
+
+    border-radius: 50%;
+
+    color: var(--tap-sys-color-content-on-inverse);
+  }
+
+  .dismiss-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dismiss svg {
+    fill: currentColor;
+
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .arrow {
+    position: absolute;
+
+    display: flex;
+
+    width: 0.625rem;
+    height: 0.625rem;
+
+    color: var(--tap-sys-color-surface-inverse-secondary);
+  }
+
+  .arrow > svg {
+    width: 0.3125rem;
+    height: 0.625rem;
+  }
+
+  .root[class*="top"] .arrow {
     transform: rotate(-90deg);
   }
 
-  :host([placement="bottom"]) .tooltip-icon,
-  :host([placement="bottom-start"]) .tooltip-icon,
-  :host([placement="bottom-end"]) .tooltip-icon {
+  .root[class*="bottom"] .arrow {
     transform: rotate(90deg);
   }
 
-  :host([placement="left"]) .tooltip-icon,
-  :host([placement="left-start"]) .tooltip-icon,
-  :host([placement="left-end"]) .tooltip-icon {
+  .root[class*="left"] .arrow {
     transform: rotate(180deg);
-  }
-
-  .tooltip-label {
-    color: var(--tap-palette-white);
-    text-align: right;
-    line-height: var(--tap-sys-typography-body-sm-height);
-    font-size: var(
-      --tap-tooltip-label-font-size,
-      --tap-sys-typography-body-sm-size
-    );
-    direction: rtl;
-  }
-
-  :host([dismissible]) .tooltip {
-    padding: var(--tap-sys-spacing-2) var(--tap-sys-spacing-4);
-    padding-left: 0;
   }
 `;

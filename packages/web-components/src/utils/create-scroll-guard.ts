@@ -51,8 +51,10 @@ const createScrollGuard = (): ScrollGuard => {
     cache.overflow = document.body.style.overflow;
     cache.paddingRight = document.body.style.paddingRight;
 
+    const hasScroll = document.body.scrollHeight > document.body.clientHeight;
+
     document.body.style.overflow = "hidden";
-    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    if (hasScroll) document.body.style.paddingRight = `${scrollbarWidth}px`;
   };
 
   const disable = () => {
