@@ -8,6 +8,6 @@ class {{name}} extends BaseIcon {
   }
 }
 
-customElements.define("tap-{{elementTag}}", {{name}});
+customElements.define("tapsi-icon-{{elementTag}}", {{name}});
 
 export default {{name}};
