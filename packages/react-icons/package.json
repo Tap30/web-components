@@ -1,7 +1,7 @@
 {
   "sideEffects": false,
   "name": "@tapsioss/react-icons",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -26,6 +26,9 @@
   "scripts": {
     "build": "tsx ./scripts/build.ts",
     "release": "pnpm publish . --tag latest --access public"
+  },
+  "peerDependencies": {
+    "react": ">=16.8"
   },
   "dependencies": {
     "@tapsioss/icons": "workspace:*"
