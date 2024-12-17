@@ -27,6 +27,9 @@
     "build": "tsx ./scripts/build.ts",
     "release": "pnpm publish . --tag latest --access public"
   },
+  "peerDependencies": {
+    "react": ">=16.8"
+  },
   "dependencies": {
     "@tapsioss/icons": "workspace:*"
   }
