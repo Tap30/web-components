@@ -1,6 +1,6 @@
 import "../../button/icon-button";
 
-import { html, isServer, LitElement, type PropertyValues } from "lit";
+import { html, LitElement, type PropertyValues } from "lit";
 import { eventOptions, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap } from "lit/directives/style-map.js";
@@ -12,6 +12,7 @@ import {
   createScrollGuard,
   getRenderRootSlot,
   isResizeSensorSupported,
+  isSSR,
   logger,
   ResizeSensor,
   runAfterRepaint,
@@ -164,7 +165,7 @@ export abstract class BaseBottomSheet extends LitElement {
     this._handleDragging = this._handleDragging.bind(this);
     this._handleKeyDown = this._handleKeyDown.bind(this);
 
-    if (!isServer && isResizeSensorSupported()) {
+    if (!isSSR() && isResizeSensorSupported()) {
       this._resizeSensor = new ResizeSensor(sizeDetails => {
         const { element, width, height } = sizeDetails;
 
@@ -468,15 +469,15 @@ export abstract class BaseBottomSheet extends LitElement {
       this._animationController.finish();
     };
 
-    this._root.addEventListener("transitionend", handleTransitionEnd);
-    // Start the animation
-    this._animationController.start();
-
     const cleanup = () => {
       // Finish the animation and remove the transition end event listener
       this._animationController.finish();
       this._root!.removeEventListener("transitionend", handleTransitionEnd);
     };
+
+    this._root.addEventListener("transitionend", handleTransitionEnd);
+    // Start the animation
+    this._animationController.start();
 
     const eventAllowed = this.dispatchEvent(
       openState ? new OpeningEvent() : new ClosingEvent(),
