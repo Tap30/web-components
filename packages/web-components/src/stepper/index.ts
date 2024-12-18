@@ -5,6 +5,8 @@ import styles from "./stepper.style.js";
 /**
  * @summary The stepper input component.
  *
+ * @tag tap-stepper
+ *
  * @prop {"sm" | "md"} [size="md"] - The size of the input.
  * @prop {string} [value=""] - The current value of the input. It is always a string.
  * @prop {string} [name=""] - The HTML name to use in form submission.

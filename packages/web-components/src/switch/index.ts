@@ -6,6 +6,8 @@ import styles from "./switch.style";
 /**
  * @summary A switch component.
  *
+ * @tag tap-switch
+ *
  * @prop {boolean} [selected=false] - Indicates whether the switch is selected.
  * @prop {boolean} [disabled=false] - Indicates whether the switch is disabled.
  * @prop {string} [value='on'] - The value of the switch when it is checked.
