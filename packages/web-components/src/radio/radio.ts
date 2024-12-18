@@ -138,29 +138,6 @@ export class Radio extends withFocusable(BaseInput) {
     // Perform the default behavior (showing pop-up)
   }
 
-  private _renderCheckIcon() {
-    if (!this.checked) return null;
-
-    return html`
-      <svg
-        aria-hidden
-        focusable="false"
-        part="check-icon"
-        width="12"
-        height="9"
-        viewBox="0 0 12 9"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M11.3333 1.40704L4.07958 8.66667L0.666664 5.37617L2.07919 3.96913L4.07958 5.85258L9.9208 0L11.3333 1.40704Z"
-          fill="currentColor"
-        />
-      </svg>
-    `;
-  }
-
   protected override renderTrailingContent() {
     return null;
   }
@@ -206,9 +183,7 @@ export class Radio extends withFocusable(BaseInput) {
           aria-hidden="true"
           part="box"
           class="box"
-        >
-          ${this._renderCheckIcon()}
-        </div>
+        ></div>
       </div>
     `;
   }
