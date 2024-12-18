@@ -8,6 +8,8 @@ export * from "./events";
 /**
  * @summary The tooltip component.
  *
+ * @tag tap-tooltip
+ *
  * @prop {'top'| 'top-start'| 'top-end'| 'right'| 'right-start'| 'right-end'| 'bottom'| 'bottom-start'| 'bottom-end'| 'left'| 'left-start'| 'left-end'} [placement='top'] -
  * The position of the tooltip based on the anchor.
  * @prop {boolean} [dismissible=true] - Whether tooltip is dismissable or not.

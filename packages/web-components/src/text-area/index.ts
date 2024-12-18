@@ -8,6 +8,8 @@ export { BaseTextInputSlots as Slots };
 /**
  * @summary The text-area component.
  *
+ * @tag tap-text-area
+ *
  * @prop {string} [value=""] - The current value of the input. It is always a string.
  * @prop {string} [name=""] - The HTML name to use in form submission.
  * @prop {boolean} [disabled=false] - Whether or not the element is disabled.

@@ -6,6 +6,8 @@ import styles from "./radio.style";
 /**
  * @summary The radio component.
  *
+ * @tag tap-radio
+ *
  * @prop {boolean} [checked=false] - Indicates whether the radio is checked.
  * @prop {boolean} [disabled=false] - Indicates whether the radio is disabled.
  * @prop {string} [value='on'] - The value of the radio when it is checked.

@@ -6,6 +6,8 @@ import styles from "./checkbox.style";
 /**
  * @summary A checkbox component.
  *
+ * @tag tap-checkbox
+ *
  * @prop {boolean} [checked=false] - Indicates whether the checkbox is checked.
  * @prop {boolean} [indeterminate=false] - Indicates whether the checkbox is in an indeterminate state.
  * @prop {boolean} [disabled=false] - Indicates whether the checkbox is disabled.

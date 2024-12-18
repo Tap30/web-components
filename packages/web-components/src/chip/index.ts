@@ -9,6 +9,8 @@ export { Slots } from "./constants";
 /**
  * @summary The chip component.
  *
+ * @tag tap-chip
+ *
  * @slot - Default content slot for chip text.
  * @slot [leading-icon] - The slot for an optional leading icon.
  * @slot [trailing-icon] - The slot for an optional trailing icon.
