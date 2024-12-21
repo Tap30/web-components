@@ -89,5 +89,11 @@ export default css`
       inset;
 
     transition: box-shadow 240ms ease;
+
+    @media (prefers-reduced-motion) {
+      .box {
+        transition: none;
+      }
+    }
   }
 `;
