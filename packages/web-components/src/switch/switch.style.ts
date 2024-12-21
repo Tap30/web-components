@@ -107,4 +107,11 @@ export default css`
     box-shadow: none;
     transform: translateX(-0.5625rem);
   }
+
+  @media (prefers-reduced-motion) {
+    .track,
+    .knob {
+      transition: none;
+    }
+  }
 `;

@@ -31,4 +31,10 @@ export default css`
       transform: rotate(465deg);
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rotating {
+      animation: none;
+    }
+  }
 `;
