@@ -1,12 +1,16 @@
 import { BaseEvent } from "../../utils";
 
-export class SnappedEvent extends BaseEvent<null> {
+type SnappedEventDetails = {
+  snapPoint: number;
+};
+
+export class SnappedEvent extends BaseEvent<SnappedEventDetails> {
   public static type = "snapped";
 
-  constructor() {
+  constructor(details: SnappedEventDetails) {
     super(SnappedEvent.type, {
       composed: true,
-      details: null,
+      details,
     });
   }
 }
