@@ -1,12 +1,10 @@
-import type { ContainerStatus } from "./constants";
-
-export type SnapPoint = number;
+import type { Status } from "./constants";
 
 export type SnapToCallbackArgument = (snapProps: {
   /**
    * The snap points currently in use.
    */
-  snapPoints: SnapPoint[];
+  snapPoints: number[];
   /**
    * The height of the header/
    */
@@ -23,18 +21,6 @@ export type SnapToCallbackArgument = (snapProps: {
    * The height of the bottom sheet.
    */
   height: number;
-  /**
-   * Minimum height needed to avoid scroll overflow in the
-   * content area, if possible.
-   */
-  minHeight: number;
-  /**
-   * Maximum height the sheet can be, your snap points are capped
-   * to this value.
-   * It can be overriden using the `max-height` attribute.
-   */
-  maxHeight: number;
-}) => SnapPoint;
+}) => number;
 
-export type ContainerStatusEnum =
-  (typeof ContainerStatus)[keyof typeof ContainerStatus];
+export type StatusEnum = (typeof Status)[keyof typeof Status];
