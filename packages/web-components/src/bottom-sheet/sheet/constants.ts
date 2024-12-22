@@ -4,11 +4,9 @@ export const Slots = {
   ACTION_BAR: "action-bar",
 } as const;
 
-export const ContainerStatus = {
+export const Status = {
   OPENED: "opened",
   CLOSED: "closed",
   OPENING: "opening",
   CLOSING: "closing",
-  SNAPPING: "snapping",
-  SNAPPED: "snapped",
 } as const;
