@@ -1,4 +1,4 @@
-import { executeAfterDeferredRepaint } from "../event-loop-execution";
+import { runBeforeRepaint } from "../event-loop-execution";
 import isSSR from "../is-ssr";
 
 type LockOptions = {
@@ -95,7 +95,7 @@ class ScrollLocker {
   }
 
   private _setOverflowHidden(options?: LockOptions) {
-    const { reserveScrollBarGap } = options ?? {};
+    const { reserveScrollBarGap = true } = options ?? {};
 
     if (!this._cachedBodySettings.paddingRight) {
       const scrollBarGap =
@@ -123,17 +123,11 @@ class ScrollLocker {
   }
 
   private _restoreOverflowSetting() {
-    if (this._cachedBodySettings.paddingRight) {
-      document.body.style.paddingRight = this._cachedBodySettings.paddingRight;
+    document.body.style.paddingRight = this._cachedBodySettings.paddingRight;
+    this._cachedBodySettings.paddingRight = "";
 
-      this._cachedBodySettings.paddingRight = "";
-    }
-
-    if (this._cachedBodySettings.overflow) {
-      document.body.style.overflow = this._cachedBodySettings.overflow;
-
-      this._cachedBodySettings.overflow = "";
-    }
+    document.body.style.overflow = this._cachedBodySettings.overflow;
+    this._cachedBodySettings.overflow = "";
   }
 
   private _setPositionFixed() {
@@ -152,7 +146,7 @@ class ScrollLocker {
         document.body.style.top = `${-scrollY}px`;
         document.body.style.left = `${-scrollX}px`;
 
-        executeAfterDeferredRepaint(() => {
+        runBeforeRepaint(() => {
           // Attempt to check if the bottom bar appeared due to the position change
           const bottomBarHeight = innerHeight - window.innerHeight;
 
@@ -166,23 +160,25 @@ class ScrollLocker {
   }
 
   private _restorePositionSetting() {
-    if (this._cachedBodySettings.positioning) {
-      // Convert the position from "px" to Int
-      const y = -parseInt(document.body.style.top, 10);
-      const x = -parseInt(document.body.style.left, 10);
+    // Convert the position from "px" to Int
+    const y = -parseInt(document.body.style.top, 10);
+    const x = -parseInt(document.body.style.left, 10);
 
-      const { left, position, top } = this._cachedBodySettings.positioning;
+    const {
+      left = "",
+      position = "",
+      top = "",
+    } = this._cachedBodySettings.positioning ?? {};
 
-      // Restore styles
-      document.body.style.position = position;
-      document.body.style.top = top;
-      document.body.style.left = left;
+    // Restore styles
+    document.body.style.position = position;
+    document.body.style.top = top;
+    document.body.style.left = left;
 
-      // Restore scroll
-      window.scrollTo(x, y);
+    // Restore scroll
+    window.scrollTo(x, y);
 
-      this._cachedBodySettings.positioning = null;
-    }
+    this._cachedBodySettings.positioning = null;
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight#Problems_and_solutions

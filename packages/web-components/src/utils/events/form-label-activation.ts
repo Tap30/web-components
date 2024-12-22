@@ -1,4 +1,4 @@
-import waitAMicrotask from "../wait-a-microtask";
+import { waitAMicrotask } from "../event-loop-execution";
 
 /**
  * Dispatches a click event to the given element that triggers a native action,
