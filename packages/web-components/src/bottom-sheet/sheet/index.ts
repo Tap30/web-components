@@ -13,7 +13,7 @@ export { Slots } from "./constants";
  * @slot body - The slot for the body content.
  * @slot action-bar - The slot for the action bar content.
  */
-@customElement("tap-modal-bottom-sheet")
+@customElement("tap-bottom-sheet")
 export class TapBottomSheet extends BottomSheet {
   public static override readonly styles = [styles];
 }

@@ -1,8 +1,14 @@
 import "../../button/icon-button";
 
 import {
+  DragGesture,
+  rubberbandIfOutOfBounds,
+  type Handler,
+} from "@use-gesture/vanilla";
+import {
   html,
   LitElement,
+  nothing,
   type PropertyValues,
   type TemplateResult,
 } from "lit";
@@ -12,27 +18,28 @@ import { styleMap } from "lit/directives/style-map.js";
 import { KeyboardKeys } from "../../internals";
 import {
   AnimationController,
+  clamp,
   FocusTrapper,
   getRenderRootSlot,
+  isSSR,
+  logger,
   runAfterRepaint,
+  runImmediatelyBeforeRepaint,
   ScrollLocker,
   waitAMicrotask,
 } from "../../utils";
-import { ContainerStatus, Slots } from "./constants";
+import { Slots, Status } from "./constants";
 import {
   ClosedEvent,
   ClosingEvent,
   HideEvent,
   OpenedEvent,
+  OpeningEvent,
   ShowEvent,
   SnappedEvent,
 } from "./events";
 import { dismiss } from "./icons";
-import type {
-  ContainerStatusEnum,
-  SnapPoint,
-  SnapToCallbackArgument,
-} from "./types";
+import type { SnapToCallbackArgument, StatusEnum } from "./types";
 
 export class BottomSheet extends LitElement {
   public static override readonly shadowRootOptions = {
@@ -76,17 +83,46 @@ export class BottomSheet extends LitElement {
   @property({ type: Boolean, attribute: "sticky-header" })
   public hasStickyHeader = false;
 
+  /**
+   * The variant of the bottom sheet.
+   */
   @property()
   public variant: "modal" | "inline" = "modal";
+
+  /**
+   * Defines a string value that can be used to set a label
+   * for assistive technologies.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   */
+  @property({ type: String })
+  public label = "";
+
+  /**
+   * Identifies the element (or elements) that labels the element.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   */
+  @property({ type: String })
+  public labelledBy = "";
+
+  @state()
+  private _status: StatusEnum = Status.CLOSED;
+
+  @state()
+  private _height = 0;
 
   @state()
   private _expandGrabber = false;
 
   @state()
-  private _isDragging = false;
+  private _isGrabbing = false;
 
   @state()
-  private _containerStatus: ContainerStatusEnum = ContainerStatus.CLOSED;
+  private _isDismissClicksAllowed = true;
+
+  @state()
+  private _preventContainerScrolling = false;
 
   @state()
   private _hasHeaderSlot = false;
@@ -103,12 +139,8 @@ export class BottomSheet extends LitElement {
   @query("#container")
   private _container!: HTMLElement | null;
 
-  @query("#grabber")
-  private _grabber!: HTMLElement | null;
-
   private _open = false;
-  private _maxHeight = NaN;
-  private _snapPoints: number[] = [];
+  private _snapPoints: null | number[] = null;
 
   private _previouslyFocusedElement: HTMLElement | null = null;
 
@@ -116,8 +148,38 @@ export class BottomSheet extends LitElement {
   private readonly _focusTrapper = new FocusTrapper(this);
   private readonly _scrollLocker = new ScrollLocker();
 
+  private _dragGesture: DragGesture | null = null;
+
   constructor() {
     super();
+
+    this._handleDocumentKeyDown = this._handleDocumentKeyDown.bind(this);
+    this._handleDrag = this._handleDrag.bind(this);
+    this._handleContainerScroll = this._handleContainerScroll.bind(this);
+    this._handleContainerTouchMove = this._handleContainerTouchMove.bind(this);
+    this._handleContainerTouchStart =
+      this._handleContainerTouchStart.bind(this);
+
+    if (!isSSR()) {
+      this.addEventListener("blur", event => {
+        if (this.variant === "inline") return;
+        if (!this.open) return;
+        if (!event.currentTarget) return;
+
+        if (
+          event.relatedTarget &&
+          (event.currentTarget as HTMLElement).contains(
+            event.relatedTarget as HTMLElement,
+          )
+        ) {
+          return;
+        }
+
+        runImmediatelyBeforeRepaint(() => {
+          this._focusTrapper.trap();
+        });
+      });
+    }
   }
 
   protected override updated(changed: PropertyValues<this>) {
@@ -128,17 +190,9 @@ export class BottomSheet extends LitElement {
         this._previouslyFocusedElement =
           document.activeElement as HTMLElement | null;
 
-        this._attachGlobalEvents();
-
-        if (!this._container) return;
-
-        this._scrollLocker.lock(this._container);
+        this._attachEvents();
       } else {
-        this._detachGlobalEvents();
-
-        if (!this._container) return;
-
-        this._scrollLocker.unlock(this._container);
+        this._detachEvents();
       }
     }
 
@@ -162,63 +216,142 @@ export class BottomSheet extends LitElement {
   public override connectedCallback(): void {
     super.connectedCallback();
 
-    if (this.open) this._attachGlobalEvents();
+    if (this.open) this._attachEvents();
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    if (!this.open) this._detachGlobalEvents();
+    if (!this.open) this._detachEvents();
   }
 
-  private _attachGlobalEvents() {
+  private _lockScroll() {
+    if (this.variant === "inline") return;
+    if (!this._container) return;
+
+    this._scrollLocker.lock(this._container);
+  }
+
+  private _unlockScroll() {
+    if (this.variant === "inline") return;
+    if (!this._container) return;
+
+    this._scrollLocker.unlock(this._container);
+  }
+
+  private _attachEvents() {
     /* eslint-disable @typescript-eslint/no-misused-promises */
     document.addEventListener("keydown", this._handleDocumentKeyDown);
+
+    if (this._container) {
+      this._container.addEventListener("scroll", this._handleContainerScroll);
+      this._container.addEventListener(
+        "touchmove",
+        this._handleContainerTouchMove,
+      );
+      this._container.addEventListener(
+        "touchstart",
+        this._handleContainerTouchStart,
+      );
+
+      this._dragGesture = new DragGesture(this._container, this._handleDrag, {
+        filterTaps: true,
+      });
+    }
     /* eslint-enable @typescript-eslint/no-misused-promises */
   }
 
-  private _detachGlobalEvents() {
+  private _detachEvents() {
     /* eslint-disable @typescript-eslint/no-misused-promises */
     document.removeEventListener("keydown", this._handleDocumentKeyDown);
+
+    if (this._container) {
+      this._container.removeEventListener(
+        "scroll",
+        this._handleContainerScroll,
+      );
+      this._container.removeEventListener(
+        "touchmove",
+        this._handleContainerTouchMove,
+      );
+      this._container.removeEventListener(
+        "touchstart",
+        this._handleContainerTouchStart,
+      );
+
+      this._dragGesture?.destroy();
+    }
     /* eslint-enable @typescript-eslint/no-misused-promises */
   }
 
-  public static get DEFAULT_MAX_SNAP_POINT() {
-    return 0;
+  private get _headerHeight() {
+    return (
+      this.renderRoot.querySelector<HTMLElement>("#header")?.offsetHeight ?? 0
+    );
   }
 
-  public static get DEFAULT_MIN_SNAP_POINT() {
-    return 0;
+  private get _bodyHeight() {
+    return (
+      this.renderRoot.querySelector<HTMLElement>("#body")?.offsetHeight ?? 0
+    );
   }
 
-  public static get DEFAULT_SNAP_POINTS() {
+  private get _actionBarHeight() {
+    return (
+      this.renderRoot.querySelector<HTMLElement>("#action-bar")?.offsetHeight ??
+      0
+    );
+  }
+
+  private get _maxSnapPoint() {
+    const maxSnap = this.snapPoints[this.snapPoints.length - 1];
+
+    if (typeof maxSnap === "undefined") {
+      return this.defaultSnapPoints[this.defaultSnapPoints.length - 1]!;
+    }
+
+    return maxSnap;
+  }
+
+  private get _minSnapPoint() {
+    const minSnap = this.snapPoints[0];
+
+    if (typeof minSnap === "undefined") return this.defaultSnapPoints[0];
+
+    return minSnap;
+  }
+
+  public get defaultSnapPoints() {
+    if (isSSR() || !this._container) return [0, 0] as [number, number];
+
     return [
-      BottomSheet.DEFAULT_MIN_SNAP_POINT,
-      BottomSheet.DEFAULT_MAX_SNAP_POINT,
-    ];
+      Math.min(this._container.scrollHeight, window.innerHeight / 2),
+      0.9 * window.innerHeight,
+    ] as [number, number];
   }
 
   /**
-   * By default the maxHeight is set to window.innerHeight to match 100vh, and responds to window resize events.
-   * You can override it by giving maxHeight a number, just make sure you handle things like resize events when needed.
-   */
-  @property({ type: Number, attribute: "max-height" })
-  public set maxHeight(newMaxHeight: number) {}
-
-  public get maxHeight() {
-    return this._maxHeight;
-  }
-
-  /**
-   * Sets the snap points for bottom sheet to snap to.
+   * The snap points for bottom sheet to snap to.
+   * Note that snap points will be sorted sorted, no matter
+   * how to set it.
    */
   @property({ attribute: false })
-  public set snapPoints(snapPoints: number[]) {
-    this._snapPoints = snapPoints;
+  public get snapPoints() {
+    if (!this._snapPoints) {
+      this._snapPoints = this.defaultSnapPoints;
+
+      return this._snapPoints;
+    }
+
+    return this._snapPoints;
   }
 
-  public get snapPoints() {
-    return this._snapPoints;
+  public set snapPoints(newSnapPoints: number[]) {
+    this._snapPoints = [...newSnapPoints].sort((a, b) => a - b);
+
+    if (isSSR()) return;
+
+    this._preventContainerScrolling = this._height < this._maxSnapPoint;
   }
 
   /**
@@ -227,7 +360,7 @@ export class BottomSheet extends LitElement {
    * @default false
    */
   @property({ type: Boolean, reflect: true })
-  set open(openState: boolean) {
+  public set open(openState: boolean) {
     if (openState === this._open) return;
 
     this._open = openState;
@@ -235,11 +368,12 @@ export class BottomSheet extends LitElement {
     void this._toggleOpenState(openState);
   }
 
-  get open() {
+  public get open() {
     return this._open;
   }
 
   private async _handleDocumentKeyDown(event: KeyboardEvent) {
+    if (this.variant === "inline") return;
     if (!this.open) return;
 
     // allow event to propagate to user code after a microtask.
@@ -249,17 +383,219 @@ export class BottomSheet extends LitElement {
     if (event.key !== KeyboardKeys.ESCAPE) return;
 
     event.preventDefault();
+    // Always stop propagation, to avoid weirdness for bottom sheets
+    // inside other bottom sheets.
+    event.stopPropagation();
 
     this.hide();
+  }
+
+  private _handleContainerScroll(event: Event) {
+    const element = event.currentTarget as HTMLElement;
+
+    if (this._preventContainerScrolling) event.preventDefault();
+
+    if (element.scrollTop >= 48) this._expandGrabber = true;
+    else this._expandGrabber = false;
+  }
+
+  private _handleContainerTouchMove(event: TouchEvent) {
+    const element = event.currentTarget as HTMLElement;
+
+    if (this._preventContainerScrolling) event.preventDefault();
+
+    if (element.scrollTop >= 48) this._expandGrabber = true;
+    else this._expandGrabber = false;
+  }
+
+  private _handleContainerTouchStart(event: MouseEvent | TouchEvent) {
+    const element = event.currentTarget as HTMLElement;
+
+    // Prevent overscroll on safari
+    if (element.scrollTop < 0) {
+      runImmediatelyBeforeRepaint(() => {
+        element.style.overflow = "hidden";
+        element.scrollTop = 0;
+        element.style.removeProperty("overflow");
+      });
+      event.preventDefault();
+    }
+  }
+
+  private _handleDrag(state: Parameters<Handler<"drag">>[0]) {
+    const {
+      cancel,
+      pressed,
+      first,
+      last,
+      tap,
+      velocity,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      memo = this._height,
+      direction: [, direction],
+      movement: [, movementY],
+    } = state;
+
+    if (!this._container) return;
+
+    const dy = -1 * movementY;
+
+    // Filter out taps
+    if (tap) return;
+
+    const minSnap = this._minSnapPoint;
+    const maxSnap = this._maxSnapPoint;
+
+    const rawY = (memo as number) + dy;
+
+    const predictedDistance = dy * velocity[1];
+    const predictedY = clamp(rawY + predictedDistance * 2, minSnap, maxSnap);
+
+    if (
+      this.variant === "modal" &&
+      !pressed &&
+      direction > 0 &&
+      rawY + predictedDistance < minSnap / 2
+    ) {
+      cancel();
+
+      this._isGrabbing = false;
+      this.hide();
+
+      return;
+    }
+
+    let newY: number = 0;
+
+    if (!pressed) newY = predictedY;
+    else {
+      if (minSnap !== maxSnap) {
+        newY = rubberbandIfOutOfBounds(rawY, 0, maxSnap, 0.55);
+      } else if (rawY < minSnap) {
+        newY = rubberbandIfOutOfBounds(rawY, minSnap, maxSnap * 2, 0.55);
+      } else {
+        newY = rubberbandIfOutOfBounds(rawY, minSnap / 2, maxSnap, 0.55);
+      }
+    }
+
+    if (newY >= maxSnap) newY = maxSnap;
+    if (memo === maxSnap && this._container.scrollTop > 0) newY = maxSnap;
+
+    newY = clamp(newY, 0, maxSnap);
+
+    this._preventContainerScrolling = newY < maxSnap;
+
+    if (first) {
+      this._isGrabbing = true;
+      if (this.variant === "modal") this._isDismissClicksAllowed = false;
+    }
+
+    if (last) {
+      void this._snapTo(newY);
+
+      this._isGrabbing = false;
+
+      runAfterRepaint(() => {
+        if (this.variant === "modal") this._isDismissClicksAllowed = true;
+      });
+
+      return;
+    }
+
+    this._height = newY;
+
+    return memo as unknown;
+  }
+
+  private async _snapTo(snapPoint: number) {
+    if (!this._root) return Promise.resolve();
+
+    const { closestPoint } = this.snapPoints.reduce(
+      (result, currentPoint) => {
+        const distance = Math.abs(snapPoint - currentPoint);
+
+        if (result.minDistance > distance) {
+          result.minDistance = distance;
+          result.closestPoint = currentPoint;
+        }
+
+        return result;
+      },
+      {
+        minDistance: Infinity,
+        closestPoint: NaN,
+      } as {
+        minDistance: number;
+        closestPoint: number;
+      },
+    );
+
+    if (Number.isNaN(closestPoint)) return Promise.resolve();
+
+    if (this._status === Status.OPENING) {
+      this._height = closestPoint;
+      this._preventContainerScrolling = this._height < this._maxSnapPoint;
+
+      return Promise.resolve();
+    }
+
+    const handleTransitionEnd = (event: TransitionEvent) => {
+      if (event.propertyName === "height") {
+        // Finish the animation when height transition ends
+        this._animationController.finish();
+      }
+    };
+
+    const cleanup = () => {
+      // Finish the animation and remove the transition end event listener
+      this._animationController.finish();
+      this._root!.removeEventListener("transitionend", handleTransitionEnd);
+    };
+
+    this._root.addEventListener("transitionend", handleTransitionEnd);
+
+    // Start the animation
+    this._animationController.start();
+    this._height = closestPoint;
+    this._preventContainerScrolling = this._height < this._maxSnapPoint;
+    // Wait for the animation to complete
+    const animationComplete = await this._animationController.promise;
+
+    // If the animation is aborted, perform cleanup
+    if (!animationComplete) return Promise.resolve(cleanup());
+
+    this.dispatchEvent(new SnappedEvent({ snapPoint: closestPoint }));
+
+    return Promise.resolve(cleanup());
   }
 
   /**
    * When given a number it'll find the closest snap point,
    * so you don't need to know the exact value.
-   * Use the callback method to access what snap points you
-   * can choose from.
+   * Use the callback method to resolve the snap point.
    */
-  public snapTo(numberOrCallback: SnapPoint | SnapToCallbackArgument) {}
+  public snapTo(numberOrCallback: number | SnapToCallbackArgument) {
+    if (isSSR()) return Promise.resolve();
+
+    const snapPoint =
+      typeof numberOrCallback === "number"
+        ? numberOrCallback
+        : numberOrCallback({
+            actionBarHeight: this._actionBarHeight,
+            bodyHeight: this._bodyHeight,
+            headerHeight: this._headerHeight,
+            height: this._height,
+            snapPoints: this.snapPoints,
+          });
+
+    if (!this.open) {
+      this._open = true;
+
+      this.requestUpdate("open", false);
+
+      return this._toggleOpenState(true, snapPoint);
+    } else return this._snapTo(snapPoint);
+  }
 
   public show() {
     if (this.open) return;
@@ -281,21 +617,19 @@ export class BottomSheet extends LitElement {
     if (!eventAllowed) this.open = true;
   }
 
-  private _reset() {}
-
-  private async _toggleOpenState(openState: boolean) {
+  private async _toggleOpenState(openState: boolean, snapPoint?: number) {
     // Skip transition if not connected or elements are not assigned
     if (!this.isConnected || !this._root || !this._container) {
-      this._containerStatus = openState
-        ? ContainerStatus.OPENED
-        : ContainerStatus.CLOSED;
+      this._status = openState ? Status.OPENED : Status.CLOSED;
 
       return;
     }
 
-    const handleTransitionEnd = () => {
-      // Finish the animation when transition ends
-      this._animationController.finish();
+    const handleTransitionEnd = (event: TransitionEvent) => {
+      if (event.propertyName === "height") {
+        // Finish the animation when height transition ends
+        this._animationController.finish();
+      }
     };
 
     const cleanup = () => {
@@ -309,26 +643,31 @@ export class BottomSheet extends LitElement {
     this._animationController.start();
 
     const eventAllowed = this.dispatchEvent(
-      openState ? new SnappedEvent() : new ClosingEvent(),
+      openState ? new OpeningEvent() : new ClosingEvent(),
     );
 
     // If the event is prevented, revert the open state and cleanup
     if (!eventAllowed) {
       this.open = !openState;
 
-      this._containerStatus = !openState
-        ? ContainerStatus.OPENED
-        : ContainerStatus.CLOSED;
+      this._status = !openState ? Status.OPENED : Status.CLOSED;
 
       return cleanup();
     }
 
-    this._containerStatus = openState
-      ? ContainerStatus.OPENING
-      : ContainerStatus.CLOSING;
+    this._lockScroll();
+
+    this._status = openState ? Status.OPENING : Status.CLOSING;
+
+    const openToSnapPoint =
+      snapPoint ?? this.snapPoints[0] ?? this.defaultSnapPoints[0];
 
     if (openState) {
-      this.dispatchEvent(new SnappedEvent());
+      // It's opening, so we have to snap
+      await this._snapTo(openToSnapPoint);
+    } else {
+      this._height = 0;
+      this._preventContainerScrolling = this._height < this._maxSnapPoint;
     }
 
     // Wait for the animation to complete
@@ -339,27 +678,24 @@ export class BottomSheet extends LitElement {
 
     this.dispatchEvent(openState ? new OpenedEvent() : new ClosedEvent());
 
-    this._containerStatus = openState
-      ? ContainerStatus.OPENED
-      : ContainerStatus.CLOSED;
+    this._status = openState ? Status.OPENED : Status.CLOSED;
 
-    // if (!openState) {
-    //   this._container.scrollTop = 0;
-    // } else if (this._initialTranslateY === 0) {
-    //   // Initial content fits within 50vh, so the bottom sheet is opened and expanded
-    //   this._containerStatus = "expanded";
-    // }
+    if (openState) {
+      if (this.variant === "modal") this._focusTrapper.trap();
+      this.dispatchEvent(new SnappedEvent({ snapPoint: openToSnapPoint }));
+    } else {
+      this._unlockScroll();
+      if (this.variant === "modal") this._previouslyFocusedElement?.focus();
+    }
 
-    // this._expandGrabber = false;
+    this._expandGrabber = false;
+    this._container.scrollTop = 0;
 
     cleanup();
   }
 
-  private _calcContainerTransform() {
-    return "";
-  }
-
   private _renderDismissButton() {
+    if (this.variant === "inline") return null;
     if (!this.hasDismissButton) return null;
 
     return html`
@@ -368,8 +704,11 @@ export class BottomSheet extends LitElement {
         part="dismiss"
         size="small"
         variant="ghost"
-        label="Close bottom sheet"
-        @click=${() => this.hide()}
+        @click=${() => {
+          if (!this._isDismissClicksAllowed) return;
+
+          this.hide();
+        }}
       >
         <span
           class="dismiss-icon"
@@ -402,7 +741,11 @@ export class BottomSheet extends LitElement {
       <div
         part="overlay"
         class="overlay"
-        @click=${() => this.hide()}
+        @click=${() => {
+          if (!this._isDismissClicksAllowed) return;
+
+          this.hide();
+        }}
       ></div>
     `;
   }
@@ -412,6 +755,7 @@ export class BottomSheet extends LitElement {
 
     return html`
       <span
+        id="heading-title"
         class="heading-title"
         part="heading-title"
       >
@@ -448,19 +792,46 @@ export class BottomSheet extends LitElement {
 
   private _renderContainer() {
     const containerStyles = styleMap({
-      transform: this._calcContainerTransform(),
-      transition: this._isDragging ? "none" : undefined,
+      height: `${this._height}px`,
+      transition: this._isGrabbing ? "none" : undefined,
     });
+
+    const containerClasses = classMap({
+      container: true,
+      "prevent-scroll": this._preventContainerScrolling,
+    });
+
+    const ariaLabelledBy = this.headingTitle
+      ? "heading-title"
+      : !this.label && this.labelledBy
+        ? this.labelledBy
+        : nothing;
+
+    const ariaLabel = this.headingTitle ? nothing : this.label;
+
+    if (!this.headingTitle && (!this.label || !this.labelledBy)) {
+      logger(
+        "Expected a valid `label` or `labelledby` attribute " +
+          "when using `header` slot, received none.",
+        "bottom-sheet",
+        "warning",
+      );
+    }
 
     return html`
       <div
         id="container"
         part="container"
-        class="container"
+        class=${containerClasses}
+        role=${this.variant === "modal" ? "dialog" : "region"}
+        aria-modal=${this.variant === "modal"}
+        aria-labelledby=${ariaLabelledBy}
+        aria-label=${ariaLabel}
         style=${containerStyles}
       >
         ${this._renderGrabber()}
         <div
+          id="header"
           part="header"
           class="header"
         >
@@ -469,6 +840,7 @@ export class BottomSheet extends LitElement {
           ${this._renderDismissButton()}
         </div>
         <div
+          id="body"
           part=${Slots.BODY}
           class=${Slots.BODY}
           ?hidden=${!this._hasBodySlot}
@@ -476,6 +848,7 @@ export class BottomSheet extends LitElement {
           <slot name=${Slots.BODY}></slot>
         </div>
         <div
+          id="action-bar"
           part=${Slots.ACTION_BAR}
           class=${Slots.ACTION_BAR}
           ?hidden=${!this._hasActionBarSlot}
