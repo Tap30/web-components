@@ -16,19 +16,29 @@ export default css`
     --input-box-bg-color: var(--tap-sys-color-surface-primary);
     --input-box-border-color: var(--tap-sys-color-surface-inverse-primary);
     --input-control-color: var(--tap-sys-color-content-on-inverse);
+    --radio-box-shadow-size: var(--tap-sys-spacing-1);
 
     display: inline-block;
     vertical-align: middle;
+  }
+
+  .root.disabled .control.checked {
+    --input-box-bg-color: var(--tap-sys-color-surface-primary);
+    --radio-box-shadow-size: var(--tap-sys-spacing-3-1);
   }
 
   .root.disabled {
     --input-box-bg-color: var(--tap-sys-color-surface-disabled);
     --input-box-border-color: var(--tap-sys-color-surface-disabled);
     --input-control-color: var(--tap-sys-color-content-disabled);
+    --radio-box-shadow-size: var(--tap-sys-spacing-14);
+  }
+
+  .control.checked {
+    --radio-box-shadow-size: var(--tap-sys-spacing-3-1);
   }
 
   .root:not(.disabled) .control.checked {
-    --input-box-bg-color: var(--tap-sys-color-surface-inverse-primary);
     --input-control-color: var(--tap-sys-color-content-on-inverse);
   }
 
@@ -75,6 +85,15 @@ export default css`
     border-radius: var(--tap-sys-radius-full);
 
     background-color: var(--input-box-bg-color);
-    box-shadow: 0 0 0 1px var(--input-box-border-color);
+    box-shadow: 0 0 0 var(--radio-box-shadow-size) var(--input-box-border-color)
+      inset;
+
+    transition: box-shadow 240ms ease;
+
+    @media (prefers-reduced-motion) {
+      .box {
+        transition: none;
+      }
+    }
   }
 `;

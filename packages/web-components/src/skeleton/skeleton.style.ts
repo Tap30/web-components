@@ -71,7 +71,6 @@ const styles = css`
     }
   }
 
-  // Removing animation if user enabled the 'Reduce Motion' option.
   @media (prefers-reduced-motion: reduce) {
     .root {
       animation: none;

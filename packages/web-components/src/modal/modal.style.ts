@@ -97,4 +97,11 @@ export default css`
   .actions ::slotted(*) {
     width: 100%;
   }
+
+  @media (prefers-reduced-motion) {
+    .root,
+    .container {
+      transition: none;
+    }
+  }
 `;
