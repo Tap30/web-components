@@ -28,7 +28,7 @@ import {
   ScrollLocker,
   waitAMicrotask,
 } from "../utils";
-import { Slots, Status } from "./constants";
+import { SENTINEL_DEFAULT_SNAP_POINTS, Slots, Status } from "./constants";
 import {
   ClosedEvent,
   ClosingEvent,
@@ -122,7 +122,11 @@ export class BottomSheet extends LitElement {
   private _isDismissClicksAllowed = true;
 
   @state()
-  private _preventContainerScrolling = false;
+  private get _preventContainerScrolling() {
+    if (isSSR()) return true;
+
+    return this._height < this._maxSnapPoint;
+  }
 
   @state()
   private _hasHeaderSlot = false;
@@ -328,12 +332,11 @@ export class BottomSheet extends LitElement {
    * - The first snap point is either the container's scroll height
    * or half the window's inner height, whichever is smaller.
    * - The second snap point is 90% of the window's inner height.
-   *
-   * If the environment is SSR (Server-Side Rendering), it returns
-   * `[0, 0]`.
    */
   public get defaultSnapPoints(): [number, number] {
-    if (isSSR() || !this._container) return [0, 0] as [number, number];
+    if (isSSR() || !this._container) {
+      return SENTINEL_DEFAULT_SNAP_POINTS as [number, number];
+    }
 
     return [
       Math.min(this._container.scrollHeight, window.innerHeight / 2),
@@ -348,10 +351,11 @@ export class BottomSheet extends LitElement {
    */
   @property({ attribute: false })
   public get snapPoints() {
-    if (!this._snapPoints) {
-      this._snapPoints = this.defaultSnapPoints;
-
-      return this._snapPoints;
+    if (
+      !this._snapPoints ||
+      this._snapPoints === SENTINEL_DEFAULT_SNAP_POINTS
+    ) {
+      return this.defaultSnapPoints;
     }
 
     return this._snapPoints;
@@ -359,10 +363,6 @@ export class BottomSheet extends LitElement {
 
   public set snapPoints(newSnapPoints: number[]) {
     this._snapPoints = [...newSnapPoints].sort((a, b) => a - b);
-
-    if (isSSR()) return;
-
-    this._preventContainerScrolling = this._height < this._maxSnapPoint;
   }
 
   /**
@@ -496,8 +496,6 @@ export class BottomSheet extends LitElement {
 
     newY = clamp(newY, 0, maxSnap);
 
-    this._preventContainerScrolling = newY < maxSnap;
-
     if (first) {
       this._isGrabbing = true;
 
@@ -548,7 +546,6 @@ export class BottomSheet extends LitElement {
 
     if (this._status === Status.OPENING) {
       this._height = closestPoint;
-      this._preventContainerScrolling = this._height < this._maxSnapPoint;
 
       return Promise.resolve();
     }
@@ -571,7 +568,6 @@ export class BottomSheet extends LitElement {
     // Start the animation
     this._animationController.start();
     this._height = closestPoint;
-    this._preventContainerScrolling = this._height < this._maxSnapPoint;
     // Wait for the animation to complete
     const animationComplete = await this._animationController.promise;
 
@@ -687,10 +683,7 @@ export class BottomSheet extends LitElement {
     if (openState) {
       // It's opening, so we have to snap
       await this._snapTo(openToSnapPoint);
-    } else {
-      this._height = 0;
-      this._preventContainerScrolling = this._height < this._maxSnapPoint;
-    }
+    } else this._height = 0;
 
     // Wait for the animation to complete
     const animationComplete = await this._animationController.promise;
