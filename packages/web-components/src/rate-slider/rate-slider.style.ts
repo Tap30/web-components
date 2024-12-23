@@ -232,6 +232,12 @@ const styles = css`
   .root:not(.unselected) .stop::after {
     visibility: visible;
   }
+
+  @media (prefers-reduced-motion) {
+    .gradient {
+      transition: none;
+    }
+  }
 `;
 
 export default styles;
