@@ -1,6 +1,6 @@
 import { customElement } from "lit/decorators.js";
-import { BottomSheet } from "./sheet";
-import styles from "./sheet.style";
+import { BottomSheet } from "./bottom-sheet";
+import styles from "./bottom-sheet.style";
 
 export { Slots } from "./constants";
 
