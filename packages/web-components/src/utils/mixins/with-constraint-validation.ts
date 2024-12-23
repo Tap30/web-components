@@ -1,9 +1,9 @@
 import {
-  isServer,
   type LitElement,
   type PropertyDeclaration,
   type PropertyValues,
 } from "lit";
+import isSSR from "../is-ssr";
 import SystemError from "../SystemError";
 import type Validator from "../Validator";
 import type { MixinBase, MixinReturn } from "./types";
@@ -227,7 +227,7 @@ const withConstraintValidation = <
     }
 
     private _syncValidity() {
-      if (isServer) return;
+      if (isSSR()) return;
 
       if (!this._validator) {
         this._validator = this[createValidator]();

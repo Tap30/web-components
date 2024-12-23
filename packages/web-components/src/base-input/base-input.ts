@@ -1,6 +1,5 @@
 import {
   html,
-  isServer,
   LitElement,
   type PropertyValues,
   type TemplateResult,
@@ -12,6 +11,7 @@ import {
   dispatchActivationClick,
   getValidityAnchor,
   isActivationClick,
+  isSSR,
   runAfterRepaint,
   waitAMicrotask,
   withConstraintValidation,
@@ -71,7 +71,7 @@ export abstract class BaseInput extends BaseClass {
   constructor() {
     super();
 
-    if (!isServer) {
+    if (!isSSR()) {
       /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
       this.addEventListener("click", async event => {
         if (this.disabled) return;

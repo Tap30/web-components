@@ -1,4 +1,5 @@
-import { isServer, type ReactiveElement } from "lit";
+import { type ReactiveElement } from "lit";
+import isSSR from "../is-ssr";
 import {
   internals,
   type WithElementInternals,
@@ -59,7 +60,7 @@ type FormSubmitterConstructor =
  * @param ctor The form submitter element's constructor.
  */
 export function setupFormSubmitter(ctor: FormSubmitterConstructor) {
-  if (isServer) {
+  if (isSSR()) {
     return;
   }
 
