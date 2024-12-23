@@ -1,4 +1,4 @@
-import "../../button/icon-button";
+import "../button/icon-button";
 
 import {
   DragGesture,
@@ -15,7 +15,7 @@ import {
 import { property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap } from "lit/directives/style-map.js";
-import { KeyboardKeys } from "../../internals";
+import { KeyboardKeys } from "../internals";
 import {
   AnimationController,
   clamp,
@@ -27,7 +27,7 @@ import {
   runImmediatelyBeforeRepaint,
   ScrollLocker,
   waitAMicrotask,
-} from "../../utils";
+} from "../utils";
 import { Slots, Status } from "./constants";
 import {
   ClosedEvent,
@@ -63,7 +63,7 @@ export class BottomSheet extends LitElement {
    * Determines whether the grabber should be visible or not.
    */
   @property({ type: Boolean, attribute: "has-grabber" })
-  public hasGrabber = true;
+  public hasGrabber = false;
 
   /**
    * Determines whether the dismiss button should be visible or not.
@@ -321,7 +321,18 @@ export class BottomSheet extends LitElement {
     return minSnap;
   }
 
-  public get defaultSnapPoints() {
+  /**
+   * Gets the default snap points for the bottom sheet.
+   *
+   * @returns {[number, number]} An array containing two snap points.
+   * - The first snap point is either the container's scroll height
+   * or half the window's inner height, whichever is smaller.
+   * - The second snap point is 90% of the window's inner height.
+   *
+   * If the environment is SSR (Server-Side Rendering), it returns
+   * `[0, 0]`.
+   */
+  public get defaultSnapPoints(): [number, number] {
     if (isSSR() || !this._container) return [0, 0] as [number, number];
 
     return [
@@ -411,7 +422,7 @@ export class BottomSheet extends LitElement {
   private _handleContainerTouchStart(event: MouseEvent | TouchEvent) {
     const element = event.currentTarget as HTMLElement;
 
-    // Prevent overscroll on safari
+    // Prevent overscroll on Safari
     if (element.scrollTop < 0) {
       runImmediatelyBeforeRepaint(() => {
         element.style.overflow = "hidden";
@@ -451,10 +462,12 @@ export class BottomSheet extends LitElement {
     const predictedDistance = dy * velocity[1];
     const predictedY = clamp(rawY + predictedDistance * 2, minSnap, maxSnap);
 
+    const downward = direction >= 0;
+
     if (
       this.variant === "modal" &&
       !pressed &&
-      direction > 0 &&
+      downward &&
       rawY + predictedDistance < minSnap / 2
     ) {
       cancel();
@@ -487,6 +500,7 @@ export class BottomSheet extends LitElement {
 
     if (first) {
       this._isGrabbing = true;
+
       if (this.variant === "modal") this._isDismissClicksAllowed = false;
     }
 
@@ -510,7 +524,7 @@ export class BottomSheet extends LitElement {
   private async _snapTo(snapPoint: number) {
     if (!this._root) return Promise.resolve();
 
-    const { closestPoint } = this.snapPoints.reduce(
+    const { closestPoint } = [0, ...this.snapPoints].reduce(
       (result, currentPoint) => {
         const distance = Math.abs(snapPoint - currentPoint);
 
@@ -597,6 +611,10 @@ export class BottomSheet extends LitElement {
     } else return this._snapTo(snapPoint);
   }
 
+  /**
+   * Opens the bottom sheet if it is not already open.
+   * Dispatches a cancelable ShowEvent ("show").
+   */
   public show() {
     if (this.open) return;
 
@@ -607,6 +625,10 @@ export class BottomSheet extends LitElement {
     if (!eventAllowed) this.open = false;
   }
 
+  /**
+   * Closes the bottom sheet if it is currently open.
+   * Dispatches a cancelable HideEvent ("hide").
+   */
   public hide() {
     if (!this.open) return;
 

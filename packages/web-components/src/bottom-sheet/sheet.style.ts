@@ -1,5 +1,5 @@
 import { css } from "lit";
-import { Z_INDEXES } from "../../internals";
+import { Z_INDEXES } from "../internals";
 
 const styles = css`
   *,
@@ -8,15 +8,13 @@ const styles = css`
     box-sizing: border-box;
   }
 
-  :host {
+  [hidden] {
+    display: none !important;
   }
 
   .root {
-    --bottom-sheet-body-pb: var(--tap-sys-spacing-9);
-    --bottom-sheet-container-dy: 100%;
-    --bottom-sheet-container-overflow: auto;
     --bottom-sheet-action-bar-position: relative;
-    --bottom-sheet-grabber-height: 12px;
+    --bottom-sheet-grabber-height: 0.75rem;
     --bottom-sheet-grabber-y: 0;
     --bottom-sheet-grabber-bottom: 0;
 
@@ -40,8 +38,6 @@ const styles = css`
   }
 
   .root.open {
-    --bottom-sheet-container-dy: 0;
-
     opacity: 1;
     visibility: visible;
   }
@@ -51,25 +47,9 @@ const styles = css`
   }
 
   .root.expanded-grabber {
-    --bottom-sheet-grabber-height: 20px;
+    --bottom-sheet-grabber-height: 1.25rem;
     --bottom-sheet-grabber-y: 50%;
     --bottom-sheet-grabber-bottom: 50%;
-  }
-
-  .root.opened:not(.expanded) {
-    --bottom-sheet-container-overflow: hidden;
-  }
-
-  .root:not(.has-body) .body {
-    display: none;
-  }
-
-  .root:not(.has-action-bar) .action-bar {
-    display: none;
-  }
-
-  .root.has-action-bar.has-body {
-    --bottom-sheet-body-pb: var(--tap-sys-spacing-6);
   }
 
   .overlay {
@@ -85,27 +65,34 @@ const styles = css`
   }
 
   .container {
+    height: 0;
+
+    overflow: auto;
     z-index: 1;
     position: relative;
-    overflow: var(--bottom-sheet-container-overflow);
-
-    max-height: calc(90 * var(--bottom-sheet-dvh));
 
     border-top-left-radius: var(--tap-sys-radius-5);
     border-top-right-radius: var(--tap-sys-radius-5);
 
     background-color: var(--tap-sys-color-surface-primary);
-    transform: translateY(var(--bottom-sheet-container-dy));
+
+    touch-action: pan-y;
 
     transition:
       transform 240ms ease,
-      max-height 240ms ease;
+      height 240ms ease;
+  }
+
+  .container.prevent-scroll {
+    overflow: hidden;
   }
 
   .grabber {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
+
+    z-index: 3;
 
     height: var(--bottom-sheet-grabber-height);
     width: 100%;
@@ -136,8 +123,8 @@ const styles = css`
     bottom: var(--bottom-sheet-grabber-bottom);
     transform: translateY(var(--bottom-sheet-grabber-y));
 
-    width: 44px;
-    height: 4px;
+    width: 2.75rem;
+    height: 0.25rem;
 
     border-radius: var(--tap-sys-radius-full);
 
@@ -204,11 +191,6 @@ const styles = css`
     fill: currentColor;
   }
 
-  .body {
-    padding-top: var(--tap-sys-spacing-6);
-    padding-bottom: var(--bottom-sheet-body-pb);
-  }
-
   .action-bar {
     position: var(--bottom-sheet-action-bar-position);
     bottom: 0;
@@ -218,6 +200,14 @@ const styles = css`
 
     background-color: var(--tap-sys-color-surface-primary);
     box-shadow: inset 0 1px 0 0 var(--tap-sys-color-border-primary);
+  }
+
+  .header + .body {
+    margin-top: var(--tap-sys-spacing-6);
+  }
+
+  .body + .action-bar {
+    margin-top: var(--tap-sys-spacing-6);
   }
 `;
 
