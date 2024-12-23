@@ -21,6 +21,7 @@ import {
   clamp,
   FocusTrapper,
   getRenderRootSlot,
+  isActiveElement,
   isSSR,
   logger,
   runAfterRepaint,
@@ -325,6 +326,10 @@ export class BottomSheet extends LitElement {
     return minSnap;
   }
 
+  private get _containerTotalHeight() {
+    return this._bodyHeight + this._headerHeight + this._actionBarHeight;
+  }
+
   /**
    * Gets the default snap points for the bottom sheet.
    *
@@ -339,7 +344,7 @@ export class BottomSheet extends LitElement {
     }
 
     return [
-      Math.min(this._container.scrollHeight, window.innerHeight / 2),
+      Math.min(this._containerTotalHeight, window.innerHeight / 2),
       0.9 * window.innerHeight,
     ] as [number, number];
   }
@@ -386,6 +391,10 @@ export class BottomSheet extends LitElement {
   private async _handleDocumentKeyDown(event: KeyboardEvent) {
     if (this.variant === "inline") return;
     if (!this.open) return;
+    // If not the active element (doesn't have focus), bail!
+    // This is necessary to avoid weirdness in stacked modals
+    // (BottomSheets, Modals, etc.).
+    if (!isActiveElement(this)) return;
 
     // allow event to propagate to user code after a microtask.
     await waitAMicrotask();
@@ -394,9 +403,6 @@ export class BottomSheet extends LitElement {
     if (event.key !== KeyboardKeys.ESCAPE) return;
 
     event.preventDefault();
-    // Always stop propagation, to avoid weirdness for bottom sheets
-    // inside other bottom sheets.
-    event.stopPropagation();
 
     this.hide();
   }
@@ -547,6 +553,10 @@ export class BottomSheet extends LitElement {
     if (this._status === Status.OPENING) {
       this._height = closestPoint;
 
+      runAfterRepaint(() => {
+        this._isDismissClicksAllowed = true;
+      });
+
       return Promise.resolve();
     }
 
@@ -568,6 +578,11 @@ export class BottomSheet extends LitElement {
     // Start the animation
     this._animationController.start();
     this._height = closestPoint;
+
+    runAfterRepaint(() => {
+      this._isDismissClicksAllowed = true;
+    });
+
     // Wait for the animation to complete
     const animationComplete = await this._animationController.promise;
 
@@ -881,6 +896,8 @@ export class BottomSheet extends LitElement {
       "expanded-grabber": this._expandGrabber,
       "sticky-header": this.hasStickyHeader,
       "sticky-action-bar": this.hasStickyActionBar,
+      "has-body": this._hasBodySlot,
+      "has-action-bar": this._hasActionBarSlot,
     });
 
     const containerTemplate = this._renderContainer();
