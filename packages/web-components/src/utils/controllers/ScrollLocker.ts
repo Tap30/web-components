@@ -25,7 +25,12 @@ class ScrollLocker {
 
   private _cachedBodySettings: {
     overflow: string;
-    positioning: { position: string; left: string; top: string } | null;
+    positioning: {
+      position: string;
+      left: string;
+      right: string;
+      top: string;
+    } | null;
     paddingRight: string;
   } = {
     overflow: "",
@@ -137,6 +142,7 @@ class ScrollLocker {
           position: document.body.style.position,
           top: document.body.style.top,
           left: document.body.style.left,
+          right: document.body.style.right,
         };
 
         // Update the dom inside an animation frame
@@ -145,6 +151,7 @@ class ScrollLocker {
         document.body.style.position = "fixed";
         document.body.style.top = `${-scrollY}px`;
         document.body.style.left = `${-scrollX}px`;
+        document.body.style.right = `0`;
 
         runBeforeRepaint(() => {
           // Attempt to check if the bottom bar appeared due to the position change
