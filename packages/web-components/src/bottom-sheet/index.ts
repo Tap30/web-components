@@ -49,8 +49,6 @@ export { Slots } from "./constants";
  * - The first snap point is either the container's scroll height
  * or half the window's inner height, whichever is smaller.
  * - The second snap point is 90% of the window's inner height.
- * If the environment is SSR (Server-Side Rendering), it returns
- * `[0, 0]`.
  *
  * @method snapTo
  * @description - When given a number it'll find the closest snap point,
