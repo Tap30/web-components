@@ -7,6 +7,8 @@ export { Slots } from "./constants";
 /**
  * @summary An empty state component with icon and action slots.
  *
+ * @tag tap-empty-state
+ *
  * @slot icon - The slot for icon element.
  * @slot action - The slot for action element.
  *
