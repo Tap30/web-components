@@ -202,12 +202,13 @@ const styles = css`
     box-shadow: inset 0 1px 0 0 var(--tap-sys-color-border-primary);
   }
 
-  .header + .body {
-    margin-top: var(--tap-sys-spacing-6);
+  .body {
+    padding-top: var(--tap-sys-spacing-6);
+    padding-bottom: var(--tap-sys-spacing-9);
   }
 
-  .body + .action-bar {
-    margin-top: var(--tap-sys-spacing-6);
+  .root.has-body.has-action-bar .body {
+    padding-bottom: var(--tap-sys-spacing-6);
   }
 `;
 
