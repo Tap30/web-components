@@ -12,12 +12,16 @@ const styles = css`
     display: none !important;
   }
 
-  .root {
+  :host {
     --bottom-sheet-action-bar-position: relative;
+    --bottom-sheet-header-position: relative;
+    --bottom-sheet-header-top: 0;
     --bottom-sheet-grabber-height: 0.75rem;
     --bottom-sheet-grabber-y: 0;
     --bottom-sheet-grabber-bottom: 0;
+  }
 
+  .root {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -46,10 +50,18 @@ const styles = css`
     --bottom-sheet-action-bar-position: sticky;
   }
 
+  .root.sticky-header {
+    --bottom-sheet-header-position: sticky;
+  }
+
   .root.expanded-grabber {
     --bottom-sheet-grabber-height: 1.25rem;
     --bottom-sheet-grabber-y: 50%;
     --bottom-sheet-grabber-bottom: 50%;
+  }
+
+  .root.has-grabber.sticky-header {
+    --bottom-sheet-header-top: var(--bottom-sheet-grabber-height);
   }
 
   .overlay {
@@ -75,6 +87,7 @@ const styles = css`
     border-top-right-radius: var(--tap-sys-radius-5);
 
     background-color: var(--tap-sys-color-surface-primary);
+    box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.2);
 
     touch-action: pan-y;
 
@@ -136,7 +149,9 @@ const styles = css`
   }
 
   .header {
-    position: relative;
+    position: var(--bottom-sheet-header-position);
+    top: var(--bottom-sheet-header-top);
+
     z-index: 2;
 
     display: flex;
@@ -145,6 +160,7 @@ const styles = css`
 
     padding: var(--tap-sys-spacing-5) var(--tap-sys-spacing-6);
 
+    background-color: var(--tap-sys-color-surface-primary);
     box-shadow: inset 0 -1px 0 0 var(--tap-sys-color-border-primary);
   }
 
@@ -155,6 +171,10 @@ const styles = css`
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .root.has-dismiss-btn .heading {
+    padding-right: var(--tap-sys-spacing-9);
   }
 
   .heading-title {
@@ -200,6 +220,10 @@ const styles = css`
 
     background-color: var(--tap-sys-color-surface-primary);
     box-shadow: inset 0 1px 0 0 var(--tap-sys-color-border-primary);
+  }
+
+  .action-bar ::slotted(*) {
+    width: 100%;
   }
 
   .body {

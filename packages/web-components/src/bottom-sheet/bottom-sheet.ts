@@ -3,6 +3,7 @@ import "../button/icon-button";
 import {
   DragGesture,
   rubberbandIfOutOfBounds,
+  type DragConfig,
   type Handler,
 } from "@use-gesture/vanilla";
 import {
@@ -24,6 +25,7 @@ import {
   isActiveElement,
   isSSR,
   logger,
+  redispatchEvent,
   runAfterRepaint,
   runImmediatelyBeforeRepaint,
   ScrollLocker,
@@ -83,6 +85,13 @@ export class BottomSheet extends LitElement {
    */
   @property({ type: Boolean, attribute: "sticky-header" })
   public hasStickyHeader = false;
+
+  /**
+   * Determines whether the bottom sheet should be expanded
+   * by grabbing gesture.
+   */
+  @property({ type: Boolean })
+  public expandable = false;
 
   /**
    * The variant of the bottom sheet.
@@ -149,8 +158,14 @@ export class BottomSheet extends LitElement {
 
   private _previouslyFocusedElement: HTMLElement | null = null;
 
+  private readonly _DRAG_GESTURE_DEFAULT_CONFIG: DragConfig = {
+    filterTaps: true,
+  };
+
   private readonly _animationController = new AnimationController();
-  private readonly _focusTrapper = new FocusTrapper(this);
+  private readonly _focusTrapper = new FocusTrapper(this, () =>
+    this.renderRoot.querySelector("#container"),
+  );
   private readonly _scrollLocker = new ScrollLocker();
 
   private _dragGesture: DragGesture | null = null;
@@ -161,34 +176,21 @@ export class BottomSheet extends LitElement {
     this._handleDocumentKeyDown = this._handleDocumentKeyDown.bind(this);
     this._handleDrag = this._handleDrag.bind(this);
     this._handleContainerScroll = this._handleContainerScroll.bind(this);
+    this._handleContainerScrollEnd = this._handleContainerScrollEnd.bind(this);
     this._handleContainerTouchMove = this._handleContainerTouchMove.bind(this);
     this._handleContainerTouchStart =
       this._handleContainerTouchStart.bind(this);
-
-    if (!isSSR()) {
-      this.addEventListener("blur", event => {
-        if (this.variant === "inline") return;
-        if (!this.open) return;
-        if (!event.currentTarget) return;
-
-        if (
-          event.relatedTarget &&
-          (event.currentTarget as HTMLElement).contains(
-            event.relatedTarget as HTMLElement,
-          )
-        ) {
-          return;
-        }
-
-        runImmediatelyBeforeRepaint(() => {
-          this._focusTrapper.trap();
-        });
-      });
-    }
   }
 
   protected override updated(changed: PropertyValues<this>) {
     super.updated(changed);
+
+    if (changed.has("expandable")) {
+      this._dragGesture?.setConfig({
+        ...this._DRAG_GESTURE_DEFAULT_CONFIG,
+        enabled: this.expandable,
+      });
+    }
 
     if (changed.has("open")) {
       if (this.open) {
@@ -251,6 +253,10 @@ export class BottomSheet extends LitElement {
     if (this._container) {
       this._container.addEventListener("scroll", this._handleContainerScroll);
       this._container.addEventListener(
+        "scrollend",
+        this._handleContainerScrollEnd,
+      );
+      this._container.addEventListener(
         "touchmove",
         this._handleContainerTouchMove,
       );
@@ -260,7 +266,8 @@ export class BottomSheet extends LitElement {
       );
 
       this._dragGesture = new DragGesture(this._container, this._handleDrag, {
-        filterTaps: true,
+        ...this._DRAG_GESTURE_DEFAULT_CONFIG,
+        enabled: this.expandable,
       });
     }
     /* eslint-enable @typescript-eslint/no-misused-promises */
@@ -274,6 +281,10 @@ export class BottomSheet extends LitElement {
       this._container.removeEventListener(
         "scroll",
         this._handleContainerScroll,
+      );
+      this._container.removeEventListener(
+        "scrollend",
+        this._handleContainerScrollEnd,
       );
       this._container.removeEventListener(
         "touchmove",
@@ -296,15 +307,24 @@ export class BottomSheet extends LitElement {
   }
 
   private get _bodyHeight() {
-    return (
-      this.renderRoot.querySelector<HTMLElement>("#body")?.offsetHeight ?? 0
-    );
+    const h =
+      this.renderRoot.querySelector<HTMLElement>("#body")?.offsetHeight ?? 0;
+
+    if (this.hasGrabber) return h + this._grabberHeight;
+
+    return h;
   }
 
   private get _actionBarHeight() {
     return (
       this.renderRoot.querySelector<HTMLElement>("#action-bar")?.offsetHeight ??
       0
+    );
+  }
+
+  private get _grabberHeight() {
+    return (
+      this.renderRoot.querySelector<HTMLElement>("#grabber")?.offsetHeight ?? 0
     );
   }
 
@@ -326,10 +346,6 @@ export class BottomSheet extends LitElement {
     return minSnap;
   }
 
-  private get _containerTotalHeight() {
-    return this._bodyHeight + this._headerHeight + this._actionBarHeight;
-  }
-
   /**
    * Gets the default snap points for the bottom sheet.
    *
@@ -343,8 +359,11 @@ export class BottomSheet extends LitElement {
       return SENTINEL_DEFAULT_SNAP_POINTS as [number, number];
     }
 
+    const totalHeight =
+      this._bodyHeight + this._headerHeight + this._actionBarHeight;
+
     return [
-      Math.min(this._containerTotalHeight, window.innerHeight / 2),
+      Math.min(totalHeight, window.innerHeight / 2),
       0.9 * window.innerHeight,
     ] as [number, number];
   }
@@ -391,6 +410,7 @@ export class BottomSheet extends LitElement {
   private async _handleDocumentKeyDown(event: KeyboardEvent) {
     if (this.variant === "inline") return;
     if (!this.open) return;
+    if (event.key !== KeyboardKeys.ESCAPE) return;
     // If not the active element (doesn't have focus), bail!
     // This is necessary to avoid weirdness in stacked modals
     // (BottomSheets, Modals, etc.).
@@ -400,11 +420,14 @@ export class BottomSheet extends LitElement {
     await waitAMicrotask();
 
     if (event.defaultPrevented) return;
-    if (event.key !== KeyboardKeys.ESCAPE) return;
 
     event.preventDefault();
 
     this.hide();
+  }
+
+  private _handleContainerScrollEnd(event: Event) {
+    redispatchEvent(this, event);
   }
 
   private _handleContainerScroll(event: Event) {
@@ -412,8 +435,12 @@ export class BottomSheet extends LitElement {
 
     if (this._preventContainerScrolling) event.preventDefault();
 
-    if (element.scrollTop >= 48) this._expandGrabber = true;
-    else this._expandGrabber = false;
+    if (!this.hasStickyHeader && this.hasGrabber) {
+      if (element.scrollTop >= 48) this._expandGrabber = true;
+      else this._expandGrabber = false;
+    }
+
+    redispatchEvent(this, event);
   }
 
   private _handleContainerTouchMove(event: TouchEvent) {
@@ -421,8 +448,10 @@ export class BottomSheet extends LitElement {
 
     if (this._preventContainerScrolling) event.preventDefault();
 
-    if (element.scrollTop >= 48) this._expandGrabber = true;
-    else this._expandGrabber = false;
+    if (!this.hasStickyHeader && this.hasGrabber) {
+      if (element.scrollTop >= 48) this._expandGrabber = true;
+      else this._expandGrabber = false;
+    }
   }
 
   private _handleContainerTouchStart(event: MouseEvent | TouchEvent) {
@@ -435,6 +464,7 @@ export class BottomSheet extends LitElement {
         element.scrollTop = 0;
         element.style.removeProperty("overflow");
       });
+
       event.preventDefault();
     }
   }
@@ -711,11 +741,15 @@ export class BottomSheet extends LitElement {
     this._status = openState ? Status.OPENED : Status.CLOSED;
 
     if (openState) {
-      if (this.variant === "modal") this._focusTrapper.trap();
+      if (this.variant === "modal") this._focusTrapper.sendFocus();
+
       this.dispatchEvent(new SnappedEvent({ snapPoint: openToSnapPoint }));
     } else {
       this._unlockScroll();
-      if (this.variant === "modal") this._previouslyFocusedElement?.focus();
+
+      if (this.variant === "modal") {
+        this._previouslyFocusedElement?.focus();
+      }
     }
 
     this._expandGrabber = false;
@@ -732,8 +766,9 @@ export class BottomSheet extends LitElement {
       <tap-icon-button
         class="dismiss"
         part="dismiss"
-        size="small"
+        size="sm"
         variant="ghost"
+        label="Dismiss bottom sheet"
         @click=${() => {
           if (!this._isDismissClicksAllowed) return;
 
@@ -839,7 +874,7 @@ export class BottomSheet extends LitElement {
 
     const ariaLabel = this.headingTitle ? nothing : this.label;
 
-    if (!this.headingTitle && (!this.label || !this.labelledBy)) {
+    if (!this.headingTitle && !this.label && !this.labelledBy) {
       logger(
         "Expected a valid `label` or `labelledby` attribute " +
           "when using `header` slot, received none.",
@@ -896,11 +931,15 @@ export class BottomSheet extends LitElement {
       "expanded-grabber": this._expandGrabber,
       "sticky-header": this.hasStickyHeader,
       "sticky-action-bar": this.hasStickyActionBar,
+      "has-grabber": this.hasGrabber,
+      "has-dismiss-btn": this.variant === "modal" && this.hasDismissButton,
       "has-body": this._hasBodySlot,
       "has-action-bar": this._hasActionBarSlot,
     });
 
     const containerTemplate = this._renderContainer();
+
+    this._focusTrapper.enabled = this.variant === "modal" && this.open;
 
     const container: TemplateResult =
       this.variant === "modal"
@@ -912,6 +951,7 @@ export class BottomSheet extends LitElement {
         id="root"
         class=${rootClasses}
         part="root"
+        tabindex="-1"
         aria-hidden=${!this.open}
         ?inert=${!this.open}
       >
