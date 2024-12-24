@@ -23,16 +23,18 @@ export class ButtonGroup extends LitElement {
   public fluidItems = false;
 
   /**
-   * Provides an accessible label for screen readers.
-   * This is used to describe the button group.
+   * Defines a string value that can be used to set a label
+   * for assistive technologies.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
    */
-  @property({ attribute: "screen-reader-label" })
-  public screenReaderLabel = "";
+  @property({ type: String })
+  public label = "";
 
   protected override render() {
-    if (!this.screenReaderLabel) {
+    if (!this.label) {
       logger(
-        "Set `screen-reader-label` attribute for better accessibility.",
+        "Set `label` attribute for better accessibility.",
         "button-group",
         "warning",
       );
@@ -50,7 +52,7 @@ export class ButtonGroup extends LitElement {
         class=${rootClasses}
         part="root"
         role="group"
-        aria-label=${this.screenReaderLabel || nothing}
+        aria-label=${this.label || nothing}
       >
         <slot></slot>
       </div>
