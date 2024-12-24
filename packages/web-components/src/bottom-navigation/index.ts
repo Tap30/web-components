@@ -38,7 +38,11 @@ export class TapBottomNavigationItem extends BottomNavigationItem {
  *
  * @slot - The default slot for navigation items.
  *
- * @prop {string} [screen-reader-label] - The label used for screen readers.
+ * @prop {string} [label] -
+ * Defines a string value that can be used to set a label
+ * for assistive technologies.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
  */
 @customElement("tap-bottom-navigation")
 export class TapBottomNavigation extends BottomNavigation {

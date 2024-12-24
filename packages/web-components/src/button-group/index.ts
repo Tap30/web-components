@@ -18,10 +18,11 @@ export { Slots } from "./constants";
  * @prop {boolean} [fluid-items=false] -
  * If true, the items in the button group will expand to fill the available space.
  *
- * @prop {string} [screen-reader-label=""] -
- * Provides an accessible label for screen readers.
- * This is used to describe the button group.
+ * @prop {string} [label=""] -
+ * Defines a string value that can be used to set a label
+ * for assistive technologies.
  *
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
  * @slot button - The slot for buttons.
  */
 @customElement("tap-button-group")

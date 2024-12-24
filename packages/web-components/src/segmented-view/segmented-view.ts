@@ -8,10 +8,13 @@ export class SegmentedView extends LitElement {
   private _activeItem = "";
 
   /**
-   * The label used for screen readers.
+   * Defines a string value that can be used to set a label
+   * for assistive technologies.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
    */
-  @property({ type: String, attribute: "screen-reader-label" })
-  public screenReaderLabel = "";
+  @property({ type: String })
+  public label = "";
 
   private get _items() {
     const itemsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
@@ -68,9 +71,9 @@ export class SegmentedView extends LitElement {
   }
 
   protected override render() {
-    if (!this.screenReaderLabel) {
+    if (!this.label) {
       logger(
-        "Set `screen-reader-label` attribute for better accessibility.",
+        "Set `label` attribute for better accessibility.",
         "segmented-view",
         "warning",
       );
@@ -81,7 +84,7 @@ export class SegmentedView extends LitElement {
         role="tablist"
         class="root"
         part="root"
-        aria-label=${this.screenReaderLabel || nothing}
+        aria-label=${this.label || nothing}
       >
         <slot @slotchange=${this._handleItemsSlotChange}></slot>
       </div>

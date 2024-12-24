@@ -38,10 +38,13 @@ export class BottomNavigation extends LitElement {
   }
 
   /**
-   * The label used for screen readers.
+   * Defines a string value that can be used to set a label
+   * for assistive technologies.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
    */
-  @property({ type: String, attribute: "screen-reader-label" })
-  public screenReaderLabel = "";
+  @property({ type: String })
+  public label = "";
 
   constructor() {
     super();
@@ -134,9 +137,9 @@ export class BottomNavigation extends LitElement {
   }
 
   protected override render() {
-    if (!this.screenReaderLabel) {
+    if (!this.label) {
       logger(
-        "Set `screen-reader-label` attribute for better accessibility.",
+        "Set `label` attribute for better accessibility.",
         "bottom-navigation",
         "warning",
       );
@@ -147,7 +150,7 @@ export class BottomNavigation extends LitElement {
         role="navigation"
         class="root"
         part="root"
-        aria-label=${this.screenReaderLabel}
+        aria-label=${this.label}
       >
         <slot @slotchange=${this._handleItemsSlotChange}></slot>
       </nav>
