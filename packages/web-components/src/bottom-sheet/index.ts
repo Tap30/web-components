@@ -3,18 +3,28 @@ import { BottomSheet } from "./bottom-sheet";
 import styles from "./bottom-sheet.style";
 
 export { Slots } from "./constants";
+export * from "./events";
 
 /**
  * @summary The bottom-sheet component.
  *
  * @tag tap-bottom-sheet
  *
- * @prop {string} [heading-title=""] - Sets the heading title in a declarative-way.
- * @prop {string} [heading-description=""] - Sets the heading description in a declarative-way.
- * @prop {boolean} [has-grabber=false] - Determines whether the grabber should be visible or not.
- * @prop {boolean} [has-dismiss-button=false] - Determines whether the dismiss button should be visible or not.
- * @prop {boolean} [sticky-action-bar=false] - Determines whether the action bar should be sticky or not.
- * @prop {boolean} [sticky-header=false] - Determines whether the header should be sticky or not.
+ * @prop {string} [heading-title=""] -
+ * Sets the heading title in a declarative-way.
+ * @prop {string} [heading-description=""] -
+ * Sets the heading description in a declarative-way.
+ * @prop {boolean} [has-grabber=false] -
+ * Determines whether the grabber should be visible or not.
+ * @prop {boolean} [has-dismiss-button=false] -
+ * Determines whether the dismiss button should be visible or not.
+ * @prop {boolean} [sticky-action-bar=false] -
+ * Determines whether the action bar should be sticky or not.
+ * @prop {boolean} [sticky-header=false] -
+ * Determines whether the header should be sticky or not.
+ * @prop {boolean} [expandable=false] -
+ * Determines whether the bottom sheet should be expanded
+ * by grabbing gesture.
  * @prop {"modal" | "inline"} [variant="modal"] - The variant of the bottom sheet.
  * @prop {string} [label=""] -
  * Defines a string value that can be used to set a label
