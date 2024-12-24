@@ -1,6 +1,6 @@
-import { LitElement, html, isServer } from "lit";
+import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
-import { getRenderRootSlot, logger } from "../utils";
+import { getRenderRootSlot, isSSR, logger } from "../utils";
 import { Slots } from "./constants";
 import { ActivateEvent, BottomNavigationItem, DeactivateEvent } from "./item";
 
@@ -32,7 +32,7 @@ export class BottomNavigation extends LitElement {
   }
 
   public set activeItem(value: string) {
-    if (isServer) return;
+    if (isSSR()) return;
 
     this._activate(value);
   }
@@ -46,7 +46,7 @@ export class BottomNavigation extends LitElement {
   constructor() {
     super();
 
-    if (!isServer) {
+    if (!isSSR()) {
       this._handleItemActivation = this._handleItemActivation.bind(this);
       this._handleItemDeactivation = this._handleItemDeactivation.bind(this);
     }

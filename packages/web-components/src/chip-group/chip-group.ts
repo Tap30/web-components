@@ -1,9 +1,9 @@
-import { LitElement, html, isServer } from "lit";
+import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { DeselectEvent, SelectEvent } from "../chip";
 import { Chip } from "../chip/chip";
-import { getRenderRootSlot } from "../utils";
+import { getRenderRootSlot, isSSR } from "../utils";
 import { Slots } from "./constants";
 
 export class ChipGroup extends LitElement {
@@ -34,7 +34,7 @@ export class ChipGroup extends LitElement {
   }
 
   public set selectedChips(values: string[]) {
-    if (isServer) return;
+    if (isSSR()) return;
 
     this._chips.forEach(chip => {
       if (values.includes(chip.value)) {
@@ -64,7 +64,7 @@ export class ChipGroup extends LitElement {
   constructor() {
     super();
 
-    if (!isServer) {
+    if (!isSSR()) {
       this._handleChipSelection = this._handleChipSelection.bind(this);
       this._handleChipDeselection = this._handleChipDeselection.bind(this);
     }

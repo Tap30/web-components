@@ -1,4 +1,5 @@
-import { isServer, type LitElement } from "lit";
+import { type LitElement } from "lit";
+import isSSR from "../is-ssr";
 import SystemError from "../SystemError";
 import type { MixinBase, MixinReturn } from "./types";
 import type { ConstraintValidation } from "./with-constraint-validation";
@@ -243,7 +244,7 @@ const withOnReportValidity = <
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       super(...args);
 
-      if (isServer) return;
+      if (isSSR()) return;
 
       this.addEventListener(
         "invalid",
