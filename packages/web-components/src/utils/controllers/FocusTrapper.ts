@@ -5,10 +5,8 @@ import {
   type ReactiveControllerHost,
   type TemplateResult,
 } from "lit";
-import { createRef, ref, type Ref } from "lit/directives/ref.js";
 import { styleMap } from "lit/directives/style-map.js";
-import { isElementFocusable } from "../dom";
-import isSSR from "../is-ssr";
+import { getDeepActiveElement, isElementFocusable } from "../dom";
 
 type Host = ReactiveControllerHost & LitElement;
 
@@ -17,121 +15,121 @@ const TrapperTypes = {
   END: "end",
 } as const;
 
-type TypesOfEnumValues<Enum extends Record<string, unknown>> = Enum[keyof Enum];
-
 class FocusTrapper implements ReactiveController {
-  // This TreeWalker is used to walk through a host's children to find
-  // focusable elements. TreeWalker is faster than `querySelectorAll('*')`.
-  // We check for SSR because there isn't a "document" during an SSR
-  // run.
-  private readonly _treeWalker: TreeWalker | null;
+  private readonly _host: Host;
 
-  private _firstTrapperRef: Ref<HTMLInputElement> = createRef();
+  private _isEnabled = true;
+  private _ignoreFocusChanges = false;
 
-  constructor(host: Host) {
+  private readonly _resolveTreeRoot: () => HTMLElement | null;
+
+  private _lastFocused: HTMLElement | null = null;
+
+  constructor(host: Host, resolveTreeRoot: () => HTMLElement | null) {
     host.addController(this);
 
-    this._treeWalker = isSSR()
-      ? null
-      : document.createTreeWalker(host, NodeFilter.SHOW_ELEMENT);
+    this._host = host;
+    this._resolveTreeRoot = resolveTreeRoot;
 
-    this._handleTrapperFocus = this._handleTrapperFocus.bind(this);
+    this._handleDocumentFocus = this._handleDocumentFocus.bind(this);
   }
 
-  public trap() {
-    this._firstTrapperRef.value?.focus();
+  public sendFocus() {
+    if (!this._isEnabled) return;
+
+    const [firstFocusableChild] = this._getFirstAndLastFocusableChildren();
+
+    firstFocusableChild?.focus();
   }
 
-  private _handleTrapperFocus(event: FocusEvent) {
-    const [firstFocusableChild, lastFocusableChild] =
-      this._getFirstAndLastFocusableChildren();
+  private _gatherFocusableElements(root: Node) {
+    const processNode = (node: Node, elements: Set<HTMLElement>) => {
+      if (elements.has(node as HTMLElement)) return;
 
-    const trapperType = this._getTrapperType(event.target as HTMLElement);
+      if (node instanceof ShadowRoot) {
+        gather(node, elements);
 
-    const isFirstTrapper = trapperType === "start";
-    const isLastTrapper = !isFirstTrapper;
+        return;
+      }
 
-    // When the host does not have focusable children
-    if (!firstFocusableChild || !lastFocusableChild) {
-      // Keep the focus trapped
-      if (isLastTrapper) this._firstTrapperRef.value?.focus();
+      if (isElementFocusable(node as HTMLElement)) {
+        elements.add(node as HTMLElement);
 
-      return;
-    }
+        return;
+      }
 
-    // Where the focus came from (what was previously focused).
-    const focusCameFromFirstChild = event.relatedTarget === firstFocusableChild;
-    const focusCameFromLastChild = event.relatedTarget === lastFocusableChild;
+      if (node instanceof HTMLSlotElement) {
+        node.assignedNodes({ flatten: true }).forEach(assignedNode => {
+          processNode(assignedNode, elements);
+        });
 
-    // Although this is a focus trap, focus can come from outside the trap.
-    // This can happen when elements are programmatically `focus()`'d. It also
-    // happens when focus leaves and returns to the window, such as clicking on
-    // the browser's URL bar and pressing Tab, or switching focus between
-    // iframes.
-    const focusCameFromOutside =
-      !focusCameFromFirstChild && !focusCameFromLastChild;
+        return;
+      }
 
-    // Focus the host's first child when we reach the end of the host and
-    // focus is moving forward. Or, when focus is moving forwards into the
-    // host from outside of the window.
-    const shouldFocusFirstChild =
-      (isLastTrapper && focusCameFromLastChild) ||
-      (isFirstTrapper && focusCameFromOutside);
+      if (node.hasChildNodes()) {
+        gather(node, elements);
 
-    if (shouldFocusFirstChild) {
-      firstFocusableChild.focus();
+        return;
+      }
+    };
 
-      return;
-    }
+    const gather = (root: Node, elements: Set<HTMLElement>) => {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
 
-    // Focus the host's last child when we reach the beginning of the host
-    // and focus is moving backward. Or, when focus is moving backwards into the
-    // host from outside of the window.
-    const shouldFocusLastChild =
-      (isFirstTrapper && focusCameFromFirstChild) ||
-      (isLastTrapper && focusCameFromOutside);
+      walker.currentNode = walker.root;
 
-    if (shouldFocusLastChild) {
-      lastFocusableChild.focus();
+      while (walker.nextNode()) {
+        const child = walker.currentNode;
 
-      return;
-    }
-  }
+        processNode(child, elements);
+      }
+    };
 
-  private _getTrapperType(
-    trapper: HTMLElement,
-  ): TypesOfEnumValues<typeof TrapperTypes> | null {
-    return trapper.getAttribute("data-trapper-type") as TypesOfEnumValues<
-      typeof TrapperTypes
-    > | null;
+    const focusableElements: Set<HTMLElement> = new Set();
+
+    gather(root, focusableElements);
+
+    return focusableElements;
   }
 
   private _getFirstAndLastFocusableChildren():
     | [HTMLElement, HTMLElement]
     | [null, null] {
-    if (!this._treeWalker) return [null, null];
+    const root = this._resolveTreeRoot();
 
-    let firstFocusableChild: HTMLElement | null = null;
-    let lastFocusableChild: HTMLElement | null = null;
+    if (!root) return [null, null];
 
-    // Reset the current node back to the root host element.
-    this._treeWalker.currentNode = this._treeWalker.root;
-    while (this._treeWalker.nextNode()) {
-      const nextChild = this._treeWalker.currentNode as Element;
+    const focusableElements = this._gatherFocusableElements(root);
 
-      if (!isElementFocusable(nextChild)) continue;
+    if (focusableElements.size === 0) return [null, null];
 
-      if (!firstFocusableChild) firstFocusableChild = nextChild as HTMLElement;
+    const elements = Array.from(focusableElements);
 
-      lastFocusableChild = nextChild as HTMLElement;
-    }
-
-    return [firstFocusableChild, lastFocusableChild] as
-      | [HTMLElement, HTMLElement]
-      | [null, null];
+    return [elements[0]!, elements[elements.length - 1]!];
   }
 
-  public wrap(tree: TemplateResult) {
+  private _trap(root: HTMLElement) {
+    const [firstFocusableChild, lastFocusableChild] =
+      this._getFirstAndLastFocusableChildren();
+
+    firstFocusableChild?.focus();
+
+    if (document.activeElement === this._lastFocused) {
+      lastFocusableChild?.focus();
+    }
+
+    if (document.activeElement && !root.contains(document.activeElement)) {
+      firstFocusableChild?.focus();
+    }
+
+    this._lastFocused = document.activeElement as HTMLElement | null;
+  }
+
+  public wrap(tree: TemplateResult, options?: { enabled: boolean }) {
+    const { enabled = true } = options ?? {};
+
+    this._isEnabled = enabled;
+
     const styles = styleMap({
       position: "absolute",
       width: 1,
@@ -146,26 +144,55 @@ class FocusTrapper implements ReactiveController {
 
     return html`
       <div
-        ${ref(this._firstTrapperRef)}
         aria-hidden="true"
-        tabindex="0"
+        tabindex=${enabled ? "0" : "-1"}
         style=${styles}
         data-trapper-type=${TrapperTypes.START}
-        @focus=${this._handleTrapperFocus}
       ></div>
       ${tree}
       <div
         aria-hidden="true"
-        tabindex="0"
+        tabindex=${enabled ? "0" : "-1"}
         style=${styles}
         data-trapper-type=${TrapperTypes.END}
-        @focus=${this._handleTrapperFocus}
       ></div>
     `;
   }
 
-  public hostConnected() {}
-  public hostDisconnected() {}
+  private _handleDocumentFocus(event: FocusEvent) {
+    if (this._ignoreFocusChanges) return;
+    if (!this._isEnabled) return;
+
+    const root = this._resolveTreeRoot();
+
+    if (!root) return;
+
+    const target = event.target as HTMLElement;
+
+    if (this._host.contains(target)) {
+      if (target === this._host) {
+        const activeElement = getDeepActiveElement(1);
+
+        if (!activeElement) return;
+        if (!root.contains(activeElement)) return this._trap(root);
+
+        this._lastFocused = activeElement;
+      } else this._lastFocused = target;
+    } else this._trap(root);
+  }
+
+  public hostConnected() {
+    document.addEventListener("focus", this._handleDocumentFocus, {
+      capture: true,
+    });
+  }
+
+  public hostDisconnected() {
+    document.removeEventListener("focus", this._handleDocumentFocus, {
+      capture: true,
+    });
+  }
+
   public hostUpdate() {}
   public hostUpdated() {}
 }
