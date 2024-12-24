@@ -2,30 +2,77 @@ import { customElement } from "lit/decorators.js";
 import { BottomSheet } from "./bottom-sheet";
 import styles from "./bottom-sheet.style";
 
+export { Slots } from "./constants";
+export * from "./events";
+
 /**
- * @summary Bottom sheet Element
+ * @summary The bottom-sheet component.
  *
- * @slot [bottom-sheet-body] - The content of the bottom sheet's body.
- * @slot [bottom-sheet-header] - The bottom sheet's header part.
+ * @tag tap-bottom-sheet
  *
- * @prop {boolean} [open=false] - Controls the visibility of the bottom sheet. If true, the bottom sheet is visible.
- * @prop {boolean} [dismissible=true] - Determines whether the bottom sheet can be dismissed by the user. If true, a close button is displayed, allowing the bottom sheet to be closed.
- * @prop {boolean} [hasDimmer=false] -  Controls the presence of a dimmer overlay.
- * @prop {string} [title=''] - Specifies the title displayed in the header of the bottom sheet.
- * @prop {boolean} [expanded=false] -  If true, the bottom sheet expands to 90% of the viewport height (90vh).
- * @prop {boolean} [showGrabber=true] -  Controls the visibility of the grabber element.
+ * @prop {string} [heading-title=""] -
+ * Sets the heading title in a declarative-way.
+ * @prop {string} [heading-description=""] -
+ * Sets the heading description in a declarative-way.
+ * @prop {boolean} [has-grabber=false] -
+ * Determines whether the grabber should be visible or not.
+ * @prop {boolean} [has-dismiss-button=false] -
+ * Determines whether the dismiss button should be visible or not.
+ * @prop {boolean} [sticky-action-bar=false] -
+ * Determines whether the action bar should be sticky or not.
+ * @prop {boolean} [sticky-header=false] -
+ * Determines whether the header should be sticky or not.
+ * @prop {boolean} [expandable=false] -
+ * Determines whether the bottom sheet should be expanded
+ * by grabbing gesture.
+ * @prop {"modal" | "inline"} [variant="modal"] - The variant of the bottom sheet.
+ * @prop {string} [label=""] -
+ * Defines a string value that can be used to set a label
+ * for assistive technologies.
  *
- * @csspart [dimmer] - The dimmer element darkens the background and is clickable to close the bottom sheet.
- * @csspart [header] - The header of the bottom sheet component, containing the title and dismiss button.
- * @csspart [body] - The container that wraps the bottom sheet's content.
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+ * @prop {string} [labelledby=""] -
+ * Identifies the element (or elements) that labels the element.
  *
- * @cssprop [--tap-bottom-sheet-bottom=0]
- * @cssprop [--tap-bottom-sheet-header-padding=0]
- * @cssprop [--tap-bottom-sheet-header-padding=12px]
- * @cssprop [--tap-bottom-sheet-background=--tap-sys-color-surface-primary]
- * @cssprop [--tap-bottom-sheet-content-overflow-y=scroll]
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
  *
- * @fires close - Fires when the bottom sheet closes.
+ * @slot header - The slot for the header content.
+ * @slot body - The slot for the main body content.
+ * @slot action-bar - The slot for the action bar content.
+ *
+ * @fires {SnappedEvent} snapped - Fired when the bottom-sheet is snapped to a specific position.
+ * @fires {OpeningEvent} opening - Fired when the bottom-sheet starts to open (cancelable).
+ * @fires {ClosingEvent} closing - Fired when the bottom-sheet starts to close (cancelable).
+ * @fires {OpenedEvent} opened - Fired when the bottom-sheet has fully opened.
+ * @fires {ClosedEvent} closed - Fired when the bottom-sheet has fully closed.
+ * @fires {HideEvent} hide - Fired when the bottom-sheet is hidden (cancelable).
+ * @fires {ShowEvent} show - Fired when the bottom-sheet is shown (cancelable).
+ *
+ * @member {number[]} snapPoints
+ * @description - The snap points for bottom sheet to snap to.
+ * Note that snap points will be sorted sorted, no matter
+ * how to set it.
+ *
+ * @member {[number, number]} defaultSnapPoints
+ * @description Gets the default snap points for the bottom sheet.
+ * Returns An array containing two snap points.
+ * - The first snap point is either the container's scroll height
+ * or half the window's inner height, whichever is smaller.
+ * - The second snap point is 90% of the window's inner height.
+ *
+ * @method snapTo
+ * @description - When given a number it'll find the closest snap point,
+ * so you don't need to know the exact value.
+ * Use the callback method to resolve the snap point.
+ * @param {number | Function} numberOrCallback
+ *
+ * @method show
+ * @description - Opens the bottom sheet if it is not already open.
+ * Dispatches a cancelable ShowEvent ("show").
+ *
+ * @method hide
+ * @description - Closes the bottom sheet if it is currently open.
+ * Dispatches a cancelable HideEvent ("hide").
  */
 @customElement("tap-bottom-sheet")
 export class TapBottomSheet extends BottomSheet {

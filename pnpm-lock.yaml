@@ -187,6 +187,9 @@ importers:
       '@tapsioss/icons':
         specifier: workspace:*
         version: link:../icons
+      react:
+        specifier: '>=16.8'
+        version: 18.3.1
 
   packages/theme: {}
 
@@ -195,6 +198,9 @@ importers:
       '@floating-ui/dom':
         specifier: ^1.6.11
         version: 1.6.12
+      '@use-gesture/vanilla':
+        specifier: ^10.3.1
+        version: 10.3.1
       lit:
         specifier: ^3.2.1
         version: 3.2.1
@@ -1378,6 +1384,12 @@ packages:
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
+
+  '@use-gesture/core@10.3.1':
+    resolution: {integrity: sha512-WcINiDt8WjqBdUXye25anHiNxPc0VOrlT8F6LLkU6cycrOGUDyY/yyFmsg3k8i5OLvv25llc0QC45GhR/C8llw==}
+
+  '@use-gesture/vanilla@10.3.1':
+    resolution: {integrity: sha512-lT4scGLu59ovA3zmtUonukAGcA0AdOOh+iwNDS05Bsu7Lq9aZToDHhI6D8Q2qvsVraovtsLLYwPrWdG/noMAKw==}
 
   '@vitejs/plugin-react@4.3.3':
     resolution: {integrity: sha512-NooDe9GpHGqNns1i8XDERg0Vsg5SSYRhRxxyTGogUdkdNt47jal+fbuYi+Yfq6pzRCKXyoPcWisfxE6RIM3GKA==}
@@ -5019,6 +5031,12 @@ snapshots:
       eslint-visitor-keys: 3.4.3
 
   '@ungap/structured-clone@1.2.0': {}
+
+  '@use-gesture/core@10.3.1': {}
+
+  '@use-gesture/vanilla@10.3.1':
+    dependencies:
+      '@use-gesture/core': 10.3.1
 
   '@vitejs/plugin-react@4.3.3(vite@5.4.11(@types/node@20.17.6))':
     dependencies:

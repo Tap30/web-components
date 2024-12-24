@@ -1,4 +1,5 @@
-import { isServer, type ReactiveElement } from "lit";
+import { type ReactiveElement } from "lit";
+import isSSR from "../is-ssr";
 import {
   internals,
   type WithElementInternals,
@@ -19,18 +20,19 @@ export type FormSubmitterType = "button" | "submit" | "reset";
  * An element that can submit or reset a `<form>`, similar to
  * `<button type="submit">`.
  */
-export interface FormSubmitter extends ReactiveElement, WithElementInternals {
-  /**
-   * A string indicating the form submission behavior of the element.
-   *
-   * - submit: The element submits the form. This is the default value if the
-   * attribute is not specified, or if it is dynamically changed to an empty or
-   * invalid value.
-   * - reset: The element resets the form.
-   * - button: The element does nothing.
-   */
-  type: FormSubmitterType;
-}
+export type FormSubmitter = ReactiveElement &
+  WithElementInternals & {
+    /**
+     * A string indicating the form submission behavior of the element.
+     *
+     * - submit: The element submits the form. This is the default value if the
+     * attribute is not specified, or if it is dynamically changed to an empty or
+     * invalid value.
+     * - reset: The element resets the form.
+     * - button: The element does nothing.
+     */
+    type: FormSubmitterType;
+  };
 
 type FormSubmitterConstructor =
   | (new () => FormSubmitter)
@@ -58,10 +60,8 @@ type FormSubmitterConstructor =
  *
  * @param ctor The form submitter element's constructor.
  */
-export function setupFormSubmitter(ctor: FormSubmitterConstructor) {
-  if (isServer) {
-    return;
-  }
+export const setupFormSubmitter = (ctor: FormSubmitterConstructor) => {
+  if (isSSR()) return;
 
   (ctor as unknown as typeof ReactiveElement).addInitializer(instance => {
     const submitter = instance as FormSubmitter;
@@ -105,4 +105,4 @@ export function setupFormSubmitter(ctor: FormSubmitterConstructor) {
       form.requestSubmit();
     });
   });
-}
+};
