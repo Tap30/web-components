@@ -16,7 +16,7 @@ export default css`
     --input-box-bg-color: var(--tap-sys-color-surface-primary);
     --input-box-border-color: var(--tap-sys-color-surface-inverse-primary);
     --input-control-color: var(--tap-sys-color-content-on-inverse);
-    --checkbox-box-shadow-size: var(--tap-sys-spacing-1);
+    --checkbox-overlay-size: 0;
 
     display: inline-block;
     vertical-align: middle;
@@ -31,7 +31,7 @@ export default css`
   .root:not(.disabled) .control.checked,
   .root:not(.disabled) .control.indeterminate {
     --input-control-color: var(--tap-sys-color-content-on-inverse);
-    --checkbox-box-shadow-size: 0.625rem;
+    --checkbox-overlay-size: 2rem;
   }
 
   .control {
@@ -70,6 +70,9 @@ export default css`
     height: 1.25rem;
     width: 1.25rem;
 
+    position: relative;
+    overflow: hidden;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,30 +80,54 @@ export default css`
     border-radius: var(--tap-sys-radius-1);
 
     background-color: var(--input-box-bg-color);
-    box-shadow: 0 0 0 var(--checkbox-box-shadow-size)
-      var(--input-box-border-color) inset;
+    box-shadow: 0 0 0 var(--tap-sys-spacing-1) var(--input-box-border-color)
+      inset;
     transition:
       box-shadow 240ms ease,
       background-color 240ms ease;
+  }
+
+  .root:not(.disabled) .box::before {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    width: var(--checkbox-overlay-size);
+    height: var(--checkbox-overlay-size);
+
+    background-color: var(--tap-sys-color-surface-inverse-primary);
+
+    transition:
+      width 240ms ease,
+      height 240ms ease;
   }
 
   .icon {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1);
 
-    opacity: 1;
-
-    transition: opacity 240ms ease;
+    transition:
+      opacity 120ms 120ms ease,
+      transform 120ms 120ms ease;
   }
 
   .icon.hidden {
-    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+    transition:
+      opacity 240ms ease,
+      transform 240ms ease;
   }
 
   @media (prefers-reduced-motion) {
     .box,
+    .box::before,
     .icon {
       transition: none;
     }
