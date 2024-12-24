@@ -34,6 +34,14 @@ class FocusTrapper implements ReactiveController {
     this._handleDocumentFocus = this._handleDocumentFocus.bind(this);
   }
 
+  public set enabled(isEnabled: boolean) {
+    this._isEnabled = isEnabled;
+  }
+
+  public get enabled() {
+    return this._isEnabled;
+  }
+
   public sendFocus() {
     if (!this._isEnabled) return;
 
@@ -125,11 +133,7 @@ class FocusTrapper implements ReactiveController {
     this._lastFocused = document.activeElement as HTMLElement | null;
   }
 
-  public wrap(tree: TemplateResult, options?: { enabled: boolean }) {
-    const { enabled = true } = options ?? {};
-
-    this._isEnabled = enabled;
-
+  public wrap(tree: TemplateResult) {
     const styles = styleMap({
       position: "absolute",
       width: 1,
@@ -145,14 +149,14 @@ class FocusTrapper implements ReactiveController {
     return html`
       <div
         aria-hidden="true"
-        tabindex=${enabled ? "0" : "-1"}
+        tabindex=${this._isEnabled ? "0" : "-1"}
         style=${styles}
         data-trapper-type=${TrapperTypes.START}
       ></div>
       ${tree}
       <div
         aria-hidden="true"
-        tabindex=${enabled ? "0" : "-1"}
+        tabindex=${this._isEnabled ? "0" : "-1"}
         style=${styles}
         data-trapper-type=${TrapperTypes.END}
       ></div>
