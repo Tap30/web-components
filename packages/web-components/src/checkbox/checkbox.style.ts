@@ -83,8 +83,8 @@ export default css`
     box-shadow: 0 0 0 var(--tap-sys-spacing-1) var(--input-box-border-color)
       inset;
     transition:
-      box-shadow 240ms ease,
-      background-color 240ms ease;
+      box-shadow 120ms ease,
+      background-color 120ms ease;
   }
 
   .root:not(.disabled) .box::before {
@@ -103,8 +103,8 @@ export default css`
     background-color: var(--tap-sys-color-surface-inverse-primary);
 
     transition:
-      width 240ms ease,
-      height 240ms ease;
+      width 120ms ease,
+      height 120ms ease;
   }
 
   .icon {
@@ -114,15 +114,15 @@ export default css`
     transform: translate(-50%, -50%) scale(1);
 
     transition:
-      opacity 120ms 120ms ease,
-      transform 120ms 120ms ease;
+      opacity 60ms 60ms ease,
+      transform 60ms 60ms ease;
   }
 
   .icon.hidden {
     transform: translate(-50%, -50%) scale(0);
     transition:
-      opacity 240ms ease,
-      transform 240ms ease;
+      opacity 120ms ease,
+      transform 120ms ease;
   }
 
   @media (prefers-reduced-motion) {
