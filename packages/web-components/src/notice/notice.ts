@@ -1,7 +1,8 @@
+import "../button/icon-button";
+
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import "../button/icon-button";
 import { getRenderRootSlot, logger, runAfterRepaint } from "../utils";
 import { Slots } from "./constants";
 import { HideEvent, ShowEvent } from "./events";
