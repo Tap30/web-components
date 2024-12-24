@@ -11,6 +11,7 @@ import {
   AnimationController,
   FocusTrapper,
   getRenderRootSlot,
+  isActiveElement,
   runAfterRepaint,
   ScrollLocker,
   waitAMicrotask,
@@ -23,12 +24,6 @@ export class Modal extends LitElement {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
-
-  /**
-   * Indicates whether the modal is open or not.
-   */
-  @property({ type: Boolean, reflect: true })
-  public open = false;
 
   /**
    * Sets the title of the modal.
@@ -57,6 +52,8 @@ export class Modal extends LitElement {
   @query("#container")
   private _container!: HTMLElement | null;
 
+  private _open = false;
+
   private readonly _focusTrapper = new FocusTrapper(
     this,
     () => this._container,
@@ -71,6 +68,65 @@ export class Modal extends LitElement {
     super();
 
     this._handleDocumentKeyDown = this._handleDocumentKeyDown.bind(this);
+  }
+
+  /**
+   * Determines whether the modal is open or not.
+   *
+   * @default false
+   */
+  @property({ type: Boolean, reflect: true })
+  public set open(openState: boolean) {
+    if (openState === this._open) return;
+
+    this._open = openState;
+
+    void this._toggleOpenState(openState);
+  }
+
+  public get open() {
+    return this._open;
+  }
+
+  private async _toggleOpenState(openState: boolean) {
+    // Skip transition if not connected or elements are not assigned
+    if (!this.isConnected || !this._root || !this._container) {
+      return;
+    }
+
+    const handleTransitionEnd = () => {
+      // Finish the animation when height transition ends
+      this._animationController.finish();
+    };
+
+    const cleanup = () => {
+      // Finish the animation and remove the transition end event listener
+      this._animationController.finish();
+      this._root!.removeEventListener("transitionend", handleTransitionEnd);
+    };
+
+    this._root.addEventListener("transitionend", handleTransitionEnd);
+
+    // Start the animation
+    this._animationController.start();
+
+    this._lockScroll();
+
+    // Wait for the animation to complete
+    const animationComplete = await this._animationController.promise;
+
+    // If the animation is aborted, perform cleanup
+    if (!animationComplete) return cleanup();
+
+    if (openState) {
+      this._focusTrapper.sendFocus();
+    } else {
+      this._unlockScroll();
+
+      this._previouslyFocusedElement?.focus();
+    }
+
+    cleanup();
   }
 
   private _attachGlobalEvents() {
@@ -104,30 +160,8 @@ export class Modal extends LitElement {
           document.activeElement as HTMLElement | null;
 
         this._attachGlobalEvents();
-        this._lockScroll();
-
-        if (!this._root) return;
-
-        this._root.addEventListener(
-          "transitionend",
-          // Finish the animation when transition ends
-          this._animationController.finish,
-        );
-        // Start the animation
-        this._animationController.start();
-
-        if (!this._animationController.promise) return;
-
-        // Wait for the animation to complete
-        this._animationController.promise
-          .then(() => {
-            this._focusTrapper.sendFocus();
-          })
-          .catch(() => void 0);
       } else {
         this._detachGlobalEvents();
-        this._unlockScroll();
-        this._previouslyFocusedElement?.focus();
       }
     }
 
@@ -178,12 +212,16 @@ export class Modal extends LitElement {
 
   private async _handleDocumentKeyDown(event: KeyboardEvent) {
     if (!this.open) return;
+    if (event.key !== KeyboardKeys.ESCAPE) return;
+    // If not the active element (doesn't have focus), bail!
+    // This is necessary to avoid weirdness in stacked modals
+    // (BottomSheets, Modals, etc.).
+    if (!isActiveElement(this)) return;
 
     // allow event to propagate to user code after a microtask.
     await waitAMicrotask();
 
     if (event.defaultPrevented) return;
-    if (event.key !== KeyboardKeys.ESCAPE) return;
 
     event.preventDefault();
 

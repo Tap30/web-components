@@ -1,4 +1,5 @@
 import { css } from "lit";
+import { Z_INDEXES } from "../internals";
 
 export default css`
   *,
@@ -9,6 +10,11 @@ export default css`
 
   [hidden] {
     display: none !important;
+  }
+
+  :host {
+    isolation: isolate;
+    position: relative;
   }
 
   .root.open {
@@ -32,9 +38,16 @@ export default css`
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
 
     visibility: hidden;
     opacity: 0;
+
+    -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    z-index: ${Z_INDEXES[5]};
 
     transition:
       visibility 240ms ease,
@@ -46,9 +59,15 @@ export default css`
 
     position: fixed;
     inset: 0;
+
+    z-index: -1;
   }
 
   .container {
+    overflow: hidden;
+    z-index: 1;
+    position: relative;
+
     transform: translateY(2rem);
 
     position: fixed;
@@ -59,7 +78,6 @@ export default css`
     background-color: var(--tap-sys-color-surface-primary);
     font-family: var(--tap-sys-font-family);
     border-radius: var(--tap-sys-radius-6);
-    overflow: hidden;
 
     transition: transform 240ms ease;
   }
