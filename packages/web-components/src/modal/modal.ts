@@ -9,10 +9,10 @@ import { classMap } from "lit/directives/class-map.js";
 import { KeyboardKeys } from "../internals";
 import {
   AnimationController,
-  createScrollGuard,
   FocusTrapper,
   getRenderRootSlot,
   runAfterRepaint,
+  ScrollLocker,
   waitAMicrotask,
 } from "../utils";
 import { Slots } from "./constants";
@@ -54,8 +54,15 @@ export class Modal extends LitElement {
   @query("#root")
   private _root!: HTMLElement | null;
 
-  private readonly _focusTrapper = new FocusTrapper(this);
-  private readonly _scrollGuard = createScrollGuard();
+  @query("#container")
+  private _container!: HTMLElement | null;
+
+  private readonly _focusTrapper = new FocusTrapper(
+    this,
+    () => this._container,
+  );
+
+  private readonly _scrollLocker = new ScrollLocker();
   private readonly _animationController = new AnimationController();
 
   private _previouslyFocusedElement: HTMLElement | null = null;
@@ -97,7 +104,7 @@ export class Modal extends LitElement {
           document.activeElement as HTMLElement | null;
 
         this._attachGlobalEvents();
-        this._scrollGuard.enable();
+        this._lockScroll();
 
         if (!this._root) return;
 
@@ -114,12 +121,12 @@ export class Modal extends LitElement {
         // Wait for the animation to complete
         this._animationController.promise
           .then(() => {
-            this._focusTrapper.trap();
+            this._focusTrapper.sendFocus();
           })
           .catch(() => void 0);
       } else {
         this._detachGlobalEvents();
-        this._scrollGuard.disable();
+        this._unlockScroll();
         this._previouslyFocusedElement?.focus();
       }
     }
@@ -151,6 +158,18 @@ export class Modal extends LitElement {
     const eventAllowed = this.dispatchEvent(new HideEvent());
 
     if (!eventAllowed) this.open = true;
+  }
+
+  private _lockScroll() {
+    if (!this._container) return;
+
+    this._scrollLocker.lock(this._container);
+  }
+
+  private _unlockScroll() {
+    if (!this._container) return;
+
+    this._scrollLocker.unlock(this._container);
   }
 
   private _handleOverlayClick() {
@@ -225,6 +244,8 @@ export class Modal extends LitElement {
       open: this.open,
       [this.alignment]: true,
     });
+
+    this._focusTrapper.enabled = this.open;
 
     const container: TemplateResult = this._focusTrapper.wrap(
       this._renderContainer(),
