@@ -16,6 +16,7 @@ export default css`
     --input-box-bg-color: var(--tap-sys-color-surface-primary);
     --input-box-border-color: var(--tap-sys-color-surface-inverse-primary);
     --input-control-color: var(--tap-sys-color-content-on-inverse);
+    --checkbox-overlay-size: 0;
 
     display: inline-block;
     vertical-align: middle;
@@ -29,8 +30,8 @@ export default css`
 
   .root:not(.disabled) .control.checked,
   .root:not(.disabled) .control.indeterminate {
-    --input-box-bg-color: var(--tap-sys-color-surface-inverse-primary);
     --input-control-color: var(--tap-sys-color-content-on-inverse);
+    --checkbox-overlay-size: 2rem;
   }
 
   .control {
@@ -69,6 +70,9 @@ export default css`
     height: 1.25rem;
     width: 1.25rem;
 
+    position: relative;
+    overflow: hidden;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -76,6 +80,56 @@ export default css`
     border-radius: var(--tap-sys-radius-1);
 
     background-color: var(--input-box-bg-color);
-    box-shadow: 0 0 0 1px var(--input-box-border-color);
+    box-shadow: 0 0 0 var(--tap-sys-spacing-1) var(--input-box-border-color)
+      inset;
+    transition:
+      box-shadow 120ms ease,
+      background-color 120ms ease;
+  }
+
+  .root:not(.disabled) .box::before {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    width: var(--checkbox-overlay-size);
+    height: var(--checkbox-overlay-size);
+
+    background-color: var(--tap-sys-color-surface-inverse-primary);
+
+    transition:
+      width 120ms ease,
+      height 120ms ease;
+  }
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+
+    transition:
+      opacity 60ms 60ms ease,
+      transform 60ms 60ms ease;
+  }
+
+  .icon.hidden {
+    transform: translate(-50%, -50%) scale(0);
+    transition:
+      opacity 120ms ease,
+      transform 120ms ease;
+  }
+
+  @media (prefers-reduced-motion) {
+    .box,
+    .box::before,
+    .icon {
+      transition: none;
+    }
   }
 `;
