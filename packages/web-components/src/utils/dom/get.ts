@@ -77,3 +77,14 @@ export const getRenderRootSlot = (
 
   return renderRoot.querySelector<HTMLSlotElement>(query);
 };
+
+export const getDeepActiveElement = (depth = Infinity) => {
+  let activeElement = document.activeElement;
+  let attempts = 0;
+
+  while (activeElement && activeElement.shadowRoot && ++attempts <= depth) {
+    activeElement = activeElement.shadowRoot.activeElement;
+  }
+
+  return activeElement as HTMLElement | null;
+};
