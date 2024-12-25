@@ -1,10 +1,11 @@
-import { html, LitElement } from "lit";
+import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { DeselectEvent, SelectEvent } from "../chip";
 import { Chip } from "../chip/chip";
-import { getRenderRootSlot, isSSR } from "../utils";
+import { getRenderRootSlot, isSSR, logger } from "../utils";
 import { Slots } from "./constants";
+import { SelectChangeEvent } from "./events";
 
 export class ChipGroup extends LitElement {
   /**
@@ -18,6 +19,15 @@ export class ChipGroup extends LitElement {
    */
   @property({ type: String })
   public orientation: "horizontal" | "vertical" = "horizontal";
+
+  /**
+   * Defines a string value that can be used to set a label
+   * for assistive technologies.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   */
+  @property({ type: String })
+  public label = "";
 
   /**
    * Indicates if the chip should be full width.
@@ -98,6 +108,18 @@ export class ChipGroup extends LitElement {
     );
   }
 
+  private _emitSelectChange(selectedValues: string[]) {
+    const prevSelectedChips = this.selectedChips;
+
+    this.selectedChips = selectedValues;
+
+    const eventAllowed = this.dispatchEvent(
+      new SelectChangeEvent({ selectedChips: selectedValues }),
+    );
+
+    if (!eventAllowed) this.selectedChips = prevSelectedChips;
+  }
+
   private _select(value: string) {
     const targetChip = this._chips.find(chip => {
       return chip.value === value;
@@ -105,9 +127,9 @@ export class ChipGroup extends LitElement {
 
     if (!targetChip || targetChip.selected) return;
 
-    this._selectedChips.push(value);
+    const newSelectedChips = [...this.selectedChips, value];
 
-    targetChip.selected = true;
+    this._emitSelectChange(newSelectedChips);
   }
 
   private _deselect(value: string) {
@@ -117,21 +139,37 @@ export class ChipGroup extends LitElement {
 
     if (!targetChip || !targetChip.selected) return;
 
-    this._selectedChips = this._selectedChips.filter(chip => chip !== value);
+    const newSelectedChips = this.selectedChips.filter(chip => chip !== value);
 
-    targetChip.selected = false;
+    this._emitSelectChange(newSelectedChips);
   }
 
   private _handleChipDeselection(event: DeselectEvent) {
-    const { chipValue } = event.details;
+    const chip = event.target as Chip;
 
-    this._deselect(chipValue);
+    this._deselect(chip.value);
   }
 
   private _handleChipSelection(event: SelectEvent) {
-    const { chipValue } = event.details;
+    const chip = event.target as Chip;
 
-    this._select(chipValue);
+    this._select(chip.value);
+  }
+
+  private _handleSlotChange() {
+    const chips = this._chips;
+
+    let didFilter = false;
+
+    const filtered = this.selectedChips.filter(chipValue => {
+      const accepted = chips.some(chip => chip.value === chipValue);
+
+      if (!accepted) didFilter = true;
+
+      return accepted;
+    });
+
+    if (didFilter) this._emitSelectChange(filtered);
   }
 
   protected override render() {
@@ -141,14 +179,23 @@ export class ChipGroup extends LitElement {
       "full-width": this.fullWidth,
     });
 
+    if (!this.label) {
+      logger(
+        "Set `label` attribute for better accessibility.",
+        "chip-group",
+        "warning",
+      );
+    }
+
     return html`
       <div
         role="group"
         class=${rootClasses}
         part="root"
         aria-orientation=${this.orientation}
+        aria-label=${this.label || nothing}
       >
-        <slot></slot>
+        <slot @slotchange=${this._handleSlotChange}></slot>
       </div>
     `;
   }
