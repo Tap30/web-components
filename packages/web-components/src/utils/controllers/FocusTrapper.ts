@@ -55,13 +55,21 @@ class FocusTrapper implements ReactiveController {
   private _sendFocusToFirstFocusableChild() {
     if (!this._isEnabled) return;
 
-    this._tryFocus(this._getFirstAndLastFocusableChildren()[0]);
+    const element = this._getFirstAndLastFocusableChildren()[0];
+
+    (document.activeElement as HTMLElement | null)?.blur();
+
+    this._tryFocus(element);
   }
 
   private _sendFocusToLastFocusableChild() {
     if (!this._isEnabled) return;
 
-    this._tryFocus(this._getFirstAndLastFocusableChildren()[1]);
+    const element = this._getFirstAndLastFocusableChildren()[1];
+
+    (document.activeElement as HTMLElement | null)?.blur();
+
+    this._tryFocus(element);
   }
 
   public sendFocus() {
