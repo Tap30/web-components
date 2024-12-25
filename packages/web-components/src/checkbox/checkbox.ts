@@ -94,10 +94,14 @@ export class Checkbox extends BaseInput {
   }
 
   private _renderIndeterminateIcon() {
-    if (!this.indeterminate) return null;
+    const IndeterminateIconClass = classMap({
+      icon: true,
+      hidden: !this.indeterminate,
+    });
 
     return html`
       <svg
+        class=${IndeterminateIconClass}
         part="indeterminate-icon"
         aria-hidden
         focusable="false"
@@ -117,10 +121,14 @@ export class Checkbox extends BaseInput {
   }
 
   private _renderCheckIcon() {
-    if (!this.checked || this.indeterminate) return null;
+    const checkIconClass = classMap({
+      icon: true,
+      hidden: !this.checked || this.indeterminate,
+    });
 
     return html`
       <svg
+        class=${checkIconClass}
         part="check-icon"
         aria-hidden
         focusable="false"
