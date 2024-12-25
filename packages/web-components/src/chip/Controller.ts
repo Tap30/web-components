@@ -23,10 +23,9 @@ class Controller implements ReactiveController {
     if (this._host.disabled) return;
 
     let event: SelectEvent | DeselectEvent;
-    const details = { chipValue: this._host.value };
 
-    if (this._host.selected) event = new DeselectEvent(details);
-    else event = new SelectEvent(details);
+    if (this._host.selected) event = new DeselectEvent();
+    else event = new SelectEvent();
 
     this._host.dispatchEvent(event);
   }
@@ -48,10 +47,9 @@ class Controller implements ReactiveController {
       // select-mode behavior.
 
       let event: SelectEvent | DeselectEvent;
-      const details = { chipValue: this._host.value };
 
-      if (this._host.selected) event = new SelectEvent(details);
-      else event = new DeselectEvent(details);
+      if (this._host.selected) event = new SelectEvent();
+      else event = new DeselectEvent();
 
       this._host.dispatchEvent(event);
     }

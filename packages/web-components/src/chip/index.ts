@@ -2,9 +2,8 @@ import { customElement } from "lit/decorators.js";
 import { Chip } from "./chip";
 import styles from "./chip.style";
 
-export * from "./events";
-
 export { Slots } from "./constants";
+export * from "./events";
 
 /**
  * @summary The chip component.
@@ -14,6 +13,9 @@ export { Slots } from "./constants";
  * @slot - Default content slot for chip text.
  * @slot [leading-icon] - The slot for an optional leading icon.
  * @slot [trailing-icon] - The slot for an optional trailing icon.
+ *
+ * @fires {SelectEvent} select - Fired when the chip is selected (cancelable, bubbles).
+ * @fires {DeselectEvent} deselect - Fired when the chip is deselected (cancelable, bubbles).
  *
  * @prop {boolean} [disabled=false] - Whether the chip is disabled or not.
  * @prop {boolean} [selected=false] - Whether the chip is selected or not.

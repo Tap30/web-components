@@ -1,27 +1,23 @@
 import { BaseEvent } from "../utils";
 
-type EventDetails = {
-  chipValue: string;
-};
-
-export class SelectEvent extends BaseEvent<EventDetails> {
+export class SelectEvent extends BaseEvent<null> {
   public static type = "select";
 
-  constructor(details: EventDetails) {
+  constructor() {
     super(SelectEvent.type, {
-      details,
+      details: null,
       bubbles: true,
       composed: true,
     });
   }
 }
 
-export class DeselectEvent extends BaseEvent<EventDetails> {
+export class DeselectEvent extends BaseEvent<null> {
   public static type = "deselect";
 
-  constructor(details: EventDetails) {
+  constructor() {
     super(DeselectEvent.type, {
-      details,
+      details: null,
       bubbles: true,
       composed: true,
     });
