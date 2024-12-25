@@ -6,7 +6,7 @@ import {
   type TemplateResult,
 } from "lit";
 import { styleMap } from "lit/directives/style-map.js";
-import { getDeepActiveElement, isElementFocusable } from "../dom";
+import { contains, isElementFocusable } from "../dom";
 import { runAfterRepaint } from "../event-loop-execution";
 
 type Host = ReactiveControllerHost & LitElement;
@@ -36,6 +36,8 @@ class FocusTrapper implements ReactiveController {
     this._resolveTreeRoot = resolveTreeRoot;
 
     this._handleDocumentFocus = this._handleDocumentFocus.bind(this);
+    this._handleStartTrapperFocus = this._handleStartTrapperFocus.bind(this);
+    this._handleEndTrapperFocus = this._handleEndTrapperFocus.bind(this);
     this.sendFocus = this.sendFocus.bind(this);
   }
 
@@ -50,12 +52,20 @@ class FocusTrapper implements ReactiveController {
     return this._isEnabled;
   }
 
-  public sendFocus() {
+  private _sendFocusToFirstFocusableChild() {
     if (!this._isEnabled) return;
 
-    const [firstFocusableChild] = this._getFirstAndLastFocusableChildren();
+    this._tryFocus(this._getFirstAndLastFocusableChildren()[0]);
+  }
 
-    this._tryFocus(firstFocusableChild);
+  private _sendFocusToLastFocusableChild() {
+    if (!this._isEnabled) return;
+
+    this._tryFocus(this._getFirstAndLastFocusableChildren()[1]);
+  }
+
+  public sendFocus() {
+    this._sendFocusToFirstFocusableChild();
   }
 
   // TODO: Add good caching mechanism for top most instance
@@ -63,6 +73,8 @@ class FocusTrapper implements ReactiveController {
     const instances = Array.from(
       document.querySelectorAll<Host>(`[${HOST_INSTANCE_DATA_ATTRIBUTE}]`),
     );
+
+    if (instances.length === 0) return null;
 
     const enabledInstances = instances.filter(instance => {
       const isEnabledStr =
@@ -72,6 +84,7 @@ class FocusTrapper implements ReactiveController {
     });
 
     if (enabledInstances.length === 0) return null;
+    if (enabledInstances.length === 1) return enabledInstances[0]!;
 
     const { topMost } = enabledInstances.reduce<{
       topMost: Host | null;
@@ -195,11 +208,41 @@ class FocusTrapper implements ReactiveController {
       this._tryFocus(lastFocusableChild);
     }
 
-    if (document.activeElement && !root.contains(document.activeElement)) {
+    if (document.activeElement && !contains(root, document.activeElement)) {
       (document.activeElement as HTMLElement).blur();
     }
 
     this._lastFocused = document.activeElement as HTMLElement | null;
+  }
+
+  private _getActualTarget(event: Event) {
+    if (!event.target) return null;
+
+    return (
+      ((event.target as HTMLElement).shadowRoot &&
+      typeof event.composedPath === "function"
+        ? event.composedPath()[0]
+        : event.target) ?? null
+    );
+  }
+
+  private _handleStartTrapperFocus(event: FocusEvent) {
+    const root = this._resolveTreeRoot();
+
+    const lastFocusedElement = (this._lastFocused ??
+      event.relatedTarget) as HTMLElement | null;
+
+    if (!root || !lastFocusedElement || !contains(root, lastFocusedElement)) {
+      this._sendFocusToFirstFocusableChild();
+
+      return;
+    }
+
+    this._sendFocusToLastFocusableChild();
+  }
+
+  private _handleEndTrapperFocus() {
+    this._sendFocusToFirstFocusableChild();
   }
 
   private _handleDocumentFocus(event: FocusEvent) {
@@ -211,17 +254,12 @@ class FocusTrapper implements ReactiveController {
 
     if (!root) return;
 
-    const target = event.target as HTMLElement;
+    const target = this._getActualTarget(event) as HTMLElement | null;
 
-    if (this._host.contains(target)) {
-      if (target === this._host) {
-        const activeElement = getDeepActiveElement(1);
+    if (!target) return;
 
-        if (!activeElement) return;
-        if (!root.contains(activeElement)) return this._trap(root);
-
-        this._lastFocused = activeElement;
-      } else this._lastFocused = target;
+    if (contains(root, target)) {
+      this._lastFocused = target;
     } else this._trap(root);
   }
 
@@ -245,7 +283,7 @@ class FocusTrapper implements ReactiveController {
         style=${styles}
         data-trapper
         data-trapper-type=${TrapperTypes.START}
-        @focus=${this.sendFocus}
+        @focus=${this._handleStartTrapperFocus}
       ></div>
       ${tree}
       <div
@@ -254,7 +292,7 @@ class FocusTrapper implements ReactiveController {
         style=${styles}
         data-trapper
         data-trapper-type=${TrapperTypes.END}
-        @focus=${this.sendFocus}
+        @focus=${this._handleEndTrapperFocus}
       ></div>
     `;
   }
