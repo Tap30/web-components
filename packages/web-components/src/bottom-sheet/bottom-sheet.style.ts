@@ -19,11 +19,14 @@ const styles = css`
     --bottom-sheet-grabber-height: 0.75rem;
     --bottom-sheet-grabber-y: 0;
     --bottom-sheet-grabber-bottom: 0;
+
+    isolation: isolate;
+    position: relative;
   }
 
   .root {
-    position: fixed;
-    bottom: 0;
+    position: absolute;
+    top: 0;
     left: 0;
     right: 0;
 
@@ -81,7 +84,11 @@ const styles = css`
 
     overflow: auto;
     z-index: 1;
-    position: relative;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
     border-top-left-radius: var(--tap-sys-radius-5);
     border-top-right-radius: var(--tap-sys-radius-5);

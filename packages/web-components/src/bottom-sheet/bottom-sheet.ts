@@ -163,10 +163,11 @@ export class BottomSheet extends LitElement {
   };
 
   private readonly _animationController = new AnimationController();
-  private readonly _focusTrapper = new FocusTrapper(this, () =>
-    this.renderRoot.querySelector("#container"),
-  );
   private readonly _scrollLocker = new ScrollLocker();
+  private readonly _focusTrapper = new FocusTrapper(
+    this,
+    () => this._container,
+  );
 
   private _dragGesture: DragGesture | null = null;
 
@@ -806,6 +807,8 @@ export class BottomSheet extends LitElement {
       <div
         part="overlay"
         class="overlay"
+        aria-hidden="true"
+        tabindex="-1"
         @click=${() => {
           if (!this._isDismissClicksAllowed) return;
 
