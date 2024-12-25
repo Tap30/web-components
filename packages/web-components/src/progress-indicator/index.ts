@@ -13,9 +13,11 @@ import styles from "./progress-indicator.style.js";
  * @prop {string} [current="0"] -
  * The current step index.
  * Defaults to "0".
- * @prop {string} [screen-reader-label=""] -
- * Provides an accessible label for screen readers.
- * This is used to describe the indicator.
+ * @prop {string} [label=""] -
+ * Defines a string value that can be used to set a label
+ * for assistive technologies.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
  * @prop {string} [valuetext=""] -
  * Defines the human-readable text alternative of value.
  *

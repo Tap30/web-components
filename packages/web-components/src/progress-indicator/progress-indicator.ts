@@ -21,11 +21,13 @@ export class ProgressIndicator extends LitElement {
   public current = "0";
 
   /**
-   * Provides an accessible label for screen readers.
-   * This is used to describe the indicator.
+   * Defines a string value that can be used to set a label
+   * for assistive technologies.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
    */
-  @property({ attribute: "screen-reader-label" })
-  public screenReaderLabel = "";
+  @property({ type: String })
+  public label = "";
 
   /**
    * Defines the human-readable text alternative of value.
@@ -56,9 +58,9 @@ export class ProgressIndicator extends LitElement {
   }
 
   protected override render() {
-    if (!this.screenReaderLabel) {
+    if (!this.label) {
       logger(
-        "Set `screen-reader-label` attribute for better accessibility.",
+        "Set `label` attribute for better accessibility.",
         "progress-indicator",
         "warning",
       );
@@ -77,7 +79,7 @@ export class ProgressIndicator extends LitElement {
         class="root"
         part="root"
         role="progressbar"
-        aria-label=${this.screenReaderLabel || nothing}
+        aria-label=${this.label || nothing}
         aria-valuemin="0"
         aria-valuemax=${this.steps || nothing}
         aria-valuenow=${this.current || nothing}
