@@ -10,4 +10,11 @@ class {{name}} extends BaseIcon {
 
 customElements.define("tapsi-icon-{{elementTag}}", {{name}});
 
+declare global {
+  interface HTMLElementTagNameMap {
+    "tapsi-icon-{{elementTag}}": {{name}};
+  }
+}
+
+
 export default {{name}};
