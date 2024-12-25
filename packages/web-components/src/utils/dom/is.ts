@@ -89,7 +89,6 @@ export const isActiveElement = (element: Element): boolean => {
   if (!document.activeElement) return false;
 
   if (document.activeElement === element) return true;
-  if (element.contains(document.activeElement)) return true;
 
-  return false;
+  return contains(element, document.activeElement);
 };
