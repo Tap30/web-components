@@ -15,19 +15,25 @@ export const isHTMLInputElement = (input: unknown): input is HTMLInputElement =>
 export const isNode = (input: unknown): input is Node => input instanceof Node;
 
 export const isShadowRoot = (node: Node): node is ShadowRoot =>
-  node instanceof ShadowRoot || node instanceof ShadowRoot;
+  node instanceof ShadowRoot;
+
+export const isHTMLDocument = (node: Node): node is Document =>
+  node instanceof Document;
 
 export const contains = (parent: Element, child: Element): boolean => {
   if (parent.contains(child)) return true;
 
-  const rootNode = child.getRootNode?.();
+  const rootNode = child.getRootNode();
 
-  // Fallback to custom implementation with Shadow DOM support
-  if (rootNode && isShadowRoot(rootNode)) {
+  if (rootNode) {
     let next: Node = child;
 
     do {
       if (next && parent === next) return true;
+
+      const shadowRoot = (next as unknown as HTMLElement).shadowRoot;
+
+      if (shadowRoot && shadowRoot.contains(parent)) return true;
 
       next = next.parentNode || (next as unknown as ShadowRoot).host;
     } while (next);
