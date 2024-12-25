@@ -12,7 +12,7 @@ export default css`
   }
 
   :host {
-    display: inline-block;
+    display: flex;
   }
 
   .root:not(.dot).md {

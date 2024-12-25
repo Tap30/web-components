@@ -52,7 +52,7 @@ export default css`
   }
 
   .root.pill.top .badge {
-    top: 6px;
+    top: var(--pill-badge-wrapper-badge-offset); // TODO: fix
   }
 
   .root.pill.middle .badge {
@@ -60,11 +60,11 @@ export default css`
   }
 
   .root.pill:not(.middle).left .badge {
-    left: 6px;
+    left: var(--pill-badge-wrapper-badge-offset); // TODO: fix
   }
 
   .root.pill:not(.middle).right .badge {
-    right: 6px;
+    right: var(--pill-badge-wrapper-badge-offset); // TODO: fix
   }
 
   .root.pill.middle.left .badge {
@@ -82,8 +82,6 @@ export default css`
     flex-shrink: 0;
 
     vertical-align: middle;
-
-    z-index: 2;
   }
 
   .badge {
@@ -92,5 +90,8 @@ export default css`
     justify-content: center;
 
     position: absolute;
+
+    z-index: 1;
+    isolation: isolate;
   }
 `;
