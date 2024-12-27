@@ -4,14 +4,14 @@ type EventDetails = {
   itemValue: string;
 };
 
-export class ActiveChangeEvent extends BaseEvent<EventDetails> {
-  public static type = "activechange";
+export class ActivateEvent extends BaseEvent<EventDetails> {
+  public static type = "activate";
 
   constructor(details: EventDetails) {
-    super(ActiveChangeEvent.type, {
+    super(ActivateEvent.type, {
       details,
-      composed: true,
       bubbles: true,
+      composed: true,
       cancelable: true,
     });
   }

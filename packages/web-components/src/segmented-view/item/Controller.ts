@@ -1,7 +1,7 @@
 import { type ReactiveController, type ReactiveControllerHost } from "lit";
 import { KeyboardKeys } from "../../internals";
 import { waitAMicrotask } from "../../utils";
-import { ActiveChangeEvent } from "./events";
+import { ActivateEvent } from "./events";
 import type { SegmentedViewItem } from "./item";
 
 /*
@@ -81,7 +81,7 @@ class SegmentedViewItemController implements ReactiveController {
     if (event.defaultPrevented) return;
 
     const eventAllowed = this._host.dispatchEvent(
-      new ActiveChangeEvent({
+      new ActivateEvent({
         itemValue: this._host.value,
       }),
     );
@@ -189,7 +189,7 @@ class SegmentedViewItemController implements ReactiveController {
       }
 
       const eventAllowed = this._host.dispatchEvent(
-        new ActiveChangeEvent({
+        new ActivateEvent({
           itemValue: nextSibling.value,
         }),
       );

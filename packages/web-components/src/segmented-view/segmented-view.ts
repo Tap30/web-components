@@ -2,7 +2,8 @@ import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { getRenderRootSlot, isSSR, logger } from "../utils";
 import { Slots } from "./constants";
-import { SegmentedViewItem } from "./item";
+import { ActiveChangeEvent } from "./events";
+import { ActivateEvent, SegmentedViewItem } from "./item";
 
 export class SegmentedView extends LitElement {
   private _activeItem = "";
@@ -15,6 +16,32 @@ export class SegmentedView extends LitElement {
    */
   @property({ type: String })
   public label = "";
+
+  constructor() {
+    super();
+
+    if (!isSSR()) {
+      this._handleItemActivate = this._handleItemActivate.bind(this);
+    }
+  }
+
+  public override connectedCallback() {
+    super.connectedCallback();
+
+    this.addEventListener(
+      ActivateEvent.type,
+      this._handleItemActivate as EventListener,
+    );
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.removeEventListener(
+      ActivateEvent.type,
+      this._handleItemActivate as EventListener,
+    );
+  }
 
   private get _items() {
     const itemsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
@@ -59,6 +86,16 @@ export class SegmentedView extends LitElement {
 
     this._activeItem = itemValue;
     targetItem.active = true;
+  }
+
+  private _handleItemActivate(event: ActivateEvent) {
+    const { itemValue } = event.details;
+
+    const eventAllowed = this.dispatchEvent(
+      new ActiveChangeEvent({ itemValue }),
+    );
+
+    if (!eventAllowed) event.preventDefault();
   }
 
   private _handleItemsSlotChange() {
