@@ -1,16 +1,12 @@
 import { customElement } from "lit/decorators.js";
 import { BottomNavigation } from "./bottom-navigation";
 import bottomNavigationStyles from "./bottom-navigation.style";
-import {
-  ActivateEvent,
-  BottomNavigationItem,
-  DeactivateEvent,
-  Slots as ItemSlots,
-} from "./item";
+import { BottomNavigationItem, Slots as ItemSlots } from "./item";
 import itemStyles from "./item/item.style";
 
 export { Slots } from "./constants";
-export { ActivateEvent, DeactivateEvent, ItemSlots };
+export * from "./events";
+export { ItemSlots };
 
 /**
  * @summary Represents a single item in a bottom navigation bar.
@@ -20,8 +16,8 @@ export { ActivateEvent, DeactivateEvent, ItemSlots };
  * @slot icon - The slot for the icon element.
  * @slot - The default slot for the content/label.
  *
- * @fires {ActivateEvent} activate
- * @fires {DeactivateEvent} deactivate
+ * @fires {ActivateEvent} activate - Fired when the item activates (bubbles).
+ * @fires {DeactivateEvent} deactivate - Fired when the item deactivates (bubbles).
  *
  * @prop {boolean} [active=false] - Indicates whether the item is active or not.
  * @prop {string} [value=""] - The value associated with the item. This value has to be unique among sibling items.
@@ -32,17 +28,22 @@ export class TapBottomNavigationItem extends BottomNavigationItem {
 }
 
 /**
- * @summary The bottom navigation bar that contains multiple navigation items.
+ * @summary The bottom navigation bar component.
  *
  * @tag tap-bottom-navigation
  *
  * @slot - The default slot for navigation items.
+ *
+ * @fires {ActiveChangeEvent} activechange - Fired when the items activation state changes (cancelable, bubbles).
  *
  * @prop {string} [label] -
  * Defines a string value that can be used to set a label
  * for assistive technologies.
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+ *
+ * @member {string} activeItem
+ * @description - The value of the currently activated item.
  */
 @customElement("tap-bottom-navigation")
 export class TapBottomNavigation extends BottomNavigation {

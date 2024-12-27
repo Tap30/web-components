@@ -1,7 +1,8 @@
-import { LitElement, html } from "lit";
+import { LitElement, html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { getRenderRootSlot, isSSR, logger } from "../utils";
 import { Slots } from "./constants";
+import { ActiveChangeEvent } from "./events";
 import { ActivateEvent, BottomNavigationItem, DeactivateEvent } from "./item";
 
 export class BottomNavigation extends LitElement {
@@ -34,7 +35,12 @@ export class BottomNavigation extends LitElement {
   public set activeItem(value: string) {
     if (isSSR()) return;
 
-    this._activate(value);
+    this._items.forEach(item => {
+      if (value === item.value) item.active = true;
+      else item.active = false;
+    });
+
+    this._activeItem = value;
   }
 
   /**
@@ -90,12 +96,7 @@ export class BottomNavigation extends LitElement {
 
     if (!targetItem || targetItem.active) return;
 
-    this._items.forEach(item => {
-      if (item !== targetItem) item.active = false;
-    });
-
-    this._activeItem = itemValue;
-    targetItem.active = true;
+    this._emitActiveChange(itemValue);
   }
 
   private _deactivate(itemValue: string) {
@@ -103,16 +104,24 @@ export class BottomNavigation extends LitElement {
 
     if (!targetItem || !targetItem.active) return;
 
-    targetItem.active = false;
-    this._activeItem = "";
-
     const hasActiveItem = !!this._queryActiveItem;
     const firstItem = this._items[0];
 
     if (hasActiveItem || !firstItem) return;
 
-    firstItem.active = true;
-    this._activeItem = firstItem.value;
+    this._emitActiveChange(firstItem.value);
+  }
+
+  private _emitActiveChange(activeValue: string) {
+    const prevActiveItem = this.activeItem;
+
+    this.activeItem = activeValue;
+
+    const eventAllowed = this.dispatchEvent(
+      new ActiveChangeEvent({ activeItem: activeValue }),
+    );
+
+    if (!eventAllowed) this.activeItem = prevActiveItem;
   }
 
   private _handleItemDeactivation(event: DeactivateEvent) {
@@ -133,7 +142,7 @@ export class BottomNavigation extends LitElement {
 
     if (hasActiveItem || !firstItem) return;
 
-    firstItem.active = true;
+    this._emitActiveChange(firstItem.value);
   }
 
   protected override render() {
@@ -150,7 +159,7 @@ export class BottomNavigation extends LitElement {
         role="navigation"
         class="root"
         part="root"
-        aria-label=${this.label}
+        aria-label=${this.label || nothing}
       >
         <slot @slotchange=${this._handleItemsSlotChange}></slot>
       </nav>
