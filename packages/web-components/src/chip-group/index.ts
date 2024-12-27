@@ -3,6 +3,7 @@ import { ChipGroup } from "./chip-group";
 import styles from "./chip-group.style";
 
 export { Slots } from "./constants";
+export * from "./events";
 
 /**
  * @summary A chip group component.
