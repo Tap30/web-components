@@ -392,13 +392,13 @@ export class RateSlider extends BaseClass {
     if (value === max) classes.rounded = true;
 
     const stopCssWidthVar = "--rate-slider-stop-width";
-    const stopCssWidth = `calc((${100}% - 16px) / ${rangeLength})`;
-    const cssOffset = value === max ? 16 : 8;
+    const stopCssWidth = `calc((${100}% - 1rem) / ${rangeLength})`;
+    const cssOffset = value === max ? "1rem" : "0.5rem";
 
     const gradientWidth =
       stopCount === 0
         ? "0"
-        : `calc((${stopCount} * var(${stopCssWidthVar})) + ${cssOffset}px)`;
+        : `calc((${stopCount} * var(${stopCssWidthVar})) + ${cssOffset})`;
 
     const styles = styleMap({
       [stopCssWidthVar]: stopCssWidth,
