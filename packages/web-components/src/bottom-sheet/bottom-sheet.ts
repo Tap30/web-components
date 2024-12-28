@@ -135,6 +135,8 @@ export class BottomSheet extends LitElement {
   private get _preventContainerScrolling() {
     if (isSSR()) return true;
 
+    if (!this.expandable) return false;
+
     return this._height < this._maxSnapPoint;
   }
 
@@ -356,7 +358,7 @@ export class BottomSheet extends LitElement {
    * - The second snap point is 90% of the window's inner height.
    */
   public get defaultSnapPoints(): [number, number] {
-    if (isSSR() || !this._container) {
+    if (isSSR() || !this.isConnected || !this._container) {
       return SENTINEL_DEFAULT_SNAP_POINTS as [number, number];
     }
 
