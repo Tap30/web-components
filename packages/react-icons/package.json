@@ -1,11 +1,8 @@
 {
   "sideEffects": false,
   "name": "@tapsioss/react-icons",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "module",
-  "engines": {
-    "node": ">=20"
-  },
   "files": [
     "./dist/**/*.js",
     "./dist/**/*.d.ts",
