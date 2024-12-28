@@ -32,6 +32,10 @@ type OwnProps = {
    * @default "auto"
    */
   size?: number | "auto";
+  /**
+   * Assigns a slot in a shadow DOM shadow tree to this element.
+   */
+  slot?: string;
 };
 
 export type Props = MergeElementProps<"svg", OwnProps>;
