@@ -19,7 +19,7 @@ export default css`
     --banner-content-width: calc(100% - 7.75rem);
 
     background-color: var(--banner-color-surface);
-    border-radius: var(--tap-sys-radius-4);
+    border-radius: var(--tapsi-radius-4);
 
     vertical-align: middle;
 
@@ -28,7 +28,7 @@ export default css`
     background-size: contain;
     background-repeat: no-repeat;
 
-    padding: var(--tap-sys-spacing-6);
+    padding: var(--tapsi-spacing-6);
 
     height: 9.25rem;
   }
@@ -44,22 +44,22 @@ export default css`
 
   .heading {
     color: var(--banner-color-content);
-    font-family: var(--tap-sys-font-family);
-    line-height: var(--tap-sys-typography-headline-xs-height);
-    font-size: var(--tap-sys-typography-headline-xs-size);
-    font-weight: var(--tap-sys-typography-headline-xs-weight);
+    font-family: var(--tapsi-font-family);
+    line-height: var(--tapsi-typography-headline-xs-height);
+    font-size: var(--tapsi-typography-headline-xs-size);
+    font-weight: var(--tapsi-typography-headline-xs-weight);
   }
 
   .description {
     color: var(--banner-color-content);
-    font-family: var(--tap-sys-font-family);
-    line-height: var(--tap-sys-typography-body-xs-height);
-    font-size: var(--tap-sys-typography-body-xs-size);
-    font-weight: var(--tap-sys-typography-body-xs-weight);
+    font-family: var(--tapsi-font-family);
+    line-height: var(--tapsi-typography-body-xs-height);
+    font-size: var(--tapsi-typography-body-xs-size);
+    font-weight: var(--tapsi-typography-body-xs-weight);
   }
 
   .heading + .description {
-    margin-top: var(--tap-sys-spacing-3);
+    margin-top: var(--tapsi-spacing-3);
   }
 
   .content {
@@ -71,7 +71,7 @@ export default css`
   }
 
   .root.hero * + .action {
-    margin-top: var(--tap-sys-spacing-5);
+    margin-top: var(--tapsi-spacing-5);
   }
 
   .action {

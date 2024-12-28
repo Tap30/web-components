@@ -13,7 +13,7 @@ export default css`
   }
 
   .root {
-    padding: var(--tap-sys-spacing-2);
+    padding: var(--tapsi-spacing-2);
     stroke-linecap: round;
     color: currentColor;
   }

@@ -2,7 +2,7 @@ import { css } from "lit";
 
 export default css`
   :host {
-    border-radius: var(--tap-sys-radius-full);
+    border-radius: var(--tapsi-radius-full);
   }
 
   .root.sm {

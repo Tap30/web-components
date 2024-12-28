@@ -7,7 +7,7 @@ export { Slots } from "./constants";
 /**
  * @summary A wrapper component to position a badge relative to an anchor.
  *
- * @tag tap-badge-wrapper
+ * @tag tapsi-badge-wrapper
  *
  * @prop {"rectangle" | "circle" | "pill"} [anchor-shape="rectangle"] - The shape of the anchor.
  * @prop {"left" | "right"} [badge-side="right"] - The horizontal placement of the badge.
@@ -16,13 +16,13 @@ export { Slots } from "./constants";
  * @slot - The default slot for the anchor element.
  * @slot badge - The slot for the badge to be positioned.
  */
-@customElement("tap-badge-wrapper")
-export class TapBadgeWrapper extends BadgeWrapper {
+@customElement("tapsi-badge-wrapper")
+export class TapsiBadgeWrapper extends BadgeWrapper {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-badge-wrapper": TapBadgeWrapper;
+    "tapsi-badge-wrapper": TapsiBadgeWrapper;
   }
 }

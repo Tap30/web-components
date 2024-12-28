@@ -8,7 +8,7 @@ export * from "./events";
 /**
  * @summary The tooltip component.
  *
- * @tag tap-tooltip
+ * @tag tapsi-tooltip
  *
  * @prop {'top'| 'top-start'| 'top-end'| 'right'| 'right-start'| 'right-end'| 'bottom'| 'bottom-start'| 'bottom-end'| 'left'| 'left-start'| 'left-end'} [placement='top'] -
  * The position of the tooltip based on the anchor.
@@ -24,13 +24,13 @@ export * from "./events";
  * @fires {ShowEvent} show - Fires when the tooltip should be visible.
  * @fires {HideEvent} hide - Fires when the tooltip should be hidden.
  */
-@customElement("tap-tooltip")
-export class TapTooltip extends Tooltip {
+@customElement("tapsi-tooltip")
+export class TapsiTooltip extends Tooltip {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-tooltip": TapTooltip;
+    "tapsi-tooltip": TapsiTooltip;
   }
 }

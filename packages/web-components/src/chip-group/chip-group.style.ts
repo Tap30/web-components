@@ -19,12 +19,12 @@ export default css`
     display: inline-block;
   }
 
-  .root.horizontal ::slotted(tap-chip) {
+  .root.horizontal ::slotted(tapsi-chip) {
     flex-shrink: 0;
   }
 
-  .root.vertical ::slotted(tap-chip) {
-    --chip-basis: calc(50% - (var(--tap-sys-spacing-5) / 2));
+  .root.vertical ::slotted(tapsi-chip) {
+    --chip-basis: calc(50% - (var(--tapsi-spacing-5) / 2));
 
     flex: 0 0 var(--chip-basis);
     max-width: var(--chip-basis);
@@ -46,7 +46,7 @@ export default css`
 
     width: 100%;
 
-    gap: var(--tap-sys-spacing-5);
+    gap: var(--tapsi-spacing-5);
   }
 
   .root::-webkit-scrollbar {

@@ -16,8 +16,8 @@ export default css`
   }
 
   .root {
-    background-color: var(--tap-sys-color-surface-secondary);
-    box-shadow: 0 0 0 1px var(--tap-sys-color-border-primary);
+    background-color: var(--tapsi-color-surface-secondary);
+    box-shadow: 0 0 0 1px var(--tapsi-color-border-primary);
     border-radius: 50%;
 
     display: inline-flex;

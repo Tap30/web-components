@@ -8,7 +8,7 @@ export * from "./events";
 /**
  * @summary A chip group component.
  *
- * @tag tap-chip-group
+ * @tag tapsi-chip-group
  *
  * @slot - The default slot for chips.
  *
@@ -24,13 +24,13 @@ export * from "./events";
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
  */
 
-@customElement("tap-chip-group")
-export class TapChipGroup extends ChipGroup {
+@customElement("tapsi-chip-group")
+export class TapsiChipGroup extends ChipGroup {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-chip-group": TapChipGroup;
+    "tapsi-chip-group": TapsiChipGroup;
   }
 }

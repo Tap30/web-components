@@ -3,7 +3,6 @@ export const Slots = {
   ACTION: "action",
 } as const;
 
-export const DEFAULT_BACKGROUND_COLOR =
-  "var(--tap-sys-color-surface-secondary)";
+export const DEFAULT_BACKGROUND_COLOR = "var(--tapsi-color-surface-secondary)";
 
-export const DEFAULT_TEXT_COLOR = "var(--tap-sys-color-content-primary)";
+export const DEFAULT_TEXT_COLOR = "var(--tapsi-color-content-primary)";

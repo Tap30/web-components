@@ -8,7 +8,7 @@ export * from "./events";
 /**
  * @summary The chip component.
  *
- * @tag tap-chip
+ * @tag tapsi-chip
  *
  * @slot - Default content slot for chip text.
  * @slot [leading-icon] - The slot for an optional leading icon.
@@ -24,13 +24,13 @@ export * from "./events";
  * Use it when chips are children of chip-group. This value has to be unique among sibling chips.
  */
 
-@customElement("tap-chip")
-export class TapChip extends Chip {
+@customElement("tapsi-chip")
+export class TapsiChip extends Chip {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-chip": TapChip;
+    "tapsi-chip": TapsiChip;
   }
 }

@@ -13,11 +13,11 @@ export default css`
 
   .root {
     direction: rtl;
-    font-family: var(--tap-sys-font-family);
+    font-family: var(--tapsi-font-family);
 
     display: flex;
     flex-direction: column;
 
-    gap: var(--tap-sys-spacing-4);
+    gap: var(--tapsi-spacing-4);
   }
 `;

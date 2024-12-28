@@ -65,10 +65,10 @@ export default css`
   }
 
   /* .item:first-child {
-    padding-top: var(--tap-pinwheel-item-height, var(--tap-sys-spacing-11));
+    padding-top: var(--tapsi-pinwheel-item-height, var(--tapsi-spacing-11));
   }
 
   .item:last-child {
-    padding-bottom: var(--tap-pinwheel-item-height, var(--tap-sys-spacing-11));
+    padding-bottom: var(--tapsi-pinwheel-item-height, var(--tapsi-spacing-11));
   } */
 `;

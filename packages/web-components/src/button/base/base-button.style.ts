@@ -30,68 +30,68 @@ export default css`
   .root.sm {
     --button-height: 2rem;
     --button-icon-size: 1.25rem;
-    --button-root-padding: 0 var(--tap-sys-spacing-3-1);
+    --button-root-padding: 0 var(--tapsi-spacing-3-1);
   }
 
   .root.md {
     --button-height: 2.5rem;
     --button-icon-size: 1.5rem;
-    --button-root-padding: 0 var(--tap-sys-spacing-4);
+    --button-root-padding: 0 var(--tapsi-spacing-4);
   }
 
   .root.lg {
     --button-icon-size: 1.5rem;
     --button-height: 3rem;
-    --button-root-padding: 0 var(--tap-sys-spacing-5);
+    --button-root-padding: 0 var(--tapsi-spacing-5);
   }
 
   .root.primary {
-    --button-background: var(--tap-sys-color-surface-inverse-primary);
-    --button-color: var(--tap-sys-color-content-on-inverse);
+    --button-background: var(--tapsi-color-surface-inverse-primary);
+    --button-color: var(--tapsi-color-content-on-inverse);
   }
 
   .root.ghost {
-    --button-background: var(--tap-sys-color-surface-tertiary);
-    --button-color: var(--tap-sys-color-content-primary);
+    --button-background: var(--tapsi-color-surface-tertiary);
+    --button-color: var(--tapsi-color-content-primary);
   }
 
   .root.naked {
     --button-background: transparent;
-    --button-color: var(--tap-sys-color-content-primary);
+    --button-color: var(--tapsi-color-content-primary);
   }
 
   .root.elevated {
-    --button-background: var(--tap-sys-color-surface-primary);
-    --button-color: var(--tap-sys-color-content-primary);
+    --button-background: var(--tapsi-color-surface-primary);
+    --button-color: var(--tapsi-color-content-primary);
     box-shadow: 0 0.25rem 1rem 0 #0000001a;
   }
 
   .root.destructive {
-    --button-background: var(--tap-sys-color-surface-negative-light);
-    --button-color: var(--tap-sys-color-content-negative);
+    --button-background: var(--tapsi-color-surface-negative-light);
+    --button-color: var(--tapsi-color-content-negative);
   }
 
   .root.brand {
-    --button-background: var(--tap-sys-color-gradient-brand);
-    --button-color: var(--tap-sys-color-content-on-inverse);
+    --button-background: var(--tapsi-color-gradient-brand);
+    --button-color: var(--tapsi-color-content-on-inverse);
   }
 
   .root:not(.naked).disabled {
-    --button-disabled-background: var(--tap-sys-color-surface-disabled);
-    --button-disabled-color: var(--tap-sys-color-content-disabled);
+    --button-disabled-background: var(--tapsi-color-surface-disabled);
+    --button-disabled-color: var(--tapsi-color-content-disabled);
   }
 
   .root.naked.disabled {
     --button-disabled-background: transparent;
-    --button-disabled-color: var(--tap-sys-color-content-disabled);
+    --button-disabled-color: var(--tapsi-color-content-disabled);
   }
 
   .root:not(.disabled):not(.primary):active .overlay {
-    --button-overlay-color: var(--tap-sys-color-surface-overlay-light);
+    --button-overlay-color: var(--tapsi-color-surface-overlay-light);
   }
 
   .root:not(.disabled).primary:active .overlay {
-    --button-overlay-color: var(--tap-sys-color-surface-inverse-secondary);
+    --button-overlay-color: var(--tapsi-color-surface-inverse-secondary);
   }
 
   .root {
@@ -117,13 +117,13 @@ export default css`
 
     background: var(--button-custom-background, var(--button-background));
     color: var(--button-custom-color, var(--button-color));
-    font-family: var(--tap-sys-font-family);
-    border-radius: var(--tap-sys-radius-full);
+    font-family: var(--tapsi-font-family);
+    border-radius: var(--tapsi-radius-full);
   }
 
   .root:focus-visible {
-    outline: var(--tap-sys-stroke-2) solid var(--tap-sys-color-content-accent);
-    outline-offset: var(--tap-sys-spacing-2);
+    outline: var(--tapsi-stroke-2) solid var(--tapsi-color-content-accent);
+    outline-offset: var(--tapsi-spacing-2);
   }
 
   .body {

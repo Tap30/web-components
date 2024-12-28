@@ -7,7 +7,7 @@ export { Slots } from "./constants";
 /**
  * @summary The banner component
  *
- * @tag tap-banner
+ * @tag tapsi-banner
  *
  * @slot - The default slot to render extra elements when variant is `hero`.
  * @slot action - The slot for action element.
@@ -19,13 +19,13 @@ export { Slots } from "./constants";
  * @prop {string} [background-color] - The background color of the banner.
  * @prop {string} [text-color] - The text color of the banner.
  */
-@customElement("tap-banner")
-export class TapBanner extends Banner {
+@customElement("tapsi-banner")
+export class TapsiBanner extends Banner {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-banner": TapBanner;
+    "tapsi-banner": TapsiBanner;
   }
 }

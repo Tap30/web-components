@@ -764,7 +764,7 @@ export class BottomSheet extends LitElement {
     if (!this.hasDismissButton) return null;
 
     return html`
-      <tap-icon-button
+      <tapsi-icon-button
         class="dismiss"
         part="dismiss"
         size="sm"
@@ -782,7 +782,7 @@ export class BottomSheet extends LitElement {
         >
           ${dismiss}
         </span>
-      </tap-icon-button>
+      </tapsi-icon-button>
     `;
   }
 

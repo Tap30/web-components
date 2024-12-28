@@ -25,30 +25,30 @@ export default css`
 
   .root.pill.md {
     --badge-min-width: 2rem;
-    --badge-font-size: var(--tap-sys-typography-body-xs-size);
-    --badge-font-height: var(--tap-sys-typography-body-xs-height);
-    --badge-font-weight: var(--tap-sys-typography-body-xs-weight);
+    --badge-font-size: var(--tapsi-typography-body-xs-size);
+    --badge-font-height: var(--tapsi-typography-body-xs-height);
+    --badge-font-weight: var(--tapsi-typography-body-xs-weight);
   }
 
   .root.pill.sm {
     --badge-min-width: 2rem;
-    --badge-font-size: var(--tap-sys-typography-label-xxs-size);
-    --badge-font-height: var(--tap-sys-typography-label-xxs-height);
-    --badge-font-weight: var(--tap-sys-typography-label-xxs-weight);
+    --badge-font-size: var(--tapsi-typography-label-xxs-size);
+    --badge-font-height: var(--tapsi-typography-label-xxs-height);
+    --badge-font-weight: var(--tapsi-typography-label-xxs-weight);
   }
 
   .root.numeral.md {
     --badge-min-width: 1.5rem;
-    --badge-font-size: var(--tap-sys-typography-label-md-size);
-    --badge-font-height: var(--tap-sys-typography-label-md-height);
-    --badge-font-weight: var(--tap-sys-typography-label-md-weight);
+    --badge-font-size: var(--tapsi-typography-label-md-size);
+    --badge-font-height: var(--tapsi-typography-label-md-height);
+    --badge-font-weight: var(--tapsi-typography-label-md-weight);
   }
 
   .root.numeral.sm {
     --badge-min-width: 1.25rem;
-    --badge-font-size: var(--tap-sys-typography-label-xs-size);
-    --badge-font-height: var(--tap-sys-typography-label-xs-height);
-    --badge-font-weight: var(--tap-sys-typography-label-xs-weight);
+    --badge-font-size: var(--tapsi-typography-label-xs-size);
+    --badge-font-height: var(--tapsi-typography-label-xs-height);
+    --badge-font-weight: var(--tapsi-typography-label-xs-weight);
   }
 
   .root.dot {
@@ -61,54 +61,54 @@ export default css`
   }
 
   .root.success.high {
-    --badge-bg-color: var(--tap-sys-color-surface-positive);
-    --badge-color: var(--tap-sys-color-content-on-negative);
+    --badge-bg-color: var(--tapsi-color-surface-positive);
+    --badge-color: var(--tapsi-color-content-on-negative);
   }
 
   .root.info.high {
-    --badge-bg-color: var(--tap-sys-color-surface-accent);
-    --badge-color: var(--tap-sys-color-content-on-negative);
+    --badge-bg-color: var(--tapsi-color-surface-accent);
+    --badge-color: var(--tapsi-color-content-on-negative);
   }
 
   .root.error.high {
-    --badge-bg-color: var(--tap-sys-color-surface-negative);
-    --badge-color: var(--tap-sys-color-content-on-negative);
+    --badge-bg-color: var(--tapsi-color-surface-negative);
+    --badge-color: var(--tapsi-color-content-on-negative);
   }
 
   .root.warning.high {
-    --badge-bg-color: var(--tap-sys-color-surface-warning);
-    --badge-color: var(--tap-sys-color-content-on-warning);
+    --badge-bg-color: var(--tapsi-color-surface-warning);
+    --badge-color: var(--tapsi-color-content-on-warning);
   }
 
   .root.success.low {
-    --badge-bg-color: var(--tap-sys-color-surface-positive-light);
-    --badge-color: var(--tap-sys-color-content-positive);
+    --badge-bg-color: var(--tapsi-color-surface-positive-light);
+    --badge-color: var(--tapsi-color-content-positive);
   }
 
   .root.info.low {
-    --badge-bg-color: var(--tap-sys-color-surface-accent-light);
-    --badge-color: var(--tap-sys-color-content-accent);
+    --badge-bg-color: var(--tapsi-color-surface-accent-light);
+    --badge-color: var(--tapsi-color-content-accent);
   }
 
   .root.error.low {
-    --badge-bg-color: var(--tap-sys-color-surface-negative-light);
-    --badge-color: var(--tap-sys-color-content-negative);
+    --badge-bg-color: var(--tapsi-color-surface-negative-light);
+    --badge-color: var(--tapsi-color-content-negative);
   }
 
   .root.warning.low {
-    --badge-bg-color: var(--tap-sys-color-surface-warning-light);
-    --badge-color: var(--tap-sys-color-content-warning);
+    --badge-bg-color: var(--tapsi-color-surface-warning-light);
+    --badge-color: var(--tapsi-color-content-warning);
   }
 
   .root.neutral {
-    --badge-bg-color: var(--tap-sys-color-surface-disabled);
-    --badge-color: var(--tap-sys-color-content-tertiary);
+    --badge-bg-color: var(--tapsi-color-surface-disabled);
+    --badge-color: var(--tapsi-color-content-tertiary);
   }
 
   .root {
-    --badge-font-size: var(--tap-sys-typography-body-xs-size);
-    --badge-font-height: var(--tap-sys-typography-body-xs-height);
-    --badge-font-weight: var(--tap-sys-typography-body-xs-weight);
+    --badge-font-size: var(--tapsi-typography-body-xs-size);
+    --badge-font-height: var(--tapsi-typography-body-xs-height);
+    --badge-font-weight: var(--tapsi-typography-body-xs-weight);
 
     display: inline-flex;
     align-items: center;
@@ -116,22 +116,22 @@ export default css`
 
     vertical-align: middle;
 
-    gap: var(--tap-sys-spacing-2);
+    gap: var(--tapsi-spacing-2);
 
     height: var(--badge-height);
     min-width: var(--badge-min-width);
 
-    font-family: var(--tap-sys-font-family);
+    font-family: var(--tapsi-font-family);
     line-height: var(--badge-font-height);
     font-size: var(--badge-font-size);
     font-weight: var(--badge-font-weight);
 
-    border-radius: var(--tap-sys-radius-full);
+    border-radius: var(--tapsi-radius-full);
 
     color: var(--badge-color);
     background-color: var(--badge-bg-color);
 
-    padding-right: var(--tap-sys-spacing-3-1);
-    padding-left: var(--tap-sys-spacing-3-1);
+    padding-right: var(--tapsi-spacing-3-1);
+    padding-left: var(--tapsi-spacing-3-1);
   }
 `;

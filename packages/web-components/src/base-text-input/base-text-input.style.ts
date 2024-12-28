@@ -26,41 +26,41 @@ export default css`
   }
 
   :host {
-    --input-control-bg-color: var(--tap-sys-color-surface-tertiary);
+    --input-control-bg-color: var(--tapsi-color-surface-tertiary);
     --input-control-border-color: transparent;
-    --input-support-color: var(--tap-sys-color-content-tertiary);
-    --input-label-color: var(--tap-sys-color-content-primary);
-    --input-color: var(--tap-sys-color-content-primary);
-    --input-icon-color: var(--tap-sys-color-content-secondary);
-    --input-placeholder-color: var(--tap-sys-color-content-tertiary);
+    --input-support-color: var(--tapsi-color-content-tertiary);
+    --input-label-color: var(--tapsi-color-content-primary);
+    --input-color: var(--tapsi-color-content-primary);
+    --input-icon-color: var(--tapsi-color-content-secondary);
+    --input-placeholder-color: var(--tapsi-color-content-tertiary);
 
     display: inline-block;
     vertical-align: middle;
   }
 
   .root.disabled {
-    --input-control-bg-color: var(--tap-sys-color-surface-disabled);
+    --input-control-bg-color: var(--tapsi-color-surface-disabled);
     --input-control-border-color: transparent;
-    --input-support-color: var(--tap-sys-color-content-disabled);
-    --input-label-color: var(--tap-sys-color-content-disabled);
-    --input-color: var(--tap-sys-color-content-disabled);
-    --input-icon-color: var(--tap-sys-color-content-disabled);
-    --input-placeholder-color: var(--tap-sys-color-content-disabled);
+    --input-support-color: var(--tapsi-color-content-disabled);
+    --input-label-color: var(--tapsi-color-content-disabled);
+    --input-color: var(--tapsi-color-content-disabled);
+    --input-icon-color: var(--tapsi-color-content-disabled);
+    --input-placeholder-color: var(--tapsi-color-content-disabled);
   }
 
   .control.error {
-    --input-control-bg-color: var(--tap-sys-color-surface-negative-light);
-    --input-control-border-color: var(--tap-sys-color-border-negative);
+    --input-control-bg-color: var(--tapsi-color-surface-negative-light);
+    --input-control-border-color: var(--tapsi-color-border-negative);
   }
 
   .control.error + .supporting-text {
-    --input-support-color: var(--tap-sys-color-content-negative);
+    --input-support-color: var(--tapsi-color-content-negative);
   }
 
   .control:not(.error):focus-within {
-    --input-control-bg-color: var(--tap-sys-color-surface-secondary);
-    --input-control-border-color: var(--tap-sys-color-border-inverse-primary);
-    --input-support-color: var(--tap-sys-color-content-secondary);
+    --input-control-bg-color: var(--tapsi-color-surface-secondary);
+    --input-control-border-color: var(--tapsi-color-border-inverse-primary);
+    --input-support-color: var(--tapsi-color-content-secondary);
   }
 
   .control {
@@ -71,13 +71,13 @@ export default css`
     height: 3.25rem;
     width: 100%;
 
-    padding-right: var(--tap-sys-spacing-6);
-    padding-left: var(--tap-sys-spacing-6);
-    gap: var(--tap-sys-spacing-4);
-    border-radius: var(--tap-sys-radius-3);
+    padding-right: var(--tapsi-spacing-6);
+    padding-left: var(--tapsi-spacing-6);
+    gap: var(--tapsi-spacing-4);
+    border-radius: var(--tapsi-radius-3);
 
     background-color: var(--input-control-bg-color);
-    border: var(--tap-sys-stroke-2) solid var(--input-control-border-color);
+    border: var(--tapsi-stroke-2) solid var(--input-control-border-color);
   }
 
   .input {
@@ -89,21 +89,21 @@ export default css`
 
     color: var(--input-color);
     background-color: transparent;
-    caret-color: var(--tap-sys-color-surface-accent);
+    caret-color: var(--tapsi-color-surface-accent);
 
-    font-family: var(--tap-sys-font-family);
-    line-height: var(--tap-sys-typography-body-md-height);
-    font-size: var(--tap-sys-typography-body-md-size);
-    font-weight: var(--tap-sys-typography-body-md-weight);
+    font-family: var(--tapsi-font-family);
+    line-height: var(--tapsi-typography-body-md-height);
+    font-size: var(--tapsi-typography-body-md-size);
+    font-weight: var(--tapsi-typography-body-md-weight);
   }
 
   .input::placeholder {
     color: var(--input-placeholder-color);
 
-    font-family: var(--tap-sys-font-family);
-    line-height: var(--tap-sys-typography-body-md-height);
-    font-size: var(--tap-sys-typography-body-md-size);
-    font-weight: var(--tap-sys-typography-body-md-weight);
+    font-family: var(--tapsi-font-family);
+    line-height: var(--tapsi-typography-body-md-height);
+    font-size: var(--tapsi-typography-body-md-size);
+    font-weight: var(--tapsi-typography-body-md-weight);
   }
 
   .leading-icon {
@@ -136,18 +136,18 @@ export default css`
   .supporting-text {
     color: var(--input-support-color);
 
-    font-family: var(--tap-sys-font-family);
-    line-height: var(--tap-sys-typography-body-sm-height);
-    font-size: var(--tap-sys-typography-body-sm-size);
-    font-weight: var(--tap-sys-typography-body-sm-weight);
+    font-family: var(--tapsi-font-family);
+    line-height: var(--tapsi-typography-body-sm-height);
+    font-size: var(--tapsi-typography-body-sm-size);
+    font-weight: var(--tapsi-typography-body-sm-weight);
   }
 
   .label {
     color: var(--input-label-color);
 
-    font-family: var(--tap-sys-font-family);
-    line-height: var(--tap-sys-typography-label-md-height);
-    font-size: var(--tap-sys-typography-label-md-size);
-    font-weight: var(--tap-sys-typography-label-md-weight);
+    font-family: var(--tapsi-font-family);
+    line-height: var(--tapsi-typography-label-md-height);
+    font-size: var(--tapsi-typography-label-md-size);
+    font-weight: var(--tapsi-typography-label-md-weight);
   }
 `;

@@ -1,11 +1,11 @@
 import { createComponent } from "@lit/react";
-import { TapSpinner } from "@tapsioss/web-components/spinner";
+import { TapsiSpinner } from "@tapsioss/web-components/spinner";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __Spinner = createComponent({
-  tagName: "tap-spinner",
-  elementClass: TapSpinner,
+  tagName: "tapsi-spinner",
+  elementClass: TapsiSpinner,
   react: React,
   events: {},
 });

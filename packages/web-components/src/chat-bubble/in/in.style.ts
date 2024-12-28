@@ -12,11 +12,11 @@ const styles = css`
   }
 
   .root.seen {
-    --chat-bubble-in-icon-color: var(--tap-sys-color-content-on-inverse);
+    --chat-bubble-in-icon-color: var(--tapsi-color-content-on-inverse);
   }
 
   .root:not(.failed) .content {
-    margin-right: var(--tap-sys-spacing-4);
+    margin-right: var(--tapsi-spacing-4);
   }
 
   .failure-indicator {
@@ -27,18 +27,18 @@ const styles = css`
     width: 1.5rem;
     height: 1.5rem;
 
-    margin-right: var(--tap-sys-spacing-4);
-    margin-left: var(--tap-sys-spacing-4);
+    margin-right: var(--tapsi-spacing-4);
+    margin-left: var(--tapsi-spacing-4);
     margin-top: auto;
 
-    fill: var(--tap-sys-color-content-negative);
+    fill: var(--tapsi-color-content-negative);
   }
 
   .status {
     display: flex;
     align-items: center;
 
-    gap: var(--tap-sys-spacing-3);
+    gap: var(--tapsi-spacing-3);
   }
 
   .status > svg {

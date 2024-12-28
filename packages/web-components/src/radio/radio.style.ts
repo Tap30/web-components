@@ -13,33 +13,33 @@ export default css`
   }
 
   :host {
-    --input-box-bg-color: var(--tap-sys-color-surface-primary);
-    --input-box-border-color: var(--tap-sys-color-surface-inverse-primary);
-    --input-control-color: var(--tap-sys-color-content-on-inverse);
-    --radio-box-shadow-size: var(--tap-sys-spacing-1);
+    --input-box-bg-color: var(--tapsi-color-surface-primary);
+    --input-box-border-color: var(--tapsi-color-surface-inverse-primary);
+    --input-control-color: var(--tapsi-color-content-on-inverse);
+    --radio-box-shadow-size: var(--tapsi-spacing-1);
 
     display: inline-block;
     vertical-align: middle;
   }
 
   .root.disabled .control.checked {
-    --input-box-bg-color: var(--tap-sys-color-surface-primary);
-    --radio-box-shadow-size: var(--tap-sys-spacing-3-1);
+    --input-box-bg-color: var(--tapsi-color-surface-primary);
+    --radio-box-shadow-size: var(--tapsi-spacing-3-1);
   }
 
   .root.disabled {
-    --input-box-bg-color: var(--tap-sys-color-surface-disabled);
-    --input-box-border-color: var(--tap-sys-color-surface-disabled);
-    --input-control-color: var(--tap-sys-color-content-disabled);
-    --radio-box-shadow-size: var(--tap-sys-spacing-14);
+    --input-box-bg-color: var(--tapsi-color-surface-disabled);
+    --input-box-border-color: var(--tapsi-color-surface-disabled);
+    --input-control-color: var(--tapsi-color-content-disabled);
+    --radio-box-shadow-size: var(--tapsi-spacing-14);
   }
 
   .control.checked {
-    --radio-box-shadow-size: var(--tap-sys-spacing-3-1);
+    --radio-box-shadow-size: var(--tapsi-spacing-3-1);
   }
 
   .root:not(.disabled) .control.checked {
-    --input-control-color: var(--tap-sys-color-content-on-inverse);
+    --input-control-color: var(--tapsi-color-content-on-inverse);
   }
 
   .control {
@@ -82,7 +82,7 @@ export default css`
     align-items: center;
     justify-content: center;
 
-    border-radius: var(--tap-sys-radius-full);
+    border-radius: var(--tapsi-radius-full);
 
     background-color: var(--input-box-bg-color);
     box-shadow: 0 0 0 var(--radio-box-shadow-size) var(--input-box-border-color)

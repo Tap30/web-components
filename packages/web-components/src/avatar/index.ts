@@ -7,7 +7,7 @@ export { Slots } from "./constants";
 /**
  * @summary Display user profile image, initials or fallback icon
  *
- * @tag tap-avatar
+ * @tag tapsi-avatar
  *
  * @slot - The default slot to use when image is not present.
  *
@@ -17,13 +17,13 @@ export { Slots } from "./constants";
  * @prop {'eager' | 'lazy'} [loading='eager'] - Indicates how the browser should load the image.
  * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xlg' | 'xxlg'} [size='md'] - The size of the avatar.
  */
-@customElement("tap-avatar")
-export class TapAvatar extends Avatar {
+@customElement("tapsi-avatar")
+export class TapsiAvatar extends Avatar {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-avatar": TapAvatar;
+    "tapsi-avatar": TapsiAvatar;
   }
 }

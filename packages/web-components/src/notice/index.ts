@@ -5,7 +5,7 @@ import styles from "./notice.style";
 /**
  * @summary The notice components.
  *
- * @tag tap-notice
+ * @tag tapsi-notice
  *
  * @prop {boolean} [visible=false] - Indicates whether the notice is visible or not.
  * @prop {string} [heading] - The title of the notice.
@@ -32,20 +32,20 @@ import styles from "./notice.style";
  * Defaults to `standard`.
  * @prop {boolean} [dismissible=false] - Indicates whether the notice can be dismissed.
  *
- * @slot actions - The actions associated with the notice component, typically a collection of `tap-button` components.
+ * @slot actions - The actions associated with the notice component, typically a collection of `tapsi-button` components.
  * @slot artwork - The custom artwork slot for the notice component. To display this slot, set the `artwork` property to `custom`.
  *
  * @fires {ShowEvent} show - Fires when the tooltip should be visible.
  * @fires {HideEvent} hide - Fires when the tooltip should be hidden.
  */
 
-@customElement("tap-notice")
-export class TapNotice extends Notice {
+@customElement("tapsi-notice")
+export class TapsiNotice extends Notice {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-notice": TapNotice;
+    "tapsi-notice": TapsiNotice;
   }
 }

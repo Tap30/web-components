@@ -120,7 +120,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   protected renderSpinner() {
     return html`
       <div class="icon spinner">
-        <tap-spinner></tap-spinner>
+        <tapsi-spinner></tapsi-spinner>
       </div>
     `;
   }

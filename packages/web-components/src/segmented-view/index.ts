@@ -11,7 +11,7 @@ export { ItemSlots };
 /**
  * @summary Represents a single item in a segmented view component.
  *
- * @tag tap-segmented-view-item
+ * @tag tapsi-segmented-view-item
  *
  * @slot - The default slot for the content/label.
  *
@@ -28,15 +28,15 @@ export { ItemSlots };
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tabpanel_role
  */
-@customElement("tap-segmented-view-item")
-export class TapSegmentedViewItem extends SegmentedViewItem {
+@customElement("tapsi-segmented-view-item")
+export class TapsiSegmentedViewItem extends SegmentedViewItem {
   public static override readonly styles = [itemStyles];
 }
 
 /**
  * @summary The segmented view component.
  *
- * @tag tap-segmented-view
+ * @tag tapsi-segmented-view
  *
  * @slot - The default slot for segmented view items.
  *
@@ -51,14 +51,14 @@ export class TapSegmentedViewItem extends SegmentedViewItem {
  * @member {string} activeItem
  * @description - The value of the currently activated item.
  */
-@customElement("tap-segmented-view")
-export class TapSegmentedView extends SegmentedView {
+@customElement("tapsi-segmented-view")
+export class TapsiSegmentedView extends SegmentedView {
   public static override readonly styles = [segmentedViewStyles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-segmented-view": TapSegmentedView;
-    "tap-segmented-view-item": TapSegmentedViewItem;
+    "tapsi-segmented-view": TapsiSegmentedView;
+    "tapsi-segmented-view-item": TapsiSegmentedViewItem;
   }
 }

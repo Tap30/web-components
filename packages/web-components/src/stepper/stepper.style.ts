@@ -13,37 +13,37 @@ export default css`
   }
 
   :host {
-    --stepper-value-color: var(--tap-sys-color-content-primary);
+    --stepper-value-color: var(--tapsi-color-content-primary);
 
     display: inline-block;
     vertical-align: middle;
   }
 
   .root.disabled {
-    --stepper-value-color: var(--tap-sys-color-content-disabled);
+    --stepper-value-color: var(--tapsi-color-content-disabled);
 
     cursor: not-allowed;
     user-select: none;
   }
 
   .root.readonly {
-    --stepper-value-color: var(--tap-sys-color-content-primary);
+    --stepper-value-color: var(--tapsi-color-content-primary);
   }
 
   .root.sm {
     --stepper-height: 2rem;
-    --stepper-value-font-size: var(--tap-sys-typography-label-md-size);
-    --stepper-value-font-weight: var(--tap-sys-typography-label-md-weight);
-    --stepper-value-font-height: var(--tap-sys-typography-label-md-height);
-    --stepper-value-font: var(--tap-sys-typography-label-md-font);
+    --stepper-value-font-size: var(--tapsi-typography-label-md-size);
+    --stepper-value-font-weight: var(--tapsi-typography-label-md-weight);
+    --stepper-value-font-height: var(--tapsi-typography-label-md-height);
+    --stepper-value-font: var(--tapsi-typography-label-md-font);
   }
 
   .root.md {
     --stepper-height: 2.5rem;
-    --stepper-value-font-size: var(--tap-sys-typography-headline-md-size);
-    --stepper-value-font-weight: var(--tap-sys-typography-headline-md-weight);
-    --stepper-value-font-height: var(--tap-sys-typography-headline-md-height);
-    --stepper-value-font: var(--tap-sys-typography-headline-md-font);
+    --stepper-value-font-size: var(--tapsi-typography-headline-md-size);
+    --stepper-value-font-weight: var(--tapsi-typography-headline-md-weight);
+    --stepper-value-font-height: var(--tapsi-typography-headline-md-height);
+    --stepper-value-font: var(--tapsi-typography-headline-md-font);
   }
 
   .root {
@@ -55,9 +55,9 @@ export default css`
 
     position: relative;
     height: var(--stepper-height);
-    gap: var(--tap-sys-spacing-4);
+    gap: var(--tapsi-spacing-4);
 
-    font-family: var(--tap-sys-font-family);
+    font-family: var(--tapsi-font-family);
   }
 
   .increase,
@@ -89,7 +89,7 @@ export default css`
   .value {
     color: var(--stepper-value-color);
 
-    gap: var(--tap-sys-spacing-3);
+    gap: var(--tapsi-spacing-3);
 
     font-family: var(--stepper-value-font);
     font-size: var(--stepper-value-font-size);
@@ -98,17 +98,17 @@ export default css`
   }
 
   .unit {
-    font-family: var(--tap-sys-typography-label-lg-font);
-    font-size: var(--tap-sys-typography-label-lg-size);
-    font-weight: var(--tap-sys-typography-label-lg-weight);
-    line-height: var(--tap-sys-typography-label-lg-height);
+    font-family: var(--tapsi-typography-label-lg-font);
+    font-size: var(--tapsi-typography-label-lg-size);
+    font-weight: var(--tapsi-typography-label-lg-weight);
+    line-height: var(--tapsi-typography-label-lg-height);
   }
 
   .focus-ring {
     position: absolute;
     inset: 0;
 
-    border-radius: var(--tap-sys-radius-full);
+    border-radius: var(--tapsi-radius-full);
 
     visibility: hidden;
     opacity: 0;

@@ -1,11 +1,11 @@
 import { createComponent } from "@lit/react";
-import { TapSegmentedViewItem } from "@tapsioss/web-components/segmented-view";
+import { TapsiSegmentedViewItem } from "@tapsioss/web-components/segmented-view";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __SegmentedViewItem = createComponent({
-  tagName: "tap-segmented-view-item",
-  elementClass: TapSegmentedViewItem,
+  tagName: "tapsi-segmented-view-item",
+  elementClass: TapsiSegmentedViewItem,
   react: React,
   events: {},
 });

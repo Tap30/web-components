@@ -16,7 +16,7 @@ const styles = css`
   }
 
   .root.selected {
-    color: var(--tap-sys-color-content-primary);
+    color: var(--tapsi-color-content-primary);
 
     font-weight: 500;
   }
@@ -31,16 +31,16 @@ const styles = css`
 
     height: 3rem;
     width: 100%;
-    padding-right: var(--tap-sys-spacing-6);
-    padding-left: var(--tap-sys-spacing-6);
+    padding-right: var(--tapsi-spacing-6);
+    padding-left: var(--tapsi-spacing-6);
 
-    color: var(--tap-sys-color-content-tertiary);
+    color: var(--tapsi-color-content-tertiary);
 
-    font-family: var(--tap-sys-font-family);
+    font-family: var(--tapsi-font-family);
 
-    font-size: var(--tap-sys-typography-body-md-size);
-    line-height: var(--tap-sys-typography-body-md-height);
-    font-weight: var(--tap-sys-typography-body-md-weight);
+    font-size: var(--tapsi-typography-body-md-size);
+    line-height: var(--tapsi-typography-body-md-height);
+    font-weight: var(--tapsi-typography-body-md-weight);
 
     white-space: nowrap;
     text-overflow: ellipsis;

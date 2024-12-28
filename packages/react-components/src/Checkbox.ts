@@ -1,11 +1,11 @@
 import { createComponent } from "@lit/react";
-import { TapCheckbox } from "@tapsioss/web-components/checkbox";
+import { TapsiCheckbox } from "@tapsioss/web-components/checkbox";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __Checkbox = createComponent({
-  tagName: "tap-checkbox",
-  elementClass: TapCheckbox,
+  tagName: "tapsi-checkbox",
+  elementClass: TapsiCheckbox,
   react: React,
   events: {},
 });

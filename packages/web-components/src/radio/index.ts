@@ -6,7 +6,7 @@ import styles from "./radio.style";
 /**
  * @summary The radio component.
  *
- * @tag tap-radio
+ * @tag tapsi-radio
  *
  * @prop {boolean} [checked=false] - Indicates whether the radio is checked.
  * @prop {boolean} [disabled=false] - Indicates whether the radio is disabled.
@@ -20,13 +20,13 @@ import styles from "./radio.style";
  * `reportValidity()` is invoked when value is empty.\
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required
  */
-@customElement("tap-radio")
-export class TapRadio extends Radio {
+@customElement("tapsi-radio")
+export class TapsiRadio extends Radio {
   public static override readonly styles = [baseInputStyles, styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-radio": TapRadio;
+    "tapsi-radio": TapsiRadio;
   }
 }

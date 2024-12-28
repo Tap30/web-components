@@ -1,11 +1,11 @@
 import { createComponent } from "@lit/react";
-import { TapSwitch } from "@tapsioss/web-components/switch";
+import { TapsiSwitch } from "@tapsioss/web-components/switch";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __Switch = createComponent({
-  tagName: "tap-switch",
-  elementClass: TapSwitch,
+  tagName: "tapsi-switch",
+  elementClass: TapsiSwitch,
   react: React,
   events: {},
 });

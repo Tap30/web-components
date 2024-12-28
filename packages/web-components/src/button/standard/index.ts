@@ -9,7 +9,7 @@ export { Slots } from "./constants";
 /**
  * @summary A customizable button component with various styles and states.
  *
- * @tag tap-button
+ * @tag tapsi-button
  *
  * @slot - Button's content.
  *
@@ -20,8 +20,8 @@ export { Slots } from "./constants";
  * @prop {'sm' | 'md' | 'lg'} [size='md'] - The size of the button.
  * @prop {'primary' | 'ghost' | 'naked' | 'elevated' | 'destructive' | 'brand'} [variant='primary'] - The variant style of the button.
  */
-@customElement("tap-button")
-export class TapButton extends Button {
+@customElement("tapsi-button")
+export class TapsiButton extends Button {
   public static override readonly styles = [
     baseButtonStyles,
     standardButtonStyles,
@@ -30,6 +30,6 @@ export class TapButton extends Button {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-button": TapButton;
+    "tapsi-button": TapsiButton;
   }
 }

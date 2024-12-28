@@ -1,11 +1,11 @@
 import { createComponent } from "@lit/react";
-import { TapTextField } from "@tapsioss/web-components/text-field";
+import { TapsiTextField } from "@tapsioss/web-components/text-field";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __TextField = createComponent({
-  tagName: "tap-text-field",
-  elementClass: TapTextField,
+  tagName: "tapsi-text-field",
+  elementClass: TapsiTextField,
   react: React,
   events: {},
 });

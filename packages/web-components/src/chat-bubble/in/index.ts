@@ -8,7 +8,7 @@ export { Slots };
 /**
  * @summary Display chat-bubble-in element
  *
- * @tag tap-chat-bubble-in
+ * @tag tapsi-chat-bubble-in
  *
  * @slot - The default slot for the content.
  *
@@ -16,13 +16,13 @@ export { Slots };
  * @prop {"sent" | "seen" | "pending" | "failed"} [status="sent"] - The status of the chat element.
  * @prop {boolean} [fully-rounded=false] - Whether or not the bubble should be fully rounded.
  */
-@customElement("tap-chat-bubble-in")
-export class TapChatBubbleIn extends ChatBubbleIn {
+@customElement("tapsi-chat-bubble-in")
+export class TapsiChatBubbleIn extends ChatBubbleIn {
   public static override readonly styles = [baseStyles, styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-chat-bubble-in": TapChatBubbleIn;
+    "tapsi-chat-bubble-in": TapsiChatBubbleIn;
   }
 }

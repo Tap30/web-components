@@ -5,7 +5,7 @@ import styles from "./progress-indicator.style.js";
 /**
  * @summary A progress indicator component displaying multiple steps.
  *
- * @tag tap-progress-indicator
+ * @tag tapsi-progress-indicator
  *
  * @prop {string} [steps="2"] -
  * The total number of steps.
@@ -23,13 +23,13 @@ import styles from "./progress-indicator.style.js";
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext
  */
-@customElement("tap-progress-indicator")
-export class TapProgressIndicator extends ProgressIndicator {
+@customElement("tapsi-progress-indicator")
+export class TapsiProgressIndicator extends ProgressIndicator {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-progress-indicator": TapProgressIndicator;
+    "tapsi-progress-indicator": TapsiProgressIndicator;
   }
 }

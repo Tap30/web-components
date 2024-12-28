@@ -13,9 +13,9 @@ export default css`
   }
 
   :host {
-    --input-box-bg-color: var(--tap-sys-color-surface-primary);
-    --input-box-border-color: var(--tap-sys-color-surface-inverse-primary);
-    --input-control-color: var(--tap-sys-color-content-on-inverse);
+    --input-box-bg-color: var(--tapsi-color-surface-primary);
+    --input-box-border-color: var(--tapsi-color-surface-inverse-primary);
+    --input-control-color: var(--tapsi-color-content-on-inverse);
     --checkbox-overlay-size: 0;
 
     display: inline-block;
@@ -23,14 +23,14 @@ export default css`
   }
 
   .root.disabled {
-    --input-box-bg-color: var(--tap-sys-color-surface-disabled);
-    --input-box-border-color: var(--tap-sys-color-surface-disabled);
-    --input-control-color: var(--tap-sys-color-content-disabled);
+    --input-box-bg-color: var(--tapsi-color-surface-disabled);
+    --input-box-border-color: var(--tapsi-color-surface-disabled);
+    --input-control-color: var(--tapsi-color-content-disabled);
   }
 
   .root:not(.disabled) .control.checked,
   .root:not(.disabled) .control.indeterminate {
-    --input-control-color: var(--tap-sys-color-content-on-inverse);
+    --input-control-color: var(--tapsi-color-content-on-inverse);
     --checkbox-overlay-size: 2rem;
   }
 
@@ -77,11 +77,10 @@ export default css`
     align-items: center;
     justify-content: center;
 
-    border-radius: var(--tap-sys-radius-1);
+    border-radius: var(--tapsi-radius-1);
 
     background-color: var(--input-box-bg-color);
-    box-shadow: 0 0 0 var(--tap-sys-spacing-1) var(--input-box-border-color)
-      inset;
+    box-shadow: 0 0 0 var(--tapsi-spacing-1) var(--input-box-border-color) inset;
     transition:
       box-shadow 120ms ease,
       background-color 120ms ease;
@@ -100,7 +99,7 @@ export default css`
     width: var(--checkbox-overlay-size);
     height: var(--checkbox-overlay-size);
 
-    background-color: var(--tap-sys-color-surface-inverse-primary);
+    background-color: var(--tapsi-color-surface-inverse-primary);
 
     transition:
       width 120ms ease,

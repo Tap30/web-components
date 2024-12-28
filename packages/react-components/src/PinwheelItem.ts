@@ -1,11 +1,11 @@
 import { createComponent } from "@lit/react";
-import { TapPinwheelItem } from "@tapsioss/web-components/pinwheel";
+import { TapsiPinwheelItem } from "@tapsioss/web-components/pinwheel";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __PinwheelItem = createComponent({
-  tagName: "tap-pinwheel-item",
-  elementClass: TapPinwheelItem,
+  tagName: "tapsi-pinwheel-item",
+  elementClass: TapsiPinwheelItem,
   react: React,
   events: {},
 });

@@ -1,11 +1,11 @@
 import { createComponent } from "@lit/react";
-import { TapBottomNavigationItem } from "@tapsioss/web-components/bottom-navigation";
+import { TapsiBottomNavigationItem } from "@tapsioss/web-components/bottom-navigation";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __BottomNavigationItem = createComponent({
-  tagName: "tap-bottom-navigation-item",
-  elementClass: TapBottomNavigationItem,
+  tagName: "tapsi-bottom-navigation-item",
+  elementClass: TapsiBottomNavigationItem,
   react: React,
   events: {},
 });

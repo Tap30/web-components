@@ -1,18 +1,18 @@
 :root {
-  --tap-sys-spacing-0: 0;
-  --tap-sys-spacing-1: 0.0625rem;
-  --tap-sys-spacing-2: 0.125rem;
-  --tap-sys-spacing-3: 0.25rem;
-  --tap-sys-spacing-3-1: 0.375rem;
-  --tap-sys-spacing-4: 0.5rem;
-  --tap-sys-spacing-5: 0.75rem;
-  --tap-sys-spacing-6: 1rem;
-  --tap-sys-spacing-7: 1.25rem;
-  --tap-sys-spacing-8: 1.5rem;
-  --tap-sys-spacing-9: 2rem;
-  --tap-sys-spacing-10: 2.5rem;
-  --tap-sys-spacing-11: 3rem;
-  --tap-sys-spacing-12: 4rem;
-  --tap-sys-spacing-13: 5rem;
-  --tap-sys-spacing-14: 6rem;
+  --tapsi-spacing-0: 0;
+  --tapsi-spacing-1: 0.0625rem;
+  --tapsi-spacing-2: 0.125rem;
+  --tapsi-spacing-3: 0.25rem;
+  --tapsi-spacing-3-1: 0.375rem;
+  --tapsi-spacing-4: 0.5rem;
+  --tapsi-spacing-5: 0.75rem;
+  --tapsi-spacing-6: 1rem;
+  --tapsi-spacing-7: 1.25rem;
+  --tapsi-spacing-8: 1.5rem;
+  --tapsi-spacing-9: 2rem;
+  --tapsi-spacing-10: 2.5rem;
+  --tapsi-spacing-11: 3rem;
+  --tapsi-spacing-12: 4rem;
+  --tapsi-spacing-13: 5rem;
+  --tapsi-spacing-14: 6rem;
 }

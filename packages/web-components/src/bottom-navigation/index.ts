@@ -11,7 +11,7 @@ export { ItemSlots };
 /**
  * @summary Represents a single item in a bottom navigation bar.
  *
- * @tag tap-bottom-navigation-item
+ * @tag tapsi-bottom-navigation-item
  *
  * @slot icon - The slot for the icon element.
  * @slot - The default slot for the content/label.
@@ -22,15 +22,15 @@ export { ItemSlots };
  * @prop {boolean} [active=false] - Indicates whether the item is active or not.
  * @prop {string} [value=""] - The value associated with the item. This value has to be unique among sibling items.
  */
-@customElement("tap-bottom-navigation-item")
-export class TapBottomNavigationItem extends BottomNavigationItem {
+@customElement("tapsi-bottom-navigation-item")
+export class TapsiBottomNavigationItem extends BottomNavigationItem {
   public static override readonly styles = [itemStyles];
 }
 
 /**
  * @summary The bottom navigation bar component.
  *
- * @tag tap-bottom-navigation
+ * @tag tapsi-bottom-navigation
  *
  * @slot - The default slot for navigation items.
  *
@@ -45,14 +45,14 @@ export class TapBottomNavigationItem extends BottomNavigationItem {
  * @member {string} activeItem
  * @description - The value of the currently activated item.
  */
-@customElement("tap-bottom-navigation")
-export class TapBottomNavigation extends BottomNavigation {
+@customElement("tapsi-bottom-navigation")
+export class TapsiBottomNavigation extends BottomNavigation {
   public static override readonly styles = [bottomNavigationStyles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-bottom-navigation": TapBottomNavigation;
-    "tap-bottom-navigation-item": TapBottomNavigationItem;
+    "tapsi-bottom-navigation": TapsiBottomNavigation;
+    "tapsi-bottom-navigation-item": TapsiBottomNavigationItem;
   }
 }

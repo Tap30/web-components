@@ -37,7 +37,7 @@ const styles = css`
     display: flex;
     flex-wrap: wrap;
 
-    gap: var(--tap-sys-spacing-4);
+    gap: var(--tapsi-spacing-4);
   }
 
   .root ::slotted(*) {

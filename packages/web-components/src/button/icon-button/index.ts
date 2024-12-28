@@ -8,7 +8,7 @@ export { Slots } from "./constants";
 /**
  * @summary A customizable icon button component with various styles and states.
  *
- * @tag tap-icon-button
+ * @tag tapsi-icon-button
  *
  * @slot - Icon button's content.
  *
@@ -19,13 +19,13 @@ export { Slots } from "./constants";
  * @prop {'sm' | 'md' | 'lg'} [size='md'] - The size of the button.
  * @prop {'primary' | 'ghost' | 'naked' | 'elevated' | 'destructive' | 'brand'} [variant='primary'] - The variant style of the button.
  */
-@customElement("tap-icon-button")
-export class TapIconButton extends IconButton {
+@customElement("tapsi-icon-button")
+export class TapsiIconButton extends IconButton {
   public static override readonly styles = [baseButtonStyles, iconButtonStyles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-icon-button": TapIconButton;
+    "tapsi-icon-button": TapsiIconButton;
   }
 }
