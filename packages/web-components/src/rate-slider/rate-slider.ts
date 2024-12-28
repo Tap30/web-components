@@ -138,6 +138,20 @@ export class RateSlider extends BaseClass {
     document.removeEventListener("touchend", this._handleDragEnd);
   }
 
+  private get _selectedStopIdx() {
+    if (!this.value) return -1;
+
+    const stops = Array.from(
+      this.renderRoot.querySelectorAll<HTMLElement>(".stop"),
+    );
+
+    if (stops.length === 0) return -1;
+
+    return stops.findIndex(
+      stop => stop.getAttribute("data-stop") === this.value,
+    );
+  }
+
   /**
    * The input's value as a number.
    */
@@ -365,10 +379,15 @@ export class RateSlider extends BaseClass {
 
     const rangeLength = max - min + 1;
 
-    if (value < Math.floor(rangeLength / 2)) classes.red = true;
-    else if (value < Math.floor(rangeLength * 0.65)) classes.yellow = true;
-    else if (value < Math.floor(rangeLength * 0.85)) classes.gray = true;
-    else classes.green = true;
+    const selectedStopIdx = this._selectedStopIdx;
+    const stopCount = selectedStopIdx === -1 ? 0 : selectedStopIdx + 1;
+
+    if (selectedStopIdx < Math.floor(rangeLength / 2)) classes.red = true;
+    else if (selectedStopIdx < Math.floor(rangeLength * 0.65)) {
+      classes.yellow = true;
+    } else if (selectedStopIdx < Math.floor(rangeLength * 0.85)) {
+      classes.gray = true;
+    } else classes.green = true;
 
     if (value === max) classes.rounded = true;
 
@@ -376,9 +395,14 @@ export class RateSlider extends BaseClass {
     const stopCssWidth = `calc((${100}% - 16px) / ${rangeLength})`;
     const cssOffset = value === max ? 16 : 8;
 
+    const gradientWidth =
+      stopCount === 0
+        ? "0"
+        : `calc((${stopCount} * var(${stopCssWidthVar})) + ${cssOffset}px)`;
+
     const styles = styleMap({
       [stopCssWidthVar]: stopCssWidth,
-      width: `calc((${value + 1} * var(${stopCssWidthVar})) + ${cssOffset}px)`,
+      width: gradientWidth,
     });
 
     return html`

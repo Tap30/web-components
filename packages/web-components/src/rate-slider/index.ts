@@ -9,7 +9,7 @@ import styles from "./rate-slider.style";
  *
  * @prop {string} [value=""] - The current value of the input. It is always a string.
  * @prop {string} [name=""] - The HTML name to use in form submission.
- * @prop {string} [valueText=""] -
+ * @prop {string} [valuetext=""] -
  * Defines the human-readable text alternative of value.
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext
@@ -32,7 +32,13 @@ import styles from "./rate-slider.style";
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
  *
- * @fires {Event} change - Fires when value changes.
+ * @method stepDown
+ * @description - Decrements the value of the input.
+ *
+ * @method stepUp
+ * @description - Increments the value of the input.
+ *
+ * @fires {Event} change - Fired when value changes.
  */
 @customElement("tap-rate-slider")
 export class TapRateSlider extends RateSlider {
