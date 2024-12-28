@@ -12,31 +12,31 @@ const styles = css`
   }
 
   .root.fully-rounded {
-    --chat-bubble-content-radius: var(--tap-sys-radius-5);
+    --chat-bubble-content-radius: var(--tapsi-radius-5);
   }
 
   .root:not(.fully-rounded).in {
-    --chat-bubble-content-radius: var(--tap-sys-radius-5)
-      var(--tap-sys-radius-5) var(--tap-sys-radius-1) var(--tap-sys-radius-5);
+    --chat-bubble-content-radius: var(--tapsi-radius-5) var(--tapsi-radius-5)
+      var(--tapsi-radius-1) var(--tapsi-radius-5);
   }
 
   .root:not(.fully-rounded).out {
-    --chat-bubble-content-radius: var(--tap-sys-radius-5)
-      var(--tap-sys-radius-5) var(--tap-sys-radius-5) var(--tap-sys-radius-1);
+    --chat-bubble-content-radius: var(--tapsi-radius-5) var(--tapsi-radius-5)
+      var(--tapsi-radius-5) var(--tapsi-radius-1);
   }
 
   .root.in {
     --chat-bubble-content-bg-color: var(
-      --tap-sys-color-surface-inverse-secondary
+      --tapsi-color-surface-inverse-secondary
     );
-    --chat-bubble-color: var(--tap-sys-color-content-on-inverse);
-    --chat-bubble-footer-color: var(--tap-sys-color-content-disabled);
+    --chat-bubble-color: var(--tapsi-color-content-on-inverse);
+    --chat-bubble-footer-color: var(--tapsi-color-content-disabled);
     --chat-bubble-footer-flex-direction: row;
   }
 
   .root.out {
-    --chat-bubble-content-bg-color: var(--tap-sys-color-surface-secondary);
-    --chat-bubble-color: var(--tap-sys-color-content-primary);
+    --chat-bubble-content-bg-color: var(--tapsi-color-surface-secondary);
+    --chat-bubble-color: var(--tapsi-color-content-primary);
     --chat-bubble-footer-color: var(--chat-bubble-content-color);
     --chat-bubble-footer-flex-direction: row-reverse;
   }
@@ -49,8 +49,8 @@ const styles = css`
     display: flex;
     flex-direction: column;
 
-    gap: var(--tap-sys-spacing-2);
-    padding: var(--tap-sys-spacing-3) var(--tap-sys-spacing-6);
+    gap: var(--tapsi-spacing-2);
+    padding: var(--tapsi-spacing-3) var(--tapsi-spacing-6);
     border-radius: var(--chat-bubble-content-radius);
 
     background-color: var(--chat-bubble-content-bg-color);
@@ -60,26 +60,26 @@ const styles = css`
   }
 
   .body {
-    font-family: var(--tap-sys-typography-body-sm-font);
-    font-size: var(--tap-sys-typography-body-sm-size);
-    line-height: var(--tap-sys-typography-body-sm-height);
-    font-weight: var(--tap-sys-typography-body-sm-weight);
+    font-family: var(--tapsi-typography-body-sm-font);
+    font-size: var(--tapsi-typography-body-sm-size);
+    line-height: var(--tapsi-typography-body-sm-height);
+    font-weight: var(--tapsi-typography-body-sm-weight);
 
     color: var(--chat-bubble-color);
   }
 
   .footer {
-    font-family: var(--tap-sys-typography-body-xs-font);
-    font-size: var(--tap-sys-typography-body-xs-size);
-    line-height: var(--tap-sys-typography-body-xs-height);
-    font-weight: var(--tap-sys-typography-body-xs-weight);
+    font-family: var(--tapsi-typography-body-xs-font);
+    font-size: var(--tapsi-typography-body-xs-size);
+    line-height: var(--tapsi-typography-body-xs-height);
+    font-weight: var(--tapsi-typography-body-xs-weight);
 
     color: var(--chat-bubble-footer-color);
 
     display: flex;
     flex-direction: var(--chat-bubble-footer-flex-direction);
 
-    gap: var(--tap-sys-spacing-3);
+    gap: var(--tapsi-spacing-3);
   }
 `;
 

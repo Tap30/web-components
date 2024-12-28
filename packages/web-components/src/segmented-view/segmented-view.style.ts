@@ -12,17 +12,17 @@ export default css`
     vertical-align: middle;
   }
 
-  .root ::slotted(tap-segmented-view-item) {
+  .root ::slotted(tapsi-segmented-view-item) {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
   }
 
   .root {
-    background-color: var(--tap-sys-color-surface-secondary);
+    background-color: var(--tapsi-color-surface-secondary);
 
-    border-radius: var(--tap-sys-radius-full);
-    padding: var(--tap-sys-spacing-3);
+    border-radius: var(--tapsi-radius-full);
+    padding: var(--tapsi-spacing-3);
 
     display: flex;
     align-items: center;

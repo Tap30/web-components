@@ -7,7 +7,7 @@ export { Slots } from "./constants";
 /**
  * @summary An empty state component with icon and action slots.
  *
- * @tag tap-empty-state
+ * @tag tapsi-empty-state
  *
  * @slot icon - The slot for icon element.
  * @slot action - The slot for action element.
@@ -17,13 +17,13 @@ export { Slots } from "./constants";
  * @prop {'auto' | 'center'} [content-alignment='auto'] - The alignment of the content.
  */
 
-@customElement("tap-empty-state")
-export class TapEmptyState extends EmptyState {
+@customElement("tapsi-empty-state")
+export class TapsiEmptyState extends EmptyState {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-empty-state": TapEmptyState;
+    "tapsi-empty-state": TapsiEmptyState;
   }
 }

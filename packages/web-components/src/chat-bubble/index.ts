@@ -1,3 +1,3 @@
 export { BaseSlots as Slots } from "./base";
-export { TapChatBubbleIn } from "./in";
-export { TapChatBubbleOut } from "./out";
+export { TapsiChatBubbleIn } from "./in";
+export { TapsiChatBubbleOut } from "./out";

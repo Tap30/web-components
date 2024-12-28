@@ -8,7 +8,7 @@ export * from "./events";
 /**
  * @summary The modal component.
  *
- * @tag tap-modal
+ * @tag tapsi-modal
  *
  * @prop {boolean} [open=false] - Indicates whether the modal is open or not.
  * @prop {string} [heading=""] - Sets the title of the modal.
@@ -21,13 +21,13 @@ export * from "./events";
  * @fires {ShowEvent} show - Fires when the modal should be visible.
  * @fires {HideEvent} hide - Fires when the modal should be hidden.
  */
-@customElement("tap-modal")
-export class TapModal extends Modal {
+@customElement("tapsi-modal")
+export class TapsiModal extends Modal {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-modal": TapModal;
+    "tapsi-modal": TapsiModal;
   }
 }

@@ -8,7 +8,7 @@ export * from "./events";
 /**
  * @summary The bottom-sheet component.
  *
- * @tag tap-bottom-sheet
+ * @tag tapsi-bottom-sheet
  *
  * @prop {string} [heading-title=""] -
  * Sets the heading title in a declarative-way.
@@ -74,13 +74,13 @@ export * from "./events";
  * @description - Closes the bottom sheet if it is currently open.
  * Dispatches a cancelable HideEvent ("hide").
  */
-@customElement("tap-bottom-sheet")
-export class TapBottomSheet extends BottomSheet {
+@customElement("tapsi-bottom-sheet")
+export class TapsiBottomSheet extends BottomSheet {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-bottom-sheet": TapBottomSheet;
+    "tapsi-bottom-sheet": TapsiBottomSheet;
   }
 }

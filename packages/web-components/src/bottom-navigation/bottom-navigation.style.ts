@@ -11,7 +11,7 @@ export default css`
     display: block;
   }
 
-  .root ::slotted(tap-bottom-navigation-item) {
+  .root ::slotted(tapsi-bottom-navigation-item) {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
@@ -20,9 +20,9 @@ export default css`
   .root {
     height: 4rem;
 
-    background-color: var(--tap-sys-color-surface-secondary);
-    box-shadow: 0 calc(-1 * var(--tap-sys-stroke-1)) 0 0
-      var(--tap-sys-color-border-primary);
+    background-color: var(--tapsi-color-surface-secondary);
+    box-shadow: 0 calc(-1 * var(--tapsi-stroke-1)) 0 0
+      var(--tapsi-color-border-primary);
 
     display: flex;
   }

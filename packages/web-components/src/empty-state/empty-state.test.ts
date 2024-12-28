@@ -6,17 +6,17 @@ import { expect, fixture } from "@open-wc/testing";
 import { html } from "lit";
 import sinon from "sinon";
 import "../../dist/empty-state/index.js";
-import { type TapEmptyState } from "./index.js";
+import { type TapsiEmptyState } from "./index.js";
 
-describe("tap-empty-state component", () => {
+describe("tapsi-empty-state component", () => {
   it("should render title", async () => {
     const title = "عنوان";
     const description = "توضیح";
-    const element = await fixture<TapEmptyState>(
-      html`<tap-empty-state
+    const element = await fixture<TapsiEmptyState>(
+      html`<tapsi-empty-state
         title=${title}
         description=${description}
-      ></tap-empty-state>`,
+      ></tapsi-empty-state>`,
     );
 
     const titleElement = element.shadowRoot!.querySelector(".title");
@@ -30,8 +30,8 @@ describe("tap-empty-state component", () => {
   });
 
   it("should not render title and description when not provided", async () => {
-    const element = await fixture<TapEmptyState>(
-      html`<tap-empty-state></tap-empty-state>`,
+    const element = await fixture<TapsiEmptyState>(
+      html`<tapsi-empty-state></tapsi-empty-state>`,
     );
 
     const titleElement = element.shadowRoot!.querySelector(".title");
@@ -43,9 +43,11 @@ describe("tap-empty-state component", () => {
   });
 
   it("should render slot", async () => {
-    const element = await fixture<TapEmptyState>(
-      html`<tap-empty-state
-        ><tap-button slot="actions">کپی لینک دعوت</tap-button></tap-empty-state
+    const element = await fixture<TapsiEmptyState>(
+      html`<tapsi-empty-state
+        ><tapsi-button slot="actions"
+          >کپی لینک دعوت</tapsi-button
+        ></tapsi-empty-state
       >`,
     );
 
@@ -56,13 +58,14 @@ describe("tap-empty-state component", () => {
   });
 
   it("should trigger a click event on a button placed in the actions slot", async () => {
-    const element = await fixture<TapEmptyState>(
-      html`<tap-empty-state
-        ><tap-button slot="actions">copy</tap-button></tap-empty-state
+    const element = await fixture<TapsiEmptyState>(
+      html`<tapsi-empty-state
+        ><tapsi-button slot="actions">copy</tapsi-button></tapsi-empty-state
       >`,
     );
 
-    const button = element.shadowRoot!.querySelector<HTMLElement>("tap-button");
+    const button =
+      element.shadowRoot!.querySelector<HTMLElement>("tapsi-button");
     const clickSpy = sinon.spy();
 
     addEventListener("click", clickSpy);

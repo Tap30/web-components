@@ -16,16 +16,16 @@ export default css`
   }
 
   .root.active {
-    --item-color: var(--tap-sys-color-content-primary);
+    --item-color: var(--tapsi-color-content-primary);
   }
 
   .root:focus-visible {
-    outline: 2px solid var(--tap-sys-color-border-accent);
+    outline: 2px solid var(--tapsi-color-border-accent);
     outline-offset: 1px;
   }
 
   .root {
-    --item-color: var(--tap-sys-color-content-tertiary);
+    --item-color: var(--tapsi-color-content-tertiary);
 
     vertical-align: middle;
 
@@ -69,9 +69,9 @@ export default css`
 
   .content {
     color: currentColor;
-    font-family: var(--tap-sys-font-family);
-    line-height: var(--tap-sys-typography-label-xs-height);
-    font-size: var(--tap-sys-typography-label-xs-size);
-    font-weight: var(--tap-sys-typography-label-xs-weight);
+    font-family: var(--tapsi-font-family);
+    line-height: var(--tapsi-typography-label-xs-height);
+    font-size: var(--tapsi-typography-label-xs-size);
+    font-weight: var(--tapsi-typography-label-xs-weight);
   }
 `;

@@ -7,7 +7,7 @@ export { Slots } from "./constants";
 /**
  * @summary The skeleton component.
  *
- * @tag tap-skeleton
+ * @tag tapsi-skeleton
  *
  * @prop {"rectangular" | "circular" | "pill" | "text"} [variant="rectangular"] -
  * The type of content that will be rendered.
@@ -20,13 +20,13 @@ export { Slots } from "./constants";
  * Only works when `variant="rectangular"`.
  */
 
-@customElement("tap-skeleton")
-export class TapSkeleton extends Skeleton {
+@customElement("tapsi-skeleton")
+export class TapsiSkeleton extends Skeleton {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-skeleton": TapSkeleton;
+    "tapsi-skeleton": TapsiSkeleton;
   }
 }

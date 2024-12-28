@@ -5,20 +5,20 @@ import styles from "./spinner.style";
 /**
  * @summary A spinner component for loading states.
  *
- * @tag tap-spinner
+ * @tag tapsi-spinner
  *
  * @prop {number | `${number}` | 'auto'} [size='auto'] -
  * Determines the size of the spinner.
  * When set to 'auto', it inherits the size of its parent element.
  * Otherwise, you can specify the size in pixels.
  */
-@customElement("tap-spinner")
-export class TapSpinner extends Spinner {
+@customElement("tapsi-spinner")
+export class TapsiSpinner extends Spinner {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-spinner": TapSpinner;
+    "tapsi-spinner": TapsiSpinner;
   }
 }

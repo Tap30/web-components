@@ -20,18 +20,18 @@ export default css`
   }
 
   .root.disabled {
-    --chip-color: var(--tap-sys-color-content-disabled);
+    --chip-color: var(--tapsi-color-content-disabled);
 
     pointer-events: none;
   }
 
   .root.selected {
-    --chip-bg-color: var(--tap-sys-color-surface-secondary);
-    --chip-stroke-color: var(--tap-sys-color-surface-inverse-primary);
+    --chip-bg-color: var(--tapsi-color-surface-secondary);
+    --chip-stroke-color: var(--tapsi-color-surface-inverse-primary);
   }
 
   .root.disabled.selected {
-    --chip-stroke-color: var(--tap-sys-color-border-primary);
+    --chip-stroke-color: var(--tapsi-color-border-primary);
   }
 
   .root.has-trailing-icon {
@@ -45,24 +45,24 @@ export default css`
   .root.sm {
     --chip-height: 2rem;
     --chip-icon-size: 1.25rem;
-    --chip-spacing: var(--tap-sys-spacing-3-1);
+    --chip-spacing: var(--tapsi-spacing-3-1);
   }
 
   .root.md {
     --chip-height: 2.5rem;
     --chip-icon-size: 1.5rem;
-    --chip-spacing: var(--tap-sys-spacing-4);
+    --chip-spacing: var(--tapsi-spacing-4);
   }
 
   .root:focus-visible {
-    outline: 2px solid var(--tap-sys-color-content-accent);
+    outline: 2px solid var(--tapsi-color-content-accent);
     outline-offset: 1px;
   }
 
   .root {
-    --chip-color: var(--tap-sys-color-content-primary);
-    --chip-bg-color: var(--tap-sys-color-surface-primary);
-    --chip-stroke-color: var(--tap-sys-color-border-primary);
+    --chip-color: var(--tapsi-color-content-primary);
+    --chip-bg-color: var(--tapsi-color-surface-primary);
+    --chip-stroke-color: var(--tapsi-color-border-primary);
     --chip-trailing-icon-display: none;
     --chip-leading-icon-display: none;
 
@@ -72,8 +72,8 @@ export default css`
     align-items: center;
     justify-content: center;
 
-    border-radius: var(--tap-sys-radius-full);
-    border: var(--tap-sys-stroke-1) solid var(--chip-stroke-color);
+    border-radius: var(--tapsi-radius-full);
+    border: var(--tapsi-stroke-1) solid var(--chip-stroke-color);
 
     background-color: var(--chip-bg-color);
     color: var(--chip-color);
@@ -90,9 +90,9 @@ export default css`
 
     padding: 0 var(--chip-spacing);
 
-    font-family: var(--tap-sys-font-family);
-    font-size: var(--tap-sys-typography-body-sm-size);
-    line-height: var(--tap-sys-typography-body-sm-height);
+    font-family: var(--tapsi-font-family);
+    font-size: var(--tapsi-typography-body-sm-size);
+    line-height: var(--tapsi-typography-body-sm-height);
 
     white-space: nowrap;
     text-overflow: ellipsis;

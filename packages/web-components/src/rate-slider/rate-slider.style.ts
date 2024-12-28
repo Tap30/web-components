@@ -18,17 +18,17 @@ const styles = css`
   }
 
   .root.disabled {
-    --rate-slider-gradient: var(--tap-sys-color-surface-disabled);
-    --rate-slider-border-color: var(--tap-sys-color-content-disabled);
-    --rate-slider-selected-dot-color: var(--tap-sys-color-content-tertiary);
-    --rate-slider-tooltip-color: var(--tap-sys-color-content-tertiary);
+    --rate-slider-gradient: var(--tapsi-color-surface-disabled);
+    --rate-slider-border-color: var(--tapsi-color-content-disabled);
+    --rate-slider-selected-dot-color: var(--tapsi-color-content-tertiary);
+    --rate-slider-tooltip-color: var(--tapsi-color-content-tertiary);
 
     pointer-events: none;
     user-select: none;
   }
 
   .root.disabled .gradient {
-    --rate-slider-gradient: var(--tap-sys-color-surface-disabled);
+    --rate-slider-gradient: var(--tapsi-color-surface-disabled);
   }
 
   .root.disabled .gradient::after {
@@ -42,9 +42,9 @@ const styles = css`
 
   .root {
     --rate-slider-gradient: transparent;
-    --rate-slider-border-color: var(--tap-sys-color-border-inverse-primary);
-    --rate-slider-selected-dot-color: var(--tap-sys-color-content-primary);
-    --rate-slider-tooltip-color: var(--tap-sys-color-surface-inverse-secondary);
+    --rate-slider-border-color: var(--tapsi-color-border-inverse-primary);
+    --rate-slider-selected-dot-color: var(--tapsi-color-content-primary);
+    --rate-slider-tooltip-color: var(--tapsi-color-surface-inverse-secondary);
 
     direction: ltr;
 
@@ -54,14 +54,14 @@ const styles = css`
     position: relative;
 
     height: 4rem;
-    border-radius: var(--tap-sys-radius-5);
+    border-radius: var(--tapsi-radius-5);
 
-    font-family: var(--tap-sys-font-family);
+    font-family: var(--tapsi-font-family);
 
     outline: none;
     user-select: none;
 
-    box-shadow: 0 0 0 var(--tap-sys-stroke-1) var(--rate-slider-border-color);
+    box-shadow: 0 0 0 var(--tapsi-stroke-1) var(--rate-slider-border-color);
   }
 
   .gradient {
@@ -72,25 +72,25 @@ const styles = css`
     z-index: 0;
 
     background: var(--rate-slider-gradient);
-    border-radius: var(--tap-sys-radius-5) 0 0 var(--tap-sys-radius-5);
+    border-radius: var(--tapsi-radius-5) 0 0 var(--tapsi-radius-5);
 
     transition: background 120ms ease;
   }
 
   .gradient.red {
-    --rate-slider-gradient: var(--tap-palette-red-100);
+    --rate-slider-gradient: var(--tapsi-palette-red-100);
   }
 
   .gradient.green {
-    --rate-slider-gradient: var(--tap-palette-green-100);
+    --rate-slider-gradient: var(--tapsi-palette-green-100);
   }
 
   .gradient.gray {
-    --rate-slider-gradient: var(--tap-palette-gray-100);
+    --rate-slider-gradient: var(--tapsi-palette-gray-100);
   }
 
   .gradient.yellow {
-    --rate-slider-gradient: var(--tap-palette-yellow-100);
+    --rate-slider-gradient: var(--tapsi-palette-yellow-100);
   }
 
   .gradient::after {
@@ -101,14 +101,14 @@ const styles = css`
 
     background-image: linear-gradient(
       to right,
-      var(--tap-palette-white),
+      var(--tapsi-palette-white),
       transparent
     );
-    border-radius: var(--tap-sys-radius-5) 0 0 var(--tap-sys-radius-5);
+    border-radius: var(--tapsi-radius-5) 0 0 var(--tapsi-radius-5);
   }
 
   .gradient.rounded {
-    border-radius: var(--tap-sys-radius-5);
+    border-radius: var(--tapsi-radius-5);
   }
 
   .stops {
@@ -122,11 +122,11 @@ const styles = css`
   }
 
   .stops > .stop:first-child {
-    padding-left: var(--tap-sys-spacing-6);
+    padding-left: var(--tapsi-spacing-6);
   }
 
   .stops > .stop:last-child {
-    padding-right: var(--tap-sys-spacing-6);
+    padding-right: var(--tapsi-spacing-6);
   }
 
   .stop {
@@ -139,19 +139,19 @@ const styles = css`
     align-items: center;
     justify-content: center;
 
-    padding-right: var(--tap-sys-spacing-4);
-    padding-left: var(--tap-sys-spacing-4);
+    padding-right: var(--tapsi-spacing-4);
+    padding-left: var(--tapsi-spacing-4);
 
     flex-grow: 1;
     flex-shrink: 0;
     flex-basis: 0;
     min-width: 0;
 
-    color: var(--tap-sys-color-content-disabled);
+    color: var(--tapsi-color-content-disabled);
 
-    font-size: var(--tap-sys-typography-label-sm-size);
-    line-height: var(--tap-sys-typography-label-sm-height);
-    font-weight: var(--tap-sys-typography-label-sm-weight);
+    font-size: var(--tapsi-typography-label-sm-size);
+    line-height: var(--tapsi-typography-label-sm-height);
+    font-weight: var(--tapsi-typography-label-sm-weight);
   }
 
   .stop::after {
@@ -166,7 +166,7 @@ const styles = css`
     position: absolute;
     visibility: hidden;
 
-    background-color: var(--tap-sys-color-content-disabled);
+    background-color: var(--tapsi-color-content-disabled);
   }
 
   .value-tooltip {
@@ -186,12 +186,12 @@ const styles = css`
     transform: translateY(calc(-50% - 8px));
 
     background-color: var(--rate-slider-tooltip-color);
-    color: var(--tap-sys-color-content-on-inverse);
-    border-radius: var(--tap-sys-radius-3);
+    color: var(--tapsi-color-content-on-inverse);
+    border-radius: var(--tapsi-radius-3);
 
-    font-size: var(--tap-sys-typography-label-lg-size);
-    line-height: var(--tap-sys-typography-label-lg-height);
-    font-weight: var(--tap-sys-typography-label-lg-weight);
+    font-size: var(--tapsi-typography-label-lg-size);
+    line-height: var(--tapsi-typography-label-lg-height);
+    font-weight: var(--tapsi-typography-label-lg-weight);
   }
 
   .root:not(.unselected):focus-visible .stop.selected {

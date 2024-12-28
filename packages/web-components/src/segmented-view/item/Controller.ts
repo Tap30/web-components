@@ -23,7 +23,9 @@ class SegmentedViewItemController implements ReactiveController {
     if (!this._root || !this._host.isConnected) return [this._host];
 
     return Array.from(
-      this._root.querySelectorAll<SegmentedViewItem>("tap-segmented-view-item"),
+      this._root.querySelectorAll<SegmentedViewItem>(
+        "tapsi-segmented-view-item",
+      ),
     ) as unknown as [SegmentedViewItem, ...SegmentedViewItem[]];
   }
 

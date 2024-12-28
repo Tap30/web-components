@@ -76,7 +76,7 @@ const styles = css`
 
     z-index: -1;
 
-    background-color: var(--tap-sys-color-surface-overlay-light);
+    background-color: var(--tapsi-color-surface-overlay-light);
   }
 
   .container {
@@ -90,10 +90,10 @@ const styles = css`
     left: 0;
     right: 0;
 
-    border-top-left-radius: var(--tap-sys-radius-5);
-    border-top-right-radius: var(--tap-sys-radius-5);
+    border-top-left-radius: var(--tapsi-radius-5);
+    border-top-right-radius: var(--tapsi-radius-5);
 
-    background-color: var(--tap-sys-color-surface-primary);
+    background-color: var(--tapsi-color-surface-primary);
     box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.2);
 
     touch-action: pan-y;
@@ -120,7 +120,7 @@ const styles = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--tap-sys-color-surface-primary);
+    background-color: var(--tapsi-color-surface-primary);
 
     transition: height 240ms ease;
   }
@@ -146,9 +146,9 @@ const styles = css`
     width: 2.75rem;
     height: 0.25rem;
 
-    border-radius: var(--tap-sys-radius-full);
+    border-radius: var(--tapsi-radius-full);
 
-    background-color: var(--tap-sys-color-surface-overlay-light);
+    background-color: var(--tapsi-color-surface-overlay-light);
 
     transition:
       bottom 240ms ease,
@@ -165,10 +165,10 @@ const styles = css`
     align-items: center;
     justify-content: space-between;
 
-    padding: var(--tap-sys-spacing-5) var(--tap-sys-spacing-6);
+    padding: var(--tapsi-spacing-5) var(--tapsi-spacing-6);
 
-    background-color: var(--tap-sys-color-surface-primary);
-    box-shadow: inset 0 -1px 0 0 var(--tap-sys-color-border-primary);
+    background-color: var(--tapsi-color-surface-primary);
+    box-shadow: inset 0 -1px 0 0 var(--tapsi-color-border-primary);
   }
 
   .heading {
@@ -181,23 +181,23 @@ const styles = css`
   }
 
   .root.has-dismiss-btn .heading {
-    padding-right: var(--tap-sys-spacing-9);
+    padding-right: var(--tapsi-spacing-9);
   }
 
   .heading-title {
-    font-family: var(--tap-sys-typography-label-md-font);
-    font-size: var(--tap-sys-typography-label-md-size);
-    line-height: var(--tap-sys-typography-label-md-height);
-    font-weight: var(--tap-sys-typography-label-md-weight);
-    color: var(--tap-sys-color-content-primary);
+    font-family: var(--tapsi-typography-label-md-font);
+    font-size: var(--tapsi-typography-label-md-size);
+    line-height: var(--tapsi-typography-label-md-height);
+    font-weight: var(--tapsi-typography-label-md-weight);
+    color: var(--tapsi-color-content-primary);
   }
 
   .heading-description {
-    font-family: var(--tap-sys-typography-body-sm-font);
-    font-size: var(--tap-sys-typography-body-sm-size);
-    line-height: var(--tap-sys-typography-body-sm-height);
-    font-weight: var(--tap-sys-typography-body-sm-weight);
-    color: var(--tap-sys-color-content-tertiary);
+    font-family: var(--tapsi-typography-body-sm-font);
+    font-size: var(--tapsi-typography-body-sm-size);
+    line-height: var(--tapsi-typography-body-sm-height);
+    font-weight: var(--tapsi-typography-body-sm-weight);
+    color: var(--tapsi-color-content-tertiary);
   }
 
   .dismiss-icon {
@@ -208,7 +208,7 @@ const styles = css`
     text-align: center;
     vertical-align: middle;
 
-    color: var(--tap-sys-color-content-primary);
+    color: var(--tapsi-color-content-primary);
   }
 
   .dismiss-icon > svg {
@@ -223,10 +223,10 @@ const styles = css`
     bottom: 0;
 
     z-index: 2;
-    padding: var(--tap-sys-spacing-6);
+    padding: var(--tapsi-spacing-6);
 
-    background-color: var(--tap-sys-color-surface-primary);
-    box-shadow: inset 0 1px 0 0 var(--tap-sys-color-border-primary);
+    background-color: var(--tapsi-color-surface-primary);
+    box-shadow: inset 0 1px 0 0 var(--tapsi-color-border-primary);
   }
 
   .action-bar ::slotted(*) {
@@ -234,12 +234,12 @@ const styles = css`
   }
 
   .body {
-    padding-top: var(--tap-sys-spacing-6);
-    padding-bottom: var(--tap-sys-spacing-9);
+    padding-top: var(--tapsi-spacing-6);
+    padding-bottom: var(--tapsi-spacing-9);
   }
 
   .root.has-body.has-action-bar .body {
-    padding-bottom: var(--tap-sys-spacing-6);
+    padding-bottom: var(--tapsi-spacing-6);
   }
 `;
 

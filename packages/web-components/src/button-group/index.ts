@@ -7,7 +7,7 @@ export { Slots } from "./constants";
 /**
  * @summary The button group component.
  *
- * @tag tap-button-group
+ * @tag tapsi-button-group
  *
  * @prop {"horizontal" | "vertical"} [orientation="horizontal"] -
  * Defines the orientation of the button group.
@@ -25,13 +25,13 @@ export { Slots } from "./constants";
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
  * @slot button - The slot for buttons.
  */
-@customElement("tap-button-group")
-export class TapButtonGroup extends ButtonGroup {
+@customElement("tapsi-button-group")
+export class TapsiButtonGroup extends ButtonGroup {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-button-group": TapButtonGroup;
+    "tapsi-button-group": TapsiButtonGroup;
   }
 }

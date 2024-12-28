@@ -4,11 +4,11 @@
 
 import { expect, fixture, html } from "@open-wc/testing";
 import "../../dist/badge/index.js";
-import { type TapBadge } from "./index";
+import { type TapsiBadge } from "./index";
 
-describe("test tap-badge", () => {
+describe("test tapsi-badge", () => {
   it("should render badge with default properties", async () => {
-    const el = await fixture<TapBadge>(html` <tap-badge></tap-badge>`);
+    const el = await fixture<TapsiBadge>(html` <tapsi-badge></tapsi-badge>`);
 
     expect(el).to.exist;
     expect(el?.getAttribute("value")).to.equal("");
@@ -19,14 +19,14 @@ describe("test tap-badge", () => {
   });
 
   it("should reflects properties to attributes", async () => {
-    const el = await fixture<TapBadge>(
-      html` <tap-badge
+    const el = await fixture<TapsiBadge>(
+      html` <tapsi-badge
         value="123"
         type="numeral"
         variant="success"
         priority="low"
         leadingIcon
-      ></tap-badge>`,
+      ></tapsi-badge>`,
     );
 
     expect(el?.getAttribute("value")).to.equal("123");
@@ -37,8 +37,8 @@ describe("test tap-badge", () => {
   });
 
   it("should conditionally renders dot badge", async () => {
-    const el = await fixture<TapBadge>(
-      html`<tap-badge type="dot"></tap-badge>`,
+    const el = await fixture<TapsiBadge>(
+      html`<tapsi-badge type="dot"></tapsi-badge>`,
     );
 
     const badge = el.shadowRoot!.querySelector(".badge");
@@ -48,11 +48,11 @@ describe("test tap-badge", () => {
   });
 
   it("should conditionally renders icon in normal badge", async () => {
-    const el = await fixture<TapBadge>(
-      html`<tap-badge
+    const el = await fixture<TapsiBadge>(
+      html`<tapsi-badge
         type="pill"
         leadingIcon
-      ></tap-badge>`,
+      ></tapsi-badge>`,
     );
 
     const badge = el.shadowRoot!.querySelector(".badge");
@@ -64,7 +64,9 @@ describe("test tap-badge", () => {
   });
 
   it("should be accessible", async () => {
-    const el = await fixture(html`<tap-badge label="Test Badge"></tap-badge>`);
+    const el = await fixture(
+      html`<tapsi-badge label="Test Badge"></tapsi-badge>`,
+    );
 
     await expect(el).to.be.accessible();
   });

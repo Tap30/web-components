@@ -5,7 +5,7 @@ import styles from "./rate-slider.style";
 /**
  * @summary The rate slider component.
  *
- * @tag tap-rate-slider
+ * @tag tapsi-rate-slider
  *
  * @prop {string} [value=""] - The current value of the input. It is always a string.
  * @prop {string} [name=""] - The HTML name to use in form submission.
@@ -40,13 +40,13 @@ import styles from "./rate-slider.style";
  *
  * @fires {Event} change - Fired when value changes.
  */
-@customElement("tap-rate-slider")
-export class TapRateSlider extends RateSlider {
+@customElement("tapsi-rate-slider")
+export class TapsiRateSlider extends RateSlider {
   static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-rate-slider": TapRateSlider;
+    "tapsi-rate-slider": TapsiRateSlider;
   }
 }

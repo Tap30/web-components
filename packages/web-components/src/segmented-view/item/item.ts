@@ -121,7 +121,7 @@ export class SegmentedViewItem extends LitElement {
     }
 
     return html`
-      <tap-button
+      <tapsi-button
         id="root"
         type="button"
         role="tab"
@@ -135,7 +135,7 @@ export class SegmentedViewItem extends LitElement {
         data-value=${this.value}
       >
         <slot></slot>
-      </tap-button>
+      </tapsi-button>
     `;
   }
 }

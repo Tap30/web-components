@@ -19,12 +19,12 @@ export default css`
     display: flex;
     align-items: center;
 
-    gap: var(--tap-sys-spacing-3);
+    gap: var(--tapsi-spacing-3);
   }
 
   .step {
     --progress-indicator-step-background-color: var(
-      --tap-sys-color-surface-tertiary
+      --tapsi-color-surface-tertiary
     );
 
     height: 0.25rem;
@@ -35,7 +35,7 @@ export default css`
 
   .step.active {
     --progress-indicator-step-background-color: var(
-      --tap-sys-color-border-inverse-primary
+      --tapsi-color-border-inverse-primary
     );
   }
 `;

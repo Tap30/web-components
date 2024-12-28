@@ -9,22 +9,22 @@ export { Slots } from "./constants";
 /**
  * @summary The pinwheel item component.
  *
- * @tag tap-pinwheel-item
+ * @tag tapsi-pinwheel-item
  *
  * @prop {boolean} [selected=false] - Indicates whether the item is selected or not.
  * @prop {string} [value=""] -
  * The value associated with the item.
  * This value has to be unique among sibling items.
  */
-@customElement("tap-pinwheel-item")
-export class TapPinwheelItem extends PinwheelItem {
+@customElement("tapsi-pinwheel-item")
+export class TapsiPinwheelItem extends PinwheelItem {
   public static override readonly styles = [itemStyles];
 }
 
 /**
  * @summary The pinwheel component.
  *
- * @tag tap-pinwheel
+ * @tag tapsi-pinwheel
  *
  * @prop {string} [valuemin=""] -
  * Defines the minimum allowed value for pinwheel.
@@ -48,14 +48,14 @@ export class TapPinwheelItem extends PinwheelItem {
  *
  * @fires change - Fires when the pinwheel selected state changes.
  */
-@customElement("tap-pinwheel")
-export class TapPinwheel extends Pinwheel {
+@customElement("tapsi-pinwheel")
+export class TapsiPinwheel extends Pinwheel {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-pinwheel": TapPinwheel;
-    "tap-pinwheel-item": TapPinwheelItem;
+    "tapsi-pinwheel": TapsiPinwheel;
+    "tapsi-pinwheel-item": TapsiPinwheelItem;
   }
 }

@@ -27,10 +27,10 @@ class ChatBubbleOut extends BaseChatBubble {
         class="avatar"
         part="avatar"
       >
-        <tap-avatar
+        <tapsi-avatar
           image=${this.avatarSrc}
           size="xs"
-        ></tap-avatar>
+        ></tapsi-avatar>
       </div>
     `;
   }

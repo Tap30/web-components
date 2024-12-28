@@ -26,23 +26,23 @@ export default css`
 
     max-width: 20.5rem;
     min-height: 2.25rem;
-    padding: var(--tap-sys-spacing-3-1) var(--tap-sys-spacing-4);
-    gap: var(--tap-sys-spacing-3);
+    padding: var(--tapsi-spacing-3-1) var(--tapsi-spacing-4);
+    gap: var(--tapsi-spacing-3);
 
-    border-radius: var(--tap-sys-radius-3);
+    border-radius: var(--tapsi-radius-3);
 
-    background-color: var(--tap-sys-color-surface-inverse-secondary);
+    background-color: var(--tapsi-color-surface-inverse-secondary);
     visibility: hidden;
     opacity: 0;
   }
 
   .text {
-    color: var(--tap-sys-color-content-on-inverse);
+    color: var(--tapsi-color-content-on-inverse);
 
-    font-family: var(--tap-sys-font-family);
-    font-size: var(--tap-sys-typography-body-sm-size);
-    font-weight: var(--tap-sys-typography-body-sm-weight);
-    line-height: var(--tap-sys-typography-body-sm-height);
+    font-family: var(--tapsi-font-family);
+    font-size: var(--tapsi-typography-body-sm-size);
+    font-weight: var(--tapsi-typography-body-sm-weight);
+    line-height: var(--tapsi-typography-body-sm-height);
   }
 
   .dismiss {
@@ -55,16 +55,16 @@ export default css`
     flex-shrink: 0;
 
     margin-right: auto;
-    margin-left: calc(-1 * var(--tap-sys-spacing-4));
-    margin-top: calc(-1 * var(--tap-sys-spacing-3-1));
-    margin-bottom: calc(-1 * var(--tap-sys-spacing-3-1));
+    margin-left: calc(-1 * var(--tapsi-spacing-4));
+    margin-top: calc(-1 * var(--tapsi-spacing-3-1));
+    margin-bottom: calc(-1 * var(--tapsi-spacing-3-1));
 
     width: 2.25rem;
     height: 2.25rem;
 
     border-radius: 50%;
 
-    color: var(--tap-sys-color-content-on-inverse);
+    color: var(--tapsi-color-content-on-inverse);
   }
 
   .dismiss-icon {
@@ -88,7 +88,7 @@ export default css`
     width: 0.625rem;
     height: 0.625rem;
 
-    color: var(--tap-sys-color-surface-inverse-secondary);
+    color: var(--tapsi-color-surface-inverse-secondary);
   }
 
   .arrow > svg {

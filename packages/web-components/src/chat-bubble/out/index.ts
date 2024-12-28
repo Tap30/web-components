@@ -8,7 +8,7 @@ export { Slots };
 /**
  * @summary Display chat-bubble-out element
  *
- * @tag tap-chat-bubble-out
+ * @tag tapsi-chat-bubble-out
  *
  * @slot - The default slot for the content.
  *
@@ -16,13 +16,13 @@ export { Slots };
  * @prop {string} [avatar-src=""] - The source of the avatar image.
  * @prop {boolean} [fully-rounded=false] - Whether or not the bubble should be fully rounded.
  */
-@customElement("tap-chat-bubble-out")
-export class TapChatBubbleOut extends ChatBubbleOut {
+@customElement("tapsi-chat-bubble-out")
+export class TapsiChatBubbleOut extends ChatBubbleOut {
   public static override readonly styles = [baseStyles, styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-chat-bubble-out": TapChatBubbleOut;
+    "tapsi-chat-bubble-out": TapsiChatBubbleOut;
   }
 }

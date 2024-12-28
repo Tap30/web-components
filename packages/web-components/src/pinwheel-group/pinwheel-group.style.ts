@@ -30,12 +30,12 @@ const styles = css`
     height: 3rem;
     z-index: -1;
 
-    border-radius: var(--tap-sys-radius-3);
+    border-radius: var(--tapsi-radius-3);
 
-    background-color: var(--tap-sys-color-surface-tertiary);
+    background-color: var(--tapsi-color-surface-tertiary);
   }
 
-  .root ::slotted(tap-pinwheel) {
+  .root ::slotted(tapsi-pinwheel) {
     flex: 1 1 0;
     min-width: 0;
   }

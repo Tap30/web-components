@@ -99,7 +99,7 @@ const transformToComponentData = new Transform({
       for (const ceDefinition of ceDefinitions) {
         const elementTag = ceDefinition.name;
         const elementClassName = ceDefinition.declaration.name;
-        const componentName = elementClassName.replace("Tap", "");
+        const componentName = elementClassName.replace("Tapsi", "");
 
         const componentTemplateStr = await fs.promises.readFile(
           componentTemplatePath,

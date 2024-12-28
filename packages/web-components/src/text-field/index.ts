@@ -7,7 +7,7 @@ export { BaseTextInputSlots as Slots };
 /**
  * @summary The text-field component.
  *
- * @tag tap-text-field
+ * @tag tapsi-text-field
  *
  * @prop {string} [value=""] - The current value of the input. It is always a string.
  * @prop {string} [name=""] - The HTML name to use in form submission.
@@ -114,13 +114,13 @@ export { BaseTextInputSlots as Slots };
  * @slot leading-icon - the leading icon slot of the text-area
  * @slot trailing - the trailing slot of the text-area
  */
-@customElement("tap-text-field")
-export class TapTextField extends TextField {
+@customElement("tapsi-text-field")
+export class TapsiTextField extends TextField {
   public static override readonly styles = [...baseTextInputStyles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-text-field": TapTextField;
+    "tapsi-text-field": TapsiTextField;
   }
 }

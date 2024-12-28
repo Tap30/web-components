@@ -27,13 +27,13 @@ export default css`
     align-items: center;
     justify-content: center;
 
-    font-family: var(--tap-sys-font-family);
+    font-family: var(--tapsi-font-family);
 
-    padding: var(--tap-sys-spacing-6) var(--tap-sys-spacing-8);
+    padding: var(--tapsi-spacing-6) var(--tapsi-spacing-8);
   }
 
   .icon {
-    color: var(--tap-sys-color-content-secondary);
+    color: var(--tapsi-color-content-secondary);
 
     display: flex;
     align-items: center;
@@ -56,27 +56,27 @@ export default css`
   .content {
     text-align: var(--empty-state-alignment);
 
-    margin-top: var(--tap-sys-spacing-8);
-    margin-bottom: var(--tap-sys-spacing-8);
+    margin-top: var(--tapsi-spacing-8);
+    margin-bottom: var(--tapsi-spacing-8);
   }
 
   .title {
-    color: var(--tap-sys-color-content-primary);
-    font-size: var(--tap-sys-typography-headline-sm-size);
-    font-weight: var(--tap-sys-typography-headline-sm-weight);
-    line-height: var(--tap-sys-typography-headline-sm-height);
+    color: var(--tapsi-color-content-primary);
+    font-size: var(--tapsi-typography-headline-sm-size);
+    font-weight: var(--tapsi-typography-headline-sm-weight);
+    line-height: var(--tapsi-typography-headline-sm-height);
   }
 
   .description {
-    margin-top: var(--tap-sys-spacing-4);
+    margin-top: var(--tapsi-spacing-4);
 
-    color: var(--tap-sys-color-content-secondary);
-    font-size: var(--tap-sys-typography-body-md-size);
-    font-weight: var(--tap-sys-typography-body-md-weight);
-    line-height: var(--tap-sys-typography-body-md-height);
+    color: var(--tapsi-color-content-secondary);
+    font-size: var(--tapsi-typography-body-md-size);
+    font-weight: var(--tapsi-typography-body-md-weight);
+    line-height: var(--tapsi-typography-body-md-height);
   }
 
   .title + .description {
-    margin-top: var(--tap-sys-spacing-4);
+    margin-top: var(--tapsi-spacing-4);
   }
 `;

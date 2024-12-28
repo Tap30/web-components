@@ -6,27 +6,29 @@ import { expect, fixture } from "@open-wc/testing";
 import { html } from "lit";
 import sinon from "sinon";
 import "../../dist/modal/index.js";
-import { type TapModal } from "./index";
+import { type TapsiModal } from "./index";
 
-describe("tap-modal component", () => {
+describe("tapsi-modal component", () => {
   it("should be hidden by default", async () => {
-    const element = await fixture<TapModal>(
-      html`<tap-modal .open=${false}></tap-modal>`,
+    const element = await fixture<TapsiModal>(
+      html`<tapsi-modal .open=${false}></tapsi-modal>`,
     );
 
     expect(element.open).to.be.false;
   });
 
   it('should become visible when "open" is set to true', async () => {
-    const element = await fixture<TapModal>(
-      html`<tap-modal .open=${true}></tap-modal>`,
+    const element = await fixture<TapsiModal>(
+      html`<tapsi-modal .open=${true}></tapsi-modal>`,
     );
 
     expect(element.open).to.be.true;
   });
 
   it('should dispatch an "open" event when show method is called', async () => {
-    const element = await fixture<TapModal>(html`<tap-modal></tap-modal>`);
+    const element = await fixture<TapsiModal>(
+      html`<tapsi-modal></tapsi-modal>`,
+    );
     const openSpy = sinon.spy();
     const closeSpy = sinon.spy();
 
@@ -44,7 +46,9 @@ describe("tap-modal component", () => {
   });
 
   it("should close when clicking on the overlay", async () => {
-    const element = await fixture<TapModal>(html`<tap-modal open></tap-modal>`);
+    const element = await fixture<TapsiModal>(
+      html`<tapsi-modal open></tapsi-modal>`,
+    );
     const overlay = element.shadowRoot!.querySelector<HTMLElement>("#overlay");
 
     overlay?.click();
@@ -54,7 +58,9 @@ describe("tap-modal component", () => {
   });
 
   it("should close when pressing the Escape key", async () => {
-    const element = await fixture<TapModal>(html`<tap-modal open></tap-modal>`);
+    const element = await fixture<TapsiModal>(
+      html`<tapsi-modal open></tapsi-modal>`,
+    );
 
     const event = new KeyboardEvent("keydown", { key: "Escape" });
 
@@ -68,11 +74,11 @@ describe("tap-modal component", () => {
     const title = "Title";
     const description = "Description";
     const element = await fixture(
-      html`<tap-modal
+      html`<tapsi-modal
         open
         title=${title}
         description=${description}
-      ></tap-modal>`,
+      ></tapsi-modal>`,
     );
 
     const titleElement = element.shadowRoot!.querySelector(".title");

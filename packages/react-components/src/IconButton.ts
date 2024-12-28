@@ -1,11 +1,11 @@
 import { createComponent } from "@lit/react";
-import { TapIconButton } from "@tapsioss/web-components/button/icon-button";
+import { TapsiIconButton } from "@tapsioss/web-components/button/icon-button";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __IconButton = createComponent({
-  tagName: "tap-icon-button",
-  elementClass: TapIconButton,
+  tagName: "tapsi-icon-button",
+  elementClass: TapsiIconButton,
   react: React,
   events: {},
 });

@@ -10,6 +10,6 @@ export const Z_INDEXES = {
 };
 
 export const FOCUS_RING_LINE = unsafeCSS(
-  "var(--tap-sys-stroke-2) solid var(--tap-sys-color-content-accent)",
+  "var(--tapsi-stroke-2) solid var(--tapsi-color-content-accent)",
 );
-export const FOCUS_RING_OFFSET = unsafeCSS("var(--tap-sys-stroke-2)");
+export const FOCUS_RING_OFFSET = unsafeCSS("var(--tapsi-stroke-2)");

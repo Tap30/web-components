@@ -1,11 +1,11 @@
 :root {
-  --tap-sys-radius-0: 0;
-  --tap-sys-radius-1: 0.125rem;
-  --tap-sys-radius-2: 0.25rem;
-  --tap-sys-radius-3: 0.5rem;
-  --tap-sys-radius-4: 0.75rem;
-  --tap-sys-radius-5: 1rem;
-  --tap-sys-radius-6: 1.25rem;
-  --tap-sys-radius-7: 1.5rem;
-  --tap-sys-radius-full: 999px;
+  --tapsi-radius-0: 0;
+  --tapsi-radius-1: 0.125rem;
+  --tapsi-radius-2: 0.25rem;
+  --tapsi-radius-3: 0.5rem;
+  --tapsi-radius-4: 0.75rem;
+  --tapsi-radius-5: 1rem;
+  --tapsi-radius-6: 1.25rem;
+  --tapsi-radius-7: 1.5rem;
+  --tapsi-radius-full: 999px;
 }

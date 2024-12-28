@@ -361,7 +361,7 @@ export class Stepper extends BaseClass {
         class=${rootClasses}
         part="root"
       >
-        <tap-icon-button
+        <tapsi-icon-button
           size=${this.size}
           type="button"
           part="decrease"
@@ -375,7 +375,7 @@ export class Stepper extends BaseClass {
           ?disabled=${isDecreaseDisabled}
         >
           ${minus}
-        </tap-icon-button>
+        </tapsi-icon-button>
         <div
           class="input"
           id="input"
@@ -402,7 +402,7 @@ export class Stepper extends BaseClass {
           class="focus-ring"
           aria-hidden="true"
         ></div>
-        <tap-icon-button
+        <tapsi-icon-button
           size=${this.size}
           type="button"
           part="increase"
@@ -416,7 +416,7 @@ export class Stepper extends BaseClass {
           ?disabled=${isIncreaseDisabled}
         >
           ${plus}
-        </tap-icon-button>
+        </tapsi-icon-button>
       </div>
     `;
   }

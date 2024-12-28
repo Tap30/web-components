@@ -5,7 +5,7 @@ import styles from "./stepper.style.js";
 /**
  * @summary The stepper input component.
  *
- * @tag tap-stepper
+ * @tag tapsi-stepper
  *
  * @prop {"sm" | "md"} [size="md"] - The size of the input.
  * @prop {string} [value=""] - The current value of the input. It is always a string.
@@ -47,13 +47,13 @@ import styles from "./stepper.style.js";
  *
  * @fires {Event} change - Fires when value changes.
  */
-@customElement("tap-stepper")
-export class TapStepper extends Stepper {
+@customElement("tapsi-stepper")
+export class TapsiStepper extends Stepper {
   static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-stepper": TapStepper;
+    "tapsi-stepper": TapsiStepper;
   }
 }

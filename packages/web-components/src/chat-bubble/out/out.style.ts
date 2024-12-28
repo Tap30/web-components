@@ -8,7 +8,7 @@ const styles = css`
   }
 
   .root {
-    --chat-bubble-out-leading-space: var(--tap-sys-spacing-11);
+    --chat-bubble-out-leading-space: var(--tapsi-spacing-11);
 
     flex-direction: row-reverse;
   }
@@ -25,8 +25,8 @@ const styles = css`
     display: flex;
     flex-direction: column-reverse;
 
-    margin-right: var(--tap-sys-spacing-4);
-    margin-left: var(--tap-sys-spacing-4);
+    margin-right: var(--tapsi-spacing-4);
+    margin-left: var(--tapsi-spacing-4);
   }
 `;
 

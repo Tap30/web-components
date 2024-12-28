@@ -13,26 +13,24 @@ export default css`
   }
 
   :host {
-    --input-control-track-bg-color: var(--tap-sys-color-surface-tertiary);
-    --input-control-knob-bg-color: var(--tap-sys-color-surface-primary);
-    --input-control-color: var(--tap-sys-color-content-primary);
+    --input-control-track-bg-color: var(--tapsi-color-surface-tertiary);
+    --input-control-knob-bg-color: var(--tapsi-color-surface-primary);
+    --input-control-color: var(--tapsi-color-content-primary);
 
     display: inline-block;
     vertical-align: middle;
   }
 
   .root.disabled {
-    --input-control-track-bg-color: var(--tap-sys-color-surface-disabled);
-    --input-control-knob-bg-color: var(--tap-sys-color-surface-primary);
-    --input-control-color: var(--tap-sys-color-content-disabled);
+    --input-control-track-bg-color: var(--tapsi-color-surface-disabled);
+    --input-control-knob-bg-color: var(--tapsi-color-surface-primary);
+    --input-control-color: var(--tapsi-color-content-disabled);
   }
 
   .root:not(.disabled) .control.selected {
-    --input-control-track-bg-color: var(
-      --tap-sys-color-surface-inverse-primary
-    );
-    --input-control-knob-bg-color: var(--tap-sys-color-surface-primary);
-    --input-control-color: var(--tap-sys-color-content-primary);
+    --input-control-track-bg-color: var(--tapsi-color-surface-inverse-primary);
+    --input-control-knob-bg-color: var(--tapsi-color-surface-primary);
+    --input-control-color: var(--tapsi-color-content-primary);
   }
 
   .control {
@@ -53,7 +51,7 @@ export default css`
     outline: none;
     border: none;
 
-    border-radius: var(--tap-sys-radius-full);
+    border-radius: var(--tapsi-radius-full);
 
     cursor: pointer;
 
@@ -70,7 +68,7 @@ export default css`
   .track {
     width: 100%;
     height: 1.875rem;
-    border-radius: var(--tap-sys-radius-full);
+    border-radius: var(--tapsi-radius-full);
 
     background-color: var(--input-control-track-bg-color);
 

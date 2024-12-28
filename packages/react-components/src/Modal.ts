@@ -1,11 +1,11 @@
 import { createComponent } from "@lit/react";
-import { TapModal } from "@tapsioss/web-components/modal";
+import { TapsiModal } from "@tapsioss/web-components/modal";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __Modal = createComponent({
-  tagName: "tap-modal",
-  elementClass: TapModal,
+  tagName: "tapsi-modal",
+  elementClass: TapsiModal,
   react: React,
   events: {},
 });

@@ -15,7 +15,7 @@ const styles = css`
   .root {
     display: block;
 
-    background-color: var(--tap-sys-color-surface-tertiary);
+    background-color: var(--tapsi-color-surface-tertiary);
 
     height: 1.2em;
 
@@ -34,7 +34,7 @@ const styles = css`
     transform-origin: 0 55%;
     transform: scale(1, 0.6);
 
-    border-radius: var(--tap-sys-radius-2);
+    border-radius: var(--tapsi-radius-2);
   }
 
   .root.text::before {
@@ -46,11 +46,11 @@ const styles = css`
   }
 
   .root.pill {
-    border-radius: var(--tap-sys-radius-full);
+    border-radius: var(--tapsi-radius-full);
   }
 
   .root.rectangular {
-    border-radius: var(--tap-sys-radius-3);
+    border-radius: var(--tapsi-radius-3);
   }
 
   .root ::slotted(*) {

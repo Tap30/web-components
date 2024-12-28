@@ -7,7 +7,7 @@ export { Slots } from "./constants";
 /**
  * @summary The pinwheel group component.
  *
- * @tag tap-pinwheel-group
+ * @tag tapsi-pinwheel-group
  *
  * @prop {string} [label=""] -
  * Defines a string value that can be used to set a label
@@ -20,13 +20,13 @@ export { Slots } from "./constants";
  *
  * @fires change - Fires when a pinwheel selected state changes.
  */
-@customElement("tap-pinwheel-group")
-export class TapPinwheelGroup extends PinwheelGroup {
+@customElement("tapsi-pinwheel-group")
+export class TapsiPinwheelGroup extends PinwheelGroup {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-pinwheel-group": TapPinwheelGroup;
+    "tapsi-pinwheel-group": TapsiPinwheelGroup;
   }
 }

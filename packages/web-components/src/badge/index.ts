@@ -7,7 +7,7 @@ export { Slots } from "./constants";
 /**
  * @summary The badge component.
  *
- * @tag tap-badge
+ * @tag tapsi-badge
  *
  * @slot icon - The slot for icon element.
  *
@@ -17,13 +17,13 @@ export { Slots } from "./constants";
  * @prop {'high' | 'low'} [priority='high'] - The priority level of the badge.
  * @prop {'md' | 'sm'} [size='md'] - The size of the badge.
  */
-@customElement("tap-badge")
-export class TapBadge extends Badge {
+@customElement("tapsi-badge")
+export class TapsiBadge extends Badge {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-badge": TapBadge;
+    "tapsi-badge": TapsiBadge;
   }
 }

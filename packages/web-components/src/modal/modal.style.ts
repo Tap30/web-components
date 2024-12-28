@@ -55,7 +55,7 @@ export default css`
   }
 
   .overlay {
-    background-color: var(--tap-sys-color-surface-overlay-dark);
+    background-color: var(--tapsi-color-surface-overlay-dark);
 
     position: fixed;
     inset: 0;
@@ -71,45 +71,45 @@ export default css`
     transform: translateY(2rem);
 
     position: fixed;
-    left: var(--tap-sys-spacing-6);
-    right: var(--tap-sys-spacing-6);
-    bottom: var(--tap-sys-spacing-6);
+    left: var(--tapsi-spacing-6);
+    right: var(--tapsi-spacing-6);
+    bottom: var(--tapsi-spacing-6);
 
-    background-color: var(--tap-sys-color-surface-primary);
-    font-family: var(--tap-sys-font-family);
-    border-radius: var(--tap-sys-radius-6);
+    background-color: var(--tapsi-color-surface-primary);
+    font-family: var(--tapsi-font-family);
+    border-radius: var(--tapsi-radius-6);
 
     transition: transform 240ms ease;
   }
 
   .body {
-    margin-top: var(--tap-sys-spacing-6);
-    margin-bottom: var(--tap-sys-spacing-6);
-    padding: var(--tap-sys-spacing-4) var(--tap-sys-spacing-6);
+    margin-top: var(--tapsi-spacing-6);
+    margin-bottom: var(--tapsi-spacing-6);
+    padding: var(--tapsi-spacing-4) var(--tapsi-spacing-6);
   }
 
   .title {
-    color: var(--tap-sys-color-content-primary);
+    color: var(--tapsi-color-content-primary);
 
-    font-size: var(--tap-sys-typography-headline-sm-size);
-    font-weight: var(--tap-sys-typography-headline-sm-weight);
-    line-height: var(--tap-sys-typography-headline-sm-height);
+    font-size: var(--tapsi-typography-headline-sm-size);
+    font-weight: var(--tapsi-typography-headline-sm-weight);
+    line-height: var(--tapsi-typography-headline-sm-height);
   }
 
   .description {
-    color: var(--tap-sys-color-content-tertiary);
+    color: var(--tapsi-color-content-tertiary);
 
-    font-size: var(--tap-sys-typography-body-md-size);
-    font-weight: var(--tap-sys-typography-body-md-weight);
-    line-height: var(--tap-sys-typography-body-md-height);
+    font-size: var(--tapsi-typography-body-md-size);
+    font-weight: var(--tapsi-typography-body-md-weight);
+    line-height: var(--tapsi-typography-body-md-height);
   }
 
   .title + .description {
-    margin-top: var(--tap-sys-spacing-4);
+    margin-top: var(--tapsi-spacing-4);
   }
 
   .actions {
-    padding: var(--tap-sys-spacing-6);
+    padding: var(--tapsi-spacing-6);
   }
 
   .actions ::slotted(*) {

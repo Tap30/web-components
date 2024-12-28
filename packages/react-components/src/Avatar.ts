@@ -1,11 +1,11 @@
 import { createComponent } from "@lit/react";
-import { TapAvatar } from "@tapsioss/web-components/avatar";
+import { TapsiAvatar } from "@tapsioss/web-components/avatar";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __Avatar = createComponent({
-  tagName: "tap-avatar",
-  elementClass: TapAvatar,
+  tagName: "tapsi-avatar",
+  elementClass: TapsiAvatar,
   react: React,
   events: {},
 });

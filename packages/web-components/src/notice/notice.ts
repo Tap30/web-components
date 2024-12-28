@@ -152,7 +152,7 @@ export class Notice extends LitElement {
     if (!this.dismissible) return null;
 
     return html`
-      <tap-icon-button
+      <tapsi-icon-button
         part="dismiss"
         size="sm"
         variant="naked"
@@ -162,7 +162,7 @@ export class Notice extends LitElement {
         @click=${() => this.hide()}
       >
         ${close}
-      </tap-icon-button>
+      </tapsi-icon-button>
     `;
   }
 

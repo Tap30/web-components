@@ -1,11 +1,11 @@
 import { createComponent } from "@lit/react";
-import { TapBanner } from "@tapsioss/web-components/banner";
+import { TapsiBanner } from "@tapsioss/web-components/banner";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __Banner = createComponent({
-  tagName: "tap-banner",
-  elementClass: TapBanner,
+  tagName: "tapsi-banner",
+  elementClass: TapsiBanner,
   react: React,
   events: {},
 });

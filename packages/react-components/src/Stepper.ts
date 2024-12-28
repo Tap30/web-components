@@ -1,11 +1,11 @@
 import { createComponent } from "@lit/react";
-import { TapStepper } from "@tapsioss/web-components/stepper";
+import { TapsiStepper } from "@tapsioss/web-components/stepper";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __Stepper = createComponent({
-  tagName: "tap-stepper",
-  elementClass: TapStepper,
+  tagName: "tapsi-stepper",
+  elementClass: TapsiStepper,
   react: React,
   events: {},
 });

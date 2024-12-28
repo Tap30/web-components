@@ -6,7 +6,7 @@ import styles from "./checkbox.style";
 /**
  * @summary A checkbox component.
  *
- * @tag tap-checkbox
+ * @tag tapsi-checkbox
  *
  * @prop {boolean} [checked=false] - Indicates whether the checkbox is checked.
  * @prop {boolean} [indeterminate=false] - Indicates whether the checkbox is in an indeterminate state.
@@ -21,13 +21,13 @@ import styles from "./checkbox.style";
  * `reportValidity()` is invoked when value is empty.\
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required
  */
-@customElement("tap-checkbox")
-export class TapCheckbox extends Checkbox {
+@customElement("tapsi-checkbox")
+export class TapsiCheckbox extends Checkbox {
   public static override readonly styles = [baseInputStyle, styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-checkbox": TapCheckbox;
+    "tapsi-checkbox": TapsiCheckbox;
   }
 }

@@ -5,17 +5,17 @@ import styles from "./divider.style.js";
 /**
  * @summary A divider component used to separate content.
  *
- * @tag tap-divider
+ * @tag tapsi-divider
  *
  * @prop {'thin' | 'medium' | 'thick'} [variant='thin'] - The thickness of the divider.
  */
-@customElement("tap-divider")
-export class TapDivider extends Divider {
+@customElement("tapsi-divider")
+export class TapsiDivider extends Divider {
   public static override readonly styles = [styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tap-divider": TapDivider;
+    "tapsi-divider": TapsiDivider;
   }
 }

@@ -3,25 +3,25 @@
 // @ts-nocheck
 
 import { expect, fixture, html, oneEvent } from "@open-wc/testing";
-import sinon from "sinon";
 import "@tapsioss/web-components/button";
-import { type TapButton } from "./index";
+import sinon from "sinon";
+import { type TapsiButton } from "./index";
 
-describe("Test tap-button", () => {
+describe("Test tapsi-button", () => {
   it("should render button with default properties", async () => {
-    const el = await fixture<TapButton>(html` <tap-button></tap-button>`);
+    const el = await fixture<TapsiButton>(html` <tapsi-button></tapsi-button>`);
 
     expect(el).to.exist;
     expect(el?.disabled).to.be.false;
   });
 
   it("should reflects properties to attributes", async () => {
-    const el = await fixture<TapButton>(
-      html` <tap-button
+    const el = await fixture<TapsiButton>(
+      html` <tapsi-button
         disabled
         type="submit"
         name="test-name"
-      ></tap-button>`,
+      ></tapsi-button>`,
     );
 
     expect(el?.disabled).to.be.true;
@@ -30,8 +30,8 @@ describe("Test tap-button", () => {
   });
 
   it("should handles button click", async () => {
-    const el = await fixture<TapButton>(
-      html` <tap-button type="submit"></tap-button>`,
+    const el = await fixture<TapsiButton>(
+      html` <tapsi-button type="submit"></tapsi-button>`,
     );
 
     setTimeout(() => el?.click(), 0);
@@ -41,7 +41,7 @@ describe("Test tap-button", () => {
   });
 
   it("should renders slot content", async () => {
-    const el = await fixture(html`<tap-button>تایید</tap-button>`);
+    const el = await fixture(html`<tapsi-button>تایید</tapsi-button>`);
     const slot = el.shadowRoot!.querySelector("slot");
     const slotContent = slot!.assignedNodes()[0];
 
@@ -50,15 +50,15 @@ describe("Test tap-button", () => {
 
   it("should be accessible", async () => {
     const el = await fixture(
-      html`<tap-button label="Test Button"></tap-button>`,
+      html`<tapsi-button label="Test Button"></tapsi-button>`,
     );
 
     await expect(el).to.be.accessible();
   });
 
   it("should conditionally renders loading state", async () => {
-    const el = await fixture<TapButton>(
-      html`<tap-button loading></tap-button>`,
+    const el = await fixture<TapsiButton>(
+      html`<tapsi-button loading></tapsi-button>`,
     );
 
     // Check if the spinner is rendered when loading is true
@@ -88,11 +88,11 @@ describe("Test tap-button", () => {
         action=""
         method="post"
       >
-        <tap-button type="submit">Submit</tap-button>
+        <tapsi-button type="submit">Submit</tapsi-button>
       </form>
     `);
 
-    const button = form.querySelector("tap-button");
+    const button = form.querySelector("tapsi-button");
 
     const handleSubmit = sinon.spy((event: SubmitEvent) =>
       event.preventDefault(),
@@ -113,11 +113,11 @@ describe("Test tap-button", () => {
         action=""
         method="post"
       >
-        <tap-button type="submit">Submit</tap-button>
+        <tapsi-button type="submit">Submit</tapsi-button>
       </form>
     `);
 
-    const button = form.querySelector("tap-button");
+    const button = form.querySelector("tapsi-button");
 
     const handleSubmit = sinon.spy((event: SubmitEvent) =>
       event.preventDefault(),
