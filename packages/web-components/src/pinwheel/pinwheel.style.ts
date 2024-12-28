@@ -26,6 +26,7 @@ export default css`
     height: 9rem;
 
     outline: none;
+    -webkit-user-select: none;
     user-select: none;
 
     overflow-y: auto;

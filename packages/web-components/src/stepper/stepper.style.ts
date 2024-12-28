@@ -23,6 +23,8 @@ export default css`
     --stepper-value-color: var(--tapsi-color-content-disabled);
 
     cursor: not-allowed;
+
+    -webkit-user-select: none;
     user-select: none;
   }
 
@@ -62,6 +64,7 @@ export default css`
 
   .increase,
   .decrease {
+    -webkit-user-select: none;
     user-select: none;
 
     flex-shrink: 0;

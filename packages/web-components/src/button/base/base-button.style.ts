@@ -96,6 +96,7 @@ export default css`
 
   .root {
     cursor: pointer;
+    -webkit-user-select: none;
     user-select: none;
     text-overflow: ellipsis;
     position: relative;

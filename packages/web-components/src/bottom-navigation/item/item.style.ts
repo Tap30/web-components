@@ -30,6 +30,7 @@ export default css`
     vertical-align: middle;
 
     cursor: pointer;
+    -webkit-user-select: none;
     user-select: none;
     border: none;
     outline: none;

@@ -11,6 +11,9 @@ const styles = css`
   :host {
     display: inline-block;
     vertical-align: middle;
+
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   :host([disabled]) {
@@ -24,6 +27,7 @@ const styles = css`
     --rate-slider-tooltip-color: var(--tapsi-color-content-tertiary);
 
     pointer-events: none;
+    -webkit-user-select: none;
     user-select: none;
   }
 
@@ -59,6 +63,7 @@ const styles = css`
     font-family: var(--tapsi-font-family);
 
     outline: none;
+    -webkit-user-select: none;
     user-select: none;
 
     box-shadow: 0 0 0 var(--tapsi-stroke-1) var(--rate-slider-border-color);
