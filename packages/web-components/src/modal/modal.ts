@@ -79,9 +79,22 @@ export class Modal extends LitElement {
   public set open(openState: boolean) {
     if (openState === this._open) return;
 
-    this._open = openState;
+    const initialOpenState = !this.hasUpdated && openState && !this._open;
 
-    void this._toggleOpenState(openState);
+    const toggle = () => {
+      this._open = openState;
+
+      void this._toggleOpenState(openState);
+    };
+
+    if (initialOpenState) {
+      runAfterRepaint(() => {
+        const prevOpen = this._open;
+
+        toggle();
+        this.requestUpdate("open", prevOpen);
+      });
+    } else toggle();
   }
 
   public get open() {
