@@ -48,6 +48,9 @@ export * from "./events";
  * @fires {HideEvent} hide - Fired when the bottom-sheet is hidden (cancelable).
  * @fires {ShowEvent} show - Fired when the bottom-sheet is shown (cancelable).
  *
+ * @member {MetaData} metaData
+ * @description - Returns the metadata of the bottom sheet.
+ *
  * @member {number[]} snapPoints
  * @description - The snap points for bottom sheet to snap to.
  * Note that snap points will be sorted sorted, no matter
@@ -64,6 +67,10 @@ export * from "./events";
  * @description - When given a number it'll find the closest snap point,
  * so you don't need to know the exact value.
  * Use the callback method to resolve the snap point.
+ * @param {number | Function} numberOrCallback
+ *
+ * @method strictSnapTo
+ * @description - Strictly snaps to the provided or resolved snap point.
  * @param {number | Function} numberOrCallback
  *
  * @method show

@@ -1,6 +1,6 @@
 import type { Status } from "./constants";
 
-export type SnapToCallbackArgument = (snapProps: {
+export type MetaData = {
   /**
    * The snap points currently in use.
    */
@@ -18,9 +18,15 @@ export type SnapToCallbackArgument = (snapProps: {
    */
   bodyHeight: number;
   /**
-   * The height of the bottom sheet.
+   * The total height of the bottom sheet (action-bar + header + body).
+   */
+  totalHeight: number;
+  /**
+   * The current height of the bottom sheet.
    */
   height: number;
-}) => number;
+};
+
+export type SnapToCallbackArgument = (data: MetaData) => number;
 
 export type StatusEnum = (typeof Status)[keyof typeof Status];

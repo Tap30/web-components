@@ -42,7 +42,7 @@ import {
   SnappedEvent,
 } from "./events";
 import { dismiss } from "./icons";
-import type { SnapToCallbackArgument, StatusEnum } from "./types";
+import type { MetaData, SnapToCallbackArgument, StatusEnum } from "./types";
 
 export class BottomSheet extends LitElement {
   public static override readonly shadowRootOptions = {
@@ -206,21 +206,13 @@ export class BottomSheet extends LitElement {
       }
     }
 
-    runAfterRepaint(() => {
-      const actionBarSlot = getRenderRootSlot(
-        this.renderRoot,
-        Slots.ACTION_BAR,
-      );
+    const actionBarSlot = getRenderRootSlot(this.renderRoot, Slots.ACTION_BAR);
+    const bodySlot = getRenderRootSlot(this.renderRoot, Slots.BODY);
+    const headerSlot = getRenderRootSlot(this.renderRoot, Slots.HEADER);
 
-      const bodySlot = getRenderRootSlot(this.renderRoot, Slots.BODY);
-      const headerSlot = getRenderRootSlot(this.renderRoot, Slots.HEADER);
-
-      this._hasActionBarSlot =
-        (actionBarSlot?.assignedNodes() ?? []).length > 0;
-
-      this._hasBodySlot = (bodySlot?.assignedNodes() ?? []).length > 0;
-      this._hasHeaderSlot = (headerSlot?.assignedNodes() ?? []).length > 0;
-    });
+    this._hasActionBarSlot = (actionBarSlot?.assignedNodes() ?? []).length > 0;
+    this._hasBodySlot = (bodySlot?.assignedNodes() ?? []).length > 0;
+    this._hasHeaderSlot = (headerSlot?.assignedNodes() ?? []).length > 0;
   }
 
   public override connectedCallback(): void {
@@ -350,6 +342,21 @@ export class BottomSheet extends LitElement {
   }
 
   /**
+   * Returns the metadata of the bottom sheet.
+   */
+  public get metaData(): MetaData {
+    return {
+      actionBarHeight: this._actionBarHeight,
+      bodyHeight: this._bodyHeight,
+      headerHeight: this._headerHeight,
+      height: this._height,
+      snapPoints: this.snapPoints,
+      totalHeight:
+        this._actionBarHeight + this._bodyHeight + this._headerHeight,
+    };
+  }
+
+  /**
    * Gets the default snap points for the bottom sheet.
    *
    * @returns {[number, number]} An array containing two snap points.
@@ -401,9 +408,22 @@ export class BottomSheet extends LitElement {
   public set open(openState: boolean) {
     if (openState === this._open) return;
 
-    this._open = openState;
+    const initialOpenState = !this.hasUpdated && openState && !this._open;
 
-    void this._toggleOpenState(openState);
+    const toggle = () => {
+      this._open = openState;
+
+      void this._toggleOpenState(openState);
+    };
+
+    if (initialOpenState) {
+      runAfterRepaint(() => {
+        const prevOpen = this._open;
+
+        toggle();
+        this.requestUpdate("open", prevOpen);
+      });
+    } else toggle();
   }
 
   public get open() {
@@ -542,7 +562,7 @@ export class BottomSheet extends LitElement {
     }
 
     if (last) {
-      void this._snapTo(newY);
+      void this._snapTo(newY, false);
 
       this._isGrabbing = false;
 
@@ -558,28 +578,34 @@ export class BottomSheet extends LitElement {
     return memo as unknown;
   }
 
-  private async _snapTo(snapPoint: number) {
+  private async _snapTo(snapPoint: number, strict: boolean) {
     if (!this._root) return Promise.resolve();
 
-    const { closestPoint } = [0, ...this.snapPoints].reduce(
-      (result, currentPoint) => {
-        const distance = Math.abs(snapPoint - currentPoint);
+    let closestPoint: number;
 
-        if (result.minDistance > distance) {
-          result.minDistance = distance;
-          result.closestPoint = currentPoint;
-        }
+    if (!strict) {
+      const closest = [0, ...this.snapPoints].reduce(
+        (result, currentPoint) => {
+          const distance = Math.abs(snapPoint - currentPoint);
 
-        return result;
-      },
-      {
-        minDistance: Infinity,
-        closestPoint: NaN,
-      } as {
-        minDistance: number;
-        closestPoint: number;
-      },
-    );
+          if (result.minDistance > distance) {
+            result.minDistance = distance;
+            result.closestPoint = currentPoint;
+          }
+
+          return result;
+        },
+        {
+          minDistance: Infinity,
+          closestPoint: NaN,
+        } as {
+          minDistance: number;
+          closestPoint: number;
+        },
+      );
+
+      closestPoint = closest.closestPoint;
+    } else closestPoint = snapPoint;
 
     if (Number.isNaN(closestPoint)) return Promise.resolve();
 
@@ -628,6 +654,29 @@ export class BottomSheet extends LitElement {
   }
 
   /**
+   * Strictly snaps to the provided or resolved snap point.
+   */
+  public strictSnapTo(numberOrCallback: number | SnapToCallbackArgument) {
+    if (isSSR()) return Promise.resolve();
+
+    const snapPoint =
+      typeof numberOrCallback === "number"
+        ? numberOrCallback
+        : numberOrCallback(this.metaData);
+
+    if (!this.open) {
+      this._open = true;
+
+      this.requestUpdate("open", false);
+
+      return this._toggleOpenState(true, {
+        point: snapPoint,
+        strict: true,
+      });
+    } else return this._snapTo(snapPoint, true);
+  }
+
+  /**
    * When given a number it'll find the closest snap point,
    * so you don't need to know the exact value.
    * Use the callback method to resolve the snap point.
@@ -638,21 +687,18 @@ export class BottomSheet extends LitElement {
     const snapPoint =
       typeof numberOrCallback === "number"
         ? numberOrCallback
-        : numberOrCallback({
-            actionBarHeight: this._actionBarHeight,
-            bodyHeight: this._bodyHeight,
-            headerHeight: this._headerHeight,
-            height: this._height,
-            snapPoints: this.snapPoints,
-          });
+        : numberOrCallback(this.metaData);
 
     if (!this.open) {
       this._open = true;
 
       this.requestUpdate("open", false);
 
-      return this._toggleOpenState(true, snapPoint);
-    } else return this._snapTo(snapPoint);
+      return this._toggleOpenState(true, {
+        point: snapPoint,
+        strict: false,
+      });
+    } else return this._snapTo(snapPoint, false);
   }
 
   /**
@@ -683,13 +729,18 @@ export class BottomSheet extends LitElement {
     if (!eventAllowed) this.open = true;
   }
 
-  private async _toggleOpenState(openState: boolean, snapPoint?: number) {
+  private async _toggleOpenState(
+    openState: boolean,
+    snapOpts?: { point: number; strict: boolean },
+  ) {
     // Skip transition if not connected or elements are not assigned
     if (!this.isConnected || !this._root || !this._container) {
       this._status = openState ? Status.OPENED : Status.CLOSED;
 
       return;
     }
+
+    const { point = null, strict = false } = snapOpts ?? {};
 
     const handleTransitionEnd = (event: TransitionEvent) => {
       if (event.propertyName === "height") {
@@ -726,11 +777,11 @@ export class BottomSheet extends LitElement {
     this._status = openState ? Status.OPENING : Status.CLOSING;
 
     const openToSnapPoint =
-      snapPoint ?? this.snapPoints[0] ?? this.defaultSnapPoints[0];
+      point ?? this.snapPoints[0] ?? this.defaultSnapPoints[0];
 
     if (openState) {
       // It's opening, so we have to snap
-      await this._snapTo(openToSnapPoint);
+      await this._snapTo(openToSnapPoint, strict);
     } else this._height = 0;
 
     // Wait for the animation to complete
