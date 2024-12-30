@@ -1,4 +1,5 @@
 import { css } from "lit";
+import { Z_INDEXES } from "../internals";
 
 export default css`
   *,
@@ -12,7 +13,9 @@ export default css`
   }
 
   :host {
+    isolation: isolate;
     position: absolute;
+    width: 100%;
   }
 
   .root.visible {
@@ -24,6 +27,10 @@ export default css`
     display: flex;
     align-items: flex-start;
 
+    -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
     max-width: 20.5rem;
     min-height: 2.25rem;
     padding: var(--tapsi-spacing-3-1) var(--tapsi-spacing-4);
@@ -34,6 +41,8 @@ export default css`
     background-color: var(--tapsi-color-surface-inverse-secondary);
     visibility: hidden;
     opacity: 0;
+
+    z-index: ${Z_INDEXES[5]};
   }
 
   .text {
