@@ -4,8 +4,7 @@ import { property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap } from "lit/directives/style-map.js";
 import { KeyboardKeys } from "../internals";
-import { getRenderRootSlot, isSSR, waitAMicrotask } from "../utils";
-import { Slots } from "./constants";
+import { isSSR, waitAMicrotask } from "../utils";
 import { HideEvent, ShowEvent } from "./events";
 import { dismiss } from "./icons";
 import { rotateArrow, translate } from "./utils";
@@ -40,6 +39,12 @@ export class Tooltip extends LitElement {
    */
   @property({ type: String })
   public text = "";
+
+  /**
+   * The id of the anchor element.
+   */
+  @property({ type: String })
+  public anchor = "";
 
   /**
    * Whether the tooltip is visible or not.
@@ -88,32 +93,8 @@ export class Tooltip extends LitElement {
 
     if (!isSSR()) {
       this._handleKeyDown = this._handleKeyDown.bind(this);
-      this._handleAnchorFocus = this._handleAnchorFocus.bind(this);
-      this._handleAnchorBlur = this._handleAnchorBlur.bind(this);
-
-      this.addEventListener(
-        "focus",
-        event => {
-          const anchorElement = this._getAnchorElement();
-
-          if (anchorElement !== event.target) return;
-
-          void this._handleAnchorFocus(event);
-        },
-        true,
-      );
-
-      this.addEventListener(
-        "blur",
-        event => {
-          const anchorElement = this._getAnchorElement();
-
-          if (anchorElement !== event.target) return;
-
-          void this._handleAnchorBlur(event);
-        },
-        true,
-      );
+      this._handleAnchorMouseEnter = this._handleAnchorMouseEnter.bind(this);
+      this._handleAnchorMouseLeave = this._handleAnchorMouseLeave.bind(this);
     }
   }
 
@@ -123,21 +104,32 @@ export class Tooltip extends LitElement {
     if (!isSSR()) {
       void this.updateTooltipPosition();
 
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      /* eslint-disable @typescript-eslint/no-misused-promises */
       document.addEventListener("keydown", this._handleKeyDown);
+
+      const anchor = this._getAnchorElement();
+
+      if (!anchor) return;
+
+      anchor.addEventListener("mouseenter", this._handleAnchorMouseEnter);
+      anchor.addEventListener("mouseleave", this._handleAnchorMouseLeave);
+      /* eslint-enable @typescript-eslint/no-misused-promises */
     }
   }
 
   public override disconnectedCallback() {
     super.disconnectedCallback();
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    /* eslint-disable @typescript-eslint/no-misused-promises */
     document.removeEventListener("keydown", this._handleKeyDown);
-    this._getAnchorElement()?.removeEventListener(
-      "focus",
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      this._handleAnchorFocus,
-    );
+
+    const anchor = this._getAnchorElement();
+
+    if (!anchor) return;
+
+    anchor.removeEventListener("mouseenter", this._handleAnchorMouseEnter);
+    anchor.removeEventListener("mouseleave", this._handleAnchorMouseLeave);
+    /* eslint-enable @typescript-eslint/no-misused-promises */
   }
 
   protected override updated(changed: PropertyValues<this>) {
@@ -227,15 +219,7 @@ export class Tooltip extends LitElement {
   }
 
   private _getAnchorElement() {
-    const anchorSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
-
-    return (anchorSlot?.assignedElements()[0] ?? null) as HTMLElement | null;
-  }
-
-  private _updateAnchorAria() {
-    const anchorElement = this._getAnchorElement();
-
-    anchorElement?.setAttribute("aria-describedby", "root");
+    return document.getElementById(this.anchor);
   }
 
   private async _handleKeyDown(event: KeyboardEvent) {
@@ -270,18 +254,6 @@ export class Tooltip extends LitElement {
     this.hide();
   }
 
-  private async _handleAnchorFocus(event: FocusEvent) {
-    if (this.noFocusActivation) return;
-
-    await this._handleTriggerShowByEvent(event);
-  }
-
-  private async _handleAnchorBlur(event: FocusEvent) {
-    if (this.noFocusActivation) return;
-
-    await this._handleTriggerHideByEvent(event);
-  }
-
   private async _handleAnchorMouseEnter(event: MouseEvent) {
     if (this.noHoverActivation) return;
 
@@ -292,11 +264,6 @@ export class Tooltip extends LitElement {
     if (this.noHoverActivation) return;
 
     await this._handleTriggerHideByEvent(event);
-  }
-
-  private _handleAnchorSlotChange() {
-    this._updateAnchorAria();
-    void this.updateTooltipPosition();
   }
 
   private _renderDismissButton() {
@@ -378,12 +345,6 @@ export class Tooltip extends LitElement {
           </svg>
         </div>
       </div>
-      <!-- The anchor element -->
-      <slot
-        @slotchange=${this._handleAnchorSlotChange}
-        @mouseenter=${this._handleAnchorMouseEnter}
-        @mouseleave=${this._handleAnchorMouseLeave}
-      ></slot>
     `;
   }
 }
