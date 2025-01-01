@@ -205,14 +205,25 @@ export class BottomSheet extends LitElement {
         this._detachEvents();
       }
     }
+  }
 
-    const actionBarSlot = getRenderRootSlot(this.renderRoot, Slots.ACTION_BAR);
-    const bodySlot = getRenderRootSlot(this.renderRoot, Slots.BODY);
-    const headerSlot = getRenderRootSlot(this.renderRoot, Slots.HEADER);
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    super.willUpdate(changed);
 
-    this._hasActionBarSlot = (actionBarSlot?.assignedNodes() ?? []).length > 0;
-    this._hasBodySlot = (bodySlot?.assignedNodes() ?? []).length > 0;
-    this._hasHeaderSlot = (headerSlot?.assignedNodes() ?? []).length > 0;
+    if (!isSSR()) {
+      const actionBarSlot = getRenderRootSlot(
+        this.renderRoot,
+        Slots.ACTION_BAR,
+      );
+
+      const bodySlot = getRenderRootSlot(this.renderRoot, Slots.BODY);
+      const headerSlot = getRenderRootSlot(this.renderRoot, Slots.HEADER);
+
+      this._hasActionBarSlot =
+        (actionBarSlot?.assignedNodes() ?? []).length > 0;
+      this._hasBodySlot = (bodySlot?.assignedNodes() ?? []).length > 0;
+      this._hasHeaderSlot = (headerSlot?.assignedNodes() ?? []).length > 0;
+    }
   }
 
   public override connectedCallback(): void {
@@ -657,23 +668,25 @@ export class BottomSheet extends LitElement {
    * Strictly snaps to the provided or resolved snap point.
    */
   public strictSnapTo(numberOrCallback: number | SnapToCallbackArgument) {
-    if (isSSR()) return Promise.resolve();
+    if (isSSR()) return;
 
-    const snapPoint =
-      typeof numberOrCallback === "number"
-        ? numberOrCallback
-        : numberOrCallback(this.metaData);
+    runImmediatelyBeforeRepaint(() => {
+      const snapPoint =
+        typeof numberOrCallback === "number"
+          ? numberOrCallback
+          : numberOrCallback(this.metaData);
 
-    if (!this.open) {
-      this._open = true;
+      if (!this.open) {
+        this._open = true;
 
-      this.requestUpdate("open", false);
+        this.requestUpdate("open", false);
 
-      return this._toggleOpenState(true, {
-        point: snapPoint,
-        strict: true,
-      });
-    } else return this._snapTo(snapPoint, true);
+        void this._toggleOpenState(true, {
+          point: snapPoint,
+          strict: true,
+        });
+      } else void this._snapTo(snapPoint, true);
+    });
   }
 
   /**
@@ -682,23 +695,25 @@ export class BottomSheet extends LitElement {
    * Use the callback method to resolve the snap point.
    */
   public snapTo(numberOrCallback: number | SnapToCallbackArgument) {
-    if (isSSR()) return Promise.resolve();
+    if (isSSR()) return;
 
-    const snapPoint =
-      typeof numberOrCallback === "number"
-        ? numberOrCallback
-        : numberOrCallback(this.metaData);
+    runImmediatelyBeforeRepaint(() => {
+      const snapPoint =
+        typeof numberOrCallback === "number"
+          ? numberOrCallback
+          : numberOrCallback(this.metaData);
 
-    if (!this.open) {
-      this._open = true;
+      if (!this.open) {
+        this._open = true;
 
-      this.requestUpdate("open", false);
+        this.requestUpdate("open", false);
 
-      return this._toggleOpenState(true, {
-        point: snapPoint,
-        strict: false,
-      });
-    } else return this._snapTo(snapPoint, false);
+        void this._toggleOpenState(true, {
+          point: snapPoint,
+          strict: false,
+        });
+      } else void this._snapTo(snapPoint, false);
+    });
   }
 
   /**

@@ -90,6 +90,9 @@ const styles = css`
     left: 0;
     right: 0;
 
+    display: flex;
+    flex-direction: column;
+
     border-top-left-radius: var(--tapsi-radius-5);
     border-top-right-radius: var(--tapsi-radius-5);
 
@@ -219,6 +222,8 @@ const styles = css`
   }
 
   .action-bar {
+    margin-top: auto;
+
     position: var(--bottom-sheet-action-bar-position);
     bottom: 0;
 
