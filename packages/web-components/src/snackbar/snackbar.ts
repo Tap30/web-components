@@ -22,7 +22,15 @@ export class Snackbar extends LitElement {
   public text = "";
 
   /**
-   * The color of the notice, indicating the type of message.
+   * Determines whether the snackbar is open or not.
+   *
+   * @default false
+   */
+  @property({ type: Boolean, reflect: true })
+  public open = false;
+
+  /**
+   * The color of the snackbar, indicating the type of message.
    * Defaults to `inverse`.
    */
   @property()
@@ -30,33 +38,27 @@ export class Snackbar extends LitElement {
     "inverse";
 
   /**
-   * Indicates whether the notice can be dismissed.
+   * Indicates whether the snackbar can be dismissed.
    */
   @property({ type: Boolean })
   public dismissible = false;
 
   /**
-   * todo: fix
+   * The time before the snackbar automatically closes (in milliseconds).
    */
-  @property()
-  public duration: boolean | number = false;
+  @property({ type: Number })
+  public duration: number = -1;
 
   @state()
   private _hasIconSlot = false;
+
+  private _timeoutRef = -1;
 
   constructor() {
     super();
 
     this._handleDocumentKeyDown = this._handleDocumentKeyDown.bind(this);
   }
-
-  /**
-   * Determines whether the snackbar is open or not.
-   *
-   * @default false
-   */
-  @property({ type: Boolean, reflect: true })
-  public open = false;
 
   private _attachGlobalEvents() {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -78,13 +80,38 @@ export class Snackbar extends LitElement {
     super.disconnectedCallback();
 
     if (!this.open) this._detachGlobalEvents();
+    window.clearTimeout(this._timeoutRef);
   }
 
   protected override updated(changed: PropertyValues<this>) {
     super.updated(changed);
 
-    if (this.open) this._attachGlobalEvents();
-    else this._detachGlobalEvents();
+    if (this.open) {
+      const autoHideDuration =
+        this.duration < 0 ? this._calculateAutoHideDuration() : this.duration;
+
+      this._attachGlobalEvents();
+      this._timeoutRef = window.setTimeout(() => {
+        this.hide();
+      }, autoHideDuration);
+    } else {
+      this._detachGlobalEvents();
+      window.clearTimeout(this._timeoutRef);
+    }
+  }
+
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
+
+    const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
+
+    this._hasIconSlot = (iconSlot?.assignedNodes().length ?? 0) > 0;
+  }
+
+  private _calculateAutoHideDuration() {
+    const wordsCount = this.text.split(" ").length;
+
+    return wordsCount * 300 + 1250;
   }
 
   public show() {
@@ -125,16 +152,7 @@ export class Snackbar extends LitElement {
     `;
   }
 
-  protected override willUpdate(changed: PropertyValues<this>) {
-    super.willUpdate(changed);
-
-    const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
-
-    this._hasIconSlot = (iconSlot?.assignedNodes().length ?? 0) > 0;
-  }
-
   private async _handleDocumentKeyDown(event: KeyboardEvent) {
-    console.log("🐕 sag 1", 1); // TODO: REMOVE ME ⚠️
     if (!this.open) return;
     if (event.key !== KeyboardKeys.ESCAPE) return;
 
