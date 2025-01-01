@@ -216,6 +216,9 @@ importers:
 
   playground:
     dependencies:
+      '@lit/react':
+        specifier: ^1.0.6
+        version: 1.0.6(@types/react@18.3.12)
       lit:
         specifier: ^3.2.1
         version: 3.2.1
