@@ -2,7 +2,6 @@ import { customElement } from "lit/decorators.js";
 import { Tooltip } from "./tooltip";
 import styles from "./tooltip.style";
 
-export { Slots } from "./constants";
 export * from "./events";
 
 /**
@@ -18,8 +17,7 @@ export * from "./events";
  * @prop {boolean} [no-hover-activation=false] - Whether to prevent showing tooltip on hover or not.
  * @prop {boolean} [no-focus-activation=false] - Whether to prevent showing tooltip on focus or not.
  * @prop {boolean} [no-escape-deactivation=false] - Whether to hide tooltip on escape or not.
- *
- * @slot - The default slot used for anchor element.
+ * @prop {string} [anchor=""] - The id of the anchor element.
  *
  * @fires {ShowEvent} show - Fires when the tooltip should be visible.
  * @fires {HideEvent} hide - Fires when the tooltip should be hidden.

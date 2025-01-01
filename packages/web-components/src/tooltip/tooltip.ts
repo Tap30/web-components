@@ -185,19 +185,6 @@ export class Tooltip extends LitElement {
 
     if (!middlewareData.arrow) return;
 
-    // const side = (this.placement.split("-") as [Side, Alignment])[0] ?? "top";
-
-    // if (!side) return;
-
-    // const sidesMap: Record<Side, Side> = {
-    //   top: "bottom",
-    //   right: "left",
-    //   bottom: "top",
-    //   left: "right",
-    // };
-
-    // const staticSide = sidesMap[side];
-
     const { x: arrowX = NaN, y: arrowY = NaN } = middlewareData.arrow;
 
     const tooltipWidth = this._tooltipElement.offsetWidth;
