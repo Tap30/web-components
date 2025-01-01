@@ -2,10 +2,7 @@ import { html } from "lit";
 
 export const close = html`
   <svg
-    width="24"
-    height="24"
     viewBox="0 0 24 24"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
     focusable="false"
     aria-hidden="true"
@@ -21,10 +18,7 @@ export const close = html`
 
 export const success = html`
   <svg
-    width="24"
-    height="24"
     viewBox="0 0 24 24"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
     focusable="false"
     aria-hidden="true"
@@ -40,10 +34,7 @@ export const success = html`
 
 export const error = html`
   <svg
-    width="24"
-    height="24"
     viewBox="0 0 24 24"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
     focusable="false"
     aria-hidden="true"
@@ -59,10 +50,7 @@ export const error = html`
 
 export const info = html`
   <svg
-    width="24"
-    height="24"
     viewBox="0 0 25 24"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
     focusable="false"
     aria-hidden="true"
@@ -78,8 +66,6 @@ export const info = html`
 
 export const warning = html`
   <svg
-    width="24"
-    height="24"
     viewBox="0 0 25 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
