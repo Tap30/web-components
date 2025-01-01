@@ -26,6 +26,7 @@ export { default as RateSlider } from "./RateSlider";
 export { default as SegmentedView } from "./SegmentedView";
 export { default as SegmentedViewItem } from "./SegmentedViewItem";
 export { default as Skeleton } from "./Skeleton";
+export { default as Snackbar } from "./Snackbar";
 export { default as Spinner } from "./Spinner";
 export { default as Stepper } from "./Stepper";
 export { default as Switch } from "./Switch";
