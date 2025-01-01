@@ -337,26 +337,21 @@ export class Snackbar extends LitElement {
           aria-labelledby="text"
         >
           <div
-            class="body"
-            part="body"
+            id="icon"
+            class="icon"
+            part="icon"
+            ?hidden=${this.color === "inverse" && !this._hasIconSlot}
           >
-            <div
-              id="icon"
-              class="icon"
-              part="icon"
-              ?hidden=${this.color === "inverse" && !this._hasIconSlot}
-            >
-              ${this._renderIcon()}
-            </div>
-            <div
-              id="text"
-              class="text"
-              part="text"
-            >
-              ${this.text}
-            </div>
-            ${this._renderDismiss()}
+            ${this._renderIcon()}
           </div>
+          <div
+            id="text"
+            class="text"
+            part="text"
+          >
+            ${this.text}
+          </div>
+          ${this._renderDismiss()}
         </div>
       </div>
     `;
