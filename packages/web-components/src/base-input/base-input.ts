@@ -68,6 +68,12 @@ export abstract class BaseInput extends BaseClass {
   @property({ type: String })
   public override inputMode = "";
 
+  /**
+   * The size of the input.
+   */
+  @property()
+  public size: "sm" | "md" = "md";
+
   constructor() {
     super();
 
@@ -151,6 +157,7 @@ export abstract class BaseInput extends BaseClass {
     const rootClasses = classMap({
       root: true,
       disabled: this.disabled,
+      [this.size]: true,
     });
 
     return html`
