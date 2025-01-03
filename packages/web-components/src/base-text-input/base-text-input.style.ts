@@ -36,7 +36,7 @@ export default css`
 
     --input-support-text-size: var(--tapsi-typography-body-sm-size);
     --input-label-text-size: var(--tapsi-typography-label-md-size);
-    --input-control-size: var(--tapsi-typography-body-md-size);
+    --input-control-text-size: var(--tapsi-typography-body-md-size);
 
     --input-support-text-height: var(--tapsi-typography-body-sm-height);
     --input-label-text-height: var(--tapsi-typography-label-md-height);
@@ -44,7 +44,7 @@ export default css`
 
     --input-support-text-weight: var(--tapsi-typography-body-sm-weight);
     --input-label-text-weight: var(--tapsi-typography-label-md-weight);
-    --input-control-weight: var(--tapsi-typography-body-md-weight);
+    --input-control-text-weight: var(--tapsi-typography-body-md-weight);
 
     --input-padding-horizontal: var(--tapsi-spacing-6);
 
@@ -67,7 +67,7 @@ export default css`
   .root.sm {
     --input-support-text-size: var(--tapsi-typography-body-xs-size);
     --input-label-text-size: var(--tapsi-typography-label-sm-size);
-    --input-control-size: var(--tapsi-typography-body-sm-size);
+    --input-control-text-size: var(--tapsi-typography-body-sm-size);
 
     --input-support-text-height: var(--tapsi-typography-body-xs-height);
     --input-label-text-height: var(--tapsi-typography-label-sm-height);
@@ -75,7 +75,7 @@ export default css`
 
     --input-support-text-weight: var(--tapsi-typography-body-xs-weight);
     --input-label-text-weight: var(--tapsi-typography-label-sm-weight);
-    --input-control-weight: var(--tapsi-typography-body-sm-weight);
+    --input-control-text-weight: var(--tapsi-typography-body-sm-weight);
 
     --input-padding-horizontal: var(--tapsi-spacing-5);
 
@@ -85,7 +85,7 @@ export default css`
   .root.md {
     --input-support-text-size: var(--tapsi-typography-body-sm-size);
     --input-label-text-size: var(--tapsi-typography-label-md-size);
-    --input-control-size: var(--tapsi-typography-body-md-size);
+    --input-control-text-size: var(--tapsi-typography-body-md-size);
 
     --input-support-text-height: var(--tapsi-typography-body-sm-height);
     --input-label-text-height: var(--tapsi-typography-label-md-height);
@@ -93,7 +93,7 @@ export default css`
 
     --input-support-text-weight: var(--tapsi-typography-body-sm-weight);
     --input-label-text-weight: var(--tapsi-typography-label-md-weight);
-    --input-control-weight: var(--tapsi-typography-body-md-weight);
+    --input-control-text-weight: var(--tapsi-typography-body-md-weight);
 
     --input-padding-horizontal: var(--tapsi-spacing-6);
 
@@ -145,8 +145,8 @@ export default css`
 
     font-family: var(--tapsi-font-family);
     line-height: var(--input-control-text-height);
-    font-size: var(--input-control-size);
-    font-weight: var(--input-control-weight);
+    font-size: var(--input-control-text-size);
+    font-weight: var(--input-control-text-weight);
   }
 
   .input::placeholder {
@@ -154,8 +154,8 @@ export default css`
 
     font-family: var(--tapsi-font-family);
     line-height: var(--input-control-text-height);
-    font-size: var(--input-control-size);
-    font-weight: var(--input-control-weight);
+    font-size: var(--input-control-text-size);
+    font-weight: var(--input-control-text-weight);
   }
 
   .leading-icon {
