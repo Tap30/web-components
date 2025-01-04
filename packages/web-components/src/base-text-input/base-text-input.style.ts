@@ -34,6 +34,22 @@ export default css`
     --input-icon-color: var(--tapsi-color-content-secondary);
     --input-placeholder-color: var(--tapsi-color-content-tertiary);
 
+    --input-support-text-size: var(--tapsi-typography-body-sm-size);
+    --input-label-text-size: var(--tapsi-typography-label-md-size);
+    --input-control-text-size: var(--tapsi-typography-body-md-size);
+
+    --input-support-text-height: var(--tapsi-typography-body-sm-height);
+    --input-label-text-height: var(--tapsi-typography-label-md-height);
+    --input-control-text-height: var(--tapsi-typography-body-md-height);
+
+    --input-support-text-weight: var(--tapsi-typography-body-sm-weight);
+    --input-label-text-weight: var(--tapsi-typography-label-md-weight);
+    --input-control-text-weight: var(--tapsi-typography-body-md-weight);
+
+    --input-padding-horizontal: var(--tapsi-spacing-6);
+
+    --input-control-height: 3.25rem;
+
     display: inline-block;
     vertical-align: middle;
   }
@@ -46,6 +62,42 @@ export default css`
     --input-color: var(--tapsi-color-content-disabled);
     --input-icon-color: var(--tapsi-color-content-disabled);
     --input-placeholder-color: var(--tapsi-color-content-disabled);
+  }
+
+  .root.sm {
+    --input-support-text-size: var(--tapsi-typography-body-xs-size);
+    --input-label-text-size: var(--tapsi-typography-label-sm-size);
+    --input-control-text-size: var(--tapsi-typography-body-sm-size);
+
+    --input-support-text-height: var(--tapsi-typography-body-xs-height);
+    --input-label-text-height: var(--tapsi-typography-label-sm-height);
+    --input-control-text-height: var(--tapsi-typography-body-sm-height);
+
+    --input-support-text-weight: var(--tapsi-typography-body-xs-weight);
+    --input-label-text-weight: var(--tapsi-typography-label-sm-weight);
+    --input-control-text-weight: var(--tapsi-typography-body-sm-weight);
+
+    --input-padding-horizontal: var(--tapsi-spacing-5);
+
+    --input-control-height: 2.5rem;
+  }
+
+  .root.md {
+    --input-support-text-size: var(--tapsi-typography-body-sm-size);
+    --input-label-text-size: var(--tapsi-typography-label-md-size);
+    --input-control-text-size: var(--tapsi-typography-body-md-size);
+
+    --input-support-text-height: var(--tapsi-typography-body-sm-height);
+    --input-label-text-height: var(--tapsi-typography-label-md-height);
+    --input-control-text-height: var(--tapsi-typography-body-md-height);
+
+    --input-support-text-weight: var(--tapsi-typography-body-sm-weight);
+    --input-label-text-weight: var(--tapsi-typography-label-md-weight);
+    --input-control-text-weight: var(--tapsi-typography-body-md-weight);
+
+    --input-padding-horizontal: var(--tapsi-spacing-6);
+
+    --input-control-height: 3.25rem;
   }
 
   .control.error {
@@ -68,11 +120,11 @@ export default css`
     display: flex;
     align-items: center;
 
-    height: 3.25rem;
+    height: var(--input-control-height);
     width: 100%;
 
-    padding-right: var(--tapsi-spacing-6);
-    padding-left: var(--tapsi-spacing-6);
+    padding-right: var(--input-padding-horizontal);
+    padding-left: var(--input-padding-horizontal);
     gap: var(--tapsi-spacing-4);
     border-radius: var(--tapsi-radius-3);
 
@@ -92,18 +144,18 @@ export default css`
     caret-color: var(--tapsi-color-surface-accent);
 
     font-family: var(--tapsi-font-family);
-    line-height: var(--tapsi-typography-body-md-height);
-    font-size: var(--tapsi-typography-body-md-size);
-    font-weight: var(--tapsi-typography-body-md-weight);
+    line-height: var(--input-control-text-height);
+    font-size: var(--input-control-text-size);
+    font-weight: var(--input-control-text-weight);
   }
 
   .input::placeholder {
     color: var(--input-placeholder-color);
 
     font-family: var(--tapsi-font-family);
-    line-height: var(--tapsi-typography-body-md-height);
-    font-size: var(--tapsi-typography-body-md-size);
-    font-weight: var(--tapsi-typography-body-md-weight);
+    line-height: var(--input-control-text-height);
+    font-size: var(--input-control-text-size);
+    font-weight: var(--input-control-text-weight);
   }
 
   .leading-icon {
@@ -137,17 +189,17 @@ export default css`
     color: var(--input-support-color);
 
     font-family: var(--tapsi-font-family);
-    line-height: var(--tapsi-typography-body-sm-height);
-    font-size: var(--tapsi-typography-body-sm-size);
-    font-weight: var(--tapsi-typography-body-sm-weight);
+    line-height: var(--input-support-text-height);
+    font-size: var(--input-support-text-size);
+    font-weight: var(--input-support-text-weight);
   }
 
   .label {
     color: var(--input-label-color);
 
     font-family: var(--tapsi-font-family);
-    line-height: var(--tapsi-typography-label-md-height);
-    font-size: var(--tapsi-typography-label-md-size);
-    font-weight: var(--tapsi-typography-label-md-weight);
+    line-height: var(--input-label-text-height);
+    font-size: var(--input-label-text-size);
+    font-weight: var(--input-label-text-weight);
   }
 `;

@@ -70,6 +70,7 @@ export { BaseTextInputSlots as Slots };
  * Identifies the element (or elements) that labels the input.
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+ * @prop {"sm" | "md"} [size="md"] - The size of the input.
  * @prop {boolean} [hide-label=false] - Whether to hide the label or not.
  * @prop {string} [type="text"] -
  * The `<input>` type to use, defaults to "text". The type greatly changes how
