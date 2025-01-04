@@ -1,5 +1,5 @@
 import { html, nothing } from "lit";
-import { property } from "lit/decorators.js";
+import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
 import {
@@ -35,6 +35,15 @@ export class Checkbox extends BaseInput {
   @property()
   public override value = "on";
 
+  /**
+   * Whether the checkbox has error.
+   */
+  @property({ type: Boolean, reflect: true })
+  public error = false;
+
+  @state()
+  private _nativeError = false;
+
   private _handleInput(event: Event) {
     if (this.disabled) return;
 
@@ -58,6 +67,10 @@ export class Checkbox extends BaseInput {
     return this.renderRoot.querySelector<HTMLInputElement>(
       'input[type="checkbox"]',
     );
+  }
+
+  private _hasError() {
+    return this.error || this._nativeError;
   }
 
   public override [getFormValue]() {
@@ -89,8 +102,8 @@ export class Checkbox extends BaseInput {
     }));
   }
 
-  public override [onReportValidity]() {
-    // Perform the default behavior (showing pop-up)
+  public override [onReportValidity](invalidEvent: Event | null) {
+    this._nativeError = !!invalidEvent;
   }
 
   private _renderIndeterminateIcon() {
@@ -168,6 +181,7 @@ export class Checkbox extends BaseInput {
       control: true,
       checked: this.checked,
       indeterminate: this.indeterminate,
+      error: this._hasError(),
     });
 
     return html`

@@ -14,6 +14,7 @@ export default css`
 
   :host {
     --input-box-bg-color: var(--tapsi-color-surface-primary);
+    --input-box-filled-bg-color: var(--tapsi-color-surface-inverse-primary);
     --input-box-border-color: var(--tapsi-color-surface-inverse-primary);
     --input-control-color: var(--tapsi-color-content-on-inverse);
     --checkbox-overlay-size: 0;
@@ -32,6 +33,11 @@ export default css`
   .root:not(.disabled) .control.indeterminate {
     --input-control-color: var(--tapsi-color-content-on-inverse);
     --checkbox-overlay-size: 2rem;
+  }
+
+  .root:not(.disabled) .control.error {
+    --input-box-border-color: var(--tapsi-color-surface-negative);
+    --input-box-filled-bg-color: var(--tapsi-color-surface-negative);
   }
 
   .control {
@@ -99,11 +105,12 @@ export default css`
     width: var(--checkbox-overlay-size);
     height: var(--checkbox-overlay-size);
 
-    background-color: var(--tapsi-color-surface-inverse-primary);
+    background-color: var(--input-box-filled-bg-color);
 
     transition:
       width 120ms ease,
-      height 120ms ease;
+      height 120ms ease,
+      background-color 120ms ease;
   }
 
   .icon {
