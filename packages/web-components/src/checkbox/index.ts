@@ -12,6 +12,7 @@ import styles from "./checkbox.style";
  * @prop {boolean} [indeterminate=false] - Indicates whether the checkbox is in an indeterminate state.
  * @prop {boolean} [disabled=false] - Indicates whether the checkbox is disabled.
  * @prop {string} [value='on'] - The value of the checkbox when it is checked.
+ * @prop {boolean} [error=false] - Whether the checkbox has error.
  * @prop {string} label - Defines a string value that can be used to name checkbox input.\
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
  * @prop {string} labelledby - Identifies the element (or elements) that labels the checkbox input.\

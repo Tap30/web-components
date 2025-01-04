@@ -35,6 +35,12 @@ export class Checkbox extends BaseInput {
   @property()
   public override value = "on";
 
+  /**
+   * Whether the checkbox has error.
+   */
+  @property({ type: Boolean, reflect: true })
+  public error = false;
+
   private _handleInput(event: Event) {
     if (this.disabled) return;
 
@@ -168,6 +174,7 @@ export class Checkbox extends BaseInput {
       control: true,
       checked: this.checked,
       indeterminate: this.indeterminate,
+      error: this.error,
     });
 
     return html`
