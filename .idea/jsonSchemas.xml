@@ -6,7 +6,6 @@
         <entry key="Interactive Demo Schema">
           <value>
             <SchemaInfo>
-              <option name="generatedName" value="New Schema" />
               <option name="name" value="Interactive Demo Schema" />
               <option name="relativePathToSchema" value="https://raw.githubusercontent.com/Tap30/web-components/refs/heads/main/internals/doc-helpers/schema.json" />
               <option name="patterns">
