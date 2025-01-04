@@ -5,7 +5,7 @@ import {
   type TemplateResult,
 } from "lit";
 import { property } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js";
+import { type ClassInfo, classMap } from "lit/directives/class-map.js";
 import { KeyboardKeys } from "../internals";
 import {
   dispatchActivationClick,
@@ -67,12 +67,6 @@ export abstract class BaseInput extends BaseClass {
 
   @property({ type: String })
   public override inputMode = "";
-
-  /**
-   * The size of the input.
-   */
-  @property()
-  public size: "sm" | "md" = "md";
 
   constructor() {
     super();
@@ -153,12 +147,15 @@ export abstract class BaseInput extends BaseClass {
     }
   }
 
-  protected override render() {
-    const rootClasses = classMap({
+  protected getRootClasses(): ClassInfo {
+    return {
       root: true,
       disabled: this.disabled,
-      [this.size]: true,
-    });
+    };
+  }
+
+  protected override render() {
+    const rootClasses = classMap(this.getRootClasses());
 
     return html`
       <div

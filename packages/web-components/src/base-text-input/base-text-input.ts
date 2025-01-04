@@ -1,6 +1,6 @@
 import { html, nothing, type PropertyValues, type TemplateResult } from "lit";
 import { property, state } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js";
+import { type ClassInfo, classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
 import {
   getFormValue,
@@ -103,6 +103,12 @@ export abstract class BaseTextInput extends BaseInput {
    */
   @property({ type: Boolean, attribute: "hide-label" })
   public hideLabel = false;
+
+  /**
+   * The size of the input.
+   */
+  @property()
+  public size: "sm" | "md" = "md";
 
   @state()
   private _dirty = false;
@@ -306,6 +312,15 @@ export abstract class BaseTextInput extends BaseInput {
   }
 
   protected abstract renderInput(): TemplateResult;
+
+  protected override getRootClasses(): ClassInfo {
+    const parentRootClasses = super.getRootClasses();
+
+    return {
+      ...parentRootClasses,
+      [this.size]: true,
+    };
+  }
 
   protected override renderControl() {
     const controlClasses = classMap({
