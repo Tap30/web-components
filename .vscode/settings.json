@@ -1,0 +1,9 @@
+{
+    "json.schemas": [
+    { 
+      "fileMatch": [ "packages/web-components/src/**/doc/interactive-demo.config.json" ],
+      "url": "https://raw.githubusercontent.com/Tap30/web-components/refs/heads/main/internals/doc-helpers/schema.json"
+    }
+  ]
+}
+  

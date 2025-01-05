@@ -46,16 +46,15 @@ jspm_packages/
 ## Editors
 .vscode/*
 !.vscode/extensions.json
-.idea
+!.vscode/settings.json
+.idea/*
+!.idea/jsonSchemas.xml
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-
-## System files
-.DS_Store
 
 ## temp folders
 /.tmp/
@@ -66,9 +65,6 @@ dist
 dist-ssr
 out-tsc
 *.local
-
-# Storybook
-storybook-static
 
 # Vitepress
 docs/.vitepress/dist
