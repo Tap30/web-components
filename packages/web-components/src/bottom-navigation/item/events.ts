@@ -5,7 +5,7 @@ type EventDetails = {
 };
 
 export class ActivateEvent extends BaseEvent<EventDetails> {
-  public static type = "activate";
+  public static readonly type = "activate";
 
   constructor(details: EventDetails) {
     super(ActivateEvent.type, {
@@ -17,7 +17,7 @@ export class ActivateEvent extends BaseEvent<EventDetails> {
 }
 
 export class DeactivateEvent extends BaseEvent<EventDetails> {
-  public static type = "deactivate";
+  public static readonly type = "deactivate";
 
   constructor(details: EventDetails) {
     super(DeactivateEvent.type, {

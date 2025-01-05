@@ -1,6 +1,7 @@
 import { customElement } from "lit/decorators.js";
 import { Chip } from "./chip";
 import styles from "./chip.style";
+import { type DeselectEvent, type SelectEvent } from "./events";
 
 export { Slots } from "./constants";
 export * from "./events";
@@ -27,6 +28,23 @@ export * from "./events";
 @customElement("tapsi-chip")
 export class TapsiChip extends Chip {
   public static override readonly styles = [styles];
+
+  declare addEventListener: <K extends keyof TapsiChipEventMap>(
+    type: K,
+    listener: (this: TapsiChip, ev: TapsiChipEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  declare removeEventListener: <K extends keyof TapsiChipEventMap>(
+    type: K,
+    listener: (this: TapsiChip, ev: TapsiChipEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiChipEventMap extends HTMLElementEventMap {
+  [SelectEvent.type]: SelectEvent;
+  [DeselectEvent.type]: DeselectEvent;
 }
 
 declare global {

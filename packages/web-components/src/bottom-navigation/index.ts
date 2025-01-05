@@ -1,7 +1,13 @@
 import { customElement } from "lit/decorators.js";
 import { BottomNavigation } from "./bottom-navigation";
 import bottomNavigationStyles from "./bottom-navigation.style";
-import { BottomNavigationItem, Slots as ItemSlots } from "./item";
+import { type ActiveChangeEvent } from "./events";
+import {
+  type ActivateEvent,
+  type DeactivateEvent,
+  BottomNavigationItem,
+  Slots as ItemSlots,
+} from "./item";
 import itemStyles from "./item/item.style";
 
 export { Slots } from "./constants";
@@ -25,6 +31,31 @@ export { ItemSlots };
 @customElement("tapsi-bottom-navigation-item")
 export class TapsiBottomNavigationItem extends BottomNavigationItem {
   public static override readonly styles = [itemStyles];
+
+  declare addEventListener: <K extends keyof TapsiBottomNavigationItemEventMap>(
+    type: K,
+    listener: (
+      this: TapsiBottomNavigationItem,
+      ev: TapsiBottomNavigationItemEventMap[K],
+    ) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  declare removeEventListener: <
+    K extends keyof TapsiBottomNavigationItemEventMap,
+  >(
+    type: K,
+    listener: (
+      this: TapsiBottomNavigationItem,
+      ev: TapsiBottomNavigationItemEventMap[K],
+    ) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiBottomNavigationItemEventMap extends HTMLElementEventMap {
+  [ActivateEvent.type]: ActivateEvent;
+  [DeactivateEvent.type]: DeactivateEvent;
 }
 
 /**
@@ -48,6 +79,28 @@ export class TapsiBottomNavigationItem extends BottomNavigationItem {
 @customElement("tapsi-bottom-navigation")
 export class TapsiBottomNavigation extends BottomNavigation {
   public static override readonly styles = [bottomNavigationStyles];
+
+  declare addEventListener: <K extends keyof TapsiBottomNavigationEventMap>(
+    type: K,
+    listener: (
+      this: TapsiBottomNavigation,
+      ev: TapsiBottomNavigationEventMap[K],
+    ) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  declare removeEventListener: <K extends keyof TapsiBottomNavigationEventMap>(
+    type: K,
+    listener: (
+      this: TapsiBottomNavigation,
+      ev: TapsiBottomNavigationEventMap[K],
+    ) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiBottomNavigationEventMap extends HTMLElementEventMap {
+  [ActiveChangeEvent.type]: ActiveChangeEvent;
 }
 
 declare global {

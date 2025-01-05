@@ -1,4 +1,5 @@
 import { customElement } from "lit/decorators.js";
+import type { SelectChangeEvent } from "../chip-group";
 import { Modal } from "./modal";
 import styles from "./modal.style";
 
@@ -24,6 +25,22 @@ export * from "./events";
 @customElement("tapsi-modal")
 export class TapsiModal extends Modal {
   public static override readonly styles = [styles];
+
+  declare addEventListener: <K extends keyof TapsiModalEventMap>(
+    type: K,
+    listener: (this: TapsiModal, ev: TapsiModalEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  declare removeEventListener: <K extends keyof TapsiModalEventMap>(
+    type: K,
+    listener: (this: TapsiModal, ev: TapsiModalEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiModalEventMap extends HTMLElementEventMap {
+  [SelectChangeEvent.type]: SelectChangeEvent;
 }
 
 declare global {

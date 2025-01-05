@@ -1,4 +1,5 @@
 import { customElement } from "lit/decorators.js";
+import { type HideEvent, type ShowEvent } from "./events";
 import { Notice } from "./notice";
 import styles from "./notice.style";
 
@@ -42,6 +43,23 @@ import styles from "./notice.style";
 @customElement("tapsi-notice")
 export class TapsiNotice extends Notice {
   public static override readonly styles = [styles];
+
+  declare addEventListener: <K extends keyof TapsiNoticeEventMap>(
+    type: K,
+    listener: (this: TapsiNotice, ev: TapsiNoticeEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  declare removeEventListener: <K extends keyof TapsiNoticeEventMap>(
+    type: K,
+    listener: (this: TapsiNotice, ev: TapsiNoticeEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiNoticeEventMap extends HTMLElementEventMap {
+  [HideEvent.type]: HideEvent;
+  [ShowEvent.type]: ShowEvent;
 }
 
 declare global {
