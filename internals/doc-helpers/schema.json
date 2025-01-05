@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "requiredElements": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(\\/|(\\.\\.?\\/)+)?([a-zA-Z0-9-_]+\\/)*[a-zA-Z0-9-_]+\\.html$"
+      }
+    },
+    "properties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "defaultValue": { "type": ["string", "boolean", "number"] },
+          "mutators": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(#|props#)[a-zA-Z][\\w-]*$"
+            }
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "path": { "type": "string", "pattern": "^(\\/|(\\.\\.?\\/)+)?([a-zA-Z0-9-_]+\\/)*[a-zA-Z0-9-_]+\\.html$" },
+                "mutates": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "target": { "type": "string", "pattern": "^props#[a-zA-Z][\\w-]*$" },
+                      "value": { "type": ["string", "number", "boolean", "object", "null"] }
+                    },
+                    "required": ["target", "value"]
+                  }
+                }
+              },
+              "required": ["name"]
+            }
+          }
+        },
+        "required": ["name", "options"]
+      }
+    }
+  },
+  "required": ["properties", "slots"]
+}
