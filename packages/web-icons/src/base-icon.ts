@@ -1,3 +1,5 @@
+type Size = number | `${number}` | "auto";
+
 class BaseIcon extends HTMLElement {
   /**
    * The viewBox of the SVG.
@@ -18,7 +20,7 @@ class BaseIcon extends HTMLElement {
    *
    * @default "auto"
    */
-  private _size: number | `${number}` | "auto" = "auto";
+  private _size: Size = "auto";
 
   protected paths?: string;
 
@@ -27,6 +29,10 @@ class BaseIcon extends HTMLElement {
 
     this.attachShadow({ mode: "open" });
   }
+
+  public declare viewbox: string;
+  public declare title: string;
+  public declare size: Size;
 
   public static get observedAttributes() {
     return ["viewbox", "title", "size"];
