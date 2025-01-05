@@ -1,7 +1,7 @@
 import { html, LitElement, type PropertyValues } from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { getRenderRootSlot, runAfterRepaint, SystemError } from "../../utils";
+import { getRenderRootSlot, isSSR, SystemError } from "../../utils";
 import Controller from "./Controller";
 import { Slots } from "./constants";
 
@@ -33,14 +33,16 @@ export class BottomNavigationItem extends LitElement {
         "bottom-navigation-item",
       );
     }
+  }
 
-    runAfterRepaint(() => {
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
+
+    if (!isSSR()) {
       const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
 
-      if (!iconSlot) return;
-
-      this._hasIcon = iconSlot.assignedNodes().length > 0;
-    });
+      this._hasIcon = (iconSlot?.assignedNodes() ?? []).length > 0;
+    }
   }
 
   public override focus(options?: FocusOptions): void {

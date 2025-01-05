@@ -1,6 +1,6 @@
 import { html, LitElement, type PropertyValues } from "lit";
 import { property, state } from "lit/decorators.js";
-import { getRenderRootSlot, runAfterRepaint } from "../utils";
+import { getRenderRootSlot, isSSR } from "../utils";
 import { Slots } from "./constants";
 
 export class EmptyState extends LitElement {
@@ -28,18 +28,16 @@ export class EmptyState extends LitElement {
   @state()
   private _hasAction = false;
 
-  protected override updated(changed: PropertyValues<this>): void {
-    super.updated(changed);
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    super.willUpdate(changed);
 
-    runAfterRepaint(() => {
+    if (!isSSR()) {
       const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
       const actionSlot = getRenderRootSlot(this.renderRoot, Slots.ACTION);
 
-      if (!iconSlot || !actionSlot) return;
-
-      this._hasIcon = iconSlot.assignedNodes().length > 0;
-      this._hasAction = actionSlot.assignedNodes().length > 0;
-    });
+      this._hasIcon = (iconSlot?.assignedNodes() ?? []).length > 0;
+      this._hasAction = (actionSlot?.assignedNodes() ?? []).length > 0;
+    }
   }
 
   private _renderTitle() {

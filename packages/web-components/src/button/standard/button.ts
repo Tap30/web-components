@@ -1,6 +1,6 @@
 import { html, type PropertyValues, type TemplateResult } from "lit";
 import { state } from "lit/decorators.js";
-import { getRenderRootSlot, runAfterRepaint } from "../../utils";
+import { getRenderRootSlot, isSSR } from "../../utils";
 import { BaseButton } from "../base";
 import { Slots } from "./constants";
 
@@ -11,10 +11,10 @@ export class Button extends BaseButton {
   @state()
   private _hasTrailingIcon = false;
 
-  protected override updated(changed: PropertyValues<this>): void {
-    super.updated(changed);
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    super.willUpdate(changed);
 
-    runAfterRepaint(() => {
+    if (!isSSR()) {
       const leadingIconSlot = getRenderRootSlot(
         this.renderRoot,
         Slots.LEADING_ICON,
@@ -25,11 +25,12 @@ export class Button extends BaseButton {
         Slots.TRAILING_ICON,
       );
 
-      if (!leadingIconSlot || !trailingIconSlot) return;
+      this._hasLeadingIcon =
+        (leadingIconSlot?.assignedNodes() ?? []).length > 0;
 
-      this._hasLeadingIcon = leadingIconSlot.assignedNodes().length > 0;
-      this._hasTrailingIcon = trailingIconSlot.assignedNodes().length > 0;
-    });
+      this._hasTrailingIcon =
+        (trailingIconSlot?.assignedNodes() ?? []).length > 0;
+    }
   }
 
   protected override renderLoading(): TemplateResult {

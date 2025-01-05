@@ -3,7 +3,7 @@ import "../button/icon-button";
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { getRenderRootSlot, logger, runAfterRepaint } from "../utils";
+import { getRenderRootSlot, isSSR, logger } from "../utils";
 import { Slots } from "./constants";
 import { HideEvent, ShowEvent } from "./events";
 import { close, error, info, success, warning } from "./icons";
@@ -80,10 +80,10 @@ export class Notice extends LitElement {
   @state()
   private _hasActionsSlot = false;
 
-  protected override updated(changed: PropertyValues<this>) {
-    super.updated(changed);
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
 
-    runAfterRepaint(() => {
+    if (!isSSR()) {
       const customArtworkSlot = getRenderRootSlot(
         this.renderRoot,
         Slots.ARTWORK,
@@ -91,15 +91,11 @@ export class Notice extends LitElement {
 
       const actionsSlot = getRenderRootSlot(this.renderRoot, Slots.ACTION);
 
-      if (customArtworkSlot) {
-        this._hasCustomArtworkSlot =
-          customArtworkSlot.assignedNodes().length > 0;
-      }
+      this._hasCustomArtworkSlot =
+        (customArtworkSlot?.assignedNodes() ?? []).length > 0;
 
-      if (actionsSlot) {
-        this._hasActionsSlot = actionsSlot.assignedNodes().length > 0;
-      }
-    });
+      this._hasActionsSlot = (actionsSlot?.assignedNodes() ?? []).length > 0;
+    }
 
     this._logWarnings();
   }

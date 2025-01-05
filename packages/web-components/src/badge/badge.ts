@@ -2,7 +2,7 @@ import { html, LitElement, type PropertyValues } from "lit";
 import type { DirectiveResult } from "lit/async-directive";
 import { property, state } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
-import { getRenderRootSlot, runAfterRepaint } from "../utils";
+import { getRenderRootSlot, isSSR } from "../utils";
 import { Slots } from "./constants";
 
 type ClassMap = DirectiveResult<typeof ClassMapDirective>;
@@ -42,16 +42,14 @@ export class Badge extends LitElement {
   @state()
   private _hasIcon = false;
 
-  protected override updated(changed: PropertyValues<this>): void {
-    super.updated(changed);
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    super.willUpdate(changed);
 
-    runAfterRepaint(() => {
+    if (!isSSR()) {
       const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
 
-      if (!iconSlot) return;
-
-      this._hasIcon = iconSlot.assignedNodes().length > 0;
-    });
+      this._hasIcon = (iconSlot?.assignedNodes() ?? []).length > 0;
+    }
   }
 
   private _renderDotBadge(rootClasses: ClassMap) {

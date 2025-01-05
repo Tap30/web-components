@@ -8,6 +8,7 @@ import {
   contains,
   getRenderRootSlot,
   isElementFocusable,
+  isSSR,
   waitAMicrotask,
 } from "../utils";
 import { Slots } from "./constants";
@@ -128,9 +129,11 @@ export class Snackbar extends LitElement {
   protected override willUpdate(changed: PropertyValues<this>) {
     super.willUpdate(changed);
 
-    const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
+    if (!isSSR()) {
+      const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
 
-    this._hasIconSlot = (iconSlot?.assignedNodes().length ?? 0) > 0;
+      this._hasIconSlot = (iconSlot?.assignedNodes() ?? []).length > 0;
+    }
   }
 
   private _calculateAutoHideDuration() {

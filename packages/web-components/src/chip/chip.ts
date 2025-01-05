@@ -2,7 +2,7 @@ import { LitElement, html, type PropertyValues } from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { getRenderRootSlot, runAfterRepaint } from "../utils";
+import { getRenderRootSlot, isSSR } from "../utils";
 import { Slots } from "./constants";
 import Controller from "./Controller";
 
@@ -47,10 +47,10 @@ export class Chip extends LitElement {
 
   private readonly _controller = new Controller(this);
 
-  protected override updated(changedProperties: PropertyValues): void {
-    super.updated(changedProperties);
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
+    super.willUpdate(changedProperties);
 
-    runAfterRepaint(() => {
+    if (!isSSR()) {
       const leadingIconSlot = getRenderRootSlot(
         this.renderRoot,
         Slots.LEADING_ICON,
@@ -61,11 +61,12 @@ export class Chip extends LitElement {
         Slots.TRAILING_ICON,
       );
 
-      if (!leadingIconSlot || !trailingIconSlot) return;
+      this._hasLeadingIcon =
+        (leadingIconSlot?.assignedNodes() ?? []).length > 0;
 
-      this._hasLeadingIcon = leadingIconSlot.assignedNodes().length > 0;
-      this._hasTrailingIcon = trailingIconSlot.assignedNodes().length > 0;
-    });
+      this._hasTrailingIcon =
+        (trailingIconSlot?.assignedNodes() ?? []).length > 0;
+    }
   }
 
   override focus(options?: FocusOptions): void {

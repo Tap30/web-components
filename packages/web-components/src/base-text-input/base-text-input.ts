@@ -6,9 +6,9 @@ import {
   getFormValue,
   getRenderRootSlot,
   getValidityAnchor,
+  isSSR,
   onReportValidity,
   redispatchEvent,
-  runAfterRepaint,
 } from "../utils";
 import { Slots } from "./constants";
 import { stringConverter } from "./utils";
@@ -201,8 +201,12 @@ export abstract class BaseTextInput extends BaseInput {
         this._refreshErrorAlert = false;
       });
     }
+  }
 
-    runAfterRepaint(() => {
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
+
+    if (!isSSR()) {
       const leadingSlot = getRenderRootSlot(
         this.renderRoot,
         Slots.LEADING_ICON,
@@ -210,11 +214,9 @@ export abstract class BaseTextInput extends BaseInput {
 
       const trailingSlot = getRenderRootSlot(this.renderRoot, Slots.TRAILING);
 
-      if (!leadingSlot || !trailingSlot) return;
-
-      this.hasLeadingIconSlot = leadingSlot.assignedNodes().length > 0;
-      this.hasTrailingSlot = trailingSlot.assignedNodes().length > 0;
-    });
+      this.hasLeadingIconSlot = (leadingSlot?.assignedNodes() ?? []).length > 0;
+      this.hasTrailingSlot = (trailingSlot?.assignedNodes() ?? []).length > 0;
+    }
   }
 
   protected override getInputElement() {

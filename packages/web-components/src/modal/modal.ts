@@ -12,6 +12,7 @@ import {
   FocusTrapper,
   getRenderRootSlot,
   isActiveElement,
+  isSSR,
   runAfterRepaint,
   ScrollLocker,
   waitAMicrotask,
@@ -177,14 +178,16 @@ export class Modal extends LitElement {
         this._detachGlobalEvents();
       }
     }
+  }
 
-    runAfterRepaint(() => {
+  protected override willUpdate(_changedProperties: PropertyValues<this>) {
+    super.willUpdate(_changedProperties);
+
+    if (!isSSR()) {
       const imageSlot = getRenderRootSlot(this.renderRoot, Slots.IMAGE);
 
-      if (!imageSlot) return;
-
-      this._hasImage = imageSlot.assignedNodes().length > 0;
-    });
+      this._hasImage = (imageSlot?.assignedNodes() ?? []).length > 0;
+    }
   }
 
   public show() {

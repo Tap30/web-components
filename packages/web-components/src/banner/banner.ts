@@ -1,7 +1,7 @@
 import { LitElement, type PropertyValues, html } from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { getRenderRootSlot, runAfterRepaint } from "../utils";
+import { getRenderRootSlot, isSSR } from "../utils";
 import {
   DEFAULT_BACKGROUND_COLOR,
   DEFAULT_TEXT_COLOR,
@@ -78,14 +78,16 @@ export class Banner extends LitElement {
         this.style.removeProperty(token);
       }
     }
+  }
 
-    runAfterRepaint(() => {
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
+
+    if (!isSSR()) {
       const actionSlot = getRenderRootSlot(this.renderRoot, Slots.ACTION);
 
-      if (!actionSlot) return;
-
-      this._hasAction = actionSlot.assignedNodes().length > 0;
-    });
+      this._hasAction = (actionSlot?.assignedNodes() ?? []).length > 0;
+    }
   }
 
   private _renderHeading() {
