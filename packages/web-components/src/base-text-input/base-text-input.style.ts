@@ -119,7 +119,7 @@ export default css`
     --input-support-color: var(--tapsi-color-content-negative);
   }
 
-  .control:not(.error):focus-within {
+  .control:not(.no-active-border):not(.error):focus-within {
     --input-control-bg-color: var(--tapsi-color-surface-secondary);
     --input-control-border-color: var(--tapsi-color-border-inverse-primary);
     --input-support-color: var(--tapsi-color-content-secondary);

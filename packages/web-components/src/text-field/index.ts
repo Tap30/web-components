@@ -73,6 +73,7 @@ export { BaseTextInputSlots as Slots };
  * @prop {"sm" | "md"} [size="md"] - The size of the input.
  * @prop {boolean} [hide-label=false] - Whether to hide the label or not.
  * @prop {boolean} [rounded=false] - Whether the input is rounded or not.
+ * @prop {boolean} [no-active-border=false] - Whether to show the active border around the input or not.
  * @prop {string} [type="text"] -
  * The `<input>` type to use, defaults to "text". The type greatly changes how
  * the text field behaves.
