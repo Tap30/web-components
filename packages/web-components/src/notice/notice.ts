@@ -1,7 +1,7 @@
 import "../button/icon-button";
 
 import { html, LitElement, nothing, type PropertyValues } from "lit";
-import { property, queryAssignedNodes, state } from "lit/decorators";
+import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { isSSR, logger } from "../utils";
 import { Slots } from "./constants";

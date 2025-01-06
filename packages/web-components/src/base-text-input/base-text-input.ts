@@ -1,5 +1,5 @@
 import { html, nothing, type PropertyValues, type TemplateResult } from "lit";
-import { property, queryAssignedNodes, state } from "lit/decorators";
+import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { type ClassInfo, classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
 import {

@@ -1,5 +1,5 @@
 import { html, type PropertyValues, type TemplateResult } from "lit";
-import { queryAssignedNodes, state } from "lit/decorators";
+import { queryAssignedNodes, state } from "lit/decorators.js";
 import { isSSR } from "../../utils";
 import { BaseButton } from "../base";
 import { Slots } from "./constants";

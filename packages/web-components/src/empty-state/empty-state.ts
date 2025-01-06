@@ -1,5 +1,5 @@
 import { html, LitElement, type PropertyValues } from "lit";
-import { property, queryAssignedNodes, state } from "lit/decorators";
+import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { isSSR } from "../utils";
 import { Slots } from "./constants";
 

@@ -1,7 +1,7 @@
 import "../button/icon-button";
 
 import { html, LitElement, type PropertyValues } from "lit";
-import { property, queryAssignedNodes, state } from "lit/decorators";
+import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { KeyboardKeys } from "../internals";
 import { contains, isElementFocusable, isSSR, waitAMicrotask } from "../utils";
