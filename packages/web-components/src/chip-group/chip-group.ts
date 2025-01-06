@@ -35,23 +35,14 @@ export class ChipGroup extends LitElement {
   @property({ type: Boolean, attribute: "full-width" })
   public fullWidth = false;
 
-  /**
-   * The selected chips elements.
-   */
-  public get selectedChips(): Chip[] {
-    if (isSSR()) return [];
-
-    return this._chips.filter(chip => chip.selected);
-  }
-
-  private get _chips() {
+  private get _selectedChips() {
     const chipsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
 
     if (!chipsSlot) return [];
 
     const chips = chipsSlot
       .assignedNodes()
-      .filter(node => node instanceof Chip);
+      .filter(node => node instanceof Chip && node.selected) as Chip[];
 
     return chips;
   }
@@ -97,7 +88,7 @@ export class ChipGroup extends LitElement {
     const chip = event.target as Chip;
     const value = chip.value;
 
-    const selectedValues = this.selectedChips
+    const selectedValues = this._selectedChips
       .map(chip => chip.value)
       .filter(v => v !== value);
 
@@ -112,7 +103,7 @@ export class ChipGroup extends LitElement {
     const chip = event.target as Chip;
     const value = chip.value;
 
-    const selectedValues = this.selectedChips
+    const selectedValues = this._selectedChips
       .map(chip => chip.value)
       .concat(value);
 
