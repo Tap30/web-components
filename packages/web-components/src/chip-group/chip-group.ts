@@ -36,25 +36,12 @@ export class ChipGroup extends LitElement {
   public fullWidth = false;
 
   /**
-   * The value of the currently selected chips.
+   * The selected chips elements.
    */
-  @property({ attribute: false })
-  public get selectedChips(): string[] {
-    return this._selectedChips;
-  }
+  public get selectedChips(): Chip[] {
+    if (isSSR()) return [];
 
-  public set selectedChips(values: string[]) {
-    if (isSSR()) return;
-
-    this._chips.forEach(chip => {
-      if (values.includes(chip.value)) {
-        chip.selected = true;
-      } else {
-        chip.selected = false;
-      }
-    });
-
-    this._selectedChips = values;
+    return this._chips.filter(chip => chip.selected);
   }
 
   private get _chips() {
@@ -68,8 +55,6 @@ export class ChipGroup extends LitElement {
 
     return chips;
   }
-
-  private _selectedChips: string[] = [];
 
   constructor() {
     super();
@@ -108,68 +93,46 @@ export class ChipGroup extends LitElement {
     );
   }
 
-  private _emitSelectChange(selectedValues: string[]) {
-    const prevSelectedChips = this.selectedChips;
-
-    this.selectedChips = selectedValues;
-
-    const eventAllowed = this.dispatchEvent(
-      new SelectChangeEvent({ selectedChips: selectedValues }),
-    );
-
-    if (!eventAllowed) this.selectedChips = prevSelectedChips;
-  }
-
-  private _select(value: string) {
-    const targetChip = this._chips.find(chip => {
-      return chip.value === value;
-    });
-
-    if (!targetChip || targetChip.selected) return;
-
-    const newSelectedChips = [...this.selectedChips, value];
-
-    this._emitSelectChange(newSelectedChips);
-  }
-
-  private _deselect(value: string) {
-    const targetChip = this._chips.find(chip => {
-      return chip.value === value;
-    });
-
-    if (!targetChip || !targetChip.selected) return;
-
-    const newSelectedChips = this.selectedChips.filter(chip => chip !== value);
-
-    this._emitSelectChange(newSelectedChips);
-  }
-
   private _handleChipDeselection(event: DeselectEvent) {
     const chip = event.target as Chip;
+    const value = chip.value;
 
-    this._deselect(chip.value);
+    const targetChip = this._chips.find(chip => {
+      return chip.value === value;
+    });
+
+    if (!targetChip) return;
+
+    const selectedValues = this.selectedChips
+      .map(chip => chip.value)
+      .filter(v => v !== value);
+
+    const eventAllowed = this.dispatchEvent(
+      new SelectChangeEvent({ values: selectedValues }),
+    );
+
+    if (!eventAllowed) event.preventDefault();
   }
 
   private _handleChipSelection(event: SelectEvent) {
     const chip = event.target as Chip;
+    const value = chip.value;
 
-    this._select(chip.value);
-  }
-
-  private _handleSlotChange() {
-    const chips = this._chips;
-
-    let didFilter = false;
-
-    const filtered = this.selectedChips.filter(chipValue => {
-      const accepted = chips.some(chip => chip.value === chipValue);
-
-      if (!accepted) didFilter = true;
-
-      return accepted;
+    const targetChip = this._chips.find(chip => {
+      return chip.value === value;
     });
 
-    if (didFilter) this._emitSelectChange(filtered);
+    if (!targetChip) return;
+
+    const selectedValues = this.selectedChips
+      .map(chip => chip.value)
+      .concat(value);
+
+    const eventAllowed = this.dispatchEvent(
+      new SelectChangeEvent({ values: selectedValues }),
+    );
+
+    if (!eventAllowed) event.preventDefault();
   }
 
   protected override render() {
@@ -195,7 +158,7 @@ export class ChipGroup extends LitElement {
         aria-orientation=${this.orientation}
         aria-label=${this.label || nothing}
       >
-        <slot @slotchange=${this._handleSlotChange}></slot>
+        <slot></slot>
       </div>
     `;
   }

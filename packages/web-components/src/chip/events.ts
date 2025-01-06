@@ -8,6 +8,7 @@ export class SelectEvent extends BaseEvent<null> {
       details: null,
       bubbles: true,
       composed: true,
+      cancelable: true,
     });
   }
 }
@@ -20,6 +21,7 @@ export class DeselectEvent extends BaseEvent<null> {
       details: null,
       bubbles: true,
       composed: true,
+      cancelable: true,
     });
   }
 }

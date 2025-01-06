@@ -1,7 +1,7 @@
 import { BaseEvent } from "../utils";
 
 type EventDetails = {
-  selectedChips: string[];
+  values: string[];
 };
 
 export class SelectChangeEvent extends BaseEvent<EventDetails> {
