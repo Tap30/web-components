@@ -1,5 +1,6 @@
 import { customElement } from "lit/decorators.js";
 import { type HideEvent, type ShowEvent } from "./events";
+import { Snackbar } from "./snackbar";
 import styles from "./snackbar.style";
 
 export { Slots } from "./constants";
