@@ -115,6 +115,12 @@ export abstract class BaseTextInput extends BaseInput {
   @property()
   public size: "sm" | "md" = "md";
 
+  /**
+   * Whether to show the active border around the input or not.
+   */
+  @property({ type: Boolean, attribute: "no-active-border" })
+  public noActiveBorder = false;
+
   @state()
   private _dirty = false;
 
@@ -344,6 +350,7 @@ export abstract class BaseTextInput extends BaseInput {
       error: this.hasError(),
       readonly: this.readOnly,
       rounded: this.rounded,
+      "no-active-border": this.noActiveBorder,
     });
 
     return html`

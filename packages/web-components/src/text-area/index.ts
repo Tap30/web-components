@@ -74,6 +74,7 @@ export { BaseTextInputSlots as Slots };
  * @prop {"sm" | "md"} [size="md"] - The size of the input.
  * @prop {boolean} [hide-label=false] - Whether to hide the label or not.
  * @prop {boolean} [rounded=false] - Whether the input is rounded or not.
+ * @prop {boolean} [no-active-border=false] - Whether to show the active border around the input or not.
  * @prop {number} [rows=2] -
  * The number of rows to display for the text input.
  * Defaults to 2.
