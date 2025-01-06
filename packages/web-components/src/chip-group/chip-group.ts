@@ -97,12 +97,6 @@ export class ChipGroup extends LitElement {
     const chip = event.target as Chip;
     const value = chip.value;
 
-    const targetChip = this._chips.find(chip => {
-      return chip.value === value;
-    });
-
-    if (!targetChip) return;
-
     const selectedValues = this.selectedChips
       .map(chip => chip.value)
       .filter(v => v !== value);
@@ -117,12 +111,6 @@ export class ChipGroup extends LitElement {
   private _handleChipSelection(event: SelectEvent) {
     const chip = event.target as Chip;
     const value = chip.value;
-
-    const targetChip = this._chips.find(chip => {
-      return chip.value === value;
-    });
-
-    if (!targetChip) return;
 
     const selectedValues = this.selectedChips
       .map(chip => chip.value)
