@@ -1,10 +1,9 @@
 import { html, nothing, type PropertyValues, type TemplateResult } from "lit";
-import { property, state } from "lit/decorators.js";
+import { property, queryAssignedNodes, state } from "lit/decorators";
 import { type ClassInfo, classMap } from "lit/directives/class-map.js";
 import BaseInput from "../base-input";
 import {
   getFormValue,
-  getRenderRootSlot,
   getValidityAnchor,
   isSSR,
   onReportValidity,
@@ -133,6 +132,12 @@ export abstract class BaseTextInput extends BaseInput {
   @state()
   private _refreshErrorAlert = false;
 
+  @queryAssignedNodes({ slot: Slots.LEADING_ICON })
+  private _leadingIconSlotNodes!: Node[];
+
+  @queryAssignedNodes({ slot: Slots.TRAILING })
+  private _trailingSlotNodes!: Node[];
+
   /**
    * Selects all the text in the text field.
    *
@@ -206,16 +211,19 @@ export abstract class BaseTextInput extends BaseInput {
   protected override willUpdate(changed: PropertyValues<this>) {
     super.willUpdate(changed);
 
+    this._handleLeadingIconSlotChange();
+    this._handleTrailingSlotChange();
+  }
+
+  private _handleLeadingIconSlotChange() {
     if (!isSSR()) {
-      const leadingSlot = getRenderRootSlot(
-        this.renderRoot,
-        Slots.LEADING_ICON,
-      );
+      this.hasLeadingIconSlot = this._leadingIconSlotNodes.length > 0;
+    }
+  }
 
-      const trailingSlot = getRenderRootSlot(this.renderRoot, Slots.TRAILING);
-
-      this.hasLeadingIconSlot = (leadingSlot?.assignedNodes() ?? []).length > 0;
-      this.hasTrailingSlot = (trailingSlot?.assignedNodes() ?? []).length > 0;
+  private _handleTrailingSlotChange() {
+    if (!isSSR()) {
+      this.hasTrailingSlot = this._trailingSlotNodes.length > 0;
     }
   }
 
@@ -343,7 +351,10 @@ export abstract class BaseTextInput extends BaseInput {
           part=${Slots.LEADING_ICON}
           ?hidden=${!this.hasLeadingIconSlot}
         >
-          <slot name=${Slots.LEADING_ICON}></slot>
+          <slot
+            @slotchange=${this._handleLeadingIconSlotChange}
+            name=${Slots.LEADING_ICON}
+          ></slot>
         </div>
         ${this.renderInput()}
         <div
@@ -351,7 +362,10 @@ export abstract class BaseTextInput extends BaseInput {
           part=${Slots.TRAILING}
           ?hidden=${!this.hasTrailingSlot}
         >
-          <slot name=${Slots.TRAILING}></slot>
+          <slot
+            @slotchange=${this._handleTrailingSlotChange}
+            name=${Slots.TRAILING}
+          ></slot>
         </div>
       </div>
     `;

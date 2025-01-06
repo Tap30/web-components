@@ -1,7 +1,7 @@
 import { html, LitElement, type PropertyValues } from "lit";
-import { property, state } from "lit/decorators.js";
+import { property, queryAssignedNodes, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map.js";
-import { getRenderRootSlot, isSSR, SystemError } from "../../utils";
+import { isSSR, SystemError } from "../../utils";
 import Controller from "./Controller";
 import { Slots } from "./constants";
 
@@ -20,7 +20,10 @@ export class BottomNavigationItem extends LitElement {
   public value: string = "";
 
   @state()
-  private _hasIcon = false;
+  private _hasIconSlot = false;
+
+  @queryAssignedNodes({ slot: Slots.ICON })
+  private _iconSlotNodes!: Node[];
 
   private readonly _controller = new Controller(this);
 
@@ -38,10 +41,12 @@ export class BottomNavigationItem extends LitElement {
   protected override willUpdate(changed: PropertyValues<this>) {
     super.willUpdate(changed);
 
-    if (!isSSR()) {
-      const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
+    this._handleIconSlotChange();
+  }
 
-      this._hasIcon = (iconSlot?.assignedNodes() ?? []).length > 0;
+  private _handleIconSlotChange() {
+    if (!isSSR()) {
+      this._hasIconSlot = this._iconSlotNodes.length > 0;
     }
   }
 
@@ -73,9 +78,12 @@ export class BottomNavigationItem extends LitElement {
           aria-hidden
           class=${Slots.ICON}
           part=${Slots.ICON}
-          ?hidden=${!this._hasIcon}
+          ?hidden=${!this._hasIconSlot}
         >
-          <slot name=${Slots.ICON}></slot>
+          <slot
+            @slotchange=${this._handleIconSlotChange}
+            name=${Slots.ICON}
+          ></slot>
         </div>
         <div
           class="content"

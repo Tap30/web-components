@@ -1,16 +1,10 @@
 import "../button/icon-button";
 
 import { html, LitElement, type PropertyValues } from "lit";
-import { property, state } from "lit/decorators.js";
+import { property, queryAssignedNodes, state } from "lit/decorators";
 import { classMap } from "lit/directives/class-map.js";
 import { KeyboardKeys } from "../internals";
-import {
-  contains,
-  getRenderRootSlot,
-  isElementFocusable,
-  isSSR,
-  waitAMicrotask,
-} from "../utils";
+import { contains, isElementFocusable, isSSR, waitAMicrotask } from "../utils";
 import { Slots } from "./constants";
 import { HideEvent, ShowEvent } from "./events";
 import { close, error, info, success, warning } from "./icons";
@@ -57,6 +51,9 @@ export class Snackbar extends LitElement {
 
   @state()
   private _hasIconSlot = false;
+
+  @queryAssignedNodes({ slot: Slots.ICON })
+  private _iconSlotNodes!: Node[];
 
   private _timeoutRef = -1;
 
@@ -129,10 +126,12 @@ export class Snackbar extends LitElement {
   protected override willUpdate(changed: PropertyValues<this>) {
     super.willUpdate(changed);
 
-    if (!isSSR()) {
-      const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
+    this._handleIconSlotChange();
+  }
 
-      this._hasIconSlot = (iconSlot?.assignedNodes() ?? []).length > 0;
+  private _handleIconSlotChange() {
+    if (!isSSR()) {
+      this._hasIconSlot = this._iconSlotNodes.length > 0;
     }
   }
 
@@ -312,7 +311,10 @@ export class Snackbar extends LitElement {
     if (this.color === "info") return info;
     if (this.color === "warning") return warning;
 
-    return html`<slot name=${Slots.ICON}></slot>`;
+    return html`<slot
+      @slotchange=${this._handleIconSlotChange}
+      name=${Slots.ICON}
+    ></slot>`;
   }
 
   protected override render() {
