@@ -1,7 +1,7 @@
 import { BaseEvent } from "../utils";
 
 type EventDetails = {
-  activeItem: string;
+  value: string;
 };
 
 export class ActiveChangeEvent extends BaseEvent<EventDetails> {

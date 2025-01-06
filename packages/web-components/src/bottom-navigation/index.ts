@@ -4,7 +4,6 @@ import bottomNavigationStyles from "./bottom-navigation.style";
 import { type ActiveChangeEvent } from "./events";
 import {
   type ActivateEvent,
-  type DeactivateEvent,
   BottomNavigationItem,
   Slots as ItemSlots,
 } from "./item";
@@ -24,7 +23,6 @@ export { ItemSlots };
  * @slot - The default slot for the content/label.
  *
  * @fires {ActivateEvent} activate - Fired when the item activates (bubbles).
- * @fires {DeactivateEvent} deactivate - Fired when the item deactivates (bubbles).
  *
  * @prop {boolean} [active=false] - Indicates whether the item is active or not.
  * @prop {string} [value=""] - The value associated with the item. This value has to be unique among sibling items.
@@ -56,7 +54,6 @@ export class TapsiBottomNavigationItem extends BottomNavigationItem {
 
 interface TapsiBottomNavigationItemEventMap extends HTMLElementEventMap {
   [ActivateEvent.type]: ActivateEvent;
-  [DeactivateEvent.type]: DeactivateEvent;
 }
 
 /**
