@@ -1,35 +1,39 @@
 import { html, type PropertyValues, type TemplateResult } from "lit";
-import { state } from "lit/decorators.js";
-import { getRenderRootSlot, runAfterRepaint } from "../../utils";
+import { queryAssignedNodes, state } from "lit/decorators.js";
+import { isSSR } from "../../utils";
 import { BaseButton } from "../base";
 import { Slots } from "./constants";
 
 export class Button extends BaseButton {
   @state()
-  private _hasLeadingIcon = false;
+  private _hasLeadingIconSlot = false;
 
   @state()
-  private _hasTrailingIcon = false;
+  private _hasTrailingIconSlot = false;
 
-  protected override updated(changed: PropertyValues<this>): void {
-    super.updated(changed);
+  @queryAssignedNodes({ slot: Slots.LEADING_ICON })
+  private _leadingIconSlotNodes!: Node[];
 
-    runAfterRepaint(() => {
-      const leadingIconSlot = getRenderRootSlot(
-        this.renderRoot,
-        Slots.LEADING_ICON,
-      );
+  @queryAssignedNodes({ slot: Slots.TRAILING_ICON })
+  private _trailingIconSlotNodes!: Node[];
 
-      const trailingIconSlot = getRenderRootSlot(
-        this.renderRoot,
-        Slots.TRAILING_ICON,
-      );
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    super.willUpdate(changed);
 
-      if (!leadingIconSlot || !trailingIconSlot) return;
+    this._handleLeadingIconSlotChange();
+    this._handleTrailingIconSlotChange();
+  }
 
-      this._hasLeadingIcon = leadingIconSlot.assignedNodes().length > 0;
-      this._hasTrailingIcon = trailingIconSlot.assignedNodes().length > 0;
-    });
+  private _handleLeadingIconSlotChange() {
+    if (!isSSR()) {
+      this._hasLeadingIconSlot = this._leadingIconSlotNodes.length > 0;
+    }
+  }
+
+  private _handleTrailingIconSlotChange() {
+    if (!isSSR()) {
+      this._hasTrailingIconSlot = this._trailingIconSlotNodes.length > 0;
+    }
   }
 
   protected override renderLoading(): TemplateResult {
@@ -45,9 +49,12 @@ export class Button extends BaseButton {
         <div
           class="icon"
           part=${Slots.LEADING_ICON}
-          ?hidden=${!this._hasLeadingIcon}
+          ?hidden=${!this._hasLeadingIconSlot}
         >
-          <slot name=${Slots.LEADING_ICON}></slot>
+          <slot
+            @slotchange=${this._handleLeadingIconSlotChange}
+            name=${Slots.LEADING_ICON}
+          ></slot>
         </div>
         <div
           class="content"
@@ -58,9 +65,12 @@ export class Button extends BaseButton {
         <div
           class="icon"
           part=${Slots.TRAILING_ICON}
-          ?hidden=${!this._hasTrailingIcon}
+          ?hidden=${!this._hasTrailingIconSlot}
         >
-          <slot name=${Slots.TRAILING_ICON}></slot>
+          <slot
+            @slotchange=${this._handleTrailingIconSlotChange}
+            name=${Slots.TRAILING_ICON}
+          ></slot>
         </div>
       </div>
     `;

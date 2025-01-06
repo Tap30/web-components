@@ -36,7 +36,7 @@ export class Avatar extends LitElement {
   @property()
   public size: "xs" | "sm" | "md" | "lg" | "xlg" | "xxlg" = "md";
 
-  protected override updated(changed: PropertyValues) {
+  protected override updated(changed: PropertyValues<this>) {
     if (changed.has("image")) {
       this._hasError = false;
     }

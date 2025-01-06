@@ -1,9 +1,9 @@
 import { LitElement, html, type PropertyValues } from "lit";
-import { property, state } from "lit/decorators.js";
+import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { KeyboardKeys } from "../internals";
-import { getRenderRootSlot, runAfterRepaint } from "../utils";
+import { isSSR } from "../utils";
 import { Slots } from "./constants";
 import { DeselectEvent, SelectEvent } from "./events";
 
@@ -41,30 +41,34 @@ export class Chip extends LitElement {
   public value: string = "";
 
   @state()
-  private _hasTrailingIcon = false;
+  private _hasTrailingIconSlot = false;
 
   @state()
-  private _hasLeadingIcon = false;
+  private _hasLeadingIconSlot = false;
 
-  protected override updated(changedProperties: PropertyValues): void {
-    super.updated(changedProperties);
+  @queryAssignedNodes({ slot: Slots.LEADING_ICON })
+  private _leadingIconSlotNodes!: Node[];
 
-    runAfterRepaint(() => {
-      const leadingIconSlot = getRenderRootSlot(
-        this.renderRoot,
-        Slots.LEADING_ICON,
-      );
+  @queryAssignedNodes({ slot: Slots.TRAILING_ICON })
+  private _trailingIconSlotNodes!: Node[];
 
-      const trailingIconSlot = getRenderRootSlot(
-        this.renderRoot,
-        Slots.TRAILING_ICON,
-      );
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
+    super.willUpdate(changedProperties);
 
-      if (!leadingIconSlot || !trailingIconSlot) return;
+    this._handleLeadingIconSlotChange();
+    this._handleTrailingIconSlotChange();
+  }
 
-      this._hasLeadingIcon = leadingIconSlot.assignedNodes().length > 0;
-      this._hasTrailingIcon = trailingIconSlot.assignedNodes().length > 0;
-    });
+  private _handleLeadingIconSlotChange() {
+    if (!isSSR()) {
+      this._hasLeadingIconSlot = this._leadingIconSlotNodes.length > 0;
+    }
+  }
+
+  private _handleTrailingIconSlotChange() {
+    if (!isSSR()) {
+      this._hasTrailingIconSlot = this._trailingIconSlotNodes.length > 0;
+    }
   }
 
   public override focus(options?: FocusOptions): void {
@@ -106,8 +110,8 @@ export class Chip extends LitElement {
       [this.size]: true,
       disabled: this.disabled,
       selected: this.selected,
-      "has-leading-icon": this._hasLeadingIcon,
-      "has-trailing-icon": this._hasTrailingIcon,
+      "has-leading-icon": this._hasLeadingIconSlot,
+      "has-trailing-icon": this._hasTrailingIconSlot,
     });
 
     return html`
@@ -126,7 +130,10 @@ export class Chip extends LitElement {
           class="icon leading-icon"
           part="leading-icon"
         >
-          <slot name=${Slots.LEADING_ICON}></slot>
+          <slot
+            @slotchange=${this._handleLeadingIconSlotChange}
+            name=${Slots.LEADING_ICON}
+          ></slot>
         </div>
         <div
           class="content"
@@ -138,7 +145,10 @@ export class Chip extends LitElement {
           class="icon trailing-icon"
           part="trailing-icon"
         >
-          <slot name=${Slots.TRAILING_ICON}></slot>
+          <slot
+            @slotchange=${this._handleTrailingIconSlotChange}
+            name=${Slots.TRAILING_ICON}
+          ></slot>
         </div>
       </button>
     `;

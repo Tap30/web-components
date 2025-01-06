@@ -1,13 +1,8 @@
 import { html, LitElement, type PropertyValues } from "lit";
-import { property, state } from "lit/decorators.js";
+import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { KeyboardKeys } from "../../internals";
-import {
-  getRenderRootSlot,
-  runAfterRepaint,
-  SystemError,
-  waitAMicrotask,
-} from "../../utils";
+import { isSSR, SystemError, waitAMicrotask } from "../../utils";
 import { Slots } from "./constants";
 import { ActivateEvent } from "./events";
 
@@ -26,7 +21,10 @@ export class BottomNavigationItem extends LitElement {
   public value: string = "";
 
   @state()
-  private _hasIcon = false;
+  private _hasIconSlot = false;
+
+  @queryAssignedNodes({ slot: Slots.ICON })
+  private _iconSlotNodes!: Node[];
 
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
@@ -37,14 +35,18 @@ export class BottomNavigationItem extends LitElement {
         "bottom-navigation-item",
       );
     }
+  }
 
-    runAfterRepaint(() => {
-      const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
 
-      if (!iconSlot) return;
+    this._handleIconSlotChange();
+  }
 
-      this._hasIcon = iconSlot.assignedNodes().length > 0;
-    });
+  private _handleIconSlotChange() {
+    if (!isSSR()) {
+      this._hasIconSlot = this._iconSlotNodes.length > 0;
+    }
   }
 
   public override focus(options?: FocusOptions): void {
@@ -102,9 +104,12 @@ export class BottomNavigationItem extends LitElement {
           aria-hidden
           class=${Slots.ICON}
           part=${Slots.ICON}
-          ?hidden=${!this._hasIcon}
+          ?hidden=${!this._hasIconSlot}
         >
-          <slot name=${Slots.ICON}></slot>
+          <slot
+            @slotchange=${this._handleIconSlotChange}
+            name=${Slots.ICON}
+          ></slot>
         </div>
         <div
           class="content"

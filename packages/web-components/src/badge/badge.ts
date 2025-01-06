@@ -1,8 +1,8 @@
 import { html, LitElement, type PropertyValues } from "lit";
 import type { DirectiveResult } from "lit/async-directive";
-import { property, state } from "lit/decorators.js";
+import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
-import { getRenderRootSlot, runAfterRepaint } from "../utils";
+import { isSSR } from "../utils";
 import { Slots } from "./constants";
 
 type ClassMap = DirectiveResult<typeof ClassMapDirective>;
@@ -40,18 +40,20 @@ export class Badge extends LitElement {
   public size: "md" | "sm" = "md";
 
   @state()
-  private _hasIcon = false;
+  private _hasIconSlot = false;
 
-  protected override updated(changed: PropertyValues<this>): void {
-    super.updated(changed);
+  @queryAssignedNodes({ slot: Slots.ICON })
+  private _iconSlotNodes!: Node[];
 
-    runAfterRepaint(() => {
-      const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    super.willUpdate(changed);
+    this._handleIconSlotChange();
+  }
 
-      if (!iconSlot) return;
-
-      this._hasIcon = iconSlot.assignedNodes().length > 0;
-    });
+  private _handleIconSlotChange() {
+    if (!isSSR()) {
+      this._hasIconSlot = this._iconSlotNodes.length > 0;
+    }
   }
 
   private _renderDotBadge(rootClasses: ClassMap) {
@@ -79,9 +81,12 @@ export class Badge extends LitElement {
         <div
           class=${Slots.ICON}
           part=${Slots.ICON}
-          ?hidden=${!this._hasIcon}
+          ?hidden=${!this._hasIconSlot}
         >
-          <slot name=${Slots.ICON}></slot>
+          <slot
+            @slotchange=${this._handleIconSlotChange}
+            name=${Slots.ICON}
+          ></slot>
         </div>
         ${this.value ?? ""}
       </div>

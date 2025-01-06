@@ -1,7 +1,7 @@
 import { LitElement, type PropertyValues, html } from "lit";
-import { property, state } from "lit/decorators.js";
+import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { getRenderRootSlot, runAfterRepaint } from "../utils";
+import { isSSR } from "../utils";
 import {
   DEFAULT_BACKGROUND_COLOR,
   DEFAULT_TEXT_COLOR,
@@ -46,7 +46,10 @@ export class Banner extends LitElement {
   public textColor?: string = DEFAULT_TEXT_COLOR;
 
   @state()
-  private _hasAction = false;
+  private _hasActionSlot = false;
+
+  @queryAssignedNodes({ slot: Slots.ACTION })
+  private _actionSlotNodes!: Node[];
 
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
@@ -78,14 +81,17 @@ export class Banner extends LitElement {
         this.style.removeProperty(token);
       }
     }
+  }
 
-    runAfterRepaint(() => {
-      const actionSlot = getRenderRootSlot(this.renderRoot, Slots.ACTION);
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
+    this._handleActionSlotChange();
+  }
 
-      if (!actionSlot) return;
-
-      this._hasAction = actionSlot.assignedNodes().length > 0;
-    });
+  private _handleActionSlotChange() {
+    if (!isSSR()) {
+      this._hasActionSlot = this._actionSlotNodes.length > 0;
+    }
   }
 
   private _renderHeading() {
@@ -131,9 +137,12 @@ export class Banner extends LitElement {
           <div
             class=${Slots.ACTION}
             part=${Slots.ACTION}
-            ?hidden=${!this._hasAction}
+            ?hidden=${!this._hasActionSlot}
           >
-            <slot name=${Slots.ACTION}></slot>
+            <slot
+              @slotchange=${this._handleActionSlotChange}
+              name=${Slots.ACTION}
+            ></slot>
           </div>
         </div>
       </div>

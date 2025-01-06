@@ -1,9 +1,9 @@
 import "../button/icon-button";
 
 import { html, LitElement, nothing, type PropertyValues } from "lit";
-import { property, state } from "lit/decorators.js";
+import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { getRenderRootSlot, logger, runAfterRepaint } from "../utils";
+import { isSSR, logger } from "../utils";
 import { Slots } from "./constants";
 import { HideEvent, ShowEvent } from "./events";
 import { close, error, info, success, warning } from "./icons";
@@ -78,30 +78,47 @@ export class Notice extends LitElement {
   private _hasCustomArtworkSlot = false;
 
   @state()
-  private _hasActionsSlot = false;
+  private _hasActionSlot = false;
 
-  protected override updated(changed: PropertyValues<this>) {
-    super.updated(changed);
+  @queryAssignedNodes({ slot: Slots.ARTWORK })
+  private _customArtworkSlotNodes!: Node[];
 
-    runAfterRepaint(() => {
-      const customArtworkSlot = getRenderRootSlot(
-        this.renderRoot,
-        Slots.ARTWORK,
-      );
+  @queryAssignedNodes({ slot: Slots.ACTION })
+  private _actionSlotNodes!: Node[];
 
-      const actionsSlot = getRenderRootSlot(this.renderRoot, Slots.ACTION);
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
 
-      if (customArtworkSlot) {
-        this._hasCustomArtworkSlot =
-          customArtworkSlot.assignedNodes().length > 0;
+    this._handleArtworkSlotChange();
+    this._handleActionSlotChange();
+  }
+
+  private _handleArtworkSlotChange() {
+    if (!isSSR()) {
+      this._hasCustomArtworkSlot = this._customArtworkSlotNodes.length > 0;
+
+      if (this.artwork === "custom" && !this._hasCustomArtworkSlot) {
+        logger(
+          `Notice component with \`custom\` artwork property should have a \`${Slots.ARTWORK}\` slot`,
+          "notice",
+          "warning",
+        );
       }
 
-      if (actionsSlot) {
-        this._hasActionsSlot = actionsSlot.assignedNodes().length > 0;
+      if (this.artwork !== "custom" && this._hasCustomArtworkSlot) {
+        logger(
+          `Notice component with \`${this.artwork}\` artwork property shouldn't have a \`${Slots.ARTWORK}\` slot`,
+          "notice",
+          "warning",
+        );
       }
-    });
+    }
+  }
 
-    this._logWarnings();
+  private _handleActionSlotChange() {
+    if (!isSSR()) {
+      this._hasActionSlot = this._actionSlotNodes.length > 0;
+    }
   }
 
   /**
@@ -128,24 +145,6 @@ export class Notice extends LitElement {
     const eventAllowed = this.dispatchEvent(new HideEvent());
 
     if (eventAllowed) this.visible = true;
-  }
-
-  private _logWarnings() {
-    if (this.artwork === "custom" && !this._hasCustomArtworkSlot) {
-      logger(
-        `Notice component with \`custom\` artwork property should have a \`${Slots.ARTWORK}\` slot`,
-        "notice",
-        "warning",
-      );
-    }
-
-    if (this.artwork !== "custom" && this._hasCustomArtworkSlot) {
-      logger(
-        `Notice component with \`${this.artwork}\` artwork property shouldn't have a \`${Slots.ARTWORK}\` slot`,
-        "notice",
-        "warning",
-      );
-    }
   }
 
   private _renderDismiss() {
@@ -204,7 +203,10 @@ export class Notice extends LitElement {
 
   private _renderArtwork() {
     if (this.artwork === "custom") {
-      return html`<slot name=${Slots.ARTWORK}></slot>`;
+      return html`<slot
+        @slotchange=${this._handleArtworkSlotChange}
+        name=${Slots.ARTWORK}
+      ></slot>`;
     }
 
     if (this.artwork === "icon") return this._renderIconArtwork();
@@ -249,9 +251,10 @@ export class Notice extends LitElement {
           <div
             class="actions"
             part="actions"
-            ?hidden=${!this._hasActionsSlot || this.variant === "compact"}
+            ?hidden=${!this._hasActionSlot || this.variant === "compact"}
           >
             <slot
+              @slotchange=${this._handleActionSlotChange}
               part=${Slots.ACTION}
               name=${Slots.ACTION}
             ></slot>

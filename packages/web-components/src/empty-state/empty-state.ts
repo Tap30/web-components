@@ -1,6 +1,6 @@
 import { html, LitElement, type PropertyValues } from "lit";
-import { property, state } from "lit/decorators.js";
-import { getRenderRootSlot, runAfterRepaint } from "../utils";
+import { property, queryAssignedNodes, state } from "lit/decorators.js";
+import { isSSR } from "../utils";
 import { Slots } from "./constants";
 
 export class EmptyState extends LitElement {
@@ -23,23 +23,34 @@ export class EmptyState extends LitElement {
   public contentAlignment: "center" | "auto" = "auto";
 
   @state()
-  private _hasIcon = false;
+  private _hasIconSlot = false;
 
   @state()
-  private _hasAction = false;
+  private _hasActionSlot = false;
 
-  protected override updated(changed: PropertyValues<this>): void {
-    super.updated(changed);
+  @queryAssignedNodes({ slot: Slots.ICON })
+  private _iconSlotNodes!: Node[];
 
-    runAfterRepaint(() => {
-      const iconSlot = getRenderRootSlot(this.renderRoot, Slots.ICON);
-      const actionSlot = getRenderRootSlot(this.renderRoot, Slots.ACTION);
+  @queryAssignedNodes({ slot: Slots.ACTION })
+  private _actionSlotNodes!: Node[];
 
-      if (!iconSlot || !actionSlot) return;
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    super.willUpdate(changed);
 
-      this._hasIcon = iconSlot.assignedNodes().length > 0;
-      this._hasAction = actionSlot.assignedNodes().length > 0;
-    });
+    this._handleIconSlotChange();
+    this._handleActionSlotChange();
+  }
+
+  private _handleIconSlotChange() {
+    if (!isSSR()) {
+      this._hasIconSlot = this._iconSlotNodes.length > 0;
+    }
+  }
+
+  private _handleActionSlotChange() {
+    if (!isSSR()) {
+      this._hasActionSlot = this._actionSlotNodes.length > 0;
+    }
   }
 
   private _renderTitle() {
@@ -76,9 +87,12 @@ export class EmptyState extends LitElement {
         <div
           class=${Slots.ICON}
           part=${Slots.ICON}
-          ?hidden=${!this._hasIcon}
+          ?hidden=${!this._hasIconSlot}
         >
-          <slot name=${Slots.ICON}></slot>
+          <slot
+            @slotchange=${this._handleIconSlotChange}
+            name=${Slots.ICON}
+          ></slot>
         </div>
         <div
           class="content"
@@ -89,9 +103,12 @@ export class EmptyState extends LitElement {
         <div
           class=${Slots.ACTION}
           part=${Slots.ACTION}
-          ?hidden=${!this._hasAction}
+          ?hidden=${!this._hasActionSlot}
         >
-          <slot name=${Slots.ACTION}></slot>
+          <slot
+            @slotchange=${this._handleActionSlotChange}
+            name=${Slots.ACTION}
+          ></slot>
         </div>
       </div>
     `;

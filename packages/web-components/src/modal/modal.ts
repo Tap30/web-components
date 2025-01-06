@@ -4,14 +4,14 @@ import {
   type PropertyValues,
   type TemplateResult,
 } from "lit";
-import { property, query, state } from "lit/decorators.js";
+import { property, query, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { KeyboardKeys } from "../internals";
 import {
   AnimationController,
   FocusTrapper,
-  getRenderRootSlot,
   isActiveElement,
+  isSSR,
   runAfterRepaint,
   ScrollLocker,
   waitAMicrotask,
@@ -44,7 +44,10 @@ export class Modal extends LitElement {
   public alignment: "start" | "center" = "start";
 
   @state()
-  private _hasImage = false;
+  private _hasImageSlot = false;
+
+  @queryAssignedNodes({ slot: Slots.IMAGE })
+  private _imageSlotNodes!: Node[];
 
   @query("#root")
   private _root!: HTMLElement | null;
@@ -177,14 +180,18 @@ export class Modal extends LitElement {
         this._detachGlobalEvents();
       }
     }
+  }
 
-    runAfterRepaint(() => {
-      const imageSlot = getRenderRootSlot(this.renderRoot, Slots.IMAGE);
+  protected override willUpdate(_changedProperties: PropertyValues<this>) {
+    super.willUpdate(_changedProperties);
 
-      if (!imageSlot) return;
+    this._handleImageSlotChange();
+  }
 
-      this._hasImage = imageSlot.assignedNodes().length > 0;
-    });
+  private _handleImageSlotChange() {
+    if (!isSSR()) {
+      this._hasImageSlot = this._imageSlotNodes.length > 0;
+    }
   }
 
   public show() {
@@ -253,12 +260,15 @@ export class Modal extends LitElement {
         aria-describedby="description"
       >
         <div
-          ?hidden=${!this._hasImage}
+          ?hidden=${!this._hasImageSlot}
           aria-hidden="true"
           class="image"
           part="image"
         >
-          <slot name=${Slots.IMAGE}></slot>
+          <slot
+            @slotchange=${this._handleImageSlotChange}
+            name=${Slots.IMAGE}
+          ></slot>
         </div>
         <div
           class="body"
