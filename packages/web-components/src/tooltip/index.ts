@@ -1,4 +1,5 @@
 import { customElement } from "lit/decorators.js";
+import { type HideEvent, type ShowEvent } from "./events";
 import { Tooltip } from "./tooltip";
 import styles from "./tooltip.style";
 
@@ -25,6 +26,23 @@ export * from "./events";
 @customElement("tapsi-tooltip")
 export class TapsiTooltip extends Tooltip {
   public static override readonly styles = [styles];
+
+  declare addEventListener: <K extends keyof TapsiTooltipEventMap>(
+    type: K,
+    listener: (this: TapsiTooltip, ev: TapsiTooltipEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  declare removeEventListener: <K extends keyof TapsiTooltipEventMap>(
+    type: K,
+    listener: (this: TapsiTooltip, ev: TapsiTooltipEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiTooltipEventMap extends HTMLElementEventMap {
+  [HideEvent.type]: HideEvent;
+  [ShowEvent.type]: ShowEvent;
 }
 
 declare global {

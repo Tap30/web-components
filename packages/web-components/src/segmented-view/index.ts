@@ -1,5 +1,10 @@
 import { customElement } from "lit/decorators.js";
-import { Slots as ItemSlots, SegmentedViewItem } from "./item";
+import { type ActiveChangeEvent } from "./events";
+import {
+  type ActivateEvent,
+  Slots as ItemSlots,
+  SegmentedViewItem,
+} from "./item";
 import itemStyles from "./item/item.style";
 import { SegmentedView } from "./segmented-view";
 import segmentedViewStyles from "./segmented-view.style";
@@ -31,6 +36,28 @@ export { ItemSlots };
 @customElement("tapsi-segmented-view-item")
 export class TapsiSegmentedViewItem extends SegmentedViewItem {
   public static override readonly styles = [itemStyles];
+
+  declare addEventListener: <K extends keyof TapsiSegmentedViewItemEventMap>(
+    type: K,
+    listener: (
+      this: TapsiSegmentedViewItem,
+      ev: TapsiSegmentedViewItemEventMap[K],
+    ) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  declare removeEventListener: <K extends keyof TapsiSegmentedViewItemEventMap>(
+    type: K,
+    listener: (
+      this: TapsiSegmentedViewItem,
+      ev: TapsiSegmentedViewItemEventMap[K],
+    ) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiSegmentedViewItemEventMap extends HTMLElementEventMap {
+  [ActivateEvent.type]: ActivateEvent;
 }
 
 /**
@@ -54,6 +81,22 @@ export class TapsiSegmentedViewItem extends SegmentedViewItem {
 @customElement("tapsi-segmented-view")
 export class TapsiSegmentedView extends SegmentedView {
   public static override readonly styles = [segmentedViewStyles];
+
+  declare addEventListener: <K extends keyof TapsiSegmentedViewMap>(
+    type: K,
+    listener: (this: TapsiSegmentedView, ev: TapsiSegmentedViewMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  declare removeEventListener: <K extends keyof TapsiSegmentedViewMap>(
+    type: K,
+    listener: (this: TapsiSegmentedView, ev: TapsiSegmentedViewMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiSegmentedViewMap extends HTMLElementEventMap {
+  [ActiveChangeEvent.type]: ActiveChangeEvent;
 }
 
 declare global {

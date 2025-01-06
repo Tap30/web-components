@@ -1,7 +1,7 @@
 import { BaseEvent } from "../utils";
 
 export class HideEvent extends BaseEvent<null> {
-  public static type = "hide";
+  public static readonly type = "hide";
 
   constructor() {
     super(HideEvent.type, {
@@ -13,7 +13,7 @@ export class HideEvent extends BaseEvent<null> {
 }
 
 export class ShowEvent extends BaseEvent<null> {
-  public static type = "show";
+  public static readonly type = "show";
 
   constructor() {
     super(ShowEvent.type, {

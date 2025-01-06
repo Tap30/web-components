@@ -1,5 +1,5 @@
 import { customElement } from "lit/decorators.js";
-import { Snackbar } from "./snackbar";
+import { type HideEvent, type ShowEvent } from "./events";
 import styles from "./snackbar.style";
 
 export { Slots } from "./constants";
@@ -34,6 +34,23 @@ export * from "./events";
 @customElement("tapsi-snackbar")
 export class TapsiSnackbar extends Snackbar {
   public static override readonly styles = [styles];
+
+  declare addEventListener: <K extends keyof TapsiSnackbarEventMap>(
+    type: K,
+    listener: (this: TapsiSnackbar, ev: TapsiSnackbarEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  declare removeEventListener: <K extends keyof TapsiSnackbarEventMap>(
+    type: K,
+    listener: (this: TapsiSnackbar, ev: TapsiSnackbarEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiSnackbarEventMap extends HTMLElementEventMap {
+  [HideEvent.type]: HideEvent;
+  [ShowEvent.type]: ShowEvent;
 }
 
 declare global {
