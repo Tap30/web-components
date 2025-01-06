@@ -1,11 +1,11 @@
 import { BaseEvent } from "../utils";
 
 type EventDetails = {
-  selectedChips: string[];
+  values: string[];
 };
 
 export class SelectChangeEvent extends BaseEvent<EventDetails> {
-  public static type = "selectchange";
+  public static readonly type = "selectchange";
 
   constructor(details: EventDetails) {
     super(SelectChangeEvent.type, {

@@ -1,6 +1,7 @@
 import { customElement } from "lit/decorators.js";
 import { ChipGroup } from "./chip-group";
 import styles from "./chip-group.style";
+import { type SelectChangeEvent } from "./events";
 
 export { Slots } from "./constants";
 export * from "./events";
@@ -27,6 +28,22 @@ export * from "./events";
 @customElement("tapsi-chip-group")
 export class TapsiChipGroup extends ChipGroup {
   public static override readonly styles = [styles];
+
+  declare addEventListener: <K extends keyof TapsiChipGroupEventMap>(
+    type: K,
+    listener: (this: TapsiChipGroup, ev: TapsiChipGroupEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  declare removeEventListener: <K extends keyof TapsiChipGroupEventMap>(
+    type: K,
+    listener: (this: TapsiChipGroup, ev: TapsiChipGroupEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiChipGroupEventMap extends HTMLElementEventMap {
+  [SelectChangeEvent.type]: SelectChangeEvent;
 }
 
 declare global {

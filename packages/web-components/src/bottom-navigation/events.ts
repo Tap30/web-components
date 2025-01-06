@@ -1,11 +1,11 @@
 import { BaseEvent } from "../utils";
 
 type EventDetails = {
-  activeItem: string;
+  value: string;
 };
 
 export class ActiveChangeEvent extends BaseEvent<EventDetails> {
-  public static type = "activechange";
+  public static readonly type = "activechange";
 
   constructor(details: EventDetails) {
     super(ActiveChangeEvent.type, {

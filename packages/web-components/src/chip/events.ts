@@ -1,25 +1,27 @@
 import { BaseEvent } from "../utils";
 
 export class SelectEvent extends BaseEvent<null> {
-  public static type = "select";
+  public static readonly type = "select";
 
   constructor() {
     super(SelectEvent.type, {
       details: null,
       bubbles: true,
       composed: true,
+      cancelable: true,
     });
   }
 }
 
 export class DeselectEvent extends BaseEvent<null> {
-  public static type = "deselect";
+  public static readonly type = "deselect";
 
   constructor() {
     super(DeselectEvent.type, {
       details: null,
       bubbles: true,
       composed: true,
+      cancelable: true,
     });
   }
 }

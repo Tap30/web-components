@@ -3,10 +3,17 @@ import { property } from "lit/decorators.js";
 import { getRenderRootSlot, isSSR, logger } from "../utils";
 import { Slots } from "./constants";
 import { ActiveChangeEvent } from "./events";
-import { ActivateEvent, BottomNavigationItem, DeactivateEvent } from "./item";
+import { ActivateEvent, BottomNavigationItem } from "./item";
 
 export class BottomNavigation extends LitElement {
-  private _activeItem = "";
+  /**
+   * Defines a string value that can be used to set a label
+   * for assistive technologies.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   */
+  @property({ type: String })
+  public label = "";
 
   private get _items() {
     const itemsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
@@ -20,44 +27,11 @@ export class BottomNavigation extends LitElement {
     return items;
   }
 
-  private get _queryActiveItem() {
-    return this._items.find(item => item.active) ?? null;
-  }
-
-  /**
-   * The value of the currently activated item.
-   */
-  @property({ type: String, attribute: false })
-  public get activeItem() {
-    return this._activeItem;
-  }
-
-  public set activeItem(value: string) {
-    if (isSSR()) return;
-
-    this._items.forEach(item => {
-      if (value === item.value) item.active = true;
-      else item.active = false;
-    });
-
-    this._activeItem = value;
-  }
-
-  /**
-   * Defines a string value that can be used to set a label
-   * for assistive technologies.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
-   */
-  @property({ type: String })
-  public label = "";
-
   constructor() {
     super();
 
     if (!isSSR()) {
       this._handleItemActivation = this._handleItemActivation.bind(this);
-      this._handleItemDeactivation = this._handleItemDeactivation.bind(this);
     }
   }
 
@@ -68,11 +42,6 @@ export class BottomNavigation extends LitElement {
       ActivateEvent.type,
       this._handleItemActivation as EventListener,
     );
-
-    this.addEventListener(
-      DeactivateEvent.type,
-      this._handleItemDeactivation as EventListener,
-    );
   }
 
   public override disconnectedCallback(): void {
@@ -82,67 +51,20 @@ export class BottomNavigation extends LitElement {
       ActivateEvent.type,
       this._handleItemActivation as EventListener,
     );
-
-    this.removeEventListener(
-      DeactivateEvent.type,
-      this._handleItemDeactivation as EventListener,
-    );
-  }
-
-  private _activate(itemValue: string) {
-    const targetItem = this._items.find(item => {
-      return item.value === itemValue;
-    });
-
-    if (!targetItem || targetItem.active) return;
-
-    this._emitActiveChange(itemValue);
-  }
-
-  private _deactivate(itemValue: string) {
-    const targetItem = this._items.find(item => item.value === itemValue);
-
-    if (!targetItem || !targetItem.active) return;
-
-    const hasActiveItem = !!this._queryActiveItem;
-    const firstItem = this._items[0];
-
-    if (hasActiveItem || !firstItem) return;
-
-    this._emitActiveChange(firstItem.value);
-  }
-
-  private _emitActiveChange(activeValue: string) {
-    const prevActiveItem = this.activeItem;
-
-    this.activeItem = activeValue;
-
-    const eventAllowed = this.dispatchEvent(
-      new ActiveChangeEvent({ activeItem: activeValue }),
-    );
-
-    if (!eventAllowed) this.activeItem = prevActiveItem;
-  }
-
-  private _handleItemDeactivation(event: DeactivateEvent) {
-    const { itemValue } = event.details;
-
-    this._deactivate(itemValue);
   }
 
   private _handleItemActivation(event: ActivateEvent) {
-    const { itemValue } = event.details;
+    const item = event.target as BottomNavigationItem;
+    const value = item.value;
 
-    this._activate(itemValue);
-  }
+    const eventAllowed = this.dispatchEvent(new ActiveChangeEvent({ value }));
 
-  private _handleItemsSlotChange() {
-    const hasActiveItem = !!this._queryActiveItem;
-    const firstItem = this._items[0];
-
-    if (hasActiveItem || !firstItem) return;
-
-    this._emitActiveChange(firstItem.value);
+    if (!eventAllowed) event.preventDefault();
+    else {
+      this._items.forEach(item => {
+        if (item.value !== value) item.active = false;
+      });
+    }
   }
 
   protected override render() {
@@ -161,7 +83,7 @@ export class BottomNavigation extends LitElement {
         part="root"
         aria-label=${this.label || nothing}
       >
-        <slot @slotchange=${this._handleItemsSlotChange}></slot>
+        <slot></slot>
       </nav>
     `;
   }

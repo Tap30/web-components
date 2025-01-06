@@ -1,6 +1,15 @@
 import { customElement } from "lit/decorators.js";
 import { BottomSheet } from "./bottom-sheet";
 import styles from "./bottom-sheet.style";
+import {
+  type ClosedEvent,
+  type ClosingEvent,
+  type HideEvent,
+  type OpenedEvent,
+  type OpeningEvent,
+  type ShowEvent,
+  type SnappedEvent,
+} from "./events";
 
 export { Slots } from "./constants";
 export * from "./events";
@@ -84,6 +93,28 @@ export * from "./events";
 @customElement("tapsi-bottom-sheet")
 export class TapsiBottomSheet extends BottomSheet {
   public static override readonly styles = [styles];
+
+  declare addEventListener: <K extends keyof TapsiBottomSheetEventMap>(
+    type: K,
+    listener: (this: TapsiBottomSheet, ev: TapsiBottomSheetEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  declare removeEventListener: <K extends keyof TapsiBottomSheetEventMap>(
+    type: K,
+    listener: (this: TapsiBottomSheet, ev: TapsiBottomSheetEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiBottomSheetEventMap extends HTMLElementEventMap {
+  [SnappedEvent.type]: SnappedEvent;
+  [OpenedEvent.type]: OpenedEvent;
+  [ClosedEvent.type]: ClosedEvent;
+  [OpeningEvent.type]: OpeningEvent;
+  [ClosingEvent.type]: ClosingEvent;
+  [HideEvent.type]: HideEvent;
+  [ShowEvent.type]: ShowEvent;
 }
 
 declare global {

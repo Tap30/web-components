@@ -1,9 +1,10 @@
 import { html, LitElement, type PropertyValues } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { isSSR, SystemError } from "../../utils";
-import Controller from "./Controller";
+import { KeyboardKeys } from "../../internals";
+import { isSSR, SystemError, waitAMicrotask } from "../../utils";
 import { Slots } from "./constants";
+import { ActivateEvent } from "./events";
 
 export class BottomNavigationItem extends LitElement {
   /**
@@ -24,8 +25,6 @@ export class BottomNavigationItem extends LitElement {
 
   @queryAssignedNodes({ slot: Slots.ICON })
   private _iconSlotNodes!: Node[];
-
-  private readonly _controller = new Controller(this);
 
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
@@ -58,6 +57,33 @@ export class BottomNavigationItem extends LitElement {
     this.renderRoot?.querySelector<HTMLElement>("#root")?.blur();
   }
 
+  private async _handleClick(event: MouseEvent) {
+    if (this.active) return;
+
+    // allow event to propagate to user code after a microtask.
+    await waitAMicrotask();
+
+    if (event.defaultPrevented) return;
+
+    const eventAllowed = this.dispatchEvent(new ActivateEvent());
+
+    if (!eventAllowed) return;
+
+    this.active = true;
+  }
+
+  private async _handleKeyDown(event: KeyboardEvent) {
+    // allow event to propagate to user code after a microtask.
+    await waitAMicrotask();
+
+    if (event.defaultPrevented) return;
+
+    if (event.key !== KeyboardKeys.ENTER) return;
+    if (!event.currentTarget) return;
+
+    (event.currentTarget as HTMLElement).click();
+  }
+
   protected override render() {
     const rootClasses = classMap({
       root: true,
@@ -71,8 +97,8 @@ export class BottomNavigationItem extends LitElement {
         class=${rootClasses}
         aria-selected=${this.active ? "true" : "false"}
         data-value=${this.value}
-        @click=${this._controller.handleClick}
-        @keydown=${this._controller.handleKeyDown}
+        @click=${this._handleClick}
+        @keydown=${this._handleKeyDown}
       >
         <div
           aria-hidden
