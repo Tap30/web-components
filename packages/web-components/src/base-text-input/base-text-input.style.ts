@@ -27,7 +27,6 @@ export default css`
 
   :host {
     --input-control-bg-color: var(--tapsi-color-surface-tertiary);
-    --input-control-border-color: transparent;
     --input-support-color: var(--tapsi-color-content-tertiary);
     --input-label-color: var(--tapsi-color-content-primary);
     --input-color: var(--tapsi-color-content-primary);
@@ -49,6 +48,9 @@ export default css`
     --input-padding-horizontal: var(--tapsi-spacing-6);
 
     --input-control-height: 3.25rem;
+
+    --input-control-border-color: transparent;
+    --input-control-border-radius: var(--tapsi-radius-3);
 
     display: inline-block;
     vertical-align: middle;
@@ -105,6 +107,14 @@ export default css`
     --input-control-border-color: var(--tapsi-color-border-negative);
   }
 
+  .root.md .control.rounded {
+    --input-control-border-radius: var(--tapsi-spacing-8);
+  }
+
+  .root.sm .control.rounded {
+    --input-control-border-radius: var(--tapsi-spacing-7);
+  }
+
   .control.error + .supporting-text {
     --input-support-color: var(--tapsi-color-content-negative);
   }
@@ -126,7 +136,7 @@ export default css`
     padding-right: var(--input-padding-horizontal);
     padding-left: var(--input-padding-horizontal);
     gap: var(--tapsi-spacing-4);
-    border-radius: var(--tapsi-radius-3);
+    border-radius: var(--input-control-border-radius);
 
     background-color: var(--input-control-bg-color);
     border: var(--tapsi-stroke-2) solid var(--input-control-border-color);

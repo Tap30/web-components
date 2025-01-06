@@ -105,6 +105,12 @@ export abstract class BaseTextInput extends BaseInput {
   public hideLabel = false;
 
   /**
+   * Whether the input is rounded or not.
+   */
+  @property({ type: Boolean })
+  public rounded = false;
+
+  /**
    * The size of the input.
    */
   @property()
@@ -327,6 +333,7 @@ export abstract class BaseTextInput extends BaseInput {
       control: true,
       error: this.hasError(),
       readonly: this.readOnly,
+      rounded: this.rounded,
     });
 
     return html`

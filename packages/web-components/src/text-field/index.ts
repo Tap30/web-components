@@ -72,6 +72,7 @@ export { BaseTextInputSlots as Slots };
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
  * @prop {"sm" | "md"} [size="md"] - The size of the input.
  * @prop {boolean} [hide-label=false] - Whether to hide the label or not.
+ * @prop {boolean} [rounded=false] - Whether the input is rounded or not.
  * @prop {string} [type="text"] -
  * The `<input>` type to use, defaults to "text". The type greatly changes how
  * the text field behaves.
