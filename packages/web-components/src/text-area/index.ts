@@ -73,6 +73,7 @@ export { BaseTextInputSlots as Slots };
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
  * @prop {"sm" | "md"} [size="md"] - The size of the input.
  * @prop {boolean} [hide-label=false] - Whether to hide the label or not.
+ * @prop {boolean} [rounded=false] - Whether the input is rounded or not.
  * @prop {number} [rows=2] -
  * The number of rows to display for the text input.
  * Defaults to 2.
