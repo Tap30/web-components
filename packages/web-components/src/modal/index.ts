@@ -1,5 +1,5 @@
 import { customElement } from "lit/decorators.js";
-import type { SelectChangeEvent } from "../chip-group";
+import type { HideEvent, ShowEvent } from "./events";
 import { Modal } from "./modal";
 import styles from "./modal.style";
 
@@ -40,7 +40,8 @@ export class TapsiModal extends Modal {
 }
 
 interface TapsiModalEventMap extends HTMLElementEventMap {
-  [SelectChangeEvent.type]: SelectChangeEvent;
+  [HideEvent.type]: HideEvent;
+  [ShowEvent.type]: ShowEvent;
 }
 
 declare global {

@@ -12,6 +12,7 @@ import itemStyles from "./item/item.style";
 
 export { Slots } from "./constants";
 export * from "./events";
+export * from "./item/events";
 export { ItemSlots };
 
 /**

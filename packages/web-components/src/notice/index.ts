@@ -3,6 +3,9 @@ import { type HideEvent, type ShowEvent } from "./events";
 import { Notice } from "./notice";
 import styles from "./notice.style";
 
+export { Slots } from "./constants";
+export * from "./events";
+
 /**
  * @summary The notice components.
  *
