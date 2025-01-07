@@ -17,6 +17,7 @@ import {
   withElementInternals,
   withFormAssociated,
 } from "../utils";
+import { DEFAULT_MAX, DEFAULT_MIN } from "./constants";
 import { minus, plus } from "./icons";
 
 const BaseClass = withFormAssociated(withElementInternals(LitElement));
@@ -46,16 +47,22 @@ export class Stepper extends BaseClass {
    */
   @property()
   public get value() {
-    return this._value || this.min || "0";
+    return this._value || this.min || `${DEFAULT_MIN}`;
   }
 
   public set value(newValue: string) {
     if (this._value === newValue) return;
 
-    const min = Number(this.min) || 0;
-    const max = Number(this.max) || 100;
+    if (newValue === "" || Number.isNaN(Number(newValue))) {
+      this._value = "";
 
-    this._value = String(clamp(Number(newValue) || min, min, max));
+      return;
+    }
+
+    const min = Number(this.min) || DEFAULT_MIN;
+    const max = Number(this.max) || DEFAULT_MAX;
+
+    this._value = String(clamp(Number(newValue), min, max));
   }
 
   /**
@@ -98,7 +105,7 @@ export class Stepper extends BaseClass {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
    */
   @property({ type: String })
-  public max = "100";
+  public max = `${DEFAULT_MAX}`;
 
   /**
    * Defines the minimum value in the range of permitted values.
@@ -107,7 +114,7 @@ export class Stepper extends BaseClass {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
    */
   @property({ type: String })
-  public min = "0";
+  public min = `${DEFAULT_MIN}`;
 
   /**
    * Returns or sets the element's step attribute, which works with min and max
@@ -292,19 +299,9 @@ export class Stepper extends BaseClass {
   private _emitValueChange(newValue: number) {
     if (this.disabled || this.readOnly) return;
 
-    const prevValue = this.value;
-
     this.valueAsNumber = newValue;
 
-    const eventAllowed = this.dispatchEvent(
-      new Event("change", {
-        bubbles: true,
-        cancelable: true,
-      }),
-    );
-
-    // Revert the chagne since the event is prevented.
-    if (!eventAllowed) this.value = prevValue;
+    this.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   private _renderUnit() {
