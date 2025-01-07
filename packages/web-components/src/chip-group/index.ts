@@ -13,7 +13,7 @@ export * from "./events";
  *
  * @slot - The default slot for chips.
  *
- * @fires {SelectChangeEvent} selectchange - Fired when the chip selection state changes. (cancelable, bubbles).
+ * @fires {SelectChangeEvent} selectchange - Fired when the chip selection state changes. (bubbles).
  *
  * @prop {'single' | 'multiple'} [select-mode='single'] - The select mode of the chip group.
  * @prop {'horizontal' | 'vertical'} [orientation='horizontal'] - The orientation of the chip group.

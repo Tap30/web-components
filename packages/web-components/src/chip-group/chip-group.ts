@@ -35,16 +35,20 @@ export class ChipGroup extends LitElement {
   @property({ type: Boolean, attribute: "full-width" })
   public fullWidth = false;
 
-  private get _selectedChips() {
+  private get _chips() {
     const chipsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
 
     if (!chipsSlot) return [];
 
     const chips = chipsSlot
       .assignedNodes()
-      .filter(node => node instanceof Chip && node.selected) as Chip[];
+      .filter(node => node instanceof Chip);
 
     return chips;
+  }
+
+  private get _selectedChips() {
+    return this._chips.filter(node => node.selected);
   }
 
   constructor() {
@@ -92,11 +96,7 @@ export class ChipGroup extends LitElement {
       .map(chip => chip.value)
       .filter(v => v !== value);
 
-    const eventAllowed = this.dispatchEvent(
-      new SelectChangeEvent({ values: selectedValues }),
-    );
-
-    if (!eventAllowed) event.preventDefault();
+    this.dispatchEvent(new SelectChangeEvent({ values: selectedValues }));
   }
 
   private _handleChipSelection(event: SelectEvent) {
@@ -107,11 +107,7 @@ export class ChipGroup extends LitElement {
       .map(chip => chip.value)
       .concat(value);
 
-    const eventAllowed = this.dispatchEvent(
-      new SelectChangeEvent({ values: selectedValues }),
-    );
-
-    if (!eventAllowed) event.preventDefault();
+    this.dispatchEvent(new SelectChangeEvent({ values: selectedValues }));
   }
 
   protected override render() {

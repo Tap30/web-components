@@ -15,8 +15,8 @@ export * from "./events";
  * @slot [leading-icon] - The slot for an optional leading icon.
  * @slot [trailing-icon] - The slot for an optional trailing icon.
  *
- * @fires {SelectEvent} select - Fired when the chip is selected (cancelable, bubbles).
- * @fires {DeselectEvent} deselect - Fired when the chip is deselected (cancelable, bubbles).
+ * @fires {SelectEvent} select - Fired when the chip is selected (bubbles).
+ * @fires {DeselectEvent} deselect - Fired when the chip is deselected (bubbles).
  *
  * @prop {boolean} [disabled=false] - Whether the chip is disabled or not.
  * @prop {boolean} [selected=false] - Whether the chip is selected or not.
