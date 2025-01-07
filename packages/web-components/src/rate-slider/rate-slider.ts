@@ -141,15 +141,11 @@ export class RateSlider extends BaseClass {
   private get _selectedStopIdx() {
     if (!this.value) return -1;
 
-    const stops = Array.from(
-      this.renderRoot.querySelectorAll<HTMLElement>(".stop"),
-    );
+    const stops = Array.from(this._stopsIterator);
 
     if (stops.length === 0) return -1;
 
-    return stops.findIndex(
-      stop => stop.getAttribute("data-stop") === this.value,
-    );
+    return stops.findIndex(stop => stop === this.valueAsNumber);
   }
 
   /**
@@ -212,6 +208,13 @@ export class RateSlider extends BaseClass {
 
   public override formStateRestoreCallback(state: string) {
     this.value = state;
+  }
+
+  private get _stopsIterator() {
+    const min = Number(this.min) || 0;
+    const max = Number(this.max) || 10;
+
+    return range(min, max + 1);
   }
 
   private _handleIncrease() {
@@ -448,10 +451,7 @@ export class RateSlider extends BaseClass {
   }
 
   private _renderStops() {
-    const min = Number(this.min) || 0;
-    const max = Number(this.max) || 10;
-
-    const stops = map(range(min, max + 1), this._renderStop.bind(this));
+    const stops = map(this._stopsIterator, this._renderStop.bind(this));
 
     return html`
       <div
