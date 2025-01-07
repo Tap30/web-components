@@ -52,7 +52,10 @@ export class Stepper extends BaseClass {
   public set value(newValue: string) {
     if (this._value === newValue) return;
 
-    this._value = newValue;
+    const min = Number(this.min) || 0;
+    const max = Number(this.max) || 100;
+
+    this._value = String(clamp(Number(newValue) || min, min, max));
   }
 
   /**
@@ -170,8 +173,6 @@ export class Stepper extends BaseClass {
   }
 
   public set valueAsNumber(value: number) {
-    if (this.disabled || this.readOnly) return;
-
     const newValue = clamp(value, Number(this.min), Number(this.max));
 
     this.value = String(newValue);
