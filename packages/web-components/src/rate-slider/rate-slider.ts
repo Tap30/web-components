@@ -356,19 +356,9 @@ export class RateSlider extends BaseClass {
     if (this.disabled) return;
     if (newValue === Number(this.value || "-1")) return;
 
-    const prevValue = this.value;
-
     this.valueAsNumber = newValue;
 
-    const eventAllowed = this.dispatchEvent(
-      new Event("change", {
-        bubbles: true,
-        cancelable: true,
-      }),
-    );
-
-    // Revert the change since the event is prevented.
-    if (!eventAllowed) this.value = prevValue;
+    this.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   private _renderGradient() {
