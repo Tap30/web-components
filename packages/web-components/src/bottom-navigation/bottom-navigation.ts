@@ -57,14 +57,11 @@ export class BottomNavigation extends LitElement {
     const item = event.target as BottomNavigationItem;
     const value = item.value;
 
-    const eventAllowed = this.dispatchEvent(new ActiveChangeEvent({ value }));
+    this._items.forEach(item => {
+      if (item.value !== value) item.active = false;
+    });
 
-    if (!eventAllowed) event.preventDefault();
-    else {
-      this._items.forEach(item => {
-        if (item.value !== value) item.active = false;
-      });
-    }
+    this.dispatchEvent(new ActiveChangeEvent({ value }));
   }
 
   protected override render() {

@@ -8,7 +8,6 @@ export class ActivateEvent extends BaseEvent<null> {
       details: null,
       bubbles: true,
       composed: true,
-      cancelable: true,
     });
   }
 }

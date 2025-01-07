@@ -65,11 +65,9 @@ export class BottomNavigationItem extends LitElement {
 
     if (event.defaultPrevented) return;
 
-    const eventAllowed = this.dispatchEvent(new ActivateEvent());
-
-    if (!eventAllowed) return;
-
     this.active = true;
+
+    this.dispatchEvent(new ActivateEvent());
   }
 
   private async _handleKeyDown(event: KeyboardEvent) {
