@@ -103,11 +103,13 @@ export class ChipGroup extends LitElement {
     const chip = event.target as Chip;
     const value = chip.value;
 
-    const selectedValues = this._selectedChips
-      .map(chip => chip.value)
-      .concat(value);
+    const selectedValues = this._selectedChips.map(chip => chip.value);
 
-    this.dispatchEvent(new SelectChangeEvent({ values: selectedValues }));
+    const values = selectedValues.includes(value)
+      ? selectedValues
+      : selectedValues.concat(value);
+
+    this.dispatchEvent(new SelectChangeEvent({ values }));
   }
 
   protected override render() {
