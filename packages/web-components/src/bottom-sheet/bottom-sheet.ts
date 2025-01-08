@@ -13,7 +13,7 @@ import {
   type PropertyValues,
   type TemplateResult,
 } from "lit";
-import { property, query, state } from "lit/decorators.js";
+import { property, query, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap } from "lit/directives/style-map.js";
 import { KeyboardKeys } from "../internals";
@@ -21,7 +21,6 @@ import {
   AnimationController,
   clamp,
   FocusTrapper,
-  getRenderRootSlot,
   isActiveElement,
   isSSR,
   logger,
@@ -155,6 +154,15 @@ export class BottomSheet extends LitElement {
   @query("#container")
   private _container!: HTMLElement | null;
 
+  @queryAssignedNodes({ slot: Slots.HEADER })
+  private _headerSlotNodes!: Node[];
+
+  @queryAssignedNodes({ slot: Slots.BODY })
+  private _bodySlotNodes!: Node[];
+
+  @queryAssignedNodes({ slot: Slots.ACTION_BAR })
+  private _actionBarSlotNodes!: Node[];
+
   private _open = false;
   private _snapPoints: null | number[] = null;
 
@@ -210,19 +218,26 @@ export class BottomSheet extends LitElement {
   protected override willUpdate(changed: PropertyValues<this>): void {
     super.willUpdate(changed);
 
+    this._handleHeaderSlotChange();
+    this._handleBodySlotChange();
+    this._handleActionBarSlotChange();
+  }
+
+  private _handleHeaderSlotChange() {
     if (!isSSR()) {
-      const actionBarSlot = getRenderRootSlot(
-        this.renderRoot,
-        Slots.ACTION_BAR,
-      );
+      this._hasHeaderSlot = this._headerSlotNodes.length > 0;
+    }
+  }
 
-      const bodySlot = getRenderRootSlot(this.renderRoot, Slots.BODY);
-      const headerSlot = getRenderRootSlot(this.renderRoot, Slots.HEADER);
+  private _handleBodySlotChange() {
+    if (!isSSR()) {
+      this._hasBodySlot = this._bodySlotNodes.length > 0;
+    }
+  }
 
-      this._hasActionBarSlot =
-        (actionBarSlot?.assignedNodes() ?? []).length > 0;
-      this._hasBodySlot = (bodySlot?.assignedNodes() ?? []).length > 0;
-      this._hasHeaderSlot = (headerSlot?.assignedNodes() ?? []).length > 0;
+  private _handleActionBarSlotChange() {
+    if (!isSSR()) {
+      this._hasActionBarSlot = this._actionBarSlotNodes.length > 0;
     }
   }
 
@@ -972,7 +987,10 @@ export class BottomSheet extends LitElement {
           class="header"
         >
           ${this._renderHeading()}
-          <slot name=${Slots.HEADER}></slot>
+          <slot
+            @slotchange=${this._handleHeaderSlotChange}
+            name=${Slots.HEADER}
+          ></slot>
           ${this._renderDismissButton()}
         </div>
         <div
@@ -981,7 +999,10 @@ export class BottomSheet extends LitElement {
           class=${Slots.BODY}
           ?hidden=${!this._hasBodySlot}
         >
-          <slot name=${Slots.BODY}></slot>
+          <slot
+            @slotchange=${this._handleBodySlotChange}
+            name=${Slots.BODY}
+          ></slot>
         </div>
         <div
           id="action-bar"
@@ -989,7 +1010,10 @@ export class BottomSheet extends LitElement {
           class=${Slots.ACTION_BAR}
           ?hidden=${!this._hasActionBarSlot}
         >
-          <slot name=${Slots.ACTION_BAR}></slot>
+          <slot
+            @slotchange=${this._handleActionBarSlotChange}
+            name=${Slots.ACTION_BAR}
+          ></slot>
         </div>
       </div>
     `;
