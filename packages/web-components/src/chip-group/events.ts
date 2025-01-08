@@ -12,7 +12,6 @@ export class SelectChangeEvent extends BaseEvent<EventDetails> {
       details,
       composed: true,
       bubbles: true,
-      cancelable: true,
     });
   }
 }

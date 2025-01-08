@@ -63,7 +63,7 @@ interface TapsiBottomNavigationItemEventMap extends HTMLElementEventMap {
  *
  * @slot - The default slot for navigation items.
  *
- * @fires {ActiveChangeEvent} activechange - Fired when the items activation state changes (cancelable, bubbles).
+ * @fires {ActiveChangeEvent} activechange - Fired when the items activation state changes (bubbles).
  *
  * @prop {string} [label] -
  * Defines a string value that can be used to set a label

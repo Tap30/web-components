@@ -1,12 +1,12 @@
-import { html, LitElement, nothing } from "lit";
+import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
+import { SynchronizeRequestEvent } from "../pinwheel/events";
 import { Pinwheel } from "../pinwheel/pinwheel";
 import {
   areEqualArrays,
   getRenderRootSlot,
   isSSR,
   logger,
-  runAfterRepaint,
   waitAMicrotask,
 } from "../utils";
 import { Slots } from "./constants";
@@ -23,10 +23,13 @@ export class PinwheelGroup extends LitElement {
   @property({ type: String })
   public label = "";
 
+  private _initiallySynced = false;
+
   constructor() {
     super();
 
     this._handlePinwheelChange = this._handlePinwheelChange.bind(this);
+    this._synchronize = this._synchronize.bind(this);
   }
 
   public override connectedCallback() {
@@ -34,6 +37,7 @@ export class PinwheelGroup extends LitElement {
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.addEventListener("change", this._handlePinwheelChange);
+    this.addEventListener(SynchronizeRequestEvent.type, this._synchronize);
   }
 
   public override disconnectedCallback() {
@@ -41,6 +45,28 @@ export class PinwheelGroup extends LitElement {
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.removeEventListener("change", this._handlePinwheelChange);
+    this.removeEventListener(SynchronizeRequestEvent.type, this._synchronize);
+  }
+
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
+
+    if (this._initiallySynced) return;
+
+    const sync = () => {
+      this._synchronize();
+
+      this._initiallySynced = true;
+    };
+
+    if (!this.hasUpdated) void this.updateComplete.then(sync);
+    else sync();
+  }
+
+  private _synchronize() {
+    const values = this._pinwheels.map(wheel => wheel.value);
+
+    this.value = values;
   }
 
   /**
@@ -53,15 +79,16 @@ export class PinwheelGroup extends LitElement {
   }
 
   public set value(newValue: string[]) {
-    if (isSSR()) return;
     if (areEqualArrays(newValue, this._value)) return;
 
     this._value = newValue;
 
+    if (isSSR()) return;
+
     this._setPinwheelValues(newValue);
   }
 
-  private get _items() {
+  private get _pinwheels() {
     const wheelsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
 
     if (!wheelsSlot) return [];
@@ -74,17 +101,14 @@ export class PinwheelGroup extends LitElement {
   }
 
   private _setPinwheelValues(newValue: string[]) {
-    const items = this._items;
+    const pinwheels = this._pinwheels;
 
     newValue.forEach((v, idx) => {
-      const pinwheel = items[idx];
+      const pinwheel = pinwheels[idx];
 
       if (!pinwheel) return;
 
-      runAfterRepaint(() => {
-        pinwheel.value = v;
-        pinwheel.lockOnItem(v);
-      });
+      pinwheel.value = v;
     });
   }
 
@@ -94,15 +118,9 @@ export class PinwheelGroup extends LitElement {
 
     if (event.defaultPrevented) return;
 
-    const pinwheelValues = this._items.map(item => item.value);
+    const pinwheelValues = this._pinwheels.map(item => item.value);
 
     this._value = pinwheelValues;
-  }
-
-  private _handleSlotChange() {
-    const newValue = this._items.map(pinwheel => pinwheel.value);
-
-    this._value = newValue;
   }
 
   protected override render() {
@@ -122,7 +140,7 @@ export class PinwheelGroup extends LitElement {
         role="group"
         aria-label=${this.label || nothing}
       >
-        <slot @slotchange=${this._handleSlotChange}></slot>
+        <slot></slot>
       </div>
     `;
   }

@@ -3,7 +3,7 @@ import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { KeyboardKeys } from "../internals";
-import { isSSR } from "../utils";
+import { isSSR, waitAMicrotask } from "../utils";
 import { Slots } from "./constants";
 import { DeselectEvent, SelectEvent } from "./events";
 
@@ -79,25 +79,34 @@ export class Chip extends LitElement {
     this.renderRoot.querySelector<HTMLElement>("#root")?.blur();
   }
 
-  private _handleClick() {
+  private async _handleClick(event: MouseEvent) {
     if (this.disabled) return;
 
-    let event: SelectEvent | DeselectEvent;
+    // allow event to propagate to user code after a microtask.
+    await waitAMicrotask();
+
+    if (event.defaultPrevented) return;
+
+    let targetEvent: SelectEvent | DeselectEvent;
 
     const prevSelectedState = this.selected;
 
-    if (prevSelectedState) event = new DeselectEvent();
-    else event = new SelectEvent();
-
-    const eventAllowed = this.dispatchEvent(event);
-
-    if (!eventAllowed) return;
+    if (prevSelectedState) targetEvent = new DeselectEvent();
+    else targetEvent = new SelectEvent();
 
     this.selected = !prevSelectedState;
+
+    this.dispatchEvent(targetEvent);
   }
 
-  private _handleKeyDown(event: KeyboardEvent) {
+  private async _handleKeyDown(event: KeyboardEvent) {
     if (this.disabled) return;
+
+    // allow event to propagate to user code after a microtask.
+    await waitAMicrotask();
+
+    if (event.defaultPrevented) return;
+
     if (event.key !== KeyboardKeys.ENTER) return;
     if (!event.currentTarget) return;
 

@@ -19,6 +19,7 @@ import {
   withElementInternals,
   withFormAssociated,
 } from "../utils";
+import { DEFAULT_MAX, DEFAULT_MIN } from "./constants";
 
 const BaseClass = withFormAssociated(withElementInternals(LitElement));
 
@@ -28,11 +29,30 @@ export class RateSlider extends BaseClass {
     delegatesFocus: true,
   };
 
+  private _value = "";
+
   /**
    * The current value of the input. It is always a string.
    */
   @property()
-  public value = "";
+  public get value() {
+    return this._value;
+  }
+
+  public set value(newValue: string) {
+    if (this._value === newValue) return;
+
+    if (newValue === "" || Number.isNaN(Number(newValue))) {
+      this._value = "";
+
+      return;
+    }
+
+    const min = Number(this.min) || DEFAULT_MIN;
+    const max = Number(this.max) || DEFAULT_MAX;
+
+    this._value = String(clamp(Number(newValue), min, max));
+  }
 
   /**
    * Defines the human-readable text alternative of value.
@@ -65,7 +85,7 @@ export class RateSlider extends BaseClass {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
    */
   @property({ type: String })
-  public max = "10";
+  public max = `${DEFAULT_MAX}`;
 
   /**
    * Defines the minimum value in the range of permitted values.
@@ -74,7 +94,7 @@ export class RateSlider extends BaseClass {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
    */
   @property({ type: String })
-  public min = "0";
+  public min = `${DEFAULT_MIN}`;
 
   @query("#root")
   private _root!: HTMLElement | null;
@@ -211,8 +231,8 @@ export class RateSlider extends BaseClass {
   }
 
   private get _stopsIterator() {
-    const min = Number(this.min) || 0;
-    const max = Number(this.max) || 10;
+    const min = Number(this.min) || DEFAULT_MIN;
+    const max = Number(this.max) || DEFAULT_MAX;
 
     return range(min, max + 1);
   }
@@ -356,25 +376,15 @@ export class RateSlider extends BaseClass {
     if (this.disabled) return;
     if (newValue === Number(this.value || "-1")) return;
 
-    const prevValue = this.value;
-
     this.valueAsNumber = newValue;
 
-    const eventAllowed = this.dispatchEvent(
-      new Event("change", {
-        bubbles: true,
-        cancelable: true,
-      }),
-    );
-
-    // Revert the change since the event is prevented.
-    if (!eventAllowed) this.value = prevValue;
+    this.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   private _renderGradient() {
     const value = this.valueAsNumber;
-    const min = Number(this.min) || 0;
-    const max = Number(this.max) || 10;
+    const min = Number(this.min) || DEFAULT_MIN;
+    const max = Number(this.max) || DEFAULT_MAX;
 
     const classes: Record<string, boolean> = {
       gradient: true,
