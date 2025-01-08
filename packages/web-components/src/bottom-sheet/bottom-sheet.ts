@@ -21,7 +21,6 @@ import {
   AnimationController,
   clamp,
   FocusTrapper,
-  isActiveElement,
   isSSR,
   logger,
   redispatchEvent,
@@ -115,6 +114,12 @@ export class BottomSheet extends LitElement {
   @property({ type: String })
   public labelledBy = "";
 
+  /**
+   * Identifies the element that should get focused when bottom sheet opens.
+   */
+  @property({ type: String, attribute: "focus-target" })
+  public focusTarget = "";
+
   @state()
   private _status: StatusEnum = Status.CLOSED;
 
@@ -180,6 +185,8 @@ export class BottomSheet extends LitElement {
   );
 
   private _dragGesture: DragGesture | null = null;
+
+  private _init = false;
 
   constructor() {
     super();
@@ -443,12 +450,9 @@ export class BottomSheet extends LitElement {
       void this._toggleOpenState(openState);
     };
 
-    if (initialOpenState) {
+    if (initialOpenState && !this._init) {
+      this._init = true;
       void this.updateComplete.then(() => {
-        const prevOpen = this._open;
-
-        this.requestUpdate("open", prevOpen);
-
         runAfterRepaint(toggle);
       });
     } else toggle();
@@ -465,7 +469,7 @@ export class BottomSheet extends LitElement {
     // If not the active element (doesn't have focus), bail!
     // This is necessary to avoid weirdness in stacked modals
     // (BottomSheets, Modals, etc.).
-    if (!isActiveElement(this)) return;
+    if (!this._focusTrapper.isTopMostInstance(this)) return;
 
     // allow event to propagate to user code after a microtask.
     await waitAMicrotask();
@@ -1037,6 +1041,7 @@ export class BottomSheet extends LitElement {
     const containerTemplate = this._renderContainer();
 
     this._focusTrapper.enabled = this.variant === "modal" && this.open;
+    this._focusTrapper.sendFocusTarget = this.focusTarget;
 
     const container: TemplateResult =
       this.variant === "modal"
