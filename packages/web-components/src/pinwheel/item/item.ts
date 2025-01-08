@@ -1,13 +1,14 @@
-import { html, LitElement } from "lit";
+import { html, LitElement, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { SystemError } from "../../utils";
+import { SynchronizeRequestEvent } from "../events";
 
 export class PinwheelItem extends LitElement {
   /**
    * Indicates whether the item is selected or not.
    */
-  @property({ type: Boolean })
+  @property({ type: Boolean, reflect: true })
   public selected = false;
 
   /**
@@ -16,6 +17,14 @@ export class PinwheelItem extends LitElement {
    */
   @property()
   public value = "";
+
+  protected override updated(changed: PropertyValues<this>) {
+    super.updated(changed);
+
+    if (changed.has("selected") && this.hasUpdated) {
+      this.dispatchEvent(new SynchronizeRequestEvent());
+    }
+  }
 
   protected override render() {
     if (!this.value) {
