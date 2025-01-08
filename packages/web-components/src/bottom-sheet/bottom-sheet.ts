@@ -251,6 +251,7 @@ export class BottomSheet extends LitElement {
     super.disconnectedCallback();
 
     if (!this.open) this._detachEvents();
+    this._scrollLocker.clearLocks();
   }
 
   private _lockScroll() {
@@ -443,11 +444,12 @@ export class BottomSheet extends LitElement {
     };
 
     if (initialOpenState) {
-      runAfterRepaint(() => {
+      void this.updateComplete.then(() => {
         const prevOpen = this._open;
 
-        toggle();
         this.requestUpdate("open", prevOpen);
+
+        runAfterRepaint(toggle);
       });
     } else toggle();
   }
