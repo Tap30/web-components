@@ -82,13 +82,11 @@ class SegmentedViewItemController implements ReactiveController {
 
     if (event.defaultPrevented) return;
 
-    const eventAllowed = this._host.dispatchEvent(
+    this._host.dispatchEvent(
       new ActivateEvent({
         itemValue: this._host.value,
       }),
     );
-
-    if (!eventAllowed) return;
 
     this._host.focus();
     this._host.active = true;
@@ -190,13 +188,11 @@ class SegmentedViewItemController implements ReactiveController {
         continue;
       }
 
-      const eventAllowed = this._host.dispatchEvent(
+      this._host.dispatchEvent(
         new ActivateEvent({
           itemValue: nextSibling.value,
         }),
       );
-
-      if (!eventAllowed) break;
 
       // deactive and remove focusability from other siblings.
       siblings.forEach(sibling => {

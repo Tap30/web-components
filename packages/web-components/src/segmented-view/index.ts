@@ -20,7 +20,7 @@ export { ItemSlots };
  *
  * @slot - The default slot for the content/label.
  *
- * @fires {ActivateEvent} activate - Fired when the item activates (cancelable, bubbles).
+ * @fires {ActivateEvent} activate - Fired when the item activates (bubbles).
  *
  * @prop {boolean} [active=false] - Indicates whether the item is active or not.
  * @prop {string} [value=""] - The value associated with the item. This value has to be unique among sibling items.
@@ -67,16 +67,11 @@ interface TapsiSegmentedViewItemEventMap extends HTMLElementEventMap {
  *
  * @slot - The default slot for segmented view items.
  *
- * * @fires {ActiveChangeEvent} activechange - Fired when the items activation state changes (cancelable, bubbles).
+ * @fires {ActiveChangeEvent} activechange - Fired when the items activation state changes (bubbles).
  *
  * @prop {string} [label=""] -
  * Defines a string value that can be used to set a label
  * for assistive technologies.
- *
- * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
- *
- * @member {string} activeItem
- * @description - The value of the currently activated item.
  */
 @customElement("tapsi-segmented-view")
 export class TapsiSegmentedView extends SegmentedView {

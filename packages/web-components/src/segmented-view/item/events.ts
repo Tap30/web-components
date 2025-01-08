@@ -12,7 +12,6 @@ export class ActivateEvent extends BaseEvent<EventDetails> {
       details,
       bubbles: true,
       composed: true,
-      cancelable: true,
     });
   }
 }
