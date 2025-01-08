@@ -10,7 +10,6 @@ import { KeyboardKeys } from "../internals";
 import {
   AnimationController,
   FocusTrapper,
-  isActiveElement,
   isSSR,
   runAfterRepaint,
   ScrollLocker,
@@ -67,6 +66,8 @@ export class Modal extends LitElement {
 
   private _previouslyFocusedElement: HTMLElement | null = null;
 
+  private _init = false;
+
   constructor() {
     super();
 
@@ -90,12 +91,10 @@ export class Modal extends LitElement {
       void this._toggleOpenState(openState);
     };
 
-    if (initialOpenState) {
-      runAfterRepaint(() => {
-        const prevOpen = this._open;
-
-        toggle();
-        this.requestUpdate("open", prevOpen);
+    if (initialOpenState && !this._init) {
+      this._init = true;
+      void this.updateComplete.then(() => {
+        runAfterRepaint(toggle);
       });
     } else toggle();
   }
@@ -165,6 +164,7 @@ export class Modal extends LitElement {
     super.disconnectedCallback();
 
     if (!this.open) this._detachGlobalEvents();
+    this._scrollLocker.clearLocks();
   }
 
   protected override updated(changed: PropertyValues<this>) {
@@ -236,7 +236,7 @@ export class Modal extends LitElement {
     // If not the active element (doesn't have focus), bail!
     // This is necessary to avoid weirdness in stacked modals
     // (BottomSheets, Modals, etc.).
-    if (!isActiveElement(this)) return;
+    if (!this._focusTrapper.isTopMostInstance(this)) return;
 
     // allow event to propagate to user code after a microtask.
     await waitAMicrotask();
