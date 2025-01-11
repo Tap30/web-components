@@ -127,13 +127,15 @@ export class ChipGroup extends LitElement {
           return;
         }
 
-        const [first, ...rest] = selectedChips;
+        const selectedValue = this._selectedValues[0];
 
-        rest.forEach(item => {
+        selectedChips.forEach(item => {
+          if (item.value === selectedValue) return;
+
           item.selected = false;
         });
 
-        this._selectedValues = first ? [first.value] : [];
+        this._selectedValues = selectedValue ? [selectedValue] : [];
       } else {
         this._selectedValues = selectedChips.map(chip => chip.value);
       }
@@ -154,7 +156,7 @@ export class ChipGroup extends LitElement {
     const value = chip.value;
 
     if (this.selectMode === "multiple") {
-      this._selectedValues.concat(value);
+      this._selectedValues = this._selectedValues.concat(value);
     } else this._selectedValues = [value];
 
     this.dispatchEvent(new SelectChangeEvent({ values: this._selectedValues }));
