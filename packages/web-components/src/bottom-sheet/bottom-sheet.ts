@@ -136,7 +136,7 @@ export class BottomSheet extends LitElement {
   private _isDismissClicksAllowed = true;
 
   @state()
-  private get _preventContainerScrolling() {
+  private get _preventSheetScrolling() {
     if (isSSR()) return true;
 
     if (!this.expandable) return false;
@@ -156,8 +156,8 @@ export class BottomSheet extends LitElement {
   @query("#root")
   private _root!: HTMLElement | null;
 
-  @query("#container")
-  private _container!: HTMLElement | null;
+  @query("#sheet")
+  private _sheet!: HTMLElement | null;
 
   @queryAssignedNodes({ slot: Slots.HEADER })
   private _headerSlotNodes!: Node[];
@@ -179,10 +179,7 @@ export class BottomSheet extends LitElement {
 
   private readonly _animationController = new AnimationController();
   private readonly _scrollLocker = new ScrollLocker();
-  private readonly _focusTrapper = new FocusTrapper(
-    this,
-    () => this._container,
-  );
+  private readonly _focusTrapper = new FocusTrapper(this, () => this._sheet);
 
   private _dragGesture: DragGesture | null = null;
 
@@ -193,11 +190,10 @@ export class BottomSheet extends LitElement {
 
     this._handleDocumentKeyDown = this._handleDocumentKeyDown.bind(this);
     this._handleDrag = this._handleDrag.bind(this);
-    this._handleContainerScroll = this._handleContainerScroll.bind(this);
-    this._handleContainerScrollEnd = this._handleContainerScrollEnd.bind(this);
-    this._handleContainerTouchMove = this._handleContainerTouchMove.bind(this);
-    this._handleContainerTouchStart =
-      this._handleContainerTouchStart.bind(this);
+    this._handleSheetScroll = this._handleSheetScroll.bind(this);
+    this._handleSheetScrollEnd = this._handleSheetScrollEnd.bind(this);
+    this._handleSheetTouchMove = this._handleSheetTouchMove.bind(this);
+    this._handleSheetTouchStart = this._handleSheetTouchStart.bind(this);
   }
 
   protected override updated(changed: PropertyValues<this>) {
@@ -263,38 +259,29 @@ export class BottomSheet extends LitElement {
 
   private _lockScroll() {
     if (this.variant === "inline") return;
-    if (!this._container) return;
+    if (!this._sheet) return;
 
-    this._scrollLocker.lock(this._container);
+    this._scrollLocker.lock(this._sheet);
   }
 
   private _unlockScroll() {
     if (this.variant === "inline") return;
-    if (!this._container) return;
+    if (!this._sheet) return;
 
-    this._scrollLocker.unlock(this._container);
+    this._scrollLocker.unlock(this._sheet);
   }
 
   private _attachEvents() {
     /* eslint-disable @typescript-eslint/no-misused-promises */
     document.addEventListener("keydown", this._handleDocumentKeyDown);
 
-    if (this._container) {
-      this._container.addEventListener("scroll", this._handleContainerScroll);
-      this._container.addEventListener(
-        "scrollend",
-        this._handleContainerScrollEnd,
-      );
-      this._container.addEventListener(
-        "touchmove",
-        this._handleContainerTouchMove,
-      );
-      this._container.addEventListener(
-        "touchstart",
-        this._handleContainerTouchStart,
-      );
+    if (this._sheet) {
+      this._sheet.addEventListener("scroll", this._handleSheetScroll);
+      this._sheet.addEventListener("scrollend", this._handleSheetScrollEnd);
+      this._sheet.addEventListener("touchmove", this._handleSheetTouchMove);
+      this._sheet.addEventListener("touchstart", this._handleSheetTouchStart);
 
-      this._dragGesture = new DragGesture(this._container, this._handleDrag, {
+      this._dragGesture = new DragGesture(this._sheet, this._handleDrag, {
         ...this._DRAG_GESTURE_DEFAULT_CONFIG,
         enabled: this.expandable,
       });
@@ -306,22 +293,13 @@ export class BottomSheet extends LitElement {
     /* eslint-disable @typescript-eslint/no-misused-promises */
     document.removeEventListener("keydown", this._handleDocumentKeyDown);
 
-    if (this._container) {
-      this._container.removeEventListener(
-        "scroll",
-        this._handleContainerScroll,
-      );
-      this._container.removeEventListener(
-        "scrollend",
-        this._handleContainerScrollEnd,
-      );
-      this._container.removeEventListener(
-        "touchmove",
-        this._handleContainerTouchMove,
-      );
-      this._container.removeEventListener(
+    if (this._sheet) {
+      this._sheet.removeEventListener("scroll", this._handleSheetScroll);
+      this._sheet.removeEventListener("scrollend", this._handleSheetScrollEnd);
+      this._sheet.removeEventListener("touchmove", this._handleSheetTouchMove);
+      this._sheet.removeEventListener(
         "touchstart",
-        this._handleContainerTouchStart,
+        this._handleSheetTouchStart,
       );
 
       this._dragGesture?.destroy();
@@ -394,12 +372,12 @@ export class BottomSheet extends LitElement {
    * Gets the default snap points for the bottom sheet.
    *
    * @returns {[number, number]} An array containing two snap points.
-   * - The first snap point is either the container's scroll height
+   * - The first snap point is either the sheet's scroll height
    * or half the window's inner height, whichever is smaller.
    * - The second snap point is 90% of the window's inner height.
    */
   public get defaultSnapPoints(): [number, number] {
-    if (isSSR() || !this.isConnected || !this._container) {
+    if (isSSR() || !this.isConnected || !this._sheet) {
       return SENTINEL_DEFAULT_SNAP_POINTS as [number, number];
     }
 
@@ -481,14 +459,14 @@ export class BottomSheet extends LitElement {
     this.hide();
   }
 
-  private _handleContainerScrollEnd(event: Event) {
+  private _handleSheetScrollEnd(event: Event) {
     redispatchEvent(this, event);
   }
 
-  private _handleContainerScroll(event: Event) {
+  private _handleSheetScroll(event: Event) {
     const element = event.currentTarget as HTMLElement;
 
-    if (this._preventContainerScrolling) event.preventDefault();
+    if (this._preventSheetScrolling) event.preventDefault();
 
     if (!this.hasStickyHeader && this.hasGrabber) {
       if (element.scrollTop >= 48) this._expandGrabber = true;
@@ -498,10 +476,10 @@ export class BottomSheet extends LitElement {
     redispatchEvent(this, event);
   }
 
-  private _handleContainerTouchMove(event: TouchEvent) {
+  private _handleSheetTouchMove(event: TouchEvent) {
     const element = event.currentTarget as HTMLElement;
 
-    if (this._preventContainerScrolling) event.preventDefault();
+    if (this._preventSheetScrolling) event.preventDefault();
 
     if (!this.hasStickyHeader && this.hasGrabber) {
       if (element.scrollTop >= 48) this._expandGrabber = true;
@@ -509,7 +487,7 @@ export class BottomSheet extends LitElement {
     }
   }
 
-  private _handleContainerTouchStart(event: MouseEvent | TouchEvent) {
+  private _handleSheetTouchStart(event: MouseEvent | TouchEvent) {
     const element = event.currentTarget as HTMLElement;
 
     // Prevent overscroll on Safari
@@ -538,7 +516,7 @@ export class BottomSheet extends LitElement {
       movement: [, movementY],
     } = state;
 
-    if (!this._container) return;
+    if (!this._sheet) return;
 
     const dy = -1 * movementY;
 
@@ -583,7 +561,7 @@ export class BottomSheet extends LitElement {
     }
 
     if (newY >= maxSnap) newY = maxSnap;
-    if (memo === maxSnap && this._container.scrollTop > 0) newY = maxSnap;
+    if (memo === maxSnap && this._sheet.scrollTop > 0) newY = maxSnap;
 
     newY = clamp(newY, 0, maxSnap);
 
@@ -770,7 +748,7 @@ export class BottomSheet extends LitElement {
     snapOpts?: { point: number; strict: boolean },
   ) {
     // Skip transition if not connected or elements are not assigned
-    if (!this.isConnected || !this._root || !this._container) {
+    if (!this.isConnected || !this._root || !this._sheet) {
       this._status = openState ? Status.OPENED : Status.CLOSED;
 
       return;
@@ -843,7 +821,7 @@ export class BottomSheet extends LitElement {
     }
 
     this._expandGrabber = false;
-    this._container.scrollTop = 0;
+    this._sheet.scrollTop = 0;
 
     cleanup();
   }
@@ -947,15 +925,15 @@ export class BottomSheet extends LitElement {
     `;
   }
 
-  private _renderContainer() {
-    const containerStyles = styleMap({
+  private _renderSheet() {
+    const sheetStyles = styleMap({
       height: `${this._height}px`,
       transition: this._isGrabbing ? "none" : undefined,
     });
 
-    const containerClasses = classMap({
-      container: true,
-      "prevent-scroll": this._preventContainerScrolling,
+    const sheetClasses = classMap({
+      sheet: true,
+      "prevent-scroll": this._preventSheetScrolling,
     });
 
     const ariaLabelledBy = this.headingTitle
@@ -977,49 +955,55 @@ export class BottomSheet extends LitElement {
 
     return html`
       <div
-        id="container"
-        part="container"
-        class=${containerClasses}
+        id="sheet"
+        part="sheet"
+        class=${sheetClasses}
         role=${this.variant === "modal" ? "dialog" : "region"}
         aria-modal=${this.variant === "modal"}
         aria-labelledby=${ariaLabelledBy}
         aria-label=${ariaLabel}
-        style=${containerStyles}
+        style=${sheetStyles}
       >
-        ${this._renderGrabber()}
         <div
-          id="header"
-          part="header"
-          class="header"
+          id="container"
+          class="container"
+          part="container"
         >
-          ${this._renderHeading()}
-          <slot
-            @slotchange=${this._handleHeaderSlotChange}
-            name=${Slots.HEADER}
-          ></slot>
-          ${this._renderDismissButton()}
-        </div>
-        <div
-          id="body"
-          part=${Slots.BODY}
-          class=${Slots.BODY}
-          ?hidden=${!this._hasBodySlot}
-        >
-          <slot
-            @slotchange=${this._handleBodySlotChange}
-            name=${Slots.BODY}
-          ></slot>
-        </div>
-        <div
-          id="action-bar"
-          part=${Slots.ACTION_BAR}
-          class=${Slots.ACTION_BAR}
-          ?hidden=${!this._hasActionBarSlot}
-        >
-          <slot
-            @slotchange=${this._handleActionBarSlotChange}
-            name=${Slots.ACTION_BAR}
-          ></slot>
+          ${this._renderGrabber()}
+          <div
+            id="header"
+            part="header"
+            class="header"
+          >
+            ${this._renderHeading()}
+            <slot
+              @slotchange=${this._handleHeaderSlotChange}
+              name=${Slots.HEADER}
+            ></slot>
+            ${this._renderDismissButton()}
+          </div>
+          <div
+            id="body"
+            part=${Slots.BODY}
+            class=${Slots.BODY}
+            ?hidden=${!this._hasBodySlot}
+          >
+            <slot
+              @slotchange=${this._handleBodySlotChange}
+              name=${Slots.BODY}
+            ></slot>
+          </div>
+          <div
+            id="action-bar"
+            part=${Slots.ACTION_BAR}
+            class=${Slots.ACTION_BAR}
+            ?hidden=${!this._hasActionBarSlot}
+          >
+            <slot
+              @slotchange=${this._handleActionBarSlotChange}
+              name=${Slots.ACTION_BAR}
+            ></slot>
+          </div>
         </div>
       </div>
     `;
@@ -1038,15 +1022,15 @@ export class BottomSheet extends LitElement {
       "has-action-bar": this._hasActionBarSlot,
     });
 
-    const containerTemplate = this._renderContainer();
+    const sheetTemplate = this._renderSheet();
 
     this._focusTrapper.enabled = this.variant === "modal" && this.open;
     this._focusTrapper.sendFocusTarget = this.focusTarget;
 
-    const container: TemplateResult =
+    const sheet: TemplateResult =
       this.variant === "modal"
-        ? this._focusTrapper.wrap(containerTemplate)
-        : containerTemplate;
+        ? this._focusTrapper.wrap(sheetTemplate)
+        : sheetTemplate;
 
     return html`
       <div
@@ -1057,7 +1041,7 @@ export class BottomSheet extends LitElement {
         aria-hidden=${!this.open}
         ?inert=${!this.open}
       >
-        ${this._renderOverlay()}${container}
+        ${this._renderOverlay()}${sheet}
       </div>
     `;
   }

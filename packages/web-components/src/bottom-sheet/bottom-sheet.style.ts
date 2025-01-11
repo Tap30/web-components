@@ -79,7 +79,7 @@ const styles = css`
     background-color: var(--tapsi-color-surface-overlay-light);
   }
 
-  .container {
+  .sheet {
     height: 0;
 
     overflow: auto;
@@ -90,9 +90,6 @@ const styles = css`
     left: 0;
     right: 0;
 
-    display: flex;
-    flex-direction: column;
-
     border-top-left-radius: var(--tapsi-radius-5);
     border-top-right-radius: var(--tapsi-radius-5);
 
@@ -101,13 +98,18 @@ const styles = css`
 
     touch-action: pan-y;
 
-    transition:
-      transform 240ms ease,
-      height 240ms ease;
+    transition: height 240ms ease;
   }
 
-  .container.prevent-scroll {
+  .sheet.prevent-scroll {
     overflow: hidden;
+  }
+
+  .container {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
   }
 
   .grabber {
