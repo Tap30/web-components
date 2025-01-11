@@ -5,7 +5,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { KeyboardKeys } from "../internals";
 import { isSSR, waitAMicrotask } from "../utils";
 import { Slots } from "./constants";
-import { DeselectEvent, SelectEvent } from "./events";
+import { DeselectEvent, SelectEvent, SynchronizeRequestEvent } from "./events";
 
 export class Chip extends LitElement {
   public static override readonly shadowRootOptions = {
@@ -51,6 +51,14 @@ export class Chip extends LitElement {
 
   @queryAssignedNodes({ slot: Slots.TRAILING_ICON })
   private _trailingIconSlotNodes!: Node[];
+
+  protected override updated(changed: PropertyValues<this>) {
+    super.updated(changed);
+
+    if (changed.has("selected") && this.hasUpdated) {
+      this.dispatchEvent(new SynchronizeRequestEvent());
+    }
+  }
 
   protected override willUpdate(changedProperties: PropertyValues<this>): void {
     super.willUpdate(changedProperties);

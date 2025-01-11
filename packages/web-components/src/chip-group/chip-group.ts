@@ -1,9 +1,10 @@
-import { html, LitElement, nothing } from "lit";
+import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { DeselectEvent, SelectEvent } from "../chip";
 import { Chip } from "../chip/chip";
-import { getRenderRootSlot, isSSR, logger } from "../utils";
+import { SynchronizeRequestEvent } from "../chip/events";
+import { getRenderRootSlot, logger } from "../utils";
 import { Slots } from "./constants";
 import { SelectChangeEvent } from "./events";
 
@@ -12,7 +13,7 @@ export class ChipGroup extends LitElement {
    * The select mode of the chip group.
    */
   @property({ type: String, attribute: "select-mode" })
-  public selectMode: "single" | "multiple" = "single";
+  public selectMode: "single" | "multiple" = "multiple";
 
   /**
    * The orientation of the chip group.
@@ -35,6 +36,10 @@ export class ChipGroup extends LitElement {
   @property({ type: Boolean, attribute: "full-width" })
   public fullWidth = false;
 
+  private _selectedValues: string[] = [];
+
+  private _initiallySynced = false;
+
   private get _chips() {
     const chipsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
 
@@ -47,17 +52,12 @@ export class ChipGroup extends LitElement {
     return chips;
   }
 
-  private get _selectedChips() {
-    return this._chips.filter(node => node.selected);
-  }
-
   constructor() {
     super();
 
-    if (!isSSR()) {
-      this._handleChipSelection = this._handleChipSelection.bind(this);
-      this._handleChipDeselection = this._handleChipDeselection.bind(this);
-    }
+    this._handleChipSelection = this._handleChipSelection.bind(this);
+    this._handleChipDeselection = this._handleChipDeselection.bind(this);
+    this._synchronize = this._synchronize.bind(this);
   }
 
   public override connectedCallback() {
@@ -72,6 +72,8 @@ export class ChipGroup extends LitElement {
       DeselectEvent.type,
       this._handleChipDeselection as EventListener,
     );
+
+    this.addEventListener(SynchronizeRequestEvent.type, this._synchronize);
   }
 
   public override disconnectedCallback(): void {
@@ -86,15 +88,63 @@ export class ChipGroup extends LitElement {
       DeselectEvent.type,
       this._handleChipDeselection as EventListener,
     );
+
+    this.removeEventListener(SynchronizeRequestEvent.type, this._synchronize);
+  }
+
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
+
+    if (this._initiallySynced) return;
+
+    const sync = () => {
+      this._synchronize();
+
+      this._initiallySynced = true;
+    };
+
+    if (!this.hasUpdated) void this.updateComplete.then(sync);
+    else sync();
+  }
+
+  private _synchronize() {
+    const chips = this._chips;
+    const selectedChips = chips.filter(item => item.selected);
+
+    if (selectedChips.length === 0 && this._selectedValues.length !== 0) {
+      this._selectedValues = [];
+
+      return;
+    }
+
+    if (selectedChips.length >= 1) {
+      if (this.selectMode === "single") {
+        if (
+          this._selectedValues.length === 1 &&
+          selectedChips.length === 1 &&
+          this._selectedValues[0] === selectedChips[0]?.value
+        ) {
+          return;
+        }
+
+        const [first, ...rest] = selectedChips;
+
+        rest.forEach(item => {
+          item.selected = false;
+        });
+
+        this._selectedValues = first ? [first.value] : [];
+      } else {
+        this._selectedValues = selectedChips.map(chip => chip.value);
+      }
+    }
   }
 
   private _handleChipDeselection(event: DeselectEvent) {
     const chip = event.target as Chip;
     const value = chip.value;
 
-    const selectedValues = this._selectedChips
-      .map(chip => chip.value)
-      .filter(v => v !== value);
+    const selectedValues = this._selectedValues.filter(v => v !== value);
 
     this.dispatchEvent(new SelectChangeEvent({ values: selectedValues }));
   }
@@ -103,13 +153,11 @@ export class ChipGroup extends LitElement {
     const chip = event.target as Chip;
     const value = chip.value;
 
-    const selectedValues = this._selectedChips.map(chip => chip.value);
+    if (this.selectMode === "multiple") {
+      this._selectedValues.concat(value);
+    } else this._selectedValues = [value];
 
-    const values = selectedValues.includes(value)
-      ? selectedValues
-      : selectedValues.concat(value);
-
-    this.dispatchEvent(new SelectChangeEvent({ values }));
+    this.dispatchEvent(new SelectChangeEvent({ values: this._selectedValues }));
   }
 
   protected override render() {
