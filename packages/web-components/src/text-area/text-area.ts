@@ -55,7 +55,7 @@ export class TextArea extends BaseTextInput {
         id="input"
         class="input"
         part="input"
-        dir=${this.dir}
+        dir=${this.dir || nothing}
         aria-invalid=${this.hasError()}
         aria-label=${ariaLabel}
         aria-labelledby=${ariaLabelledBy}
