@@ -16,10 +16,23 @@ export class ChipGroup extends LitElement {
   public selectMode: "single" | "multiple" = "multiple";
 
   /**
+   * Determines if chip selection is required.
+   */
+  @property({ type: Boolean, attribute: "selection-required" })
+  public selectionRequired = false;
+
+  /**
    * The orientation of the chip group.
    */
   @property({ type: String })
   public orientation: "horizontal" | "vertical" = "horizontal";
+
+  /**
+   * Determines the number of columns of chips the parent will wrap.
+   * This property is only used when orientation is set to "vertical".
+   */
+  @property({ type: Number })
+  public cols = 2;
 
   /**
    * Defines a string value that can be used to set a label
@@ -95,16 +108,20 @@ export class ChipGroup extends LitElement {
   protected override willUpdate(changed: PropertyValues<this>) {
     super.willUpdate(changed);
 
+    if (changed.has("cols")) {
+      this.style.setProperty("--chips-cols", String(this.cols));
+    }
+
     if (this._initiallySynced) return;
 
-    const sync = () => {
+    const init = () => {
       this._synchronize();
 
       this._initiallySynced = true;
     };
 
-    if (!this.hasUpdated) void this.updateComplete.then(sync);
-    else sync();
+    if (!this.hasUpdated) void this.updateComplete.then(init);
+    else init();
   }
 
   private _synchronize() {
@@ -147,6 +164,16 @@ export class ChipGroup extends LitElement {
     const value = chip.value;
 
     const selectedValues = this._selectedValues.filter(v => v !== value);
+
+    if (this.selectionRequired && selectedValues.length === 0) {
+      chip.selected = true;
+
+      this._selectedValues = [value];
+
+      return;
+    }
+
+    this._selectedValues = selectedValues;
 
     this.dispatchEvent(new SelectChangeEvent({ values: selectedValues }));
   }
