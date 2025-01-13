@@ -13,9 +13,8 @@ export default {
     const { dirname } = getFileMeta(import.meta.url);
 
     const docsDir = path.resolve(dirname, "..");
-
-    const monorepoDir = path.join(docsDir, "..");
-    const distDir = path.join(monorepoDir, "dist");
+    const workspaceDir = path.join(docsDir, "..");
+    const distDir = path.join(workspaceDir, "dist");
     const metadataFile = path.join(distDir, "components-metadata.json");
 
     const metadata = JSON.parse(

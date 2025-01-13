@@ -6,9 +6,9 @@ import { getFileMeta } from "../scripts/utils";
 
 const { dirname } = getFileMeta(import.meta.url);
 
-const docsVitepressDir = path.join(dirname, ".vitepress");
-const docsDistDir = path.join(docsVitepressDir, "dist");
-const metadataFile = path.join(docsDistDir, "components-metadata.json");
+const workspaceDir = path.join(dirname, "..");
+const distDir = path.join(workspaceDir, "dist");
+const metadataFile = path.join(distDir, "components-metadata.json");
 
 const getComponentsSidebarItems = (): DefaultTheme.SidebarItem[] =>
   (JSON.parse(fs.readFileSync(metadataFile).toString("utf-8")) as Metadata)
