@@ -1,4 +1,4 @@
-import { type DefaultTheme } from "vitepress";
+import { type CustomElement } from "custom-elements-manifest";
 
 export type HTMLTemplatePath = `${string}.html`;
 
@@ -60,28 +60,13 @@ export type componentSuperclass = {
 
 export type ImportPaths = {
   webComponents?: string;
-  reactComponents?: string;
 };
 
-export type Component = {
-  id: string;
-  type?: {
-    text: string;
-  };
-  kind?: string;
-  description?: string;
-  name: string;
-  slots?: ComponentSlot[];
-  members?: ComponentMember[];
-  events?: ComponentEvent[];
-  superclass?: componentSuperclass;
-  tagName: string;
-  summary?: string;
-  customElement?: boolean;
-  default?: string;
+export type Component = CustomElement & {
+  kebabCaseName: string;
   interactiveDemo?: InteractiveDemo;
   importPaths: ImportPaths;
-  slotName?: string;
+  slotsEnumName?: string;
 };
 
 export type Metadata = {

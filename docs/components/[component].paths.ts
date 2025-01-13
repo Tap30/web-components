@@ -29,7 +29,7 @@ export default {
 
       return {
         params: {
-          component: c.id,
+          component: c.kebabCaseName,
         },
         content,
       };
@@ -65,10 +65,11 @@ const getSlotsMarkdown = (component: Component) => {
     res += "\n## Slots\n";
 
     res += tabulateData(
-      slots?.map(({ description, name }) => ({
-        description,
-        name: name ? codify(name) : null,
-      })) || [],
+      ["Name", "Description"],
+      slots?.map(({ description, name }) => [
+        name ? codify(name) : "-",
+        description || "-",
+      ]),
     );
 
     res += `\n
@@ -77,14 +78,14 @@ const getSlotsMarkdown = (component: Component) => {
 You can use slot names as variables:
 
 \`\`\`ts
-import { ${component.slotName} } from ${component.importPaths.webComponents};
+import { ${component.slotsEnumName} } from "${component.importPaths.webComponents}";
 
 ${slots
   ?.map(slot => {
     const slotEnum =
       slot.name === "" ? "DEFAULT" : slot.name.toUpperCase().replace(/-/g, "_");
 
-    return `console.log(${component.slotName}.${slotEnum}); // "${slot.name}"`;
+    return `console.log(${component.slotsEnumName}.${slotEnum}); // "${slot.name}"`;
   })
   .join("\n")}
 
@@ -110,28 +111,30 @@ const getUsageMarkdown = (component: Component) => {
 };
 
 const getMembersMarkdown = (component: Component) => {
-  const members = component?.members || [];
+  const members = component.members || [];
   let res = "";
 
-  if ((members?.length ?? 0) > 0) {
+  if ((members.length ?? 0) > 0) {
     res += "\n## Properties\n";
 
     res += tabulateData(
-      members?.map(({ type, name, description, default: defaultValue }) => {
-        return {
-          name: name ? codify(name) : null,
-          description: description?.replace(/\\/g, "<br>"),
-          type: type?.text
+      ["Name", "Description", "Type", "Default Value"],
+      members.map(member => {
+        if (member.kind !== "field") return [];
+        const { type, name, description, default: defaultValue } = member;
+
+        return [
+          name ? codify(name) : "-",
+          description?.replace(/\\/g, "<br>") || "",
+          type?.text
             ? type.text
                 ?.split("|")
                 .map(t => codify(t.trim().replace(/'/g, '"')))
                 .join(" \\| ")
-            : null,
-          default: defaultValue
-            ? codify(defaultValue.replace(/'/g, '"'))
-            : null,
-        };
-      }) || [],
+            : "-",
+          defaultValue ? codify(defaultValue.replace(/'/g, '"')) : "-",
+        ];
+      }),
     );
   }
 
@@ -146,14 +149,45 @@ const getEventsMarkdown = (component: Component) => {
     res += "\n## Events\n";
 
     res += tabulateData(
-      events?.map(({ description, name, type }) => ({
-        description: description
+      ["Name", "Description", "Type"],
+      events?.map(({ description, name, type }) => [
+        name ? codify(name) : "-",
+        description
           ?.replace(/cancelable/g, '<Badge type="danger">Cancelable</Badge>')
-          .replace(/bubbles/g, '<Badge type="warning">Bubbles</Badge>'),
-        name: name ? codify(name) : null,
-        type: type?.text ? codify(type.text) : null,
-      })) || [],
+          .replace(/bubbles/g, '<Badge type="warning">Bubbles</Badge>') || "-",
+        type?.text ? codify(type.text) : "-",
+      ]),
     );
+
+    const exportedEvents = events.filter(e => {
+      return (
+        !!e.type && e.type.text !== "Event" && e.type.text !== "InputEvent"
+      );
+    });
+
+    if (exportedEvents.length > 0) {
+      res += `\n
+::: tip
+
+You can import custom event names:
+
+\`\`\`ts
+import { \n  ${exportedEvents
+        .map(e => e.type.text)
+        .join(",\n  ")}\n} from "${component.importPaths.webComponents}";
+
+${exportedEvents
+  .map(event => {
+    const eventClass = event.type.text;
+
+    return `element.addEventListener(${eventClass}.type, handle${component.name}${event.type.text.replace("Event", "")});`;
+  })
+  .join("\n")}
+
+\`\`\`
+
+:::`;
+    }
   }
 
   return res;

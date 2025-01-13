@@ -21,8 +21,8 @@ export * from "./events";
  *
  * @slot icon - The slot for icon when color is `inverse`.
  *
- * @fires {ShowEvent} show - Fires when the snackbar should be visible.
- * @fires {HideEvent} hide - Fires when the snackbar should be hidden.
+ * @fires {ShowEvent} show - Fires when the snackbar should be visible. (cancelable)
+ * @fires {HideEvent} hide - Fires when the snackbar should be hidden. (cancelable)
  *
  * @method show
  * @description - Opens the snackbar if it is not already open.

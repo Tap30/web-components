@@ -20,8 +20,8 @@ export * from "./events";
  * @prop {boolean} [no-escape-deactivation=false] - Whether to hide tooltip on escape or not.
  * @prop {string} [anchor=""] - The id of the anchor element.
  *
- * @fires {ShowEvent} show - Fires when the tooltip should be visible.
- * @fires {HideEvent} hide - Fires when the tooltip should be hidden.
+ * @fires {ShowEvent} show - Fires when the tooltip should be visible. (cancelable)
+ * @fires {HideEvent} hide - Fires when the tooltip should be hidden. (cancelable)
  */
 @customElement("tapsi-tooltip")
 export class TapsiTooltip extends Tooltip {

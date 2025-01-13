@@ -18,7 +18,7 @@ export { Slots } from "./constants";
  * The value of the currently selected items.
  * It's not an attribute and will only work in CSR.
  *
- * @fires change - Fires when a pinwheel selected state changes.
+ * @fires {Event} change - Fires when a pinwheel selected state changes.
  */
 @customElement("tapsi-pinwheel-group")
 export class TapsiPinwheelGroup extends PinwheelGroup {

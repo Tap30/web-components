@@ -46,7 +46,7 @@ export class TapsiPinwheelItem extends PinwheelItem {
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
  *
- * @fires change - Fires when the pinwheel selected state changes.
+ * @fires {Event} change - Fires when the pinwheel selected state changes.
  */
 @customElement("tapsi-pinwheel")
 export class TapsiPinwheel extends Pinwheel {

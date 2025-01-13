@@ -19,8 +19,8 @@ export * from "./events";
  * @slot imagery - The slot for imagery element.
  * @slot action-bar - The slot for actionbar element.
  *
- * @fires {ShowEvent} show - Fires when the modal should be visible.
- * @fires {HideEvent} hide - Fires when the modal should be hidden.
+ * @fires {ShowEvent} show - Fires when the modal should be visible. (cancelable)
+ * @fires {HideEvent} hide - Fires when the modal should be hidden. (cancelable)
  */
 @customElement("tapsi-modal")
 export class TapsiModal extends Modal {
