@@ -1,11 +1,10 @@
-import { LitElement, html, type PropertyValues } from "lit";
+import { html, LitElement, type PropertyValues } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { KeyboardKeys } from "../internals";
-import { isSSR, waitAMicrotask } from "../utils";
+import { isSSR, logger } from "../utils";
 import { Slots } from "./constants";
-import { DeselectEvent, SelectEvent, SynchronizeRequestEvent } from "./events";
+import ChipSelectionController from "./Controller";
 
 export class Chip extends LitElement {
   public static override readonly shadowRootOptions = {
@@ -13,11 +12,25 @@ export class Chip extends LitElement {
     delegatesFocus: true,
   };
 
+  private _selected = false;
+
   /**
    * Whether the chip is selected or not.
    */
   @property({ type: Boolean, reflect: true })
-  public selected = false;
+  public get selected() {
+    return this._selected;
+  }
+
+  public set selected(isSelected: boolean) {
+    const prevSelected = this.selected;
+
+    if (prevSelected === isSelected) return;
+
+    this._selected = isSelected;
+    this.requestUpdate("selected", prevSelected);
+    this._selectionController.handleSelectedChange();
+  }
 
   /**
    * Whether the chip is disabled or not.
@@ -33,9 +46,6 @@ export class Chip extends LitElement {
 
   /**
    * The value associated with the chip.
-   *
-   * Use it when chips are children of chip-group.
-   * This value has to be unique among sibling chips.
    */
   @property({ type: String })
   public value: string = "";
@@ -52,16 +62,17 @@ export class Chip extends LitElement {
   @queryAssignedNodes({ slot: Slots.TRAILING_ICON })
   private _trailingIconSlotNodes!: Node[];
 
-  protected override updated(changed: PropertyValues<this>) {
-    super.updated(changed);
+  private readonly _selectionController = new ChipSelectionController(this);
 
-    if (changed.has("selected") && this.hasUpdated) {
-      this.dispatchEvent(new SynchronizeRequestEvent());
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
+
+    if (changed.has("value") && !this.value) {
+      logger(
+        `Expected a valid \`value\` property/attribute. Received \`${this.value}\`.`,
+        "chip",
+      );
     }
-  }
-
-  protected override willUpdate(changedProperties: PropertyValues<this>): void {
-    super.willUpdate(changedProperties);
 
     this._handleLeadingIconSlotChange();
     this._handleTrailingIconSlotChange();
@@ -87,40 +98,6 @@ export class Chip extends LitElement {
     this.renderRoot.querySelector<HTMLElement>("#root")?.blur();
   }
 
-  private async _handleClick(event: MouseEvent) {
-    if (this.disabled) return;
-
-    // allow event to propagate to user code after a microtask.
-    await waitAMicrotask();
-
-    if (event.defaultPrevented) return;
-
-    let targetEvent: SelectEvent | DeselectEvent;
-
-    const prevSelectedState = this.selected;
-
-    if (prevSelectedState) targetEvent = new DeselectEvent();
-    else targetEvent = new SelectEvent();
-
-    this.selected = !prevSelectedState;
-
-    this.dispatchEvent(targetEvent);
-  }
-
-  private async _handleKeyDown(event: KeyboardEvent) {
-    if (this.disabled) return;
-
-    // allow event to propagate to user code after a microtask.
-    await waitAMicrotask();
-
-    if (event.defaultPrevented) return;
-
-    if (event.key !== KeyboardKeys.ENTER) return;
-    if (!event.currentTarget) return;
-
-    (event.currentTarget as HTMLElement).click();
-  }
-
   protected override render() {
     const rootClasses = classMap({
       root: true,
@@ -140,8 +117,8 @@ export class Chip extends LitElement {
         tabindex="${this.disabled ? "-1" : "0"}"
         aria-label=${ifDefined(this.ariaLabel ?? undefined)}
         aria-pressed=${this.selected}
-        @click=${this._handleClick}
-        @keydown=${this._handleKeyDown}
+        @click=${this._selectionController.handleClick}
+        @keydown=${this._selectionController.handleKeyDown}
       >
         <div
           class="icon leading-icon"

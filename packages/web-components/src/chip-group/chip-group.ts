@@ -3,7 +3,6 @@ import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { DeselectEvent, SelectEvent } from "../chip";
 import { Chip } from "../chip/chip";
-import { SynchronizeRequestEvent } from "../chip/events";
 import { getRenderRootSlot, logger } from "../utils";
 import { Slots } from "./constants";
 import { SelectChangeEvent } from "./events";
@@ -43,16 +42,6 @@ export class ChipGroup extends LitElement {
   @property({ type: String })
   public label = "";
 
-  /**
-   * Indicates if the chip should be full width.
-   */
-  @property({ type: Boolean, attribute: "full-width" })
-  public fullWidth = false;
-
-  private _selectedValues: string[] = [];
-
-  private _initiallySynced = false;
-
   private get _chips() {
     const chipsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
 
@@ -70,7 +59,6 @@ export class ChipGroup extends LitElement {
 
     this._handleChipSelection = this._handleChipSelection.bind(this);
     this._handleChipDeselection = this._handleChipDeselection.bind(this);
-    this._synchronize = this._synchronize.bind(this);
   }
 
   public override connectedCallback() {
@@ -85,8 +73,6 @@ export class ChipGroup extends LitElement {
       DeselectEvent.type,
       this._handleChipDeselection as EventListener,
     );
-
-    this.addEventListener(SynchronizeRequestEvent.type, this._synchronize);
   }
 
   public override disconnectedCallback(): void {
@@ -101,8 +87,6 @@ export class ChipGroup extends LitElement {
       DeselectEvent.type,
       this._handleChipDeselection as EventListener,
     );
-
-    this.removeEventListener(SynchronizeRequestEvent.type, this._synchronize);
   }
 
   protected override willUpdate(changed: PropertyValues<this>) {
@@ -111,89 +95,28 @@ export class ChipGroup extends LitElement {
     if (changed.has("cols")) {
       this.style.setProperty("--chips-cols", String(this.cols));
     }
-
-    if (this._initiallySynced) return;
-
-    const init = () => {
-      this._synchronize();
-
-      this._initiallySynced = true;
-    };
-
-    if (!this.hasUpdated) void this.updateComplete.then(init);
-    else init();
   }
 
-  private _synchronize() {
-    const chips = this._chips;
-    const selectedChips = chips.filter(item => item.selected);
-
-    if (selectedChips.length === 0 && this._selectedValues.length !== 0) {
-      this._selectedValues = [];
-
-      return;
-    }
-
-    if (selectedChips.length >= 1) {
-      if (this.selectMode === "single") {
-        if (
-          this._selectedValues.length === 1 &&
-          selectedChips.length === 1 &&
-          this._selectedValues[0] === selectedChips[0]?.value
-        ) {
-          return;
-        }
-
-        const selectedValue = this._selectedValues[0];
-
-        selectedChips.forEach(item => {
-          if (item.value === selectedValue) return;
-
-          item.selected = false;
-        });
-
-        this._selectedValues = selectedValue ? [selectedValue] : [];
-      } else {
-        this._selectedValues = selectedChips.map(chip => chip.value);
-      }
-    }
-  }
-
-  private _handleChipDeselection(event: DeselectEvent) {
-    const chip = event.target as Chip;
-    const value = chip.value;
-
-    const selectedValues = this._selectedValues.filter(v => v !== value);
-
-    if (this.selectionRequired && selectedValues.length === 0) {
-      chip.selected = true;
-
-      this._selectedValues = [value];
-
-      return;
-    }
-
-    this._selectedValues = selectedValues;
+  private _handleChipDeselection() {
+    const selectedValues = this._chips
+      .filter(chip => chip.selected)
+      .map(chip => chip.value);
 
     this.dispatchEvent(new SelectChangeEvent({ values: selectedValues }));
   }
 
-  private _handleChipSelection(event: SelectEvent) {
-    const chip = event.target as Chip;
-    const value = chip.value;
+  private _handleChipSelection() {
+    const selectedValues = this._chips
+      .filter(chip => chip.selected)
+      .map(chip => chip.value);
 
-    if (this.selectMode === "multiple") {
-      this._selectedValues = this._selectedValues.concat(value);
-    } else this._selectedValues = [value];
-
-    this.dispatchEvent(new SelectChangeEvent({ values: this._selectedValues }));
+    this.dispatchEvent(new SelectChangeEvent({ values: selectedValues }));
   }
 
   protected override render() {
     const rootClasses = classMap({
       root: true,
       [this.orientation]: true,
-      "full-width": this.fullWidth,
     });
 
     if (!this.label) {

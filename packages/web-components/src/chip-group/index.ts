@@ -17,7 +17,6 @@ export * from "./events";
  *
  * @prop {'single' | 'multiple'} [select-mode='single'] - The select mode of the chip group.
  * @prop {'horizontal' | 'vertical'} [orientation='horizontal'] - The orientation of the chip group.
- * @prop {boolean} [full-width=false] - Indicates if the chip should be full width.
  * @prop {string} [label=""] -
  * Defines a string value that can be used to set a label
  * for assistive technologies.

@@ -11,10 +11,6 @@ export default css`
     display: none !important;
   }
 
-  :host([full-width]) {
-    width: 100%;
-  }
-
   :host {
     display: inline-block;
   }
