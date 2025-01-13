@@ -175,12 +175,14 @@ class ScrollLocker {
       left = "",
       position = "",
       top = "",
+      right = "",
     } = this._cachedBodySettings.positioning ?? {};
 
     // Restore styles
     document.body.style.position = position;
     document.body.style.top = top;
     document.body.style.left = left;
+    document.body.style.right = right;
 
     // Restore scroll
     window.scrollTo(x, y);

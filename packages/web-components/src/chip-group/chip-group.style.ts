@@ -11,10 +11,6 @@ export default css`
     display: none !important;
   }
 
-  :host([full-width]) {
-    width: 100%;
-  }
-
   :host {
     display: inline-block;
   }
@@ -24,7 +20,10 @@ export default css`
   }
 
   .root.vertical ::slotted(tapsi-chip) {
-    --chip-basis: calc(50% - (var(--tapsi-spacing-5) / 2));
+    --chip-basis: calc(
+      (100% + (1 - var(--chips-cols)) * var(--tapsi-spacing-5)) /
+        var(--chips-cols)
+    );
 
     flex: 0 0 var(--chip-basis);
     max-width: var(--chip-basis);

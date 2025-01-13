@@ -1,9 +1,9 @@
-import { html, LitElement, nothing } from "lit";
+import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { DeselectEvent, SelectEvent } from "../chip";
 import { Chip } from "../chip/chip";
-import { getRenderRootSlot, isSSR, logger } from "../utils";
+import { getRenderRootSlot, logger } from "../utils";
 import { Slots } from "./constants";
 import { SelectChangeEvent } from "./events";
 
@@ -12,13 +12,26 @@ export class ChipGroup extends LitElement {
    * The select mode of the chip group.
    */
   @property({ type: String, attribute: "select-mode" })
-  public selectMode: "single" | "multiple" = "single";
+  public selectMode: "single" | "multiple" = "multiple";
+
+  /**
+   * Determines if chip selection is required.
+   */
+  @property({ type: Boolean, attribute: "selection-required" })
+  public selectionRequired = false;
 
   /**
    * The orientation of the chip group.
    */
   @property({ type: String })
   public orientation: "horizontal" | "vertical" = "horizontal";
+
+  /**
+   * Determines the number of columns of chips the parent will wrap.
+   * This property is only used when orientation is set to "vertical".
+   */
+  @property({ type: Number })
+  public cols = 2;
 
   /**
    * Defines a string value that can be used to set a label
@@ -28,12 +41,6 @@ export class ChipGroup extends LitElement {
    */
   @property({ type: String })
   public label = "";
-
-  /**
-   * Indicates if the chip should be full width.
-   */
-  @property({ type: Boolean, attribute: "full-width" })
-  public fullWidth = false;
 
   private get _chips() {
     const chipsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
@@ -47,17 +54,11 @@ export class ChipGroup extends LitElement {
     return chips;
   }
 
-  private get _selectedChips() {
-    return this._chips.filter(node => node.selected);
-  }
-
   constructor() {
     super();
 
-    if (!isSSR()) {
-      this._handleChipSelection = this._handleChipSelection.bind(this);
-      this._handleChipDeselection = this._handleChipDeselection.bind(this);
-    }
+    this._handleChipSelection = this._handleChipSelection.bind(this);
+    this._handleChipDeselection = this._handleChipDeselection.bind(this);
   }
 
   public override connectedCallback() {
@@ -88,35 +89,34 @@ export class ChipGroup extends LitElement {
     );
   }
 
-  private _handleChipDeselection(event: DeselectEvent) {
-    const chip = event.target as Chip;
-    const value = chip.value;
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
 
-    const selectedValues = this._selectedChips
-      .map(chip => chip.value)
-      .filter(v => v !== value);
+    if (changed.has("cols")) {
+      this.style.setProperty("--chips-cols", String(this.cols));
+    }
+  }
+
+  private _handleChipDeselection() {
+    const selectedValues = this._chips
+      .filter(chip => chip.selected)
+      .map(chip => chip.value);
 
     this.dispatchEvent(new SelectChangeEvent({ values: selectedValues }));
   }
 
-  private _handleChipSelection(event: SelectEvent) {
-    const chip = event.target as Chip;
-    const value = chip.value;
+  private _handleChipSelection() {
+    const selectedValues = this._chips
+      .filter(chip => chip.selected)
+      .map(chip => chip.value);
 
-    const selectedValues = this._selectedChips.map(chip => chip.value);
-
-    const values = selectedValues.includes(value)
-      ? selectedValues
-      : selectedValues.concat(value);
-
-    this.dispatchEvent(new SelectChangeEvent({ values }));
+    this.dispatchEvent(new SelectChangeEvent({ values: selectedValues }));
   }
 
   protected override render() {
     const rootClasses = classMap({
       root: true,
       [this.orientation]: true,
-      "full-width": this.fullWidth,
     });
 
     if (!this.label) {

@@ -1,6 +1,6 @@
 import "./index.css";
 
-import { StrictMode } from "react";
+import * as React from "react";
 import { createRoot } from "react-dom/client";
 
 const reactRootElement = document.getElementById("react-root");
@@ -12,7 +12,7 @@ const App = () => {
 };
 
 createRoot(reactRootElement).render(
-  <StrictMode>
+  <React.StrictMode>
     <App />
-  </StrictMode>,
+  </React.StrictMode>,
 );

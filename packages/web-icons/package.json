@@ -1,7 +1,6 @@
 {
-  "sideEffects": false,
   "name": "@tapsioss/web-icons",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "type": "module",
   "files": [
     "./dist/**/*.js",

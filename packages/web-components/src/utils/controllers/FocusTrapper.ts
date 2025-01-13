@@ -29,6 +29,8 @@ class FocusTrapper implements ReactiveController {
   private _lastFocused: HTMLElement | null = null;
   private _ignoreFocusChanges = false;
 
+  private _sendFocusTarget: string = "";
+
   constructor(host: Host, resolveTreeRoot: () => HTMLElement | null) {
     host.addController(this);
 
@@ -52,6 +54,14 @@ class FocusTrapper implements ReactiveController {
     return this._isEnabled;
   }
 
+  public set sendFocusTarget(focusTarget: string) {
+    this._sendFocusTarget = focusTarget;
+  }
+
+  public get sendFocusTarget() {
+    return this._sendFocusTarget;
+  }
+
   private _sendFocusToFirstFocusableChild() {
     if (!this._isEnabled) return;
 
@@ -73,7 +83,13 @@ class FocusTrapper implements ReactiveController {
   }
 
   public sendFocus() {
-    this._sendFocusToFirstFocusableChild();
+    if (this._sendFocusTarget) {
+      const focusTarget = document.getElementById(this._sendFocusTarget);
+
+      this._tryFocus(focusTarget);
+    } else {
+      this._sendFocusToFirstFocusableChild();
+    }
   }
 
   // TODO: Add good caching mechanism for top most instance
@@ -256,7 +272,7 @@ class FocusTrapper implements ReactiveController {
   private _handleDocumentFocus(event: FocusEvent) {
     if (!this._isEnabled) return;
     if (this._ignoreFocusChanges) return;
-    if (this._topMostInstance !== this._host) return;
+    if (!this.isTopMostInstance(this._host)) return;
 
     const root = this._resolveTreeRoot();
 
@@ -269,6 +285,10 @@ class FocusTrapper implements ReactiveController {
     if (contains(root, target)) {
       this._lastFocused = target;
     } else this._trap(root);
+  }
+
+  public isTopMostInstance(host: Host) {
+    return this._topMostInstance === host;
   }
 
   public wrap(tree: TemplateResult) {

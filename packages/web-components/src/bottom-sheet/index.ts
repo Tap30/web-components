@@ -47,6 +47,7 @@ export * from "./events";
  * Identifies the element (or elements) that labels the element.
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+ * @prop {string} [focus-target=""] - Identifies the element that should get focused when bottom sheet opens.
  *
  * @slot header - The slot for the header content.
  * @slot body - The slot for the main body content.

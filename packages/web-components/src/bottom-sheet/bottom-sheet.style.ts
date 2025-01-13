@@ -124,6 +124,7 @@ const styles = css`
     justify-content: center;
     align-items: center;
     background-color: var(--tapsi-color-surface-primary);
+    flex-shrink: 0;
 
     transition: height 240ms ease;
   }
