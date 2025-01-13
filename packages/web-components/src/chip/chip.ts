@@ -29,7 +29,7 @@ export class Chip extends LitElement {
 
     this._selected = isSelected;
     this.requestUpdate("selected", prevSelected);
-    this._selectionController.handleSelectedChange();
+    this._selectionController.handleSelectionChange();
   }
 
   /**
