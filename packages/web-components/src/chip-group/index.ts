@@ -28,12 +28,18 @@ export * from "./events";
 export class TapsiChipGroup extends ChipGroup {
   public static override readonly styles = [styles];
 
+  /**
+   * @internal
+   */
   declare addEventListener: <K extends keyof TapsiChipGroupEventMap>(
     type: K,
     listener: (this: TapsiChipGroup, ev: TapsiChipGroupEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
+  /**
+   * @internal
+   */
   declare removeEventListener: <K extends keyof TapsiChipGroupEventMap>(
     type: K,
     listener: (this: TapsiChipGroup, ev: TapsiChipGroupEventMap[K]) => void,

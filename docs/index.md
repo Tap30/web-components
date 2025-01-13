@@ -1,20 +1,22 @@
----
-layout: home
+# Getting Started
 
-hero:
-  name: TDS
-  text: Tapsi Design System
+## Installation
 
-  actions:
-    - theme: brand
-      text: Getting Started
-      link: /dev/getting-started
-    - theme: alt
-      text: Explore Components
-      link: /dev/components/tap-avatar
-    - theme: alt
-      text: Design System Guidelines
-      link: /design/guidelines
+::: code-group
 
----
+```bash [pnpm]
+pnpm install @tapsioss/web-components # installing Tapsi components
+pnpm install @tapsioss/theme # installing the Tapsi theme
+```
 
+```bash [npm]
+npm install @tapsioss/web-components # installing Tapsi components
+npm install @tapsioss/theme # installing the Tapsi theme
+```
+
+```bash [yarn]
+yarn add @tapsioss/web-components # installing Tapsi components
+yarn add @tapsioss/theme # installing the Tapsi theme
+```
+
+:::
