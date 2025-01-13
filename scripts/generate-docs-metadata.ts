@@ -1,5 +1,9 @@
 /* eslint-disable no-console */
-import { type Package } from "custom-elements-manifest";
+import {
+  type CustomElement,
+  type Declaration,
+  type Package,
+} from "custom-elements-manifest";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { type DefaultTheme } from "vitepress";
@@ -22,10 +26,18 @@ const cemFile = path.join(distDir, "custom-elements.json");
 
 const cem = JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
 
+const getKebabCaseComponentName = (component: Declaration) => {
+  if (!("tagName" in component) || !component.tagName) return null;
+
+  const tagName = component.tagName;
+
+  return tagName.replace("tapsi-", "");
+};
+
 void (() => {
   console.log("🧩 generating components metadata...");
 
-  const sidebarItems: DefaultTheme.SidebarItem[] = [];
+  const sidebarItemsMap: Record<string, DefaultTheme.SidebarItem> = {};
   const components: Component[] = [];
 
   const filteredModules = cem.modules.filter(module => {
@@ -54,11 +66,9 @@ void (() => {
       .map(s => s.name);
 
     declarations.forEach(component => {
-      if (!("tagName" in component) || !component.tagName) return;
+      const kebabCaseName = getKebabCaseComponentName(component);
 
-      const tagName = component.tagName;
-
-      const kebabCaseName = tagName.replace("tapsi-", "");
+      if (!kebabCaseName) return;
 
       const compoundPartialName = kebabCaseName.replace(
         relativePath.concat("-"),
@@ -87,15 +97,12 @@ void (() => {
 
       importPaths.webComponents = `@tapsioss/web-components/${relativePath}`;
 
-      if (kebabCaseName) {
-        components.push({
-          ...component,
-          kebabCaseName,
-          importPaths,
-          slotsEnumName,
-        });
-      }
-
+      components.push({
+        ...(component as CustomElement),
+        kebabCaseName,
+        importPaths,
+        slotsEnumName,
+      });
       const sidebarItem: DefaultTheme.SidebarItem = {};
       const childPath = relativePath.split("/")[1];
 
@@ -108,18 +115,26 @@ void (() => {
           sidebarItem.items = [];
         }
 
-        sidebarItem.items.push({
-          text: kebabCaseName,
-          link: `components/${kebabCaseName}`,
+        // console.log("🐕 sag 1", 1); // TODO: REMOVE ME ⚠️
+
+        sidebarItem.items = declarations.map(component => {
+          // console.log("🐕 sag 2", 2, component); // TODO: REMOVE ME ⚠️
+
+          const name = getKebabCaseComponentName(component) || "";
+
+          return {
+            text: name,
+            link: `components/${name}`,
+          };
         });
       }
 
       if (!childPath) {
-        sidebarItems.push(sidebarItem);
+        sidebarItemsMap[sidebarItem.text] = sidebarItem;
       } else {
         const [parentPath] = relativePath.split("/");
 
-        const parentItem = sidebarItems.find(item => item.text === parentPath);
+        const parentItem = sidebarItemsMap[parentPath!];
 
         if (parentItem) {
           if (!Array.isArray(parentItem.items)) {
@@ -128,10 +143,10 @@ void (() => {
 
           parentItem.items.push(sidebarItem);
         } else {
-          sidebarItems.push({
+          sidebarItemsMap[parentPath!] = {
             text: parentPath,
             items: [sidebarItem],
-          });
+          };
         }
       }
     });
@@ -142,7 +157,7 @@ void (() => {
     JSON.stringify(
       {
         components,
-        sidebarItems: sidebarItems.sort((a, b) =>
+        sidebarItems: Object.values(sidebarItemsMap).sort((a, b) =>
           a.text!.localeCompare(b.text!),
         ),
       },

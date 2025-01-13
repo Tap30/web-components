@@ -1,20 +1,18 @@
 import fs from "fs";
-import { DefaultTheme } from "vitepress";
-import { getFileMeta } from "../../scripts/utils";
 import path from "node:path";
-import { Metadata } from "../../internals/doc-helpers/types";
+import { type DefaultTheme } from "vitepress";
+import { type Metadata } from "../internals/doc-helpers/types";
+import { getFileMeta } from "../scripts/utils";
 
 const { dirname } = getFileMeta(import.meta.url);
 
-const docsDir = path.join(dirname, "..");
-const docsVitepressDir = path.join(docsDir, ".vitepress");
+const docsVitepressDir = path.join(dirname, ".vitepress");
 const docsDistDir = path.join(docsVitepressDir, "dist");
 const metadataFile = path.join(docsDistDir, "components-metadata.json");
 
-
 const getComponentsSidebarItems = (): DefaultTheme.SidebarItem[] =>
-  (JSON.parse(fs.readFileSync(metadataFile).toString()) as Metadata).sidebarItems;
-
+  (JSON.parse(fs.readFileSync(metadataFile).toString("utf-8")) as Metadata)
+    .sidebarItems;
 
 const getComponentsSidebar = (): DefaultTheme.Sidebar => {
   return [
@@ -26,4 +24,4 @@ const getComponentsSidebar = (): DefaultTheme.Sidebar => {
   ];
 };
 
-export default getComponentsSidebar() as DefaultTheme.Sidebar;
+export default getComponentsSidebar();

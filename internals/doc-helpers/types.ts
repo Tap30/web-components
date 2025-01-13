@@ -1,4 +1,5 @@
 import { type CustomElement } from "custom-elements-manifest";
+import { type DefaultTheme } from "vitepress";
 
 export type HTMLTemplatePath = `${string}.html`;
 

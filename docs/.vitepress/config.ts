@@ -1,6 +1,6 @@
 import { defineConfig } from "vitepress";
-import sidebar from "./sidebar";
-import socialLinks from "./socialLinks";
+import sidebar from "../sidebar";
+import socialLinks from "../social-links";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
