@@ -115,11 +115,7 @@ void (() => {
           sidebarItem.items = [];
         }
 
-        // console.log("🐕 sag 1", 1); // TODO: REMOVE ME ⚠️
-
         sidebarItem.items = declarations.map(component => {
-          // console.log("🐕 sag 2", 2, component); // TODO: REMOVE ME ⚠️
-
           const name = getKebabCaseComponentName(component) || "";
 
           return {
