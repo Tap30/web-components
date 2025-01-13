@@ -2,7 +2,7 @@ import fs from "fs";
 import { DefaultTheme } from "vitepress";
 import { getFileMeta } from "../../scripts/utils";
 import path from "node:path";
-import {Metadata} from "../../internals/doc-helpers/types";
+import { Metadata } from "../../internals/doc-helpers/types";
 
 const { dirname } = getFileMeta(import.meta.url);
 
