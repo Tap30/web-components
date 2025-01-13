@@ -27,12 +27,18 @@ export * from "./events";
 export class TapsiTooltip extends Tooltip {
   public static override readonly styles = [styles];
 
+  /**
+   * @internal
+   */
   declare addEventListener: <K extends keyof TapsiTooltipEventMap>(
     type: K,
     listener: (this: TapsiTooltip, ev: TapsiTooltipEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
+  /**
+   * @internal
+   */
   declare removeEventListener: <K extends keyof TapsiTooltipEventMap>(
     type: K,
     listener: (this: TapsiTooltip, ev: TapsiTooltipEventMap[K]) => void,

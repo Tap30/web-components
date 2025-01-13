@@ -36,12 +36,18 @@ export * from "./events";
 export class TapsiSnackbar extends Snackbar {
   public static override readonly styles = [styles];
 
+  /**
+   * @internal
+   */
   declare addEventListener: <K extends keyof TapsiSnackbarEventMap>(
     type: K,
     listener: (this: TapsiSnackbar, ev: TapsiSnackbarEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
+  /**
+   * @internal
+   */
   declare removeEventListener: <K extends keyof TapsiSnackbarEventMap>(
     type: K,
     listener: (this: TapsiSnackbar, ev: TapsiSnackbarEventMap[K]) => void,

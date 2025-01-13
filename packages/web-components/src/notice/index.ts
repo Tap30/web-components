@@ -46,13 +46,19 @@ export * from "./events";
 @customElement("tapsi-notice")
 export class TapsiNotice extends Notice {
   public static override readonly styles = [styles];
-
+  /**
+  /**
+   * @internal
+   */
   declare addEventListener: <K extends keyof TapsiNoticeEventMap>(
     type: K,
     listener: (this: TapsiNotice, ev: TapsiNoticeEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
+  /**
+   * @internal
+   */
   declare removeEventListener: <K extends keyof TapsiNoticeEventMap>(
     type: K,
     listener: (this: TapsiNotice, ev: TapsiNoticeEventMap[K]) => void,

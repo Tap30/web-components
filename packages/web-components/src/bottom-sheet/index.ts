@@ -19,6 +19,9 @@ export * from "./events";
  *
  * @tag tapsi-bottom-sheet
  *
+ *
+ * @prop {boolean} [open=false] -
+ * Determines whether the bottom-sheet is open.
  * @prop {string} [heading-title=""] -
  * Sets the heading title in a declarative-way.
  * @prop {string} [heading-description=""] -
@@ -94,12 +97,18 @@ export * from "./events";
 export class TapsiBottomSheet extends BottomSheet {
   public static override readonly styles = [styles];
 
+  /**
+   * @internal
+   */
   declare addEventListener: <K extends keyof TapsiBottomSheetEventMap>(
     type: K,
     listener: (this: TapsiBottomSheet, ev: TapsiBottomSheetEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
+  /**
+   * @internal
+   */
   declare removeEventListener: <K extends keyof TapsiBottomSheetEventMap>(
     type: K,
     listener: (this: TapsiBottomSheet, ev: TapsiBottomSheetEventMap[K]) => void,

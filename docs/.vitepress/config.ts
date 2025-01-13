@@ -1,5 +1,4 @@
 import { defineConfig } from "vitepress";
-import nav from "./nav";
 import sidebar from "./sidebar";
 import socialLinks from "./socialLinks";
 
@@ -8,7 +7,6 @@ export default defineConfig({
   title: "Tapsi components",
   description: "A set of components based on Tapsi design system.",
   base: "/web-components/",
-  vite: {},
   head: [
     ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
     [
@@ -30,6 +28,5 @@ export default defineConfig({
   themeConfig: {
     sidebar,
     socialLinks,
-    nav,
   },
 });

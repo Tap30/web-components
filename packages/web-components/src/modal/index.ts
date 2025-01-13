@@ -26,12 +26,18 @@ export * from "./events";
 export class TapsiModal extends Modal {
   public static override readonly styles = [styles];
 
+  /**
+   * @internal
+   */
   declare addEventListener: <K extends keyof TapsiModalEventMap>(
     type: K,
     listener: (this: TapsiModal, ev: TapsiModalEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
+  /**
+   * @internal
+   */
   declare removeEventListener: <K extends keyof TapsiModalEventMap>(
     type: K,
     listener: (this: TapsiModal, ev: TapsiModalEventMap[K]) => void,
