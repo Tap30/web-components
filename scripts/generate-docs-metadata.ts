@@ -10,7 +10,6 @@ import {
 import { getFileMeta } from "./utils";
 
 const { dirname } = getFileMeta(import.meta.url);
-// TODO: rename to docs Metadata
 const workspaceDir = path.resolve(dirname, "..");
 const webComponentsSrcDir = path.join(
   workspaceDir,

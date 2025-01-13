@@ -47,7 +47,6 @@ export * from "./events";
 export class TapsiNotice extends Notice {
   public static override readonly styles = [styles];
   /**
-  /**
    * @internal
    */
   declare addEventListener: <K extends keyof TapsiNoticeEventMap>(
