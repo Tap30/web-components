@@ -10,10 +10,10 @@ const workspaceDir = path.join(dirname, "..");
 const distDir = path.join(workspaceDir, "dist");
 const metadataFile = path.join(distDir, "components-metadata.json");
 
-const getComponentsSidebar = (): DefaultTheme.Sidebar => {
+const getSidebarItems = (): DefaultTheme.Sidebar => {
   return (
     JSON.parse(fs.readFileSync(metadataFile).toString("utf-8")) as Metadata
   ).sidebarItems;
 };
 
-export default getComponentsSidebar();
+export default getSidebarItems();
