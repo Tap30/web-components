@@ -70,7 +70,17 @@ export type Component = CustomElement & {
   slotsEnumName?: string;
 };
 
+export type IconPath = Record<string, string>;
+
+export type Icon = {
+  pascalName: string;
+  kebabName: string;
+  paths: IconPath[];
+  svgTag: string;
+};
+
 export type Metadata = {
+  icons: Icon[];
   components: Component[];
   sidebarItems: DefaultTheme.SidebarItem[];
 };

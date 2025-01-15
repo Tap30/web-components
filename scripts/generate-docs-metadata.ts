@@ -9,6 +9,7 @@ import * as path from "node:path";
 import { type DefaultTheme } from "vitepress";
 import {
   type Component,
+  type Icon,
   type ImportPaths,
 } from "../internals/doc-helpers/types";
 import { getFileMeta } from "./utils";
@@ -20,11 +21,13 @@ const webComponentsSrcDir = path.join(
   "packages/web-components/src",
 );
 
-const distDir = path.join(workspaceDir, "dist");
-const metadataFile = path.join(distDir, "components-metadata.json");
-const cemFile = path.join(distDir, "custom-elements.json");
+const iconsDistDir = path.join(workspaceDir, "packages/icons/dist/paths.json");
+const workspaceDistDir = path.join(workspaceDir, "dist");
+const metadataFile = path.join(workspaceDistDir, "components-metadata.json");
+const cemFile = path.join(workspaceDistDir, "custom-elements.json");
 
 const cem = JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
+const iconsData = JSON.parse(fs.readFileSync(iconsDistDir, "utf8"));
 
 const getKebabCaseComponentName = (component: Declaration) => {
   if (!("tagName" in component) || !component.tagName) return null;
@@ -35,7 +38,7 @@ const getKebabCaseComponentName = (component: Declaration) => {
 };
 
 void (() => {
-  console.log("🧩 generating components metadata...");
+  console.log("🧩 generating docs metadata...");
 
   const sidebarItemsMap: Record<string, DefaultTheme.SidebarItem> = {};
   const components: Component[] = [];
@@ -109,7 +112,7 @@ void (() => {
       sidebarItem.text = childPath ?? relativePath;
 
       if (declarations.length === 1) {
-        sidebarItem.link = `components/${kebabCaseName}`;
+        sidebarItem.link = `/components/${kebabCaseName}`;
       } else {
         if (!Array.isArray(sidebarItem.items)) {
           sidebarItem.items = [];
@@ -120,7 +123,7 @@ void (() => {
 
           return {
             text: name,
-            link: `components/${name}`,
+            link: `/components/${name}`,
           };
         });
       }
@@ -148,20 +151,61 @@ void (() => {
     });
   });
 
+  const componentSidebarItems: DefaultTheme.SidebarItem = {
+    text: "Components",
+    items: Object.values(sidebarItemsMap).sort((a, b) =>
+      a.text!.localeCompare(b.text!),
+    ),
+  };
+
+  const icons = Object.values(iconsData as Record<string, Icon>).map(icon => {
+    const paths = icon.paths.map(({ d, clipRule, fillRule, xlinkHref }) => {
+      const props = [
+        `d="${d}"`,
+        clipRule ? `clip-rule="${clipRule}"` : null,
+        fillRule ? `fill-rule="${fillRule}"` : null,
+        xlinkHref ? `xlink:href="${xlinkHref}"` : null,
+      ];
+
+      return `<path ${props.filter(Boolean).join(" ")} />`;
+    });
+
+    const svgTag = `<svg viewBox="0 0 24 24" class="tapsi-icon" id="${icon.kebabName}-icon">${paths}</svg>`;
+
+    return {
+      kebabName: icon.kebabName,
+      pascalName: icon.pascalName,
+      svgTag,
+    };
+  });
+
+  const iconsSidebarItem: DefaultTheme.SidebarItem = {
+    text: "Icons",
+    link: "icons",
+    collapsed: true,
+    items: icons
+      .sort((a, b) => a.kebabName!.localeCompare(b.kebabName))
+      .map(icon => ({
+        text: icon.kebabName,
+        link: `/icons/${icon.kebabName}`,
+      })),
+  };
+
+  const sidebarItems = [componentSidebarItems, iconsSidebarItem];
+
   fs.writeFileSync(
     metadataFile,
     JSON.stringify(
       {
         components,
-        sidebarItems: Object.values(sidebarItemsMap).sort((a, b) =>
-          a.text!.localeCompare(b.text!),
-        ),
+        sidebarItems,
+        icons,
       },
       null,
       2,
     ),
   );
 
-  console.log("✅ components metadata generated.");
+  console.log("✅ docs metadata generated.");
 })();
 /* eslint-enable no-console */
