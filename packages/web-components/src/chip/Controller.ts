@@ -1,3 +1,4 @@
+import { KeyboardKeys } from "../internals";
 import { SelectionController, type SelectionElement } from "../utils";
 import type { Chip } from "./chip";
 import { DeselectEvent, SelectEvent } from "./events";
@@ -11,27 +12,47 @@ type Host = SelectionElement<Chip>;
  */
 class ChipSelectionController extends SelectionController<Chip> {
   constructor(host: Host) {
-    super(
-      host,
-      "tapsi-chip",
-      () => {
-        const chipGroup = this._host.closest("tapsi-chip-group");
+    super(host, "tapsi-chip", () => {
+      const chipGroup = this._host.closest("tapsi-chip-group");
 
-        return {
-          member: "selected",
-          mode: chipGroup?.selectMode ?? "multiple",
-          required: chipGroup?.selectionRequired ?? false,
-        };
-      },
-      selected => {
-        let targetEvent: SelectEvent | DeselectEvent;
+      return {
+        member: "selected",
+        mode: chipGroup?.selectMode ?? "multiple",
+        required: chipGroup?.selectionRequired ?? false,
+      };
+    });
+  }
 
-        if (!selected) targetEvent = new DeselectEvent();
-        else targetEvent = new SelectEvent();
+  public override async handleClick(event: MouseEvent) {
+    if (!(await super.handleClick(event))) return false;
 
-        this._host.dispatchEvent(targetEvent);
-      },
-    );
+    let targetEvent: SelectEvent | DeselectEvent;
+
+    const { member } = this._selectionProperties;
+
+    const newSelectedState = !this._host[member];
+
+    if (!newSelectedState) targetEvent = new DeselectEvent();
+    else targetEvent = new SelectEvent();
+
+    this._host.dispatchEvent(targetEvent);
+
+    return true;
+  }
+
+  public override async handleKeyDown(event: KeyboardEvent) {
+    if (!(await super.handleKeyDown(event))) return false;
+
+    if (!event.currentTarget) return false;
+    if (![KeyboardKeys.SPACE, KeyboardKeys.ENTER].includes(event.key)) {
+      return false;
+    }
+
+    event.preventDefault();
+
+    (event.target as HTMLElement).click();
+
+    return true;
   }
 }
 
