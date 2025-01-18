@@ -12,3 +12,8 @@
   gap: 12px;
   flex-wrap: wrap;
 }
+
+.vp-doc table {
+  min-width: 100%;
+  display: table;
+}
