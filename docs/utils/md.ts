@@ -5,7 +5,7 @@ export const tabulateData = (headers: string[], data: string[][]): string => {
   const headersMarkdown = `| ${headers.join(" | ")} |`;
   const separator = `| ${headers.map(() => "---").join(" | ")} |`;
 
-  const rowsMarkdown = data.map(row => `| ${(row).join(" | ")} |`).join("\n");
+  const rowsMarkdown = data.map(row => `| ${row.join(" | ")} |`).join("\n");
 
   return `${headersMarkdown}\n${separator}\n${rowsMarkdown}`;
 };

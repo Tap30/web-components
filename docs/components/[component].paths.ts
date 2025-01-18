@@ -6,7 +6,7 @@ import {
   type Metadata,
 } from "../../internals/doc-helpers/types";
 import { getFileMeta } from "../../scripts/utils";
-import { codify, tabulateData } from "../internals/utils/tabulateData";
+import { codify, tabulateData } from "../utils/md";
 
 export default {
   paths() {
