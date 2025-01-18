@@ -3,6 +3,8 @@ import { waitAMicrotask } from "../../utils";
 
 type Getter<T> = () => T;
 
+type RootNode = ShadowRoot | Document | HTMLElement;
+
 export type SelectionElement<T extends HTMLElement> = ReactiveControllerHost &
   T;
 
@@ -21,6 +23,12 @@ export type SelectionProperties<T extends HTMLElement> = {
   required?: boolean;
 };
 
+export type SelectionControllerConfig<T extends HTMLElement> = {
+  tagName: keyof HTMLElementTagNameMap;
+  resolveParentTarget: (rootNode: RootNode) => HTMLElement | null;
+  selectionProperties: SelectionProperties<T> | Getter<SelectionProperties<T>>;
+};
+
 /*
  * To use, elements should add the controller and call
  * `controller.handleSelectionChange()` in a getter/setter. This must
@@ -33,17 +41,17 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
   private readonly _selectionPropertiesResolver:
     | SelectionProperties<T>
     | Getter<SelectionProperties<T>>;
+  private readonly _resolveParentTarget: (
+    rootNode: RootNode,
+  ) => HTMLElement | null;
 
-  constructor(
-    host: SelectionElement<T>,
-    hostTagName: keyof HTMLElementTagNameMap,
-    selectionProperties:
-      | SelectionProperties<T>
-      | Getter<SelectionProperties<T>>,
-  ) {
+  constructor(host: SelectionElement<T>, config: SelectionControllerConfig<T>) {
+    const { resolveParentTarget, selectionProperties, tagName } = config;
+
     this._host = host;
-    this._hostTagName = hostTagName;
+    this._hostTagName = tagName;
     this._selectionPropertiesResolver = selectionProperties;
+    this._resolveParentTarget = resolveParentTarget;
 
     host.addController(this);
 
@@ -52,12 +60,8 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
     this.handleSelectionChange = this.handleSelectionChange.bind(this);
   }
 
-  protected get _rootNode() {
-    const rootNode = this._host.getRootNode() as
-      | ShadowRoot
-      | Document
-      | HTMLElement
-      | null;
+  private get _rootNode() {
+    const rootNode = this._host.getRootNode() as RootNode | null;
 
     return rootNode;
   }
@@ -65,8 +69,12 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
   protected get _elements(): [SelectionElement<T>, ...SelectionElement<T>[]] {
     if (!this._rootNode || !this._host.isConnected) return [this._host];
 
+    const parentTarget = this._resolveParentTarget(this._rootNode);
+
+    if (!parentTarget) return [this._host];
+
     return Array.from(
-      this._rootNode.querySelectorAll<SelectionElement<T>>(
+      parentTarget.querySelectorAll<SelectionElement<T>>(
         `${this._hostTagName}`,
       ),
     ) as unknown as [SelectionElement<T>, ...SelectionElement<T>[]];
