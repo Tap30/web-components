@@ -89,7 +89,7 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
   }
 
   /**
-   * Should be called whenever the host's `selected` property changes
+   * Should be called whenever the host's selection property changes
    * synchronously.
    */
   public handleSelectionChange() {
