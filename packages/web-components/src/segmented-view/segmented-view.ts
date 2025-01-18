@@ -1,9 +1,8 @@
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
-import { getRenderRootSlot, isSSR, logger } from "../utils";
-import { Slots } from "./constants";
+import { logger } from "../utils";
 import { ActiveChangeEvent } from "./events";
-import { ActivateEvent, SegmentedViewItem } from "./item";
+import { ActivateEvent, type SegmentedViewItem } from "./item";
 
 export class SegmentedView extends LitElement {
   /**
@@ -18,9 +17,7 @@ export class SegmentedView extends LitElement {
   constructor() {
     super();
 
-    if (!isSSR()) {
-      this._handleItemActivate = this._handleItemActivate.bind(this);
-    }
+    this._handleItemActivate = this._handleItemActivate.bind(this);
   }
 
   public override connectedCallback() {
@@ -41,35 +38,11 @@ export class SegmentedView extends LitElement {
     );
   }
 
-  private get _items() {
-    const itemsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
-
-    if (!itemsSlot) return [];
-
-    const items = itemsSlot
-      .assignedNodes()
-      .filter(node => node instanceof SegmentedViewItem);
-
-    return items;
-  }
-
-  private get _queryActiveItem() {
-    return this._items.find(item => item.active) ?? null;
-  }
-
   private _handleItemActivate(event: ActivateEvent) {
-    const { itemValue } = event.details;
+    const item = event.target as SegmentedViewItem;
+    const value = item.value;
 
-    this.dispatchEvent(new ActiveChangeEvent({ itemValue }));
-  }
-
-  private _handleItemsSlotChange() {
-    const hasActiveItem = !!this._queryActiveItem;
-    const firstItem = this._items[0];
-
-    if (hasActiveItem || !firstItem) return;
-
-    firstItem.active = true;
+    this.dispatchEvent(new ActiveChangeEvent({ value }));
   }
 
   protected override render() {
@@ -88,7 +61,7 @@ export class SegmentedView extends LitElement {
         part="root"
         aria-label=${this.label || nothing}
       >
-        <slot @slotchange=${this._handleItemsSlotChange}></slot>
+        <slot></slot>
       </div>
     `;
   }
