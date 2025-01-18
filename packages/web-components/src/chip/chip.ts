@@ -71,6 +71,7 @@ export class Chip extends LitElement {
       logger(
         `Expected a valid \`value\` property/attribute. Received \`${this.value}\`.`,
         "chip",
+        "error",
       );
     }
 

@@ -1,7 +1,7 @@
 import { html, LitElement, type PropertyValues } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { isSSR, SystemError } from "../../utils";
+import { isSSR, logger } from "../../utils";
 import { Slots } from "./constants";
 import NavItemSelectionController from "./Controller";
 
@@ -50,9 +50,10 @@ export class BottomNavigationItem extends LitElement {
     super.updated(changed);
 
     if (!this.value) {
-      throw new SystemError(
+      logger(
         `Expected a valid \`value\` property/attribute. Received \`${this.value}\`.`,
         "bottom-navigation-item",
+        "error",
       );
     }
   }
