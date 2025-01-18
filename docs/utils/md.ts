@@ -7,7 +7,7 @@ export const tabulateData = (headers: string[], data: string[][]): string => {
 
   const rowsMarkdown = data.map(row => `| ${row.join(" | ")} |`).join("\n");
 
-  return `${headersMarkdown}\n${separator}\n${rowsMarkdown}`;
+  return `\n<div class="table-wrapper">\n\n${headersMarkdown}\n${separator}\n${rowsMarkdown}\n\n</div>\n`;
 };
 
 export const codify = (inputString: string) => `\`${inputString}\``;
