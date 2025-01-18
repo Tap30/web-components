@@ -1,5 +1,4 @@
 import { type ReactiveController, type ReactiveControllerHost } from "lit";
-import { KeyboardKeys } from "../../internals";
 import { waitAMicrotask } from "../../utils";
 
 type Getter<T> = () => T;
@@ -35,26 +34,16 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
     | SelectionProperties<T>
     | Getter<SelectionProperties<T>>;
 
-  private readonly _onSelect?: (
-    newHostSelected: boolean,
-    properties: SelectionProperties<T>,
-  ) => void;
-
   constructor(
     host: SelectionElement<T>,
     hostTagName: keyof HTMLElementTagNameMap,
     selectionProperties:
       | SelectionProperties<T>
       | Getter<SelectionProperties<T>>,
-    onSelect?: (
-      newHostSelected: boolean,
-      properties: SelectionProperties<T>,
-    ) => void,
   ) {
     this._host = host;
     this._hostTagName = hostTagName;
     this._selectionPropertiesResolver = selectionProperties;
-    this._onSelect = onSelect;
 
     this.handleClick = this.handleClick.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -129,18 +118,16 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
   }
 
   public async handleClick(event: MouseEvent) {
-    if ("disabled" in this._host && this._host.disabled) return;
-
-    console.log("here");
+    if ("disabled" in this._host && this._host.disabled) return false;
 
     // allow event to propagate to user code after a microtask.
     await waitAMicrotask();
 
-    if (event.defaultPrevented) return;
+    if (event.defaultPrevented) return false;
 
     const properties = this._selectionProperties;
 
-    if (!properties) return;
+    if (!properties) return false;
 
     const { member, required = false } = properties;
 
@@ -149,29 +136,26 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
     const hostSelected = this._host[member];
     const newHostSelected = !hostSelected;
 
-    if (required && !newHostSelected && selectedSiblings.length === 0) return;
+    if (required && !newHostSelected && selectedSiblings.length === 0) {
+      return false;
+    }
 
     // @ts-expect-error This is alright, because we expect to recieve a
     // boolean member.
     this._host[member] = newHostSelected;
 
-    this._onSelect?.(newHostSelected, properties);
+    return true;
   }
 
   public async handleKeyDown(event: KeyboardEvent) {
-    if ("disabled" in this._host && this._host.disabled) return;
+    if ("disabled" in this._host && this._host.disabled) return false;
 
     // allow event to propagate to user code after a microtask.
     await waitAMicrotask();
 
-    if (event.defaultPrevented) return;
+    if (event.defaultPrevented) return false;
 
-    if (![KeyboardKeys.SPACE, KeyboardKeys.ENTER].includes(event.key)) return;
-    if (!event.currentTarget) return;
-
-    event.preventDefault();
-
-    (event.target as HTMLElement).click();
+    return true;
   }
 }
 
