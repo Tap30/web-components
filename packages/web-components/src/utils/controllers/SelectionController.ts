@@ -45,6 +45,8 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
     this._hostTagName = hostTagName;
     this._selectionPropertiesResolver = selectionProperties;
 
+    host.addController(this);
+
     this.handleClick = this.handleClick.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleSelectionChange = this.handleSelectionChange.bind(this);
@@ -87,6 +89,10 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
 
     if (this._host[selectionMember]) this._applySelectionProperties();
   }
+
+  public hostDisconnected() {}
+  public hostUpdate() {}
+  public hostUpdated() {}
 
   /**
    * Should be called whenever the host's selection property changes
