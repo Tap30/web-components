@@ -12,10 +12,14 @@ type Host = SelectionElement<BottomNavigationItem>;
  */
 class NavItemSelectionController extends SelectionController<BottomNavigationItem> {
   constructor(host: Host) {
-    super(host, "tapsi-bottom-navigation-item", {
-      member: "active",
-      mode: "single",
-      required: true,
+    super(host, {
+      tagName: "tapsi-bottom-navigation-item",
+      resolveParentTarget: () => host.closest("tapsi-bottom-navigation"),
+      selectionProperties: {
+        member: "active",
+        mode: "single",
+        required: true,
+      },
     });
   }
 

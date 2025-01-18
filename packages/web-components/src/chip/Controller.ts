@@ -12,14 +12,18 @@ type Host = SelectionElement<Chip>;
  */
 class ChipSelectionController extends SelectionController<Chip> {
   constructor(host: Host) {
-    super(host, "tapsi-chip", () => {
-      const chipGroup = this._host.closest("tapsi-chip-group");
+    super(host, {
+      tagName: "tapsi-chip",
+      resolveParentTarget: () => this._host.closest("tapsi-chip-group"),
+      selectionProperties: () => {
+        const chipGroup = this._host.closest("tapsi-chip-group");
 
-      return {
-        member: "selected",
-        mode: chipGroup?.selectMode ?? "multiple",
-        required: chipGroup?.selectionRequired ?? false,
-      };
+        return {
+          member: "selected",
+          mode: chipGroup?.selectMode ?? "multiple",
+          required: chipGroup?.selectionRequired ?? false,
+        };
+      },
     });
   }
 

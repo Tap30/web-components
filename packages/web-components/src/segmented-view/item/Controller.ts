@@ -19,10 +19,14 @@ class ItemSelectionController extends SelectionController<SegmentedViewItem> {
   private _focused = false;
 
   constructor(host: Host) {
-    super(host, "tapsi-segmented-view-item", {
-      member: "active",
-      mode: "single",
-      required: true,
+    super(host, {
+      tagName: "tapsi-segmented-view-item",
+      resolveParentTarget: () => host.closest("tapsi-segmented-view"),
+      selectionProperties: {
+        member: "active",
+        mode: "single",
+        required: true,
+      },
     });
 
     this._handleFocusIn = this._handleFocusIn.bind(this);
