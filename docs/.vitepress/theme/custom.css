@@ -12,3 +12,13 @@
   gap: 12px;
   flex-wrap: wrap;
 }
+
+.table-wrapper {
+  width: 100%;
+  overflow: auto;
+}
+
+.vp-doc table {
+  min-width: 688px;
+  display: table;
+}
