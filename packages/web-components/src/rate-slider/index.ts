@@ -38,7 +38,7 @@ import styles from "./rate-slider.style";
  * @method stepUp
  * @description - Increments the value of the input.
  *
- * @fires {Event} change - Fired when value changes.
+ * @fires {Event} change - Fired when value changes (bubbles).
  */
 @customElement("tapsi-rate-slider")
 export class TapsiRateSlider extends RateSlider {
