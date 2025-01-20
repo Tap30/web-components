@@ -60,24 +60,30 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
     this.handleSelectionChange = this.handleSelectionChange.bind(this);
   }
 
-  private get _rootNode() {
-    const rootNode = this._host.getRootNode() as RootNode | null;
-
-    return rootNode;
-  }
-
   protected get _elements(): [SelectionElement<T>, ...SelectionElement<T>[]] {
-    if (!this._rootNode || !this._host.isConnected) return [this._host];
+    const parentTarget = this._parentTarget;
 
-    const parentTarget = this._resolveParentTarget(this._rootNode);
-
-    if (!parentTarget) return [this._host];
+    if (!parentTarget || !this._host.isConnected) return [this._host];
 
     return Array.from(
       parentTarget.querySelectorAll<SelectionElement<T>>(
         `${this._hostTagName}`,
       ),
     ) as unknown as [SelectionElement<T>, ...SelectionElement<T>[]];
+  }
+
+  private get _rootNode() {
+    const rootNode = this._host.getRootNode() as RootNode | null;
+
+    return rootNode;
+  }
+
+  protected get _parentTarget() {
+    const rootNode = this._rootNode;
+
+    if (!rootNode) return null;
+
+    return this._resolveParentTarget(rootNode);
   }
 
   protected get _siblings() {
@@ -153,6 +159,8 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
     if (required && !newHostSelected && selectedSiblings.length === 0) {
       return false;
     }
+
+    if (hostSelected === newHostSelected) return false;
 
     // @ts-expect-error This is alright, because we expect to recieve a
     // boolean member.
