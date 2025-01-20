@@ -6,7 +6,7 @@ import {
   codify,
   getUsageSectionMarkdown,
   tabulateData,
-} from "../internals/utils/formatters";
+} from "../utils/markdown";
 
 export default {
   paths() {
@@ -79,7 +79,7 @@ const getPropertyTable = (): string => {
         codify('"auto"'),
       ],
     ],
-  )}/n`;
+  )}\n`;
 
   return res;
 };

@@ -56,7 +56,7 @@ outline: false
 </style>
 
 <script setup>
-import '../internals/components/DocIconGrid';
+import './DocIconGrid';
 </script>
 
 

@@ -183,15 +183,9 @@ void (() => {
     text: "Icons",
     link: "icons",
     collapsed: true,
-    items: icons
-      .sort((a, b) => a.kebabName!.localeCompare(b.kebabName))
-      .map(icon => ({
-        text: icon.kebabName,
-        link: `/icons/${icon.kebabName}`,
-      })),
   };
 
-  const sidebarItems = [componentSidebarItems, iconsSidebarItem];
+  const sidebarItems = [iconsSidebarItem, componentSidebarItems];
 
   fs.writeFileSync(
     metadataFile,

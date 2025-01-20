@@ -10,7 +10,7 @@ import {
   codify,
   getUsageSectionMarkdown,
   tabulateData,
-} from "../internals/utils/formatters";
+} from "../utils/markdown";
 
 export default {
   paths() {
