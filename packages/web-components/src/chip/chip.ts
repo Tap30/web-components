@@ -29,7 +29,7 @@ export class Chip extends LitElement {
 
     this._selected = isSelected;
     this.requestUpdate("selected", prevSelected);
-    this._selectionController.handleSelectedChange();
+    this._selectionController.handleSelectionChange();
   }
 
   /**
@@ -71,6 +71,7 @@ export class Chip extends LitElement {
       logger(
         `Expected a valid \`value\` property/attribute. Received \`${this.value}\`.`,
         "chip",
+        "error",
       );
     }
 

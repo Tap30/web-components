@@ -1,15 +1,11 @@
 import { BaseEvent } from "../../utils";
 
-type EventDetails = {
-  itemValue: string;
-};
-
-export class ActivateEvent extends BaseEvent<EventDetails> {
+export class ActivateEvent extends BaseEvent<null> {
   public static readonly type = "activate";
 
-  constructor(details: EventDetails) {
+  constructor() {
     super(ActivateEvent.type, {
-      details,
+      details: null,
       bubbles: true,
       composed: true,
     });

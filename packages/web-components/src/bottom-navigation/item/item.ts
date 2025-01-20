@@ -1,17 +1,35 @@
 import { html, LitElement, type PropertyValues } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { KeyboardKeys } from "../../internals";
-import { isSSR, SystemError, waitAMicrotask } from "../../utils";
+import { isSSR, logger } from "../../utils";
 import { Slots } from "./constants";
-import { ActivateEvent } from "./events";
+import NavItemSelectionController from "./Controller";
 
 export class BottomNavigationItem extends LitElement {
+  public static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+
+  private _active = false;
+
   /**
-   * Indicates whether the item is active or not.
+   * Whether the item is active or not.
    */
   @property({ type: Boolean, reflect: true })
-  public active = false;
+  public get active() {
+    return this._active;
+  }
+
+  public set active(isActive: boolean) {
+    const prevActive = this.active;
+
+    if (prevActive === isActive) return;
+
+    this._active = isActive;
+    this.requestUpdate("active", prevActive);
+    this._selectionController.handleSelectionChange();
+  }
 
   /**
    * The value associated with the item.
@@ -26,13 +44,16 @@ export class BottomNavigationItem extends LitElement {
   @queryAssignedNodes({ slot: Slots.ICON })
   private _iconSlotNodes!: Node[];
 
+  private readonly _selectionController = new NavItemSelectionController(this);
+
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (!this.value) {
-      throw new SystemError(
+      logger(
         `Expected a valid \`value\` property/attribute. Received \`${this.value}\`.`,
         "bottom-navigation-item",
+        "error",
       );
     }
   }
@@ -57,31 +78,6 @@ export class BottomNavigationItem extends LitElement {
     this.renderRoot?.querySelector<HTMLElement>("#root")?.blur();
   }
 
-  private async _handleClick(event: MouseEvent) {
-    if (this.active) return;
-
-    // allow event to propagate to user code after a microtask.
-    await waitAMicrotask();
-
-    if (event.defaultPrevented) return;
-
-    this.active = true;
-
-    this.dispatchEvent(new ActivateEvent());
-  }
-
-  private async _handleKeyDown(event: KeyboardEvent) {
-    // allow event to propagate to user code after a microtask.
-    await waitAMicrotask();
-
-    if (event.defaultPrevented) return;
-
-    if (event.key !== KeyboardKeys.ENTER) return;
-    if (!event.currentTarget) return;
-
-    (event.currentTarget as HTMLElement).click();
-  }
-
   protected override render() {
     const rootClasses = classMap({
       root: true,
@@ -95,8 +91,8 @@ export class BottomNavigationItem extends LitElement {
         class=${rootClasses}
         aria-selected=${this.active ? "true" : "false"}
         data-value=${this.value}
-        @click=${this._handleClick}
-        @keydown=${this._handleKeyDown}
+        @click=${this._selectionController.handleClick}
+        @keydown=${this._selectionController.handleKeyDown}
       >
         <div
           aria-hidden
