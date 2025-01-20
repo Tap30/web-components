@@ -1,8 +1,7 @@
-import { html, LitElement, type PropertyValues } from "lit";
+import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { logger } from "../../utils";
-import { SynchronizeRequestEvent } from "../events";
 import ItemSelectionController from "./Controller";
 
 export class PinwheelItem extends LitElement {
@@ -34,14 +33,6 @@ export class PinwheelItem extends LitElement {
   public value = "";
 
   private readonly _selectionController = new ItemSelectionController(this);
-
-  protected override updated(changed: PropertyValues<this>) {
-    super.updated(changed);
-
-    if (changed.has("selected") && this.hasUpdated) {
-      this.dispatchEvent(new SynchronizeRequestEvent());
-    }
-  }
 
   protected override render() {
     if (!this.value) {
