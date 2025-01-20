@@ -31,6 +31,9 @@ export { ItemSlots };
 export class TapsiBottomNavigationItem extends BottomNavigationItem {
   public static override readonly styles = [itemStyles];
 
+  /**
+   * @internal
+   */
   declare addEventListener: <K extends keyof TapsiBottomNavigationItemEventMap>(
     type: K,
     listener: (
@@ -40,6 +43,9 @@ export class TapsiBottomNavigationItem extends BottomNavigationItem {
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
+  /**
+   * @internal
+   */
   declare removeEventListener: <
     K extends keyof TapsiBottomNavigationItemEventMap,
   >(
@@ -78,6 +84,9 @@ interface TapsiBottomNavigationItemEventMap extends HTMLElementEventMap {
 export class TapsiBottomNavigation extends BottomNavigation {
   public static override readonly styles = [bottomNavigationStyles];
 
+  /**
+   * @internal
+   */
   declare addEventListener: <K extends keyof TapsiBottomNavigationEventMap>(
     type: K,
     listener: (
@@ -87,6 +96,9 @@ export class TapsiBottomNavigation extends BottomNavigation {
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
+  /**
+   * @internal
+   */
   declare removeEventListener: <K extends keyof TapsiBottomNavigationEventMap>(
     type: K,
     listener: (

@@ -37,6 +37,9 @@ export { ItemSlots };
 export class TapsiSegmentedViewItem extends SegmentedViewItem {
   public static override readonly styles = [itemStyles];
 
+  /**
+   * @internal
+   */
   declare addEventListener: <K extends keyof TapsiSegmentedViewItemEventMap>(
     type: K,
     listener: (
@@ -46,6 +49,9 @@ export class TapsiSegmentedViewItem extends SegmentedViewItem {
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
+  /**
+   * @internal
+   */
   declare removeEventListener: <K extends keyof TapsiSegmentedViewItemEventMap>(
     type: K,
     listener: (
@@ -77,12 +83,18 @@ interface TapsiSegmentedViewItemEventMap extends HTMLElementEventMap {
 export class TapsiSegmentedView extends SegmentedView {
   public static override readonly styles = [segmentedViewStyles];
 
+  /**
+   * @internal
+   */
   declare addEventListener: <K extends keyof TapsiSegmentedViewMap>(
     type: K,
     listener: (this: TapsiSegmentedView, ev: TapsiSegmentedViewMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
+  /**
+   * @internal
+   */
   declare removeEventListener: <K extends keyof TapsiSegmentedViewMap>(
     type: K,
     listener: (this: TapsiSegmentedView, ev: TapsiSegmentedViewMap[K]) => void,

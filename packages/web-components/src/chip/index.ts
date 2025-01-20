@@ -29,12 +29,18 @@ export { DeselectEvent, SelectEvent };
 export class TapsiChip extends Chip {
   public static override readonly styles = [styles];
 
+  /**
+   * @internal
+   */
   declare addEventListener: <K extends keyof TapsiChipEventMap>(
     type: K,
     listener: (this: TapsiChip, ev: TapsiChipEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
+  /**
+   * @internal
+   */
   declare removeEventListener: <K extends keyof TapsiChipEventMap>(
     type: K,
     listener: (this: TapsiChip, ev: TapsiChipEventMap[K]) => void,

@@ -69,4 +69,3 @@ out-tsc
 # Vitepress
 docs/.vitepress/dist
 docs/.vitepress/cache
-docs/dev/components/custom-elements.json

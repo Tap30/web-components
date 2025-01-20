@@ -21,8 +21,8 @@ export * from "./events";
  *
  * @slot icon - The slot for icon when color is `inverse`.
  *
- * @fires {ShowEvent} show - Fires when the snackbar should be visible.
- * @fires {HideEvent} hide - Fires when the snackbar should be hidden.
+ * @fires {ShowEvent} show - Fires when the snackbar should be visible. (cancelable)
+ * @fires {HideEvent} hide - Fires when the snackbar should be hidden. (cancelable)
  *
  * @method show
  * @description - Opens the snackbar if it is not already open.
@@ -36,12 +36,18 @@ export * from "./events";
 export class TapsiSnackbar extends Snackbar {
   public static override readonly styles = [styles];
 
+  /**
+   * @internal
+   */
   declare addEventListener: <K extends keyof TapsiSnackbarEventMap>(
     type: K,
     listener: (this: TapsiSnackbar, ev: TapsiSnackbarEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
+  /**
+   * @internal
+   */
   declare removeEventListener: <K extends keyof TapsiSnackbarEventMap>(
     type: K,
     listener: (this: TapsiSnackbar, ev: TapsiSnackbarEventMap[K]) => void,

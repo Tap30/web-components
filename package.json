@@ -34,12 +34,10 @@
     "docs:vitepress:dev": "vitepress dev docs",
     "docs:vitepress:build": "vitepress build docs",
     "docs:vitepress:preview": "vitepress preview docs",
-    "docs:custom-elements:dev": "shx cp ./dist/custom-elements.json ./docs/dev/components/custom-elements.json",
-    "docs:custom-elements:prod": "shx cp ./dist/custom-elements.json ./docs/.vitepress/dist/dev/components/custom-elements.json",
-    "docs:elements-config:prod": "shx cp ./docs/dev/components/elements-config.json ./docs/.vitepress/dist/dev/components/elements-config.json",
-    "docs:dev": "run-s analyze docs:custom-elements:dev docs:vitepress:dev",
-    "docs:build": "run-s analyze docs:vitepress:build docs:custom-elements:prod docs:elements-config:prod",
+    "docs:dev": "run-s analyze docs:gen:metadata docs:vitepress:dev",
+    "docs:build": "run-s analyze docs:gen:metadata docs:vitepress:build",
     "docs:preview": "run-s docs:vitepress:preview",
+    "docs:gen:metadata": "tsx ./scripts/generate-docs-metadata.ts",
     "analyze": "tsx ./scripts/generate-cem.ts"
   },
   "devDependencies": {

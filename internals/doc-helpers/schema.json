@@ -39,14 +39,28 @@
               "type": "object",
               "properties": {
                 "name": { "type": "string" },
-                "path": { "type": "string", "pattern": "^(\\/|(\\.\\.?\\/)+)?([a-zA-Z0-9-_]+\\/)*[a-zA-Z0-9-_]+\\.html$" },
+                "path": {
+                  "type": "string",
+                  "pattern": "^(\\/|(\\.\\.?\\/)+)?([a-zA-Z0-9-_]+\\/)*[a-zA-Z0-9-_]+\\.html$"
+                },
                 "mutates": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "target": { "type": "string", "pattern": "^props#[a-zA-Z][\\w-]*$" },
-                      "value": { "type": ["string", "number", "boolean", "object", "null"] }
+                      "target": {
+                        "type": "string",
+                        "pattern": "^props#[a-zA-Z][\\w-]*$"
+                      },
+                      "value": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean",
+                          "object",
+                          "null"
+                        ]
+                      }
                     },
                     "required": ["target", "value"]
                   }
