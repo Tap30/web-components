@@ -24,6 +24,16 @@ export class TextArea extends BaseTextInput {
   @property({ type: Number })
   public cols = 20;
 
+  /**
+   * Hints at the type of data that might be entered by the user while editing
+   * the element or its contents. This allows a browser to display an
+   * appropriate virtual keyboard.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode
+   */
+  @property({ type: String })
+  public override inputMode = "";
+
   public override [createValidator](): Validator<unknown> {
     return new TextAreaValidator(() => ({
       state: this,
