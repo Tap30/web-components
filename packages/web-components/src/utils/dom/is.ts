@@ -87,8 +87,13 @@ export const isElementFocusable = (element: Element): boolean => {
 
 export const isActiveElement = (element: Element): boolean => {
   if (!document.activeElement) return false;
+  if (document.activeElement === element) return true;
+  if (!document.activeElement.shadowRoot) return false;
 
+  const innerActiveElement = document.activeElement.shadowRoot.activeElement;
+
+  if (!innerActiveElement) return false;
   if (document.activeElement === element) return true;
 
-  return contains(element, document.activeElement);
+  return false;
 };
