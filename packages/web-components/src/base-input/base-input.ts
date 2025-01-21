@@ -65,9 +65,6 @@ export abstract class BaseInput extends BaseClass {
   @property({ type: String })
   public labelledBy = "";
 
-  @property({ type: String })
-  public override inputMode = "";
-
   constructor() {
     super();
 
@@ -108,11 +105,11 @@ export abstract class BaseInput extends BaseClass {
     return this.getInputElement();
   }
 
-  override focus(options?: FocusOptions): void {
+  public override focus(options?: FocusOptions): void {
     this.getInputElement()?.focus(options);
   }
 
-  override blur(): void {
+  public override blur(): void {
     this.getInputElement()?.blur();
   }
 
