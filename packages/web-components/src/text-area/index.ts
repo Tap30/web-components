@@ -86,6 +86,13 @@ export { BaseTextInputSlots as Slots };
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#cols
  *
+ * @prop {string} [inputmode=""] -
+ * Hints at the type of data that might be entered by the user while editing
+ * the element or its contents. This allows a browser to display an
+ * appropriate virtual keyboard.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode
+ *
  * @slot leading-icon - the leading icon slot of the text-area
  * @slot trailing - the trailing slot of the text-area
  */
