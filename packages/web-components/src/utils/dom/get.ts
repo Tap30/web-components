@@ -77,3 +77,14 @@ export const getRenderRootSlot = (
 
   return renderRoot.querySelector<HTMLSlotElement>(query);
 };
+
+export const getActualActiveElement = () => {
+  const deepCheck = (element: Element | null): Element | null => {
+    if (!element) return null;
+    if (!element.shadowRoot) return element;
+
+    return deepCheck(element.shadowRoot.activeElement);
+  };
+
+  return deepCheck(document.activeElement);
+};
