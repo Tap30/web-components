@@ -1,10 +1,10 @@
 import { customElement } from "lit/decorators.js";
 import type { HideEvent, ShowEvent } from "./events";
-import { Modal } from "./modal";
-import styles from "./modal.style";
+import styles from "./modal.style.ts";
+import { Modal } from "./modal.ts";
 
-export { Slots } from "./constants";
-export * from "./events";
+export { Slots } from "./constants.ts";
+export * from "./events.ts";
 
 /**
  * @summary The modal component.

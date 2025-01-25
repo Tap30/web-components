@@ -1,7 +1,7 @@
 import { customElement } from "lit/decorators.js";
-import { baseInputStyles } from "../base-input";
-import { Radio } from "./radio";
-import styles from "./radio.style";
+import { baseInputStyles } from "../base-input/index.ts";
+import styles from "./radio.style.ts";
+import { Radio } from "./radio.ts";
 
 /**
  * @summary The radio component.

@@ -6,17 +6,17 @@ import {
 } from "lit";
 import { property, query, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { KeyboardKeys } from "../internals";
+import { KeyboardKeys } from "../internals/index.ts";
 import {
   AnimationController,
   FocusTrapper,
-  isSSR,
+  isSsr,
   runAfterRepaint,
   ScrollLocker,
   waitAMicrotask,
-} from "../utils";
-import { Slots } from "./constants";
-import { HideEvent, ShowEvent } from "./events";
+} from "../utils/index.ts";
+import { Slots } from "./constants.ts";
+import { HideEvent, ShowEvent } from "./events.ts";
 
 export class Modal extends LitElement {
   public static override readonly shadowRootOptions = {
@@ -189,7 +189,7 @@ export class Modal extends LitElement {
   }
 
   private _handleImageSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasImageSlot = this._imageSlotNodes.length > 0;
     }
   }

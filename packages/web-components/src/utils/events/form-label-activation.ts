@@ -1,4 +1,4 @@
-import { waitAMicrotask } from "../event-loop-execution";
+import { waitAMicrotask } from "../event-loop-execution.ts";
 
 /**
  * Dispatches a click event to the given element that triggers a native action,

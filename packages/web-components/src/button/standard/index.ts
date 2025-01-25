@@ -1,10 +1,10 @@
 import { customElement } from "lit/decorators.js";
-import { baseButtonStyles } from "../base";
-import standardButtonStyles from "./button.style";
+import { baseButtonStyles } from "../base/index.ts";
+import standardButtonStyles from "./button.style.ts";
 
-import { Button } from "./button";
+import { Button } from "./button.ts";
 
-export { Slots } from "./constants";
+export { Slots } from "./constants.ts";
 
 /**
  * @summary A customizable button component with various styles and states.

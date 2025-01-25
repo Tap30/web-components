@@ -1,7 +1,7 @@
 import { customElement } from "lit/decorators.js";
-import baseInputStyle from "../base-input/base-input.style";
-import { Checkbox } from "./checkbox";
-import styles from "./checkbox.style";
+import baseInputStyle from "../base-input/base-input.style.ts";
+import styles from "./checkbox.style.ts";
+import { Checkbox } from "./checkbox.ts";
 
 /**
  * @summary A checkbox component.

@@ -1,2 +1,2 @@
-export * from "./get";
-export * from "./is";
+export * from "./get.ts";
+export * from "./is.ts";

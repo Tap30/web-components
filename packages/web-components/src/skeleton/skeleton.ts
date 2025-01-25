@@ -2,7 +2,7 @@ import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap, type StyleInfo } from "lit/directives/style-map.js";
-import { logger } from "../utils";
+import { logger } from "../utils/index.ts";
 
 export class Skeleton extends LitElement {
   /**

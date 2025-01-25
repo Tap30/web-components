@@ -1,8 +1,8 @@
 import { customElement } from "lit/decorators.js";
-import { Skeleton } from "./skeleton";
-import styles from "./skeleton.style";
+import styles from "./skeleton.style.ts";
+import { Skeleton } from "./skeleton.ts";
 
-export { Slots } from "./constants";
+export { Slots } from "./constants.ts";
 
 /**
  * @summary The skeleton component.

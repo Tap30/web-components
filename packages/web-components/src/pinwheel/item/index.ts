@@ -1,2 +1,2 @@
-export { Slots } from "./constants";
-export { PinwheelItem } from "./item";
+export { Slots } from "./constants.ts";
+export { PinwheelItem } from "./item.ts";

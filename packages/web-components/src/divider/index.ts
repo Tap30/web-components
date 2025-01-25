@@ -1,6 +1,6 @@
 import { customElement } from "lit/decorators.js";
-import { Divider } from "./divider.js";
-import styles from "./divider.style.js";
+import styles from "./divider.style.ts";
+import { Divider } from "./divider.ts";
 
 /**
  * @summary A divider component used to separate content.

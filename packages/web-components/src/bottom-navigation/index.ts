@@ -1,17 +1,17 @@
 import { customElement } from "lit/decorators.js";
-import { BottomNavigation } from "./bottom-navigation";
-import bottomNavigationStyles from "./bottom-navigation.style";
-import { type ActiveChangeEvent } from "./events";
+import bottomNavigationStyles from "./bottom-navigation.style.ts";
+import { BottomNavigation } from "./bottom-navigation.ts";
+import { type ActiveChangeEvent } from "./events.ts";
 import {
   type ActivateEvent,
   BottomNavigationItem,
   Slots as ItemSlots,
-} from "./item";
-import itemStyles from "./item/item.style";
+} from "./item/index.ts";
+import itemStyles from "./item/item.style.ts";
 
-export { Slots } from "./constants";
-export * from "./events";
-export * from "./item/events";
+export { Slots } from "./constants.ts";
+export * from "./events.ts";
+export * from "./item/events.ts";
 export { ItemSlots };
 
 /**

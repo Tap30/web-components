@@ -1,6 +1,6 @@
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
-import { logger } from "../utils";
+import { logger } from "../utils/index.ts";
 
 export class PinwheelGroup extends LitElement {
   /**

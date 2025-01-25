@@ -1,12 +1,12 @@
-import "../button/icon-button";
+import "../button/icon-button/index.ts";
 
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { isSSR, logger } from "../utils";
-import { Slots } from "./constants";
-import { HideEvent, ShowEvent } from "./events";
-import { close, error, info, success, warning } from "./icons";
+import { isSsr, logger } from "../utils/index.ts";
+import { Slots } from "./constants.ts";
+import { HideEvent, ShowEvent } from "./events.ts";
+import { close, error, info, success, warning } from "./icons.ts";
 
 export class Notice extends LitElement {
   public static override readonly shadowRootOptions: ShadowRootInit = {
@@ -94,7 +94,7 @@ export class Notice extends LitElement {
   }
 
   private _handleArtworkSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasCustomArtworkSlot = this._customArtworkSlotNodes.length > 0;
 
       if (this.artwork === "custom" && !this._hasCustomArtworkSlot) {
@@ -116,7 +116,7 @@ export class Notice extends LitElement {
   }
 
   private _handleActionSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasActionSlot = this._actionSlotNodes.length > 0;
     }
   }

@@ -1,7 +1,7 @@
 import { html, nothing } from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import BaseInput from "../base-input";
+import BaseInput from "../base-input/index.ts";
 import {
   createValidator,
   getFormState,
@@ -9,8 +9,8 @@ import {
   logger,
   onReportValidity,
   redispatchEvent,
-} from "../utils";
-import CheckboxValidator from "./Validator";
+} from "../utils/index.ts";
+import CheckboxValidator from "./Validator.ts";
 
 export class Checkbox extends BaseInput {
   /**

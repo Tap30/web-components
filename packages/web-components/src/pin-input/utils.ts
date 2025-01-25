@@ -10,4 +10,4 @@ export const stringConverter: PropertyDeclaration["converter"] = {
 };
 
 export const isNumeric = (str: string) => /^[0-9]+$/.test(str);
-export const isAlphaNumberic = (str: string) => /^[a-zA-Z0-9]+$/i.test(str);
+export const isAlphaNumeric = (str: string) => /^[a-zA-Z0-9]+$/i.test(str);

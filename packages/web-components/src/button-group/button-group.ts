@@ -1,7 +1,7 @@
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { logger } from "../utils";
+import { logger } from "../utils/index.ts";
 
 export class ButtonGroup extends LitElement {
   /**

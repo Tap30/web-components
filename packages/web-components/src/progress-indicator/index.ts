@@ -1,6 +1,6 @@
 import { customElement } from "lit/decorators.js";
-import { ProgressIndicator } from "./progress-indicator.js";
-import styles from "./progress-indicator.style.js";
+import styles from "./progress-indicator.style.ts";
+import { ProgressIndicator } from "./progress-indicator.ts";
 
 /**
  * @summary A progress indicator component displaying multiple steps.

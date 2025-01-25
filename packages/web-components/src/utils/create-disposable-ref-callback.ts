@@ -1,4 +1,4 @@
-import type { DirectiveResult } from "lit/async-directive";
+import type { DirectiveResult } from "lit/async-directive.js";
 import { ref, type RefDirective } from "lit/directives/ref.js";
 
 type CleanupFunction = () => void | undefined;
