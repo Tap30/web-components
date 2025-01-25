@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "node:path";
 import { type DefaultTheme } from "vitepress";
-import { type Metadata } from "../internals/doc-helpers/types";
-import { getFileMeta } from "../scripts/utils";
+import { type Metadata } from "../internals/doc-helpers/types.ts";
+import { getFileMeta } from "../scripts/utils.ts";
 
 const { dirname } = getFileMeta(import.meta.url);
 

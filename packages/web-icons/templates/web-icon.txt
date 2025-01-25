@@ -1,4 +1,4 @@
-import BaseIcon from "./base-icon";
+import BaseIcon from "./base-icon.ts";
 
 class {{name}} extends BaseIcon {
   constructor() {

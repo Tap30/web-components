@@ -9,7 +9,7 @@ import { promisify } from "node:util";
 import { chain } from "stream-chain";
 import Parser from "stream-json/Parser";
 import StreamValues from "stream-json/streamers/StreamValues";
-import { fileExists, getFileMeta } from "../../../scripts/utils";
+import { fileExists, getFileMeta } from "../../../scripts/utils.ts";
 
 const asyncExec = promisify(exec);
 
