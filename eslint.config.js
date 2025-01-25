@@ -25,7 +25,6 @@ export default config(
         project: true,
         projectService: {
           defaultProject: "./tsconfig.json",
-          allowDefaultProject: ["playground/vite.config.ts"],
         },
         sourceType: "module",
       },
@@ -56,6 +55,13 @@ export default config(
       "no-unused-private-class-members": "warn",
       "no-promise-executor-return": "error",
       "no-unmodified-loop-condition": "warn",
+      "import/extensions": [
+        "error",
+        "always",
+        {
+          ignorePackages: true,
+        },
+      ],
       eqeqeq: ["error", "smart"],
       "no-duplicate-imports": [
         "error",
