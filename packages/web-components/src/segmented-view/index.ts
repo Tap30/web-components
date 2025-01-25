@@ -1,16 +1,16 @@
 import { customElement } from "lit/decorators.js";
-import { type ActiveChangeEvent } from "./events";
+import { type ActiveChangeEvent } from "./events.ts";
 import {
   type ActivateEvent,
   Slots as ItemSlots,
   SegmentedViewItem,
-} from "./item";
-import itemStyles from "./item/item.style";
-import { SegmentedView } from "./segmented-view";
-import segmentedViewStyles from "./segmented-view.style";
+} from "./item/index.ts";
+import itemStyles from "./item/item.style.ts";
+import segmentedViewStyles from "./segmented-view.style.ts";
+import { SegmentedView } from "./segmented-view.ts";
 
-export { Slots } from "./constants";
-export * from "./events";
+export { Slots } from "./constants.ts";
+export * from "./events.ts";
 export { ItemSlots };
 
 /**

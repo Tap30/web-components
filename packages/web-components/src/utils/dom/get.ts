@@ -1,4 +1,4 @@
-import { isHTMLElement, isShadowRoot, isWindow } from "./is";
+import { isHTMLElement, isShadowRoot, isWindow } from "./is.ts";
 
 export const getWindow = (node: Node | Window): Window => {
   if (!node) return window;

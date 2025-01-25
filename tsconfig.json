@@ -19,6 +19,7 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "rewriteRelativeImportExtensions": true,
     "noImplicitReturns": true,
     "noImplicitOverride": true,
     "noUnusedLocals": true,
@@ -49,6 +50,6 @@
       "@tapsioss/theme": ["./packages/theme/dist/index.css"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "docs/.vitepress"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }

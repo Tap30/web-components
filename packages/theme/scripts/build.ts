@@ -2,7 +2,7 @@
 import { exec } from "node:child_process";
 import * as path from "node:path";
 import { promisify } from "node:util";
-import { ensureDirExists, getFileMeta } from "../../../scripts/utils";
+import { ensureDirExists, getFileMeta } from "../../../scripts/utils.ts";
 
 const execCmd = promisify(exec);
 

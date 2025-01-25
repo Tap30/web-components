@@ -1,2 +1,2 @@
-export { BaseInput as default } from "./base-input";
-export { default as baseInputStyles } from "./base-input.style";
+export { default as baseInputStyles } from "./base-input.style.ts";
+export { BaseInput as default } from "./base-input.ts";

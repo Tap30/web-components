@@ -1,7 +1,7 @@
 import { customElement } from "lit/decorators.js";
-import { baseInputStyles } from "../base-input";
-import { Switch } from "./switch";
-import styles from "./switch.style";
+import { baseInputStyles } from "../base-input/index.ts";
+import styles from "./switch.style.ts";
+import { Switch } from "./switch.ts";
 
 /**
  * @summary A switch component.

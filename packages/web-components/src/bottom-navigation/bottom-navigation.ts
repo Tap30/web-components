@@ -1,8 +1,8 @@
 import { LitElement, html, nothing } from "lit";
 import { property } from "lit/decorators.js";
-import { logger } from "../utils";
-import { ActiveChangeEvent } from "./events";
-import { ActivateEvent, type BottomNavigationItem } from "./item";
+import { logger } from "../utils/index.ts";
+import { ActiveChangeEvent } from "./events.ts";
+import { ActivateEvent, type BottomNavigationItem } from "./item/index.ts";
 
 export class BottomNavigation extends LitElement {
   /**

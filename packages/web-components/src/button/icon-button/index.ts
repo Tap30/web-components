@@ -1,9 +1,9 @@
 import { customElement } from "lit/decorators.js";
-import { baseButtonStyles } from "../base";
-import { IconButton } from "./icon-button";
-import iconButtonStyles from "./icon-button.style";
+import { baseButtonStyles } from "../base/index.ts";
+import iconButtonStyles from "./icon-button.style.ts";
+import { IconButton } from "./icon-button.ts";
 
-export { Slots } from "./constants";
+export { Slots } from "./constants.ts";
 
 /**
  * @summary A customizable icon button component with various styles and states.

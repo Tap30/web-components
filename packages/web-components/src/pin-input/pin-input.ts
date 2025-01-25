@@ -2,8 +2,8 @@ import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { live } from "lit/directives/live.js";
-import { requestFormSubmit } from "../base-input/utils";
-import { KeyboardKeys } from "../internals";
+import { requestFormSubmit } from "../base-input/utils.ts";
+import { KeyboardKeys } from "../internals/index.ts";
 import {
   createValidator,
   dispatchActivationClick,
@@ -12,7 +12,7 @@ import {
   isActivationClick,
   isHTMLElement,
   isHTMLInputElement,
-  isSSR,
+  isSsr,
   logger,
   onReportValidity,
   redispatchEvent,
@@ -24,11 +24,11 @@ import {
   withFormAssociated,
   withOnReportValidity,
   type Validator,
-} from "../utils";
-import { DEFAULT_DISPLAY_VALUE } from "./constants";
-import { CompleteEvent } from "./events";
-import { isAlphaNumberic, isNumeric, stringConverter } from "./utils";
-import PinInputValidator from "./Validator";
+} from "../utils/index.ts";
+import { DEFAULT_DISPLAY_VALUE } from "./constants.ts";
+import { CompleteEvent } from "./events.ts";
+import { isAlphaNumeric, isNumeric, stringConverter } from "./utils.ts";
+import PinInputValidator from "./Validator.ts";
 
 const BaseClass = withOnReportValidity(
   withConstraintValidation(
@@ -343,7 +343,7 @@ export class PinInput extends BaseClass {
    * The value as an array.
    */
   public get valueAsArray() {
-    if (isSSR() || !this.isConnected) return this._values;
+    if (isSsr() || !this.isConnected) return this._values;
 
     return this._pins.map(pin => pin.value);
   }
@@ -416,7 +416,7 @@ export class PinInput extends BaseClass {
     if (!value) return true;
     if (this.type === "numeric") return isNumeric(value);
 
-    return isAlphaNumberic(value);
+    return isAlphaNumeric(value);
   }
 
   private async _handleActivationClick(event: MouseEvent) {

@@ -1,12 +1,12 @@
 import { LitElement, type PropertyValues, html } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { isSSR } from "../utils";
+import { isSsr } from "../utils/index.ts";
 import {
   DEFAULT_BACKGROUND_COLOR,
   DEFAULT_TEXT_COLOR,
   Slots,
-} from "./constants";
+} from "./constants.ts";
 
 export class Banner extends LitElement {
   /**
@@ -89,7 +89,7 @@ export class Banner extends LitElement {
   }
 
   private _handleActionSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasActionSlot = this._actionSlotNodes.length > 0;
     }
   }

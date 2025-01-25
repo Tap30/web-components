@@ -2,8 +2,8 @@ import { html, LitElement, type PropertyValues } from "lit";
 import type { DirectiveResult } from "lit/async-directive";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
-import { isSSR } from "../utils";
-import { Slots } from "./constants";
+import { isSsr } from "../utils/index.ts";
+import { Slots } from "./constants.ts";
 
 type ClassMap = DirectiveResult<typeof ClassMapDirective>;
 
@@ -51,7 +51,7 @@ export class Badge extends LitElement {
   }
 
   private _handleIconSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasIconSlot = this._iconSlotNodes.length > 0;
     }
   }

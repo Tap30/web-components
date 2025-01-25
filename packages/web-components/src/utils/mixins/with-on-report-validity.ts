@@ -1,9 +1,12 @@
 import { type LitElement } from "lit";
-import isSSR from "../is-ssr";
-import SystemError from "../SystemError";
+import isSsr from "../is-ssr.ts";
+import SystemError from "../SystemError.ts";
 import type { MixinBase, MixinReturn } from "./types";
 import type { ConstraintValidation } from "./with-constraint-validation";
-import { internals, type WithElementInternals } from "./with-element-internals";
+import {
+  internals,
+  type WithElementInternals,
+} from "./with-element-internals.ts";
 
 /**
  * A symbol property used for a callback when validity has been reported.
@@ -244,7 +247,7 @@ const withOnReportValidity = <
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       super(...args);
 
-      if (isSSR()) return;
+      if (isSsr()) return;
 
       this.addEventListener(
         "invalid",

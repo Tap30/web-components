@@ -1,5 +1,5 @@
 import { css } from "lit";
-import { FOCUS_RING_LINE, FOCUS_RING_OFFSET } from "../internals";
+import { FOCUS_RING_LINE, FOCUS_RING_OFFSET } from "../internals/index.ts";
 
 export default css`
   *,

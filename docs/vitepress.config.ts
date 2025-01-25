@@ -1,6 +1,6 @@
 import { defineConfig } from "vitepress";
-import sidebar from "./sidebar";
-import socialLinks from "./social-links";
+import sidebar from "./sidebar.ts";
+import socialLinks from "./social-links.ts";
 
 export default defineConfig({
   title: "Tapsi components",

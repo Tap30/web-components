@@ -1,10 +1,10 @@
-import "../../avatar";
+import "../../avatar/index.ts";
 
 import { html, type TemplateResult } from "lit";
 import type { DirectiveResult } from "lit/async-directive";
 import { property } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
-import { BaseChatBubble } from "../base";
+import { BaseChatBubble } from "../base/index.ts";
 
 class ChatBubbleOut extends BaseChatBubble {
   /**

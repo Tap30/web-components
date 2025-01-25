@@ -1,4 +1,4 @@
-import { BaseEvent } from "../utils";
+import { BaseEvent } from "../utils/index.ts";
 
 export class CompleteEvent extends BaseEvent<null> {
   public static readonly type = "complete";
@@ -7,7 +7,6 @@ export class CompleteEvent extends BaseEvent<null> {
     super(CompleteEvent.type, {
       details: null,
       composed: true,
-      bubbles: true,
     });
   }
 }

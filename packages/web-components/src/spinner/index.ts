@@ -1,6 +1,6 @@
 import { customElement } from "lit/decorators.js";
-import { Spinner } from "./spinner";
-import styles from "./spinner.style";
+import styles from "./spinner.style.ts";
+import { Spinner } from "./spinner.ts";
 
 /**
  * @summary A spinner component for loading states.

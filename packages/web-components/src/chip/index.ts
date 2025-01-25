@@ -1,9 +1,9 @@
 import { customElement } from "lit/decorators.js";
-import { Chip } from "./chip";
-import styles from "./chip.style";
-import { DeselectEvent, SelectEvent } from "./events";
+import styles from "./chip.style.ts";
+import { Chip } from "./chip.ts";
+import { DeselectEvent, SelectEvent } from "./events.ts";
 
-export { Slots } from "./constants";
+export { Slots } from "./constants.ts";
 export { DeselectEvent, SelectEvent };
 
 /**

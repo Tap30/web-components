@@ -3,7 +3,7 @@ import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { map } from "lit/directives/map.js";
 import { range } from "lit/directives/range.js";
-import { logger } from "../utils";
+import { logger } from "../utils/index.ts";
 
 export class ProgressIndicator extends LitElement {
   /**

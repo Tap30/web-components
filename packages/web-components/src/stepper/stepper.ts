@@ -1,24 +1,24 @@
-import "../button/icon-button";
+import "../button/icon-button/index.ts";
 
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { requestFormSubmit } from "../base-input/utils";
-import { KeyboardKeys } from "../internals";
+import { requestFormSubmit } from "../base-input/utils.ts";
+import { KeyboardKeys } from "../internals/index.ts";
 import {
   clamp,
   dispatchActivationClick,
   getFormValue,
   isActivationClick,
-  isSSR,
+  isSsr,
   logger,
   toFaNumber,
   waitAMicrotask,
   withElementInternals,
   withFormAssociated,
-} from "../utils";
-import { DEFAULT_MAX, DEFAULT_MIN } from "./constants";
-import { minus, plus } from "./icons";
+} from "../utils/index.ts";
+import { DEFAULT_MAX, DEFAULT_MIN } from "./constants.ts";
+import { minus, plus } from "./icons.ts";
 
 const BaseClass = withFormAssociated(withElementInternals(LitElement));
 
@@ -131,7 +131,7 @@ export class Stepper extends BaseClass {
 
     this._handleKeyDown = this._handleKeyDown.bind(this);
 
-    if (!isSSR()) {
+    if (!isSsr()) {
       /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
       this.addEventListener("click", async event => {
         if (this.disabled) return;

@@ -1,9 +1,9 @@
 import { html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import BaseInput from "../base-input";
-import CheckboxValidator from "../checkbox/Validator";
-import { KeyboardKeys } from "../internals";
+import BaseInput from "../base-input/index.ts";
+import CheckboxValidator from "../checkbox/Validator.ts";
+import { KeyboardKeys } from "../internals/index.ts";
 import {
   createValidator,
   getFormState,
@@ -12,7 +12,7 @@ import {
   onReportValidity,
   redispatchEvent,
   waitAMicrotask,
-} from "../utils";
+} from "../utils/index.ts";
 
 export class Switch extends BaseInput {
   /**

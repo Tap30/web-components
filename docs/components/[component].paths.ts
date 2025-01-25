@@ -4,9 +4,9 @@ import path from "node:path";
 import {
   type Component,
   type Metadata,
-} from "../../internals/doc-helpers/types";
-import { getFileMeta } from "../../scripts/utils";
-import { codify, tabulateData } from "../utils/md";
+} from "../../internals/doc-helpers/types.ts";
+import { getFileMeta } from "../../scripts/utils.ts";
+import { codify, tabulateData } from "../utils/md.ts";
 
 export default {
   paths() {

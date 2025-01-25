@@ -3,11 +3,11 @@ import { html, LitElement, type PropertyValues } from "lit";
 import { property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap } from "lit/directives/style-map.js";
-import { KeyboardKeys } from "../internals";
-import { isSSR, waitAMicrotask } from "../utils";
-import { HideEvent, ShowEvent } from "./events";
-import { dismiss } from "./icons";
-import { rotateArrow, translate } from "./utils";
+import { KeyboardKeys } from "../internals/index.ts";
+import { isSsr, waitAMicrotask } from "../utils/index.ts";
+import { HideEvent, ShowEvent } from "./events.ts";
+import { dismiss } from "./icons.ts";
+import { rotateArrow, translate } from "./utils.ts";
 
 export class Tooltip extends LitElement {
   /**
@@ -91,7 +91,7 @@ export class Tooltip extends LitElement {
   constructor() {
     super();
 
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._handleKeyDown = this._handleKeyDown.bind(this);
       this._handleAnchorMouseEnter = this._handleAnchorMouseEnter.bind(this);
       this._handleAnchorMouseLeave = this._handleAnchorMouseLeave.bind(this);
@@ -101,7 +101,7 @@ export class Tooltip extends LitElement {
   public override connectedCallback() {
     super.connectedCallback();
 
-    if (!isSSR()) {
+    if (!isSsr()) {
       void this.updateTooltipPosition();
 
       /* eslint-disable @typescript-eslint/no-misused-promises */
@@ -274,7 +274,7 @@ export class Tooltip extends LitElement {
   }
 
   protected override render() {
-    const isVisible = isSSR() ? false : this.visible;
+    const isVisible = isSsr() ? false : this.visible;
 
     const rootClasses = classMap({
       root: true,

@@ -1,6 +1,9 @@
 import { customElement } from "lit/decorators.js";
-import { PinInput } from "./pin-input";
-import styles from "./pin-input.style";
+import type { CompleteEvent } from "./events.ts";
+import styles from "./pin-input.style.ts";
+import { PinInput } from "./pin-input.ts";
+
+export * from "./events.ts";
 
 /**
  * @summary The pin-input component.
@@ -70,10 +73,37 @@ import styles from "./pin-input.style";
  * @prop {"alphanumeric" | "numeric"} [type="alphanumeric"] -
  * Determines which values can be entered.
  * Defaults to "alphanumeric".
+ *
+ * @fires {CompleteEvent} complete - Fires when all the pins have values.
+ *
+ * @member {string[]} valueAsArray - The value as an array.
+ * @member {Function} displayValue - Retrieves or sets the function used to display values on inputs.
  */
 @customElement("tapsi-pin-input")
 export class TapsiPinInput extends PinInput {
   public static override readonly styles = [styles];
+
+  /**
+   * @internal
+   */
+  declare addEventListener: <K extends keyof TapsiPinInputEventMap>(
+    type: K,
+    listener: (this: TapsiPinInput, ev: TapsiPinInputEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /**
+   * @internal
+   */
+  declare removeEventListener: <K extends keyof TapsiPinInputEventMap>(
+    type: K,
+    listener: (this: TapsiPinInput, ev: TapsiPinInputEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiPinInputEventMap extends HTMLElementEventMap {
+  [CompleteEvent.type]: CompleteEvent;
 }
 
 declare global {

@@ -1,8 +1,8 @@
 import { customElement } from "lit/decorators.js";
-import { PinwheelGroup } from "./pinwheel-group";
-import styles from "./pinwheel-group.style";
+import styles from "./pinwheel-group.style.ts";
+import { PinwheelGroup } from "./pinwheel-group.ts";
 
-export { Slots } from "./constants";
+export { Slots } from "./constants.ts";
 
 /**
  * @summary The pinwheel group component.

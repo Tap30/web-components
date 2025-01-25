@@ -1,5 +1,5 @@
 import { type ReactiveController, type ReactiveControllerHost } from "lit";
-import { waitAMicrotask } from "../../utils";
+import { waitAMicrotask } from "../../utils/index.ts";
 
 type Getter<T> = () => T;
 

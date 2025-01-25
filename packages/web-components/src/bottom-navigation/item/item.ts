@@ -1,9 +1,9 @@
 import { html, LitElement, type PropertyValues } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { isSSR, logger } from "../../utils";
-import { Slots } from "./constants";
-import NavItemSelectionController from "./Controller";
+import { isSsr, logger } from "../../utils/index.ts";
+import { Slots } from "./constants.ts";
+import NavItemSelectionController from "./Controller.ts";
 
 export class BottomNavigationItem extends LitElement {
   public static override readonly shadowRootOptions = {
@@ -65,7 +65,7 @@ export class BottomNavigationItem extends LitElement {
   }
 
   private _handleIconSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasIconSlot = this._iconSlotNodes.length > 0;
     }
   }

@@ -1,6 +1,6 @@
 import { customElement } from "lit/decorators.js";
-import { BottomSheet } from "./bottom-sheet";
-import styles from "./bottom-sheet.style";
+import styles from "./bottom-sheet.style.ts";
+import { BottomSheet } from "./bottom-sheet.ts";
 import {
   type ClosedEvent,
   type ClosingEvent,
@@ -9,10 +9,10 @@ import {
   type OpeningEvent,
   type ShowEvent,
   type SnappedEvent,
-} from "./events";
+} from "./events.ts";
 
-export { Slots } from "./constants";
-export * from "./events";
+export { Slots } from "./constants.ts";
+export * from "./events.ts";
 
 /**
  * @summary The bottom-sheet component.

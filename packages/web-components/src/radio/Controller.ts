@@ -1,5 +1,5 @@
 import { type ReactiveController } from "lit";
-import { KeyboardKeys } from "../internals";
+import { KeyboardKeys } from "../internals/index.ts";
 
 export interface SingleSelectionElement extends HTMLElement {
   /**

@@ -1,16 +1,16 @@
 import { html, nothing, type PropertyValues, type TemplateResult } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { type ClassInfo, classMap } from "lit/directives/class-map.js";
-import BaseInput from "../base-input";
+import BaseInput from "../base-input/index.ts";
 import {
   getFormValue,
   getValidityAnchor,
-  isSSR,
+  isSsr,
   onReportValidity,
   redispatchEvent,
-} from "../utils";
-import { Slots } from "./constants";
-import { stringConverter } from "./utils";
+} from "../utils/index.ts";
+import { Slots } from "./constants.ts";
+import { stringConverter } from "./utils.ts";
 
 export abstract class BaseTextInput extends BaseInput {
   /**
@@ -228,13 +228,13 @@ export abstract class BaseTextInput extends BaseInput {
   }
 
   private _handleLeadingIconSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this.hasLeadingIconSlot = this._leadingIconSlotNodes.length > 0;
     }
   }
 
   private _handleTrailingSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this.hasTrailingSlot = this._trailingSlotNodes.length > 0;
     }
   }

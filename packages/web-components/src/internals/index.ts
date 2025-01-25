@@ -1,3 +1,3 @@
-export * from "./animations";
-export * from "./keyboard";
-export * from "./tokens";
+export * from "./animations.ts";
+export * from "./keyboard.ts";
+export * from "./tokens.ts";

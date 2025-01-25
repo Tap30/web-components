@@ -1,7 +1,7 @@
-import { KeyboardKeys } from "../internals";
-import { SelectionController, type SelectionElement } from "../utils";
+import { KeyboardKeys } from "../internals/index.ts";
+import { SelectionController, type SelectionElement } from "../utils/index.ts";
 import type { Chip } from "./chip";
-import { DeselectEvent, SelectEvent } from "./events";
+import { DeselectEvent, SelectEvent } from "./events.ts";
 
 type Host = SelectionElement<Chip>;
 

@@ -1,3 +1,3 @@
-export { default as BaseChatBubble } from "./base";
-export { default as baseStyles } from "./base.style";
-export { Slots as BaseSlots } from "./constants";
+export { default as baseStyles } from "./base.style.ts";
+export { default as BaseChatBubble } from "./base.ts";
+export { Slots as BaseSlots } from "./constants.ts";

@@ -1,8 +1,8 @@
 import { customElement } from "lit/decorators.js";
-import { ButtonGroup } from "./button-group";
-import styles from "./button-group.style";
+import styles from "./button-group.style.ts";
+import { ButtonGroup } from "./button-group.ts";
 
-export { Slots } from "./constants";
+export { Slots } from "./constants.ts";
 
 /**
  * @summary The button group component.
