@@ -4,4 +4,4 @@ If you believe you have found a security vulnerability in this repo and its pack
 
 ## How to let us know?
 
-- [Open up an issue](https://github.com/Tap30/web-components/issues/new?assignees=mimshins&labels=security&projects=&template=bug_report.md&title=)
+- [Open up an issue](https://github.com/Tap30/web-components/issues/new?assignees=mimshins&labels=security,"priority:high"&projects=&template=bug_report.md&title=fix(security):)
