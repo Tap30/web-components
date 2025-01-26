@@ -14,6 +14,7 @@ export { default as Chip } from "./Chip";
 export { default as ChipGroup } from "./ChipGroup";
 export { default as Divider } from "./Divider";
 export { default as EmptyState } from "./EmptyState";
+export { default as FileInput } from "./FileInput";
 export { default as IconButton } from "./IconButton";
 export { default as Modal } from "./Modal";
 export { default as Notice } from "./Notice";
