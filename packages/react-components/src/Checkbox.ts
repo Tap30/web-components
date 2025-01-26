@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, eslint-comments/disable-enable-pair, @typescript-eslint/ban-ts-comment */
 import { createComponent } from "@lit/react";
-import { TapsiCheckbox } from "@tapsioss/web-components/checkbox";
 import * as React from "react";
+// @ts-ignore
+import { TapsiCheckbox } from "@tapsioss/web-components/checkbox";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __Checkbox = createComponent({

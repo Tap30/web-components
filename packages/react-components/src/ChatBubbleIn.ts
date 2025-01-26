@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, eslint-comments/disable-enable-pair, @typescript-eslint/ban-ts-comment */
 import { createComponent } from "@lit/react";
-import { TapsiChatBubbleIn } from "@tapsioss/web-components/chat-bubble/in";
 import * as React from "react";
+// @ts-ignore
+import { TapsiChatBubbleIn } from "@tapsioss/web-components/chat-bubble/in";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __ChatBubbleIn = createComponent({

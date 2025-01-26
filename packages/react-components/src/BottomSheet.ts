@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, eslint-comments/disable-enable-pair, @typescript-eslint/ban-ts-comment */
 import { createComponent } from "@lit/react";
-import { TapsiBottomSheet } from "@tapsioss/web-components/bottom-sheet";
 import * as React from "react";
+// @ts-ignore
+import { TapsiBottomSheet } from "@tapsioss/web-components/bottom-sheet";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __BottomSheet = createComponent({

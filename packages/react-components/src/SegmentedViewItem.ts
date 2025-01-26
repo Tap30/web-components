@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, eslint-comments/disable-enable-pair, @typescript-eslint/ban-ts-comment */
 import { createComponent } from "@lit/react";
-import { TapsiSegmentedViewItem } from "@tapsioss/web-components/segmented-view";
 import * as React from "react";
+// @ts-ignore
+import { TapsiSegmentedViewItem } from "@tapsioss/web-components/segmented-view";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __SegmentedViewItem = createComponent({

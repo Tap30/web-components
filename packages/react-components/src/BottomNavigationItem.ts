@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, eslint-comments/disable-enable-pair, @typescript-eslint/ban-ts-comment */
 import { createComponent } from "@lit/react";
-import { TapsiBottomNavigationItem } from "@tapsioss/web-components/bottom-navigation";
 import * as React from "react";
+// @ts-ignore
+import { TapsiBottomNavigationItem } from "@tapsioss/web-components/bottom-navigation";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __BottomNavigationItem = createComponent({

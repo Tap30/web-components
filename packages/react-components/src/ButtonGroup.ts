@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, eslint-comments/disable-enable-pair, @typescript-eslint/ban-ts-comment */
 import { createComponent } from "@lit/react";
-import { TapsiButtonGroup } from "@tapsioss/web-components/button-group";
 import * as React from "react";
+// @ts-ignore
+import { TapsiButtonGroup } from "@tapsioss/web-components/button-group";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 const __ButtonGroup = createComponent({
