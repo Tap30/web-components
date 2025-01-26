@@ -1,8 +1,8 @@
 import { html, LitElement, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { getRenderRootSlot, runAfterRepaint } from "../utils";
-import { Slots } from "./constants";
+import { getRenderRootSlot, runAfterRepaint } from "../utils/index.ts";
+import { Slots } from "./constants.ts";
 
 export class BadgeWrapper extends LitElement {
   /**

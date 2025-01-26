@@ -1,8 +1,8 @@
 import { customElement } from "lit/decorators.js";
-import { Avatar } from "./avatar";
-import styles from "./avatar.style";
+import styles from "./avatar.style.ts";
+import { Avatar } from "./avatar.ts";
 
-export { Slots } from "./constants";
+export { Slots } from "./constants.ts";
 
 /**
  * @summary Display user profile image, initials or fallback icon

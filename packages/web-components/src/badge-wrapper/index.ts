@@ -1,8 +1,8 @@
 import { customElement } from "lit/decorators.js";
-import { BadgeWrapper } from "./badge-wrapper";
-import styles from "./badge-wrapper.style";
+import styles from "./badge-wrapper.style.ts";
+import { BadgeWrapper } from "./badge-wrapper.ts";
 
-export { Slots } from "./constants";
+export { Slots } from "./constants.ts";
 
 /**
  * @summary A wrapper component to position a badge relative to an anchor.

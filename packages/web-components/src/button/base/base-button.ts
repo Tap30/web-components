@@ -17,7 +17,7 @@ import {
   setupFormSubmitter,
   withElementInternals,
   withFocusable,
-} from "../../utils";
+} from "../../utils/index.ts";
 
 const BaseClass = withElementInternals(withFocusable(LitElement));
 
