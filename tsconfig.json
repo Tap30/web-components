@@ -33,18 +33,20 @@
     "baseUrl": ".",
     "paths": {
       // Icons metadata
-      "@tapsioss/icons": ["./packages/icons/dist"],
+      "@tapsioss/icons": ["./packages/icons/dist/index.js"],
       "@tapsioss/icons/*": ["./packages/icons/dist/*"],
       // Web Component Icons
-      "@tapsioss/web-icons": ["./packages/web-icons/dist"],
+      "@tapsioss/web-icons": ["./packages/web-icons/dist/index.js"],
       "@tapsioss/web-icons/*": ["./packages/web-icons/dist/*"],
       // React Icons
-      "@tapsioss/react-icons": ["./packages/react-icons/dist"],
+      "@tapsioss/react-icons": ["./packages/react-icons/dist/index.js"],
       "@tapsioss/react-icons/*": ["./packages/react-icons/dist/*"],
       // Web Components
       "@tapsioss/web-components/*": ["./packages/web-components/dist/*"],
       // React Components
-      "@tapsioss/react-components": ["./packages/react-components/dist"],
+      "@tapsioss/react-components": [
+        "./packages/react-components/dist/index.js"
+      ],
       "@tapsioss/react-components/*": ["./packages/react-components/dist/*"],
       // Tokens
       "@tapsioss/theme": ["./packages/theme/dist/index.css"]
