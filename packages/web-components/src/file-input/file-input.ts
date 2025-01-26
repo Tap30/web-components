@@ -1,10 +1,11 @@
+import "../button/icon-button/index.ts";
+import "../spinner/index.ts";
+
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property, query, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { live } from "lit/directives/live.js";
-import "../button/icon-button";
-import "../spinner";
 import {
   createValidator,
   dispatchActivationClick,
@@ -12,7 +13,7 @@ import {
   getFormValue,
   getValidityAnchor,
   isActivationClick,
-  isSSR,
+  isSsr,
   logger,
   onReportValidity,
   redispatchEvent,
@@ -22,12 +23,12 @@ import {
   withElementInternals,
   withFormAssociated,
   withOnReportValidity,
-} from "../utils";
-import { Slots } from "./constants";
-import { RetryEvent } from "./events";
-import { clear, error, image } from "./icons";
-import { getProgressUiParams, isFileImage, isStringNumber } from "./utils";
-import FileInputValidator from "./Validator";
+} from "../utils/index.ts";
+import { Slots } from "./constants.ts";
+import { RetryEvent } from "./events.ts";
+import { clear, error, image } from "./icons.ts";
+import { getProgressUiParams, isFileImage, isStringNumber } from "./utils.ts";
+import FileInputValidator from "./Validator.ts";
 
 const BaseClass = withOnReportValidity(
   withConstraintValidation(
@@ -250,7 +251,7 @@ export class FileInput extends BaseClass {
   }
 
   private _handlePlaceholderIconSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasPlaceholderIconSlot = this._placeholderIconSlotNodes.length > 0;
     }
   }

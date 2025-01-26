@@ -1,10 +1,10 @@
 import { customElement } from "lit/decorators.js";
-import { type RetryEvent } from "./events";
-import { FileInput } from "./file-input";
-import styles from "./file-input.style";
+import { type RetryEvent } from "./events.ts";
+import styles from "./file-input.style.ts";
+import { FileInput } from "./file-input.ts";
 
-export { Slots } from "./constants";
-export * from "./events";
+export { Slots } from "./constants.ts";
+export * from "./events.ts";
 
 /**
  * @summary A file-input component.

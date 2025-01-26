@@ -1,4 +1,4 @@
-import { BaseEvent } from "../utils";
+import { BaseEvent } from "../utils/index.ts";
 
 export class RetryEvent extends BaseEvent<null> {
   public static readonly type = "retry";
