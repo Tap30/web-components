@@ -1,8 +1,8 @@
 import { html, type PropertyValues, type TemplateResult } from "lit";
 import { queryAssignedNodes, state } from "lit/decorators.js";
-import { isSSR } from "../../utils";
-import { BaseButton } from "../base";
-import { Slots } from "./constants";
+import { isSsr } from "../../utils/index.ts";
+import { BaseButton } from "../base/index.ts";
+import { Slots } from "./constants.ts";
 
 export class Button extends BaseButton {
   @state()
@@ -25,13 +25,13 @@ export class Button extends BaseButton {
   }
 
   private _handleLeadingIconSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasLeadingIconSlot = this._leadingIconSlotNodes.length > 0;
     }
   }
 
   private _handleTrailingIconSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasTrailingIconSlot = this._trailingIconSlotNodes.length > 0;
     }
   }

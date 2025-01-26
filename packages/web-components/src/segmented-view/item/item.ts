@@ -1,9 +1,9 @@
-import "../../button/standard";
+import "../../button/standard/index.ts";
 
 import { html, LitElement, type PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
-import { logger } from "../../utils";
-import ItemSelectionController from "./Controller";
+import { logger } from "../../utils/index.ts";
+import ItemSelectionController from "./Controller.ts";
 
 export class SegmentedViewItem extends LitElement {
   public static override readonly shadowRootOptions = {

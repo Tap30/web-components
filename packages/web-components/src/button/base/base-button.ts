@@ -1,4 +1,4 @@
-import "../../spinner";
+import "../../spinner/index.ts";
 
 import {
   html,

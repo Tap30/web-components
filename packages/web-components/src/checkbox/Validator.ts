@@ -1,4 +1,4 @@
-import { Validator } from "../utils";
+import { Validator } from "../utils/index.ts";
 
 export type CheckboxState = {
   /**

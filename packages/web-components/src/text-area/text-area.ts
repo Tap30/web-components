@@ -1,9 +1,9 @@
 import { html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { live } from "lit/directives/live.js";
-import BaseTextInput from "../base-text-input";
-import { createValidator, logger, type Validator } from "../utils";
-import TextAreaValidator from "./Validator";
+import BaseTextInput from "../base-text-input/index.ts";
+import { createValidator, logger, type Validator } from "../utils/index.ts";
+import TextAreaValidator from "./Validator.ts";
 
 export class TextArea extends BaseTextInput {
   /**

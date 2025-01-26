@@ -7,9 +7,12 @@
 
 import type { LitElement, PropertyDeclaration } from "lit";
 import { property } from "lit/decorators.js";
-import SystemError from "../SystemError";
+import SystemError from "../SystemError.ts";
 import type { MixinBase, MixinReturn } from "./types";
-import { internals, type WithElementInternals } from "./with-element-internals";
+import {
+  internals,
+  type WithElementInternals,
+} from "./with-element-internals.ts";
 
 export const getFormValue = Symbol("getFormValue");
 export const getFormState = Symbol("getFormState");

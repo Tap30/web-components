@@ -2,9 +2,9 @@ import { html, LitElement, type PropertyValues } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { isSSR, logger } from "../utils";
-import { Slots } from "./constants";
-import ChipSelectionController from "./Controller";
+import { isSsr, logger } from "../utils/index.ts";
+import { Slots } from "./constants.ts";
+import ChipSelectionController from "./Controller.ts";
 
 export class Chip extends LitElement {
   public static override readonly shadowRootOptions = {
@@ -80,13 +80,13 @@ export class Chip extends LitElement {
   }
 
   private _handleLeadingIconSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasLeadingIconSlot = this._leadingIconSlotNodes.length > 0;
     }
   }
 
   private _handleTrailingIconSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasTrailingIconSlot = this._trailingIconSlotNodes.length > 0;
     }
   }

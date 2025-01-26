@@ -1,8 +1,8 @@
 import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { logger } from "../../utils";
-import ItemSelectionController from "./Controller";
+import { logger } from "../../utils/index.ts";
+import ItemSelectionController from "./Controller.ts";
 
 export class PinwheelItem extends LitElement {
   private _selected = false;

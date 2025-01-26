@@ -1,9 +1,9 @@
 import { customElement } from "lit/decorators.js";
-import { type HideEvent, type ShowEvent } from "./events";
-import { Tooltip } from "./tooltip";
-import styles from "./tooltip.style";
+import { type HideEvent, type ShowEvent } from "./events.ts";
+import styles from "./tooltip.style.ts";
+import { Tooltip } from "./tooltip.ts";
 
-export * from "./events";
+export * from "./events.ts";
 
 /**
  * @summary The tooltip component.

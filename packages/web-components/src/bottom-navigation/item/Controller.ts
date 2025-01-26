@@ -1,6 +1,9 @@
-import { KeyboardKeys } from "../../internals";
-import { SelectionController, type SelectionElement } from "../../utils";
-import { ActivateEvent } from "./events";
+import { KeyboardKeys } from "../../internals/index.ts";
+import {
+  SelectionController,
+  type SelectionElement,
+} from "../../utils/index.ts";
+import { ActivateEvent } from "./events.ts";
 import type { BottomNavigationItem } from "./item";
 
 type Host = SelectionElement<BottomNavigationItem>;

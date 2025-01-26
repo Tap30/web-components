@@ -17,6 +17,7 @@ export { default as EmptyState } from "./EmptyState";
 export { default as IconButton } from "./IconButton";
 export { default as Modal } from "./Modal";
 export { default as Notice } from "./Notice";
+export { default as PinInput } from "./PinInput";
 export { default as Pinwheel } from "./Pinwheel";
 export { default as PinwheelGroup } from "./PinwheelGroup";
 export { default as PinwheelItem } from "./PinwheelItem";

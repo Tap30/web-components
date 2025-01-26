@@ -1,10 +1,10 @@
 import { customElement } from "lit/decorators.js";
-import { type HideEvent, type ShowEvent } from "./events";
-import { Notice } from "./notice";
-import styles from "./notice.style";
+import { type HideEvent, type ShowEvent } from "./events.ts";
+import styles from "./notice.style.ts";
+import { Notice } from "./notice.ts";
 
-export { Slots } from "./constants";
-export * from "./events";
+export { Slots } from "./constants.ts";
+export * from "./events.ts";
 
 /**
  * @summary The notice components.

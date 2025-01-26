@@ -1,2 +1,5 @@
-export { Slots as IconButtonSlots, TapsiIconButton } from "./icon-button";
-export { Slots as ButtonSlots, TapsiButton } from "./standard";
+export {
+  Slots as IconButtonSlots,
+  TapsiIconButton,
+} from "./icon-button/index.ts";
+export { Slots as ButtonSlots, TapsiButton } from "./standard/index.ts";

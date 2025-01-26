@@ -1,6 +1,10 @@
-import { requestFormSubmit } from "../../base-input/utils";
-import { KeyboardKeys } from "../../internals";
-import { clamp, SelectionController, type SelectionElement } from "../../utils";
+import { requestFormSubmit } from "../../base-input/utils.ts";
+import { KeyboardKeys } from "../../internals/index.ts";
+import {
+  clamp,
+  SelectionController,
+  type SelectionElement,
+} from "../../utils/index.ts";
 import type { Pinwheel } from "../pinwheel";
 import type { PinwheelItem } from "./item";
 

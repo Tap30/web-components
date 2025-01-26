@@ -1,6 +1,6 @@
 import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
-import { SystemError } from "../utils";
+import { SystemError } from "../utils/index.ts";
 
 export class Spinner extends LitElement {
   /**

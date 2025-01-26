@@ -1,5 +1,5 @@
-import { runBeforeRepaint } from "../event-loop-execution";
-import isSSR from "../is-ssr";
+import { runBeforeRepaint } from "../event-loop-execution.ts";
+import isSsr from "../is-ssr.ts";
 
 type LockOptions = {
   reserveScrollBarGap?: boolean;
@@ -41,7 +41,7 @@ class ScrollLocker {
   constructor() {
     this._preventDefault = this._preventDefault.bind(this);
 
-    if (!isSSR()) {
+    if (!isSsr()) {
       let hasPassiveEvents = false;
 
       const passiveTestOptions = {

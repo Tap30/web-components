@@ -6,20 +6,20 @@ import {
 } from "lit";
 import { property } from "lit/decorators.js";
 import { type ClassInfo, classMap } from "lit/directives/class-map.js";
-import { KeyboardKeys } from "../internals";
+import { KeyboardKeys } from "../internals/index.ts";
 import {
   dispatchActivationClick,
   getValidityAnchor,
   isActivationClick,
-  isSSR,
+  isSsr,
   runAfterRepaint,
   waitAMicrotask,
   withConstraintValidation,
   withElementInternals,
   withFormAssociated,
   withOnReportValidity,
-} from "../utils";
-import { requestFormSubmit } from "./utils";
+} from "../utils/index.ts";
+import { requestFormSubmit } from "./utils.ts";
 
 const BaseClass = withOnReportValidity(
   withConstraintValidation(
@@ -68,7 +68,7 @@ export abstract class BaseInput extends BaseClass {
   constructor() {
     super();
 
-    if (!isSSR()) {
+    if (!isSsr()) {
       /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
       this.addEventListener("click", async event => {
         if (this.disabled) return;

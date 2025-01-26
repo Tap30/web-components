@@ -1,5 +1,5 @@
 import type { TemplateResult } from "lit";
-import * as Icons from "./icons";
+import * as Icons from "./icons.ts";
 
 export const STATES = ["sent", "seen", "pending", "failed"] as const;
 

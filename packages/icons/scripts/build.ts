@@ -9,7 +9,7 @@ import {
   ensureDirExists,
   getFileMeta,
   toPascalCase,
-} from "../../../scripts/utils";
+} from "../../../scripts/utils.ts";
 
 const execCmd = promisify(exec);
 

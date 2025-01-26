@@ -1,6 +1,6 @@
 import { customElement } from "lit/decorators.js";
-import { Stepper } from "./stepper.js";
-import styles from "./stepper.style.js";
+import styles from "./stepper.style.ts";
+import { Stepper } from "./stepper.ts";
 
 /**
  * @summary The stepper input component.

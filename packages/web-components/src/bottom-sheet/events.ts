@@ -1,4 +1,4 @@
-import { BaseEvent } from "../utils";
+import { BaseEvent } from "../utils/index.ts";
 
 type SnappedEventDetails = {
   snapPoint: number;

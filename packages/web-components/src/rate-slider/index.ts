@@ -1,6 +1,6 @@
 import { customElement } from "lit/decorators.js";
-import { RateSlider } from "./rate-slider";
-import styles from "./rate-slider.style";
+import styles from "./rate-slider.style.ts";
+import { RateSlider } from "./rate-slider.ts";
 
 /**
  * @summary The rate slider component.

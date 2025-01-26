@@ -1,12 +1,12 @@
-import { KeyboardKeys } from "../../internals";
+import { KeyboardKeys } from "../../internals/index.ts";
 import {
   isHTMLElement,
   runAfterRepaint,
   SelectionController,
   type SelectionElement,
-} from "../../utils";
-import { ActivateEvent } from "./events";
-import { SegmentedViewItem } from "./item";
+} from "../../utils/index.ts";
+import { ActivateEvent } from "./events.ts";
+import { SegmentedViewItem } from "./item.ts";
 
 type Host = SelectionElement<SegmentedViewItem>;
 

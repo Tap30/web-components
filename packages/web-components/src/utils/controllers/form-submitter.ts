@@ -1,9 +1,9 @@
 import { type ReactiveElement } from "lit";
-import isSSR from "../is-ssr";
+import isSsr from "../is-ssr.ts";
 import {
   internals,
   type WithElementInternals,
-} from "../mixins/with-element-internals";
+} from "../mixins/with-element-internals.ts";
 
 /**
  * A string indicating the form submission behavior of the element.
@@ -61,7 +61,7 @@ type FormSubmitterConstructor =
  * @param ctor The form submitter element's constructor.
  */
 export const setupFormSubmitter = (ctor: FormSubmitterConstructor) => {
-  if (isSSR()) return;
+  if (isSsr()) return;
 
   (ctor as unknown as typeof ReactiveElement).addInitializer(instance => {
     const submitter = instance as FormSubmitter;

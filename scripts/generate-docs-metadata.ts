@@ -10,8 +10,8 @@ import { type DefaultTheme } from "vitepress";
 import {
   type Component,
   type ImportPaths,
-} from "../internals/doc-helpers/types";
-import { getFileMeta } from "./utils";
+} from "../internals/doc-helpers/types.ts";
+import { getFileMeta } from "./utils.ts";
 
 const { dirname } = getFileMeta(import.meta.url);
 const workspaceDir = path.resolve(dirname, "..");

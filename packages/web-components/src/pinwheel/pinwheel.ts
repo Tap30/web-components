@@ -8,15 +8,15 @@ import {
   getFormValue,
   getRenderRootSlot,
   isActivationClick,
-  isSSR,
+  isSsr,
   logger,
   runAfterRepaint,
   waitAMicrotask,
   withElementInternals,
   withFormAssociated,
-} from "../utils";
-import { Slots } from "./constants";
-import { PinwheelItem } from "./item";
+} from "../utils/index.ts";
+import { Slots } from "./constants.ts";
+import { PinwheelItem } from "./item/index.ts";
 
 const BaseClass = withFormAssociated(withElementInternals(LitElement));
 
@@ -73,7 +73,7 @@ export class Pinwheel extends BaseClass {
 
     this._value = newValue;
 
-    if (isSSR() || !this.isConnected) return;
+    if (isSsr() || !this.isConnected) return;
 
     if (!this.hasUpdated && newValue !== "") {
       void this.updateComplete.then(() => this._setSelectedItem(newValue));
@@ -105,7 +105,7 @@ export class Pinwheel extends BaseClass {
   constructor() {
     super();
 
-    if (!isSSR()) {
+    if (!isSsr()) {
       /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
       this.addEventListener("click", async event => {
         if (this.disabled) return;
