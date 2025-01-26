@@ -24,6 +24,7 @@ import {
   withOnReportValidity,
 } from "../utils";
 import { Slots } from "./constants";
+import { RetryEvent } from "./events";
 import { clear, error, image } from "./icons";
 import { getProgressUiParams, isFileImage, isStringNumber } from "./utils";
 import FileInputValidator from "./Validator";
@@ -79,7 +80,7 @@ export class FileInput extends BaseClass {
    * The text showing in file input when it is in loading state.
    */
   @property({ type: String, attribute: "loading-text" })
-  public loadingText = "در حال بارگذاری ...";
+  public loadingText = "در حال بارگذاری...";
 
   /**
    * The error message that replaces supporting text when `error` is true. If
@@ -152,25 +153,6 @@ export class FileInput extends BaseClass {
    */
   @property({ type: Boolean, reflect: true })
   public required = false;
-
-  @property()
-  public set value(newValue: string) {
-    if (newValue) {
-      logger(
-        [
-          "Failed to set the 'value' property on 'TapsiFileInput':",
-          "This input element accepts a filename, which may only be",
-          "programmatically set to the empty string.",
-        ].join(" "),
-        "file-input",
-        "error",
-      );
-
-      return;
-    }
-
-    this._value = newValue;
-  }
 
   @state()
   private _hasPlaceholderIconSlot = false;
@@ -331,9 +313,8 @@ export class FileInput extends BaseClass {
 
   public override [createValidator]() {
     return new FileInputValidator(() => ({
-      required: this.required,
-      validity: {},
-      validationMessage: "",
+      required: this.required ?? false,
+      value: this.value ?? "",
     }));
   }
 
@@ -412,6 +393,25 @@ export class FileInput extends BaseClass {
     this._nativeErrorText = "";
   }
 
+  @property()
+  public set value(newValue: string) {
+    if (newValue) {
+      logger(
+        [
+          "Failed to set the 'value' property on 'TapsiFileInput':",
+          "This input element accepts a filename, which may only be",
+          "programmatically set to the empty string.",
+        ].join(" "),
+        "file-input",
+        "error",
+      );
+
+      return;
+    }
+
+    this._value = newValue;
+  }
+
   public get value() {
     return this._value;
   }
@@ -430,7 +430,7 @@ export class FileInput extends BaseClass {
     return this.loading.toString() !== "false";
   }
 
-  private _renderTrailingContent() {
+  private _renderHelperText() {
     const text = this._getSupportingOrErrorText();
 
     if (!text) return null;
@@ -458,7 +458,7 @@ export class FileInput extends BaseClass {
     </div>`;
   }
 
-  private _renderLeadingContent() {
+  private _renderLabel() {
     if (this.hideLabel) return null;
     if (!this.label) return null;
 
@@ -543,9 +543,21 @@ export class FileInput extends BaseClass {
     </div>`;
   }
 
+  private _handleRetry() {
+    this.dispatchEvent(new RetryEvent());
+  }
+
   private _renderErrorState() {
     return html` <div class="error-state">
       <div class="icon">${error}</div>
+      <tapsi-button
+        size="sm"
+        variant="ghost"
+        class="error-action"
+        @click=${this._handleRetry}
+      >
+        تلاش مجدد
+      </tapsi-button>
     </div>`;
   }
 
@@ -573,16 +585,12 @@ export class FileInput extends BaseClass {
     `;
   }
 
-  private _hasSelectedFile() {
-    return this._value;
-  }
-
   private _renderFileInputContent() {
     if (this._hasError()) return this._renderErrorState();
 
     if (this._isLoading()) return this._renderLoadingState();
 
-    if (this._hasSelectedFile()) return this._renderPreview();
+    if (this.value) return this._renderPreview();
 
     return this._renderEmptyState();
   }
@@ -603,9 +611,10 @@ export class FileInput extends BaseClass {
     return null;
   }
 
-  private _renderControl() {
-    const controlClasses = classMap({
-      control: true,
+  protected override render() {
+    const rootClasses = classMap({
+      root: true,
+      disabled: this.disabled,
       loading: this._isLoading(),
       readonly: this.readOnly,
       error: this._hasError(),
@@ -617,51 +626,42 @@ export class FileInput extends BaseClass {
 
     return html`
       <div
-        class=${controlClasses}
-        part="control"
-        ?inert=${this.disabled}
-      >
-        <input
-          part="input"
-          type="file"
-          id="input"
-          class="input"
-          aria-invalid=${this._hasError()}
-          aria-label=${ariaLabel}
-          aria-labelledby=${ariaLabelledBy}
-          aria-describedby=${ariaDescribedBy}
-          ?disabled=${this.disabled || this._isLoading()}
-          ?multiple=${this.multiple}
-          capture=${ifDefined(this.capture)}
-          accept=${ifDefined(this.accept)}
-          ?required=${this.required}
-          @input=${this._handleInput}
-          @change=${this._handleChange}
-          .value=${live(this._value)}
-        />
-        <div
-          aria-hidden="true"
-          part="file-input"
-          class="file-input"
-        >
-          ${this._renderFileInputContent()} ${this._renderClearIcon()}
-        </div>
-      </div>
-    `;
-  }
-
-  protected override render() {
-    const rootClasses = classMap({
-      root: true,
-      disabled: this.disabled,
-    });
-
-    return html`
-      <div
         part="root"
         class=${rootClasses}
+        ?inert=${this.disabled}
       >
-        ${this._renderLeadingContent()}${this._renderControl()}${this._renderTrailingContent()}
+        ${this._renderLabel()}
+        <div
+          class="control"
+          part="control"
+        >
+          <input
+            part="input"
+            type="file"
+            id="input"
+            class="input"
+            aria-invalid=${this._hasError()}
+            aria-label=${ariaLabel}
+            aria-labelledby=${ariaLabelledBy}
+            aria-describedby=${ariaDescribedBy}
+            ?disabled=${this.disabled || this._isLoading()}
+            ?multiple=${this.multiple}
+            ?readonly=${this.readOnly}
+            capture=${ifDefined(this.capture)}
+            accept=${ifDefined(this.accept)}
+            ?required=${this.required}
+            @input=${this._handleInput}
+            @change=${this._handleChange}
+            .value=${live(this._value)}
+          />
+          <div
+            part="file-input"
+            class="file-input"
+          >
+            ${this._renderFileInputContent()}${this._renderClearIcon()}
+          </div>
+        </div>
+        ${this._renderHelperText()}
       </div>
     `;
   }

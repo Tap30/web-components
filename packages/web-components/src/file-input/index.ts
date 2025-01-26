@@ -1,8 +1,10 @@
 import { customElement } from "lit/decorators.js";
+import { type RetryEvent } from "./events";
 import { FileInput } from "./file-input";
 import styles from "./file-input.style";
 
 export { Slots } from "./constants";
+export * from "./events";
 
 /**
  * @summary A file-input component.
@@ -11,6 +13,12 @@ export { Slots } from "./constants";
  *
  * @prop {boolean} [disabled=false] -
  * Indicates whether the file-input is disabled.
+ * @prop {string} [accept=''] -
+ * Specifying what file format does the file input accepts.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept
+ * @prop {string} [placeholder='انتخاب فایل'] -
+ * A placeholder text for the input component when no file has been selected.
  * @prop {string} [value=''] -
  * The value of the file-input.
  * When the user selected multiple files, the value represents the first file in the list of files they selected. \
@@ -27,6 +35,10 @@ export { Slots } from "./constants";
  * Used for showing camera for mobile devices.
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#capture
+ * @prop {string} [supporting-text=""] -
+ * Conveys additional information below the file input, such as how it should be used.
+ * @prop {string} [loading-text="در حال بارگذاری..."] -
+ * The text showing in file input when it is in loading state.
  * @prop {string} [error-text=""] -
  * The error message that replaces supporting text when `error` is true. If
  * `errorText` is an empty string, then the supporting text will continue to
@@ -51,23 +63,51 @@ export { Slots } from "./constants";
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
  * @prop {boolean} [hide-label=false] - Whether to hide the label or not.
+ * @prop {boolean} [multiple=false] - Whether the file input allows the user to select more than one file.
  * @prop {boolean} [required=false] -
  * Indicates that the user must specify a value for the input before the
  * owning form can be submitted and will render an error state when
  * `reportValidity()` is invoked when value is empty.
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required
- * @prop {boolean} [readonly=false] -
+ * @prop {boolean} [readOnly=false] -
  * Indicates whether or not a user should be able to edit the input's
  * value.
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
  *
+ * @method reset
+ * @description - resets the input value
+ *
  * @slot placeholder-icon - The icon placeholder that will override the default icon
+ *
+ * @fires {RetryEvent} retry - Fires when the retry button is clicked.
  */
 @customElement("tapsi-file-input")
 export class TapsiFileInput extends FileInput {
   public static override readonly styles = [styles];
+
+  /**
+   * @internal
+   */
+  declare addEventListener: <K extends keyof TapsiFileInputEventMap>(
+    type: K,
+    listener: (this: TapsiFileInput, ev: TapsiFileInputEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /**
+   * @internal
+   */
+  declare removeEventListener: <K extends keyof TapsiFileInputEventMap>(
+    type: K,
+    listener: (this: TapsiFileInput, ev: TapsiFileInputEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+}
+
+interface TapsiFileInputEventMap extends HTMLElementEventMap {
+  [RetryEvent.type]: RetryEvent;
 }
 
 declare global {

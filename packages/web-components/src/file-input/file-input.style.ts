@@ -14,17 +14,10 @@ export default css`
 
   :host {
     --input-bg-color: var(--tapsi-color-surface-secondary);
-    --input-filled-bg-color: var(--tapsi-color-surface-inverse-primary);
     --input-control-border-color: var(--tapsi-palette-gray-200);
     --input-support-color: var(--tapsi-color-content-secondary);
     --input-control-color: var(--tapsi-color-content-on-inverse);
-
-    --input-support-text-size: var(--tapsi-typography-body-sm-size);
-    --input-label-text-size: var(--tapsi-typography-label-md-size);
-    --input-support-text-height: var(--tapsi-typography-body-sm-height);
-    --input-label-text-height: var(--tapsi-typography-label-md-height);
-    --input-support-text-weight: var(--tapsi-typography-body-sm-weight);
-    --input-label-text-weight: var(--tapsi-typography-label-md-weight);
+    --input-label-color: var(--tapsi-color-content-primary);
 
     display: inline-block;
     vertical-align: middle;
@@ -48,24 +41,23 @@ export default css`
     --input-support-color: var(--tapsi-color-content-disabled);
     --input-label-color: var(--tapsi-color-content-disabled);
     --input-color: var(--tapsi-color-content-disabled);
-    --input-icon-color: var(--tapsi-color-content-disabled);
   }
 
   .root.disabled .input {
     display: none;
   }
 
-  .control.error {
+  .root.error {
     --input-control-border-color: var(--tapsi-palette-red-200);
     --input-bg-color: var(--tapsi-color-surface-negative-light);
     --input-support-color: var(--tapsi-color-content-negative);
   }
 
-  .control.error + .supporting-text {
+  .root.error .control + .supporting-text {
     --input-support-color: var(--tapsi-color-content-negative);
   }
 
-  .root:not(.disabled) .control.loading .input {
+  .root:not(.disabled).loading .input {
     cursor: wait;
   }
 
@@ -82,9 +74,9 @@ export default css`
   .label {
     color: var(--input-label-color);
     font-family: var(--tapsi-font-family);
-    line-height: var(--input-label-text-height);
-    font-size: var(--input-label-text-size);
-    font-weight: var(--input-label-text-weight);
+    line-height: var(--tapsi-typography-label-md-height);
+    font-weight: var(--tapsi-typography-label-md-weight);
+    font-size: var(--tapsi-typography-label-md-size);
   }
 
   .input {
@@ -125,19 +117,15 @@ export default css`
     background-color: var(--input-bg-color);
 
     border: 1px solid var(--input-control-border-color);
-
-    transition:
-      box-shadow 120ms ease,
-      background-color 120ms ease;
   }
 
   .supporting-text {
     color: var(--input-support-color);
 
     font-family: var(--tapsi-font-family);
-    line-height: var(--input-support-text-height);
-    font-size: var(--input-support-text-size);
-    font-weight: var(--input-support-text-weight);
+    line-height: var(--tapsi-typography-body-sm-height);
+    font-size: var(--tapsi-typography-body-sm-size);
+    font-weight: var(--tapsi-typography-body-sm-weight);
   }
 
   .loading-state {
@@ -160,9 +148,20 @@ export default css`
     left: var(--tapsi-spacing-6);
   }
 
+  .error-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
   .error-state .icon {
     height: 2.5rem;
     width: 2.5rem;
+  }
+
+  .error-state .error-action {
+    margin-top: var(--tapsi-spacing-4);
   }
 
   .empty-state {
@@ -193,7 +192,7 @@ export default css`
     transform-origin: center;
   }
   .background-circle {
-    stroke: #e6e6e6;
+    stroke: var(--tapsi-color-surface-tertiary);
   }
   .foreground-circle {
     stroke: var(--tapsi-color-content-accent);
@@ -204,22 +203,18 @@ export default css`
     position: relative;
     width: 3rem;
     height: 3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .progress-wrapper .progress {
     width: 100%;
     height: 100%;
-
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-90deg);
-    position: absolute;
   }
 
   .progress-wrapper .percentage {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     position: absolute;
 
     font-family: var(--tapsi-font-family);
@@ -229,8 +224,9 @@ export default css`
   }
 
   .loading-state .text {
-    margin-top: var(--tapsi-spacing-4);
     color: var(--tapsi-color-content-secondary);
+
+    margin-top: var(--tapsi-spacing-4);
 
     font-family: var(--tapsi-font-family);
     font-size: var(--tapsi-typography-body-sm-size);
@@ -257,7 +253,9 @@ export default css`
     border-width: 0;
   }
 
-  .selected-files {
-    direction: ltr;
+  @media (prefers-reduced-motion) {
+    .foreground-circle {
+      transition: none;
+    }
   }
 `;
