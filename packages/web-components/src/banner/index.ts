@@ -1,8 +1,8 @@
 import { customElement } from "lit/decorators.js";
-import { Banner } from "./banner";
-import styles from "./banner.style";
+import styles from "./banner.style.ts";
+import { Banner } from "./banner.ts";
 
-export { Slots } from "./constants";
+export { Slots } from "./constants.ts";
 
 /**
  * @summary The banner component
