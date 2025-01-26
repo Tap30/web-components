@@ -128,4 +128,4 @@ Please follow the coding style of the project. We use `prettier` and `eslint`, s
 
 ## License
 
-By contributing your code to the `Tap30/*` GitHub repositories, you agree to license your contribution under the MIT license.
+By contributing your code to the `Tap30/*` GitHub repositories, you agree to license your contribution under the [MIT license](https://github.com/Tap30/web-components/blob/main/LICENSE).
