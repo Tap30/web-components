@@ -63,6 +63,7 @@ export * from "./events.ts";
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
  * @prop {boolean} [hide-label=false] - Whether to hide the label or not.
+ * @prop {boolean} [retryable-error=false] - Whether the file input has retry button in error state.
  * @prop {boolean} [multiple=false] - Whether the file input allows the user to select more than one file.
  * @prop {boolean} [required=false] -
  * Indicates that the user must specify a value for the input before the

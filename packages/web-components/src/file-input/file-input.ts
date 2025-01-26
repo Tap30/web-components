@@ -101,6 +101,12 @@ export class FileInput extends BaseClass {
   public error = false;
 
   /**
+   * Whether the file input has retry button in error state.
+   */
+  @property({ type: Boolean, attribute: "retryable-error" })
+  public retryableError = false;
+
+  /**
    * Used for showing camera for mobile devices.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#capture
@@ -544,21 +550,23 @@ export class FileInput extends BaseClass {
     </div>`;
   }
 
-  private _handleRetry() {
-    this.dispatchEvent(new RetryEvent());
+  private _renderRetry() {
+    if (!this.retryableError) return null;
+
+    return html`<tapsi-button
+      size="sm"
+      variant="ghost"
+      class="error-action"
+      @click=${() => this.dispatchEvent(new RetryEvent())}
+    >
+      تلاش مجدد
+    </tapsi-button>`;
   }
 
   private _renderErrorState() {
     return html` <div class="error-state">
       <div class="icon">${error}</div>
-      <tapsi-button
-        size="sm"
-        variant="ghost"
-        class="error-action"
-        @click=${this._handleRetry}
-      >
-        تلاش مجدد
-      </tapsi-button>
+      ${this._renderRetry()}
     </div>`;
   }
 

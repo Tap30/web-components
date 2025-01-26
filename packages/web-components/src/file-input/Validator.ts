@@ -19,7 +19,7 @@ class FileInputValidator extends Validator<FileInputState> {
     if (!this._control) {
       // Lazily create the platform input
       this._control = document.createElement("input");
-      this._control.type = "file";
+      this._control.type = "text";
     }
 
     this._control.required = state.required;
