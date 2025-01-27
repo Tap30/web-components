@@ -33,23 +33,33 @@
     "baseUrl": ".",
     "paths": {
       // Icons metadata
-      "@tapsioss/icons": ["./packages/icons/dist/index.js"],
+      "@tapsioss/icons": ["./packages/icons/dist", "types/@tapsioss/icons.ts"],
       "@tapsioss/icons/*": ["./packages/icons/dist/*"],
       // Web Component Icons
-      "@tapsioss/web-icons": ["./packages/web-icons/dist/index.js"],
+      "@tapsioss/web-icons": ["./packages/web-icons/dist"],
       "@tapsioss/web-icons/*": ["./packages/web-icons/dist/*"],
       // React Icons
-      "@tapsioss/react-icons": ["./packages/react-icons/dist/index.js"],
+      "@tapsioss/react-icons": ["./packages/react-icons/dist"],
       "@tapsioss/react-icons/*": ["./packages/react-icons/dist/*"],
       // Web Components
-      "@tapsioss/web-components/*": ["./packages/web-components/dist/*"],
+      "@tapsioss/web-components/*": [
+        "./packages/web-components/dist/*",
+        "./packages/web-components/src/*"
+      ],
       // React Components
       "@tapsioss/react-components": [
-        "./packages/react-components/dist/index.js"
+        "./packages/react-components/dist",
+        "./packages/react-components/src"
       ],
-      "@tapsioss/react-components/*": ["./packages/react-components/dist/*"],
+      "@tapsioss/react-components/*": [
+        "./packages/react-components/dist/*",
+        "./packages/react-components/src/*"
+      ],
       // Tokens
-      "@tapsioss/theme": ["./packages/theme/dist/index.css"]
+      "@tapsioss/theme": [
+        "./packages/theme/dist/index.css",
+        "./packages/theme/src/index.css"
+      ]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

@@ -214,7 +214,7 @@ const transformToComponentModule = new Transform({
 
       await fs.promises.appendFile(
         barrelFilePath,
-        `export { default as ${componentName} } from "./${componentName}";\n`,
+        `export { default as ${componentName} } from "./${componentName}.ts";\n`,
         {
           encoding: "utf-8",
         },
