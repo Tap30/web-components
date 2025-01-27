@@ -1,16 +1,15 @@
 import fs from "node:fs";
-
 import path from "node:path";
 import {
   type Component,
   type Metadata,
-} from "../../internals/doc-helpers/types";
-import { getFileMeta } from "../../scripts/utils";
+} from "../../internals/doc-helpers/types.ts";
+import { getFileMeta } from "../../scripts/utils.ts";
 import {
   codify,
   getUsageSectionMarkdown,
   tabulateData,
-} from "../utils/markdown";
+} from "../utils/markdown.ts";
 
 export default {
   paths() {

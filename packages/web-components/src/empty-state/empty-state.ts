@@ -1,7 +1,7 @@
 import { html, LitElement, type PropertyValues } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
-import { isSSR } from "../utils";
-import { Slots } from "./constants";
+import { isSsr } from "../utils/index.ts";
+import { Slots } from "./constants.ts";
 
 export class EmptyState extends LitElement {
   /**
@@ -42,13 +42,13 @@ export class EmptyState extends LitElement {
   }
 
   private _handleIconSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasIconSlot = this._iconSlotNodes.length > 0;
     }
   }
 
   private _handleActionSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasActionSlot = this._actionSlotNodes.length > 0;
     }
   }

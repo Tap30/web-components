@@ -1,8 +1,8 @@
 import { customElement } from "lit/decorators.js";
-import { Badge } from "./badge";
-import styles from "./badge.style";
+import styles from "./badge.style.ts";
+import { Badge } from "./badge.ts";
 
-export { Slots } from "./constants";
+export { Slots } from "./constants.ts";
 
 /**
  * @summary The badge component.

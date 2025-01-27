@@ -4,22 +4,22 @@ import { classMap } from "lit/directives/class-map.js";
 import { map } from "lit/directives/map.js";
 import { range } from "lit/directives/range.js";
 import { styleMap } from "lit/directives/style-map.js";
-import { requestFormSubmit } from "../base-input/utils";
-import { KeyboardKeys } from "../internals";
+import { requestFormSubmit } from "../base-input/utils.ts";
+import { KeyboardKeys } from "../internals/index.ts";
 import {
   clamp,
   dispatchActivationClick,
   getBoundingClientRect,
   getFormValue,
   isActivationClick,
-  isSSR,
+  isSsr,
   logger,
   toFaNumber,
   waitAMicrotask,
   withElementInternals,
   withFormAssociated,
-} from "../utils";
-import { DEFAULT_MAX, DEFAULT_MIN } from "./constants";
+} from "../utils/index.ts";
+import { DEFAULT_MAX, DEFAULT_MIN } from "./constants.ts";
 
 const BaseClass = withFormAssociated(withElementInternals(LitElement));
 
@@ -110,7 +110,7 @@ export class RateSlider extends BaseClass {
     this._handleDragEnd = this._handleDragEnd.bind(this);
     this._handleDragging = this._handleDragging.bind(this);
 
-    if (!isSSR()) {
+    if (!isSsr()) {
       /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
       this.addEventListener("click", async event => {
         if (this.disabled) return;

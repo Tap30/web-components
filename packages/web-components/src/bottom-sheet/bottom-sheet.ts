@@ -1,4 +1,4 @@
-import "../button/icon-button";
+import "../button/icon-button/index.ts";
 
 import {
   DragGesture,
@@ -16,20 +16,20 @@ import {
 import { property, query, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap } from "lit/directives/style-map.js";
-import { KeyboardKeys } from "../internals";
+import { KeyboardKeys } from "../internals/index.ts";
 import {
   AnimationController,
   clamp,
   FocusTrapper,
-  isSSR,
+  isSsr,
   logger,
   redispatchEvent,
   runAfterRepaint,
   runImmediatelyBeforeRepaint,
   ScrollLocker,
   waitAMicrotask,
-} from "../utils";
-import { SENTINEL_DEFAULT_SNAP_POINTS, Slots, Status } from "./constants";
+} from "../utils/index.ts";
+import { SENTINEL_DEFAULT_SNAP_POINTS, Slots, Status } from "./constants.ts";
 import {
   ClosedEvent,
   ClosingEvent,
@@ -38,8 +38,8 @@ import {
   OpeningEvent,
   ShowEvent,
   SnappedEvent,
-} from "./events";
-import { dismiss } from "./icons";
+} from "./events.ts";
+import { dismiss } from "./icons.ts";
 import type { MetaData, SnapToCallbackArgument, StatusEnum } from "./types";
 
 export class BottomSheet extends LitElement {
@@ -137,7 +137,7 @@ export class BottomSheet extends LitElement {
 
   @state()
   private get _preventContainerScrolling() {
-    if (isSSR()) return true;
+    if (isSsr()) return true;
 
     if (!this.expandable) return false;
 
@@ -231,19 +231,19 @@ export class BottomSheet extends LitElement {
   }
 
   private _handleHeaderSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasHeaderSlot = this._headerSlotNodes.length > 0;
     }
   }
 
   private _handleBodySlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasBodySlot = this._bodySlotNodes.length > 0;
     }
   }
 
   private _handleActionBarSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasActionBarSlot = this._actionBarSlotNodes.length > 0;
     }
   }
@@ -399,7 +399,7 @@ export class BottomSheet extends LitElement {
    * - The second snap point is 90% of the window's inner height.
    */
   public get defaultSnapPoints(): [number, number] {
-    if (isSSR() || !this.isConnected || !this._container) {
+    if (isSsr() || !this.isConnected || !this._container) {
       return SENTINEL_DEFAULT_SNAP_POINTS as [number, number];
     }
 
@@ -689,7 +689,7 @@ export class BottomSheet extends LitElement {
    * Strictly snaps to the provided or resolved snap point.
    */
   public strictSnapTo(numberOrCallback: number | SnapToCallbackArgument) {
-    if (isSSR()) return;
+    if (isSsr()) return;
 
     runImmediatelyBeforeRepaint(() => {
       const snapPoint =
@@ -716,7 +716,7 @@ export class BottomSheet extends LitElement {
    * Use the callback method to resolve the snap point.
    */
   public snapTo(numberOrCallback: number | SnapToCallbackArgument) {
-    if (isSSR()) return;
+    if (isSsr()) return;
 
     runImmediatelyBeforeRepaint(() => {
       const snapPoint =

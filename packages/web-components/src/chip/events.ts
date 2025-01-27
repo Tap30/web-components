@@ -1,4 +1,4 @@
-import { BaseEvent } from "../utils";
+import { BaseEvent } from "../utils/index.ts";
 
 export class SelectEvent extends BaseEvent<null> {
   public static readonly type = "select";

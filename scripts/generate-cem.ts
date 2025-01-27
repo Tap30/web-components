@@ -3,7 +3,7 @@ import { exec } from "node:child_process";
 import * as path from "node:path";
 import { cwd } from "node:process";
 import { promisify } from "node:util";
-import { getFileMeta } from "./utils";
+import { getFileMeta } from "./utils.ts";
 
 const { dirname } = getFileMeta(import.meta.url);
 

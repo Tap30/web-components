@@ -1,7 +1,7 @@
 import { html, nothing, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import BaseInput from "../base-input";
+import BaseInput from "../base-input/index.ts";
 import {
   createValidator,
   getFormState,
@@ -11,9 +11,9 @@ import {
   onReportValidity,
   redispatchEvent,
   withFocusable,
-} from "../utils";
-import SingleSelectionController from "./Controller";
-import RadioValidator from "./Validator";
+} from "../utils/index.ts";
+import SingleSelectionController from "./Controller.ts";
+import RadioValidator from "./Validator.ts";
 
 export class Radio extends withFocusable(BaseInput) {
   private _checked = false;

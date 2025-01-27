@@ -1,7 +1,7 @@
-import { BaseEvent } from "../utils";
+import { BaseEvent } from "../utils/index.ts";
 
 type EventDetails = {
-  itemValue: string;
+  value: string;
 };
 
 export class ActiveChangeEvent extends BaseEvent<EventDetails> {

@@ -1,7 +1,7 @@
 import { customElement } from "lit/decorators.js";
-import { baseStyles, BaseSlots as Slots } from "../base";
-import ChatBubbleIn from "./in";
-import styles from "./in.style";
+import { baseStyles, BaseSlots as Slots } from "../base/index.ts";
+import styles from "./in.style.ts";
+import ChatBubbleIn from "./in.ts";
 
 export { Slots };
 

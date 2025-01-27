@@ -1,6 +1,6 @@
 import { customElement } from "lit/decorators.js";
-import { Stepper } from "./stepper.js";
-import styles from "./stepper.style.js";
+import styles from "./stepper.style.ts";
+import { Stepper } from "./stepper.ts";
 
 /**
  * @summary The stepper input component.
@@ -45,7 +45,7 @@ import styles from "./stepper.style.js";
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
  *
- * @fires {Event} change - Fires when value changes.
+ * @fires {Event} change - Fires when value changes (bubbles).
  */
 @customElement("tapsi-stepper")
 export class TapsiStepper extends Stepper {

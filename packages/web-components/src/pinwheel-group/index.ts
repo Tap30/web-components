@@ -1,8 +1,8 @@
 import { customElement } from "lit/decorators.js";
-import { PinwheelGroup } from "./pinwheel-group";
-import styles from "./pinwheel-group.style";
+import styles from "./pinwheel-group.style.ts";
+import { PinwheelGroup } from "./pinwheel-group.ts";
 
-export { Slots } from "./constants";
+export { Slots } from "./constants.ts";
 
 /**
  * @summary The pinwheel group component.
@@ -14,11 +14,6 @@ export { Slots } from "./constants";
  * for assistive technologies.
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
- * @prop {string} [value=""] -
- * The value of the currently selected items.
- * It's not an attribute and will only work in CSR.
- *
- * @fires {Event} change - Fires when a pinwheel selected state changes.
  */
 @customElement("tapsi-pinwheel-group")
 export class TapsiPinwheelGroup extends PinwheelGroup {

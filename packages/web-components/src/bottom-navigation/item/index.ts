@@ -1,3 +1,3 @@
-export { Slots } from "./constants";
-export * from "./events";
-export { BottomNavigationItem } from "./item";
+export { Slots } from "./constants.ts";
+export * from "./events.ts";
+export { BottomNavigationItem } from "./item.ts";

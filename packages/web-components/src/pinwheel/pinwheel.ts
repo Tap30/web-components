@@ -1,26 +1,22 @@
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { requestFormSubmit } from "../base-input/utils";
-import { KeyboardKeys } from "../internals";
 import {
-  clamp,
   debounce,
   dispatchActivationClick,
   getBoundingClientRect,
   getFormValue,
   getRenderRootSlot,
   isActivationClick,
-  isSSR,
+  isSsr,
   logger,
   runAfterRepaint,
   waitAMicrotask,
   withElementInternals,
   withFormAssociated,
-} from "../utils";
-import { Slots } from "./constants";
-import { SynchronizeRequestEvent } from "./events";
-import { PinwheelItem } from "./item";
+} from "../utils/index.ts";
+import { Slots } from "./constants.ts";
+import { PinwheelItem } from "./item/index.ts";
 
 const BaseClass = withFormAssociated(withElementInternals(LitElement));
 
@@ -77,7 +73,7 @@ export class Pinwheel extends BaseClass {
 
     this._value = newValue;
 
-    if (isSSR() || !this.isConnected) return;
+    if (isSsr() || !this.isConnected) return;
 
     if (!this.hasUpdated && newValue !== "") {
       void this.updateComplete.then(() => this._setSelectedItem(newValue));
@@ -105,15 +101,11 @@ export class Pinwheel extends BaseClass {
   private _value: string = "";
 
   private _isProgrammaticallyScrolling = false;
-  private _initiallySynced = false;
 
   constructor() {
     super();
 
-    this._handleKeyDown = this._handleKeyDown.bind(this);
-    this._synchronize = this._synchronize.bind(this);
-
-    if (!isSSR()) {
+    if (!isSsr()) {
       /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
       this.addEventListener("click", async event => {
         if (this.disabled) return;
@@ -131,24 +123,6 @@ export class Pinwheel extends BaseClass {
     }
   }
 
-  public override connectedCallback() {
-    super.connectedCallback();
-
-    /* eslint-disable @typescript-eslint/no-misused-promises */
-    this.addEventListener("keydown", this._handleKeyDown);
-    this.addEventListener(SynchronizeRequestEvent.type, this._synchronize);
-    /* eslint-enable @typescript-eslint/no-misused-promises */
-  }
-
-  public override disconnectedCallback() {
-    super.disconnectedCallback();
-
-    /* eslint-disable @typescript-eslint/no-misused-promises */
-    this.removeEventListener("keydown", this._handleKeyDown);
-    this.removeEventListener(SynchronizeRequestEvent.type, this._synchronize);
-    /* eslint-enable @typescript-eslint/no-misused-promises */
-  }
-
   protected override firstUpdated(changed: PropertyValues<this>) {
     super.firstUpdated(changed);
 
@@ -162,65 +136,19 @@ export class Pinwheel extends BaseClass {
     }
   }
 
-  protected override willUpdate(changed: PropertyValues<this>) {
-    super.willUpdate(changed);
+  protected override updated(changed: PropertyValues<this>) {
+    super.updated(changed);
 
-    if (this._initiallySynced) return;
+    if (changed.has("value")) {
+      if (!this.value) this._selectFirstItem();
 
-    const sync = () => {
-      this._applySingleSelection();
-      this._synchronize();
-
-      this._initiallySynced = true;
-    };
-
-    if (!this.hasUpdated) void this.updateComplete.then(sync);
-    else sync();
-  }
-
-  private _applySingleSelection() {
-    const items = this._items;
-    const firstItem = items[0];
-    const selectedItems = items.filter(item => item.selected);
-
-    if (!firstItem || selectedItems.length !== 0) return;
-
-    firstItem.selected = true;
-  }
-
-  private _synchronize() {
-    const items = this._items;
-    const selectedItems = items.filter(item => item.selected);
-
-    if (selectedItems.length === 0 && this.value !== "") {
-      this.value = "";
-      this.dispatchEvent(new SynchronizeRequestEvent());
-
-      return;
-    }
-
-    if (selectedItems.length === 1 && this.value !== selectedItems[0]!.value) {
-      this.value = selectedItems[0]!.value;
-      this.dispatchEvent(new SynchronizeRequestEvent());
-
-      return;
-    }
-
-    if (selectedItems.length > 1) {
-      const [firstSelectedItem, ...rest] = selectedItems;
-
-      rest.forEach(item => {
-        item.selected = false;
+      runAfterRepaint(() => {
+        this.setViewOnItem(this.value);
       });
-
-      this.value = firstSelectedItem?.value ?? "";
-      this.dispatchEvent(new SynchronizeRequestEvent());
-
-      return;
     }
   }
 
-  private _lockOnItem(itemValue: string): void {
+  public setViewOnItem(itemValue: string): void {
     // Invalidate cache since this function will only be called programmatically
     // and we need to get the latest items every time.
     this._cachedItems = null;
@@ -272,6 +200,19 @@ export class Pinwheel extends BaseClass {
     return items;
   }
 
+  private _selectFirstItem() {
+    // Invalidate cache since this function will only be called
+    // programatically and we need to get the latest items every time.
+    this._cachedItems = null;
+
+    const firstItem = this._items[0];
+
+    if (!firstItem) return;
+    if (firstItem.selected) return;
+
+    this._setSelectedItem(firstItem.value);
+  }
+
   private _setSelectedItem(itemValue: string) {
     // Invalidate cache since this function will only be called
     // programatically and we need to get the latest items every time.
@@ -284,11 +225,6 @@ export class Pinwheel extends BaseClass {
     });
 
     if (!targetItem) return;
-
-    runAfterRepaint(() => {
-      this._lockOnItem(targetItem.value);
-    });
-
     if (targetItem.selected) return;
 
     items.forEach(item => {
@@ -307,7 +243,7 @@ export class Pinwheel extends BaseClass {
     if (this.disabled) return;
 
     if (newValue === this.value) {
-      this._lockOnItem(newValue);
+      this.setViewOnItem(newValue);
 
       return;
     }
@@ -352,94 +288,6 @@ export class Pinwheel extends BaseClass {
     }
 
     return 0;
-  }
-
-  private _handleClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-
-    if (!(target instanceof PinwheelItem)) return;
-
-    this._emitValueChange(target.value);
-  }
-
-  private async _handleKeyDown(event: KeyboardEvent) {
-    if (this.disabled) return;
-
-    // allow event to propagate to user code after a microtask.
-    await waitAMicrotask();
-
-    if (event.defaultPrevented) return;
-
-    const items = this._items;
-
-    switch (event.key) {
-      case KeyboardKeys.ENTER: {
-        event.preventDefault();
-
-        return requestFormSubmit(this);
-      }
-
-      case KeyboardKeys.UP: {
-        event.preventDefault();
-
-        if (items.length === 0) return;
-
-        const idx = items.findIndex(item => item.selected);
-        const nextIdx = idx === -1 ? 0 : clamp(idx - 1, 0, items.length - 1);
-        const newValue = items[nextIdx]?.value;
-
-        if (!newValue) return;
-
-        this._emitValueChange(newValue);
-
-        return;
-      }
-
-      case KeyboardKeys.DOWN: {
-        event.preventDefault();
-
-        if (items.length === 0) return;
-
-        const idx = items.findIndex(item => item.selected);
-        const nextIdx = clamp(idx + 1, 0, items.length - 1);
-        const newValue = items[nextIdx]?.value;
-
-        if (!newValue) return;
-
-        this._emitValueChange(newValue);
-
-        return;
-      }
-
-      case KeyboardKeys.HOME: {
-        event.preventDefault();
-
-        const nextIdx = 0;
-        const newValue = items[nextIdx]?.value;
-
-        if (!newValue) return;
-
-        this._emitValueChange(newValue);
-
-        return;
-      }
-
-      case KeyboardKeys.END: {
-        event.preventDefault();
-
-        const nextIdx = items.length - 1;
-        const newValue = items[nextIdx]?.value;
-
-        if (!newValue) return;
-
-        this._emitValueChange(newValue);
-
-        return;
-      }
-
-      default:
-        return;
-    }
   }
 
   public override formDisabledCallback(disabled: boolean) {
@@ -495,7 +343,6 @@ export class Pinwheel extends BaseClass {
         aria-valuemin=${this.valueMin || nothing}
         aria-valuenow=${this._spinArias.valueNow || nothing}
         aria-valuetext=${this._spinArias.valueText || nothing}
-        @click=${this._handleClick}
         @scroll=${this._handleScroll}
       >
         <div

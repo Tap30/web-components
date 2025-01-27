@@ -1,5 +1,5 @@
 import { css } from "lit";
-import { Z_INDEXES } from "../internals";
+import { Z_INDEXES } from "../internals/index.ts";
 
 const styles = css`
   *,

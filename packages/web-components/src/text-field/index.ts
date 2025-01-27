@@ -1,6 +1,9 @@
 import { customElement } from "lit/decorators.js";
-import { BaseTextInputSlots, baseTextInputStyles } from "../base-text-input";
-import { TextField } from "./text-field";
+import {
+  BaseTextInputSlots,
+  baseTextInputStyles,
+} from "../base-text-input/index.ts";
+import { TextField } from "./text-field.ts";
 
 export { BaseTextInputSlots as Slots };
 
@@ -113,6 +116,13 @@ export { BaseTextInputSlots as Slots };
  * to limit the increments at which a numeric or date-time value can be set.
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+ *
+ * @prop {string} [inputmode=""] -
+ * Hints at the type of data that might be entered by the user while editing
+ * the element or its contents. This allows a browser to display an
+ * appropriate virtual keyboard.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode
  *
  * @slot leading-icon - the leading icon slot of the text-area
  * @slot trailing - the trailing slot of the text-area

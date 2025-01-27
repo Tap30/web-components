@@ -1,11 +1,16 @@
-import "../../button/standard";
+import "../../button/standard/index.ts";
 
 import { html, LitElement, type PropertyValues } from "lit";
-import { property } from "lit/decorators.js";
-import { isSSR, logger, SystemError, waitAMicrotask } from "../../utils";
-import SegmentedViewItemController from "./Controller";
+import { property, query } from "lit/decorators.js";
+import { logger } from "../../utils/index.ts";
+import ItemSelectionController from "./Controller.ts";
 
 export class SegmentedViewItem extends LitElement {
+  public static override readonly shadowRootOptions = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+
   private _active = false;
 
   /**
@@ -40,7 +45,7 @@ export class SegmentedViewItem extends LitElement {
 
     this._active = isActive;
     this.requestUpdate("active", prevActive);
-    this._controller.handleActiveChange();
+    this._selectionController.handleSelectionChange();
   }
 
   /**
@@ -50,36 +55,17 @@ export class SegmentedViewItem extends LitElement {
   @property({ type: String })
   public value: string = "";
 
-  private readonly _controller = new SegmentedViewItemController(this);
+  @query("#root")
+  private _root!: HTMLElement | null;
 
-  constructor() {
-    super();
-
-    this.addController(this._controller);
-
-    if (!isSSR()) {
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      this.addEventListener("focus", async event => {
-        // allow event to propagate to user code after a microtask.
-        await waitAMicrotask();
-
-        if (event.defaultPrevented) return;
-
-        this.focus();
-      });
-    }
-  }
-
-  private get _rootElement() {
-    return this.renderRoot?.querySelector<HTMLElement>("#root") ?? null;
-  }
+  private readonly _selectionController = new ItemSelectionController(this);
 
   public override get tabIndex() {
-    return this._rootElement?.tabIndex ?? 0;
+    return this._root?.tabIndex ?? 0;
   }
 
   public override set tabIndex(newTabIndex: number) {
-    const root = this._rootElement;
+    const root = this._root;
 
     if (root) {
       if (root.tabIndex === newTabIndex) return;
@@ -92,19 +78,20 @@ export class SegmentedViewItem extends LitElement {
     super.updated(changed);
 
     if (!this.value) {
-      throw new SystemError(
+      logger(
         `Expected a valid \`value\` property/attribute. Received \`${this.value}\`.`,
         "segmented-view-item",
+        "error",
       );
     }
   }
 
   public override focus(options?: FocusOptions): void {
-    this._rootElement?.focus(options);
+    this._root?.focus(options);
   }
 
   public override blur(): void {
-    this._rootElement?.blur();
+    this._root?.blur();
   }
 
   protected override render() {
@@ -133,6 +120,8 @@ export class SegmentedViewItem extends LitElement {
         aria-selected=${this.active ? "true" : "false"}
         aria-controls=${this.controls}
         data-value=${this.value}
+        @click=${this._selectionController.handleClick}
+        @keydown=${this._selectionController.handleKeyDown}
       >
         <slot></slot>
       </tapsi-button>

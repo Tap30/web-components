@@ -1,0 +1,16 @@
+{
+  "name": "@tapsioss/docs",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "dependencies": {
+    "@tapsioss/theme": "workspace:*",
+    "@tapsioss/web-components": "workspace:*",
+    "@tapsioss/web-icons": "workspace:*"
+  }
+}

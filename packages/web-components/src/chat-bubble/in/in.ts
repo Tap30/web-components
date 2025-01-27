@@ -2,12 +2,12 @@ import { html, type TemplateResult } from "lit";
 import type { DirectiveResult } from "lit/async-directive.js";
 import { property } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
-import { BaseChatBubble } from "../base";
+import { BaseChatBubble } from "../base/index.ts";
 import {
   STATUS_TO_ICON_MAP,
   STATUS_TO_LOCALE_MAP,
   type States,
-} from "./constants";
+} from "./constants.ts";
 
 class ChatBubbleIn extends BaseChatBubble {
   /**

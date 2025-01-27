@@ -1,10 +1,10 @@
 import { customElement } from "lit/decorators.js";
-import { ChipGroup } from "./chip-group";
-import styles from "./chip-group.style";
-import { type SelectChangeEvent } from "./events";
+import styles from "./chip-group.style.ts";
+import { ChipGroup } from "./chip-group.ts";
+import { type SelectChangeEvent } from "./events.ts";
 
-export { Slots } from "./constants";
-export * from "./events";
+export { Slots } from "./constants.ts";
+export * from "./events.ts";
 
 /**
  * @summary A chip group component.

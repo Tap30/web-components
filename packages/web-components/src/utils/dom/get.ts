@@ -1,4 +1,4 @@
-import { isHTMLElement, isShadowRoot, isWindow } from "./is";
+import { isHTMLElement, isShadowRoot, isWindow } from "./is.ts";
 
 export const getWindow = (node: Node | Window): Window => {
   if (!node) return window;
@@ -76,4 +76,15 @@ export const getRenderRootSlot = (
     slotName === "" ? "slot:not([name])" : `slot[name="${slotName}"]`;
 
   return renderRoot.querySelector<HTMLSlotElement>(query);
+};
+
+export const getActualActiveElement = () => {
+  const deepCheck = (element: Element | null): Element | null => {
+    if (!element) return null;
+    if (!element.shadowRoot) return element;
+
+    return deepCheck(element.shadowRoot.activeElement);
+  };
+
+  return deepCheck(document.activeElement);
 };

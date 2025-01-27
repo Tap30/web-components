@@ -1,11 +1,11 @@
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { DeselectEvent, SelectEvent } from "../chip";
-import { Chip } from "../chip/chip";
-import { getRenderRootSlot, logger } from "../utils";
-import { Slots } from "./constants";
-import { SelectChangeEvent } from "./events";
+import { Chip } from "../chip/chip.ts";
+import { DeselectEvent, SelectEvent } from "../chip/index.ts";
+import { getRenderRootSlot, logger } from "../utils/index.ts";
+import { Slots } from "./constants.ts";
+import { SelectChangeEvent } from "./events.ts";
 
 export class ChipGroup extends LitElement {
   /**

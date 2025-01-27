@@ -1,9 +1,9 @@
 import { html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { live } from "lit/directives/live.js";
-import BaseTextInput from "../base-text-input";
-import { createValidator, logger, type Validator } from "../utils";
-import TextFieldValidator from "./Validator";
+import BaseTextInput from "../base-text-input/index.ts";
+import { createValidator, logger, type Validator } from "../utils/index.ts";
+import TextFieldValidator from "./Validator.ts";
 
 export class TextField extends BaseTextInput {
   /**
@@ -75,6 +75,16 @@ export class TextField extends BaseTextInput {
    */
   @property({ type: String })
   public step = "";
+
+  /**
+   * Hints at the type of data that might be entered by the user while editing
+   * the element or its contents. This allows a browser to display an
+   * appropriate virtual keyboard.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode
+   */
+  @property({ type: String })
+  public override inputMode = "";
 
   /**
    * The text field's value as a number.

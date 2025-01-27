@@ -1,5 +1,5 @@
 import type { Coords, Placement } from "@floating-ui/dom";
-import { isSSR } from "../utils";
+import { isSsr } from "../utils/index.ts";
 
 /**
  * Returns a translate CSS value that is rounded by DPR.
@@ -7,7 +7,7 @@ import { isSSR } from "../utils";
 export const translate = (coordinates: Coords) => {
   const { x, y } = coordinates;
 
-  const dpr = isSSR() ? window.devicePixelRatio : 1;
+  const dpr = isSsr() ? window.devicePixelRatio : 1;
 
   // Rounding coordinates by DPR
   const _x = Number.isNaN(x) ? 0 : Math.round(Math.round(x * dpr) / dpr);

@@ -3,12 +3,15 @@ import {
   type PropertyDeclaration,
   type PropertyValues,
 } from "lit";
-import isSSR from "../is-ssr";
-import SystemError from "../SystemError";
+import isSsr from "../is-ssr.ts";
+import SystemError from "../SystemError.ts";
 import type Validator from "../Validator";
 import type { MixinBase, MixinReturn } from "./types";
-import { internals, type WithElementInternals } from "./with-element-internals";
-import { type FormAssociated } from "./with-form-associated";
+import {
+  internals,
+  type WithElementInternals,
+} from "./with-element-internals.ts";
+import { type FormAssociated } from "./with-form-associated.ts";
 
 /**
  * A symbol property used to create a constraint validation `Validator`.
@@ -227,7 +230,7 @@ const withConstraintValidation = <
     }
 
     private _syncValidity() {
-      if (isSSR()) return;
+      if (isSsr()) return;
 
       if (!this._validator) {
         this._validator = this[createValidator]();

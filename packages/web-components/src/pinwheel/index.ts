@@ -1,10 +1,10 @@
 import { customElement } from "lit/decorators.js";
-import { PinwheelItem } from "./item";
-import itemStyles from "./item/item.style";
-import { Pinwheel } from "./pinwheel";
-import styles from "./pinwheel.style";
+import { PinwheelItem } from "./item/index.ts";
+import itemStyles from "./item/item.style.ts";
+import styles from "./pinwheel.style.ts";
+import { Pinwheel } from "./pinwheel.ts";
 
-export { Slots } from "./constants";
+export { Slots } from "./constants.ts";
 
 /**
  * @summary The pinwheel item component.
@@ -46,7 +46,7 @@ export class TapsiPinwheelItem extends PinwheelItem {
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
  *
- * @fires {Event} change - Fires when the pinwheel selected state changes.
+ * @fires {Event} change - Fires when the pinwheel selected state changes (bubbles).
  */
 @customElement("tapsi-pinwheel")
 export class TapsiPinwheel extends Pinwheel {

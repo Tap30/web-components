@@ -1,7 +1,10 @@
 import { customElement } from "lit/decorators.js";
-import { BaseTextInputSlots, baseTextInputStyles } from "../base-text-input";
-import { TextArea } from "./text-area";
-import styles from "./text-area.style";
+import {
+  BaseTextInputSlots,
+  baseTextInputStyles,
+} from "../base-text-input/index.ts";
+import styles from "./text-area.style.ts";
+import { TextArea } from "./text-area.ts";
 
 export { BaseTextInputSlots as Slots };
 
@@ -85,6 +88,13 @@ export { BaseTextInputSlots as Slots };
  * Defaults to 20.
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#cols
+ *
+ * @prop {string} [inputmode=""] -
+ * Hints at the type of data that might be entered by the user while editing
+ * the element or its contents. This allows a browser to display an
+ * appropriate virtual keyboard.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode
  *
  * @slot leading-icon - the leading icon slot of the text-area
  * @slot trailing - the trailing slot of the text-area

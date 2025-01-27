@@ -1,6 +1,6 @@
 import { html, type PropertyValues, type TemplateResult } from "lit";
-import { logger } from "../../utils";
-import { BaseButton } from "../base";
+import { logger } from "../../utils/index.ts";
+import { BaseButton } from "../base/index.ts";
 
 export class IconButton extends BaseButton {
   protected override updated(changed: PropertyValues<this>) {

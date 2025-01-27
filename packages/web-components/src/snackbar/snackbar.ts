@@ -1,13 +1,18 @@
-import "../button/icon-button";
+import "../button/icon-button/index.ts";
 
 import { html, LitElement, type PropertyValues } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { KeyboardKeys } from "../internals";
-import { contains, isElementFocusable, isSSR, waitAMicrotask } from "../utils";
-import { Slots } from "./constants";
-import { HideEvent, ShowEvent } from "./events";
-import { close, error, info, success, warning } from "./icons";
+import { KeyboardKeys } from "../internals/index.ts";
+import {
+  contains,
+  isElementFocusable,
+  isSsr,
+  waitAMicrotask,
+} from "../utils/index.ts";
+import { Slots } from "./constants.ts";
+import { HideEvent, ShowEvent } from "./events.ts";
+import { close, error, info, success, warning } from "./icons.ts";
 
 export class Snackbar extends LitElement {
   public static override readonly shadowRootOptions = {
@@ -130,7 +135,7 @@ export class Snackbar extends LitElement {
   }
 
   private _handleIconSlotChange() {
-    if (!isSSR()) {
+    if (!isSsr()) {
       this._hasIconSlot = this._iconSlotNodes.length > 0;
     }
   }

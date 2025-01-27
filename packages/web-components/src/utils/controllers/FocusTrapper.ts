@@ -6,8 +6,8 @@ import {
   type TemplateResult,
 } from "lit";
 import { styleMap } from "lit/directives/style-map.js";
-import { contains, isElementFocusable } from "../dom";
-import { runAfterRepaint } from "../event-loop-execution";
+import { contains, isElementFocusable } from "../dom/index.ts";
+import { runAfterRepaint } from "../event-loop-execution.ts";
 
 type Host = ReactiveControllerHost & LitElement;
 

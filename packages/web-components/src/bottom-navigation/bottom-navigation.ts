@@ -1,9 +1,8 @@
 import { LitElement, html, nothing } from "lit";
 import { property } from "lit/decorators.js";
-import { getRenderRootSlot, isSSR, logger } from "../utils";
-import { Slots } from "./constants";
-import { ActiveChangeEvent } from "./events";
-import { ActivateEvent, BottomNavigationItem } from "./item";
+import { logger } from "../utils/index.ts";
+import { ActiveChangeEvent } from "./events.ts";
+import { ActivateEvent, type BottomNavigationItem } from "./item/index.ts";
 
 export class BottomNavigation extends LitElement {
   /**
@@ -15,24 +14,10 @@ export class BottomNavigation extends LitElement {
   @property({ type: String })
   public label = "";
 
-  private get _items() {
-    const itemsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
-
-    if (!itemsSlot) return [];
-
-    const items = itemsSlot
-      .assignedNodes()
-      .filter(node => node instanceof BottomNavigationItem);
-
-    return items;
-  }
-
   constructor() {
     super();
 
-    if (!isSSR()) {
-      this._handleItemActivation = this._handleItemActivation.bind(this);
-    }
+    this._handleItemActivation = this._handleItemActivation.bind(this);
   }
 
   public override connectedCallback() {
@@ -56,10 +41,6 @@ export class BottomNavigation extends LitElement {
   private _handleItemActivation(event: ActivateEvent) {
     const item = event.target as BottomNavigationItem;
     const value = item.value;
-
-    this._items.forEach(item => {
-      if (item.value !== value) item.active = false;
-    });
 
     this.dispatchEvent(new ActiveChangeEvent({ value }));
   }

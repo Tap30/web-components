@@ -1,15 +1,29 @@
-import { html, LitElement, type PropertyValues } from "lit";
+import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { SystemError } from "../../utils";
-import { SynchronizeRequestEvent } from "../events";
+import { logger } from "../../utils/index.ts";
+import ItemSelectionController from "./Controller.ts";
 
 export class PinwheelItem extends LitElement {
+  private _selected = false;
+
   /**
    * Indicates whether the item is selected or not.
    */
   @property({ type: Boolean, reflect: true })
-  public selected = false;
+  public get selected() {
+    return this._selected;
+  }
+
+  public set selected(isSelected: boolean) {
+    const prevSelected = this.selected;
+
+    if (prevSelected === isSelected) return;
+
+    this._selected = isSelected;
+    this.requestUpdate("selected", prevSelected);
+    this._selectionController.handleSelectionChange();
+  }
 
   /**
    * The value associated with the item.
@@ -18,19 +32,14 @@ export class PinwheelItem extends LitElement {
   @property()
   public value = "";
 
-  protected override updated(changed: PropertyValues<this>) {
-    super.updated(changed);
-
-    if (changed.has("selected") && this.hasUpdated) {
-      this.dispatchEvent(new SynchronizeRequestEvent());
-    }
-  }
+  private readonly _selectionController = new ItemSelectionController(this);
 
   protected override render() {
     if (!this.value) {
-      throw new SystemError(
+      logger(
         `Expected a valid \`value\` property/attribute. Received \`${this.value}\`.`,
         "pinwheel-item",
+        "error",
       );
     }
 
@@ -46,6 +55,8 @@ export class PinwheelItem extends LitElement {
         class=${rootClasses}
         part="root"
         data-value=${this.value}
+        @click=${this._selectionController.handleClick}
+        @keydown=${this._selectionController.handleKeyDown}
       >
         <slot></slot>
       </div>
