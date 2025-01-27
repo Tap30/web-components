@@ -37,10 +37,8 @@ const generateImports = (
   moduleResolutionRegistryPath: string,
 ) => {
   return [
-    "/* eslint-disable @typescript-eslint/no-unsafe-assignment, eslint-comments/disable-enable-pair, @typescript-eslint/ban-ts-comment */",
     `import { createComponent } from "@lit/react";`,
     `import * as React from "react";`,
-    "// @ts-ignore",
     `import { ${elementClass} } from "${moduleResolutionRegistryPath}";`,
   ].join("\n");
 };
@@ -216,7 +214,7 @@ const transformToComponentModule = new Transform({
 
       await fs.promises.appendFile(
         barrelFilePath,
-        `export { default as ${componentName} } from "./${componentName}";\n`,
+        `export { default as ${componentName} } from "./${componentName}.ts";\n`,
         {
           encoding: "utf-8",
         },
