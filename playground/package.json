@@ -9,7 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@lit/react": "^1.0.6",
-    "lit": "^3.2.1"
+    "@tapsioss/icons": "workspace:*",
+    "@tapsioss/react-components": "workspace:*",
+    "@tapsioss/react-icons": "workspace:*",
+    "@tapsioss/theme": "workspace:*",
+    "@tapsioss/web-components": "workspace:*",
+    "@tapsioss/web-icons": "workspace:*"
   }
 }
