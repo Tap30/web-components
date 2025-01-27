@@ -2,7 +2,8 @@ name: Publish
 
 on:
   pull_request:
-    types: [closed]
+    types:
+      - closed
     branches:
       - main
 
@@ -18,8 +19,8 @@ jobs:
       - name: Set PACKAGE_NAME variable
         id: set-package-name
         run:
-          echo "PACKAGE_NAME=$(echo ${{ github.event.pull_request.head.ref }} |
-          awk -F'/' '{print $2}')" >> $GITHUB_ENV
+          echo "PACKAGE_NAME=$(echo ${{ github.head_ref }} | awk -F'/' '{print
+          $2}')" >> $GITHUB_ENV
 
       - uses: pnpm/action-setup@v3
         with:
@@ -54,8 +55,8 @@ jobs:
       - name: Set PACKAGE_NAME variable
         id: set-package-name
         run:
-          echo "PACKAGE_NAME=$(echo ${{ github.event.pull_request.head.ref }} |
-          awk -F'/' '{print $2}')" >> $GITHUB_ENV
+          echo "PACKAGE_NAME=$(echo ${{ github.head_ref }} | awk -F'/' '{print
+          $2}')" >> $GITHUB_ENV
 
       - uses: pnpm/action-setup@v3
         with:
