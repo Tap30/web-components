@@ -1,0 +1,83 @@
+name: Publish
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  build:
+    if:
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.head.ref, 'release/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set PACKAGE_NAME variable
+        id: set-package-name
+        run:
+          echo "PACKAGE_NAME=$(echo ${{ github.head_ref }} | awk -F'/' '{print
+          $2}')" >> $GITHUB_ENV
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: "📦 install dependencies"
+        run: pnpm install
+
+      - name: "🧱 build package"
+        run: pnpm ${{ env.PACKAGE_NAME }}:build
+
+      - name: "🗄️ archive package"
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: packages/${{ env.PACKAGE_NAME }}/dist
+
+  publish-npm:
+    needs: build
+    if:
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.head.ref, 'release/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set PACKAGE_NAME variable
+        id: set-package-name
+        run:
+          echo "PACKAGE_NAME=$(echo ${{ github.head_ref }} | awk -F'/' '{print
+          $2}')" >> $GITHUB_ENV
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          registry-url: https://registry.npmjs.org/
+
+      - name: "📦 install dependencies"
+        run: pnpm install
+
+      - name: "🚚 download package"
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: packages/${{ env.PACKAGE_NAME }}/dist
+
+      - name: "🚀 publish package"
+        run: pnpm ${{ env.PACKAGE_NAME }}:release
+        env:
+          NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
