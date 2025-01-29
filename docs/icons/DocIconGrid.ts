@@ -82,7 +82,6 @@ export class DocIconGrid extends LitElement {
     super.updated(changed);
 
     if (this._selectedIcon) {
-      // this._iconWrapper.innerHTML = this._selectedIcon.svgTag;
       this._usageSection.innerHTML = getUsageSectionMarkdown({
         importPath: `@tapsioss/web-icons/${this._selectedIcon.kebabName}`,
         tagName: `tapsi-icon-${this._selectedIcon.kebabName}`,
@@ -177,6 +176,24 @@ export class DocIconGrid extends LitElement {
       </div> `;
   }
 
+  private _renderSearchIcon() {
+    return html`<svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      aria-hidden="true"
+    >
+      <path
+        d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
+        stroke="currentColor"
+        fill="none"
+        fill-rule="evenodd"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></path>
+    </svg>`;
+  }
+
   private _renderSearchbar() {
     return html`<div id="icon-header">
       <p>You can select one of these icons to see the details.</p>
@@ -185,21 +202,9 @@ export class DocIconGrid extends LitElement {
           for="icon-search"
           id="docsearch-label"
           class="DocSearch-MagnifierLabel"
-          ><svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            aria-hidden="true"
-          >
-            <path
-              d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
-              stroke="currentColor"
-              fill="none"
-              fill-rule="evenodd"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path></svg
-          ><span class="DocSearch-VisuallyHiddenForAccessibility"
+        >
+          ${this._renderSearchIcon()}
+          <span class="DocSearch-VisuallyHiddenForAccessibility"
             >Search</span
           ></label
         >
@@ -216,6 +221,7 @@ export class DocIconGrid extends LitElement {
   }
 
   private _shouldShowIconInGrid(icon: SVGIconInfo) {
+    // Do not apply the filter if the user typed a single-character string in search input.
     if (this._searchString.length < 2) return true;
 
     return this._normalizeStringFiltering(icon.kebabName).includes(
@@ -240,7 +246,7 @@ export class DocIconGrid extends LitElement {
       });
     }
 
-    return html`<div>Icon was found for "${this._searchString}"!</div>`;
+    return html`<div>No icon was found for "${this._searchString}"!</div>`;
   }
 
   protected override render() {
