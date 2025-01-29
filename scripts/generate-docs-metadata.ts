@@ -9,7 +9,6 @@ import * as path from "node:path";
 import { type DefaultTheme } from "vitepress";
 import {
   type Component,
-  type Icon,
   type ImportPaths,
 } from "../internals/doc-helpers/types.ts";
 import { getFileMeta } from "./utils.ts";
@@ -21,13 +20,11 @@ const webComponentsSrcDir = path.join(
   "packages/web-components/src",
 );
 
-const iconsDistDir = path.join(workspaceDir, "packages/icons/dist/paths.json");
 const workspaceDistDir = path.join(workspaceDir, "dist");
 const metadataFile = path.join(workspaceDistDir, "components-metadata.json");
 const cemFile = path.join(workspaceDistDir, "custom-elements.json");
 
 const cem = JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
-const iconsData = JSON.parse(fs.readFileSync(iconsDistDir, "utf8"));
 
 const getKebabCaseComponentName = (component: Declaration) => {
   if (!("tagName" in component) || !component.tagName) return null;
@@ -158,27 +155,6 @@ void (() => {
     ),
   };
 
-  const icons = Object.values(iconsData as Record<string, Icon>).map(icon => {
-    const paths = icon.paths.map(({ d, clipRule, fillRule, xlinkHref }) => {
-      const props = [
-        `d="${d}"`,
-        clipRule ? `clip-rule="${clipRule}"` : null,
-        fillRule ? `fill-rule="${fillRule}"` : null,
-        xlinkHref ? `xlink:href="${xlinkHref}"` : null,
-      ];
-
-      return `<path ${props.filter(Boolean).join(" ")} />`;
-    });
-
-    const svgTag = `<svg viewBox="0 0 24 24" class="tapsi-icon" id="${icon.kebabName}-icon">${paths}</svg>`;
-
-    return {
-      kebabName: icon.kebabName,
-      pascalName: icon.pascalName,
-      svgTag,
-    };
-  });
-
   const iconsSidebarItem: DefaultTheme.SidebarItem = {
     text: "Icons",
     link: "icons",
@@ -193,7 +169,6 @@ void (() => {
       {
         components,
         sidebarItems,
-        icons,
       },
       null,
       2,

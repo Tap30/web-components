@@ -31,34 +31,6 @@ export type InteractiveDemo = {
   slots: DemoSlot[];
 };
 
-export type ComponentSlot = {
-  name: string;
-  description: string;
-};
-
-export type ComponentMember = {
-  type: {
-    text: string;
-  };
-  description?: string;
-  name: string;
-  default?: string;
-  kind: string;
-};
-
-export type ComponentEvent = {
-  type?: {
-    text: string;
-  };
-  description?: string;
-  name: string;
-};
-
-export type componentSuperclass = {
-  name: string;
-  module: string;
-};
-
 export type ImportPaths = {
   webComponents?: string;
 };
@@ -70,17 +42,7 @@ export type Component = CustomElement & {
   slotsEnumName?: string;
 };
 
-export type IconPath = Record<string, string>;
-
-export type Icon = {
-  pascalName: string;
-  kebabName: string;
-  paths: IconPath[];
-  svgTag: string;
-};
-
 export type Metadata = {
-  icons: Icon[];
   components: Component[];
   sidebarItems: DefaultTheme.SidebarItem[];
 };
