@@ -32,7 +32,7 @@ export type InteractiveDemo = {
 };
 
 export type ImportPaths = {
-  webComponents: string;
+  webComponents?: string;
 };
 
 export type Component = CustomElement & {
