@@ -7,6 +7,8 @@ import {
 import { getFileMeta } from "../../scripts/utils.ts";
 import {
   codify,
+  getFormattedImportUsageString,
+  getFormattedTagUsageString,
   getUsageSectionMarkdown,
   tabulateData,
 } from "../utils/markdown.ts";
@@ -47,10 +49,13 @@ const getComponentMarkdown = (component: Component) => {
 
     res += `${component.summary}\n`;
 
-    res += getUsageSectionMarkdown({
-      importPath: component.importPaths.webComponents,
-      tagName: component.tagName,
-    });
+    res += getUsageSectionMarkdown([
+      [
+        "Import",
+        getFormattedImportUsageString(component.importPaths.webComponents),
+      ],
+      ["Tag", getFormattedTagUsageString(component.tagName)],
+    ]);
 
     res += getMembersMarkdown(component);
 

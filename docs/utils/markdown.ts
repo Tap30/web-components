@@ -12,34 +12,26 @@ export const tabulateData = (headers: string[], data: string[][]): string => {
 
 export const codify = (inputString: string) => `\`${inputString}\``;
 
-export const getFormattedTagUsageString = (tagName: string) =>
-  `<pre>&lt;<span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">${tagName}</span>&gt;&lt;/<span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">${tagName}</span>&gt;</pre>`;
+export const getFormattedTagUsageString = (tagName?: string) => {
+  if (!tagName) return "";
+  return `<pre>&lt;<span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">${tagName}</span>&gt;&lt;/<span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">${tagName}</span>&gt;</pre>`;
+};
 
-export const getFormattedImportUsageString = (path: string) =>
-  `<pre><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">import</span> <span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">"${path}"</span>;</pre>`;
+export const getFormattedImportUsageString = (path?: string) => {
+  if (!path) return "";
+  return `<pre><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">import</span> <span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">"${path}"</span>;</pre>`;
+};
 
-export const getUsageSectionMarkdown = (props: {
-  tagName?: string;
-  importPath?: string;
-}) => {
+export const getUsageSectionMarkdown = (sections: [string, string?][]) => {
   let res = "";
 
-  const shouldShowUsageSection = Object.values(props).reduce(
-    (a, b) => a || b !== undefined,
-    false,
-  );
-
-  if (!shouldShowUsageSection) return res;
+  if (sections.length === 0) return res;
 
   res += "\n<ul id='usage'>\n";
 
-  if (props.importPath !== undefined) {
-    res += `<li><strong>Import</strong>${getFormattedImportUsageString(props.importPath)}</li>`;
-  }
-
-  if (props.tagName !== undefined) {
-    res += `<li><strong>Tag</strong>${getFormattedTagUsageString(props.tagName)}</li>`;
-  }
+  sections.forEach(([sectionName, sectionValue]) => {
+    res += `<li><strong>${sectionName}</strong>${sectionValue || "-"}</li>`;
+  });
 
   res += "\n</ul>\n";
 

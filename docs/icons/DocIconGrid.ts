@@ -5,7 +5,11 @@ import { html, LitElement, nothing, svg, type PropertyValues } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import "vitepress/theme";
-import { getUsageSectionMarkdown } from "../utils/markdown.ts";
+import {
+  getFormattedImportUsageString,
+  getFormattedTagUsageString,
+  getUsageSectionMarkdown,
+} from "../utils/markdown.ts";
 
 type SVGPathInfo = {
   clipRule?: string;
@@ -73,6 +77,7 @@ export class DocIconGrid extends LitElement {
   }
 
   private _handleEscapeKey = (e: KeyboardEvent) => {
+    e.preventDefault();
     if (e.key === "Escape") {
       this._closeModal();
     }
@@ -82,10 +87,20 @@ export class DocIconGrid extends LitElement {
     super.updated(changed);
 
     if (this._selectedIcon) {
-      this._usageSection.innerHTML = getUsageSectionMarkdown({
-        importPath: `@tapsioss/web-icons/${this._selectedIcon.kebabName}`,
-        tagName: `tapsi-icon-${this._selectedIcon.kebabName}`,
-      });
+      this._usageSection.innerHTML = getUsageSectionMarkdown([
+        [
+          "Import",
+          getFormattedImportUsageString(
+            `@tapsioss/web-icons/${this._selectedIcon.kebabName}`,
+          ),
+        ],
+        [
+          "Tag",
+          getFormattedTagUsageString(
+            `tapsi-icon-${this._selectedIcon.kebabName}`,
+          ),
+        ],
+      ]);
     }
   }
 
@@ -109,6 +124,7 @@ export class DocIconGrid extends LitElement {
       <svg
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         ${iconPaths.map(({ d, clipRule, fillRule }) => {
           return svg`<path
@@ -123,8 +139,7 @@ export class DocIconGrid extends LitElement {
 
   private _renderModal() {
     return html`<div
-        aria-hidden=${!this._showModal}
-        role="button"
+        aria-hidden="true"
         class=${classMap({
           "modal-overlay": true,
           open: !!this._showModal,
@@ -134,6 +149,9 @@ export class DocIconGrid extends LitElement {
 
       <div
         id="icon-modal"
+        role="dialog"
+        aria-labelledby="modal-header"
+        aria-modal="true"
         class=${classMap({
           modal: true,
           open: !!this._selectedIcon,
@@ -143,12 +161,16 @@ export class DocIconGrid extends LitElement {
         <header
           style="display:flex; justify-content:space-between; align-items: center;"
         >
-          <h3>${this._selectedIcon?.pascalName} Icon</h3>
-          <button @click=${this._closeModal}>
+          <h3 id="modal-header">${this._selectedIcon?.pascalName} Icon</h3>
+          <button
+            @click=${this._closeModal}
+            aria-label="close modal"
+          >
             <svg
               viewBox="0 0 24 24"
               class="tapsi-icon"
               id="cross-icon"
+              aria-hidden="true"
             >
               <path
                 d="M17.6565 7.75735L13.4138 12L17.6565 16.2426L16.2423 17.6568L11.9996 13.4142L7.75699 17.6568L6.34277 16.2426L10.5854 12L6.34277 7.75735L7.75699 6.34314L11.9996 10.5858L16.2423 6.34314L17.6565 7.75735Z"
@@ -196,7 +218,7 @@ export class DocIconGrid extends LitElement {
 
   private _renderSearchbar() {
     return html`<div id="icon-header">
-      <p>You can select one of these icons to see the details.</p>
+      <p>Select an icon to view its details.</p>
       <span class="icons-search-input">
         <label
           for="icon-search"
@@ -211,7 +233,6 @@ export class DocIconGrid extends LitElement {
         <input
           @input=${this._handleInputChange}
           id="icon-search"
-          autofocus="true"
           placeholder="Search icons"
           type="search"
           class="DocSearch-Input"
@@ -239,6 +260,7 @@ export class DocIconGrid extends LitElement {
         return html`<button
           title=${icon.kebabName}
           class="icon-item"
+          aria-label="open icon modal"
           @click=${() => this._openModal(icon)}
         >
           ${this._getSvg(icon.paths)}
