@@ -90,12 +90,12 @@ outline: false
 </style>
 
 <script setup>
-import './DocIconGrid';
+import './internals/components/DocIconGrid';
 </script>
 
 # Icons
 
-## Properties
+## Properties 
 
 <div class="table-wrapper">
 

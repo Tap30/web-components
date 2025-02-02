@@ -4,12 +4,14 @@ import { createFocusTrap, type FocusTrap } from "focus-trap";
 import { html, LitElement, nothing, svg, type PropertyValues } from "lit";
 import { customElement, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
+
 import "vitepress/theme";
 import {
   getFormattedImportUsageString,
   getFormattedTagUsageString,
   getUsageSectionMarkdown,
-} from "../utils/markdown.ts";
+} from "../../utils/markdown.ts";
 
 type SVGPathInfo = {
   clipRule?: string;
@@ -39,9 +41,6 @@ export class DocIconGrid extends LitElement {
   @state()
   _selectedIcon: null | SVGIconInfo = null;
 
-  @query("#usage-section")
-  private _usageSection!: HTMLElement;
-
   @query("#icon-modal")
   private _iconModal!: HTMLElement;
 
@@ -58,7 +57,7 @@ export class DocIconGrid extends LitElement {
   public override disconnectedCallback() {
     super.disconnectedCallback();
 
-    scrollLock.disableBodyScroll(this._iconModal);
+    scrollLock.enableBodyScroll(this._iconModal);
 
     this._focusTrapper?.deactivate();
     this._focusTrapper = null;
@@ -77,32 +76,11 @@ export class DocIconGrid extends LitElement {
   }
 
   private _handleEscapeKey = (e: KeyboardEvent) => {
-    e.preventDefault();
     if (e.key === "Escape") {
+      e.preventDefault();
       this._closeModal();
     }
   };
-
-  protected override updated(changed: PropertyValues<this>) {
-    super.updated(changed);
-
-    if (this._selectedIcon) {
-      this._usageSection.innerHTML = getUsageSectionMarkdown([
-        [
-          "Import",
-          getFormattedImportUsageString(
-            `@tapsioss/web-icons/${this._selectedIcon.kebabName}`,
-          ),
-        ],
-        [
-          "Tag",
-          getFormattedTagUsageString(
-            `tapsi-icon-${this._selectedIcon.kebabName}`,
-          ),
-        ],
-      ]);
-    }
-  }
 
   private _closeModal = () => {
     this._showModal = false;
@@ -122,6 +100,7 @@ export class DocIconGrid extends LitElement {
     if (!iconPaths) return;
     return html`
       <svg
+        fill="currentColor"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
@@ -135,6 +114,27 @@ export class DocIconGrid extends LitElement {
         })}
       </svg>
     `;
+  }
+
+  private _renderIconUsageSection() {
+    if (!this._selectedIcon) return null;
+
+    return unsafeHTML(
+      getUsageSectionMarkdown([
+        [
+          "Import",
+          getFormattedImportUsageString(
+            `@tapsioss/web-icons/${this._selectedIcon.kebabName}`,
+          ),
+        ],
+        [
+          "Tag",
+          getFormattedTagUsageString(
+            `tapsi-icon-${this._selectedIcon.kebabName}`,
+          ),
+        ],
+      ]),
+    );
   }
 
   private _renderModal() {
@@ -184,7 +184,7 @@ export class DocIconGrid extends LitElement {
         <main>
           <h4>Usage</h4>
 
-          <section id="usage-section"></section>
+          ${this._renderIconUsageSection()}
 
           <h4>Preview</h4>
 

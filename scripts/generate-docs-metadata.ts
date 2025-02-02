@@ -157,8 +157,7 @@ void (() => {
 
   const iconsSidebarItem: DefaultTheme.SidebarItem = {
     text: "Icons",
-    link: "icons",
-    collapsed: true,
+    link: "/icons",
   };
 
   const sidebarItems = [iconsSidebarItem, componentSidebarItems];
