@@ -96,7 +96,7 @@ export class DocIconGrid extends LitElement {
     this._focusTrapper?.activate();
   };
 
-  private _getSvg(iconPaths: SVGPathInfo[]) {
+  private _getSvg(iconPaths?: SVGPathInfo[]) {
     if (!iconPaths) return;
     return html`
       <svg
@@ -192,7 +192,7 @@ export class DocIconGrid extends LitElement {
             class="tapsi-icon-wrapper"
             id="icon-wrapper"
           >
-            ${this._selectedIcon && this._getSvg(this._selectedIcon?.paths)}
+            ${this._getSvg(this._selectedIcon?.paths)}
           </div>
         </main>
       </div> `;
