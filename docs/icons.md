@@ -1,7 +1,7 @@
 ---
 prev: false
 next: false
-outline: false
+outline: "deep"
 ---
 
 <style>
@@ -53,6 +53,11 @@ outline: false
   justify-content: center;
   border-radius: 8px;
   padding: 6px;
+}
+
+.icon-item:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
 }
 
 .icon-item svg {
