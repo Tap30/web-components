@@ -170,15 +170,25 @@ importers:
 
   docs:
     dependencies:
+      '@tapsioss/icons':
+        specifier: workspace:*
+        version: link:../packages/icons
       '@tapsioss/theme':
         specifier: workspace:*
         version: link:../packages/theme
       '@tapsioss/web-components':
         specifier: workspace:*
         version: link:../packages/web-components
-      '@tapsioss/web-icons':
-        specifier: workspace:*
-        version: link:../packages/web-icons
+      body-scroll-lock:
+        specifier: 4.0.0-beta.0
+        version: 4.0.0-beta.0
+      focus-trap:
+        specifier: ^7.6.4
+        version: 7.6.4
+    devDependencies:
+      '@types/body-scroll-lock':
+        specifier: ^3.1.2
+        version: 3.1.2
 
   packages/icons: {}
 
@@ -1222,6 +1232,9 @@ packages:
   '@types/body-parser@1.19.5':
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
 
+  '@types/body-scroll-lock@3.1.2':
+    resolution: {integrity: sha512-ELhtuphE/YbhEcpBf/rIV9Tl3/O0A0gpCVD+oYFSS8bWstHFJUgA4nNw1ZakVlRC38XaQEIsBogUZKWIPBvpfQ==}
+
   '@types/chai-dom@1.11.3':
     resolution: {integrity: sha512-EUEZI7uID4ewzxnU7DJXtyvykhQuwe+etJ1wwOiJyQRTH/ifMWKX+ghiXkxCUvNJ6IQDodf0JXhuP6zZcy2qXQ==}
 
@@ -1755,6 +1768,9 @@ packages:
 
   birpc@0.2.19:
     resolution: {integrity: sha512-5WeXXAvTmitV1RqJFppT5QtUiz2p1mRSYU000Jkft5ZUCLJIk4uQriYNO50HknxKwM6jd8utNc66K1qGIwwWBQ==}
+
+  body-scroll-lock@4.0.0-beta.0:
+    resolution: {integrity: sha512-a7tP5+0Mw3YlUJcGAKUqIBkYYGlYxk2fnCasq/FUph1hadxlTRjF+gAcZksxANnaMnALjxEddmSi/H3OR8ugcQ==}
 
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -2367,6 +2383,9 @@ packages:
 
   flatted@3.3.2:
     resolution: {integrity: sha512-AiwGJM8YcNOaobumgtng+6NHuOqC3A7MixFeDafM3X9cIUM+xUXoS5Vfgf+OihAYe20fxqNM9yPBXJzRtZ/4eA==}
+
+  focus-trap@7.6.4:
+    resolution: {integrity: sha512-xx560wGBk7seZ6y933idtjJQc1l+ck+pI3sKvhKozdBV1dRZoKhkW5xoCaFv9tQiX5RH1xfSxjuNu6g+lmN/gw==}
 
   focus-trap@7.6.4:
     resolution: {integrity: sha512-xx560wGBk7seZ6y933idtjJQc1l+ck+pI3sKvhKozdBV1dRZoKhkW5xoCaFv9tQiX5RH1xfSxjuNu6g+lmN/gw==}
@@ -4948,6 +4967,8 @@ snapshots:
       '@types/connect': 3.4.38
       '@types/node': 20.17.16
 
+  '@types/body-scroll-lock@3.1.2': {}
+
   '@types/chai-dom@1.11.3':
     dependencies:
       '@types/chai': 4.3.20
@@ -5691,6 +5712,8 @@ snapshots:
   binary-extensions@2.3.0: {}
 
   birpc@0.2.19: {}
+
+  body-scroll-lock@4.0.0-beta.0: {}
 
   brace-expansion@1.1.11:
     dependencies:
@@ -6470,6 +6493,10 @@ snapshots:
       keyv: 4.5.4
 
   flatted@3.3.2: {}
+
+  focus-trap@7.6.4:
+    dependencies:
+      tabbable: 6.2.0
 
   focus-trap@7.6.4:
     dependencies:

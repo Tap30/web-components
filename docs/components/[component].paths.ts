@@ -5,7 +5,13 @@ import {
   type Metadata,
 } from "../../internals/doc-helpers/types.ts";
 import { getFileMeta } from "../../scripts/utils.ts";
-import { codify, tabulateData } from "../utils/md.ts";
+import {
+  codify,
+  getFormattedImportUsageString,
+  getFormattedTagUsageString,
+  getUsageSectionMarkdown,
+  tabulateData,
+} from "../utils/markdown.ts";
 
 export default {
   paths() {
@@ -43,7 +49,13 @@ const getComponentMarkdown = (component: Component) => {
 
     res += `${component.summary}\n`;
 
-    res += getUsageMarkdown(component);
+    res += getUsageSectionMarkdown([
+      [
+        "Import",
+        getFormattedImportUsageString(component.importPaths.webComponents),
+      ],
+      ["Tag", getFormattedTagUsageString(component.tagName)],
+    ]);
 
     res += getMembersMarkdown(component);
 
@@ -91,19 +103,6 @@ ${slots
 
 :::`;
   }
-
-  return res;
-};
-
-const getUsageMarkdown = (component: Component) => {
-  let res = "";
-
-  res += "\n<ul id='usage'>\n";
-
-  res += `<li><strong>Import</strong><pre><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">import</span> <span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">"${component.importPaths.webComponents}"</span>;</pre></li>`;
-  res += `<li><strong>Tag</strong><pre>&lt;<span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">${component.tagName}</span>&gt;&lt;/<span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">${component.tagName}</span>&gt;</pre></li>`;
-
-  res += "\n</ul>\n";
 
   return res;
 };

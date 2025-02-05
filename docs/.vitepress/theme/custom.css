@@ -13,6 +13,37 @@
   flex-wrap: wrap;
 }
 
+#usage {
+  background: var(--vp-c-bg-soft);
+  padding: 18px;
+  border-radius: 8px;
+  overflow: auto;
+  font-size: 14px;
+}
+
+#usage li {
+  display: flex;
+  align-items: center;
+}
+
+:not(.dark) #usage pre span {
+  color: var(--shiki-light, inherit);
+}
+
+.dark #usage pre span {
+  color: var(--shiki-dark, inherit);
+}
+
+#usage pre {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+#usage strong {
+  width: 90px;
+  flex-shrink: 0;
+}
+
 .table-wrapper {
   width: 100%;
   overflow: auto;
@@ -22,3 +53,51 @@
   min-width: 688px;
   display: table;
 }
+
+.modal-overlay {
+  position: fixed;
+  background: var(--vp-backdrop-bg-color);
+  backdrop-filter: blur(4px);
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  overflow: auto;
+  background: var(--vp-c-bg);
+  padding: 0 30px 30px;
+  max-width: 90dvw;
+  width: 500px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 101;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms;
+  border-radius: 16px;
+}
+
+.modal.open {
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  opacity: 1;
+}
+

@@ -20,9 +20,9 @@ const webComponentsSrcDir = path.join(
   "packages/web-components/src",
 );
 
-const distDir = path.join(workspaceDir, "dist");
-const metadataFile = path.join(distDir, "components-metadata.json");
-const cemFile = path.join(distDir, "custom-elements.json");
+const workspaceDistDir = path.join(workspaceDir, "dist");
+const metadataFile = path.join(workspaceDistDir, "components-metadata.json");
+const cemFile = path.join(workspaceDistDir, "custom-elements.json");
 
 const cem = JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
 
@@ -35,7 +35,7 @@ const getKebabCaseComponentName = (component: Declaration) => {
 };
 
 void (() => {
-  console.log("🧩 generating components metadata...");
+  console.log("🧩 generating docs metadata...");
 
   const sidebarItemsMap: Record<string, DefaultTheme.SidebarItem> = {};
   const components: Component[] = [];
@@ -109,7 +109,7 @@ void (() => {
       sidebarItem.text = childPath ?? relativePath;
 
       if (declarations.length === 1) {
-        sidebarItem.link = `components/${kebabCaseName}`;
+        sidebarItem.link = `/components/${kebabCaseName}`;
       } else {
         if (!Array.isArray(sidebarItem.items)) {
           sidebarItem.items = [];
@@ -120,7 +120,7 @@ void (() => {
 
           return {
             text: name,
-            link: `components/${name}`,
+            link: `/components/${name}`,
           };
         });
       }
@@ -148,20 +148,32 @@ void (() => {
     });
   });
 
+  const componentSidebarItems: DefaultTheme.SidebarItem = {
+    text: "Components",
+    items: Object.values(sidebarItemsMap).sort((a, b) =>
+      a.text!.localeCompare(b.text!),
+    ),
+  };
+
+  const iconsSidebarItem: DefaultTheme.SidebarItem = {
+    text: "Icons",
+    link: "/icons",
+  };
+
+  const sidebarItems = [iconsSidebarItem, componentSidebarItems];
+
   fs.writeFileSync(
     metadataFile,
     JSON.stringify(
       {
         components,
-        sidebarItems: Object.values(sidebarItemsMap).sort((a, b) =>
-          a.text!.localeCompare(b.text!),
-        ),
+        sidebarItems,
       },
       null,
       2,
     ),
   );
 
-  console.log("✅ components metadata generated.");
+  console.log("✅ docs metadata generated.");
 })();
 /* eslint-enable no-console */

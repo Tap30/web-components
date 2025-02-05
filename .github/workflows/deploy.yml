@@ -28,10 +28,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0
       - uses: pnpm/action-setup@v3
         with:
-          version: 9 
+          version: 9
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -41,8 +41,8 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Install dependencies
         run: pnpm install
-      - name: Analyze 
-        run: pnpm analyze 
+      - name: Building Packages
+        run: pnpm packages:build
       - name: Build Docs
         run: pnpm docs:build
       - name: Upload artifact

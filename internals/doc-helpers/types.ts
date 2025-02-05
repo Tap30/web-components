@@ -31,34 +31,6 @@ export type InteractiveDemo = {
   slots: DemoSlot[];
 };
 
-export type ComponentSlot = {
-  name: string;
-  description: string;
-};
-
-export type ComponentMember = {
-  type: {
-    text: string;
-  };
-  description?: string;
-  name: string;
-  default?: string;
-  kind: string;
-};
-
-export type ComponentEvent = {
-  type?: {
-    text: string;
-  };
-  description?: string;
-  name: string;
-};
-
-export type componentSuperclass = {
-  name: string;
-  module: string;
-};
-
 export type ImportPaths = {
   webComponents?: string;
 };
