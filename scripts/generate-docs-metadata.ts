@@ -7,10 +7,7 @@ import {
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { type DefaultTheme } from "vitepress";
-import {
-  type Component,
-  type ImportPaths,
-} from "../internals/doc-helpers/types.ts";
+import type { Component, ImportPaths } from "../types/docs.ts";
 import { getFileMeta } from "./utils.ts";
 
 const { dirname } = getFileMeta(import.meta.url);

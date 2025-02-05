@@ -1,10 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import {
-  type Component,
-  type Metadata,
-} from "../../internals/doc-helpers/types.ts";
 import { getFileMeta } from "../../scripts/utils.ts";
+import { type Component, type Metadata } from "../../types/docs.ts";
 import {
   codify,
   getFormattedImportUsageString,

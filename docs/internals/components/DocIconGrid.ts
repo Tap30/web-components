@@ -93,7 +93,10 @@ export class DocIconGrid extends LitElement {
     this._showModal = true;
     this._selectedIcon = icon;
     scrollLock.disableBodyScroll(this._iconModal);
-    this._focusTrapper?.activate();
+
+    void this.updateComplete.then(() => {
+      this._focusTrapper?.activate();
+    });
   };
 
   private _getSvg(iconPaths?: SVGPathInfo[]) {
@@ -142,7 +145,7 @@ export class DocIconGrid extends LitElement {
         aria-hidden="true"
         class=${classMap({
           "modal-overlay": true,
-          open: !!this._showModal,
+          open: this._showModal,
         })}
         @click=${this._closeModal}
       ></div>
@@ -154,9 +157,10 @@ export class DocIconGrid extends LitElement {
         aria-modal="true"
         class=${classMap({
           modal: true,
-          open: !!this._selectedIcon,
+          open: this._showModal,
         })}
         @click=${(e: Event) => e.stopPropagation()}
+        ?inert=${!this._showModal}
       >
         <header
           style="display:flex; justify-content:space-between; align-items: center;"

@@ -7,7 +7,7 @@
           <value>
             <SchemaInfo>
               <option name="name" value="Interactive Demo Schema" />
-              <option name="relativePathToSchema" value="https://raw.githubusercontent.com/Tap30/web-components/refs/heads/main/internals/doc-helpers/schema.json" />
+              <option name="relativePathToSchema" value="https://raw.githubusercontent.com/Tap30/web-components/refs/heads/main/internals/interactive-demo.schema.json" />
               <option name="patterns">
                 <list>
                   <Item>
