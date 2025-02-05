@@ -1,5 +1,6 @@
 packages:
   # all packages in direct subdirs of packages/
   - "packages/*"
+  - "internals/test-helpers" # TODO: make doc helpers a package too
   - "playground"
   - "docs"

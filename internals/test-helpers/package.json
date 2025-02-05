@@ -1,0 +1,7 @@
+{
+  "name": "@internals/test-helpers",
+  "main": "index.ts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module"
+}
