@@ -12,7 +12,7 @@
     "noEmit": true,
     "allowJs": false,
     "checkJs": false,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
 
     "strict": true,
     "pretty": true,
@@ -59,7 +59,7 @@
       "@tapsioss/theme": [
         "./packages/theme/dist/index.css",
         "./packages/theme/src/index.css"
-      ]
+      ],
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

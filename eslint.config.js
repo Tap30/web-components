@@ -1,8 +1,11 @@
 import jsLint from "@eslint/js";
 import commentsPlugin from "eslint-plugin-eslint-comments";
 import importPlugin from "eslint-plugin-import";
+import jestPlugin from "eslint-plugin-jest";
+import jestDomPlugin from "eslint-plugin-jest-dom";
 import litPlugin from "eslint-plugin-lit";
 import prettierRecommendedConfig from "eslint-plugin-prettier/recommended";
+import testingLibraryPlugin from "eslint-plugin-testing-library";
 import wcPlugin from "eslint-plugin-wc";
 import { config, configs as tsLintConfigs } from "typescript-eslint";
 
@@ -15,8 +18,7 @@ export default config(
   wcPlugin.configs["flat/recommended"],
   prettierRecommendedConfig,
   {
-    ignores: ["**/*.test.ts"],
-    files: ["*.ts"],
+    files: ["*.ts", "*.tsx"],
   },
   {
     languageOptions: {
@@ -41,6 +43,18 @@ export default config(
       "eslint-comments/no-unlimited-disable": "error",
       "eslint-comments/no-unused-enable": "error",
       "eslint-comments/no-unused-disable": "error",
+    },
+  },
+  {
+    files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+    extends: [
+      jestDomPlugin.configs["flat/recommended"],
+      testingLibraryPlugin.configs["flat/react"],
+      testingLibraryPlugin.configs["flat/dom"],
+      jestPlugin.configs["flat/recommended"],
+    ],
+    rules: {
+      "jest/prefer-importing-jest-globals": "error",
     },
   },
   {
