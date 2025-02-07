@@ -2,7 +2,7 @@
 
 If you're reading this, you're definitely awesome!
 <br />
-The following is a set of guidelines for contributing to StylelessUi and its packages, which are hosted in the [TAPSI Design System's Monorepo](https://github.com/Tap30/web-components). These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
+The following is a set of guidelines for contributing to TAPSI Design System's Monorepo, which are hosted in the [TAPSI Design System's Monorepo](https://github.com/Tap30/web-components). These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 ## Code of Conduct
 
