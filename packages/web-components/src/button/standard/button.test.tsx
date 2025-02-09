@@ -21,6 +21,7 @@ const handleClick = jest.fn();
 const getTestButton = () => screen.getByTestId("test-button");
 
 const mockRequiredProps = {
+  "data-testid": "test-button",
   label: "test-button-label",
 };
 
@@ -31,7 +32,12 @@ describe("🧪 button/standard: UI", () => {
   itSupportsDataSetProps(Button, mockRequiredProps);
 
   it("should trigger `handleClick` function after clicking on the button", async () => {
-    render(<Button onClick={handleClick} />);
+    render(
+      <Button
+        {...mockRequiredProps}
+        onClick={handleClick}
+      />,
+    );
     const testButton = getTestButton();
 
     const { click } = userEvent.setup();
@@ -42,7 +48,12 @@ describe("🧪 button/standard: UI", () => {
   });
 
   it("should trigger `handleClick` function after focusing on the button and pressing Enter", async () => {
-    render(<Button onClick={handleClick} />);
+    render(
+      <Button
+        {...mockRequiredProps}
+        onClick={handleClick}
+      />,
+    );
     const testButton = getTestButton();
 
     const { tab, keyboard } = userEvent.setup();
@@ -57,6 +68,7 @@ describe("🧪 button/standard: UI", () => {
   it("should not be able to trigger `handleClick` function while `disabled`", async () => {
     render(
       <Button
+        {...mockRequiredProps}
         onClick={handleClick}
         disabled
       />,
@@ -74,15 +86,20 @@ describe("🧪 button/standard: UI", () => {
   });
 
   it("should have `aria-label` when the host has a `label` property", async () => {
-    render(<Button label="test-label" />);
+    render(<Button {...mockRequiredProps} />);
 
     expect(
       await screen.findByShadowTestId("tapsi-button-root"),
-    ).toHaveAttribute("aria-label", "test-label");
+    ).toHaveAttribute("aria-label", "test-button-label");
   });
 
   it("should show spinner with `loading` prop", async () => {
-    render(<Button loading />);
+    render(
+      <Button
+        {...mockRequiredProps}
+        loading
+      />,
+    );
 
     expect(
       await screen.findByShadowTestId("tapsi-button-spinner"),
