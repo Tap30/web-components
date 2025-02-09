@@ -1,20 +1,6 @@
-import { render, screen } from "@internals/test-helpers";
+import { render } from "@internals/test-helpers";
 import { expect, it } from "@jest/globals";
 import { type ComponentType } from "react";
-
-export const getComponent = <T extends JSX.IntrinsicAttributes>(
-  Component: ComponentType<T>,
-  props: T,
-): HTMLElement => {
-  render(
-    <Component
-      data-testid="test-component"
-      {...props}
-    />,
-  );
-
-  return screen.getByTestId("test-component");
-};
 
 export const itShouldMount = <T extends JSX.IntrinsicAttributes>(
   Component: ComponentType<T>,

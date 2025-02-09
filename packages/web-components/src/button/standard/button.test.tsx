@@ -5,7 +5,6 @@ import { describe, expect, it, jest } from "@jest/globals";
 import { createComponent } from "@lit/react";
 import React, { type FormEventHandler } from "react";
 import {
-  getComponent,
   itShouldMount,
   itSupportsClassName,
   itSupportsDataSetProps,
@@ -19,6 +18,7 @@ const Button = createComponent({
 });
 
 const handleClick = jest.fn();
+const getTestButton = () => screen.getByTestId("test-button");
 
 const mockRequiredProps = {
   label: "test-button-label",
@@ -31,9 +31,8 @@ describe("🧪 button/standard: UI", () => {
   itSupportsDataSetProps(Button, mockRequiredProps);
 
   it("should trigger `handleClick` function after clicking on the button", async () => {
-    const testButton = getComponent(Button, {
-      onClick: handleClick,
-    });
+    render(<Button onClick={handleClick} />);
+    const testButton = getTestButton();
 
     const { click } = userEvent.setup();
 
@@ -43,9 +42,8 @@ describe("🧪 button/standard: UI", () => {
   });
 
   it("should trigger `handleClick` function after focusing on the button and pressing Enter", async () => {
-    const testButton = getComponent(Button, {
-      onClick: handleClick,
-    });
+    render(<Button onClick={handleClick} />);
+    const testButton = getTestButton();
 
     const { tab, keyboard } = userEvent.setup();
 
@@ -57,10 +55,13 @@ describe("🧪 button/standard: UI", () => {
   });
 
   it("should not be able to trigger `handleClick` function while `disabled`", async () => {
-    const testButton = getComponent(Button, {
-      onClick: handleClick,
-      disabled: true,
-    });
+    render(
+      <Button
+        onClick={handleClick}
+        disabled
+      />,
+    );
+    const testButton = getTestButton();
 
     const { tab, click } = userEvent.setup();
 
@@ -72,13 +73,8 @@ describe("🧪 button/standard: UI", () => {
     expect(handleClick).toHaveBeenCalledTimes(0);
   });
 
-  it("should have `aria-label` property when the host has a `label` property", async () => {
-    render(
-      <Button
-        {...mockRequiredProps}
-        label="test-label"
-      />,
-    );
+  it("should have `aria-label` when the host has a `label` property", async () => {
+    render(<Button label="test-label" />);
 
     expect(
       await screen.findByShadowTestId("tapsi-button-root"),
