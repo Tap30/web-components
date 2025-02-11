@@ -46,6 +46,7 @@ export class Avatar extends LitElement {
     return html`
       <img
         part="image"
+        data-testid="avatar-image"
         class="image"
         alt=${this.alt}
         src="${this.image}"
@@ -57,6 +58,7 @@ export class Avatar extends LitElement {
 
   private _renderPlaceholder() {
     return html` <div
+      data-testid="avatar-placeholder"
       part="placeholder"
       class="placeholder"
       aria-hidden="true"
@@ -73,6 +75,7 @@ export class Avatar extends LitElement {
 
     return html`
       <div
+        data-testid="avatar-root"
         role="img"
         aria-label=${this.label}
         part="root"
