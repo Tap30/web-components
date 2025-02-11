@@ -68,6 +68,9 @@ importers:
       custom-elements-manifest:
         specifier: ^2.1.0
         version: 2.1.0
+      element-internals-polyfill:
+        specifier: ^1.3.13
+        version: 1.3.13
       eslint:
         specifier: ^9.12.0
         version: 9.19.0
@@ -2183,6 +2186,9 @@ packages:
 
   electron-to-chromium@1.5.88:
     resolution: {integrity: sha512-K3C2qf1o+bGzbilTDCTBhTQcMS9KW60yTAaTeeXsfvQuTDDwlokLam/AdqlqcSy9u4UainDgsHV23ksXAOgamw==}
+
+  element-internals-polyfill@1.3.13:
+    resolution: {integrity: sha512-viZ7wJsvh6eFwGQX512zEaccK/c6RRFSerJsdkfe3DW/ZtruvNeOR33fpPZgfXxvqRdU2lK33KM4S6GqaTgVKQ==}
 
   emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -6590,6 +6596,8 @@ snapshots:
       jake: 10.9.2
 
   electron-to-chromium@1.5.88: {}
+
+  element-internals-polyfill@1.3.13: {}
 
   emittery@0.13.1: {}
 

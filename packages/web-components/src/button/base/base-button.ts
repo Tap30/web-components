@@ -119,7 +119,10 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
    */
   protected renderSpinner() {
     return html`
-      <div class="icon spinner">
+      <div
+        class="icon spinner"
+        data-testid="tapsi-button-spinner"
+      >
         <tapsi-spinner></tapsi-spinner>
       </div>
     `;
@@ -158,6 +161,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     return html`
       <button
         id="root"
+        data-testid="tapsi-button-root"
         part="root"
         class=${rootClasses}
         tabindex=${this.tabIndex}
