@@ -1,18 +1,11 @@
-import { test, type Locator, type Page } from "@playwright/test";
-
-export const render = (page: Page, content: string, root?: Locator) => {
-  return page.evaluate(
-    async ([root, content]) => {
-      const targetRoot = (await root?.elementHandle()) ?? document.body;
-
-      targetRoot.innerHTML = content;
-    },
-    [root, content] as const,
-  );
-};
+import { test } from "@playwright/test";
 
 const { afterAll, afterEach, beforeAll, beforeEach, describe, expect, step } =
   test;
+
+export * from "./handles.ts";
+export * from "./mock/index.ts";
+export * from "./render.ts";
 
 export {
   afterAll,
