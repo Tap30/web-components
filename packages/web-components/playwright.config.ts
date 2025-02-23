@@ -8,15 +8,15 @@ export default defineConfig({
   reporter: process.env.CI ? "github" : "list",
   projects: [
     {
-      name: "Desktop",
+      name: "💻 Desktop",
       use: devices["Desktop Chrome"],
     },
     {
-      name: "iOS",
+      name: "📱 iOS",
       use: devices["iPhone X"],
     },
     {
-      name: "Android",
+      name: "📱 Android",
       use: devices["Galaxy S9+"],
     },
   ],

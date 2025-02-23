@@ -1,3 +1,33 @@
 import "@tapsioss/theme";
-// Import modules using path aliases
-// i.e. `import "@tapsioss/web-components/avatar";`
+import "@tapsioss/web-components/avatar";
+import "@tapsioss/web-components/badge";
+import "@tapsioss/web-components/badge-wrapper";
+import "@tapsioss/web-components/banner";
+import "@tapsioss/web-components/bottom-navigation";
+import "@tapsioss/web-components/bottom-sheet";
+import "@tapsioss/web-components/button";
+import "@tapsioss/web-components/button-group";
+import "@tapsioss/web-components/chat-bubble";
+import "@tapsioss/web-components/checkbox";
+import "@tapsioss/web-components/chip";
+import "@tapsioss/web-components/chip-group";
+import "@tapsioss/web-components/divider";
+import "@tapsioss/web-components/empty-state";
+import "@tapsioss/web-components/file-input";
+import "@tapsioss/web-components/modal";
+import "@tapsioss/web-components/notice";
+import "@tapsioss/web-components/pin-input";
+import "@tapsioss/web-components/pinwheel";
+import "@tapsioss/web-components/pinwheel-group";
+import "@tapsioss/web-components/progress-indicator";
+import "@tapsioss/web-components/radio";
+import "@tapsioss/web-components/rate-slider";
+import "@tapsioss/web-components/segmented-view";
+import "@tapsioss/web-components/skeleton";
+import "@tapsioss/web-components/snackbar";
+import "@tapsioss/web-components/spinner";
+import "@tapsioss/web-components/stepper";
+import "@tapsioss/web-components/switch";
+import "@tapsioss/web-components/text-area";
+import "@tapsioss/web-components/text-field";
+import "@tapsioss/web-components/tooltip";

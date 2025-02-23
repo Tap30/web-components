@@ -85,16 +85,18 @@ export class Modal extends LitElement {
 
     const initialOpenState = !this.hasUpdated && openState && !this._open;
 
-    const toggle = () => {
+    const toggle = (shouldRender = false) => {
       this._open = openState;
 
       void this._toggleOpenState(openState);
+
+      if (shouldRender) this.requestUpdate("open");
     };
 
     if (initialOpenState && !this._init) {
       this._init = true;
       void this.updateComplete.then(() => {
-        runAfterRepaint(toggle);
+        runAfterRepaint(() => toggle(true));
       });
     } else toggle();
   }
