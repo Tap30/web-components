@@ -22,7 +22,7 @@ export default defineConfig({
   ],
   use: {
     baseURL: "http://localhost:3000",
-    permissions: ["clipboard-write"],
+    permissions: ["clipboard-write", "clipboard-read"],
   },
   webServer: {
     command: "pnpm --filter @tapsioss/playground run start:test",
