@@ -30,9 +30,9 @@ class BaseIcon extends HTMLElement {
     this.attachShadow({ mode: "open" });
   }
 
-  public declare viewbox: string;
-  public declare title: string;
-  public declare size: Size;
+  declare public viewbox: string;
+  declare public title: string;
+  declare public size: Size;
 
   public static get observedAttributes() {
     return ["viewbox", "title", "size"];

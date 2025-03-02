@@ -1,4 +1,4 @@
-export type CallDetail = {};
+export type CallDetail = object;
 
 export type MockFn = {
   called: boolean;

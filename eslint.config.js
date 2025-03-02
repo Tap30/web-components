@@ -19,7 +19,7 @@ export default config(
     files: ["*.ts", "*.tsx"],
   },
   {
-    ignores: ["dist", "node_modules"],
+    ignores: ["dist", "node_modules", "docs/.vitepress/cache"],
   },
   {
     languageOptions: {

@@ -1,3 +1,3 @@
-import vitepressConfig from '../vitepress.config';
+import vitepressConfig from "../vitepress.config.ts";
 
 export default vitepressConfig;
