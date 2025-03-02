@@ -25,7 +25,12 @@ export default defineConfig({
     permissions: ["clipboard-write"],
   },
   webServer: {
-    command: "pnpm playground:test",
+    command: "pnpm --filter @tapsioss/playground run start:test",
     reuseExistingServer: !process.env.CI,
+    url: "http://localhost:3000/test",
+    gracefulShutdown: {
+      signal: "SIGTERM",
+      timeout: 1000,
+    },
   },
 });
