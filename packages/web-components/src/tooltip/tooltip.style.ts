@@ -14,8 +14,9 @@ export default css`
 
   :host {
     isolation: isolate;
-    position: absolute;
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 
   .root.visible {
