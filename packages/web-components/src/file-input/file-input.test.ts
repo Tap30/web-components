@@ -1,6 +1,7 @@
 import {
   afterEach,
   beforeEach,
+  createPromiseResolvers,
   describe,
   disposeMocks,
   expect,
@@ -9,7 +10,7 @@ import {
   test,
 } from "@internals/test-helpers";
 import * as path from "path";
-import { ErrorMessages } from "./constants.ts";
+import { ErrorMessages, scope } from "./constants.ts";
 
 describe("🧩 file-input", () => {
   beforeEach(async ({ page }) => {
@@ -34,11 +35,17 @@ describe("🧩 file-input", () => {
   test("🧪 should throw error if no valid label was set for the input", async ({
     page,
   }) => {
-    const errors: string[] = [];
+    const msgResolver = createPromiseResolvers<string>();
 
     page.on("console", msg => {
-      if (msg.type() === "error") {
-        errors.push(msg.text());
+      if (
+        msg.type() === "error" &&
+        msg.text().includes(scope) &&
+        msg
+          .text()
+          .includes(ErrorMessages.SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE)
+      ) {
+        msgResolver.resolve(msg.text());
       }
     });
 
@@ -47,9 +54,9 @@ describe("🧩 file-input", () => {
       `<tapsi-file-input data-testid="test-file-input"></tapsi-file-input>`,
     );
 
-    expect(errors[0]).toContain(
-      ErrorMessages.SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE,
-    );
+    const msg = await msgResolver.promise;
+
+    expect(msg).toBeDefined();
   });
 
   test("🧪 should show spinner when attribute `loading` was set to true", async ({
@@ -85,92 +92,6 @@ describe("🧩 file-input", () => {
       ErrorMessages.ERROR_AND_LOADING_ATTRIBUTES_AT_THE_SAME_TIME,
     );
   });
-
-  // test("🧪 should throw error when `loading` is invalid", async ({ page }) => {
-  //   let errors: string[] = [];
-  //
-  //   page.on("console", msg => {
-  //     if (msg.type() === "error") {
-  //       errors.push(msg.text());
-  //     }
-  //   });
-  //
-  //   // Simple `loading` attribute is valid and should not throw any errors.
-  //   await render(
-  //     page,
-  //     `<tapsi-file-input label="label" data-testid="test-file-input" loading></tapsi-file-input>`,
-  //   );
-  //   expect(errors.length).toEqual(0);
-  //
-  //   errors = [];
-  //   page.on("console", msg => {
-  //     if (msg.type() === "error") {
-  //       errors.push(msg.text());
-  //     }
-  //   });
-  //
-  //   // Numeric values between 0 and 100 are also valid values for `loading`.
-  //   await render(
-  //     page,
-  //     `<tapsi-file-input label="label" data-testid="test-file-input" loading="0"></tapsi-file-input>`,
-  //   );
-  //   expect(errors.length).toBe(0);
-  //
-  //   errors = [];
-  //   page.on("console", msg => {
-  //     if (msg.type() === "error") {
-  //       errors.push(msg.text());
-  //     }
-  //   });
-  //   await render(
-  //     page,
-  //     `<tapsi-file-input label="label" data-testid="test-file-input" loading="50"></tapsi-file-input>`,
-  //   );
-  //   expect(errors.length).toBe(0);
-  //
-  //   errors = [];
-  //   page.on("console", msg => {
-  //     if (msg.type() === "error") {
-  //       errors.push(msg.text());
-  //     }
-  //   });
-  //   await render(
-  //     page,
-  //     `<tapsi-file-input label="label" data-testid="test-file-input" loading="100"></tapsi-file-input>`,
-  //   );
-  //   expect(errors.length).toBe(0);
-  //
-  //   errors = [];
-  //   page.on("console", msg => {
-  //     if (msg.type() === "error") {
-  //       errors.push(msg.text());
-  //     }
-  //   });
-  //
-  //   // Even floating numbers are valid until they're in the correct range.
-  //   await render(
-  //     page,
-  //     `<tapsi-file-input label="label" data-testid="test-file-input" loading="23.4"></tapsi-file-input>`,
-  //   );
-  //   expect(errors.length).toBe(0);
-  //
-  //   errors = [];
-  //   page.on("console", msg => {
-  //     if (msg.type() === "error") {
-  //       errors.push(msg.text());
-  //     }
-  //   });
-  //
-  //   // Values outside this range are invalid and should throw error.
-  //   await render(
-  //     page,
-  //     `<tapsi-file-input label="label" data-testid="test-file-input" loading="200"></tapsi-file-input>`,
-  //   );
-  //   expect(errors.length).toBe(1);
-  //   expect(errors[0]).toContain(
-  //     ErrorMessages.ERROR_AND_LOADING_ATTRIBUTES_AT_THE_SAME_TIME,
-  //   );
-  // });
 
   test("🧪 should not be interactive when disabled", async ({ page }) => {
     await render(

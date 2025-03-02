@@ -2,6 +2,8 @@ export const Slots = {
   PLACEHOLDER_ICON: "placeholder-icon",
 } as const;
 
+export const scope = "file-input";
+
 export const ErrorMessages = {
   SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE: [
     "Expected a valid `label` or `labelledby` attribute, received none.",
