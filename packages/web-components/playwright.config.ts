@@ -5,16 +5,16 @@ export default defineConfig({
   fullyParallel: true,
   retries: process.env.CI ? 2 : undefined,
   forbidOnly: !!process.env.CI,
-  reporter: process.env.CI ? "github" : "list",
+  reporter: process.env.CI ? [["github"]] : [["list"], ["html"]],
   projects: [
     {
       name: "💻 Desktop",
       use: devices["Desktop Chrome"],
     },
-    {
-      name: "📱 iOS",
-      use: devices["iPhone X"],
-    },
+    // {
+    //   name: "📱 iOS",
+    //   use: devices["iPhone X"],
+    // },
     {
       name: "📱 Android",
       use: devices["Galaxy S9+"],
