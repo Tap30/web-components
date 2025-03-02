@@ -24,7 +24,7 @@ import {
   withFormAssociated,
   withOnReportValidity,
 } from "../utils/index.ts";
-import { Slots } from "./constants.ts";
+import { ErrorMessages, scope, Slots } from "./constants.ts";
 import { RetryEvent } from "./events.ts";
 import { clear, error, image } from "./icons.ts";
 import { getProgressUiParams, isFileImage, isStringNumber } from "./utils.ts";
@@ -363,16 +363,16 @@ export class FileInput extends BaseClass {
   private _logErrors() {
     if (this._isLoading() && this.error) {
       logger(
-        "The File input cannot have `error` and `loading` state at the same time.",
-        "file-input",
+        ErrorMessages.ERROR_AND_LOADING_ATTRIBUTES_AT_THE_SAME_TIME,
+        scope,
         "error",
       );
     }
 
     if (!this._hasValidLabel()) {
       logger(
-        "Expected a valid `label` or `labelledby` attribute, received none.",
-        "file-input",
+        ErrorMessages.SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE,
+        scope,
         "error",
       );
     }
@@ -381,11 +381,7 @@ export class FileInput extends BaseClass {
       const loading = parseInt(this.loading.toString());
 
       if (!(0 <= loading && loading <= 100)) {
-        logger(
-          "the `loading` value should be between 0 and 100",
-          "file-input",
-          "error",
-        );
+        logger(ErrorMessages.INVALID_LOADING_VALUE, scope, "error");
       }
     }
   }
@@ -403,15 +399,7 @@ export class FileInput extends BaseClass {
   @property()
   public set value(newValue: string) {
     if (newValue) {
-      logger(
-        [
-          "Failed to set the 'value' property on 'TapsiFileInput':",
-          "This input element accepts a filename, which may only be",
-          "programmatically set to the empty string.",
-        ].join(" "),
-        "file-input",
-        "error",
-      );
+      logger(ErrorMessages.INVALID_VALUE, scope, "error");
 
       return;
     }
@@ -488,7 +476,7 @@ export class FileInput extends BaseClass {
 
       if (isFileImage(file.name)) {
         return html`<img
-          src=${this._previewSrc}
+          src=${ifDefined(this._previewSrc)}
           alt="preview"
           class="preview"
         />`;

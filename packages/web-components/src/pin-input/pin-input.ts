@@ -25,7 +25,7 @@ import {
   withOnReportValidity,
   type Validator,
 } from "../utils/index.ts";
-import { DEFAULT_DISPLAY_VALUE } from "./constants.ts";
+import { DEFAULT_DISPLAY_VALUE, ErrorMessages } from "./constants.ts";
 import { CompleteEvent } from "./events.ts";
 import { isAlphaNumeric, isNumeric, stringConverter } from "./utils.ts";
 import PinInputValidator from "./Validator.ts";
@@ -151,7 +151,7 @@ export class PinInput extends BaseClass {
    * The number of each input's length.
    * Defaults to 1.
    */
-  @property({ type: Number })
+  @property({ type: Number, attribute: "pin-length" })
   public pinLength = 1;
 
   @state()
@@ -658,7 +658,7 @@ export class PinInput extends BaseClass {
 
     if (!hasValidLabel) {
       logger(
-        "Expected a valid `label` or `labelledby` attribute, received none.",
+        ErrorMessages.SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE,
         "pin-input",
         "error",
       );

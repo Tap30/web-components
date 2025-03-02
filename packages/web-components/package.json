@@ -18,7 +18,7 @@
     "prebuild": "pnpm run clear",
     "build": "tsc --project ./tsconfig.build.json",
     "predev": "pnpm run clear",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test": "playwright test",
     "dev": "tsc --watch --project ./tsconfig.dev.json",
     "release": "pnpm publish . --tag latest --access public"
   },
@@ -29,7 +29,6 @@
     "tslib": "^2.8.0"
   },
   "devDependencies": {
-    "@internals/test-helpers": "workspace:*",
-    "jest": "^29.7.0"
+    "@internals/test-helpers": "workspace:*"
   }
 }

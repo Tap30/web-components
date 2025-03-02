@@ -59,9 +59,9 @@
       "@tapsioss/theme": [
         "./packages/theme/dist/index.css",
         "./packages/theme/src/index.css"
-      ],
+      ]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "docs/.vitepress/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

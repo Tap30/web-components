@@ -13,6 +13,7 @@ import {
   redispatchEvent,
   waitAMicrotask,
 } from "../utils/index.ts";
+import { ErrorMessages } from "./constants.ts";
 
 export class Switch extends BaseInput {
   /**
@@ -135,7 +136,7 @@ export class Switch extends BaseInput {
   protected override renderControl() {
     if (!this.hasValidLabel()) {
       logger(
-        "Expected a valid `label` or `labelledby` attribute, received none.",
+        ErrorMessages.SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE,
         "switch",
         "error",
       );
