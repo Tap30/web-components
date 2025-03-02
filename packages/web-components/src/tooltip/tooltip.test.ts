@@ -1,16 +1,6 @@
-import {
-  beforeEach,
-  describe,
-  expect,
-  render,
-  test,
-} from "@internals/test-helpers";
+import { describe, expect, render, test } from "@internals/test-helpers";
 
 describe("🧩 tooltip", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   test("🧪 should be visible to user", async ({ page }) => {
     await render(
       page,

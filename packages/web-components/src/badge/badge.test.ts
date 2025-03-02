@@ -1,16 +1,6 @@
-import {
-  beforeEach,
-  describe,
-  expect,
-  render,
-  test,
-} from "@internals/test-helpers";
+import { describe, expect, render, test } from "@internals/test-helpers";
 
 describe("🧩 badge", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   test("🧪 should show value when variant is not `dot`", async ({ page }) => {
     const badge = page.getByTestId("test-badge");
 

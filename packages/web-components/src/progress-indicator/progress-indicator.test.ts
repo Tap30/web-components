@@ -1,16 +1,6 @@
-import {
-  beforeEach,
-  describe,
-  expect,
-  render,
-  test,
-} from "@internals/test-helpers";
+import { describe, expect, render, test } from "@internals/test-helpers";
 
 describe("🧩 progress-indicator", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   test("🧪 should show correct steps based on attributes", async ({ page }) => {
     await render(
       page,

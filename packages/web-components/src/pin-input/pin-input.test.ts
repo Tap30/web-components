@@ -1,5 +1,4 @@
 import {
-  beforeEach,
   describe,
   expect,
   forEachLocator,
@@ -30,10 +29,6 @@ const validatePinValues = async (pins: Locator[], pattern: string[]) => {
 };
 
 describe("🧩 pin-input", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   test("🧪 should change pin counts using `pins` attribute", async ({
     page,
   }) => {

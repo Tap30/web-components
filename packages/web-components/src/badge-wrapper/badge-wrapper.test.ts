@@ -1,16 +1,6 @@
-import {
-  beforeEach,
-  describe,
-  expect,
-  render,
-  test,
-} from "@internals/test-helpers";
+import { describe, expect, render, test } from "@internals/test-helpers";
 
 describe("🧩 badge-wrapper", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   test("🧪 should show anchor and badge slots in all anchor shapes", async ({
     page,
   }) => {

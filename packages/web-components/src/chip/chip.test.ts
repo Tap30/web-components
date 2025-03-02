@@ -1,16 +1,6 @@
-import {
-  beforeEach,
-  describe,
-  expect,
-  render,
-  test,
-} from "@internals/test-helpers";
+import { describe, expect, render, test } from "@internals/test-helpers";
 
 describe("🧩 chip", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   test("🧪 should toggle with keyboard interaction", async ({ page }) => {
     await render(
       page,

@@ -1,6 +1,5 @@
 import {
   afterEach,
-  beforeEach,
   describe,
   disposeMocks,
   expect,
@@ -12,10 +11,6 @@ import {
 import { type TapsiBottomNavigationItem } from "@tapsioss/web-components/bottom-navigation/index";
 
 describe("🧩 bottom-navigation-item", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   afterEach(async ({ page }) => {
     await disposeMocks(page);
   });
@@ -121,10 +116,6 @@ describe("🧩 bottom-navigation-item", () => {
 });
 
 describe("🧩 bottom-navigation", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   afterEach(async ({ page }) => {
     await disposeMocks(page);
   });

@@ -1,6 +1,5 @@
 import {
   afterEach,
-  beforeEach,
   describe,
   disposeMocks,
   expect,
@@ -12,10 +11,6 @@ import { type TapsiTextField } from "@tapsioss/web-components/text-field/index";
 import { ErrorMessages } from "../base-text-input/constants.ts";
 
 describe("🧩 text-field", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   afterEach(async ({ page }) => {
     await disposeMocks(page);
   });

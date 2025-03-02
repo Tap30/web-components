@@ -1,10 +1,4 @@
-import {
-  beforeEach,
-  describe,
-  expect,
-  render,
-  test,
-} from "@internals/test-helpers";
+import { describe, expect, render, test } from "@internals/test-helpers";
 
 const selectors = {
   image: 'tapsi-avatar [part="image"]',
@@ -12,10 +6,6 @@ const selectors = {
 };
 
 describe("🧩 avatar", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   test("🧪 should customize placeholder using default slot", async ({
     page,
   }) => {

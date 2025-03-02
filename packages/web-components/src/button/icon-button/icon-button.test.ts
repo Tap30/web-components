@@ -1,6 +1,5 @@
 import {
   afterEach,
-  beforeEach,
   describe,
   disposeMocks,
   expect,
@@ -10,10 +9,6 @@ import {
 } from "@internals/test-helpers";
 
 describe("🧩 icon-button", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   afterEach(async ({ page }) => {
     await disposeMocks(page);
   });

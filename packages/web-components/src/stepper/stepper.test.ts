@@ -1,10 +1,4 @@
-import {
-  beforeEach,
-  describe,
-  expect,
-  render,
-  test,
-} from "@internals/test-helpers";
+import { describe, expect, render, test } from "@internals/test-helpers";
 import { type Page } from "@playwright/test";
 import { type TapsiStepper } from "@tapsioss/web-components/stepper";
 
@@ -23,10 +17,6 @@ const getStepperElements = (page: Page) => {
 };
 
 describe("🧩 stepper", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   test("🧪 should has required attributes for screen readers", async ({
     page,
   }) => {

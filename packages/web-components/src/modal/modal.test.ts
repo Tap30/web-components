@@ -1,16 +1,6 @@
-import {
-  beforeEach,
-  describe,
-  expect,
-  render,
-  test,
-} from "@internals/test-helpers";
+import { describe, expect, render, test } from "@internals/test-helpers";
 
 describe("🧩 modal", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   test("🧪 should show elements based on props and slots", async ({ page }) => {
     await render(
       page,
@@ -229,7 +219,6 @@ describe("🧩 modal", () => {
 
     await page.keyboard.press("Escape");
     await expect(modal3).toBeHidden();
-
 
     // After closing modal 3, modal 2 should be on top
     await expect(modal2).toBeVisible();

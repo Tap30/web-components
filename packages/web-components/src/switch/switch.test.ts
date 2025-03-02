@@ -1,6 +1,5 @@
 import {
   afterEach,
-  beforeEach,
   describe,
   disposeMocks,
   expect,
@@ -11,10 +10,6 @@ import {
 import { ErrorMessages } from "./constants.ts";
 
 describe("🧩 switch", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   afterEach(async ({ page }) => {
     await disposeMocks(page);
   });

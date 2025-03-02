@@ -1,6 +1,5 @@
 import {
   afterEach,
-  beforeEach,
   createPromiseResolvers,
   describe,
   disposeMocks,
@@ -13,10 +12,6 @@ import * as path from "path";
 import { ErrorMessages, scope } from "./constants.ts";
 
 describe("🧩 file-input", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   afterEach(async ({ page }) => {
     await disposeMocks(page);
   });

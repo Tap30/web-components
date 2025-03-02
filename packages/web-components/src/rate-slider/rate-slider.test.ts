@@ -1,18 +1,8 @@
-import {
-  beforeEach,
-  describe,
-  expect,
-  render,
-  test,
-} from "@internals/test-helpers";
+import { describe, expect, render, test } from "@internals/test-helpers";
 import { type Locator } from "@playwright/test";
 import { type TapsiRateSlider } from "@tapsioss/web-components/rate-slider/index";
 
 describe("🧩 rate-slider", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   test("🧪 should has required attributes for screen readers", async ({
     page,
   }) => {

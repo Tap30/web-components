@@ -1,20 +1,10 @@
-import {
-  beforeEach,
-  describe,
-  expect,
-  render,
-  test,
-} from "@internals/test-helpers";
+import { describe, expect, render, test } from "@internals/test-helpers";
 import {
   type States,
   STATUS_TO_LOCALE_MAP,
 } from "@tapsioss/web-components/chat-bubble/in/constants";
 
 describe("🧩 chat-bubble", () => {
-  beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   describe("🧩 chat-bubble-in", () => {
     test("🧪 should show correct text under message based on `status`", async ({
       page,
