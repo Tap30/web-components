@@ -8,24 +8,6 @@ import {
   setupMocks,
   test,
 } from "@internals/test-helpers";
-import { type Locator } from "@playwright/test";
-
-const expectSegmentedViewItems = (segmentedViewItems: Locator[]) => {
-  return {
-    toBeActive: async () => {
-      for (const segmentedViewItem of segmentedViewItems) {
-        await expect(segmentedViewItem).toHaveJSProperty("active", true);
-      }
-    },
-    notToBeActive: async () => {
-      for (const chip of segmentedViewItems) {
-        await expect(chip).toHaveJSProperty("active", false);
-      }
-    },
-  };
-};
-
-const testRadioLike
 
 describe("🧩 segmented-view", () => {
   beforeEach(async ({ page }) => {
@@ -80,29 +62,29 @@ describe("🧩 segmented-view", () => {
     await handleActivate1.matchResult({ callCount: 1 });
     await handleActivate2.matchResult({ callCount: 0 });
     await handleActiveChange.matchResult({ callCount: 1 });
-    await expectSegmentedViewItems([item1]).toBeActive();
-    await expectSegmentedViewItems([item2]).notToBeActive();
+    await expect(item1).toHaveJSProperty("active", true);
+    await expect(item2).toHaveJSProperty("active", false);
 
     await item2.click();
     await handleActivate1.matchResult({ callCount: 1 });
     await handleActivate2.matchResult({ callCount: 1 });
     await handleActiveChange.matchResult({ callCount: 2 });
-    await expectSegmentedViewItems([item2]).toBeActive();
-    await expectSegmentedViewItems([item1]).notToBeActive();
+    await expect(item2).toHaveJSProperty("active", true);
+    await expect(item1).toHaveJSProperty("active", false);
 
     await item1.click();
     await handleActivate1.matchResult({ callCount: 2 });
     await handleActivate2.matchResult({ callCount: 1 });
     await handleActiveChange.matchResult({ callCount: 3 });
-    await expectSegmentedViewItems([item1]).toBeActive();
-    await expectSegmentedViewItems([item2]).notToBeActive();
+    await expect(item1).toHaveJSProperty("active", true);
+    await expect(item2).toHaveJSProperty("active", false);
 
     await item2.click();
     await handleActivate1.matchResult({ callCount: 2 });
     await handleActivate2.matchResult({ callCount: 2 });
     await handleActiveChange.matchResult({ callCount: 4 });
-    await expectSegmentedViewItems([item2]).toBeActive();
-    await expectSegmentedViewItems([item1]).notToBeActive();
+    await expect(item2).toHaveJSProperty("active", true);
+    await expect(item1).toHaveJSProperty("active", false);
   });
 
   test("🧪 should change active item and trigger events (`activate` and `activechange`) using keyboard navigation", async ({
@@ -151,8 +133,8 @@ describe("🧩 segmented-view", () => {
     await handleActivate1.matchResult({ callCount: 1 });
     await handleActivate2.matchResult({ callCount: 0 });
     await handleActiveChange.matchResult({ callCount: 1 });
-    await expectSegmentedViewItems([item1]).toBeActive();
-    await expectSegmentedViewItems([item2]).notToBeActive();
+    await expect(item1).toHaveJSProperty("active", true);
+    await expect(item2).toHaveJSProperty("active", false);
 
     await page.keyboard.press("ArrowLeft");
     await expect(item2).toBeFocused();
@@ -160,8 +142,8 @@ describe("🧩 segmented-view", () => {
     await handleActivate1.matchResult({ callCount: 1 });
     await handleActivate2.matchResult({ callCount: 1 });
     await handleActiveChange.matchResult({ callCount: 2 });
-    await expectSegmentedViewItems([item2]).toBeActive();
-    await expectSegmentedViewItems([item1]).notToBeActive();
+    await expect(item2).toHaveJSProperty("active", true);
+    await expect(item1).toHaveJSProperty("active", false);
 
     await page.keyboard.press("ArrowRight");
     await expect(item1).toBeFocused();
@@ -169,7 +151,7 @@ describe("🧩 segmented-view", () => {
     await handleActivate1.matchResult({ callCount: 2 });
     await handleActivate2.matchResult({ callCount: 1 });
     await handleActiveChange.matchResult({ callCount: 3 });
-    await expectSegmentedViewItems([item1]).toBeActive();
-    await expectSegmentedViewItems([item2]).notToBeActive();
+    await expect(item1).toHaveJSProperty("active", true);
+    await expect(item2).toHaveJSProperty("active", false);
   });
 });

@@ -1,24 +1,14 @@
 import {
-  afterEach,
   beforeEach,
   describe,
-  disposeMocks,
   expect,
   render,
   test,
 } from "@internals/test-helpers";
 
-const testIds = {
-  banner: "test-banner",
-};
-
 describe("🧩 banner", () => {
   beforeEach(async ({ page }) => {
     await page.goto("/");
-  });
-
-  afterEach(async ({ page }) => {
-    await disposeMocks(page);
   });
 
   test("🧪 should render banner elements", async ({ page }) => {
@@ -26,7 +16,7 @@ describe("🧩 banner", () => {
       page,
       `
   <tapsi-banner
-      data-testid="${testIds.banner}"
+      data-testid="test-banner"
       heading="heading"
       description="description"
       image="https://picsum.photos/200"

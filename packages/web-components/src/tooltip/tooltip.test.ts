@@ -100,7 +100,7 @@ describe("🧩 tooltip", () => {
     );
     await expect(tooltip).toBeVisible();
 
-    await page.keyboard.down("Escape");
+    await page.keyboard.press("Escape");
     await expect(tooltip).toBeHidden();
 
     await render(
@@ -112,7 +112,7 @@ describe("🧩 tooltip", () => {
     );
     await expect(tooltip).toBeVisible();
 
-    await page.keyboard.down("Escape");
+    await page.keyboard.press("Escape");
     await expect(tooltip).toBeVisible();
   });
 });

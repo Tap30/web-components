@@ -3,6 +3,7 @@ import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap, type StyleInfo } from "lit/directives/style-map.js";
 import { logger } from "../utils/index.ts";
+import { ErrorMessages } from "./constants.ts";
 
 export class Skeleton extends LitElement {
   /**
@@ -45,7 +46,7 @@ export class Skeleton extends LitElement {
       styleInfo.paddingTop = `${100 / ratio}%`;
     } else if (this.ratio && this.variant !== "rectangular") {
       logger(
-        'You can only use `ratio` when `variant="rectangular"`.',
+        ErrorMessages.SET_RATIO_ONLY_IN_RECTANGULAR_VARIANT,
         "skeleton",
         "error",
       );

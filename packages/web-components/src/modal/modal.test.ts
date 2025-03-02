@@ -1,8 +1,6 @@
 import {
-  afterEach,
   beforeEach,
   describe,
-  disposeMocks,
   expect,
   render,
   test,
@@ -11,10 +9,6 @@ import {
 describe("🧩 modal", () => {
   beforeEach(async ({ page }) => {
     await page.goto("/");
-  });
-
-  afterEach(async ({ page }) => {
-    await disposeMocks(page);
   });
 
   test("🧪 should show elements based on props and slots", async ({ page }) => {
@@ -71,13 +65,13 @@ describe("🧩 modal", () => {
     const modalActionButton1 = page.getByTestId("test-modal-action-1");
     const modalActionButton2 = page.getByTestId("test-modal-action-2");
 
-    await page.keyboard.down("Tab");
+    await page.keyboard.press("Tab");
     await expect(modalActionButton1).toBeFocused();
 
-    await page.keyboard.down("Tab");
+    await page.keyboard.press("Tab");
     await expect(modalActionButton2).toBeFocused();
 
-    await page.keyboard.down("Tab");
+    await page.keyboard.press("Tab");
     await expect(modalActionButton1).toBeFocused();
   });
 
@@ -142,7 +136,7 @@ describe("🧩 modal", () => {
 
     await expect(modalContainer).toBeVisible();
 
-    await page.keyboard.down("Escape");
+    await page.keyboard.press("Escape");
     await expect(modalContainer).toBeHidden();
   });
 
@@ -171,5 +165,90 @@ describe("🧩 modal", () => {
 
     await modalOverlay.click();
     await expect(modalContainer).toBeHidden();
+  });
+
+  test("🧪 should work with multiple modals", async ({ page }) => {
+    await render(
+      page,
+      `
+    <tapsi-modal
+      data-testid="test-modal-1"
+      heading="هدینگ 1"
+      description="دسکریپشن"
+      open
+    >
+      <tapsi-button-group data-testid="test-modal-1-actions-slot" label="modal action bar" slot="action-bar">
+        <tapsi-button data-testid="test-modal-1-action-1">click</tapsi-button>
+        <tapsi-button data-testid="test-modal-1-action-2">click</tapsi-button>
+      </tapsi-button-group>
+    </tapsi-modal>
+    <tapsi-modal
+      data-testid="test-modal-2"
+      heading="هدینگ 2"
+      description="دسکریپشن"
+      open
+    >
+      <tapsi-button-group data-testid="test-modal-2-actions-slot" label="modal action bar" slot="action-bar">
+        <tapsi-button data-testid="test-modal-2-action-1">click</tapsi-button>
+        <tapsi-button data-testid="test-modal-2-action-2">click</tapsi-button>
+      </tapsi-button-group>
+    </tapsi-modal>
+    <tapsi-modal
+      data-testid="test-modal-3"
+      heading="هدینگ 3"
+      description="دسکریپشن"
+      open
+    >
+      <tapsi-button-group data-testid="test-modal-3-actions-slot" label="modal action bar" slot="action-bar">
+        <tapsi-button data-testid="test-modal-3-action-1">click</tapsi-button>
+        <tapsi-button data-testid="test-modal-3-action-2">click</tapsi-button>
+      </tapsi-button-group>
+    </tapsi-modal>
+    `,
+    );
+
+    const modal1 = page.getByTestId("test-modal-1").getByRole("alertdialog");
+
+    const modal2 = page.getByTestId("test-modal-2").getByRole("alertdialog");
+    const modal2Action1 = page.getByTestId("test-modal-2-action-1");
+    const modal2Action2 = page.getByTestId("test-modal-2-action-2");
+
+    const modal3 = page.getByTestId("test-modal-3").getByRole("alertdialog");
+    const modal3Action1 = page.getByTestId("test-modal-3-action-1");
+    const modal3Action2 = page.getByTestId("test-modal-3-action-2");
+
+    // Modal 3 should be on top
+    await expect(modal3).toBeVisible();
+    await expect(modal3Action1).toBeFocused();
+
+    await page.keyboard.press("Tab");
+    await expect(modal3Action2).toBeFocused();
+
+    await page.keyboard.press("Tab");
+    await expect(modal3Action1).toBeFocused();
+
+    await page.keyboard.press("Escape");
+    await expect(modal3).toBeHidden();
+
+
+    // After closing modal 3, modal 2 should be on top
+    await expect(modal2).toBeVisible();
+
+    await page.keyboard.press("Shift+Tab");
+    await expect(modal2Action1).toBeFocused();
+
+    await page.keyboard.press("Tab");
+    await expect(modal2Action2).toBeFocused();
+
+    await page.keyboard.press("Tab");
+    await expect(modal2Action1).toBeFocused();
+
+    await page.keyboard.press("Escape");
+    await expect(modal2).toBeHidden();
+
+    // After closing modal 2, modal 1 should be on top
+    await expect(modal1).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(modal1).toBeHidden();
   });
 });
