@@ -3,6 +3,7 @@ import { test } from "@playwright/test";
 const { afterAll, afterEach, beforeAll, beforeEach, describe, expect, step } =
   test;
 
+export { default as createPromiseResolvers } from "./create-promise-resolvers.ts";
 export * from "./forEachLocator.ts";
 export * from "./handles.ts";
 export * from "./mock/index.ts";
