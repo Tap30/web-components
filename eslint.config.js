@@ -19,6 +19,9 @@ export default config(
     files: ["*.ts", "*.tsx"],
   },
   {
+    ignores: ["dist", "node_modules"],
+  },
+  {
     languageOptions: {
       parserOptions: {
         tsconfigRootDir: import.meta.dirname,
