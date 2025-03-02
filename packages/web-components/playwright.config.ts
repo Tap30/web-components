@@ -21,11 +21,11 @@ export default defineConfig({
     },
   ],
   use: {
-    baseURL: "http://localhost:5173",
+    baseURL: "http://localhost:3000",
     permissions: ["clipboard-write"],
   },
   webServer: {
-    command: "pnpm --filter @tapsioss/playground run dev",
+    command: "pnpm playground:test",
     reuseExistingServer: !process.env.CI,
   },
 });
