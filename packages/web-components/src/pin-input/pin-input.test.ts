@@ -191,7 +191,7 @@ describe("🧩 pin-input", () => {
 
     await pins.nth(2).focus();
 
-    await page.keyboard.press("Meta+v");
+    await page.keyboard.press("ControlOrMeta+KeyV");
 
     expect(
       await validatePinValues(await pins.all(), ["1", "2", "3", "", ""]),
@@ -206,7 +206,7 @@ describe("🧩 pin-input", () => {
 
     await pins.nth(2).focus();
 
-    await page.keyboard.press("Meta+v");
+    await page.keyboard.press("ControlOrMeta+KeyV");
 
     expect(
       await validatePinValues(await pins.all(), ["12", "34", "56", "78", "9"]),
@@ -227,7 +227,7 @@ describe("🧩 pin-input", () => {
 
     await page.keyboard.press("Tab");
 
-    await page.keyboard.press("Meta+v");
+    await page.keyboard.press("ControlOrMeta+KeyV");
 
     expect(
       await validatePinValues(await pins.all(), ["1", "2", "3", "4", "5"]),
@@ -244,7 +244,7 @@ describe("🧩 pin-input", () => {
 
     await page.keyboard.press("Tab");
 
-    await page.keyboard.press("Meta+v");
+    await page.keyboard.press("ControlOrMeta+KeyV");
 
     expect(
       await validatePinValues(await pins.all(), ["12", "34", "56", "78", "90"]),
