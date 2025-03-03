@@ -53,7 +53,7 @@ const generateVars = async (tokensPath: string, varsPath: string) => {
       tokensPath
     )) as ModuleWithDefaultExport<Tokens>;
   } catch (err) {
-    console.error([""].join(" "), { err });
+    console.error(`Couldn't resolve module at ${tokensPath}.`, { err });
 
     return Promise.resolve();
   }
