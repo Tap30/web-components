@@ -1,6 +1,7 @@
 import { html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { live } from "lit/directives/live.js";
+import { ErrorMessages } from "../base-text-input/constants.ts";
 import BaseTextInput from "../base-text-input/index.ts";
 import { createValidator, logger, type Validator } from "../utils/index.ts";
 import TextFieldValidator from "./Validator.ts";
@@ -170,10 +171,7 @@ export class TextField extends BaseTextInput {
   protected override renderInput() {
     if (!this.hasValidLabel()) {
       logger(
-        [
-          "Expected a valid `label` or `labelledby` attribute, received none.",
-          "If you want to hide the label, provide both `label` and `hidelabel` attributes.",
-        ].join(" "),
+        ErrorMessages.SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE,
         "text-field",
         "error",
       );

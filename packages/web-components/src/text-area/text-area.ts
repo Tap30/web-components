@@ -46,7 +46,7 @@ export class TextArea extends BaseTextInput {
       logger(
         [
           "Expected a valid `label` or `labelledby` attribute, received none.",
-          "If you want to hide the label, provide both `label` and `hidelabel` attributes.",
+          "If you want to hide the label, provide both `label` and `hide-label` attributes.",
         ].join(" "),
         "text-area",
         "error",

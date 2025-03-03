@@ -15,7 +15,7 @@ export * from "./events.ts";
  *
  * @fires {SelectChangeEvent} selectchange - Fired when the chip selection state changes. (bubbles).
  *
- * @prop {'single' | 'multiple'} [select-mode='single'] - The select mode of the chip group.
+ * @prop {'single' | 'multiple'} [select-mode='multiple'] - The select mode of the chip group.
  * @prop {'horizontal' | 'vertical'} [orientation='horizontal'] - The orientation of the chip group.
  * @prop {string} [label=""] -
  * Defines a string value that can be used to set a label

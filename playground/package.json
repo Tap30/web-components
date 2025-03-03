@@ -1,12 +1,12 @@
 {
+  "sideEffects": true,
   "name": "@tapsioss/playground",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "start:dev": "vite",
+    "start:test": "tsc && vite build && vite --port 3000 preview"
   },
   "dependencies": {
     "@tapsioss/icons": "workspace:*",
