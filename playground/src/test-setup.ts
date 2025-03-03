@@ -1,4 +1,4 @@
-import "@tapsioss/theme/default-theme/css-variables";
+import "@tapsioss/theme/css-variables";
 
 import "@tapsioss/web-components/avatar";
 import "@tapsioss/web-components/badge";
