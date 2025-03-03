@@ -1,18 +1,37 @@
 {
   "name": "@tapsioss/theme",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "type": "module",
   "files": [
-    "./dist/**/*.css"
+    "./dist"
   ],
-  "main": "./dist/index.css",
+  "types": "./dist/types.d.ts",
   "exports": {
-    ".": {
-      "default": "./dist/index.css"
+    "./css-variables": {
+      "default": "./dist/default-theme/tokens.css"
+    },
+    "./*/css-variables": {
+      "default": "./dist/*/tokens.css"
+    },
+    "./tokens": {
+      "default": "./dist/default-theme/tokens.js",
+      "types": "./dist/default-theme/tokens.d.ts"
+    },
+    "./*/tokens": {
+      "default": "./dist/*/tokens.js",
+      "types": "./dist/*/tokens.d.ts"
+    },
+    "./types": {
+      "default": "./dist/types.d.ts"
     }
   },
   "scripts": {
-    "build": "tsx ./scripts/build.ts",
+    "clear": "shx rm -rf dist",
+    "prebuild": "run-s clear generate",
+    "build:transpile": "tsc --project tsconfig.build.json",
+    "build:copy-css": "tsx ./scripts/copy-css-vars.ts",
+    "build": "run-s build:*",
+    "generate": "tsx ./scripts/generate.ts",
     "release": "pnpm publish . --tag latest --access public"
   }
 }
