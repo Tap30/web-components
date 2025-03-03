@@ -5,17 +5,25 @@
   "files": [
     "./dist"
   ],
+  "types": "./dist/types.d.ts",
   "exports": {
-    "./default-theme": {
-      "default": "./dist/default-theme.css"
+    "./default-theme/css-variables": {
+      "default": "./dist/default-theme/tokens.css"
     },
-    ".": {
-      "default": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+    "./default-theme/tokens": {
+      "default": "./dist/default-theme/tokens.js"
+    },
+    "./types": {
+      "default": "./dist/types.d.ts"
     }
   },
   "scripts": {
-    "build": "tsx ./scripts/build.ts",
+    "clear": "shx rm -rf dist",
+    "prebuild": "run-s clear generate",
+    "build:transpile": "tsc --project tsconfig.build.json",
+    "build:copy-css": "tsx ./scripts/copy-css-vars.ts",
+    "build": "run-s build:*",
+    "generate": "tsx ./scripts/generate.ts",
     "release": "pnpm publish . --tag latest --access public"
   }
 }
