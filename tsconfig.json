@@ -56,14 +56,8 @@
         "./packages/react-components/src/*"
       ],
       // Tokens
-      "@tapsioss/theme/*/css-variables": [
-        "./packages/theme/dist/*/tokens.css",
-        "./packages/theme/src/*/tokens.css"
-      ],
-      "@tapsioss/theme/*/tokens": [
-        "./packages/theme/dist/*/tokens.js",
-        "./packages/theme/src/*/tokens.ts"
-      ]
+      "@tapsioss/theme/*/css-variables": ["./packages/theme/src/*/tokens.css"],
+      "@tapsioss/theme/*/tokens": ["./packages/theme/src/*/tokens.ts"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "docs/.vitepress/**/*.ts"],

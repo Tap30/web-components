@@ -7,11 +7,12 @@
   ],
   "types": "./dist/types.d.ts",
   "exports": {
-    "./default-theme/css-variables": {
-      "default": "./dist/default-theme/tokens.css"
+    "./*/css-variables": {
+      "default": "./dist/*/tokens.css"
     },
-    "./default-theme/tokens": {
-      "default": "./dist/default-theme/tokens.js"
+    "./*/tokens": {
+      "default": "./dist/*/tokens.js",
+      "types": "./dist/*/tokens.d.ts"
     },
     "./types": {
       "default": "./dist/types.d.ts"
