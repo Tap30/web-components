@@ -20,8 +20,6 @@ export { ItemSlots };
  *
  * @slot - The default slot for the content/label.
  *
- * @fires {ActivateEvent} activate - Fired when the item activates (bubbles).
- *
  * @prop {boolean} [active=false] - Indicates whether the item is active or not.
  * @prop {string} [value=""] - The value associated with the item. This value has to be unique among sibling items.
  * @prop {"sm" | "md"} [size="md"] - The size of the item.
