@@ -1,14 +1,18 @@
-import { createComponent } from "@lit/react";
-import { TapsiPinInput } from "@tapsioss/web-components/pin-input";
+import * as LitReact from "@lit/react";
+import * as ComponentNamespace from "@tapsioss/web-components/pin-input";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
-const __PinInput = createComponent({
+const __PinInput = LitReact.createComponent({
   tagName: "tapsi-pin-input",
-  elementClass: TapsiPinInput,
+  elementClass: ComponentNamespace.TapsiPinInput,
   react: React,
-  events: {},
+  events: {
+    onComplete:
+      "complete" as LitReact.EventName<ComponentNamespace.CompleteEvent>,
+  },
 });
+
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const PinInput = __PinInput;

@@ -1,14 +1,15 @@
-import { createComponent } from "@lit/react";
-import { TapsiEmptyState } from "@tapsioss/web-components/empty-state";
+import * as LitReact from "@lit/react";
+import * as ComponentNamespace from "@tapsioss/web-components/empty-state";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
-const __EmptyState = createComponent({
+const __EmptyState = LitReact.createComponent({
   tagName: "tapsi-empty-state",
-  elementClass: TapsiEmptyState,
+  elementClass: ComponentNamespace.TapsiEmptyState,
   react: React,
   events: {},
 });
+
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const EmptyState = __EmptyState;

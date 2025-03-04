@@ -1,14 +1,15 @@
-import { createComponent } from "@lit/react";
-import { TapsiSwitch } from "@tapsioss/web-components/switch";
+import * as LitReact from "@lit/react";
+import * as ComponentNamespace from "@tapsioss/web-components/switch";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
-const __Switch = createComponent({
+const __Switch = LitReact.createComponent({
   tagName: "tapsi-switch",
-  elementClass: TapsiSwitch,
+  elementClass: ComponentNamespace.TapsiSwitch,
   react: React,
   events: {},
 });
+
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Switch = __Switch;

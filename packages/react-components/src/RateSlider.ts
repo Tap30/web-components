@@ -1,14 +1,15 @@
-import { createComponent } from "@lit/react";
-import { TapsiRateSlider } from "@tapsioss/web-components/rate-slider";
+import * as LitReact from "@lit/react";
+import * as ComponentNamespace from "@tapsioss/web-components/rate-slider";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
-const __RateSlider = createComponent({
+const __RateSlider = LitReact.createComponent({
   tagName: "tapsi-rate-slider",
-  elementClass: TapsiRateSlider,
+  elementClass: ComponentNamespace.TapsiRateSlider,
   react: React,
-  events: {},
+  events: { onChange: "change" },
 });
+
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const RateSlider = __RateSlider;

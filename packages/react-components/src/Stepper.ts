@@ -1,14 +1,15 @@
-import { createComponent } from "@lit/react";
-import { TapsiStepper } from "@tapsioss/web-components/stepper";
+import * as LitReact from "@lit/react";
+import * as ComponentNamespace from "@tapsioss/web-components/stepper";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
-const __Stepper = createComponent({
+const __Stepper = LitReact.createComponent({
   tagName: "tapsi-stepper",
-  elementClass: TapsiStepper,
+  elementClass: ComponentNamespace.TapsiStepper,
   react: React,
-  events: {},
+  events: { onChange: "change" },
 });
+
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Stepper = __Stepper;

@@ -1,14 +1,18 @@
-import { createComponent } from "@lit/react";
-import { TapsiSnackbar } from "@tapsioss/web-components/snackbar";
+import * as LitReact from "@lit/react";
+import * as ComponentNamespace from "@tapsioss/web-components/snackbar";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
-const __Snackbar = createComponent({
+const __Snackbar = LitReact.createComponent({
   tagName: "tapsi-snackbar",
-  elementClass: TapsiSnackbar,
+  elementClass: ComponentNamespace.TapsiSnackbar,
   react: React,
-  events: {},
+  events: {
+    onShow: "show" as LitReact.EventName<ComponentNamespace.ShowEvent>,
+    onHide: "hide" as LitReact.EventName<ComponentNamespace.HideEvent>,
+  },
 });
+
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Snackbar = __Snackbar;
