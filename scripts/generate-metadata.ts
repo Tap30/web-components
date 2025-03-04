@@ -4,11 +4,16 @@ import {
   type Declaration,
   type Package,
 } from "custom-elements-manifest";
+import { exec } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { cwd } from "node:process";
+import { promisify } from "node:util";
 import { type DefaultTheme } from "vitepress";
 import type { Component, ImportPaths } from "../types/docs.ts";
 import { getFileMeta } from "./utils.ts";
+
+const asyncExec = promisify(exec);
 
 const { dirname } = getFileMeta(import.meta.url);
 const workspaceDir = path.resolve(dirname, "..");
@@ -19,9 +24,50 @@ const webComponentsSrcDir = path.join(
 
 const workspaceDistDir = path.join(workspaceDir, "dist");
 const metadataFile = path.join(workspaceDistDir, "components-metadata.json");
-const cemFile = path.join(workspaceDistDir, "custom-elements.json");
 
-const cem = JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
+const generateCem = async (): Promise<Package> => {
+  const entrypoint = path.resolve(
+    workspaceDir,
+    "./packages/web-components/src",
+  );
+
+  const distDir = path.relative(cwd(), path.join(workspaceDir, "dist"));
+
+  const globs: string[] = [
+    `${entrypoint}/**/index.ts`,
+    `${entrypoint}/**/*/index.ts`,
+    `!${entrypoint}/utils/**`,
+    `!${entrypoint}/internals/**`,
+  ];
+
+  await asyncExec(`shx rm -rf ${distDir}`);
+  const { stderr: cemAnalyzeStderr, stdout: cemAnalyzeStdout } =
+    await asyncExec(
+      [
+        "cem",
+        "analyze",
+        "--litelement",
+        "--outdir",
+        distDir,
+        globs.map(g => `--globs ${g}`).join(" "),
+      ].join(" "),
+    );
+
+  if (cemAnalyzeStdout) console.log(cemAnalyzeStdout);
+  if (cemAnalyzeStderr) console.error(cemAnalyzeStderr);
+
+  const cemFile = path.join(workspaceDistDir, "custom-elements.json");
+  const cem = JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
+
+  const { stderr: cemRmStderr, stdout: cemRmStdout } = await asyncExec(
+    ["rm", cemFile].join(" "),
+  );
+
+  if (cemRmStdout) console.log(cemAnalyzeStdout);
+  if (cemRmStderr) console.error(cemAnalyzeStderr);
+
+  return cem;
+};
 
 const getKebabCaseComponentName = (component: Declaration) => {
   if (!("tagName" in component) || !component.tagName) return null;
@@ -31,8 +77,10 @@ const getKebabCaseComponentName = (component: Declaration) => {
   return tagName.replace("tapsi-", "");
 };
 
-void (() => {
-  console.log("🧩 generating docs metadata...");
+void (async () => {
+  console.log("🧩 generating metadata...");
+
+  const cem = await generateCem();
 
   const sidebarItemsMap: Record<string, DefaultTheme.SidebarItem> = {};
   const components: Component[] = [];
