@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import type { Package } from "custom-elements-manifest";
 import Mustache from "mustache";
 import { exec } from "node:child_process";
 import * as fs from "node:fs";
@@ -10,8 +9,12 @@ import { chain } from "stream-chain";
 import Parser from "stream-json/Parser";
 import StreamValues from "stream-json/streamers/StreamValues";
 import { fileExists, getFileMeta } from "../../../scripts/utils.ts";
+import { type Component, type Metadata } from "../../../types/docs.ts";
 
 const asyncExec = promisify(exec);
+
+const COMPONENT_NAMESPACE = "ComponentNamespace";
+const LIT_REACT_NAMESPACE = "LitReact";
 
 const { dirname } = getFileMeta(import.meta.url);
 
@@ -19,28 +22,65 @@ const packageDir = path.resolve(dirname, "..");
 const workspaceDir = path.resolve(packageDir, "../../");
 const srcDir = path.join(packageDir, "src");
 const templatesDir = path.join(packageDir, "templates");
-const webComponentsSrcDir = path.join(
-  workspaceDir,
-  "packages/web-components/src",
-);
 
 const barrelFilePath = path.join(srcDir, "index.ts");
-const cemGeneratorPath = path.join(workspaceDir, "scripts/generate-cem.ts");
+const metadataGeneratorPath = path.join(
+  workspaceDir,
+  "scripts/generate-metadata.ts",
+);
+
 const componentTemplatePath = path.join(templatesDir, "component.txt");
-const cemPath = path.join(workspaceDir, "dist/custom-elements.json");
+const metadataPath = path.join(workspaceDir, "dist/components-metadata.json");
 
 const START_COMMENT = "/* START: AUTO-GENERATED [DO_NOT_REMOVE] */";
 const END_COMMENT = "/* END: AUTO-GENERATED [DO_NOT_REMOVE] */";
 
-const generateImports = (
-  elementClass: string,
-  moduleResolutionRegistryPath: string,
-) => {
+const getComponentImports = (component: Component) => {
   return [
-    `import { createComponent } from "@lit/react";`,
+    `import * as ${LIT_REACT_NAMESPACE} from "@lit/react";`,
     `import * as React from "react";`,
-    `import { ${elementClass} } from "${moduleResolutionRegistryPath}";`,
+    `import * as ${COMPONENT_NAMESPACE} from "${component.importPaths.webComponents}";`,
   ].join("\n");
+};
+
+const getComponentCode = async (component: Component): Promise<string> => {
+  const componentTemplateStr = await fs.promises.readFile(
+    componentTemplatePath,
+    { encoding: "utf-8" },
+  );
+
+  const events = `{ ${
+    component.events
+      ?.map(event => {
+        const eventName = event.name;
+        const eventClass = event.type.text;
+
+        const eventNameInReact = [
+          `on`,
+          String(eventName).charAt(0).toUpperCase() +
+            String(eventName).slice(1),
+        ].join("");
+
+        if (eventClass === "Event") {
+          return `${eventNameInReact}: '${eventName}'`;
+        }
+
+        return `${eventNameInReact}: '${eventName}' as ${LIT_REACT_NAMESPACE}.EventName<${COMPONENT_NAMESPACE}.${eventClass}>`;
+      })
+      .join(",") || ""
+  } }`;
+
+  return Mustache.render(
+    componentTemplateStr,
+    {
+      componentName: component.name.replace("Tapsi", ""),
+      elementTag: component.tagName,
+      elementClass: `${COMPONENT_NAMESPACE}.${component.name}`,
+      events,
+    },
+    {},
+    { escape: v => v as string },
+  );
 };
 
 const generateExports = (componentName: string) => {
@@ -50,104 +90,38 @@ const generateExports = (componentName: string) => {
   ].join("\n");
 };
 
-type ComponentData = Array<{
-  webComponentResolutionPath: string;
-  elementTag: string;
-  elementClassName: string;
-  componentName: string;
-  componentCode: string;
-}>;
-
-const transformToCEM = new Transform({
+const transformToComponentsMetadata = new Transform({
   objectMode: true,
   transform(
     chunk: {
       key: PropertyKey;
-      value: Package;
+      value: Metadata;
     },
     _,
     callback,
   ) {
-    callback(null, chunk.value);
-  },
-});
-
-const transformToComponentData = new Transform({
-  objectMode: true,
-  async transform(chunk: Package, _, callback) {
-    const streamData: ComponentData = [];
-
-    for (const module of chunk.modules) {
-      if (module.kind !== "javascript-module") continue;
-
-      const moduleSrc = module.path;
-      const moduleDir = path.dirname(moduleSrc);
-      const relativePath = path.relative(webComponentsSrcDir, moduleDir);
-
-      const ceDefinitions = (module.exports ?? []).filter(
-        ex => ex.kind === "custom-element-definition",
-      );
-
-      if (ceDefinitions.length === 0) {
-        console.error(`No "custom-element-definition" found for ${moduleSrc}.`);
-
-        continue;
-      }
-
-      const webComponentResolutionPath = `@tapsioss/web-components/${relativePath}`;
-
-      for (const ceDefinition of ceDefinitions) {
-        const elementTag = ceDefinition.name;
-        const elementClassName = ceDefinition.declaration.name;
-        const componentName = elementClassName.replace("Tapsi", "");
-
-        const componentTemplateStr = await fs.promises.readFile(
-          componentTemplatePath,
-          { encoding: "utf-8" },
-        );
-
-        const componentCode = Mustache.render(
-          componentTemplateStr,
-          {
-            componentName,
-            elementTag,
-            elementClass: elementClassName,
-            events: JSON.stringify({}, null, 2),
-          },
-          {},
-          { escape: v => v as string },
-        );
-
-        streamData.push({
-          webComponentResolutionPath,
-          elementTag,
-          elementClassName,
-          componentName,
-          componentCode,
-        });
-      }
-    }
-
-    callback(null, streamData);
+    callback(null, chunk.value.components);
   },
 });
 
 const transformToComponentModule = new Transform({
   objectMode: true,
-  async transform(chunk: ComponentData, _, callback) {
+  async transform(chunk: Component[], _, callback) {
     for (const component of chunk) {
-      const {
-        componentCode,
-        componentName,
-        elementClassName,
-        webComponentResolutionPath,
-      } = component;
+      const componentName = component.name.replace("Tapsi", "");
 
       const modulePath = path.join(srcDir, `${componentName}.ts`);
       const moduleExists = fileExists(modulePath);
 
+      const componentCode = await getComponentCode(component);
+
       if (moduleExists) {
         const tempModulePath = path.join(srcDir, `${componentName}.temp.ts`);
+
+        const readModule = fs.createReadStream(modulePath, {
+          encoding: "utf-8",
+          autoClose: true,
+        });
 
         const injectComponentCode = new Transform({
           transform(chunk: Buffer, _, callback) {
@@ -178,11 +152,6 @@ const transformToComponentModule = new Transform({
           },
         });
 
-        const readModule = fs.createReadStream(modulePath, {
-          encoding: "utf-8",
-          autoClose: true,
-        });
-
         const writeToTemp = fs.createWriteStream(tempModulePath, {
           encoding: "utf-8",
           flags: "w",
@@ -197,7 +166,7 @@ const transformToComponentModule = new Transform({
           });
       } else {
         const moduleContent = [
-          generateImports(elementClassName, webComponentResolutionPath),
+          getComponentImports(component),
           "\n",
           START_COMMENT,
           componentCode,
@@ -233,7 +202,7 @@ const transformToComponentModule = new Transform({
 void (async () => {
   console.time("generate");
   const { stdout, stderr } = await asyncExec(
-    ["tsx", cemGeneratorPath].join(" "),
+    ["tsx", metadataGeneratorPath].join(" "),
   );
 
   if (stderr) console.error(stderr);
@@ -243,7 +212,7 @@ void (async () => {
 
   if (fileExists(barrelFilePath)) await fs.promises.rm(barrelFilePath);
 
-  fs.createReadStream(cemPath, {
+  fs.createReadStream(metadataPath, {
     autoClose: true,
     encoding: "utf-8",
   })
@@ -251,8 +220,7 @@ void (async () => {
       chain([
         Parser.make(),
         StreamValues.make(),
-        transformToCEM,
-        transformToComponentData,
+        transformToComponentsMetadata,
         transformToComponentModule,
       ] as const),
     )
