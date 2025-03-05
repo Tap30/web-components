@@ -1,9 +1,9 @@
 import type {
-  Colors,
+  Color,
   Palette,
   Radius,
   Spacing,
-  Strokes,
+  Stroke,
   Tokens,
   Typography,
 } from "../types";
@@ -97,7 +97,7 @@ const palette = {
   },
 } as const satisfies Palette;
 
-const colors = {
+const color = {
   brand: "var(--tapsi-palette-orange-400)",
   gradient: {
     brand: "linear-gradient(91.39deg,#ff7733 0%,#ff5722 50.15%,#e64917 100%)",
@@ -150,7 +150,7 @@ const colors = {
     warning: "var(--tapsi-palette-yellow-200)",
     "inverse-primary": "var(--tapsi-palette-gray-700)",
   },
-} as const satisfies Colors;
+} as const satisfies Color;
 
 const radius = {
   "0": "0",
@@ -183,11 +183,11 @@ const spacing = {
   "14": "6rem",
 } as const satisfies Spacing;
 
-const strokes = {
+const stroke = {
   "0": "0px",
   "1": "1px",
   "2": "2px",
-} as const satisfies Strokes;
+} as const satisfies Stroke;
 
 const typography = {
   "font-family": '"Vazirmatn", sans-serif',
@@ -299,10 +299,10 @@ const typography = {
 
 const tokens = {
   palette,
-  colors,
+  color,
   radius,
   spacing,
-  strokes,
+  stroke,
   typography,
 } as const satisfies Tokens;
 

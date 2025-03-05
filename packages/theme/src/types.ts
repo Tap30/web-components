@@ -22,7 +22,7 @@ export type Palette = {
   purple: Record<ColorSetSteps, string>;
 };
 
-export type Colors = {
+export type Color = {
   brand: string;
   gradient: Record<"brand", string>;
   surface: Record<
@@ -103,7 +103,7 @@ export type Spacing = Record<
   string
 >;
 
-export type Strokes = Record<"0" | "1" | "2", string>;
+export type Stroke = Record<"0" | "1" | "2", string>;
 
 export type TypographyVariant = {
   font: string;
@@ -122,9 +122,9 @@ export type Typography = {
 
 export type Tokens = {
   palette: Palette;
-  colors: Colors;
+  color: Color;
   radius: Radius;
   spacing: Spacing;
-  strokes: Strokes;
+  stroke: Stroke;
   typography: Typography;
 };
