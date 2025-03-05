@@ -57,6 +57,7 @@ export class FileInput extends BaseClass {
     converter: {
       fromAttribute(value: string | null): boolean | number {
         if (value === null) return false;
+        if (value === "") return true;
 
         const numericValue = Number(value);
 
@@ -645,6 +646,8 @@ export class FileInput extends BaseClass {
   }
 
   protected override render() {
+    console.log(this.loading);
+
     const rootClasses = classMap({
       root: true,
       disabled: this.disabled,
