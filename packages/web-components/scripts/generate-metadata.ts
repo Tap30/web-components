@@ -4,36 +4,50 @@ import {
   type Declaration,
   type Package,
 } from "custom-elements-manifest";
+import { exec } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { promisify } from "node:util";
 import { type DefaultTheme } from "vitepress";
-import type { Component, ImportPaths } from "../types/docs.ts";
-import { getFileMeta } from "./utils.ts";
+import { getFileMeta } from "../../../scripts/utils.ts";
+import type { Component, ImportPaths, Metadata } from "../../../types/docs.ts";
+
+const asyncExec = promisify(exec);
 
 const { dirname } = getFileMeta(import.meta.url);
-const workspaceDir = path.resolve(dirname, "..");
-const webComponentsSrcDir = path.join(
-  workspaceDir,
-  "packages/web-components/src",
-);
+const packageDir = path.join(dirname, "..");
+const packageSrcDir = path.join(packageDir, "src");
 
-const workspaceDistDir = path.join(workspaceDir, "dist");
-const metadataFile = path.join(workspaceDistDir, "components-metadata.json");
-const cemFile = path.join(workspaceDistDir, "custom-elements.json");
+const metadataFile = path.join(packageDir, "components-metadata.json");
 
-const cem = JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
+const generateCem = async (): Promise<Package> => {
+  const globs: string[] = [
+    `${packageSrcDir}/**/index.ts`,
+    `${packageSrcDir}/**/*/index.ts`,
+    `!${packageSrcDir}/utils/**`,
+    `!${packageSrcDir}/internals/**`,
+  ];
 
-const getKebabCaseComponentName = (component: Declaration) => {
-  if (!("tagName" in component) || !component.tagName) return null;
+  const { stderr: cemAnalyzeStderr, stdout: cemAnalyzeStdout } =
+    await asyncExec(
+      [
+        "cem",
+        "analyze",
+        "--litelement",
+        "--packagejson",
+        globs.map(g => `--globs ${g}`).join(" "),
+      ].join(" "),
+    );
 
-  const tagName = component.tagName;
+  if (cemAnalyzeStdout) console.log(cemAnalyzeStdout);
+  if (cemAnalyzeStderr) console.error(cemAnalyzeStderr);
 
-  return tagName.replace("tapsi-", "");
+  const cemFile = path.join(packageDir, "custom-elements.json");
+
+  return JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
 };
 
-void (() => {
-  console.log("🧩 generating docs metadata...");
-
+const generateMetadataFromCem = (cem: Package): Metadata => {
   const sidebarItemsMap: Record<string, DefaultTheme.SidebarItem> = {};
   const components: Component[] = [];
 
@@ -49,7 +63,7 @@ void (() => {
   filteredModules.forEach(module => {
     const moduleSrc = module.path;
     const moduleDir = path.dirname(moduleSrc);
-    const relativePath = path.relative(webComponentsSrcDir, moduleDir);
+    const relativePath = path.relative(packageSrcDir, moduleDir);
 
     if (!relativePath) return;
 
@@ -159,17 +173,27 @@ void (() => {
 
   const sidebarItems = [iconsSidebarItem, componentSidebarItems];
 
-  fs.writeFileSync(
-    metadataFile,
-    JSON.stringify(
-      {
-        components,
-        sidebarItems,
-      },
-      null,
-      2,
-    ),
-  );
+  return {
+    sidebarItems,
+    components,
+  };
+};
+
+const getKebabCaseComponentName = (component: Declaration) => {
+  if (!("tagName" in component) || !component.tagName) return null;
+
+  const tagName = component.tagName;
+
+  return tagName.replace("tapsi-", "");
+};
+
+void (async () => {
+  console.log("🧩 generating metadata...");
+
+  const cem = await generateCem();
+  const metadata = generateMetadataFromCem(cem);
+
+  fs.writeFileSync(metadataFile, JSON.stringify(metadata, null, 2));
 
   console.log("✅ docs metadata generated.");
 })();

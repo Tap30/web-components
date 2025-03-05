@@ -1,14 +1,15 @@
-import { createComponent } from "@lit/react";
-import { TapsiAvatar } from "@tapsioss/web-components/avatar";
+import * as LitReact from "@lit/react";
+import * as ComponentNamespace from "@tapsioss/web-components/avatar";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
-const __Avatar = createComponent({
+const __Avatar = LitReact.createComponent({
   tagName: "tapsi-avatar",
-  elementClass: TapsiAvatar,
+  elementClass: ComponentNamespace.TapsiAvatar,
   react: React,
   events: {},
 });
+
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Avatar = __Avatar;

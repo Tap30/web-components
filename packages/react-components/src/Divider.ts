@@ -1,14 +1,15 @@
-import { createComponent } from "@lit/react";
-import { TapsiDivider } from "@tapsioss/web-components/divider";
+import * as LitReact from "@lit/react";
+import * as ComponentNamespace from "@tapsioss/web-components/divider";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
-const __Divider = createComponent({
+const __Divider = LitReact.createComponent({
   tagName: "tapsi-divider",
-  elementClass: TapsiDivider,
+  elementClass: ComponentNamespace.TapsiDivider,
   react: React,
   events: {},
 });
+
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Divider = __Divider;

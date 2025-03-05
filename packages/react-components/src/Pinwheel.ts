@@ -1,14 +1,15 @@
-import { createComponent } from "@lit/react";
-import { TapsiPinwheel } from "@tapsioss/web-components/pinwheel";
+import * as LitReact from "@lit/react";
+import * as ComponentNamespace from "@tapsioss/web-components/pinwheel";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
-const __Pinwheel = createComponent({
+const __Pinwheel = LitReact.createComponent({
   tagName: "tapsi-pinwheel",
-  elementClass: TapsiPinwheel,
+  elementClass: ComponentNamespace.TapsiPinwheel,
   react: React,
   events: {},
 });
+
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Pinwheel = __Pinwheel;

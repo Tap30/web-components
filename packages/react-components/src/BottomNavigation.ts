@@ -1,14 +1,18 @@
-import { createComponent } from "@lit/react";
-import { TapsiBottomNavigation } from "@tapsioss/web-components/bottom-navigation";
+import * as LitReact from "@lit/react";
+import * as ComponentNamespace from "@tapsioss/web-components/bottom-navigation";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
-const __BottomNavigation = createComponent({
+const __BottomNavigation = LitReact.createComponent({
   tagName: "tapsi-bottom-navigation",
-  elementClass: TapsiBottomNavigation,
+  elementClass: ComponentNamespace.TapsiBottomNavigation,
   react: React,
-  events: {},
+  events: {
+    onActivechange:
+      "activechange" as LitReact.EventName<ComponentNamespace.ActiveChangeEvent>,
+  },
 });
+
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const BottomNavigation = __BottomNavigation;

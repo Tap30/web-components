@@ -3,9 +3,8 @@
   "version": "0.8.0",
   "type": "module",
   "files": [
-    "./dist/**/*.js",
-    "./dist/**/*.d.ts",
-    "./dist/**/package.json"
+    "./dist",
+    "custom-elements.json"
   ],
   "exports": {
     "./*": {
@@ -16,11 +15,13 @@
   "scripts": {
     "clear": "shx rm -rf dist",
     "prebuild": "pnpm run clear",
-    "build": "tsc --project ./tsconfig.build.json",
+    "build": "run-p gen:metadata bulld:compile",
+    "bulld:compile": "tsc --project ./tsconfig.build.json",
     "predev": "pnpm run clear",
     "test": "playwright test",
     "dev": "tsc --watch --project ./tsconfig.dev.json",
-    "release": "pnpm publish . --tag latest --access public"
+    "release": "pnpm publish . --tag latest --access public",
+    "gen:metadata": "tsx scripts/generate-metadata.ts"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.11",
@@ -30,5 +31,6 @@
   },
   "devDependencies": {
     "@internals/test-helpers": "workspace:*"
-  }
+  },
+  "customElements": "custom-elements.json"
 }

@@ -1,10 +1,6 @@
 import { customElement } from "lit/decorators.js";
 import { type ActiveChangeEvent } from "./events.ts";
-import {
-  type ActivateEvent,
-  Slots as ItemSlots,
-  SegmentedViewItem,
-} from "./item/index.ts";
+import { Slots as ItemSlots, SegmentedViewItem } from "./item/index.ts";
 import itemStyles from "./item/item.style.ts";
 import segmentedViewStyles from "./segmented-view.style.ts";
 import { SegmentedView } from "./segmented-view.ts";
@@ -20,8 +16,6 @@ export { ItemSlots };
  *
  * @slot - The default slot for the content/label.
  *
- * @fires {ActivateEvent} activate - Fired when the item activates (bubbles).
- *
  * @prop {boolean} [active=false] - Indicates whether the item is active or not.
  * @prop {string} [value=""] - The value associated with the item. This value has to be unique among sibling items.
  * @prop {"sm" | "md"} [size="md"] - The size of the item.
@@ -36,34 +30,6 @@ export { ItemSlots };
 @customElement("tapsi-segmented-view-item")
 export class TapsiSegmentedViewItem extends SegmentedViewItem {
   public static override readonly styles = [itemStyles];
-
-  /**
-   * @internal
-   */
-  declare addEventListener: <K extends keyof TapsiSegmentedViewItemEventMap>(
-    type: K,
-    listener: (
-      this: TapsiSegmentedViewItem,
-      ev: TapsiSegmentedViewItemEventMap[K],
-    ) => void,
-    options?: boolean | AddEventListenerOptions,
-  ) => void;
-
-  /**
-   * @internal
-   */
-  declare removeEventListener: <K extends keyof TapsiSegmentedViewItemEventMap>(
-    type: K,
-    listener: (
-      this: TapsiSegmentedViewItem,
-      ev: TapsiSegmentedViewItemEventMap[K],
-    ) => void,
-    options?: boolean | EventListenerOptions,
-  ) => void;
-}
-
-interface TapsiSegmentedViewItemEventMap extends HTMLElementEventMap {
-  [ActivateEvent.type]: ActivateEvent;
 }
 
 /**

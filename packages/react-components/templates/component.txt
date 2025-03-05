@@ -1,4 +1,4 @@
-const __{{componentName}} = createComponent({
+const __{{componentName}} = LitReact.createComponent({
   tagName: "{{elementTag}}",
   elementClass: {{elementClass}},
   react: React,

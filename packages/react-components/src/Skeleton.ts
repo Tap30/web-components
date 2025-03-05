@@ -1,14 +1,15 @@
-import { createComponent } from "@lit/react";
-import { TapsiSkeleton } from "@tapsioss/web-components/skeleton";
+import * as LitReact from "@lit/react";
+import * as ComponentNamespace from "@tapsioss/web-components/skeleton";
 import * as React from "react";
 
 /* START: AUTO-GENERATED [DO_NOT_REMOVE] */
-const __Skeleton = createComponent({
+const __Skeleton = LitReact.createComponent({
   tagName: "tapsi-skeleton",
-  elementClass: TapsiSkeleton,
+  elementClass: ComponentNamespace.TapsiSkeleton,
   react: React,
   events: {},
 });
+
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Skeleton = __Skeleton;
