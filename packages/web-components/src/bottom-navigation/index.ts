@@ -2,11 +2,7 @@ import { customElement } from "lit/decorators.js";
 import bottomNavigationStyles from "./bottom-navigation.style.ts";
 import { BottomNavigation } from "./bottom-navigation.ts";
 import { type ActiveChangeEvent } from "./events.ts";
-import {
-  type ActivateEvent,
-  BottomNavigationItem,
-  Slots as ItemSlots,
-} from "./item/index.ts";
+import { BottomNavigationItem, Slots as ItemSlots } from "./item/index.ts";
 import itemStyles from "./item/item.style.ts";
 
 export { Slots } from "./constants.ts";
@@ -28,36 +24,6 @@ export { ItemSlots };
 @customElement("tapsi-bottom-navigation-item")
 export class TapsiBottomNavigationItem extends BottomNavigationItem {
   public static override readonly styles = [itemStyles];
-
-  /**
-   * @internal
-   */
-  declare addEventListener: <K extends keyof TapsiBottomNavigationItemEventMap>(
-    type: K,
-    listener: (
-      this: TapsiBottomNavigationItem,
-      ev: TapsiBottomNavigationItemEventMap[K],
-    ) => void,
-    options?: boolean | AddEventListenerOptions,
-  ) => void;
-
-  /**
-   * @internal
-   */
-  declare removeEventListener: <
-    K extends keyof TapsiBottomNavigationItemEventMap,
-  >(
-    type: K,
-    listener: (
-      this: TapsiBottomNavigationItem,
-      ev: TapsiBottomNavigationItemEventMap[K],
-    ) => void,
-    options?: boolean | EventListenerOptions,
-  ) => void;
-}
-
-interface TapsiBottomNavigationItemEventMap extends HTMLElementEventMap {
-  [ActivateEvent.type]: ActivateEvent;
 }
 
 /**
