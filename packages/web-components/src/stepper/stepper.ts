@@ -12,6 +12,7 @@ import {
   isActivationClick,
   isSsr,
   logger,
+  runAfterRepaint,
   toFaNumber,
   waitAMicrotask,
   withElementInternals,
@@ -126,6 +127,14 @@ export class Stepper extends BaseClass {
   @property({ type: String })
   public step = "1";
 
+  /**
+   * Indicates that the element should be focused on page load.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   */
+  @property({ type: Boolean })
+  public override autofocus = false;
+
   constructor() {
     super();
 
@@ -161,6 +170,16 @@ export class Stepper extends BaseClass {
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.removeEventListener("keydown", this._handleKeyDown);
+  }
+
+  protected override firstUpdated(changed: PropertyValues<this>): void {
+    super.firstUpdated(changed);
+
+    runAfterRepaint(() => {
+      if (!this.autofocus) return;
+
+      this.focus();
+    });
   }
 
   protected override updated(changed: PropertyValues<this>) {

@@ -44,6 +44,10 @@ import { Stepper } from "./stepper.ts";
  * Defaults to "1".
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+ * @prop {boolean} [autofocus=false] -
+ * Indicates that the element should be focused on page load.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
  *
  * @fires {Event} change - Fires when value changes (bubbles).
  */
