@@ -65,6 +65,14 @@ export abstract class BaseInput extends BaseClass {
   @property({ type: String })
   public labelledBy = "";
 
+  /**
+   * Indicates that the element should be focused on page load.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   */
+  @property({ type: Boolean })
+  public override autofocus = false;
+
   constructor() {
     super();
 

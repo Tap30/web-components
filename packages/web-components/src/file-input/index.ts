@@ -76,6 +76,10 @@ export * from "./events.ts";
  * value.
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
+ * @prop {boolean} [autofocus=false] -
+ * Indicates that the element should be focused on page load.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
  *
  * @method reset
  * @description - resets the input value

@@ -61,6 +61,14 @@ export class Pinwheel extends BaseClass {
   public labelledBy = "";
 
   /**
+   * Indicates that the element should be focused on page load.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   */
+  @property({ type: Boolean })
+  public override autofocus = false;
+
+  /**
    * The value of the currently selected item.
    */
   @property({ attribute: false })
@@ -134,6 +142,12 @@ export class Pinwheel extends BaseClass {
         "warning",
       );
     }
+
+    runAfterRepaint(() => {
+      if (!this.autofocus) return;
+
+      this.focus();
+    });
   }
 
   protected override updated(changed: PropertyValues<this>) {

@@ -101,6 +101,14 @@ export class PinInput extends BaseClass {
   public autocomplete: AutoFill = "";
 
   /**
+   * Indicates that the element should be focused on page load.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   */
+  @property({ type: Boolean })
+  public override autofocus = false;
+
+  /**
    * Conveys additional information below the input, such as how it should
    * be used.
    */

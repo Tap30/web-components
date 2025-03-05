@@ -1,4 +1,4 @@
-import { html, LitElement, nothing } from "lit";
+import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { map } from "lit/directives/map.js";
@@ -14,6 +14,7 @@ import {
   isActivationClick,
   isSsr,
   logger,
+  runAfterRepaint,
   toFaNumber,
   waitAMicrotask,
   withElementInternals,
@@ -96,6 +97,14 @@ export class RateSlider extends BaseClass {
   @property({ type: String })
   public min = `${DEFAULT_MIN}`;
 
+  /**
+   * Indicates that the element should be focused on page load.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   */
+  @property({ type: Boolean })
+  public override autofocus = false;
+
   @query("#root")
   private _root!: HTMLElement | null;
 
@@ -126,6 +135,16 @@ export class RateSlider extends BaseClass {
         dispatchActivationClick(this);
       });
     }
+  }
+
+  protected override firstUpdated(changed: PropertyValues<this>): void {
+    super.firstUpdated(changed);
+
+    runAfterRepaint(() => {
+      if (!this.autofocus) return;
+
+      this.focus();
+    });
   }
 
   public override connectedCallback() {

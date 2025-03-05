@@ -95,6 +95,10 @@ export { BaseTextInputSlots as Slots };
  * appropriate virtual keyboard.
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode
+ * @prop {boolean} [autofocus=false] -
+ * Indicates that the element should be focused on page load.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
  *
  * @slot leading-icon - the leading icon slot of the text-area
  * @slot trailing - the trailing slot of the text-area

@@ -72,7 +72,6 @@ export class TextArea extends BaseTextInput {
         aria-describedby=${ariaDescribedBy}
         ?required=${!!this.required}
         ?disabled=${this.disabled}
-        ?autofocus=${this.autofocus}
         ?readonly=${this.readOnly}
         cols=${this.cols || nothing}
         rows=${this.rows || nothing}

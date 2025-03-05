@@ -45,6 +45,10 @@ export class TapsiPinwheelItem extends PinwheelItem {
  * Identifies the element (or elements) that labels the pinwheel.
  *
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+ * @prop {boolean} [autofocus=false] -
+ * Indicates that the element should be focused on page load.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
  *
  * @fires {Event} change - Fires when the pinwheel selected state changes (bubbles).
  */

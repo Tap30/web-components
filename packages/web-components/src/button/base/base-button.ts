@@ -14,6 +14,7 @@ import {
   type FormSubmitterType,
   internals,
   isFocusable,
+  runAfterRepaint,
   setupFormSubmitter,
   withElementInternals,
   withFocusable,
@@ -69,6 +70,14 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   public size: "sm" | "md" | "lg" = "md";
 
   /**
+   * Indicates that the element should be focused on page load.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   */
+  @property({ type: Boolean })
+  public override autofocus = false;
+
+  /**
    * The variant style of the button.
    * @default "primary"
    */
@@ -96,6 +105,16 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     super.connectedCallback();
 
     this._updateFocusability();
+  }
+
+  protected override firstUpdated(changed: PropertyValues<this>): void {
+    super.firstUpdated(changed);
+
+    runAfterRepaint(() => {
+      if (!this.autofocus) return;
+
+      this.focus();
+    });
   }
 
   protected override updated(changed: PropertyValues<this>) {

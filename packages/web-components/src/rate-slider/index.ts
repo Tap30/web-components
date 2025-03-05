@@ -31,6 +31,10 @@ import { RateSlider } from "./rate-slider.ts";
  * Defaults to "0".
  *
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
+ * @prop {boolean} [autofocus=false] -
+ * Indicates that the element should be focused on page load.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
  *
  * @method stepDown
  * @description - Decrements the value of the input.

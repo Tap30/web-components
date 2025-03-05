@@ -196,7 +196,6 @@ export class TextField extends BaseTextInput {
         aria-describedby=${ariaDescribedBy}
         ?required=${!!this.required}
         ?disabled=${this.disabled}
-        ?autofocus=${this.autofocus}
         ?readonly=${this.readOnly}
         inputmode=${this.inputMode || nothing}
         placeholder=${this.placeholder || nothing}

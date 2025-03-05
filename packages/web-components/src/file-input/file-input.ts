@@ -17,6 +17,7 @@ import {
   logger,
   onReportValidity,
   redispatchEvent,
+  runAfterRepaint,
   toFaNumber,
   waitAMicrotask,
   withConstraintValidation,
@@ -52,7 +53,25 @@ export class FileInput extends BaseClass {
    * - If `true`, a spinner will appear indicating the component is loading.
    * - If a number between 0 and 100, it shows the percentage of the loading state.
    */
-  @property()
+  @property({
+    converter: {
+      fromAttribute(value: string | null): boolean | number {
+        if (value === null) return false;
+        if (value === "") return true;
+
+        const numericValue = Number(value);
+
+        if (Number.isNaN(numericValue)) return true;
+
+        return numericValue;
+      },
+      toAttribute(value: boolean | number): string | null {
+        if (typeof value === "boolean") return value ? "true" : null;
+
+        return `${value}`;
+      },
+    },
+  })
   public loading: boolean | number = false;
 
   /**
@@ -161,6 +180,14 @@ export class FileInput extends BaseClass {
   @property({ type: Boolean, reflect: true })
   public required = false;
 
+  /**
+   * Indicates that the element should be focused on page load.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   */
+  @property({ type: Boolean })
+  public override autofocus = false;
+
   @state()
   private _hasPlaceholderIconSlot = false;
 
@@ -194,6 +221,16 @@ export class FileInput extends BaseClass {
 
     this._handleDrop = this._handleDrop.bind(this);
     this._handleActivationClick = this._handleActivationClick.bind(this);
+  }
+
+  protected override firstUpdated(changed: PropertyValues<this>): void {
+    super.firstUpdated(changed);
+
+    runAfterRepaint(() => {
+      if (!this.autofocus) return;
+
+      this.focus();
+    });
   }
 
   protected override willUpdate(changed: PropertyValues<this>) {
@@ -476,7 +513,7 @@ export class FileInput extends BaseClass {
 
       if (isFileImage(file.name)) {
         return html`<img
-          src=${ifDefined(this._previewSrc)}
+          src=${this._previewSrc ?? nothing}
           alt="preview"
           class="preview"
         />`;
@@ -609,6 +646,8 @@ export class FileInput extends BaseClass {
   }
 
   protected override render() {
+    console.log(this.loading);
+
     const rootClasses = classMap({
       root: true,
       disabled: this.disabled,

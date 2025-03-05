@@ -21,6 +21,10 @@ import { Checkbox } from "./checkbox.ts";
  * owning form can be submitted and will render an error state when
  * `reportValidity()` is invoked when value is empty.\
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required
+ * @prop {boolean} [autofocus=false] -
+ * Indicates that the element should be focused on page load.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
  */
 @customElement("tapsi-checkbox")
 export class TapsiCheckbox extends Checkbox {
