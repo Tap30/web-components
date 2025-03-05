@@ -1,6 +1,6 @@
 {
   "name": "@tapsioss/theme",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "type": "module",
   "files": [
     "./dist"
