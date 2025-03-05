@@ -47,7 +47,7 @@ const generateCem = async (): Promise<Package> => {
   return JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
 };
 
-const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
+const generateMetadataFromCem = (cem: Package): Metadata => {
   const sidebarItemsMap: Record<string, DefaultTheme.SidebarItem> = {};
   const components: Component[] = [];
 
@@ -191,7 +191,7 @@ void (async () => {
   console.log("🧩 generating metadata...");
 
   const cem = await generateCem();
-  const metadata = await generateMetadataFromCem(cem);
+  const metadata = generateMetadataFromCem(cem);
 
   fs.writeFileSync(metadataFile, JSON.stringify(metadata, null, 2));
 
