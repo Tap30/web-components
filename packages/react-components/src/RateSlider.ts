@@ -7,7 +7,7 @@ const __RateSlider = LitReact.createComponent({
   tagName: "tapsi-rate-slider",
   elementClass: ComponentNamespace.TapsiRateSlider,
   react: React,
-  events: { onChange: "change" },
+  events: {},
 });
 
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */

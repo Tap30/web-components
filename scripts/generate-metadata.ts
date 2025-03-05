@@ -57,16 +57,8 @@ const generateCem = async (): Promise<Package> => {
   if (cemAnalyzeStderr) console.error(cemAnalyzeStderr);
 
   const cemFile = path.join(workspaceDistDir, "custom-elements.json");
-  const cem = JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
 
-  const { stderr: cemRmStderr, stdout: cemRmStdout } = await asyncExec(
-    ["rm", cemFile].join(" "),
-  );
-
-  if (cemRmStdout) console.log(cemAnalyzeStdout);
-  if (cemRmStderr) console.error(cemAnalyzeStderr);
-
-  return cem;
+  return JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
 };
 
 const getKebabCaseComponentName = (component: Declaration) => {

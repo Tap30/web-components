@@ -62,11 +62,12 @@ const getComponentCode = async (component: Component): Promise<string> => {
         ].join("");
 
         if (eventClass === "Event") {
-          return `${eventNameInReact}: '${eventName}'`;
+          return null;
         }
 
         return `${eventNameInReact}: '${eventName}' as ${LIT_REACT_NAMESPACE}.EventName<${COMPONENT_NAMESPACE}.${eventClass}>`;
       })
+      .filter(event => event !== null)
       .join(",") || ""
   } }`;
 

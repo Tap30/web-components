@@ -7,7 +7,7 @@ const __Pinwheel = LitReact.createComponent({
   tagName: "tapsi-pinwheel",
   elementClass: ComponentNamespace.TapsiPinwheel,
   react: React,
-  events: { onChange: "change" },
+  events: {},
 });
 
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */

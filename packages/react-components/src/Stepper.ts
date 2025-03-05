@@ -7,7 +7,7 @@ const __Stepper = LitReact.createComponent({
   tagName: "tapsi-stepper",
   elementClass: ComponentNamespace.TapsiStepper,
   react: React,
-  events: { onChange: "change" },
+  events: {},
 });
 
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
