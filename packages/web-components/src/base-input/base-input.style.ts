@@ -13,7 +13,7 @@ export default css`
 
   .root {
     direction: rtl;
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
 
     display: flex;
     flex-direction: column;

@@ -57,7 +57,7 @@ const styles = css`
   }
 
   .root {
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
 
     display: flex;
     flex-direction: column;
@@ -68,7 +68,7 @@ const styles = css`
   .label {
     color: var(--label-color);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--tapsi-typography-label-md-height);
     font-size: var(--tapsi-typography-label-md-size);
     font-weight: var(--tapsi-typography-label-md-weight);
@@ -77,7 +77,7 @@ const styles = css`
   .supporting-text {
     color: var(--support-color);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--tapsi-typography-body-sm-height);
     font-size: var(--tapsi-typography-body-sm-size);
     font-weight: var(--tapsi-typography-body-sm-weight);
@@ -112,7 +112,7 @@ const styles = css`
     box-shadow: 0 0 0 var(--tapsi-stroke-2) var(--pin-border-color);
     border-radius: var(--tapsi-radius-3);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--tapsi-typography-headline-sm-height);
     font-size: var(--tapsi-typography-headline-sm-size);
     font-weight: var(--tapsi-typography-headline-sm-weight);

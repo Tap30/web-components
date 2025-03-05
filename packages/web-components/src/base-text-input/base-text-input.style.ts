@@ -153,7 +153,7 @@ export default css`
     background-color: transparent;
     caret-color: var(--tapsi-color-surface-accent);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--input-control-text-height);
     font-size: var(--input-control-text-size);
     font-weight: var(--input-control-text-weight);
@@ -162,7 +162,7 @@ export default css`
   .input::placeholder {
     color: var(--input-placeholder-color);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--input-control-text-height);
     font-size: var(--input-control-text-size);
     font-weight: var(--input-control-text-weight);
@@ -198,7 +198,7 @@ export default css`
   .supporting-text {
     color: var(--input-support-color);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--input-support-text-height);
     font-size: var(--input-support-text-size);
     font-weight: var(--input-support-text-weight);
@@ -207,7 +207,7 @@ export default css`
   .label {
     color: var(--input-label-color);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--input-label-text-height);
     font-size: var(--input-label-text-size);
     font-weight: var(--input-label-text-weight);

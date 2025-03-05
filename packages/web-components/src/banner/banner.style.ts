@@ -44,7 +44,7 @@ export default css`
 
   .heading {
     color: var(--banner-color-content);
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--tapsi-typography-headline-xs-height);
     font-size: var(--tapsi-typography-headline-xs-size);
     font-weight: var(--tapsi-typography-headline-xs-weight);
@@ -52,7 +52,7 @@ export default css`
 
   .description {
     color: var(--banner-color-content);
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--tapsi-typography-body-xs-height);
     font-size: var(--tapsi-typography-body-xs-size);
     font-weight: var(--tapsi-typography-body-xs-weight);

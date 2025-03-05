@@ -60,7 +60,7 @@ const styles = css`
     height: 4rem;
     border-radius: var(--tapsi-radius-5);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
 
     outline: none;
     -webkit-user-select: none;

@@ -45,7 +45,7 @@ export default css`
     padding: var(--notice-padding);
 
     text-decoration: none;
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
 
     color: var(--notice-color);
     background-color: var(--notice-background-color);

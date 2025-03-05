@@ -76,7 +76,7 @@ export default css`
     bottom: var(--tapsi-spacing-6);
 
     background-color: var(--tapsi-color-surface-primary);
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     border-radius: var(--tapsi-radius-6);
 
     transition: transform 240ms ease;

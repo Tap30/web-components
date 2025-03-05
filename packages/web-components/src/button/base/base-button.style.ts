@@ -118,7 +118,7 @@ export default css`
 
     background: var(--button-custom-background, var(--button-background));
     color: var(--button-custom-color, var(--button-color));
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     border-radius: var(--tapsi-radius-full);
   }
 
