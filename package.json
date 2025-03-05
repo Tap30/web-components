@@ -40,7 +40,7 @@
     "docs:dev": "run-s gen:metadata docs:vitepress:dev",
     "docs:build": "run-s gen:metadata docs:vitepress:build",
     "docs:preview": "run-s docs:vitepress:preview",
-    "gen:metadata": "tsx ./scripts/generate-metadata.ts"
+    "gen:metadata": "pnpm --filter @tapsioss/web-components run gen:metadata"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.2",

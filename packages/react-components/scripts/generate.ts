@@ -19,18 +19,13 @@ const LIT_REACT_NAMESPACE = "LitReact";
 const { dirname } = getFileMeta(import.meta.url);
 
 const packageDir = path.resolve(dirname, "..");
-const workspaceDir = path.resolve(packageDir, "../../");
 const srcDir = path.join(packageDir, "src");
 const templatesDir = path.join(packageDir, "templates");
 
 const barrelFilePath = path.join(srcDir, "index.ts");
-const metadataGeneratorPath = path.join(
-  workspaceDir,
-  "scripts/generate-metadata.ts",
-);
 
 const componentTemplatePath = path.join(templatesDir, "component.txt");
-const metadataPath = path.join(workspaceDir, "dist/components-metadata.json");
+const metadataPath = path.resolve(packageDir, "../web-components/components-metadata.json");
 
 const START_COMMENT = "/* START: AUTO-GENERATED [DO_NOT_REMOVE] */";
 const END_COMMENT = "/* END: AUTO-GENERATED [DO_NOT_REMOVE] */";
@@ -203,7 +198,7 @@ const transformToComponentModule = new Transform({
 void (async () => {
   console.time("generate");
   const { stdout, stderr } = await asyncExec(
-    ["tsx", metadataGeneratorPath].join(" "),
+    "pnpm --filter @tapsioss/web-components run gen:metadata",
   );
 
   if (stderr) console.error(stderr);
