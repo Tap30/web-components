@@ -193,25 +193,25 @@ const typography = {
   "font-family": '"Vazirmatn", sans-serif',
   body: {
     xs: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "0.75rem",
       height: 1.6666666667,
       weight: 400,
     },
     sm: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "0.875rem",
       height: 1.7142857143,
       weight: 400,
     },
     md: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "1rem",
       height: 1.75,
       weight: 400,
     },
     lg: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "1.125rem",
       height: 1.7777777778,
       weight: 400,
@@ -219,31 +219,31 @@ const typography = {
   },
   label: {
     xxs: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "0.625rem",
       height: 1.6,
       weight: 500,
     },
     xs: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "0.75rem",
       height: 2,
       weight: 500,
     },
     sm: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "0.875rem",
       height: 1.7142857143,
       weight: 500,
     },
     md: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "1rem",
       height: 1.75,
       weight: 500,
     },
     lg: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "1.125rem",
       height: 1.7777777778,
       weight: 500,
@@ -251,25 +251,25 @@ const typography = {
   },
   headline: {
     xs: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "1rem",
       height: 1.5,
       weight: 600,
     },
     sm: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "1.25rem",
       height: 1.5,
       weight: 600,
     },
     md: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "1.5rem",
       height: 1.5,
       weight: 600,
     },
     lg: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "1.75rem",
       height: 1.5,
       weight: 600,
@@ -277,19 +277,19 @@ const typography = {
   },
   display: {
     sm: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "2rem",
       height: 1.5,
       weight: 600,
     },
     md: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "2.5rem",
       height: 1.5,
       weight: 600,
     },
     lg: {
-      font: "var(--tapsi-font-family)",
+      font: "var(--tapsi-typography-font-family)",
       size: "3rem",
       height: 1.5,
       weight: 600,

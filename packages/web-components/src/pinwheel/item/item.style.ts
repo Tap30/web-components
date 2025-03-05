@@ -36,7 +36,7 @@ const styles = css`
 
     color: var(--tapsi-color-content-tertiary);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
 
     font-size: var(--tapsi-typography-body-md-size);
     line-height: var(--tapsi-typography-body-md-height);

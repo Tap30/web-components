@@ -79,7 +79,7 @@ export default css`
     top: var(--tapsi-spacing-6);
 
     background-color: var(--snackbar-background-color);
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     border-radius: var(--tapsi-radius-full);
 
     display: flex;

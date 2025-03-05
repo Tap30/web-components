@@ -70,7 +70,7 @@ export default css`
 
   .content {
     color: currentColor;
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--tapsi-typography-label-xs-height);
     font-size: var(--tapsi-typography-label-xs-size);
     font-weight: var(--tapsi-typography-label-xs-weight);

@@ -90,7 +90,7 @@ export default css`
 
     padding: 0 var(--chip-spacing);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     font-size: var(--tapsi-typography-body-sm-size);
     line-height: var(--tapsi-typography-body-sm-height);
 

@@ -25,7 +25,7 @@ export default css`
 
   .root {
     direction: rtl;
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
 
     display: flex;
     flex-direction: column;
@@ -73,7 +73,7 @@ export default css`
 
   .label {
     color: var(--input-label-color);
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--tapsi-typography-label-md-height);
     font-weight: var(--tapsi-typography-label-md-weight);
     font-size: var(--tapsi-typography-label-md-size);
@@ -122,7 +122,7 @@ export default css`
   .supporting-text {
     color: var(--input-support-color);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--tapsi-typography-body-sm-height);
     font-size: var(--tapsi-typography-body-sm-size);
     font-weight: var(--tapsi-typography-body-sm-weight);
@@ -182,7 +182,7 @@ export default css`
 
     margin-top: var(--tapsi-spacing-4);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     font-size: var(--tapsi-typography-body-sm-size);
     font-weight: var(--tapsi-typography-body-sm-weight);
   }
@@ -217,7 +217,7 @@ export default css`
   .progress-wrapper .percentage {
     position: absolute;
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     font-size: var(--tapsi-typography-headline-xs-size);
     font-weight: var(--tapsi-typography-headline-xs-weight);
     line-height: var(--tapsi-typography-headline-xs-height);
@@ -228,7 +228,7 @@ export default css`
 
     margin-top: var(--tapsi-spacing-4);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     font-size: var(--tapsi-typography-body-sm-size);
     font-weight: var(--tapsi-typography-body-sm-weight);
     line-height: var(--tapsi-typography-body-sm-height);

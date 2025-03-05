@@ -121,7 +121,7 @@ export default css`
     height: var(--badge-height);
     min-width: var(--badge-min-width);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
     line-height: var(--badge-font-height);
     font-size: var(--badge-font-size);
     font-weight: var(--badge-font-weight);

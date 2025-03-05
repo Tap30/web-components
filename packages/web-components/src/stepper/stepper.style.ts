@@ -59,7 +59,7 @@ export default css`
     height: var(--stepper-height);
     gap: var(--tapsi-spacing-4);
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
   }
 
   .increase,

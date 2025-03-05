@@ -27,7 +27,7 @@ export default css`
     align-items: center;
     justify-content: center;
 
-    font-family: var(--tapsi-font-family);
+    font-family: var(--tapsi-typography-font-family);
 
     padding: var(--tapsi-spacing-6) var(--tapsi-spacing-8);
   }
