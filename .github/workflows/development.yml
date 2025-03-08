@@ -56,7 +56,7 @@ jobs:
         run: pnpm install
 
       - name: "🎭 install playwright"
-        run: pnpx playwright install --with-deps --only-shell
+        run: pnpm playwright install --with-deps --only-shell
 
       - name: "🔍 run tests"
         run: pnpm test
