@@ -59,4 +59,4 @@ jobs:
         run: pnpx playwright install --with-deps --only-shell
 
       - name: "🔍 run tests"
-        run: pnpm test
+        run: pnpx playwright test
