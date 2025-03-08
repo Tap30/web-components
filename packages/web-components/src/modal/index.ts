@@ -16,7 +16,7 @@ export * from "./events.ts";
  * @prop {string} [description=""] - Sets the description text for the modal.
  * @prop {"start" | "center"} [alignment="start"] - Determines the alignment of the modal's content.
  *
- * @slot imagery - The slot for imagery element.
+ * @slot image - The slot for imagery element.
  * @slot action-bar - The slot for actionbar element.
  *
  * @fires {ShowEvent} show - Fires when the modal should be visible. (cancelable)
