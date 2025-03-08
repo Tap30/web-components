@@ -56,7 +56,6 @@ export class PinwheelItem extends LitElement {
         part="root"
         data-value=${this.value}
         @click=${this._selectionController.handleClick}
-        @keydown=${this._selectionController.handleKeyDown}
       >
         <slot></slot>
       </div>

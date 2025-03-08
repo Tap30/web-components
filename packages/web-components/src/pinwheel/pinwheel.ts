@@ -1,7 +1,10 @@
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
+import { requestFormSubmit } from "../base-input/utils.ts";
+import { KeyboardKeys } from "../internals/keyboard.ts";
 import {
+  clamp,
   debounce,
   dispatchActivationClick,
   getBoundingClientRect,
@@ -267,6 +270,97 @@ export class Pinwheel extends BaseClass {
     this.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
+  private _handleKeyDown = async (event: KeyboardEvent) => {
+    if (this.disabled) return;
+    if (!this._root) return;
+
+    // allow event to propagate to user code after a microtask.
+    await waitAMicrotask();
+
+    if (event.defaultPrevented) return;
+
+    const items = this._items;
+
+    switch (event.key) {
+      case KeyboardKeys.ENTER: {
+        event.preventDefault();
+
+        requestFormSubmit(this);
+
+        return true;
+      }
+
+      case KeyboardKeys.UP: {
+        event.preventDefault();
+
+        if (items.length === 0) return false;
+
+        const idx = items.findIndex(item => item.selected);
+        const nextIdx = idx === -1 ? 0 : clamp(idx - 1, 0, items.length - 1);
+        const nextItem = items[nextIdx];
+
+        if (!nextItem) return false;
+
+        nextItem.selected = true;
+
+        this._emitValueChange(nextItem.value);
+
+        return true;
+      }
+
+      case KeyboardKeys.DOWN: {
+        event.preventDefault();
+
+        if (items.length === 0) return false;
+
+        const idx = items.findIndex(item => item.selected);
+        const nextIdx = clamp(idx + 1, 0, items.length - 1);
+        const nextItem = items[nextIdx];
+
+        if (!nextItem) return false;
+
+        nextItem.selected = true;
+
+        this._emitValueChange(nextItem.value);
+
+        return true;
+      }
+
+      case KeyboardKeys.HOME: {
+        event.preventDefault();
+
+        const nextIdx = 0;
+        const nextItem = items[nextIdx];
+
+        if (!nextItem) return false;
+
+        nextItem.selected = true;
+
+        this._emitValueChange(nextItem.value);
+
+        return true;
+      }
+
+      case KeyboardKeys.END: {
+        event.preventDefault();
+
+        const nextIdx = items.length - 1;
+        const nextItem = items[nextIdx];
+
+        if (!nextItem) return false;
+
+        nextItem.selected = true;
+
+        this._emitValueChange(nextItem.value);
+
+        return true;
+      }
+
+      default:
+        return false;
+    }
+  };
+
   private _handleScroll = debounce(() => {
     if (!this._root) return;
 
@@ -358,6 +452,7 @@ export class Pinwheel extends BaseClass {
         aria-valuenow=${this._spinArias.valueNow || nothing}
         aria-valuetext=${this._spinArias.valueText || nothing}
         @scroll=${this._handleScroll}
+        @keydown=${this._handleKeyDown}
       >
         <div
           id="container"
