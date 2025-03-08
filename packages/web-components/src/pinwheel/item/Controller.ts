@@ -1,7 +1,4 @@
-import { requestFormSubmit } from "../../base-input/utils.ts";
-import { KeyboardKeys } from "../../internals/index.ts";
 import {
-  clamp,
   SelectionController,
   type SelectionElement,
 } from "../../utils/index.ts";
@@ -28,14 +25,7 @@ class ItemSelectionController extends SelectionController<PinwheelItem> {
     });
   }
 
-  private _emitValueChange(newValue: string) {
-    const parent = this._parentTarget as Pinwheel | null;
-
-    if (!parent) return;
-    if (parent.disabled) return;
-
-    parent.value = newValue;
-
+  private _emitValueChange() {
     this._host.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
@@ -55,93 +45,16 @@ class ItemSelectionController extends SelectionController<PinwheelItem> {
   }
 
   public override async handleClick(event: MouseEvent) {
-    if (!(await super.handleClick(event))) return false;
-
-    this._emitValueChange(this._host.value);
-
-    return true;
-  }
-
-  public override async handleKeyDown(event: KeyboardEvent) {
-    if (!(await super.handleKeyDown(event))) return false;
-
     const parent = this._parentTarget as Pinwheel | null;
 
     if (!parent) return false;
     if (parent.disabled) return false;
 
-    const items = this._elements;
+    if (!(await super.handleClick(event))) return false;
 
-    switch (event.key) {
-      case KeyboardKeys.ENTER: {
-        event.preventDefault();
+    this._emitValueChange();
 
-        requestFormSubmit(parent);
-
-        return true;
-      }
-
-      case KeyboardKeys.UP: {
-        event.preventDefault();
-
-        if (items.length === 0) return false;
-
-        const idx = items.findIndex(item => item.selected);
-        const nextIdx = idx === -1 ? 0 : clamp(idx - 1, 0, items.length - 1);
-        const newValue = items[nextIdx]?.value;
-
-        if (!newValue) return false;
-
-        this._emitValueChange(newValue);
-
-        return true;
-      }
-
-      case KeyboardKeys.DOWN: {
-        event.preventDefault();
-
-        if (items.length === 0) return false;
-
-        const idx = items.findIndex(item => item.selected);
-        const nextIdx = clamp(idx + 1, 0, items.length - 1);
-        const newValue = items[nextIdx]?.value;
-
-        if (!newValue) return false;
-
-        this._emitValueChange(newValue);
-
-        return true;
-      }
-
-      case KeyboardKeys.HOME: {
-        event.preventDefault();
-
-        const nextIdx = 0;
-        const newValue = items[nextIdx]?.value;
-
-        if (!newValue) return false;
-
-        this._emitValueChange(newValue);
-
-        return true;
-      }
-
-      case KeyboardKeys.END: {
-        event.preventDefault();
-
-        const nextIdx = items.length - 1;
-        const newValue = items[nextIdx]?.value;
-
-        if (!newValue) return false;
-
-        this._emitValueChange(newValue);
-
-        return true;
-      }
-
-      default:
-        return false;
-    }
+    return true;
   }
 }
 
