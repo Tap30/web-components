@@ -10,7 +10,12 @@ import * as path from "node:path";
 import { promisify } from "node:util";
 import { type DefaultTheme } from "vitepress";
 import { getFileMeta } from "../../../scripts/utils.ts";
-import type { Component, ImportPaths, Metadata } from "../../../types/docs.ts";
+import {
+  type Component,
+  type ImportPaths,
+  type Metadata,
+  type ReactGeneratedComponent,
+} from "../../../types/docs.ts";
 
 const asyncExec = promisify(exec);
 
@@ -47,8 +52,20 @@ const generateCem = async (): Promise<Package> => {
   return JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
 };
 
+const getKebabCaseComponentName = (component: Declaration) => {
+  if (!("tagName" in component) || !component.tagName) return null;
+
+  const tagName = component.tagName;
+
+  return tagName.replace("tapsi-", "");
+};
+
 const generateMetadataFromCem = (cem: Package): Metadata => {
   const sidebarItemsMap: Record<string, DefaultTheme.SidebarItem> = {};
+  const componentsMap: Record<string, Component> = {};
+  const reactGeneratedComponentsMap: Record<string, ReactGeneratedComponent[]> =
+    {};
+
   const components: Component[] = [];
 
   const filteredModules = cem.modules.filter(module => {
@@ -72,90 +89,155 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
 
     if (!declarations || !exports) return;
 
-    const exportedSlots = exports
-      .filter(m => m.name.includes("Slots"))
-      .map(s => s.name);
+    const exportedSlots = exports.filter(m => m.name.includes("Slots"));
 
-    declarations.forEach(component => {
-      const kebabCaseName = getKebabCaseComponentName(component);
+    const exportedSlotNames = exportedSlots.map(s => s.name);
+
+    declarations.forEach(declaration => {
+      const kebabCaseName = getKebabCaseComponentName(declaration);
 
       if (!kebabCaseName) return;
 
-      const compoundPartialName = kebabCaseName.replace(
-        relativePath.concat("-"),
-        "",
-      );
+      const convertDeclarationToComponentMetadata = (
+        declaration: Declaration,
+      ): Component => {
+        const compoundPartialName = kebabCaseName.replace(
+          relativePath.concat("-"),
+          "",
+        );
 
-      const isCompoundPartialComponent = compoundPartialName !== kebabCaseName;
+        const isCompoundPartialComponent =
+          compoundPartialName !== kebabCaseName;
 
-      const importPaths: ImportPaths = {};
-      let slotsEnumName;
+        const importPaths: ImportPaths = {};
+        let slotsEnumName;
 
-      if (exportedSlots.length === 1) {
-        slotsEnumName = exportedSlots[0];
-      } else if (exportedSlots.length > 1) {
-        if (isCompoundPartialComponent) {
-          slotsEnumName = exportedSlots.find(slotName =>
-            slotName.toLowerCase().includes(compoundPartialName),
-          );
+        if (exportedSlotNames.length === 1) {
+          slotsEnumName = exportedSlotNames[0];
+        } else if (exportedSlotNames.length > 1) {
+          if (isCompoundPartialComponent) {
+            slotsEnumName = exportedSlotNames.find(slotName =>
+              slotName.toLowerCase().includes(compoundPartialName),
+            );
+          } else {
+            slotsEnumName = exportedSlotNames.find(
+              slotName =>
+                slotName.toLowerCase().replace("slots", "").length === 0,
+            );
+          }
+        }
+
+        importPaths.webComponents = `@tapsioss/web-components/${relativePath}`;
+        return {
+          ...(declaration as CustomElement),
+          kebabCaseName,
+          importPaths,
+          slotsEnumName,
+          exportedSlots,
+        };
+      };
+
+      const convertComponentToReactMetadata = (
+        component: Component,
+      ): ReactGeneratedComponent => {
+        const elementClass = component.name;
+        const componentName = component.name.replace("Tapsi", "");
+        const elementTag = component.tagName;
+        const slots = component.slotsEnumName;
+
+        if (!elementTag) {
+          throw new Error(`No tag was found for ${component}`);
+        }
+
+        const events = component.events;
+
+        let webComponentImportPath = component.importPaths.webComponents;
+
+        if (!webComponentImportPath) {
+          throw new Error(`No import path was found for ${component}`);
+        }
+
+        let slotImportPath = webComponentImportPath;
+
+        if (elementTag.endsWith('-item')) {
+          slotImportPath += '/item'
+        }
+
+        return {
+          elementClass,
+          componentName,
+          elementTag,
+          events,
+          webComponentImportPath,
+          slotImportPath,
+          slots: exportedSlots,
+        };
+      };
+
+      const getComponentsSidebarItems = () => {
+        const sidebarItem: DefaultTheme.SidebarItem = {};
+        const [parentPath, childPath] = relativePath.split("/");
+
+        sidebarItem.text = childPath ?? relativePath;
+
+        const isCompound = declarations.length > 1;
+
+        if (!isCompound) {
+          sidebarItem.link = `/components/${kebabCaseName}`;
         } else {
-          slotsEnumName = exportedSlots.find(
-            slotName =>
-              slotName.toLowerCase().replace("slots", "").length === 0,
-          );
-        }
-      }
-
-      importPaths.webComponents = `@tapsioss/web-components/${relativePath}`;
-
-      components.push({
-        ...(component as CustomElement),
-        kebabCaseName,
-        importPaths,
-        slotsEnumName,
-      });
-      const sidebarItem: DefaultTheme.SidebarItem = {};
-      const childPath = relativePath.split("/")[1];
-
-      sidebarItem.text = childPath ?? relativePath;
-
-      if (declarations.length === 1) {
-        sidebarItem.link = `/components/${kebabCaseName}`;
-      } else {
-        if (!Array.isArray(sidebarItem.items)) {
-          sidebarItem.items = [];
-        }
-
-        sidebarItem.items = declarations.map(component => {
-          const name = getKebabCaseComponentName(component) || "";
-
-          return {
-            text: name,
-            link: `/components/${name}`,
-          };
-        });
-      }
-
-      if (!childPath) {
-        sidebarItemsMap[sidebarItem.text] = sidebarItem;
-      } else {
-        const [parentPath] = relativePath.split("/");
-
-        const parentItem = sidebarItemsMap[parentPath!];
-
-        if (parentItem) {
-          if (!Array.isArray(parentItem.items)) {
-            parentItem.items = [];
+          if (!Array.isArray(sidebarItem.items)) {
+            sidebarItem.items = [];
           }
 
-          parentItem.items.push(sidebarItem);
-        } else {
-          sidebarItemsMap[parentPath!] = {
-            text: parentPath,
-            items: [sidebarItem],
-          };
+          sidebarItem.items = declarations.map(component => {
+            const name = getKebabCaseComponentName(component) || "";
+
+            return {
+              text: name,
+              link: `/components/${name}`,
+            };
+          });
         }
-      }
+
+        if (!childPath) {
+          sidebarItemsMap[sidebarItem.text] = sidebarItem;
+        } else {
+          const parentItem = sidebarItemsMap[parentPath!];
+
+          if (parentItem) {
+            if (!Array.isArray(parentItem.items)) {
+              parentItem.items = [];
+            }
+
+            parentItem.items.push(sidebarItem);
+          } else {
+            sidebarItemsMap[parentPath!] = {
+              text: parentPath,
+              items: [sidebarItem],
+            };
+          }
+        }
+      };
+
+      const getReactGeneratedComponentsMetadata = () => {
+        const key = declarations
+          .reduce((a, b) => (a.name.length <= b.name.length ? a : b))
+          .name.replace("Tapsi", "");
+
+        reactGeneratedComponentsMap[key] = declarations.map(declaration =>
+          convertComponentToReactMetadata(
+            convertDeclarationToComponentMetadata(declaration),
+          ),
+        );
+      };
+
+      const component = convertDeclarationToComponentMetadata(declaration);
+
+      componentsMap[component.name] = component;
+      components.push(component);
+
+      getComponentsSidebarItems();
+      getReactGeneratedComponentsMetadata();
     });
   });
 
@@ -165,6 +247,33 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
       a.text!.localeCompare(b.text!),
     ),
   };
+
+  const reactGeneratedComponents = Object.entries(
+    reactGeneratedComponentsMap,
+  ).reduce((a, [compoundRootKey, components]) => {
+    const compoundRoot = components.find(
+      c => c.componentName === compoundRootKey,
+    );
+
+    const compoundComponents = components
+      .filter(c => c.componentName !== compoundRootKey)
+      .reduce((a, b) => {
+        const compoundKey = b.componentName.replace(compoundRootKey, "");
+
+        return {
+          ...a,
+          [compoundKey]: b,
+        };
+      }, {});
+
+    return {
+      ...a,
+      [compoundRootKey]: {
+        Root: compoundRoot,
+        ...compoundComponents,
+      },
+    };
+  }, {});
 
   const iconsSidebarItem: DefaultTheme.SidebarItem = {
     text: "Icons",
@@ -176,15 +285,8 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
   return {
     sidebarItems,
     components,
+    reactGeneratedComponents,
   };
-};
-
-const getKebabCaseComponentName = (component: Declaration) => {
-  if (!("tagName" in component) || !component.tagName) return null;
-
-  const tagName = component.tagName;
-
-  return tagName.replace("tapsi-", "");
 };
 
 void (async () => {

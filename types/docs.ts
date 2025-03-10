@@ -1,4 +1,4 @@
-import { type CustomElement } from "custom-elements-manifest";
+import { type CustomElement, type Export } from "custom-elements-manifest";
 import { type DefaultTheme } from "vitepress";
 
 export type HTMLTemplatePath = `${string}.html`;
@@ -40,9 +40,26 @@ export type Component = CustomElement & {
   interactiveDemo?: InteractiveDemo;
   importPaths: ImportPaths;
   slotsEnumName?: string;
+  exportedSlots?: Export[];
 };
+
+export type ReactGeneratedComponent = {
+  componentName: string;
+  elementClass: string;
+  elementTag: string;
+  events: CustomElement["events"];
+  webComponentImportPath: string;
+  slotImportPath?: string;
+  slots?: Export[];
+};
+
+export type ReactGeneratedComponents = Record<
+  string,
+  Record<string, ReactGeneratedComponent>
+>;
 
 export type Metadata = {
   components: Component[];
   sidebarItems: DefaultTheme.SidebarItem[];
+  reactGeneratedComponents: ReactGeneratedComponents;
 };

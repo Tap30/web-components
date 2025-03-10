@@ -4,3 +4,5 @@ const __{{componentName}} = LitReact.createComponent({
   react: React,
   events: {{events}},
 });
+
+{{exports}}
