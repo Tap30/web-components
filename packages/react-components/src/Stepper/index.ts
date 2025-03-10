@@ -1,1 +1,1 @@
-export { Stepper } from "./Stepper.ts";
+export { Stepper, Event as StepperEvent } from "./Stepper.ts";

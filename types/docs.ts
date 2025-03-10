@@ -43,23 +43,7 @@ export type Component = CustomElement & {
   exportedSlots?: Export[];
 };
 
-export type ReactGeneratedComponent = {
-  componentName: string;
-  elementClass: string;
-  elementTag: string;
-  events: CustomElement["events"];
-  webComponentImportPath: string;
-  slotImportPath?: string;
-  slots?: Export[];
-};
-
-export type ReactGeneratedComponents = Record<
-  string,
-  Record<string, ReactGeneratedComponent>
->;
-
 export type Metadata = {
   components: Component[];
   sidebarItems: DefaultTheme.SidebarItem[];
-  reactGeneratedComponents: ReactGeneratedComponents;
 };

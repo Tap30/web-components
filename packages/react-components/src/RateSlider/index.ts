@@ -1,1 +1,1 @@
-export { RateSlider } from "./RateSlider.ts";
+export { RateSlider, Event as RateSliderEvent } from "./RateSlider.ts";

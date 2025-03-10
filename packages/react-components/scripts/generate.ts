@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import type { CustomElement, Export } from "custom-elements-manifest";
 import Mustache from "mustache";
 import { exec } from "node:child_process";
 import * as fs from "node:fs";
@@ -13,11 +14,17 @@ import {
   fileExists,
   getFileMeta,
 } from "../../../scripts/utils.ts";
-import {
-  type Metadata,
-  type ReactGeneratedComponent,
-  type ReactGeneratedComponents,
-} from "../../../types/docs.ts";
+import { type Component, type Metadata } from "../../../types/docs.ts";
+
+export type ReactGeneratedComponent = {
+  componentName: string;
+  elementClass: string;
+  elementTag: string;
+  events: CustomElement["events"];
+  webComponentImportPath: string;
+  slotImportPath?: string;
+  slots?: Export[];
+};
 
 const asyncExec = promisify(exec);
 
@@ -41,40 +48,48 @@ const metadataPath = path.resolve(
 const START_COMMENT = "/* START: AUTO-GENERATED [DO_NOT_REMOVE] */";
 const END_COMMENT = "/* END: AUTO-GENERATED [DO_NOT_REMOVE] */";
 
-const getComponentImports = (component: ReactGeneratedComponent) => {
-  return [
-    `import * as ${LIT_REACT_NAMESPACE} from "@lit/react";`,
-    `import * as React from "react";`,
-    `import * as ${COMPONENT_NAMESPACE} from "${component.webComponentImportPath}";`,
-    'import { type ReactWebComponent } from "@lit/react";',
-  ].join("\n");
-};
+const convertComponentToReactMetadata = (
+  component: Component,
+): ReactGeneratedComponent => {
+  const elementClass = component.name;
+  const componentName = component.name.replace("Tapsi", "");
+  const elementTag = component.tagName;
+  const slots = component.exportedSlots;
 
-const getEventsExportsList = ({
-  events,
-}: ReactGeneratedComponent): string[] => {
-  const exportsList: string[] = [];
-
-  events?.forEach(event => {
-    const eventClass = event.type.text;
-
-    if (eventClass !== "Event") {
-      exportsList.push(eventClass);
-    }
-  });
-
-  return exportsList;
-};
-
-const getSlotsExportsList = ({ slots }: ReactGeneratedComponent): string[] => {
-  const exportsList: string[] = [];
-  const componentSlot = slots?.find(s => s.name === "Slots");
-
-  if (componentSlot) {
-    exportsList.push("Slots");
+  if (!elementTag) {
+    throw new Error(`No tag was found for ${componentName}`);
   }
 
-  return exportsList;
+  const events = component.events;
+
+  const webComponentImportPath = component.importPaths.webComponents;
+
+  if (!webComponentImportPath) {
+    throw new Error(`No import path was found for ${componentName}`);
+  }
+
+  let slotImportPath = webComponentImportPath;
+
+  if (elementTag.endsWith("-item")) {
+    slotImportPath += "/item";
+  }
+
+  return {
+    elementClass,
+    componentName,
+    elementTag,
+    events,
+    webComponentImportPath,
+    slotImportPath,
+    slots,
+  };
+};
+
+const getEventsExportsList = ({ events }: ReactGeneratedComponent): string[] =>
+  events?.filter(e => e.type.text !== "Events").map(e => e.type.text) || [];
+
+const getSlotsExportsList = ({ slots }: ReactGeneratedComponent): string[] => {
+  return slots?.filter(s => s.name === "Slots").map(s => s.name) || [];
 };
 
 const getExportsList = (component: ReactGeneratedComponent) => {
@@ -139,13 +154,13 @@ const getComponentCode = async (
 
   let exports = "";
 
-  const exportsList = getEventsExportsList(component);
+  const eventExportsList = getEventsExportsList(component);
 
-  if (exportsList.length > 0) {
-    exports = `export { ${exportsList.join(",")} } from '${webComponentImportPath}'\n`;
+  if (eventExportsList.length > 0) {
+    exports = `export { ${eventExportsList.join(",")} } from '${webComponentImportPath}'\n`;
   }
 
-  if (slots?.length ?? 0 > 0) {
+  if ((slots?.length ?? 0) > 0 && !!slotImportPath) {
     exports += `export { Slots } from "${slotImportPath}"\n`;
   }
 
@@ -180,103 +195,113 @@ const transformToComponentsMetadata = new Transform({
     _,
     callback,
   ) {
-    callback(null, chunk.value.reactGeneratedComponents);
+    callback(null, chunk.value.components);
   },
 });
 
 const transformToComponentModule = new Transform({
   objectMode: true,
-  async transform(chunk: ReactGeneratedComponents, _, callback) {
-    for (const [key, components] of Object.entries(chunk)) {
+  async transform(chunk: Component[], _, callback) {
+    for (const componentMetadata of chunk) {
+      const component = convertComponentToReactMetadata(componentMetadata);
+      const key = component.componentName;
+
       const moduleDir = path.join(srcDir, `${key}`);
 
-      ensureDirExists(moduleDir);
+      await ensureDirExists(moduleDir);
       const moduleBarrelFilePath = path.join(moduleDir, "index.ts");
 
       if (fileExists(moduleBarrelFilePath))
         await fs.promises.rm(moduleBarrelFilePath);
 
-      for (const component of Object.values(components)) {
-        const { componentName } = component;
+      const { componentName } = component;
 
-        const modulePath = path.join(moduleDir, `${componentName}.ts`);
+      const modulePath = path.join(moduleDir, `${componentName}.ts`);
 
-        const moduleExists = fileExists(modulePath);
-        const componentCode = await getComponentCode(component);
+      const moduleExists = fileExists(modulePath);
+      const componentCode = await getComponentCode(component);
 
-        await fs.promises.appendFile(
-          moduleBarrelFilePath,
-          getModuleBarrelFileComponentImport(component),
-          {
-            encoding: "utf-8",
-          },
-        );
+      await fs.promises.appendFile(
+        moduleBarrelFilePath,
+        getModuleBarrelFileComponentImport(component),
+        {
+          encoding: "utf-8",
+        },
+      );
 
-        if (moduleExists) {
-          const tempModulePath = path.join(srcDir, `${componentName}.temp.ts`);
+      if (moduleExists) {
+        const tempModulePath = path.join(srcDir, `${componentName}.temp.ts`);
 
-          const readModule = fs.createReadStream(modulePath, {
-            encoding: "utf-8",
-            autoClose: true,
-          });
+        const readModule = fs.createReadStream(modulePath, {
+          encoding: "utf-8",
+          autoClose: true,
+        });
 
-          const injectComponentCode = new Transform({
-            transform(chunk: Buffer, _, callback) {
-              const lines = chunk.toString("utf-8").split("\n");
+        const injectComponentCode = new Transform({
+          transform(chunk: Buffer, _, callback) {
+            const lines = chunk.toString("utf-8").split("\n");
 
-              let isInsideBlock = false;
+            let isInsideBlock = false;
 
-              const transformedLines = lines
-                .map(line => {
-                  if (line.trim() === START_COMMENT) {
-                    isInsideBlock = true;
+            const transformedLines = lines
+              .map(line => {
+                if (line.trim() === START_COMMENT) {
+                  isInsideBlock = true;
 
-                    return `${line}\n${componentCode}`;
-                  } else if (line.trim() === END_COMMENT) {
-                    isInsideBlock = false;
-
-                    return line;
-                  } else if (isInsideBlock) {
-                    // Skip lines within block
-                    return null;
-                  }
+                  return `${line}\n${componentCode}`;
+                } else if (line.trim() === END_COMMENT) {
+                  isInsideBlock = false;
 
                   return line;
-                })
-                .filter(lines => lines !== null);
+                } else if (isInsideBlock) {
+                  // Skip lines within block
+                  return null;
+                }
 
-              callback(null, transformedLines.join("\n"));
-            },
+                return line;
+              })
+              .filter(lines => lines !== null);
+
+            callback(null, transformedLines.join("\n"));
+          },
+        });
+
+        const writeToTemp = fs.createWriteStream(tempModulePath, {
+          encoding: "utf-8",
+          flags: "w",
+          autoClose: true,
+        });
+
+        readModule
+          .pipe(injectComponentCode)
+          .pipe(writeToTemp)
+          .on("finish", () => {
+            fs.renameSync(tempModulePath, modulePath);
           });
-
-          const writeToTemp = fs.createWriteStream(tempModulePath, {
-            encoding: "utf-8",
-            flags: "w",
-            autoClose: true,
-          });
-
-          readModule
-            .pipe(injectComponentCode)
-            .pipe(writeToTemp)
-            .on("finish", () => {
-              fs.renameSync(tempModulePath, modulePath);
-            });
-        } else {
-          const moduleContent = [
-            getComponentImports(component),
-            "\n",
-            START_COMMENT,
-            componentCode,
-            END_COMMENT,
-            "\n",
-            generateExports(componentName),
+      } else {
+        const getComponentImports = (component: ReactGeneratedComponent) => {
+          return [
+            `import * as ${LIT_REACT_NAMESPACE} from "@lit/react";`,
+            `import * as React from "react";`,
+            `import * as ${COMPONENT_NAMESPACE} from "${component.webComponentImportPath}";`,
+            'import { type ReactWebComponent } from "@lit/react";',
           ].join("\n");
+        };
 
-          await fs.promises.writeFile(modulePath, moduleContent, {
-            encoding: "utf-8",
-            flag: "w",
-          });
-        }
+        const moduleContent = [
+          getComponentImports(component),
+          "\n",
+          START_COMMENT,
+          componentCode,
+          END_COMMENT,
+          "\n",
+          generateExports(componentName),
+        ].join("\n");
+
+        await fs.promises.writeFile(modulePath, moduleContent, {
+          encoding: "utf-8",
+          flag: "w",
+        });
       }
 
       await fs.promises.appendFile(

@@ -14,7 +14,6 @@ import {
   type Component,
   type ImportPaths,
   type Metadata,
-  type ReactGeneratedComponent,
 } from "../../../types/docs.ts";
 
 const asyncExec = promisify(exec);
@@ -63,8 +62,6 @@ const getKebabCaseComponentName = (component: Declaration) => {
 const generateMetadataFromCem = (cem: Package): Metadata => {
   const sidebarItemsMap: Record<string, DefaultTheme.SidebarItem> = {};
   const componentsMap: Record<string, Component> = {};
-  const reactGeneratedComponentsMap: Record<string, ReactGeneratedComponent[]> =
-    {};
 
   const components: Component[] = [];
 
@@ -137,43 +134,6 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
         };
       };
 
-      const convertComponentToReactMetadata = (
-        component: Component,
-      ): ReactGeneratedComponent => {
-        const elementClass = component.name;
-        const componentName = component.name.replace("Tapsi", "");
-        const elementTag = component.tagName;
-        const slots = component.slotsEnumName;
-
-        if (!elementTag) {
-          throw new Error(`No tag was found for ${component}`);
-        }
-
-        const events = component.events;
-
-        let webComponentImportPath = component.importPaths.webComponents;
-
-        if (!webComponentImportPath) {
-          throw new Error(`No import path was found for ${component}`);
-        }
-
-        let slotImportPath = webComponentImportPath;
-
-        if (elementTag.endsWith('-item')) {
-          slotImportPath += '/item'
-        }
-
-        return {
-          elementClass,
-          componentName,
-          elementTag,
-          events,
-          webComponentImportPath,
-          slotImportPath,
-          slots: exportedSlots,
-        };
-      };
-
       const getComponentsSidebarItems = () => {
         const sidebarItem: DefaultTheme.SidebarItem = {};
         const [parentPath, childPath] = relativePath.split("/");
@@ -219,25 +179,12 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
         }
       };
 
-      const getReactGeneratedComponentsMetadata = () => {
-        const key = declarations
-          .reduce((a, b) => (a.name.length <= b.name.length ? a : b))
-          .name.replace("Tapsi", "");
-
-        reactGeneratedComponentsMap[key] = declarations.map(declaration =>
-          convertComponentToReactMetadata(
-            convertDeclarationToComponentMetadata(declaration),
-          ),
-        );
-      };
-
       const component = convertDeclarationToComponentMetadata(declaration);
 
       componentsMap[component.name] = component;
       components.push(component);
 
       getComponentsSidebarItems();
-      getReactGeneratedComponentsMetadata();
     });
   });
 
@@ -247,33 +194,6 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
       a.text!.localeCompare(b.text!),
     ),
   };
-
-  const reactGeneratedComponents = Object.entries(
-    reactGeneratedComponentsMap,
-  ).reduce((a, [compoundRootKey, components]) => {
-    const compoundRoot = components.find(
-      c => c.componentName === compoundRootKey,
-    );
-
-    const compoundComponents = components
-      .filter(c => c.componentName !== compoundRootKey)
-      .reduce((a, b) => {
-        const compoundKey = b.componentName.replace(compoundRootKey, "");
-
-        return {
-          ...a,
-          [compoundKey]: b,
-        };
-      }, {});
-
-    return {
-      ...a,
-      [compoundRootKey]: {
-        Root: compoundRoot,
-        ...compoundComponents,
-      },
-    };
-  }, {});
 
   const iconsSidebarItem: DefaultTheme.SidebarItem = {
     text: "Icons",
@@ -285,7 +205,6 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
   return {
     sidebarItems,
     components,
-    reactGeneratedComponents,
   };
 };
 
