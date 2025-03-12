@@ -86,7 +86,7 @@ const convertComponentToReactMetadata = (
 };
 
 const getEventsExportsList = ({ events }: ReactGeneratedComponent): string[] =>
-  events?.filter(e => e.type.text !== "Events").map(e => e.type.text) || [];
+  events?.filter(e => e.type.text !== "Event").map(e => e.type.text) || [];
 
 const getSlotsExportsList = ({ slots }: ReactGeneratedComponent): string[] => {
   return slots?.filter(s => s.name === "Slots").map(s => s.name) || [];

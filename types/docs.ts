@@ -33,6 +33,7 @@ export type InteractiveDemo = {
 
 export type ImportPaths = {
   webComponents?: string;
+  react?: string;
 };
 
 export type Component = CustomElement & {

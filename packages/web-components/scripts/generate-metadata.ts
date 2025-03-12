@@ -9,7 +9,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { promisify } from "node:util";
 import { type DefaultTheme } from "vitepress";
-import { getFileMeta } from "../../../scripts/utils.ts";
+import { getFileMeta, toPascalCase } from "../../../scripts/utils.ts";
 import {
   type Component,
   type ImportPaths,
@@ -125,6 +125,13 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
         }
 
         importPaths.webComponents = `@tapsioss/web-components/${relativePath}`;
+
+        const componentName = toPascalCase(
+          getKebabCaseComponentName(declaration) || "",
+          "-",
+        );
+
+        importPaths.react = `@tapsioss/react-components/${componentName}`;
         return {
           ...(declaration as CustomElement),
           kebabCaseName,
@@ -190,9 +197,24 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
 
   const componentSidebarItems: DefaultTheme.SidebarItem = {
     text: "Components",
+    link: "/components",
+
     items: Object.values(sidebarItemsMap).sort((a, b) =>
       a.text!.localeCompare(b.text!),
     ),
+  };
+
+  const themeSidebarItem: DefaultTheme.SidebarItem = {
+    text: "Theme",
+    link: "/theme",
+    items: [
+      { text: "Palette", link: "/theme/palette" },
+      { text: "Color", link: "/theme/color" },
+      { text: "Radius", link: "/theme/radius" },
+      { text: "Spacing", link: "/theme/spacing" },
+      { text: "Stroke", link: "/theme/stroke" },
+      { text: "Typography", link: "/theme/typography" },
+    ],
   };
 
   const iconsSidebarItem: DefaultTheme.SidebarItem = {
@@ -200,7 +222,11 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
     link: "/icons",
   };
 
-  const sidebarItems = [iconsSidebarItem, componentSidebarItems];
+  const sidebarItems = [
+    componentSidebarItems,
+    iconsSidebarItem,
+    themeSidebarItem,
+  ];
 
   return {
     sidebarItems,

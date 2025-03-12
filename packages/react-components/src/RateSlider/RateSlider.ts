@@ -10,8 +10,6 @@ const __RateSlider = LitReact.createComponent({
   events: {},
 });
 
-export { Event } from "@tapsioss/web-components/rate-slider";
-
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const RateSlider = __RateSlider;

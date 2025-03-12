@@ -10,8 +10,6 @@ const __Stepper = LitReact.createComponent({
   events: {},
 });
 
-export { Event } from "@tapsioss/web-components/stepper";
-
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Stepper = __Stepper;

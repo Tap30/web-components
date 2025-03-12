@@ -1,5 +1,1 @@
-export {
-  Pinwheel,
-  Event as PinwheelEvent,
-  Slots as PinwheelSlots,
-} from "./Pinwheel.ts";
+export { Pinwheel, Slots as PinwheelSlots } from "./Pinwheel.ts";

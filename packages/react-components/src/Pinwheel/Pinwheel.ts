@@ -10,7 +10,7 @@ const __Pinwheel = LitReact.createComponent({
   events: {},
 });
 
-export { Event, Slots } from "@tapsioss/web-components/pinwheel";
+export { Slots } from "@tapsioss/web-components/pinwheel";
 
 /* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
