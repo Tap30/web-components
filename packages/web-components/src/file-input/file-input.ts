@@ -28,7 +28,12 @@ import {
 import { ErrorMessages, scope, Slots } from "./constants.ts";
 import { RetryEvent } from "./events.ts";
 import { clear, error, image } from "./icons.ts";
-import { getProgressUiParams, isFileImage, isStringNumber } from "./utils.ts";
+import {
+  getProgressUiParams,
+  isFileImage,
+  isStringNumber,
+  loadingConverter,
+} from "./utils.ts";
 import FileInputValidator from "./Validator.ts";
 
 const BaseClass = withOnReportValidity(
@@ -53,25 +58,7 @@ export class FileInput extends BaseClass {
    * - If `true`, a spinner will appear indicating the component is loading.
    * - If a number between 0 and 100, it shows the percentage of the loading state.
    */
-  @property({
-    converter: {
-      fromAttribute(value: string | null): boolean | number {
-        if (value === null) return false;
-        if (value === "") return true;
-
-        const numericValue = Number(value);
-
-        if (Number.isNaN(numericValue)) return true;
-
-        return numericValue;
-      },
-      toAttribute(value: boolean | number): string | null {
-        if (typeof value === "boolean") return value ? "true" : null;
-
-        return `${value}`;
-      },
-    },
-  })
+  @property({ converter: loadingConverter })
   public loading: boolean | number = false;
 
   /**
@@ -646,8 +633,6 @@ export class FileInput extends BaseClass {
   }
 
   protected override render() {
-    console.log(this.loading);
-
     const rootClasses = classMap({
       root: true,
       disabled: this.disabled,
