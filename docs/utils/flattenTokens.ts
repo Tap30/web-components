@@ -5,7 +5,7 @@ type FlattenedPaletteEntry = {
 };
 
 const flattenTokens = (
-  palette: Record<string, any>,
+  palette: Record<string, unknown>,
   prefix: string = "",
 ): FlattenedPaletteEntry[] => {
   const results: FlattenedPaletteEntry[] = [];
