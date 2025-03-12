@@ -3,23 +3,6 @@ outline: "deep"
 prev: false
 ---
 
-<script setup>
-import tokens from "@tapsioss/theme/tokens";
-import "@tapsioss/theme/css-variables";
-import flattenTokens from '../utils/flattenTokens';
-
-const {
-  palette,
-  color,
-  radius,
-  spacing,
-  stroke,
-  typography,
-} = tokens;
-</script>
-
-
-
 # Theme
 
 The Tapsi design system’s theme is available as a standalone package for easy integration into any project. This package provides global CSS variables (design tokens) that you can reference throughout your application for consistent styling.

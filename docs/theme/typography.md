@@ -5,15 +5,6 @@ outline: false
 import tokens from "@tapsioss/theme/tokens";
 import "@tapsioss/theme/css-variables";
 import flattenTokens from '../utils/flattenTokens';
-
-const {
-  palette,
-  color,
-  radius,
-  spacing,
-  stroke,
-  typography,
-} = tokens;
 </script>
 
 # Typography Tokens
@@ -31,7 +22,7 @@ across headings, paragraphs, and other typographic elements, this set of tokens 
       </tr>
     </thead>
     <tbody>
-      <tr v-for="row in flattenTokens(typography, 'typography')">
+      <tr v-for="row in flattenTokens(tokens.typography, 'typography')">
         <td><code>tokens.{{ row.path }}</code></td>
         <td><code>--tapsi-{{ row.token }}</code></td>
         <td><code>{{ row.value }}</code></td>

@@ -5,15 +5,6 @@ outline: false
 import tokens from "@tapsioss/theme/tokens";
 import "@tapsioss/theme/css-variables";
 import flattenTokens from '../utils/flattenTokens';
-
-const {
-  palette,
-  color,
-  radius,
-  spacing,
-  stroke,
-  typography,
-} = tokens;
 </script>
 
 # Color Tokens
@@ -31,7 +22,7 @@ accents, they ensure optimal contrast, visual hierarchy, and accessibility throu
       </tr>
     </thead>
     <tbody>
-      <tr v-for="row in flattenTokens(color, 'color')">
+      <tr v-for="row in flattenTokens(tokens.color, 'color')">
         <td><code>tokens.{{ row.path }}</code></td>
         <td><code>--tapsi-{{ row.token }}</code></td>
         <td>

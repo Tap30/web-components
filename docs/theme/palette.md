@@ -5,15 +5,6 @@ outline: false
 import tokens from "@tapsioss/theme/tokens";
 import "@tapsioss/theme/css-variables";
 import flattenTokens from '../utils/flattenTokens';
-
-const {
-  palette,
-  color,
-  radius,
-  spacing,
-  stroke,
-  typography,
-} = tokens;
 </script>
 
 # Palette Tokens
@@ -33,7 +24,7 @@ The following tokens form the foundational colors of Tapsi’s visual language. 
       </tr>
     </thead>
     <tbody>
-      <tr v-for="row in flattenTokens(palette, 'palette')">
+      <tr v-for="row in flattenTokens(tokens.palette, 'palette')">
         <td><code>tokens.{{ row.path }}</code></td>
         <td><code>--tapsi-{{ row.token }}</code></td>
         <td>

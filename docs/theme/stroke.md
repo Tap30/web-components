@@ -5,15 +5,6 @@ outline: false
 import tokens from "@tapsioss/theme/tokens";
 import "@tapsioss/theme/css-variables";
 import flattenTokens from '../utils/flattenTokens';
-
-const {
-  palette,
-  color,
-  radius,
-  spacing,
-  stroke,
-  typography,
-} = tokens;
 </script>
 
 # Stroke Tokens
@@ -31,7 +22,7 @@ line-based elements—from subtle separators to prominent outlines—consistent,
       </tr>
     </thead>
     <tbody>
-      <tr v-for="row in flattenTokens(stroke, 'stroke')">
+      <tr v-for="row in flattenTokens(tokens.stroke, 'stroke')">
         <td><code>tokens.{{ row.path }}</code></td>
         <td><code>--tapsi-{{ row.token }}</code></td>
         <td><code>{{ row.value }}</code></td>

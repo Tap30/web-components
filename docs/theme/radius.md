@@ -5,15 +5,6 @@ outline: false
 import tokens from "@tapsioss/theme/tokens";
 import "@tapsioss/theme/css-variables";
 import flattenTokens from '../utils/flattenTokens';
-
-const {
-  palette,
-  color,
-  radius,
-  spacing,
-  stroke,
-  typography,
-} = tokens;
 </script>
 
 # Radius Tokens
@@ -34,7 +25,7 @@ edges or gentle curves, consistent radius tokens keep corners uniform and visual
       </tr>
     </thead>
     <tbody>
-      <tr v-for="row in flattenTokens(radius, 'radius')">
+      <tr v-for="row in flattenTokens(tokens.radius, 'radius')">
         <td><code>tokens.{{ row.path }}</code></td>
         <td><code>--tapsi-{{ row.token }}</code></td>
         <td><code>{{ row.value }}</code></td>

@@ -5,15 +5,6 @@ outline: false
 import tokens from "@tapsioss/theme/tokens";
 import "@tapsioss/theme/css-variables";
 import flattenTokens from '../utils/flattenTokens';
-
-const {
-  palette,
-  color,
-  radius,
-  spacing,
-  stroke,
-  typography,
-} = tokens;
 </script>
 
 # Spacing Tokens
@@ -34,7 +25,7 @@ layouts, reinforces visual rhythm, and simplifies the alignment of elements in y
       </tr>
     </thead>
     <tbody>
-      <tr v-for="row in flattenTokens(spacing, 'spacing')">
+      <tr v-for="row in flattenTokens(tokens.spacing, 'spacing')">
         <td><code>tokens.{{ row.path }}</code></td>
         <td><code>--tapsi-{{ row.token }}</code></td>
         <td><code>{{ row.value }}</code></td>
