@@ -4,19 +4,23 @@ type FlattenedPaletteEntry = {
   value: string;
 };
 
-function flattenTokens(
+const flattenTokens = (
   palette: Record<string, any>,
-  prefix: string = ""
-): FlattenedPaletteEntry[] {
+  prefix: string = "",
+): FlattenedPaletteEntry[] => {
   const results: FlattenedPaletteEntry[] = [];
 
   // Helper to decide how to join prefix & key using dot vs. bracket
   function buildPath(prefix: string, key: string): string {
-    const isNumericKey = /^\d+$/.test(key);
+    const isKeyKebabCase = key.includes("-");
+    const shouldUseBrackets = /^\d+$/.test(key) || isKeyKebabCase;
+
     if (!prefix) {
-      return isNumericKey ? `[${key}]` : key;
+      return shouldUseBrackets ? `[${isKeyKebabCase ? `"${key}"` : key}]` : key;
     } else {
-      return isNumericKey ? `${prefix}[${key}]` : `${prefix}.${key}`;
+      return shouldUseBrackets
+        ? `${prefix}[${isKeyKebabCase ? `"${key}"` : key}]`
+        : `${prefix}.${key}`;
     }
   }
 
@@ -47,7 +51,6 @@ function flattenTokens(
 
   recurse(palette, prefix);
   return results;
-}
-
+};
 
 export default flattenTokens;
