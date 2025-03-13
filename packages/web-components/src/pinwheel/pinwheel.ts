@@ -18,7 +18,7 @@ import {
   withElementInternals,
   withFormAssociated,
 } from "../utils/index.ts";
-import { Slots } from "./constants.ts";
+import { ErrorMessages, scope, Slots } from "./constants.ts";
 import { PinwheelItem } from "./item/index.ts";
 
 const BaseClass = withFormAssociated(withElementInternals(LitElement));
@@ -138,12 +138,7 @@ export class Pinwheel extends BaseClass {
     super.firstUpdated(changed);
 
     if (!this.valueMax || !this.valueMin) {
-      logger(
-        "When your items have sequential numeric values, " +
-          "include the `valuemax` and `valuemin` attributes to enhance accessibility.",
-        "pinwheel",
-        "warning",
-      );
+      logger(ErrorMessages.USE_VALUE_MIN_AND_VALUE_MAX, scope, "warning");
     }
 
     runAfterRepaint(() => {
@@ -419,8 +414,8 @@ export class Pinwheel extends BaseClass {
 
     if (!hasValidLabel) {
       logger(
-        "Expected a valid `label` or `labelledby` attribute, received none.",
-        "pinwheel",
+        ErrorMessages.SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE,
+        scope,
         "error",
       );
     }
