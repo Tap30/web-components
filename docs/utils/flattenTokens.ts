@@ -1,17 +1,21 @@
+import type { Tokens } from "@tapsioss/theme";
+
 type FlattenedPaletteEntry = {
   path: string;
   token: string;
   value: string;
 };
 
+type TokensUnion = Tokens[keyof Tokens];
+
 const flattenTokens = (
-  palette: Record<string, unknown>,
+  tokens: TokensUnion,
   prefix: string = "",
 ): FlattenedPaletteEntry[] => {
   const results: FlattenedPaletteEntry[] = [];
 
   // Helper to decide how to join prefix & key using dot vs. bracket
-  function buildPath(prefix: string, key: string): string {
+  const buildPath = (prefix: string, key: string): string => {
     const isKeyKebabCase = key.includes("-");
     const shouldUseBrackets = /^\d+$/.test(key) || isKeyKebabCase;
 
@@ -22,9 +26,12 @@ const flattenTokens = (
         ? `${prefix}[${isKeyKebabCase ? `"${key}"` : key}]`
         : `${prefix}.${key}`;
     }
-  }
+  };
 
-  function recurse(currentObj: Record<string, unknown>, currentPrefix: string) {
+  const recurse = (
+    currentObj: Record<string, unknown>,
+    currentPrefix: string,
+  ) => {
     for (const key in currentObj) {
       const value = currentObj[key];
       const newPath = buildPath(currentPrefix, key);
@@ -47,9 +54,9 @@ const flattenTokens = (
         recurse(value as Record<string, unknown>, newPath);
       }
     }
-  }
+  };
 
-  recurse(palette, prefix);
+  recurse(tokens, prefix);
   return results;
 };
 

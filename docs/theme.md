@@ -38,12 +38,12 @@ This automatically injects all CSS variables into the global scope, enabling you
 Also, you can access tokens in javascript:
 
 ```ts
-import tokens from "@tapsioss/theme/default-theme/tokens"
+import tokens from "@tapsioss/theme/tokens"
 
-conosle.log(tokens.palette.orange["500"]) // "#e55c2e"
+conosle.log(tokens.palette.orange["500"]); // "#e55c2e"
 ```
 
-The following tokens are currently available:
+The following tokens are currently available, each with its own API reference and usage examples for both CSS and JavaScript:
 
 - [Palette](/theme/palette)
 - [Color](/theme/color)

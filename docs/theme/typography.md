@@ -20,9 +20,6 @@ const sizeText = {
   lg: 'Large'
 };
 
-
-
-
 </script>
 
 # Typography Tokens
@@ -44,7 +41,7 @@ The following tokens centralize all font-related details: **family**, **size**, 
     <tbody>
       <tr>
         <td><code>tokens.typography.["font-family"]}</code></td>
-        <td><code>--tapsi-typography-font-familyfont-family</code></td>
+        <td><code>--tapsi-typography-font-family</code></td>
         <td><code>{{ fontFamily }}</code></td>
       </tr>
     </tbody>

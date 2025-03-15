@@ -9,7 +9,6 @@ import flattenTokens from '../utils/flattenTokens';
 
 # Palette Tokens
 
-
 The following tokens form the foundational colors of Tapsi’s visual language. By using these curated hues—including brand colors, neutrals, and complementary tones—you maintain a unified and balanced color scheme across your application.
 
 <div class="table-wrapper">

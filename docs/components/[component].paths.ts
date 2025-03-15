@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { getFileMeta } from "../../scripts/utils.ts";
-import { type Component, type Metadata } from "../../types/docs.ts";
+import { type ComponentMetadata, type Metadata } from "../../types/docs.ts";
 import { codify, tabulateData } from "../utils/markdown.ts";
 
 export default {
@@ -34,7 +34,7 @@ export default {
   },
 };
 
-const getComponentMarkdown = (component: Component) => {
+const getComponentMarkdown = (component: ComponentMetadata) => {
   let res = "\n";
 
   if (component) {
@@ -56,7 +56,7 @@ const getComponentMarkdown = (component: Component) => {
   return res;
 };
 
-const getImportsMarkdown = (component: Component) => {
+const getImportsMarkdown = (component: ComponentMetadata) => {
   let res = "";
 
   res += `
@@ -76,7 +76,7 @@ import { ${component.name.replace("Tapsi", "")} } from "${component.importPaths.
   return res;
 };
 
-const getUsageMarkdown = (component: Component) => {
+const getUsageMarkdown = (component: ComponentMetadata) => {
   let res = "";
 
   res += `
@@ -96,7 +96,7 @@ const getUsageMarkdown = (component: Component) => {
   return res;
 };
 
-const getSlotsMarkdown = (component: Component) => {
+const getSlotsMarkdown = (component: ComponentMetadata) => {
   const slots = component?.slots || [];
   let res = "";
 
@@ -154,7 +154,7 @@ ${slots
   return res;
 };
 
-const getMembersMarkdown = (component: Component) => {
+const getMembersMarkdown = (component: ComponentMetadata) => {
   const members = component.members || [];
   let res = "";
 
@@ -185,7 +185,7 @@ const getMembersMarkdown = (component: Component) => {
   return res;
 };
 
-const getEventsMarkdown = (component: Component) => {
+const getEventsMarkdown = (component: ComponentMetadata) => {
   const events = component?.events || [];
   let res = "";
 
