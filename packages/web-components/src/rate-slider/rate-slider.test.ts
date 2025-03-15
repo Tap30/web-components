@@ -3,6 +3,28 @@ import { type Locator } from "@playwright/test";
 import { type TapsiRateSlider } from "@tapsioss/web-components/rate-slider/index";
 
 describe("🧩 rate-slider", () => {
+  test("🧪 should be automatically focused only with `autofocus` attribute", async ({
+    page,
+  }) => {
+    // First we are going to test the component without `autofocus` attribute. We expect the component not to be focused.
+    await render(
+      page,
+      `<tapsi-rate-slider label="test" data-testid="test-component"></tapsi-rate-slider>`,
+    );
+
+    const component = page.getByTestId("test-component");
+
+    await expect(component).not.toBeFocused();
+
+    // We expect the component to be automatically focused with `autofocus` attribute.
+    await render(
+      page,
+      `<tapsi-rate-slider label="test" data-testid="test-component" autofocus></tapsi-rate-slider>`,
+    );
+
+    await expect(component).toBeFocused();
+  });
+
   test("🧪 should has required attributes for screen readers", async ({
     page,
   }) => {

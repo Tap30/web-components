@@ -198,6 +198,9 @@ export class FileInput extends BaseClass {
   @queryAssignedNodes({ slot: Slots.PLACEHOLDER_ICON })
   private _placeholderIconSlotNodes!: Node[];
 
+  @query("#root", true)
+  private _root!: HTMLInputElement | null;
+
   @query("#input", true)
   private _input!: HTMLInputElement | null;
 
@@ -256,6 +259,14 @@ export class FileInput extends BaseClass {
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.removeEventListener("click", this._handleActivationClick);
+  }
+
+  public override focus(options?: FocusOptions) {
+    this._root?.focus(options);
+  }
+
+  public override blur() {
+    this._root?.blur();
   }
 
   private _handleInput(event: Event) {
@@ -647,9 +658,11 @@ export class FileInput extends BaseClass {
 
     return html`
       <div
+        id="root"
         part="root"
         class=${rootClasses}
         ?inert=${this.disabled}
+        tabindex=${this.disabled ? "-1" : "0"}
       >
         ${this._renderLabel()}
         <div
