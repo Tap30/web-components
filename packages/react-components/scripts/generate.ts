@@ -14,9 +14,9 @@ import {
   fileExists,
   getFileMeta,
 } from "../../../scripts/utils.ts";
-import { type Component, type Metadata } from "../../../types/docs.ts";
+import { type ComponentMetadata, type Metadata } from "../../../types/docs.ts";
 
-export type ReactGeneratedComponent = {
+type ReactMetadata = {
   componentName: string;
   elementClass: string;
   elementTag: string;
@@ -48,21 +48,24 @@ const metadataPath = path.resolve(
 const START_COMMENT = "/* START: AUTO-GENERATED [DO_NOT_REMOVE] */";
 const END_COMMENT = "/* END: AUTO-GENERATED [DO_NOT_REMOVE] */";
 
-const convertComponentToReactMetadata = (
-  component: Component,
-): ReactGeneratedComponent => {
-  const elementClass = component.name;
-  const componentName = component.name.replace("Tapsi", "");
-  const elementTag = component.tagName;
-  const slots = component.exportedSlots;
+const createReactMetadata = (
+  componentMetadata: ComponentMetadata,
+): ReactMetadata => {
+  const {
+    name: elementClass,
+    tagName: elementTag,
+    events,
+    importPaths,
+    exportedSlots: slots,
+  } = componentMetadata;
+
+  const componentName = elementClass.replace("Tapsi", "");
 
   if (!elementTag) {
     throw new Error(`No tag was found for ${componentName}`);
   }
 
-  const events = component.events;
-
-  const webComponentImportPath = component.importPaths.webComponents;
+  const webComponentImportPath = importPaths.webComponents;
 
   if (!webComponentImportPath) {
     throw new Error(`No import path was found for ${componentName}`);
@@ -85,35 +88,41 @@ const convertComponentToReactMetadata = (
   };
 };
 
-const getEventsExportsList = ({ events }: ReactGeneratedComponent): string[] =>
+const getEventsExportsList = ({ events }: ReactMetadata): string[] =>
   events?.filter(e => e.type.text !== "Event").map(e => e.type.text) || [];
 
-const getSlotsExportsList = ({ slots }: ReactGeneratedComponent): string[] => {
+const getSlotsExportsList = ({ slots }: ReactMetadata): string[] => {
   return slots?.filter(s => s.name === "Slots").map(s => s.name) || [];
 };
 
-const getExportsList = (component: ReactGeneratedComponent) => {
+const getExportsList = (reactMetadata: ReactMetadata) => {
   return [
-    ...getEventsExportsList(component),
-    ...getSlotsExportsList(component),
+    ...getEventsExportsList(reactMetadata),
+    ...getSlotsExportsList(reactMetadata),
   ];
 };
 
-const getModuleBarrelFileComponentImport = (
-  component: ReactGeneratedComponent,
-) => {
-  const exportsList = [
-    component.componentName,
-    ...getExportsList(component).map(
-      e => `${e} as ${component.componentName}${e}`,
-    ),
-  ];
+const getModuleBarrelFileComponentImport = (reactMetadata: ReactMetadata) => {
+  const renamedExportsList = getExportsList(reactMetadata).map(
+    e => `${e} as ${reactMetadata.componentName}${e}`,
+  );
 
-  return `export { ${exportsList.join(", ")} } from "./${component.componentName}.ts";\n`;
+  const exportsList = [reactMetadata.componentName, ...renamedExportsList];
+
+  return `export { ${exportsList.join(", ")} } from "./${reactMetadata.componentName}.ts";\n`;
 };
 
-const getComponentCode = async (
-  component: ReactGeneratedComponent,
+const getReactComponentImports = (reactMetadata: ReactMetadata) => {
+  return [
+    `import * as ${LIT_REACT_NAMESPACE} from "@lit/react";`,
+    `import * as React from "react";`,
+    `import * as ${COMPONENT_NAMESPACE} from "${reactMetadata.webComponentImportPath}";`,
+    'import { type ReactWebComponent } from "@lit/react";',
+  ].join("\n");
+};
+
+const getReactComponentCode = async (
+  reactMetadata: ReactMetadata,
 ): Promise<string> => {
   const {
     componentName,
@@ -123,7 +132,7 @@ const getComponentCode = async (
     webComponentImportPath,
     slots,
     slotImportPath,
-  } = component;
+  } = reactMetadata;
 
   const componentTemplateStr = await fs.promises.readFile(
     componentTemplatePath,
@@ -154,7 +163,7 @@ const getComponentCode = async (
 
   let exports = "";
 
-  const eventExportsList = getEventsExportsList(component);
+  const eventExportsList = getEventsExportsList(reactMetadata);
 
   if (eventExportsList.length > 0) {
     exports = `export { ${eventExportsList.join(",")} } from '${webComponentImportPath}'\n`;
@@ -178,16 +187,16 @@ const getComponentCode = async (
   );
 };
 
-const generateExports = (componentName: string) => {
+const getReactComponentExports = (componentName: string) => {
   return [
     `const ${componentName} = __${componentName};\n`,
     `export { ${componentName} };`,
   ].join("\n");
 };
 
-const transformToComponentsMetadata = new Transform({
+const transformToComponentModule = new Transform({
   objectMode: true,
-  transform(
+  async transform(
     chunk: {
       key: PropertyKey;
       value: Metadata;
@@ -195,35 +204,29 @@ const transformToComponentsMetadata = new Transform({
     _,
     callback,
   ) {
-    callback(null, chunk.value.components);
-  },
-});
+    const metadata = chunk.value.components;
 
-const transformToComponentModule = new Transform({
-  objectMode: true,
-  async transform(chunk: Component[], _, callback) {
-    for (const componentMetadata of chunk) {
-      const component = convertComponentToReactMetadata(componentMetadata);
-      const key = component.componentName;
+    for (const componentMetadata of metadata) {
+      const reactMetadata = createReactMetadata(componentMetadata);
+      const { componentName } = reactMetadata;
 
-      const moduleDir = path.join(srcDir, `${key}`);
+      const moduleDir = path.join(srcDir, `${componentName}`);
 
       await ensureDirExists(moduleDir);
       const moduleBarrelFilePath = path.join(moduleDir, "index.ts");
 
-      if (fileExists(moduleBarrelFilePath))
+      if (fileExists(moduleBarrelFilePath)) {
         await fs.promises.rm(moduleBarrelFilePath);
-
-      const { componentName } = component;
+      }
 
       const modulePath = path.join(moduleDir, `${componentName}.ts`);
 
       const moduleExists = fileExists(modulePath);
-      const componentCode = await getComponentCode(component);
+      const componentCode = await getReactComponentCode(reactMetadata);
 
       await fs.promises.appendFile(
         moduleBarrelFilePath,
-        getModuleBarrelFileComponentImport(component),
+        getModuleBarrelFileComponentImport(reactMetadata),
         {
           encoding: "utf-8",
         },
@@ -279,23 +282,14 @@ const transformToComponentModule = new Transform({
             fs.renameSync(tempModulePath, modulePath);
           });
       } else {
-        const getComponentImports = (component: ReactGeneratedComponent) => {
-          return [
-            `import * as ${LIT_REACT_NAMESPACE} from "@lit/react";`,
-            `import * as React from "react";`,
-            `import * as ${COMPONENT_NAMESPACE} from "${component.webComponentImportPath}";`,
-            'import { type ReactWebComponent } from "@lit/react";',
-          ].join("\n");
-        };
-
         const moduleContent = [
-          getComponentImports(component),
+          getReactComponentImports(reactMetadata),
           "\n",
           START_COMMENT,
           componentCode,
           END_COMMENT,
           "\n",
-          generateExports(componentName),
+          getReactComponentExports(componentName),
         ].join("\n");
 
         await fs.promises.writeFile(modulePath, moduleContent, {
@@ -306,7 +300,7 @@ const transformToComponentModule = new Transform({
 
       await fs.promises.appendFile(
         barrelFilePath,
-        `export * from "./${key}/index.ts";\n`,
+        `export * from "./${componentName}/index.ts";\n`,
         {
           encoding: "utf-8",
         },
@@ -343,7 +337,6 @@ void (async () => {
       chain([
         Parser.make(),
         StreamValues.make(),
-        transformToComponentsMetadata,
         transformToComponentModule,
       ] as const),
     )

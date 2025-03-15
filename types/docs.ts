@@ -36,7 +36,7 @@ export type ImportPaths = {
   react?: string;
 };
 
-export type Component = CustomElement & {
+export type ComponentMetadata = CustomElement & {
   kebabCaseName: string;
   interactiveDemo?: InteractiveDemo;
   importPaths: ImportPaths;
@@ -45,6 +45,6 @@ export type Component = CustomElement & {
 };
 
 export type Metadata = {
-  components: Component[];
+  components: ComponentMetadata[];
   sidebarItems: DefaultTheme.SidebarItem[];
 };

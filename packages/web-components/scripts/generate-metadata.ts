@@ -11,7 +11,7 @@ import { promisify } from "node:util";
 import { type DefaultTheme } from "vitepress";
 import { getFileMeta, toPascalCase } from "../../../scripts/utils.ts";
 import {
-  type Component,
+  type ComponentMetadata,
   type ImportPaths,
   type Metadata,
 } from "../../../types/docs.ts";
@@ -61,9 +61,7 @@ const getKebabCaseComponentName = (component: Declaration) => {
 
 const generateMetadataFromCem = (cem: Package): Metadata => {
   const sidebarItemsMap: Record<string, DefaultTheme.SidebarItem> = {};
-  const componentsMap: Record<string, Component> = {};
-
-  const components: Component[] = [];
+  const components: ComponentMetadata[] = [];
 
   const filteredModules = cem.modules.filter(module => {
     const hasDeclarations = (module.declarations ?? []).length > 0;
@@ -95,9 +93,7 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
 
       if (!kebabCaseName) return;
 
-      const convertDeclarationToComponentMetadata = (
-        declaration: Declaration,
-      ): Component => {
+      const setComponentsMetadata = (): void => {
         const compoundPartialName = kebabCaseName.replace(
           relativePath.concat("-"),
           "",
@@ -126,22 +122,22 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
 
         importPaths.webComponents = `@tapsioss/web-components/${relativePath}`;
 
-        const componentName = toPascalCase(
-          getKebabCaseComponentName(declaration) || "",
-          "-",
-        );
+        const componentName = toPascalCase(kebabCaseName, "-");
 
         importPaths.react = `@tapsioss/react-components/${componentName}`;
-        return {
+
+        const component = {
           ...(declaration as CustomElement),
           kebabCaseName,
           importPaths,
           slotsEnumName,
           exportedSlots,
         };
+
+        components.push(component);
       };
 
-      const getComponentsSidebarItems = () => {
+      const setComponentsSidebarItems = () => {
         const sidebarItem: DefaultTheme.SidebarItem = {};
         const [parentPath, childPath] = relativePath.split("/");
 
@@ -156,13 +152,9 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
             sidebarItem.items = [];
           }
 
-          sidebarItem.items = declarations.map(component => {
-            const name = getKebabCaseComponentName(component) || "";
-
-            return {
-              text: name,
-              link: `/components/${name}`,
-            };
+          sidebarItem.items.push({
+            text: kebabCaseName,
+            link: `/components/${kebabCaseName}`,
           });
         }
 
@@ -186,12 +178,8 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
         }
       };
 
-      const component = convertDeclarationToComponentMetadata(declaration);
-
-      componentsMap[component.name] = component;
-      components.push(component);
-
-      getComponentsSidebarItems();
+      setComponentsMetadata();
+      setComponentsSidebarItems();
     });
   });
 
