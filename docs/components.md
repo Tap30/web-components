@@ -12,8 +12,7 @@ Tapsi provides a set of UI components for building consistent interfaces. There 
 
 ::: info
 
- Both component packages rely on [Tapsi’s Theme package](/theme) to ensure consistent styling and design tokens. Make 
- sure to install and import the Theme package.
+ Both component packages rely on [Tapsi’s Theme package](/theme) to ensure consistent styling and design tokens. Make sure to install and import the Theme package.
  
 :::
 

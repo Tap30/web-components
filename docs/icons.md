@@ -100,15 +100,13 @@ import './internals/components/DocIconGrid';
 
 # Icons
 
-The Tapsi design system provides a comprehensive set of icons published on NPM. You can integrate these icons into your 
-project using either **Web Components** (framework-agnostic) or **React Components** (optimized for React).
+The Tapsi design system provides a comprehensive set of icons published on NPM. You can integrate these icons into your project using either **Web Components** (framework-agnostic) or **React Components** (optimized for React).
 
 ## Installation
 
 ### Web
 
-Use `@tapsioss/web-components` if you want to embed Tapsi icons into any project – whether it’s vanilla HTML, Angular, 
-Vue, Svelte, or any framework that supports Web Components.
+Use `@tapsioss/web-components` if you want to embed Tapsi icons into any project – whether it’s vanilla HTML, Angular, Vue, Svelte, or any framework that supports Web Components.
 
 
 ::: code-group
@@ -128,8 +126,7 @@ yarn add @tapsioss/web-components
 
 ### React
 
-Use `@tapsioss/react-components` if you’re working in a React environment and want a more streamlined integration that 
-follows React conventions.
+Use `@tapsioss/react-components` if you’re working in a React environment and want a more streamlined integration that follows React conventions.
 
 ::: code-group
 

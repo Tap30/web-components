@@ -9,10 +9,7 @@ import flattenTokens from '../utils/flattenTokens';
 
 # Spacing Tokens
 
-The following tokens offer a scalable system for margins and padding. Applying these tokens helps maintain balanced 
-layouts, reinforces visual rhythm, and simplifies the alignment of elements in your UI.
-
-
+The following tokens offer a scalable system for margins and padding. Applying these tokens helps maintain balanced layouts, reinforces visual rhythm, and simplifies the alignment of elements in your UI.
 
 <div class="table-wrapper">
   <table>

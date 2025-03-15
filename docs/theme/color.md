@@ -9,8 +9,7 @@ import flattenTokens from '../utils/flattenTokens';
 
 # Color Tokens
 
-The following tokens outline specific roles and usage guidelines for each color. From primary actions to background 
-accents, they ensure optimal contrast, visual hierarchy, and accessibility throughout your interface.
+The following tokens outline specific roles and usage guidelines for each color. From primary actions to background accents, they ensure optimal contrast, visual hierarchy, and accessibility throughout your interface.
 
 <div class="table-wrapper">
   <table>

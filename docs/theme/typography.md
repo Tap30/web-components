@@ -27,8 +27,7 @@ const sizeText = {
 
 # Typography Tokens
 
-The following tokens centralize all font-related details: **family**, **size**, **weight**, and **height**. By unifying text styles 
-across headings, paragraphs, and other typographic elements, this set of tokens ensures a seamless and readable user experience.
+The following tokens centralize all font-related details: **family**, **size**, **weight**, and **height**. By unifying text styles across headings, paragraphs, and other typographic elements, this set of tokens ensures a seamless and readable user experience.
 
 
 ## Font Family

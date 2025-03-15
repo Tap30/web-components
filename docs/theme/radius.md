@@ -9,10 +9,7 @@ import flattenTokens from '../utils/flattenTokens';
 
 # Radius Tokens
 
-The following tokens define corner rounding (`border-radius`) values across the design system. Whether you need sharp 
-edges or gentle curves, consistent radius tokens keep corners uniform and visually appealing in every component.
-
-
+The following tokens define corner rounding (`border-radius`) values across the design system. Whether you need sharp edges or gentle curves, consistent radius tokens keep corners uniform and visually appealing in every component.
 
 <div class="table-wrapper">
   <table>

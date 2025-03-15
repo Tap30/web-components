@@ -26,8 +26,7 @@ yarn add @tapsioss/theme
 
 ## Theme Usage
 
-To add Tapsi’s global CSS variables (e.g., color palettes, spacing, stroke, radius and typography tokens) to your 
-project, import the `css-variables` module at the root of your application:
+To add Tapsi’s global CSS variables (e.g., color palettes, spacing, stroke, radius and typography tokens) to your project, import the `css-variables` module at the root of your application:
 
 ```ts
 import "@tapsioss/theme/css-variables";
