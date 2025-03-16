@@ -25,7 +25,10 @@ const templatesDir = path.join(packageDir, "templates");
 const barrelFilePath = path.join(srcDir, "index.ts");
 
 const componentTemplatePath = path.join(templatesDir, "component.txt");
-const metadataPath = path.resolve(packageDir, "../web-components/components-metadata.json");
+const metadataPath = path.resolve(
+  packageDir,
+  "../web-components/components-metadata.json",
+);
 
 const START_COMMENT = "/* START: AUTO-GENERATED [DO_NOT_REMOVE] */";
 const END_COMMENT = "/* END: AUTO-GENERATED [DO_NOT_REMOVE] */";

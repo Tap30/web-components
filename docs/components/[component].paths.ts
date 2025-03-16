@@ -16,7 +16,10 @@ export default {
 
     const docsDir = path.resolve(dirname, "..");
     const workspaceDir = path.join(docsDir, "..");
-    const metadataFile = path.join(workspaceDir, "packages/web-components/components-metadata.json");
+    const metadataFile = path.join(
+      workspaceDir,
+      "packages/web-components/components-metadata.json",
+    );
 
     const metadata = JSON.parse(
       fs.readFileSync(metadataFile).toString(),

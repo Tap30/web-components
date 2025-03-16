@@ -10,16 +10,27 @@ import { config, configs as tsLintConfigs } from "typescript-eslint";
 export default config(
   jsLint.configs.recommended,
   ...tsLintConfigs.recommendedTypeChecked,
+  /* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access */
   importPlugin.flatConfigs.recommended,
   importPlugin.flatConfigs.typescript,
+  /* eslint-enable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access */
   litPlugin.configs["flat/recommended"],
   wcPlugin.configs["flat/recommended"],
   prettierRecommendedConfig,
   {
+    files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+    extends: [playwrightPlugin.configs["flat/recommended"]],
+  },
+  {
     files: ["*.ts", "*.tsx"],
   },
   {
-    ignores: ["dist", "node_modules", "docs/.vitepress/cache"],
+    ignores: [
+      "**/dist",
+      "**/node_modules",
+      "docs/.vitepress/dist",
+      "docs/.vitepress/cache",
+    ],
   },
   {
     languageOptions: {
@@ -27,6 +38,7 @@ export default config(
         tsconfigRootDir: import.meta.dirname,
         project: true,
         projectService: {
+          allowDefaultProject: ["eslint.config.js"],
           defaultProject: "./tsconfig.json",
         },
         sourceType: "module",
@@ -45,10 +57,6 @@ export default config(
       "eslint-comments/no-unused-enable": "error",
       "eslint-comments/no-unused-disable": "error",
     },
-  },
-  {
-    files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
-    extends: [playwrightPlugin.configs["flat/recommended"]],
   },
   {
     rules: {
@@ -137,9 +145,5 @@ export default config(
         },
       },
     },
-  },
-  {
-    files: ["*.js", "*.mjs"],
-    ...tsLintConfigs.disableTypeChecked,
   },
 );
