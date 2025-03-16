@@ -1,9 +1,10 @@
 import { defineConfig } from "vitepress";
+import nav from "./nav.ts";
 import sidebar from "./sidebar.ts";
 import socialLinks from "./social-links.ts";
 
 export default defineConfig({
-  title: "Tapsi components",
+  title: "Tapsi Design System",
   description: "A set of components based on Tapsi design system.",
   base: "/web-components/",
   head: [
@@ -27,5 +28,6 @@ export default defineConfig({
   themeConfig: {
     sidebar,
     socialLinks,
+    nav,
   },
 });

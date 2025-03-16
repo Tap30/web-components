@@ -1,4 +1,4 @@
-import { type CustomElement } from "custom-elements-manifest";
+import { type CustomElement, type Export } from "custom-elements-manifest";
 import { type DefaultTheme } from "vitepress";
 
 export type HTMLTemplatePath = `${string}.html`;
@@ -33,16 +33,18 @@ export type InteractiveDemo = {
 
 export type ImportPaths = {
   webComponents?: string;
+  react?: string;
 };
 
-export type Component = CustomElement & {
+export type ComponentMetadata = CustomElement & {
   kebabCaseName: string;
   interactiveDemo?: InteractiveDemo;
   importPaths: ImportPaths;
   slotsEnumName?: string;
+  exportedSlots?: Export[];
 };
 
 export type Metadata = {
-  components: Component[];
+  components: ComponentMetadata[];
   sidebarItems: DefaultTheme.SidebarItem[];
 };

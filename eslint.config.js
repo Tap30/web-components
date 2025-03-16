@@ -27,8 +27,9 @@ export default config(
   {
     ignores: [
       "**/dist",
+      "**/coverage",
+      "**/playwright-report",
       "**/node_modules",
-      "docs/.vitepress/dist",
       "docs/.vitepress/cache",
     ],
   },

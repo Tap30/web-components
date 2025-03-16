@@ -1,14 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { getFileMeta } from "../../scripts/utils.ts";
-import { type Component, type Metadata } from "../../types/docs.ts";
-import {
-  codify,
-  getFormattedImportUsageString,
-  getFormattedTagUsageString,
-  getUsageSectionMarkdown,
-  tabulateData,
-} from "../utils/markdown.ts";
+import { type ComponentMetadata, type Metadata } from "../../types/docs.ts";
+import { codify, tabulateData } from "../utils/markdown.ts";
 
 export default {
   paths() {
@@ -40,21 +34,17 @@ export default {
   },
 };
 
-const getComponentMarkdown = (component: Component) => {
+const getComponentMarkdown = (component: ComponentMetadata) => {
   let res = "\n";
 
   if (component) {
     res += `# ${component.name?.split("Tapsi")[1]}\n`;
 
-    res += `${component.summary}\n`;
+    res += `${component.summary}\n\n`;
 
-    res += getUsageSectionMarkdown([
-      [
-        "Import",
-        getFormattedImportUsageString(component.importPaths.webComponents),
-      ],
-      ["Tag", getFormattedTagUsageString(component.tagName)],
-    ]);
+    res += getImportsMarkdown(component);
+
+    res += getUsageMarkdown(component);
 
     res += getMembersMarkdown(component);
 
@@ -66,7 +56,47 @@ const getComponentMarkdown = (component: Component) => {
   return res;
 };
 
-const getSlotsMarkdown = (component: Component) => {
+const getImportsMarkdown = (component: ComponentMetadata) => {
+  let res = "";
+
+  res += `
+## Importing
+
+::: code-group
+\`\`\`ts [Web]
+import "${component.importPaths.webComponents}";
+\`\`\`
+
+\`\`\`ts [React]
+import { ${component.name.replace("Tapsi", "")} } from "${component.importPaths.react}";
+\`\`\`
+
+:::`;
+
+  return res;
+};
+
+const getUsageMarkdown = (component: ComponentMetadata) => {
+  let res = "";
+
+  res += `
+## Component Usage
+
+::: code-group
+\`\`\`html [Web]
+<${component.tagName}></${component.tagName}>
+\`\`\`
+
+\`\`\`tsx [React]
+<${component.name.replace("Tapsi", "")} />
+\`\`\`
+:::
+`;
+
+  return res;
+};
+
+const getSlotsMarkdown = (component: ComponentMetadata) => {
   const slots = component?.slots || [];
   let res = "";
 
@@ -81,12 +111,15 @@ const getSlotsMarkdown = (component: Component) => {
       ]),
     );
 
+    const reactName = component.name.replace("Tapsi", "");
+
     res += `\n
 ::: tip
 
 You can use slot names as variables:
 
-\`\`\`ts
+::: code-group
+\`\`\`ts [Web]
 import { ${component.slotsEnumName} } from "${component.importPaths.webComponents}";
 
 ${slots
@@ -100,13 +133,28 @@ ${slots
 
 \`\`\`
 
-:::`;
+
+\`\`\`ts [React]
+import { ${reactName}Slots } from "${component.importPaths.react?.split(`/${reactName}`)[0]}";
+
+${slots
+  ?.map(slot => {
+    const slotEnum =
+      slot.name === "" ? "DEFAULT" : slot.name.toUpperCase().replace(/-/g, "_");
+
+    return `console.log(${reactName}Slots.${slotEnum}); // "${slot.name}"`;
+  })
+  .join("\n")}
+
+\`\`\`
+
+:::\n`;
   }
 
   return res;
 };
 
-const getMembersMarkdown = (component: Component) => {
+const getMembersMarkdown = (component: ComponentMetadata) => {
   const members = component.members || [];
   let res = "";
 
@@ -137,12 +185,14 @@ const getMembersMarkdown = (component: Component) => {
   return res;
 };
 
-const getEventsMarkdown = (component: Component) => {
+const getEventsMarkdown = (component: ComponentMetadata) => {
   const events = component?.events || [];
   let res = "";
 
   if ((events?.length ?? 0) > 0) {
     res += "\n## Events\n";
+
+    const reactName = component.name.replace("Tapsi", "");
 
     res += tabulateData(
       ["Name", "Description", "Type"],
@@ -167,7 +217,9 @@ const getEventsMarkdown = (component: Component) => {
 
 You can import custom event names:
 
-\`\`\`ts
+::: code-group
+
+\`\`\`ts [Web]
 import { \n  ${exportedEvents
         .map(e => e.type.text)
         .join(",\n  ")}\n} from "${component.importPaths.webComponents}";
@@ -179,6 +231,28 @@ ${exportedEvents
     return `element.addEventListener(${eventClass}.type, handle${component.name}${event.type.text.replace("Event", "")});`;
   })
   .join("\n")}
+
+\`\`\`
+
+\`\`\`tsx [React]
+import { \n  ${exportedEvents
+        .map(e => `${reactName}${e.type.text}`)
+        .join(
+          ",\n  ",
+        )}\n} from "${component.importPaths.react?.split(`/${reactName}`)[0]}";
+
+
+// ...
+
+<${reactName}
+${exportedEvents
+  .map(event => {
+    const eventClass = event.type.text;
+
+    return `  on${eventClass}={(e: ${reactName}${eventClass}) => {...}}`;
+  })
+  .join("\n")}
+/>
 
 \`\`\`
 

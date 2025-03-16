@@ -3,18 +3,21 @@
   "version": "0.1.0",
   "type": "module",
   "files": [
-    "./dist/**/*.js",
-    "./dist/**/*.d.ts",
-    "./dist/**/package.json"
+    "./dist"
   ],
   "exports": {
     "./*": {
-      "types": "./dist/*.d.ts",
-      "default": "./dist/*.js"
+      "types": "./dist/*/index.d.ts",
+      "default": "./dist/*/index.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
     "clear": "shx rm -rf dist",
+    "dev": "tsc --watch --project ./tsconfig.dev.json",
     "generate": "tsx ./scripts/generate.ts",
     "prebuild": "run-p clear generate",
     "build": "tsc --project ./tsconfig.build.json",

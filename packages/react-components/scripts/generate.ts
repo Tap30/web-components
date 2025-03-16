@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import type { CustomElement, Export } from "custom-elements-manifest";
 import Mustache from "mustache";
 import { exec } from "node:child_process";
 import * as fs from "node:fs";
@@ -8,8 +9,22 @@ import { promisify } from "node:util";
 import { chain } from "stream-chain";
 import Parser from "stream-json/Parser";
 import StreamValues from "stream-json/streamers/StreamValues";
-import { fileExists, getFileMeta } from "../../../scripts/utils.ts";
-import { type Component, type Metadata } from "../../../types/docs.ts";
+import {
+  ensureDirExists,
+  fileExists,
+  getFileMeta,
+} from "../../../scripts/utils.ts";
+import { type ComponentMetadata, type Metadata } from "../../../types/docs.ts";
+
+type ReactMetadata = {
+  componentName: string;
+  elementClass: string;
+  elementTag: string;
+  events: CustomElement["events"];
+  webComponentImportPath: string;
+  slotImportPath?: string;
+  slots?: Export[];
+};
 
 const asyncExec = promisify(exec);
 
@@ -33,22 +48,99 @@ const metadataPath = path.resolve(
 const START_COMMENT = "/* START: AUTO-GENERATED [DO_NOT_REMOVE] */";
 const END_COMMENT = "/* END: AUTO-GENERATED [DO_NOT_REMOVE] */";
 
-const getComponentImports = (component: Component) => {
+const createReactMetadata = (
+  componentMetadata: ComponentMetadata,
+): ReactMetadata => {
+  const {
+    name: elementClass,
+    tagName: elementTag,
+    events,
+    importPaths,
+    exportedSlots: slots,
+  } = componentMetadata;
+
+  const componentName = elementClass.replace("Tapsi", "");
+
+  if (!elementTag) {
+    throw new Error(`No tag was found for ${componentName}`);
+  }
+
+  const webComponentImportPath = importPaths.webComponents;
+
+  if (!webComponentImportPath) {
+    throw new Error(`No import path was found for ${componentName}`);
+  }
+
+  let slotImportPath = webComponentImportPath;
+
+  if (elementTag.endsWith("-item")) {
+    slotImportPath += "/item";
+  }
+
+  return {
+    elementClass,
+    componentName,
+    elementTag,
+    events,
+    webComponentImportPath,
+    slotImportPath,
+    slots,
+  };
+};
+
+const getEventsExportsList = ({ events }: ReactMetadata): string[] =>
+  events?.filter(e => e.type.text !== "Event").map(e => e.type.text) || [];
+
+const getSlotsExportsList = ({ slots }: ReactMetadata): string[] => {
+  return slots?.filter(s => s.name === "Slots").map(s => s.name) || [];
+};
+
+const getExportsList = (reactMetadata: ReactMetadata) => {
+  return [
+    ...getEventsExportsList(reactMetadata),
+    ...getSlotsExportsList(reactMetadata),
+  ];
+};
+
+const getModuleBarrelFileComponentImport = (reactMetadata: ReactMetadata) => {
+  const renamedExportsList = getExportsList(reactMetadata).map(
+    e => `${e} as ${reactMetadata.componentName}${e}`,
+  );
+
+  const exportsList = [reactMetadata.componentName, ...renamedExportsList];
+
+  return `export { ${exportsList.join(", ")} } from "./${reactMetadata.componentName}.ts";\n`;
+};
+
+const getReactComponentImports = (reactMetadata: ReactMetadata) => {
   return [
     `import * as ${LIT_REACT_NAMESPACE} from "@lit/react";`,
     `import * as React from "react";`,
-    `import * as ${COMPONENT_NAMESPACE} from "${component.importPaths.webComponents}";`,
+    `import * as ${COMPONENT_NAMESPACE} from "${reactMetadata.webComponentImportPath}";`,
+    'import { type ReactWebComponent } from "@lit/react";',
   ].join("\n");
 };
 
-const getComponentCode = async (component: Component): Promise<string> => {
+const getReactComponentCode = async (
+  reactMetadata: ReactMetadata,
+): Promise<string> => {
+  const {
+    componentName,
+    elementTag,
+    elementClass,
+    events: _events,
+    webComponentImportPath,
+    slots,
+    slotImportPath,
+  } = reactMetadata;
+
   const componentTemplateStr = await fs.promises.readFile(
     componentTemplatePath,
     { encoding: "utf-8" },
   );
 
   const events = `{ ${
-    component.events
+    _events
       ?.map(event => {
         const eventName = event.name;
         const eventClass = event.type.text;
@@ -69,29 +161,42 @@ const getComponentCode = async (component: Component): Promise<string> => {
       .join(",") || ""
   } }`;
 
+  let exports = "";
+
+  const eventExportsList = getEventsExportsList(reactMetadata);
+
+  if (eventExportsList.length > 0) {
+    exports = `export { ${eventExportsList.join(",")} } from '${webComponentImportPath}'\n`;
+  }
+
+  if ((slots?.length ?? 0) > 0 && !!slotImportPath) {
+    exports += `export { Slots } from "${slotImportPath}"\n`;
+  }
+
   return Mustache.render(
     componentTemplateStr,
     {
-      componentName: component.name.replace("Tapsi", ""),
-      elementTag: component.tagName,
-      elementClass: `${COMPONENT_NAMESPACE}.${component.name}`,
+      componentName,
+      elementTag,
+      elementClass: `${COMPONENT_NAMESPACE}.${elementClass}`,
       events,
+      exports,
     },
     {},
     { escape: v => v as string },
   );
 };
 
-const generateExports = (componentName: string) => {
+const getReactComponentExports = (componentName: string) => {
   return [
     `const ${componentName} = __${componentName};\n`,
-    `export default ${componentName};`,
+    `export { ${componentName} };`,
   ].join("\n");
 };
 
-const transformToComponentsMetadata = new Transform({
+const transformToComponentModule = new Transform({
   objectMode: true,
-  transform(
+  async transform(
     chunk: {
       key: PropertyKey;
       value: Metadata;
@@ -99,20 +204,33 @@ const transformToComponentsMetadata = new Transform({
     _,
     callback,
   ) {
-    callback(null, chunk.value.components);
-  },
-});
+    const metadata = chunk.value.components;
 
-const transformToComponentModule = new Transform({
-  objectMode: true,
-  async transform(chunk: Component[], _, callback) {
-    for (const component of chunk) {
-      const componentName = component.name.replace("Tapsi", "");
+    for (const componentMetadata of metadata) {
+      const reactMetadata = createReactMetadata(componentMetadata);
+      const { componentName } = reactMetadata;
 
-      const modulePath = path.join(srcDir, `${componentName}.ts`);
+      const moduleDir = path.join(srcDir, `${componentName}`);
+
+      await ensureDirExists(moduleDir);
+      const moduleBarrelFilePath = path.join(moduleDir, "index.ts");
+
+      if (fileExists(moduleBarrelFilePath)) {
+        await fs.promises.rm(moduleBarrelFilePath);
+      }
+
+      const modulePath = path.join(moduleDir, `${componentName}.ts`);
+
       const moduleExists = fileExists(modulePath);
+      const componentCode = await getReactComponentCode(reactMetadata);
 
-      const componentCode = await getComponentCode(component);
+      await fs.promises.appendFile(
+        moduleBarrelFilePath,
+        getModuleBarrelFileComponentImport(reactMetadata),
+        {
+          encoding: "utf-8",
+        },
+      );
 
       if (moduleExists) {
         const tempModulePath = path.join(srcDir, `${componentName}.temp.ts`);
@@ -165,13 +283,13 @@ const transformToComponentModule = new Transform({
           });
       } else {
         const moduleContent = [
-          getComponentImports(component),
+          getReactComponentImports(reactMetadata),
           "\n",
           START_COMMENT,
           componentCode,
           END_COMMENT,
           "\n",
-          generateExports(componentName),
+          getReactComponentExports(componentName),
         ].join("\n");
 
         await fs.promises.writeFile(modulePath, moduleContent, {
@@ -182,7 +300,7 @@ const transformToComponentModule = new Transform({
 
       await fs.promises.appendFile(
         barrelFilePath,
-        `export { default as ${componentName} } from "./${componentName}.ts";\n`,
+        `export * from "./${componentName}/index.ts";\n`,
         {
           encoding: "utf-8",
         },
@@ -192,7 +310,7 @@ const transformToComponentModule = new Transform({
     callback();
   },
   async final(callback) {
-    await asyncExec(`prettier ${srcDir}/**/* --write --fix`);
+    await asyncExec(`prettier ${srcDir}/** --write --fix`);
 
     callback();
   },
@@ -219,7 +337,6 @@ void (async () => {
       chain([
         Parser.make(),
         StreamValues.make(),
-        transformToComponentsMetadata,
         transformToComponentModule,
       ] as const),
     )
