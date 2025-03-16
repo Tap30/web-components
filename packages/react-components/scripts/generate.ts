@@ -233,7 +233,7 @@ const transformToComponentModule = new Transform({
       );
 
       if (moduleExists) {
-        const tempModulePath = path.join(srcDir, `${componentName}.temp.ts`);
+        const tempModulePath = path.join(moduleDir, `${componentName}.temp.ts`);
 
         const readModule = fs.createReadStream(modulePath, {
           encoding: "utf-8",
