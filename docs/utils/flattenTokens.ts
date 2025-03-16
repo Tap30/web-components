@@ -1,4 +1,4 @@
-import type { Tokens } from "@tapsioss/theme";
+import Tokens from "@tapsioss/theme/tokens";
 
 type FlattenedPaletteEntry = {
   path: string;
@@ -6,7 +6,7 @@ type FlattenedPaletteEntry = {
   value: string;
 };
 
-type TokensUnion = Tokens[keyof Tokens];
+type TokensUnion = (typeof Tokens)[keyof typeof Tokens];
 
 const flattenTokens = (
   tokens: TokensUnion,
