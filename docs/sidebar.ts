@@ -7,7 +7,10 @@ import { type Metadata } from "../types/docs.ts";
 const { dirname } = getFileMeta(import.meta.url);
 
 const workspaceDir = path.join(dirname, "..");
-const metadataFile = path.join(workspaceDir, "packages/web-components/components-metadata.json");
+const metadataFile = path.join(
+  workspaceDir,
+  "packages/web-components/components-metadata.json",
+);
 
 const getSidebarItems = (): DefaultTheme.Sidebar => {
   return (

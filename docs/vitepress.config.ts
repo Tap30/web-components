@@ -1,6 +1,6 @@
 import { defineConfig } from "vitepress";
-import sidebar from "./sidebar.ts";
 import nav from "./nav.ts";
+import sidebar from "./sidebar.ts";
 import socialLinks from "./social-links.ts";
 
 export default defineConfig({
