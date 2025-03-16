@@ -31,6 +31,8 @@ export default css`
     flex-direction: column;
 
     gap: var(--tapsi-spacing-4);
+
+    width: 100%;
   }
 
   .root.disabled {
@@ -68,7 +70,7 @@ export default css`
     justify-content: center;
 
     height: 8.25rem;
-    width: 100%;
+    min-width: 8.25rem;
   }
 
   .label {
@@ -102,7 +104,7 @@ export default css`
   }
 
   .file-input {
-    height: 8.25rem;
+    height: 100%;
     width: 100%;
 
     position: relative;

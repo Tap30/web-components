@@ -1,3 +1,5 @@
+import type { PropertyDeclaration } from "lit";
+
 export const isStringNumber = (inputString: string): boolean =>
   /^\d+(\.\d+)?$/.test(inputString);
 
@@ -32,4 +34,22 @@ export const isFileImage = (fileName: string) => {
   return imageFileExtensions.some(imageExtension =>
     fileName.toLowerCase().endsWith(imageExtension),
   );
+};
+
+export const loadingConverter: PropertyDeclaration["converter"] = {
+  fromAttribute(value: string | null): boolean | number {
+    if (value === null) return false;
+    if (value === "") return true;
+
+    const numericValue = Number(value);
+
+    if (Number.isNaN(numericValue)) return true;
+
+    return numericValue;
+  },
+  toAttribute(value: boolean | number): string | null {
+    if (typeof value === "boolean") return value ? "true" : null;
+
+    return `${value}`;
+  },
 };

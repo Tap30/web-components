@@ -13,6 +13,28 @@ describe("🧩 checkbox", () => {
     await disposeMocks(page);
   });
 
+  test("🧪 should be automatically focused only with `autofocus` attribute", async ({
+    page,
+  }) => {
+    // First we are going to test the component without `autofocus` attribute. We expect the component not to be focused.
+    await render(
+      page,
+      `<tapsi-checkbox label="test" data-testid="test-component"></tapsi-checkbox>`,
+    );
+
+    const component = page.getByTestId("test-component");
+
+    await expect(component).not.toBeFocused();
+
+    // We expect the component to be automatically focused with `autofocus` attribute.
+    await render(
+      page,
+      `<tapsi-checkbox label="test" data-testid="test-component" autofocus></tapsi-checkbox>`,
+    );
+
+    await expect(component).toBeFocused();
+  });
+
   test("🧪 should trigger `change` event on click", async ({ page }) => {
     await render(
       page,

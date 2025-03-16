@@ -15,6 +15,28 @@ describe("🧩 text-field", () => {
     await disposeMocks(page);
   });
 
+  test("🧪 should be automatically focused only with `autofocus` attribute", async ({
+    page,
+  }) => {
+    // First we are going to test the component without `autofocus` attribute. We expect the component not to be focused.
+    await render(
+      page,
+      `<tapsi-text-field label="test" data-testid="test-component">test</tapsi-text-field>`,
+    );
+
+    const component = page.getByTestId("test-component");
+
+    await expect(component).not.toBeFocused();
+
+    // We expect the component to be automatically focused with `autofocus` attribute.
+    await render(
+      page,
+      `<tapsi-text-field label="test" data-testid="test-component" autofocus>test</tapsi-text-field>`,
+    );
+
+    await expect(component).toBeFocused();
+  });
+
   test("🧪 should trigger `input` and `change` events while typing", async ({
     page,
   }) => {

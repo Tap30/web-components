@@ -44,6 +44,28 @@ describe("🧩 pin-input", () => {
     }
   });
 
+  test("🧪 should be automatically focused only with `autofocus` attribute", async ({
+    page,
+  }) => {
+    // First we are going to test the component without `autofocus` attribute. We expect the component not to be focused.
+    await render(
+      page,
+      `<tapsi-pin-input label="لیبل" data-testid="test-component"></tapsi-pin-input>`,
+    );
+
+    const component = page.getByTestId("test-component");
+
+    await expect(component).not.toBeFocused();
+
+    // We expect the component to be automatically focused with `autofocus` attribute.
+    await render(
+      page,
+      `<tapsi-pin-input label="لیبل" data-testid="test-component" autofocus></tapsi-pin-input>`,
+    );
+
+    await expect(component).toBeFocused();
+  });
+
   test("🧪 should fill pin-input from middle while typing from the middle of the pin-input", async ({
     page,
   }) => {
