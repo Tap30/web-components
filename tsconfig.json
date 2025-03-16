@@ -61,7 +61,7 @@
         "./packages/theme/src/default-theme/tokens.css"
       ],
       "@tapsioss/theme/*/tokens": ["./packages/theme/src/*/tokens.ts"],
-      "@tapsioss/theme/tokens": ["./packages/theme/src/default-theme/tokens.ts"]
+      "@tapsioss/theme/tokens": ["./packages/theme/src/default-theme/tokens.ts"],
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "docs/.vitepress/**/*.ts"],
