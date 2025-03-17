@@ -26,6 +26,6 @@
     "build:copy-css": "tsx ./scripts/copy-css-vars.ts",
     "build": "run-s build:*",
     "generate": "tsx ./scripts/generate.ts",
-    "release": "pnpm publish . --tag latest --access public"
+    "release": "pnpm publish . --tag latest --access public --no-git-checks"
   }
 }

@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "tsx ./scripts/build.ts",
-    "release": "pnpm publish . --tag latest --access public"
+    "release": "pnpm publish . --tag latest --access public --no-git-checks"
   },
   "dependencies": {
     "@tapsioss/icons": "workspace:*"

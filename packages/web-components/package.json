@@ -19,7 +19,7 @@
     "predev": "pnpm run clear",
     "test": "playwright test",
     "dev": "tsc --watch --project ./tsconfig.dev.json",
-    "release": "pnpm publish . --tag latest --access public",
+    "release": "pnpm publish . --tag latest --access public --no-git-checks",
     "gen:metadata": "tsx scripts/generate-metadata.ts"
   },
   "dependencies": {

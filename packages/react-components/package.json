@@ -22,7 +22,7 @@
     "prebuild": "run-p clear generate",
     "build": "tsc --project ./tsconfig.build.json",
     "prerelease": "pnpm build",
-    "release": "pnpm publish . --tag latest --access public"
+    "release": "pnpm publish . --tag latest --access public --no-git-checks"
   },
   "peerDependencies": {
     "react": ">=16.8"
