@@ -193,6 +193,7 @@
       "clean": "if-file-deleted",
       "files": [
         "./packages/web-components/src/**/*.ts",
+        "./packages/web-components/scripts/generate-metadata.ts",
         "!./packages/web-components/src/**/*.test.ts"
       ],
       "output": [

@@ -148,9 +148,7 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
         if (!isCompound) {
           sidebarItem.link = `/components/${kebabCaseName}`;
         } else {
-          if (!Array.isArray(sidebarItem.items)) {
-            sidebarItem.items = [];
-          }
+          sidebarItem.items = sidebarItemsMap[sidebarItem.text]?.items || [];
 
           sidebarItem.items.push({
             text: kebabCaseName,
