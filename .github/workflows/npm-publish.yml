@@ -1,11 +1,8 @@
 name: Publish
 
 on:
-  pull_request:
-    types:
-      - closed
-    branches:
-      - main
+  release:
+    types: [created]
 
 permissions:
   contents: read
@@ -13,9 +10,6 @@ permissions:
 
 jobs:
   build:
-    if:
-      github.event.pull_request.merged == true &&
-      startsWith(github.event.pull_request.head.ref, 'release/')
     runs-on: ubuntu-latest
     steps:
       - name: "☁️ checkout repository"
@@ -23,9 +17,9 @@ jobs:
 
       - name: "✍️ set PACKAGE_NAME variable"
         id: set-package-name
-        run:
-          echo "PACKAGE_NAME=$(echo ${{ github.head_ref }} | awk -F'/' '{print
-          $2}')" >> $GITHUB_ENV
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          echo "PACKAGE_NAME=$(echo $TAG_NAME | cut -d '@' -f 1)" >> $GITHUB_ENV
 
       - name: "🔧 setup pnpm"
         uses: pnpm/action-setup@v3
@@ -56,9 +50,6 @@ jobs:
 
   publish-npm:
     needs: build
-    if:
-      github.event.pull_request.merged == true &&
-      startsWith(github.event.pull_request.head.ref, 'release/')
     runs-on: ubuntu-latest
     steps:
       - name: "☁️ checkout repository"
@@ -66,9 +57,9 @@ jobs:
 
       - name: "✍️ set PACKAGE_NAME variable"
         id: set-package-name
-        run:
-          echo "PACKAGE_NAME=$(echo ${{ github.head_ref }} | awk -F'/' '{print
-          $2}')" >> $GITHUB_ENV
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          echo "PACKAGE_NAME=$(echo $TAG_NAME | cut -d '@' -f 1)" >> $GITHUB_ENV
 
       - name: "🔧 setup pnpm"
         uses: pnpm/action-setup@v3
