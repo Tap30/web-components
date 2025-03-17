@@ -9,5 +9,11 @@
     "incremental": true,
     "noEmitOnError": true
   },
-  "exclude": ["**/*.stories.ts", "**/*.test.ts", "**/*.test.tsx", "node_modules", "dist"]
+  "exclude": [
+    "**/*.stories.ts",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "node_modules",
+    "dist"
+  ]
 }

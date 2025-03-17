@@ -79,3 +79,6 @@ playwright/.cache/
 # Web components metadata
 packages/web-components/components-metadata.json
 packages/web-components/custom-elements.json
+
+# wireit
+.wireit

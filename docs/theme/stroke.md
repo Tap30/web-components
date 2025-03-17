@@ -1,6 +1,7 @@
 ---
 outline: false
 ---
+
 <script setup>
 import tokens from "@tapsioss/theme/tokens";
 import "@tapsioss/theme/css-variables";
@@ -9,7 +10,10 @@ import flattenTokens from '../utils/flattenTokens';
 
 # Stroke Tokens
 
-The following tokens specify standardized stroke widths for borders, outlines, and dividers. Using these tokens keeps line-based elements—from subtle separators to prominent outlines—consistent, giving the interface a polished look.
+The following tokens specify standardized stroke widths for borders, outlines,
+and dividers. Using these tokens keeps line-based elements—from subtle
+separators to prominent outlines—consistent, giving the interface a polished
+look.
 
 <div class="table-wrapper">
   <table>

@@ -67,7 +67,7 @@ const generateVars = async (tokensPath: string, varsPath: string) => {
   ].join("\n");
 
   await fs.writeFile(varsPath, vars, { encoding: "utf-8" });
-  await execCmd(`prettier ${varsPath} --write --fix`);
+  await execCmd(`prettier ${varsPath} --write`);
 };
 
 const generate = async () => {

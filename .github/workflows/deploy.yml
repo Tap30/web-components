@@ -25,27 +25,32 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: "☁️ checkout repository"
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: pnpm/action-setup@v3
+
+      - name: "🔧 setup pnpm"
+        uses: pnpm/action-setup@v3
         with:
           version: 9
-      - name: Setup Node
+
+      - name: "🔧 setup node"
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm # or pnpm / yarn
-      - name: Setup Pages
+          cache: "pnpm"
+
+      - name: "🔧 setup pages"
         uses: actions/configure-pages@v4
-      - name: Install dependencies
+
+      - name: "📦 install dependencies"
         run: pnpm install
-      - name: Building Packages
-        run: pnpm packages:build
-      - name: Build Docs
-        run: pnpm docs:build
-      - name: Upload artifact
+
+      - name: "🧱 build"
+        run: pnpm build
+
+      - name: "🗄️ upload pages artifact"
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
@@ -58,6 +63,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     steps:
-      - name: Deploy to GitHub Pages
+      - name: "🚀 deploy to github pages"
         id: deployment
         uses: actions/deploy-pages@v4

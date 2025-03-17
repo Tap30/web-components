@@ -15,10 +15,8 @@
   "scripts": {
     "clear": "shx rm -rf dist",
     "prebuild": "pnpm run clear",
-    "build": "run-p gen:metadata bulld:compile",
-    "bulld:compile": "tsc --project ./tsconfig.build.json",
+    "build": "tsc --project ./tsconfig.build.json",
     "predev": "pnpm run clear",
-    "pretest": "pnpm --filter @tapsioss/theme run build && pnpm run build",
     "test": "playwright test",
     "dev": "tsc --watch --project ./tsconfig.dev.json",
     "release": "pnpm publish . --tag latest --access public",

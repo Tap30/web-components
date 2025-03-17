@@ -9,6 +9,10 @@ on:
       - reopened
   workflow_call:
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   lint:
     name: Run linter
@@ -58,5 +62,5 @@ jobs:
       - name: "🎭 install playwright"
         run: pnpm playwright install --with-deps --only-shell
 
-      - name: "🔍 run tests"
+      - name: "🧪 run tests"
         run: pnpm test

@@ -8,40 +8,219 @@
     "node": ">=20"
   },
   "scripts": {
-    "clear:dist": "shx rm -rf dist",
-    "web-components:build": "pnpm --filter @tapsioss/web-components run build",
-    "web-components:release": "pnpm --filter @tapsioss/web-components run release",
-    "react-components:build": "pnpm --filter @tapsioss/react-components run build",
-    "react-components:release": "pnpm --filter @tapsioss/react-components run release",
-    "theme:build": "pnpm --filter @tapsioss/theme run build",
-    "theme:release": "pnpm --filter @tapsioss/theme run release",
-    "icons:build": "pnpm --filter @tapsioss/icons run build",
-    "icons:release": "pnpm --filter @tapsioss/icons run release",
-    "web-icons:build": "pnpm --filter @tapsioss/web-icons run build",
-    "web-icons:release": "pnpm --filter @tapsioss/web-icons run release",
-    "react-icons:build": "pnpm --filter @tapsioss/react-icons run build",
-    "react-icons:release": "pnpm --filter @tapsioss/react-icons run release",
-    "packages:test": "pnpm run -r --parallel --filter=!@tapsioss/docs --filter=!@tapsioss/playground test",
-    "packages:dev": "pnpm run -r --parallel --filter=!@tapsioss/docs dev",
-    "packages:build": "pnpm run -r --filter=!@tapsioss/playground --filter=!@tapsioss/docs build",
-    "prepackages:release": "pnpm packages:build",
-    "packages:release": "pnpm run -r --filter=!@tapsioss/playground --filter=!@tapsioss/docs release",
-    "playground:dev": "pnpm --filter @tapsioss/playground run start:dev",
-    "playground:test": "pnpm --filter @tapsioss/playground run start:test",
-    "dev": "run-p packages:dev playground:dev",
-    "build": "pnpm run packages:build",
-    "test": "pnpm run packages:test",
-    "lint:ts": "tsc --project tsconfig.json",
-    "lint:ecma": "eslint --color --cache --cache-location .eslintcache --max-warnings 1",
-    "lint": "run-p lint:*",
-    "fmt": "prettier packages/*/src/**/* --write --fix",
-    "docs:vitepress:dev": "pnpm --filter docs run dev",
-    "docs:vitepress:build": "pnpm --filter docs run build",
-    "docs:vitepress:preview": "pnpm --filter docs run preview",
-    "docs:dev": "run-s gen:metadata docs:vitepress:dev",
-    "docs:build": "run-s gen:metadata docs:vitepress:build",
-    "docs:preview": "run-s docs:vitepress:preview",
-    "gen:metadata": "pnpm --filter @tapsioss/web-components run gen:metadata"
+    "release:web-components": "pnpm --filter @tapsioss/web-components run release",
+    "release:react-components": "pnpm --filter @tapsioss/react-components run release",
+    "release:theme": "pnpm --filter @tapsioss/theme run release",
+    "release:icons": "pnpm --filter @tapsioss/icons run release",
+    "release:web-icons": "pnpm --filter @tapsioss/web-icons run release",
+    "release:react-icons": "pnpm --filter @tapsioss/react-icons run release",
+    "build:packages": "wireit",
+    "build:web-components": "wireit",
+    "build:react-components": "wireit",
+    "build:theme": "wireit",
+    "build:icons": "wireit",
+    "build:web-icons": "wireit",
+    "build:react-icons": "wireit",
+    "build:docs": "wireit",
+    "test": "wireit",
+    "lint": "wireit",
+    "fmt": "wireit",
+    "dev:packages": "pnpm run -r --parallel --filter=!@tapsioss/docs dev",
+    "dev:playground": "pnpm --filter @tapsioss/playground run start:dev",
+    "dev:docs:vitepress": "pnpm --filter @tapsioss/docs run dev",
+    "dev:docs": "run-s gen:metadata dev:docs:vitepress",
+    "dev": "run-p dev:packages dev:playground",
+    "preview:docs": "pnpm --filter @tapsioss/docs run preview",
+    "gen:metadata": "wireit"
+  },
+  "wireit": {
+    "fmt": {
+      "command": "prettier . --write --cache",
+      "files": [
+        "./.prettierrc",
+        "**/*.{ts,tsx}",
+        "!**/dist/**/*",
+        "!pnpm-lock.yaml"
+      ],
+      "output": []
+    },
+    "lint": {
+      "dependencies": [
+        "lint:ts",
+        "lint:ecma"
+      ]
+    },
+    "lint:ts": {
+      "command": "tsc --project tsconfig.json",
+      "files": [
+        "./tsconfig.json",
+        "**/*.{ts,tsx}",
+        "!**/dist/**/*"
+      ],
+      "output": []
+    },
+    "lint:ecma": {
+      "command": "eslint --color --cache --cache-location .eslintcache --max-warnings 1",
+      "files": [
+        "./tsconfig.json",
+        "./.prettierrc",
+        "./eslint.config.js",
+        "**/*.{ts,tsx}",
+        "!**/dist/**/*"
+      ],
+      "output": []
+    },
+    "build:packages": {
+      "dependencies": [
+        "build:theme",
+        "build:web-components",
+        "build:react-components",
+        "build:icons",
+        "build:web-icons",
+        "build:react-icons"
+      ]
+    },
+    "build:theme": {
+      "command": "pnpm --filter @tapsioss/theme run build",
+      "clean": "if-file-deleted",
+      "files": [
+        "./packages/theme/**/*.ts",
+        "./packages/theme/tsconfig.build.json",
+        "!./packages/theme/dist/**/*"
+      ],
+      "output": [
+        "./packages/theme/dist/**/*"
+      ]
+    },
+    "build:web-components": {
+      "command": "pnpm --filter @tapsioss/web-components run build",
+      "clean": "if-file-deleted",
+      "files": [
+        "./packages/web-components/**/*.ts",
+        "./packages/web-components/tsconfig.build.json",
+        "!./packages/web-components/**/*.test.ts",
+        "!./packages/web-components/playwright.config.ts",
+        "!./packages/web-components/dist/**/*"
+      ],
+      "output": [
+        "./packages/web-components/dist/**/*"
+      ],
+      "dependencies": [
+        "gen:metadata"
+      ]
+    },
+    "build:react-components": {
+      "command": "pnpm --filter @tapsioss/react-components run build",
+      "clean": "if-file-deleted",
+      "files": [
+        "./packages/web-components/dist/**/*",
+        "./packages/react-components/templates/component.txt",
+        "./packages/react-components/**/*.ts",
+        "./packages/react-components/tsconfig.build.json",
+        "!./packages/react-components/dist/**/*"
+      ],
+      "output": [
+        "./packages/react-components/dist/**/*"
+      ],
+      "dependencies": [
+        "build:web-components"
+      ]
+    },
+    "build:icons": {
+      "command": "pnpm --filter @tapsioss/icons run build",
+      "clean": "if-file-deleted",
+      "files": [
+        "./packages/icons/templates/entry.txt",
+        "./packages/icons/**/*.{ts,svg}",
+        "./packages/icons/tsconfig.build.json",
+        "!./packages/icons/dist/**/*"
+      ],
+      "output": [
+        "./packages/icons/dist/**/*"
+      ]
+    },
+    "build:web-icons": {
+      "command": "pnpm --filter @tapsioss/web-icons run build",
+      "clean": "if-file-deleted",
+      "files": [
+        "./packages/web-icons/templates/web-icon.txt",
+        "./packages/web-icons/**/*.ts",
+        "./packages/web-icons/tsconfig.build.json",
+        "!./packages/web-icons/dist/**/*"
+      ],
+      "output": [
+        "./packages/web-icons/dist/**/*"
+      ],
+      "dependencies": [
+        "build:icons"
+      ]
+    },
+    "build:react-icons": {
+      "command": "pnpm --filter @tapsioss/react-icons run build",
+      "clean": "if-file-deleted",
+      "files": [
+        "./packages/react-icons/templates/react-icon.txt",
+        "./packages/react-icons/**/*.{ts,tsx}",
+        "./packages/react-icons/tsconfig.build.json",
+        "!./packages/react-icons/dist/**/*"
+      ],
+      "output": [
+        "./packages/react-icons/dist/**/*"
+      ],
+      "dependencies": [
+        "build:icons"
+      ]
+    },
+    "build:docs": {
+      "command": "pnpm --filter @tapsioss/docs run build",
+      "clean": "if-file-deleted",
+      "files": [
+        "./docs/**/*",
+        "!./docs/node_modules/**/*",
+        "!./docs/.vitepress/cache/**/*",
+        "!./docs/.vitepress/dist/**/*"
+      ],
+      "output": [
+        "./docs/.vitepress/dist/**/*"
+      ],
+      "dependencies": [
+        "build:packages",
+        "gen:metadata"
+      ]
+    },
+    "gen:metadata": {
+      "command": "pnpm --filter @tapsioss/web-components run gen:metadata",
+      "clean": "if-file-deleted",
+      "files": [
+        "./packages/web-components/src/**/*.ts",
+        "!./packages/web-components/src/**/*.test.ts"
+      ],
+      "output": [
+        "./packages/web-components/custom-elements.json",
+        "./packages/web-components/components-metadata.json"
+      ]
+    },
+    "test": {
+      "dependencies": [
+        "test:web-components"
+      ]
+    },
+    "test:web-components": {
+      "command": "pnpm --filter @tapsioss/web-components run test",
+      "clean": "if-file-deleted",
+      "files": [
+        "./packages/web-components/src/**/*",
+        "./packages/web-components/playwright.config.ts"
+      ],
+      "output": [
+        "./packages/web-components/test-results/**/*",
+        "./packages/web-components/playwright-report/**/*"
+      ],
+      "dependencies": [
+        "build:theme",
+        "build:web-components"
+      ]
+    }
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.4",
@@ -89,6 +268,7 @@
     "typescript-eslint": "^8.26.1",
     "vite": "^5.4.14",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitepress": "^1.6.3"
+    "vitepress": "^1.6.3",
+    "wireit": "^0.14.11"
   }
 }

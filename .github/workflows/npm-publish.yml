@@ -7,6 +7,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   build:
     if:
@@ -14,19 +18,22 @@ jobs:
       startsWith(github.event.pull_request.head.ref, 'release/')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: "☁️ checkout repository"
+        uses: actions/checkout@v4
 
-      - name: Set PACKAGE_NAME variable
+      - name: "✍️ set PACKAGE_NAME variable"
         id: set-package-name
         run:
           echo "PACKAGE_NAME=$(echo ${{ github.head_ref }} | awk -F'/' '{print
           $2}')" >> $GITHUB_ENV
 
-      - uses: pnpm/action-setup@v3
+      - name: "🔧 setup pnpm"
+        uses: pnpm/action-setup@v3
         with:
           version: 9
 
-      - uses: actions/setup-node@v4
+      - name: "🔧 setup node"
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
@@ -35,7 +42,7 @@ jobs:
         run: pnpm install
 
       - name: "🧱 build package"
-        run: pnpm ${{ env.PACKAGE_NAME }}:build
+        run: pnpm build:${{ env.PACKAGE_NAME }}
 
       - name: "🗄️ archive package"
         uses: actions/upload-artifact@v4
@@ -50,19 +57,22 @@ jobs:
       startsWith(github.event.pull_request.head.ref, 'release/')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: "☁️ checkout repository"
+        uses: actions/checkout@v4
 
-      - name: Set PACKAGE_NAME variable
+      - name: "✍️ set PACKAGE_NAME variable"
         id: set-package-name
         run:
           echo "PACKAGE_NAME=$(echo ${{ github.head_ref }} | awk -F'/' '{print
           $2}')" >> $GITHUB_ENV
 
-      - uses: pnpm/action-setup@v3
+      - name: "🔧 setup pnpm"
+        uses: pnpm/action-setup@v3
         with:
           version: 9
 
-      - uses: actions/setup-node@v4
+      - name: "🔧 setup node"
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
@@ -78,6 +88,6 @@ jobs:
           path: packages/${{ env.PACKAGE_NAME }}/dist
 
       - name: "🚀 publish package"
-        run: pnpm ${{ env.PACKAGE_NAME }}:release
+        run: pnpm release:${{ env.PACKAGE_NAME }}
         env:
           NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
