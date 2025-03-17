@@ -36,6 +36,10 @@ jobs:
       - name: "📦 install dependencies"
         run: pnpm install
 
+      # Set up GitHub Actions caching for Wireit.
+      - name: "🔌 setup wireit cache"
+        uses: google/wireit@setup-github-actions-caching/v2
+
       - name: "🔍 lint code"
         run: pnpm lint
 
@@ -61,6 +65,10 @@ jobs:
 
       - name: "🎭 install playwright"
         run: pnpm playwright install --with-deps --only-shell
+
+        # Set up GitHub Actions caching for Wireit.
+      - name: "🔌 setup wireit cache"
+        uses: google/wireit@setup-github-actions-caching/v2
 
       - name: "🧪 run tests"
         run: pnpm test
