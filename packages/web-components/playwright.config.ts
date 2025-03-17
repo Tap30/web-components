@@ -5,7 +5,9 @@ export default defineConfig({
   fullyParallel: true,
   retries: process.env.CI ? 2 : undefined,
   forbidOnly: !!process.env.CI,
-  reporter: process.env.CI ? [["github"]] : [["list"], ["html"]],
+  reporter: process.env.CI
+    ? [["github"]]
+    : [["list"], ["html", { open: "never" }]],
   projects: [
     {
       name: "💻 Desktop",

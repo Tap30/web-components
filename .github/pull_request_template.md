@@ -11,7 +11,8 @@ Choose the right checklist for the change that you're making:
 
 ## Feature
 
-- [ ] Implements an existing feature request or RFC. Make sure the feature request has been accepted for implementation before opening a PR.
+- [ ] Implements an existing feature request or RFC. Make sure the feature
+      request has been accepted for implementation before opening a PR.
 - [ ] Related issues linked using `fixes #number`
 - [ ] Tests added
 - [ ] Documentation added

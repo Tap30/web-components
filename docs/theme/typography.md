@@ -1,6 +1,7 @@
 ---
 outline: "deep"
 ---
+
 <script setup>
 import tokens from "@tapsioss/theme/tokens";
 import "@tapsioss/theme/css-variables";
@@ -24,8 +25,10 @@ const sizeText = {
 
 # Typography Tokens
 
-The following tokens centralize all font-related details: **family**, **size**, **weight**, and **height**. By unifying text styles across headings, paragraphs, and other typographic elements, this set of tokens ensures a seamless and readable user experience.
-
+The following tokens centralize all font-related details: **family**, **size**,
+**weight**, and **height**. By unifying text styles across headings, paragraphs,
+and other typographic elements, this set of tokens ensures a seamless and
+readable user experience.
 
 ## Font Family
 
@@ -48,9 +51,7 @@ The following tokens centralize all font-related details: **family**, **size**, 
   </table>
 </div>
 
-
 <section v-for="([type, data]) in Object.entries(typographyTokens)">
-
 
 ## {{ capitalizeFirstLetter(type) }} Tokens
 
@@ -78,6 +79,5 @@ The following tokens centralize all font-related details: **family**, **size**, 
   </div>
 
 </div>
-
 
 </section>

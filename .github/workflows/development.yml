@@ -9,6 +9,10 @@ on:
       - reopened
   workflow_call:
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   lint:
     name: Run linter
@@ -31,6 +35,10 @@ jobs:
 
       - name: "📦 install dependencies"
         run: pnpm install
+
+      # Set up GitHub Actions caching for Wireit.
+      - name: "🔌 setup wireit cache"
+        uses: google/wireit@setup-github-actions-caching/v2
 
       - name: "🔍 lint code"
         run: pnpm lint
@@ -58,5 +66,9 @@ jobs:
       - name: "🎭 install playwright"
         run: pnpm playwright install --with-deps --only-shell
 
-      - name: "🔍 run tests"
+        # Set up GitHub Actions caching for Wireit.
+      - name: "🔌 setup wireit cache"
+        uses: google/wireit@setup-github-actions-caching/v2
+
+      - name: "🧪 run tests"
         run: pnpm test

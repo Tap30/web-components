@@ -233,7 +233,7 @@ const transformToComponentModule = new Transform({
       );
 
       if (moduleExists) {
-        const tempModulePath = path.join(srcDir, `${componentName}.temp.ts`);
+        const tempModulePath = path.join(moduleDir, `${componentName}.temp.ts`);
 
         const readModule = fs.createReadStream(modulePath, {
           encoding: "utf-8",
@@ -310,7 +310,7 @@ const transformToComponentModule = new Transform({
     callback();
   },
   async final(callback) {
-    await asyncExec(`prettier ${srcDir}/** --write --fix`);
+    await asyncExec(`prettier ${srcDir}/** --write`);
 
     callback();
   },
@@ -318,13 +318,6 @@ const transformToComponentModule = new Transform({
 
 void (async () => {
   console.time("generate");
-  const { stdout, stderr } = await asyncExec(
-    "pnpm --filter @tapsioss/web-components run gen:metadata",
-  );
-
-  if (stderr) console.error(stderr);
-  if (stdout) console.log(stdout);
-
   console.log("🧩 generating react components...");
 
   if (fileExists(barrelFilePath)) await fs.promises.rm(barrelFilePath);
