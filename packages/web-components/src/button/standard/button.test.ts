@@ -180,4 +180,48 @@ describe("🧩 button", () => {
     await expect(spinner).toBeVisible();
     await expect(root).toHaveAttribute("aria-busy", "true");
   });
+
+  test("📸 should have correct ui in different variants, sizes and loading states", async ({
+    page,
+  }) => {
+    const sizeValues = ["sm", "md", "lg"];
+    const loadingValues = [true, false];
+    const variantValues = [
+      "primary",
+      "ghost",
+      "naked",
+      "elevated",
+      "destructive",
+      "brand",
+    ];
+
+    for (const variant of variantValues) {
+      for (const size of sizeValues) {
+        for (const loading of loadingValues) {
+          await render(
+            page,
+            `
+            <tapsi-button
+              label="test-button"
+              data-testid="test-button"
+              variant="${variant}"
+              size="${size}"
+              ${loading ? "loading" : ""}
+            >
+              عنوان
+            </tapsi-button>
+            `,
+          );
+          const component = page.getByTestId("test-button");
+
+          const screenshot = `${["button", size, variant, loading && "loading"].filter(Boolean).join("_")}.png`;
+
+          await expect(component).toHaveScreenshot(screenshot, {
+            animations: "disabled", // we disable animations because of the spinner
+            omitBackground: true,
+          });
+        }
+      }
+    }
+  });
 });
