@@ -1,14 +1,39 @@
 name: 📸 Update Snapshots on Comment
 
-on:
-  issue_comment:
-    types:
-      - created
-      - edited
-      - deleted
-  workflow_call:
+#on:
+#  issue_comment:
+#    types:
+#      - created
+#      - edited
+#      - deleted
+#  workflow_call:
+
+on: issue_comment
+
 
 jobs:
+  # _________________________________
+  pr_commented:
+    name: PR comment
+    if: ${{ github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo A comment on PR $NUMBER
+        env:
+          NUMBER: ${{ github.event.issue.number }}
+
+  issue_commented:
+    # This job only runs for issue comments
+    name: Issue comment
+    if: ${{ !github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo A comment on issue $NUMBER
+        env:
+          NUMBER: ${{ github.event.issue.number }}
+  # _________________________________
   update-snapshots:
     name: Update Snapshots
 #    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/approve-snapshots') }}
