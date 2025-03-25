@@ -24,7 +24,7 @@ jobs:
         uses: thollander/actions-comment-pull-request@v3
         with:
           message: |
-            ### Updating snapshots. Click [here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) to see the status.
+            ⏳ Updating snapshots. Click [here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) to see the status.
 
       - name: "🔧 setup node"
         uses: actions/setup-node@v4
@@ -54,4 +54,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v3
         with:
           message: |
-            ### 🎉 Successfully updated and committed Playwright snapshots! 🎉
+            ✅ Successfully updated and committed Playwright snapshots!
