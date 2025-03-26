@@ -1,4 +1,5 @@
 import {
+  accessibility,
   afterEach,
   describe,
   disposeMocks,
@@ -7,8 +8,8 @@ import {
   setupMocks,
   test,
 } from "@internals/test-helpers";
-import { type TapsiTextField } from "@tapsioss/web-components/text-field/index";
 import { ErrorMessages } from "../base-text-input/constants.ts";
+import { type TapsiTextField } from "./index.ts";
 
 describe("🧩 text-field", () => {
   afterEach(async ({ page }) => {
@@ -240,5 +241,21 @@ describe("🧩 text-field", () => {
     await expect(input).not.toBeFocused();
     await label.click();
     await expect(input).toBeFocused();
+  });
+
+  test("🦯 should be accessible inside a form", async ({ page }) => {
+    await render(
+      page,
+      `
+      <form>
+          <tapsi-text-field label="valid label"></tapsi-text-field>
+          <tapsi-button type="submit">Submit</tapsi-button>
+      </form>
+    `,
+    );
+
+    const accessibilityScanResults = await accessibility(page).analyze();
+
+    expect(accessibilityScanResults.violations).toEqual([]);
   });
 });
