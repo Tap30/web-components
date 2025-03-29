@@ -243,19 +243,52 @@ describe("🧩 text-field", () => {
     await expect(input).toBeFocused();
   });
 
-  test("🦯 should be accessible inside a form", async ({ page }) => {
+  test("🦯 should be accessible inside a form with a valid label", async ({
+    page,
+  }) => {
+    // First, we expect the component not to be accessible without a label
     await render(
       page,
       `
       <form>
-          <tapsi-text-field label="valid label"></tapsi-text-field>
+          <tapsi-text-field></tapsi-text-field>
           <tapsi-button type="submit">Submit</tapsi-button>
       </form>
     `,
     );
 
-    const accessibilityScanResults = await accessibility(page).analyze();
+    let a11yResult = await accessibility(page).analyze();
 
-    expect(accessibilityScanResults.violations).toEqual([]);
+    expect(a11yResult.violations).not.toEqual([]);
+
+    // After adding label, we expect the component to be accessible
+    await render(
+      page,
+      `
+      <form>
+          <tapsi-text-field label="my-label"></tapsi-text-field>
+          <tapsi-button type="submit">Submit</tapsi-button>
+      </form>
+    `,
+    );
+
+    a11yResult = await accessibility(page).analyze();
+
+    expect(a11yResult.violations).toEqual([]);
+
+    // we expect it to be accessible even if the label is hidden
+    await render(
+      page,
+      `
+      <form>
+          <tapsi-text-field label="my-label" hide-label></tapsi-text-field>
+          <tapsi-button type="submit">Submit</tapsi-button>
+      </form>
+    `,
+    );
+
+    a11yResult = await accessibility(page).analyze();
+
+    expect(a11yResult.violations).toEqual([]);
   });
 });
