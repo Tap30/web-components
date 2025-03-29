@@ -27,6 +27,12 @@ const { afterAll, afterEach, beforeAll, beforeEach, describe, expect, step } =
  * @param {Page} page - The Playwright page object representing the component or view to test.
  * @returns {AxeBuilder} - An AxeBuilder instance configured for the given page with specific rules disabled.
  *
+ * @example
+ * ```ts
+ * const isAccessible = await checkAccessibility(page);
+ * expect(isAccessible).toBe(true);
+ * ```
+ *
  * @see {@link http://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md | Axe-core rule descriptions}
  * @see {@link https://playwright.dev/docs/accessibility-testing | Playwright accessibility testing docs}
  */
