@@ -1,10 +1,6 @@
 import "../../spinner/index.ts";
 
 import {
-  dispatchActivationClick,
-  isActivationClick,
-} from "@tapsioss/web-components/utils/index.js";
-import {
   html,
   LitElement,
   nothing,
@@ -14,14 +10,16 @@ import {
 import { property, query } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import {
-  type FormSubmitter,
-  type FormSubmitterType,
+  dispatchActivationClick,
   internals,
+  isActivationClick,
   isFocusable,
   runAfterRepaint,
   setupFormSubmitter,
   withElementInternals,
   withFocusable,
+  type FormSubmitter,
+  type FormSubmitterType,
 } from "../../utils/index.ts";
 
 const BaseClass = withElementInternals(withFocusable(LitElement));
