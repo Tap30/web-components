@@ -1,0 +1,6 @@
+import * as ReactDOM from "react-dom/client";
+import Example from "./Example.tsx";
+
+const reactRoot = ReactDOM.createRoot(document.getElementById("root")!);
+
+reactRoot.render(<Example />);
