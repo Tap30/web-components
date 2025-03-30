@@ -23,7 +23,7 @@ export { Slots } from "./constants.ts";
  * The filename to use when downloading the linked resource.
  * If not specified, the browser will determine a filename.
  * This is only applicable when the button is used as a link (`href` is set).
- * @prop {string} [target=""] -
+ * @prop {"_blank" | "_parent" | "_self" | "_top" | ""} [target=""] -
  * Where to display the linked `href` URL for a link button. Common options
  * include `_blank` to open in a new tab.
  * @prop {boolean} [autofocus=false] -

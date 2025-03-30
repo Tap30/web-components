@@ -221,7 +221,6 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
         class=${classes}
         tabindex=${this.tabIndex}
         ?disabled=${this.disabled}
-        type=${this.type}
         aria-label=${this.label || nothing}
         aria-busy=${this.loading}
       >
@@ -242,7 +241,6 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
         download=${this.download || nothing}
         target=${this.target || nothing}
         ?disabled=${this.disabled}
-        type=${this.type}
         aria-label=${this.label || nothing}
         aria-busy=${this.loading}
       >
