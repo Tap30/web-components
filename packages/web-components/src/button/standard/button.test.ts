@@ -35,6 +35,36 @@ describe("🧩 button", () => {
     await expect(component).toBeFocused();
   });
 
+  test("🧪 should be rendered as link button and navigate to the provided url", async ({
+    page,
+    context,
+  }) => {
+    await render(
+      page,
+      `<tapsi-button href="https://google.com" target="_blank" label="test-button" data-testid="test-button">⭐️</tapsi-button>`,
+    );
+
+    const btn = page.getByTestId("test-button");
+
+    await expect(btn).toBeVisible();
+
+    const root = page.getByRole("link");
+
+    await expect(root).toHaveAttribute("target", "_blank");
+
+    const [newPage] = await Promise.all([
+      // Wait for a new page to be opened
+      context.waitForEvent("page"),
+      // Click the link
+      btn.click(),
+    ]);
+
+    // Wait for the new tab to load completely
+    await newPage.waitForLoadState("load");
+
+    expect(newPage.url()).toContain("google.com");
+  });
+
   test("🧪 should trigger `click` event on click", async ({ page }) => {
     await render(
       page,
