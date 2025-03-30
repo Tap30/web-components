@@ -1,13 +1,17 @@
 import "../../spinner/index.ts";
 
 import {
+  dispatchActivationClick,
+  isActivationClick,
+} from "@tapsioss/web-components/utils/index.js";
+import {
   html,
   LitElement,
   nothing,
   type PropertyValues,
   type TemplateResult,
 } from "lit";
-import { property } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import {
   type FormSubmitter,
@@ -70,6 +74,27 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   public size: "sm" | "md" | "lg" = "md";
 
   /**
+   * The URL that the link button points to.
+   */
+  @property()
+  public href = "";
+
+  /**
+   * The filename to use when downloading the linked resource.
+   * If not specified, the browser will determine a filename.
+   * This is only applicable when the button is used as a link (`href` is set).
+   */
+  @property()
+  public download = "";
+
+  /**
+   * Where to display the linked `href` URL for a link button. Common options
+   * include `_blank` to open in a new tab.
+   */
+  @property()
+  public target: "_blank" | "_parent" | "_self" | "_top" | "" = "";
+
+  /**
    * Indicates that the element should be focused on page load.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
@@ -90,8 +115,17 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     | "destructive"
     | "brand" = "primary";
 
+  @query("#root")
+  private readonly _root!: HTMLElement | null;
+
   public get form() {
     return this[internals].form;
+  }
+
+  constructor() {
+    super();
+
+    this._handleClick = this._handleClick.bind(this);
   }
 
   private _updateFocusability() {
@@ -105,9 +139,17 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     super.connectedCallback();
 
     this._updateFocusability();
+
+    this.addEventListener("click", this._handleClick);
   }
 
-  protected override firstUpdated(changed: PropertyValues<this>): void {
+  public override disconnectedCallback() {
+    super.disconnectedCallback();
+
+    this.removeEventListener("click", this._handleClick);
+  }
+
+  protected override firstUpdated(changed: PropertyValues<this>) {
     super.firstUpdated(changed);
 
     runAfterRepaint(() => {
@@ -149,20 +191,67 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     return this.renderContent();
   }
 
-  private _handleClick(e: MouseEvent) {
+  private _handleClick(event: MouseEvent) {
     if (this.loading || this.disabled) {
-      e.preventDefault();
-      e.stopImmediatePropagation();
+      event.preventDefault();
+      event.stopImmediatePropagation();
       return;
     }
+
+    if (!isActivationClick(event) || !this._root) {
+      return;
+    }
+
+    this.focus();
+
+    dispatchActivationClick(this._root);
   }
 
-  override focus(options?: FocusOptions) {
-    this.renderRoot.querySelector<HTMLElement>("#root")?.focus(options);
+  public override focus(options?: FocusOptions) {
+    this._root?.focus(options);
   }
 
-  override blur() {
-    this.renderRoot.querySelector<HTMLElement>("#root")?.blur();
+  public override blur() {
+    this._root?.blur();
+  }
+
+  private _renderAsButton(classes: ReturnType<typeof classMap>) {
+    return html`
+      <button
+        id="root"
+        part="root"
+        class=${classes}
+        tabindex=${this.tabIndex}
+        ?disabled=${this.disabled}
+        type=${this.type}
+        aria-label=${this.label || nothing}
+        aria-busy=${this.loading}
+      >
+        <span class="overlay"></span>
+        ${this._renderBody()}
+      </button>
+    `;
+  }
+
+  private _renderAsLink(classes: ReturnType<typeof classMap>) {
+    return html`
+      <a
+        id="root"
+        part="root"
+        class=${classes}
+        tabindex=${this.tabIndex}
+        href=${this.href}
+        download=${this.download || nothing}
+        target=${this.target || nothing}
+        ?disabled=${this.disabled}
+        type=${this.type}
+        aria-label=${this.label || nothing}
+        aria-busy=${this.loading}
+      >
+        <span class="overlay"></span>
+        ${this._renderBody()}
+      </a>
+    `;
   }
 
   protected override render() {
@@ -174,21 +263,10 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
       [this.variant]: true,
     });
 
-    return html`
-      <button
-        id="root"
-        part="root"
-        class=${rootClasses}
-        tabindex=${this.tabIndex}
-        @click=${this._handleClick}
-        ?disabled=${this.disabled}
-        type=${this.type}
-        aria-label=${this.label || nothing}
-        aria-busy=${this.loading}
-      >
-        <span class="overlay"></span>
-        ${this._renderBody()}
-      </button>
-    `;
+    const isLink = Boolean(this.href);
+
+    return isLink
+      ? this._renderAsLink(rootClasses)
+      : this._renderAsButton(rootClasses);
   }
 }
