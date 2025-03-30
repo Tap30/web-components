@@ -1,4 +1,4 @@
-name: Development
+name: 🧑‍💻 Development
 
 on:
   pull_request:
@@ -15,11 +15,41 @@ permissions:
 
 jobs:
   lint:
-    name: Run linter
+    name: 🔍 Run linter
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: "☁️ checkout repository"
+      - name: ☁️ checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: 🔧 setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: 📦 install dependencies
+        run: pnpm install
+
+      # Set up GitHub Actions caching for Wireit.
+      - name: 🔌 setup wireit cache
+        uses: google/wireit@setup-github-actions-caching/v2
+
+      - name: 🔍 lint code
+        run: pnpm lint
+
+  test:
+    needs: lint
+    name: 🧪 Run tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: ☁️ checkout repository
         uses: actions/checkout@v4
 
       - name: "🔧 setup pnpm"
@@ -33,42 +63,47 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
-      - name: "📦 install dependencies"
+      - name: 📦 install dependencies
         run: pnpm install
 
-      # Set up GitHub Actions caching for Wireit.
-      - name: "🔌 setup wireit cache"
-        uses: google/wireit@setup-github-actions-caching/v2
-
-      - name: "🔍 lint code"
-        run: pnpm lint
-
-  test:
-    needs: lint
-    name: Run unit tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-
-      - name: "📦 install dependencies"
-        run: pnpm install
-
-      - name: "🎭 install playwright"
+      - name: 🎭 install playwright
         run: pnpm playwright install --with-deps --only-shell
 
         # Set up GitHub Actions caching for Wireit.
-      - name: "🔌 setup wireit cache"
+      - name: 🔌 setup wireit cache
         uses: google/wireit@setup-github-actions-caching/v2
 
-      - name: "🧪 run tests"
-        run: pnpm test
+      - name: 🧪 run tests
+        run: |
+          pnpm test | tee output.log
+          if grep -q -e "Error: A snapshot doesn't exist at" -e "Screenshot comparison failed" output.log; then
+            echo "Playwright tests failed due to a snapshot issue."
+            echo "SNAPSHOT_DIFFERENCES=true" >> $GITHUB_ENV
+            exit 1
+          elif grep -q "failed" output.log; then
+            echo "Playwright tests failed due to a non-snapshot issue."
+            exit 1
+          fi
+
+      - name: 🗄️ archive artifacts
+        uses: actions/upload-artifact@v4
+        id: artifact-upload
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: packages/web-components/playwright-report/
+          retention-days: 30
+
+      - name: ✍️ comment on PR with report link
+        uses: thollander/actions-comment-pull-request@v3
+        if: ${{ failure() && env.SNAPSHOT_DIFFERENCES == 'true' }}
+        with:
+          message: |
+            > [!CAUTION]
+            > Playwright visual snapshot differences were detected.
+            > You can download the [report](${{ steps.artifact-upload.outputs.artifact-url }}) file.
+
+            To approve the snapshot changes and update the snapshots, please comment:
+            ```
+            /approve-snapshots
+            ```

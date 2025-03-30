@@ -6,7 +6,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : undefined,
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI
-    ? [["github"]]
+    ? [["github"], ["html", { open: "never" }]]
     : [["list"], ["html", { open: "never" }]],
   projects: [
     {

@@ -1,4 +1,4 @@
-name: Publish
+name: 🚀 Publish
 
 on:
   release:
@@ -10,39 +10,40 @@ permissions:
 
 jobs:
   build:
+    name: 🏗️ Build
     runs-on: ubuntu-latest
     steps:
-      - name: "☁️ checkout repository"
+      - name: ☁️ checkout repository
         uses: actions/checkout@v4
 
-      - name: "✍️ set PACKAGE_NAME variable"
+      - name: ✍️ set PACKAGE_NAME variable
         id: set-package-name
         run: |
           TAG_NAME=${GITHUB_REF#refs/tags/}
           echo "PACKAGE_NAME=$(echo $TAG_NAME | cut -d '@' -f 1)" >> $GITHUB_ENV
 
-      - name: "🔧 setup pnpm"
+      - name: 🔧 setup pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 9
 
-      - name: "🔧 setup node"
+      - name: 🔧 setup node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
 
-      - name: "📦 install dependencies"
+      - name: 📦 install dependencies
         run: pnpm install
 
       # Set up GitHub Actions caching for Wireit.
-      - name: "🔌 setup wireit cache"
+      - name: 🔌 setup wireit cache
         uses: google/wireit@setup-github-actions-caching/v2
 
-      - name: "🧱 build package"
+      - name: 🧱 build package
         run: pnpm build:${{ env.PACKAGE_NAME }}
 
-      - name: "🗄️ archive package"
+      - name: 🗄️ archive package
         uses: actions/upload-artifact@v4
         with:
           name: dist
@@ -50,39 +51,40 @@ jobs:
 
   publish-npm:
     needs: build
+    name: 🚀 Publish on NPM registry
     runs-on: ubuntu-latest
     steps:
-      - name: "☁️ checkout repository"
+      - name: ☁️ checkout repository
         uses: actions/checkout@v4
 
-      - name: "✍️ set PACKAGE_NAME variable"
+      - name: ✍️ set PACKAGE_NAME variable
         id: set-package-name
         run: |
           TAG_NAME=${GITHUB_REF#refs/tags/}
           echo "PACKAGE_NAME=$(echo $TAG_NAME | cut -d '@' -f 1)" >> $GITHUB_ENV
 
-      - name: "🔧 setup pnpm"
+      - name: 🔧 setup pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 9
 
-      - name: "🔧 setup node"
+      - name: 🔧 setup node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
           registry-url: https://registry.npmjs.org/
 
-      - name: "📦 install dependencies"
+      - name: 📦 install dependencies
         run: pnpm install
 
-      - name: "🚚 download package"
+      - name: 🚚 download package
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: packages/${{ env.PACKAGE_NAME }}/dist
 
-      - name: "🚀 publish package"
+      - name: 🚀 publish package
         run: pnpm release:${{ env.PACKAGE_NAME }}
         env:
           NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
