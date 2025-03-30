@@ -45,10 +45,40 @@ describe("🧩 icon-button", () => {
     await expect(component).toBeFocused();
   });
 
+  test("🧪 should be rendered as link button and navigate to the provided url", async ({
+    page,
+    context,
+  }) => {
+    await render(
+      page,
+      `<tapsi-icon-button href="https://google.com" target="_blank" label="test-icon-button" data-testid="test-icon-button">⭐️</tapsi-icon-button>`,
+    );
+
+    const btn = page.getByTestId("test-icon-button");
+
+    await expect(btn).toBeVisible();
+
+    const root = page.getByRole("link");
+
+    await expect(root).toHaveAttribute("target", "_blank");
+
+    const [newPage] = await Promise.all([
+      // Wait for a new page to be opened
+      context.waitForEvent("page"),
+      // Click the link
+      btn.click(),
+    ]);
+
+    // Wait for the new tab to load completely
+    await newPage.waitForLoadState("load");
+
+    expect(newPage.url()).toContain("google.com");
+  });
+
   test("🧪 should trigger `click` event on click", async ({ page }) => {
     await render(
       page,
-      `<tapsi-icon-button label="test-icon-button" data-testid="test-icon-button">کلیک کنید</tapsi-icon-button>`,
+      `<tapsi-icon-button label="test-icon-button" data-testid="test-icon-button">⭐️</tapsi-icon-button>`,
     );
 
     const btn = page.getByTestId("test-icon-button");
@@ -71,7 +101,7 @@ describe("🧩 icon-button", () => {
   }) => {
     await render(
       page,
-      `<tapsi-icon-button label="test-icon-button" data-testid="test-icon-button">کلیک کنید</tapsi-icon-button>`,
+      `<tapsi-icon-button label="test-icon-button" data-testid="test-icon-button">⭐️</tapsi-icon-button>`,
     );
 
     const btn = page.getByTestId("test-icon-button");
@@ -95,10 +125,10 @@ describe("🧩 icon-button", () => {
     await render(
       page,
       `
-      <tapsi-icon-button label="test-icon-button" data-testid="test-icon-button-1">کلیک کنید</tapsi-icon-button>
-      <tapsi-icon-button label="test-icon-button" data-testid="test-icon-button-2">کلیک کنید</tapsi-icon-button>
-      <tapsi-icon-button label="test-icon-button" data-testid="test-icon-button-3" disabled>کلیک کنید</tapsi-icon-button>
-      <tapsi-icon-button label="test-icon-button" data-testid="test-icon-button-4">کلیک کنید</tapsi-icon-button>
+      <tapsi-icon-button label="test-icon-button" data-testid="test-icon-button-1">⭐️</tapsi-icon-button>
+      <tapsi-icon-button label="test-icon-button" data-testid="test-icon-button-2">⭐️</tapsi-icon-button>
+      <tapsi-icon-button label="test-icon-button" data-testid="test-icon-button-3" disabled>⭐️</tapsi-icon-button>
+      <tapsi-icon-button label="test-icon-button" data-testid="test-icon-button-4">⭐️</tapsi-icon-button>
 `,
     );
 
@@ -130,7 +160,7 @@ describe("🧩 icon-button", () => {
   }) => {
     await render(
       page,
-      `<tapsi-icon-button label="test-icon-button" data-testid="test-icon-button" disabled>کلیک کنید</tapsi-icon-button>`,
+      `<tapsi-icon-button label="test-icon-button" data-testid="test-icon-button" disabled>⭐️</tapsi-icon-button>`,
     );
 
     const btn = page.getByTestId("test-icon-button");
@@ -158,7 +188,7 @@ describe("🧩 icon-button", () => {
       page,
       `
 <tapsi-icon-button label="test-icon-button" data-testid="test-icon-button" loading>
-    کلیک کنید
+    ⭐️
 </tapsi-icon-button>`,
     );
 
