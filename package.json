@@ -23,6 +23,7 @@
     "build:react-icons": "wireit",
     "build:docs": "wireit",
     "test": "wireit",
+    "test:update-snapshots": "pnpm --filter @tapsioss/web-components run test:update-snapshots",
     "lint": "wireit",
     "fmt": "wireit",
     "dev:packages": "pnpm run -r --parallel --filter=!@tapsioss/docs dev",

@@ -1,6 +1,6 @@
 # Sample workflow for building and deploying a VitePress site to GitHub Pages
 #
-name: Deploy VitePress site to Pages
+name: 🚀 Deploy VitePress site to Pages
 
 on:
   # Runs on pushes targeting the `main` branch. Change this to `master` if you're
@@ -23,6 +23,7 @@ concurrency:
 
 jobs:
   build:
+    name: 🏗️ Build
     runs-on: ubuntu-latest
     steps:
       - name: "☁️ checkout repository"
@@ -65,7 +66,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
-    name: Deploy
+    name: 🚀 Deploy
     steps:
       - name: "🚀 deploy to github pages"
         id: deployment
