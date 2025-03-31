@@ -29,9 +29,17 @@ jobs:
         uses: thollander/actions-comment-pull-request@v3
         with:
           message: |
+            > /approve-snapshots
+
             ⏳ Updating snapshots. Click [here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) to see the status.
 
-      - name: "🔧 setup node"
+      - name: 🔧 setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+
+      - name: 🔧 setup node
         uses: actions/setup-node@v4
         with:
           node-version: 20
