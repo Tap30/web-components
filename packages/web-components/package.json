@@ -18,6 +18,7 @@
     "build": "tsc --project ./tsconfig.build.json",
     "predev": "pnpm run clear",
     "test": "playwright test",
+    "test:update-snapshots": "playwright test --update-snapshots",
     "dev": "tsc --watch --project ./tsconfig.dev.json",
     "release": "pnpm publish . --tag latest --access public --no-git-checks",
     "gen:metadata": "tsx scripts/generate-metadata.ts"

@@ -23,6 +23,7 @@
     "build:react-icons": "wireit",
     "build:docs": "wireit",
     "test": "wireit",
+    "test:update-snapshots": "pnpm --filter @tapsioss/web-components run test:update-snapshots",
     "lint": "wireit",
     "fmt": "wireit",
     "dev:packages": "pnpm run -r --parallel --filter=!@tapsioss/docs dev",
@@ -224,6 +225,7 @@
     }
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
     "@custom-elements-manifest/analyzer": "^0.10.4",
     "@eslint/js": "^9.22.0",
     "@lit/react": "^1.0.7",
@@ -267,7 +269,7 @@
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.1",
-    "vite": "^5.4.14",
+    "vite": "^5.4.15",
     "vite-tsconfig-paths": "^5.1.4",
     "vitepress": "^1.6.3",
     "wireit": "^0.14.11"

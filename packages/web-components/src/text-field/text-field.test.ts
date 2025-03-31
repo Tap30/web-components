@@ -1,4 +1,5 @@
 import {
+  accessibility,
   afterEach,
   describe,
   disposeMocks,
@@ -7,8 +8,8 @@ import {
   setupMocks,
   test,
 } from "@internals/test-helpers";
-import { type TapsiTextField } from "@tapsioss/web-components/text-field/index";
 import { ErrorMessages } from "../base-text-input/constants.ts";
+import { type TapsiTextField } from "./index.ts";
 
 describe("🧩 text-field", () => {
   afterEach(async ({ page }) => {
@@ -240,5 +241,54 @@ describe("🧩 text-field", () => {
     await expect(input).not.toBeFocused();
     await label.click();
     await expect(input).toBeFocused();
+  });
+
+  test("🦯 should be accessible inside a form with a valid label", async ({
+    page,
+  }) => {
+    // First, we expect the component not to be accessible without a label
+    await render(
+      page,
+      `
+      <form>
+          <tapsi-text-field></tapsi-text-field>
+          <tapsi-button type="submit">Submit</tapsi-button>
+      </form>
+    `,
+    );
+
+    let a11yResult = await accessibility(page).analyze();
+
+    expect(a11yResult.violations).not.toEqual([]);
+
+    // After adding label, we expect the component to be accessible
+    await render(
+      page,
+      `
+      <form>
+          <tapsi-text-field label="my-label"></tapsi-text-field>
+          <tapsi-button type="submit">Submit</tapsi-button>
+      </form>
+    `,
+    );
+
+    a11yResult = await accessibility(page).analyze();
+
+    expect(a11yResult.violations).toEqual([]);
+
+    // we expect it to be accessible even if the label is hidden
+    await render(
+      page,
+      `
+      <form>
+          <tapsi-text-field label="my-label" hide-label></tapsi-text-field>
+          <tapsi-button type="submit">Submit</tapsi-button>
+      </form>
+    `,
+    );
+
+    a11yResult = await accessibility(page).analyze();
+
+    expect(a11yResult.violations).toEqual([]);
   });
 });
