@@ -4,8 +4,6 @@ on:
   issue_comment:
     types:
       - created
-      - edited
-      - deleted
 
 permissions:
   contents: write
@@ -16,6 +14,7 @@ jobs:
     name: Update Snapshots
     if: ${{ github.event.issue.pull_request && github.event.comment.body == '/approve-snapshots' }}
     runs-on: ubuntu-latest
+
     steps:
       - name: 🔍 get PR branch
         uses: xt0rted/pull-request-comment-branch@v2
@@ -51,10 +50,6 @@ jobs:
 
       - name: 🎭 install playwright
         run: pnpm playwright install --with-deps --only-shell
-
-        # Set up GitHub Actions caching for Wireit.
-      - name: 🔌 setup wireit cache
-        uses: google/wireit@setup-github-actions-caching/v2
 
       - name: 📸 update snapshots
         run: pnpm run test:update-snapshots
