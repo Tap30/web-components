@@ -6,7 +6,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : undefined,
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI
-    ? [["github"], ["html", { open: "never" }]]
+    ? [["github"]]
     : [["list"], ["html", { open: "never" }]],
   projects: [
     {
@@ -35,6 +35,7 @@ export default defineConfig({
       timeout: 1000,
     },
   },
+  snapshotPathTemplate: "./test-snapshots/{testFilePath}/{arg}{ext}",
   expect: {
     toHaveScreenshot: {
       maxDiffPixels: 100,
