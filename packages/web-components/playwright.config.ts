@@ -10,15 +10,15 @@ export default defineConfig({
     : [["list"], ["html", { open: "never" }]],
   projects: [
     {
-      name: "💻 Desktop",
+      name: "desktop",
       use: devices["Desktop Chrome"],
     },
     // {
-    //   name: "📱 iOS",
+    //   name: "iOS",
     //   use: devices["iPhone X"],
     // },
     {
-      name: "📱 Android",
+      name: "android",
       use: devices["Galaxy S9+"],
     },
   ],
@@ -35,7 +35,7 @@ export default defineConfig({
       timeout: 1000,
     },
   },
-  snapshotPathTemplate: "./test-snapshots/{testFilePath}/{arg}{ext}",
+  snapshotPathTemplate: "./test-snapshots/{arg}-{projectName}{ext}",
   expect: {
     toHaveScreenshot: {
       maxDiffPixels: 100,
