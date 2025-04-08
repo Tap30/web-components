@@ -30,10 +30,12 @@
     "useDefineForClassFields": false,
     "importHelpers": true,
 
-    "baseUrl": ".",
     "paths": {
       // Icons metadata
-      "@tapsioss/icons": ["./packages/icons/dist", "types/@tapsioss/icons.ts"],
+      "@tapsioss/icons": [
+        "./packages/icons/dist",
+        "./types/@tapsioss/icons.ts"
+      ],
       "@tapsioss/icons/*": ["./packages/icons/dist/*"],
       // Web Component Icons
       "@tapsioss/web-icons": ["./packages/web-icons/dist"],

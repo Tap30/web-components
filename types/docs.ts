@@ -36,12 +36,26 @@ export type ImportPaths = {
   react?: string;
 };
 
+export type ExampleMetadata = {
+  title: string;
+  description?: string;
+};
+
+export type MetaJson = Record<string, ExampleMetadata>;
+
+export type Example = {
+  path: string;
+  code: string;
+  metadata: ExampleMetadata;
+};
+
 export type ComponentMetadata = CustomElement & {
   kebabCaseName: string;
   interactiveDemo?: InteractiveDemo;
   importPaths: ImportPaths;
   slotsEnumName?: string;
-  exportedSlots?: Export[];
+  exportedSlots: Export[];
+  examples: Example[];
 };
 
 export type Metadata = {

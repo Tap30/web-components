@@ -1,60 +1,19 @@
-import fs from "node:fs";
-import path from "node:path";
+import * as fs from "node:fs/promises";
+import * as path from "node:path";
 import { getFileMeta } from "../../scripts/utils.ts";
 import { type ComponentMetadata, type Metadata } from "../../types/docs.ts";
+import {
+  SANDBOXER_IFRAME_HEIGHT,
+  SANDBOXER_IFRAME_ID,
+  SANDBOXER_IFRAME_WIDTH,
+} from "../internals/sandboxer/sandboxer.ts";
 import { codify, tabulateData } from "../utils/markdown.ts";
 
-export default {
-  paths() {
-    const { dirname } = getFileMeta(import.meta.url);
-
-    const docsDir = path.resolve(dirname, "..");
-    const workspaceDir = path.join(docsDir, "..");
-    const metadataFile = path.join(
-      workspaceDir,
-      "packages/web-components/components-metadata.json",
-    );
-
-    const metadata = JSON.parse(
-      fs.readFileSync(metadataFile).toString(),
-    ) as Metadata;
-
-    return metadata.components.map(c => {
-      let content = "";
-
-      content += getComponentMarkdown(c);
-
-      return {
-        params: {
-          component: c.kebabCaseName,
-        },
-        content,
-      };
-    });
-  },
-};
-
-const getComponentMarkdown = (component: ComponentMetadata) => {
-  let res = "\n";
-
-  if (component) {
-    res += `# ${component.name?.split("Tapsi")[1]}\n`;
-
-    res += `${component.summary}\n\n`;
-
-    res += getImportsMarkdown(component);
-
-    res += getUsageMarkdown(component);
-
-    res += getMembersMarkdown(component);
-
-    res += getSlotsMarkdown(component);
-
-    res += getEventsMarkdown(component);
+declare global {
+  interface Window {
+    exampleCodes?: string[];
   }
-
-  return res;
-};
+}
 
 const getImportsMarkdown = (component: ComponentMetadata) => {
   let res = "";
@@ -261,4 +220,95 @@ ${exportedEvents
   }
 
   return res;
+};
+
+const getExampleCodes = (component: ComponentMetadata) => {
+  if (component.examples.length === 0) return [];
+
+  return component.examples.map(example => example.code);
+};
+
+const getExamplesMarkdown = (component: ComponentMetadata) => {
+  if (component.examples.length === 0) return "";
+
+  let md = [
+    "## Examples",
+    "You can explore a variety of examples that demonstrate different patterns implemented in React.",
+    "\n",
+  ].join("\n");
+
+  const iframe = `<iframe allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" id=${SANDBOXER_IFRAME_ID} style="width: ${SANDBOXER_IFRAME_WIDTH};height: ${SANDBOXER_IFRAME_HEIGHT};"></iframe>`;
+
+  component.examples.forEach(example => {
+    md = md.concat(
+      [
+        example.metadata.title,
+        example.metadata.description ?? "unknown",
+        "\n",
+        iframe,
+      ].join("\n"),
+    );
+  });
+
+  return md;
+};
+
+const getGlobalScopeVars = (component: ComponentMetadata) => {
+  const body: string[] = [];
+
+  if (component.examples.length !== 0) {
+    body.push(
+      `window.exampleCodes = ${JSON.stringify(getExampleCodes(component))};`,
+    );
+  }
+
+  return ["<script>", body.join("\n"), "</script>"].join("\n");
+};
+
+const getComponentMarkdown = (component: ComponentMetadata) => {
+  const pageTitle = component.name.replace(/^Tapsi/, "");
+
+  return [
+    getGlobalScopeVars(component),
+    "<script setup>",
+    `import { createSandboxer } from "../internals/sandboxer/sandboxer.ts";`,
+    `window.createSandboxer = createSandboxer;`,
+    "</script>",
+    `# ${pageTitle}`,
+    component.summary,
+    "\n",
+    getImportsMarkdown(component),
+    getUsageMarkdown(component),
+    getExamplesMarkdown(component),
+    getMembersMarkdown(component),
+    getSlotsMarkdown(component),
+    getEventsMarkdown(component),
+  ].join("\n");
+};
+
+export default {
+  async paths() {
+    const { dirname } = getFileMeta(import.meta.url);
+
+    const docsDir = path.join(dirname, "..");
+    const workspaceDir = path.join(docsDir, "..");
+
+    const metadataFile = path.join(
+      workspaceDir,
+      "packages/web-components/components-metadata.json",
+    );
+
+    const metadata = JSON.parse(
+      await fs.readFile(metadataFile, { encoding: "utf-8" }),
+    ) as Metadata;
+
+    return metadata.components.map(c => {
+      return {
+        params: {
+          component: c.kebabCaseName,
+        },
+        content: getComponentMarkdown(c),
+      };
+    });
+  },
 };

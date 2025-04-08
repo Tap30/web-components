@@ -4,16 +4,23 @@ import {
   type Declaration,
   type Package,
 } from "custom-elements-manifest";
+import globAsync from "fast-glob";
 import { exec } from "node:child_process";
-import * as fs from "node:fs";
+import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { promisify } from "node:util";
 import { type DefaultTheme } from "vitepress";
-import { getFileMeta, toPascalCase } from "../../../scripts/utils.ts";
+import {
+  dirExists,
+  getFileMeta,
+  toPascalCase,
+} from "../../../scripts/utils.ts";
 import {
   type ComponentMetadata,
+  type Example,
   type ImportPaths,
   type Metadata,
+  type MetaJson,
 } from "../../../types/docs.ts";
 
 const asyncExec = promisify(exec);
@@ -48,7 +55,9 @@ const generateCem = async (): Promise<Package> => {
 
   const cemFile = path.join(packageDir, "custom-elements.json");
 
-  return JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
+  return JSON.parse(
+    await fs.readFile(cemFile, { encoding: "utf8" }),
+  ) as Package;
 };
 
 const getKebabCaseComponentName = (component: Declaration) => {
@@ -59,7 +68,7 @@ const getKebabCaseComponentName = (component: Declaration) => {
   return tagName.replace("tapsi-", "");
 };
 
-const generateMetadataFromCem = (cem: Package): Metadata => {
+const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
   const sidebarItemsMap: Record<string, DefaultTheme.SidebarItem> = {};
   const components: ComponentMetadata[] = [];
 
@@ -72,26 +81,64 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
     return hasDeclarations && hasCEExports;
   });
 
-  filteredModules.forEach(module => {
+  for (const module of filteredModules) {
     const moduleSrc = module.path;
     const moduleDir = path.dirname(moduleSrc);
     const relativePath = path.relative(packageSrcDir, moduleDir);
+    const examplesDir = path.join(moduleDir, "examples");
 
-    if (!relativePath) return;
+    const hasExamples = dirExists(examplesDir);
+
+    if (!relativePath) continue;
 
     const declarations = module.declarations;
     const exports = module.exports;
 
-    if (!declarations || !exports) return;
+    if (!declarations || !exports) continue;
 
     const exportedSlots = exports.filter(m => m.name.includes("Slots"));
 
     const exportedSlotNames = exportedSlots.map(s => s.name);
 
-    declarations.forEach(declaration => {
+    const examples: Example[] = [];
+
+    if (hasExamples) {
+      const [examplePaths, metaJson] = await Promise.all([
+        globAsync(path.join(examplesDir, "**/*.example.{ts,tsx,js,jsx}")),
+        fs.readFile(path.join(examplesDir, "meta.json"), { encoding: "utf-8" }),
+      ]);
+
+      const examplesMetadata = JSON.parse(metaJson) as MetaJson;
+
+      const examplePromises = examplePaths.map(async examplePath => {
+        const pathInfo = path.parse(examplePath);
+        const name = path.basename(examplePath, `.example${pathInfo.ext}`);
+
+        const metadata = examplesMetadata[name];
+
+        if (!metadata) {
+          console.warn(
+            [
+              `Expected a valid \`meta.json\` for \`${relativePath}\`.`,
+              "Skipping example parsing for this component.",
+            ].join(" "),
+          );
+
+          return Promise.resolve();
+        }
+
+        return fs.readFile(examplePath, { encoding: "utf-8" }).then(code => {
+          examples.push({ metadata, path: examplePath, code });
+        });
+      });
+
+      await Promise.all(examplePromises);
+    }
+
+    for (const declaration of declarations) {
       const kebabCaseName = getKebabCaseComponentName(declaration);
 
-      if (!kebabCaseName) return;
+      if (!kebabCaseName) continue;
 
       const setComponentsMetadata = (): void => {
         const compoundPartialName = kebabCaseName.replace(
@@ -126,12 +173,13 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
 
         importPaths.react = `@tapsioss/react-components/${componentName}`;
 
-        const component = {
+        const component: ComponentMetadata = {
           ...(declaration as CustomElement),
           kebabCaseName,
           importPaths,
           slotsEnumName,
           exportedSlots,
+          examples,
         };
 
         components.push(component);
@@ -180,8 +228,8 @@ const generateMetadataFromCem = (cem: Package): Metadata => {
 
       setComponentsMetadata();
       setComponentsSidebarItems();
-    });
-  });
+    }
+  }
 
   const componentSidebarItems: DefaultTheme.SidebarItem = {
     text: "Components",
@@ -226,9 +274,9 @@ void (async () => {
   console.log("🧩 generating metadata...");
 
   const cem = await generateCem();
-  const metadata = generateMetadataFromCem(cem);
+  const metadata = await generateMetadataFromCem(cem);
 
-  fs.writeFileSync(metadataFile, JSON.stringify(metadata, null, 2));
+  await fs.writeFile(metadataFile, JSON.stringify(metadata, null, 2));
 
   console.log("✅ docs metadata generated.");
 })();
