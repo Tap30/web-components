@@ -36,10 +36,6 @@ jobs:
       - name: 📦 install dependencies
         run: pnpm install
 
-      # Set up GitHub Actions caching for Wireit.
-      - name: 🔌 setup wireit cache
-        uses: google/wireit@setup-github-actions-caching/v2
-
       - name: 🧱 build package
         run: pnpm build:${{ env.PACKAGE_NAME }}
 
