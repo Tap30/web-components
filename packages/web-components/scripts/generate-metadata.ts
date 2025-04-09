@@ -26,8 +26,8 @@ const metadataFile = path.join(packageDir, "components-metadata.json");
 
 const generateCem = async (): Promise<Package> => {
   const globs: string[] = [
-    `${packageSrcDir}/**/index.ts`,
-    `${packageSrcDir}/**/*/index.ts`,
+    `${packageSrcDir}/**/*.ts`,
+    `${packageSrcDir}/**/*/*.ts`,
     `!${packageSrcDir}/utils/**`,
     `!${packageSrcDir}/internals/**`,
   ];
