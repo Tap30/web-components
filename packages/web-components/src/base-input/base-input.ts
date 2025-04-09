@@ -28,15 +28,20 @@ const BaseClass = withOnReportValidity(
 );
 
 export abstract class BaseInput extends BaseClass {
-  static override shadowRootOptions: ShadowRootInit = {
+  /** @internal */
+  public static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
   /**
    * The current value of the input. It is always a string.
+   *
+   * @prop {string} value
+   * @attr {string} value
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public value = "";
 
   /**
@@ -45,6 +50,10 @@ export abstract class BaseInput extends BaseClass {
    * `reportValidity()` is invoked when value is empty.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required
+   *
+   * @prop {boolean} required
+   * @attr {boolean} required
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public required = false;
@@ -53,22 +62,34 @@ export abstract class BaseInput extends BaseClass {
    * Defines a string value that can be used to name input.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public label = "";
 
   /**
    * Identifies the element (or elements) that labels the input.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   *
+   * @prop {string} labelledBy
+   * @attr {string} labelledby
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public labelledBy = "";
 
   /**
    * Indicates that the element should be focused on page load.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   *
+   * @prop {boolean} autofocus
+   * @attr {string} autofocus
+   * @default false
    */
   @property({ type: Boolean })
   public override autofocus = false;

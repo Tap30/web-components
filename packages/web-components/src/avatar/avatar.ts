@@ -11,6 +11,7 @@ import styles from "./avatar.style.ts";
  * @slot - The default slot to use when image is not present.
  */
 export class Avatar extends LitElement {
+  /** @internal */
   public static override readonly styles = [styles];
 
   @state()
