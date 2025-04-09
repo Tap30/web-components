@@ -1,1 +1,5 @@
-export { registerAvatarElement } from "./avatar/element.ts";
+import { registerAvatarElement } from "./avatar/element.ts";
+
+const registerAllElements = () => ({ avatar: registerAvatarElement() });
+
+export { registerAllElements, registerAvatarElement };
