@@ -22,13 +22,16 @@ const withElementInternals = <T extends MixinBase<LitElement>>(
     extends BaseClass
     implements WithElementInternals
   {
-    private _internals?: ElementInternals;
+    private _internals: ElementInternals;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    constructor(...args: any[]) {
+      super(args);
+
+      this._internals = (this as HTMLElement).attachInternals();
+    }
 
     public get [internals](): ElementInternals {
-      if (!this._internals) {
-        this._internals = (this as HTMLElement).attachInternals();
-      }
-
       return this._internals;
     }
   }
