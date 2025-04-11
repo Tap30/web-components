@@ -37,7 +37,7 @@ jobs:
         run: pnpm install
 
       - name: ⚡ run danger file
-        run: pnpm danger
+        run: pnpm check:danger
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -64,7 +64,7 @@ jobs:
         run: pnpm install
 
       - name: 🔍 lint code
-        run: pnpm lint
+        run: pnpm check:lint
 
   test:
     needs: lint
