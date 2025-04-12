@@ -3,40 +3,66 @@ import type { DirectiveResult } from "lit/async-directive";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
 import { isSsr } from "../utils/index.ts";
+import styles from "./badge.style.ts";
 import { Slots } from "./constants.ts";
 
 type ClassMap = DirectiveResult<typeof ClassMapDirective>;
 
+/**
+ * @summary The badge component.
+ *
+ * @tag tapsi-badge
+ *
+ * @slot icon - The slot for icon element.
+ */
 export class Badge extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
   /**
    * The value of the badge.
+   * @prop {string | number} value
+   * @attr {string} value
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public value: string | number = "";
 
   /**
    * The variant of the badge.
+   * @prop {"pill" | "numeral" | "dot"} variant
+   * @attr {"pill" | "numeral" | "dot"} variant
+   * @default "pill"
    */
-  @property({ type: String })
+  @property()
   public variant: "pill" | "numeral" | "dot" = "pill";
 
   /**
    * The color of the badge.
+   * @prop {"success" | "error" | "info" | "warning" | "neutral"} color
+   * @attr {"success" | "error" | "info" | "warning" | "neutral"} color
+   * @default "neutral"
    */
-  @property({ type: String })
+  @property()
   public color: "success" | "error" | "info" | "warning" | "neutral" =
     "neutral";
 
   /**
    * The priority level of the badge.
+   * @prop {"high" | "low"} priority
+   * @attr {"high" | "low"} priority
+   * @default "high"
    */
-  @property({ type: String })
+  @property()
   public priority: "high" | "low" = "high";
 
   /**
    * The size of the badge.
+   * @prop {"md" | "sm"} size
+   * @attr {"md" | "sm"} size
+   * @default "md"
    */
-  @property({ type: String })
+  @property()
   public size: "md" | "sm" = "md";
 
   @state()
