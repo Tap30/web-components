@@ -5,6 +5,14 @@ import { getRenderRootSlot, runAfterRepaint } from "../utils/index.ts";
 import styles from "./badge-wrapper.style.ts";
 import { Slots } from "./constants.ts";
 
+/**
+ * @summary A wrapper component to position a badge relative to an anchor.
+ *
+ * @tag tapsi-badge-wrapper
+ *
+ * @slot - The default slot for the anchor element.
+ * @slot badge - The slot for the badge to be positioned.
+ */
 export class BadgeWrapper extends LitElement {
   /** @internal */
   public static override readonly styles = [styles];
