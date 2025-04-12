@@ -2,20 +2,33 @@ import { html, type TemplateResult } from "lit";
 import type { DirectiveResult } from "lit/async-directive.js";
 import { property } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
-import { BaseChatBubble } from "../base/index.ts";
+import { BaseChatBubble, baseStyles } from "../base/index.ts";
 import {
   STATUS_TO_ICON_MAP,
   STATUS_TO_LOCALE_MAP,
   type States,
 } from "./constants.ts";
+import styles from "./in.style.ts";
 
+/**
+ * @summary Displays the user entered chat message bubble.
+ *
+ * @tag tapsi-chat-bubble-in
+ *
+ * @slot - The default slot for the content.
+ */
 class ChatBubbleIn extends BaseChatBubble {
+  /** @internal */
+  public static override readonly styles = [baseStyles, styles];
+
   /**
    * The status of the chat element.
    *
+   * @prop {"sent" | "seen" | "pending" | "failed"} status
+   * @attr {"sent" | "seen" | "pending" | "failed"} status
    * @default "sent"
    */
-  @property({ type: String })
+  @property()
   public status: States = "sent";
 
   constructor() {

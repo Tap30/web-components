@@ -4,17 +4,25 @@ import { property } from "lit/decorators.js";
 import { type ClassMapDirective } from "lit/directives/class-map.js";
 
 abstract class BaseChatBubble extends LitElement {
-  @property({ type: String })
+  @property()
   protected author: "in" | "out" = "in";
 
   /**
    * The timestamp of chat element.
+   *
+   * @prop {string} timestamp
+   * @attr {string} timestamp
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public timestamp = "";
 
   /**
    * Whether or not the bubble should be fully rounded.
+   *
+   * @prop {boolean} fullyRounded
+   * @attr {string} fully-rounded
+   * @default false
    */
   @property({ type: Boolean, attribute: "fully-rounded" })
   public fullyRounded = false;

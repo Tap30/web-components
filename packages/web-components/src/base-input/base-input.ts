@@ -130,14 +130,17 @@ export abstract class BaseInput extends BaseClass {
     | HTMLTextAreaElement
     | null;
 
+  /** @internal */
   public override [getValidityAnchor]() {
     return this.getInputElement();
   }
 
+  /** @internal */
   public override focus(options?: FocusOptions): void {
     this.getInputElement()?.focus(options);
   }
 
+  /** @internal */
   public override blur(): void {
     this.getInputElement()?.blur();
   }
@@ -152,10 +155,12 @@ export abstract class BaseInput extends BaseClass {
     });
   }
 
+  /** @internal */
   public override formDisabledCallback(disabled: boolean) {
     this.disabled = disabled;
   }
 
+  /** @internal */
   protected async handleFormSubmitWithEnter(event: KeyboardEvent) {
     if (this.disabled) {
       event.preventDefault();

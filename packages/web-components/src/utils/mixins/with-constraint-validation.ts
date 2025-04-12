@@ -251,14 +251,14 @@ const withConstraintValidation = <
       this[internals].setValidity(flags, validationMessage, anchor);
     }
 
-    [createValidator](): Validator<unknown> {
+    public [createValidator](): Validator<unknown> {
       throw new SystemError(
         "Method not implemented. Implement [createValidator].",
         "mixins/with-constraint-validation",
       );
     }
 
-    [getValidityAnchor](): HTMLElement | null {
+    public [getValidityAnchor](): HTMLElement | null {
       throw new SystemError(
         "Method not implemented. Implement [getValidityAnchor].",
         "mixins/with-constraint-validation",
