@@ -4,8 +4,21 @@ import { classMap } from "lit/directives/class-map.js";
 import { isSsr, logger } from "../../utils/index.ts";
 import { Slots } from "./constants.ts";
 import NavItemSelectionController from "./Controller.ts";
+import styles from "./item.style.ts";
 
+/**
+ * @summary Represents a single item in a bottom navigation bar.
+ *
+ * @tag tapsi-bottom-navigation-item
+ *
+ * @slot icon - The slot for the icon element.
+ * @slot - The default slot for the content/label.
+ */
 export class BottomNavigationItem extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
   public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
@@ -15,6 +28,9 @@ export class BottomNavigationItem extends LitElement {
 
   /**
    * Whether the item is active or not.
+   *
+   * @prop {boolean} active
+   * @attr {string} active
    */
   @property({ type: Boolean, reflect: true })
   public get active() {
@@ -34,8 +50,11 @@ export class BottomNavigationItem extends LitElement {
   /**
    * The value associated with the item.
    * This value has to be unique among sibling items.
+   *
+   * @prop {string} value
+   * @attr {string} value
    */
-  @property({ type: String })
+  @property()
   public value: string = "";
 
   @state()
@@ -70,10 +89,12 @@ export class BottomNavigationItem extends LitElement {
     }
   }
 
+  /** @internal */
   public override focus(options?: FocusOptions): void {
     this.renderRoot?.querySelector<HTMLElement>("#root")?.focus(options);
   }
 
+  /** @internal */
   public override blur(): void {
     this.renderRoot?.querySelector<HTMLElement>("#root")?.blur();
   }
