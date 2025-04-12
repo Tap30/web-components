@@ -1,6 +1,7 @@
 import { html, nothing } from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
+import baseInputStyle from "../base-input/base-input.style.ts";
 import BaseInput from "../base-input/index.ts";
 import {
   createValidator,
@@ -10,19 +11,36 @@ import {
   onReportValidity,
   redispatchEvent,
 } from "../utils/index.ts";
+import styles from "./checkbox.style.ts";
 import CheckboxValidator from "./Validator.ts";
 
+/**
+ * @summary Checkboxes allow the user to select one or more items from a set.
+ *
+ * @tag "tapsi-checkbox"
+ */
 export class Checkbox extends BaseInput {
+  /** @internal */
+  public static override readonly styles = [baseInputStyle, styles];
+
   /**
    * Whether or not the checkbox is selected.
+   *
+   * @prop {boolean} checked
+   * @attr {string} checked
+   * @default false;
    */
-  @property({ type: Boolean })
+  @property({ type: Boolean, reflect: true })
   public checked = false;
 
   /**
    * Whether or not the checkbox is indeterminate.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#indeterminate_state_checkboxes
+   *
+   * @prop {boolean} indeterminate
+   * @attr {string} indeterminate
+   * @default false;
    */
   @property({ type: Boolean })
   public indeterminate = false;
@@ -31,12 +49,20 @@ export class Checkbox extends BaseInput {
    * The value of the checkbox that is submitted with a form when selected.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#value
+   *
+   * @prop {string} value
+   * @attr {string} value
+   * @default "on";
    */
   @property()
   public override value = "on";
 
   /**
    * Whether the checkbox has error.
+   *
+   * @prop {boolean} error
+   * @attr {string} error
+   * @default false;
    */
   @property({ type: Boolean, reflect: true })
   public error = false;
@@ -73,28 +99,33 @@ export class Checkbox extends BaseInput {
     return this.error || this._nativeError;
   }
 
+  /** @internal */
   public override [getFormValue]() {
     if (!this.checked || this.indeterminate) return null;
 
     return this.value;
   }
 
+  /** @internal */
   public override [getFormState]() {
     return String(this.checked);
   }
 
+  /** @internal */
   public override formResetCallback() {
     // The checked property does not reflect, so the original attribute set by
     // the user is used to determine the default value.
     this.checked = this.hasAttribute("checked");
   }
 
+  /** @internal */
   public override formStateRestoreCallback(state: string) {
     if (state === "on") return;
 
     this.checked = state === "true";
   }
 
+  /** @internal */
   public override [createValidator]() {
     return new CheckboxValidator(() => ({
       checked: this.checked,
@@ -102,6 +133,7 @@ export class Checkbox extends BaseInput {
     }));
   }
 
+  /** @internal */
   public override [onReportValidity](invalidEvent: Event | null) {
     this._nativeError = !!invalidEvent;
   }

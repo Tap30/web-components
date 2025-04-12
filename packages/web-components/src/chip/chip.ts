@@ -3,19 +3,60 @@ import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { isSsr, logger } from "../utils/index.ts";
+import styles from "./chip.style.ts";
 import { Slots } from "./constants.ts";
 import ChipSelectionController from "./Controller.ts";
+import type { DeselectEvent, SelectEvent } from "./events.ts";
 
+interface TapsiChipEventMap extends HTMLElementEventMap {
+  [SelectEvent.type]: SelectEvent;
+  [DeselectEvent.type]: DeselectEvent;
+}
+
+/**
+ * @summary Chips are compact elements that represent an input, attribute, or action.
+ *
+ * @tag tapsi-chip
+ *
+ * @slot - Default content slot for chip text.
+ * @slot [leading-icon] - The slot for an optional leading icon.
+ * @slot [trailing-icon] - The slot for an optional trailing icon.
+ *
+ * @fires {SelectEvent} select - Fired when the chip is selected (bubbles).
+ * @fires {DeselectEvent} deselect - Fired when the chip is deselected (bubbles).
+ */
 export class Chip extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
   public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
+  /** @internal */
+  declare addEventListener: <K extends keyof TapsiChipEventMap>(
+    type: K,
+    listener: (this: Chip, ev: TapsiChipEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /** @internal */
+  declare removeEventListener: <K extends keyof TapsiChipEventMap>(
+    type: K,
+    listener: (this: Chip, ev: TapsiChipEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+
   private _selected = false;
 
   /**
    * Whether the chip is selected or not.
+   *
+   * @prop {boolean} selected
+   * @attr {string} selected
+   * @default false;
    */
   @property({ type: Boolean, reflect: true })
   public get selected() {
@@ -34,20 +75,32 @@ export class Chip extends LitElement {
 
   /**
    * Whether the chip is disabled or not.
+   *
+   * @prop {boolean} disabled
+   * @attr {string} disabled
+   * @default false;
    */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
 
   /**
    * The size of the chip.
+   *
+   * @prop {"sm" | "md"} size
+   * @attr {"sm" | "md"} size
+   * @default "md";
    */
-  @property({ type: String })
+  @property()
   public size: "sm" | "md" = "md";
 
   /**
    * The value associated with the chip.
+   *
+   * @prop {string} value
+   * @attr {string} value
+   * @default "";
    */
-  @property({ type: String })
+  @property()
   public value: string = "";
 
   @state()
@@ -91,10 +144,12 @@ export class Chip extends LitElement {
     }
   }
 
+  /** @internal */
   public override focus(options?: FocusOptions): void {
     this.renderRoot.querySelector<HTMLElement>("#root")?.focus(options);
   }
 
+  /** @internal */
   public override blur(): void {
     this.renderRoot.querySelector<HTMLElement>("#root")?.blur();
   }

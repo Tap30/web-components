@@ -4,7 +4,7 @@ import { classMap } from "lit/directives/class-map.js";
 import styles from "./avatar.style.ts";
 
 /**
- * @summary Display user profile image, initials or fallback icon
+ * @summary Avatars display user profile image, initials or fallback icon.
  *
  * @tag tapsi-avatar
  *
