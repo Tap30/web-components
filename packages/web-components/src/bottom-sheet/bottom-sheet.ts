@@ -54,13 +54,13 @@ interface TapsiBottomSheetEventMap extends HTMLElementEventMap {
 }
 
 /**
- * @summary The bottom-sheet component.
+ * @summary The Bottom sheet component that shows the secondary content anchored to the bottom of the screen.
  *
  * @tag tapsi-bottom-sheet
  *
- * @slot header - The slot for the header content.
- * @slot body - The slot for the main body content.
- * @slot action-bar - The slot for the action bar content.
+ * @slot [header] - The slot for the header content.
+ * @slot [body] - The slot for the main body content.
+ * @slot [action-bar] - The slot for the action bar content.
  *
  * @fires {SnappedEvent} snapped - Fired when the bottom-sheet is snapped to a specific position.
  * @fires {OpeningEvent} opening - Fired when the bottom-sheet starts to open (cancelable).

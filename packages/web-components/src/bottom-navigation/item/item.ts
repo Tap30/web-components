@@ -7,12 +7,12 @@ import NavItemSelectionController from "./Controller.ts";
 import styles from "./item.style.ts";
 
 /**
- * @summary Represents a single item in a bottom navigation bar.
+ * @summary The item part of the bottom navigation.
  *
  * @tag tapsi-bottom-navigation-item
  *
- * @slot icon - The slot for the icon element.
  * @slot - The default slot for the content/label.
+ * @slot [icon] - The slot for the icon element.
  */
 export class BottomNavigationItem extends LitElement {
   /** @internal */

@@ -10,12 +10,12 @@ import {
 } from "./constants.ts";
 
 /**
- * @summary The banner component
+ * @summary Display a banner to a user
  *
  * @tag tapsi-banner
  *
  * @slot - The default slot to render extra elements when variant is `hero`.
- * @slot action - The slot for action element.
+ * @slot [action] - The slot for action element.
  */
 export class Banner extends LitElement {
   /** @internal */

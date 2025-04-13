@@ -1,4 +1,5 @@
 import { registerBottomSheetElement } from "@tapsioss/web-components/bottom-sheet/element";
+import { registerDividerElement } from "@tapsioss/web-components/divider/element";
 import { registerEmptyStateElement } from "@tapsioss/web-components/empty-state/element";
 import { registerAvatarElement } from "./avatar/element.ts";
 import { registerBadgeWrapperElement } from "./badge-wrapper/element.ts";
@@ -24,6 +25,7 @@ const registerAllElements = () => ({
   "bottom-navigation-item": registerBottomNavigationItemElement(),
   "bottom-sheet": registerBottomSheetElement(),
   "empty-state": registerEmptyStateElement(),
+  divider: registerDividerElement(),
   "icon-button": registerIconButtonElement(),
   button: registerButtonElement(),
   "button-group": registerButtonGroupElement(),
@@ -50,6 +52,7 @@ export {
   registerCheckboxElement,
   registerChipElement,
   registerChipGroupElement,
+  registerDividerElement,
   registerEmptyStateElement,
   registerIconButtonElement,
 };

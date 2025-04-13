@@ -11,7 +11,7 @@ import { Slots } from "./constants.ts";
  * @tag tapsi-badge-wrapper
  *
  * @slot - The default slot for the anchor element.
- * @slot badge - The slot for the badge to be positioned.
+ * @slot [badge] - The slot for the badge to be positioned.
  */
 export class BadgeWrapper extends LitElement {
   /** @internal */

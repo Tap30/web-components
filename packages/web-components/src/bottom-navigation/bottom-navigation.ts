@@ -11,7 +11,7 @@ interface TapsiBottomNavigationEventMap extends HTMLElementEventMap {
 }
 
 /**
- * @summary The bottom navigation component offers global, persistent navigation throughout an app.
+ * @summary The bottom navigation component that offers global, persistent navigation throughout an app.
  *
  * @tag tapsi-bottom-navigation
  *

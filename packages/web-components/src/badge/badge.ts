@@ -9,11 +9,11 @@ import { Slots } from "./constants.ts";
 type ClassMap = DirectiveResult<typeof ClassMapDirective>;
 
 /**
- * @summary The badge component.
+ * @summary Small alphanumerical value or status descriptor for UI elements.
  *
  * @tag tapsi-badge
  *
- * @slot icon - The slot for icon element.
+ * @slot [icon] - The slot for icon element.
  */
 export class Badge extends LitElement {
   /** @internal */
