@@ -3,8 +3,12 @@ import { property } from "lit/decorators.js";
 import { logger } from "../utils/index.ts";
 import styles from "./bottom-navigation.style.ts";
 import { ActiveChangeEvent } from "./events.ts";
-import { ActivateEvent } from "./item/events.ts";
+import { type ActivateEvent } from "./item/events.ts";
 import { type BottomNavigationItem } from "./item/item.ts";
+
+interface TapsiBottomNavigationEventMap extends HTMLElementEventMap {
+  [ActiveChangeEvent.type]: ActiveChangeEvent;
+}
 
 /**
  * @summary The bottom navigation component offers global, persistent navigation throughout an app.
@@ -38,12 +42,36 @@ export class BottomNavigation extends LitElement {
     this._handleItemActivation = this._handleItemActivation.bind(this);
   }
 
+  /**
+   * @internal
+   */
+  declare addEventListener: <K extends keyof TapsiBottomNavigationEventMap>(
+    type: K,
+    listener: (
+      this: BottomNavigation,
+      ev: TapsiBottomNavigationEventMap[K],
+    ) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /**
+   * @internal
+   */
+  declare removeEventListener: <K extends keyof TapsiBottomNavigationEventMap>(
+    type: K,
+    listener: (
+      this: BottomNavigation,
+      ev: TapsiBottomNavigationEventMap[K],
+    ) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+
   /** @internal */
   public override connectedCallback() {
     super.connectedCallback();
 
     this.addEventListener(
-      ActivateEvent.type,
+      ActiveChangeEvent.type,
       this._handleItemActivation as EventListener,
     );
   }
@@ -53,7 +81,7 @@ export class BottomNavigation extends LitElement {
     super.disconnectedCallback();
 
     this.removeEventListener(
-      ActivateEvent.type,
+      ActiveChangeEvent.type,
       this._handleItemActivation as EventListener,
     );
   }

@@ -43,6 +43,16 @@ import {
 import { dismiss } from "./icons.ts";
 import type { MetaData, SnapToCallbackArgument, StatusEnum } from "./types";
 
+interface TapsiBottomSheetEventMap extends HTMLElementEventMap {
+  [ClosedEvent.type]: ClosedEvent;
+  [ClosingEvent.type]: ClosingEvent;
+  [HideEvent.type]: HideEvent;
+  [OpenedEvent.type]: OpenedEvent;
+  [OpeningEvent.type]: OpeningEvent;
+  [ShowEvent.type]: ShowEvent;
+  [SnappedEvent.type]: SnappedEvent;
+}
+
 /**
  * @summary The bottom-sheet component.
  *
@@ -69,6 +79,24 @@ export class BottomSheet extends LitElement {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
+
+  /**
+   * @internal
+   */
+  declare addEventListener: <K extends keyof TapsiBottomSheetEventMap>(
+    type: K,
+    listener: (this: BottomSheet, ev: TapsiBottomSheetEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /**
+   * @internal
+   */
+  declare removeEventListener: <K extends keyof TapsiBottomSheetEventMap>(
+    type: K,
+    listener: (this: BottomSheet, ev: TapsiBottomSheetEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
 
   /**
    * Sets the heading title in a declarative-way.
@@ -479,6 +507,8 @@ export class BottomSheet extends LitElement {
    * The snap points for bottom sheet to snap to.
    * Note that snap points will be sorted sorted, no matter
    * how to set it.
+   *
+   * @return {number[]} snapPoints
    */
   @property({ attribute: false })
   public get snapPoints() {
