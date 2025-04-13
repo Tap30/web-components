@@ -29,6 +29,7 @@ import {
   ScrollLocker,
   waitAMicrotask,
 } from "../utils/index.ts";
+import styles from "./bottom-sheet.style.ts";
 import { SENTINEL_DEFAULT_SNAP_POINTS, Slots, Status } from "./constants.ts";
 import {
   ClosedEvent,
@@ -42,7 +43,28 @@ import {
 import { dismiss } from "./icons.ts";
 import type { MetaData, SnapToCallbackArgument, StatusEnum } from "./types";
 
+/**
+ * @summary The bottom-sheet component.
+ *
+ * @tag tapsi-bottom-sheet
+ *
+ * @slot header - The slot for the header content.
+ * @slot body - The slot for the main body content.
+ * @slot action-bar - The slot for the action bar content.
+ *
+ * @fires {SnappedEvent} snapped - Fired when the bottom-sheet is snapped to a specific position.
+ * @fires {OpeningEvent} opening - Fired when the bottom-sheet starts to open (cancelable).
+ * @fires {ClosingEvent} closing - Fired when the bottom-sheet starts to close (cancelable).
+ * @fires {OpenedEvent} opened - Fired when the bottom-sheet has fully opened.
+ * @fires {ClosedEvent} closed - Fired when the bottom-sheet has fully closed.
+ * @fires {HideEvent} hide - Fired when the bottom-sheet is hidden (cancelable).
+ * @fires {ShowEvent} show - Fired when the bottom-sheet is shown (cancelable).
+ */
 export class BottomSheet extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
   public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
@@ -50,36 +72,54 @@ export class BottomSheet extends LitElement {
 
   /**
    * Sets the heading title in a declarative-way.
+   *
+   * @prop {string} headingTitle
+   * @attr {string} heading-title
    */
   @property({ attribute: "heading-title" })
   public headingTitle?: string;
 
   /**
    * Sets the heading description in a declarative-way.
+   *
+   * @prop {string} headingDescription
+   * @attr {string} heading-description
    */
   @property({ attribute: "heading-description" })
   public headingDescription?: string;
 
   /**
    * Determines whether the grabber should be visible or not.
+   *
+   * @prop {boolean} hasGrabber
+   * @attr {string} has-grabber
    */
   @property({ type: Boolean, attribute: "has-grabber" })
   public hasGrabber = false;
 
   /**
    * Determines whether the dismiss button should be visible or not.
+   *
+   * @prop {boolean} hasDismissButton
+   * @attr {string} has-dismiss-button
    */
   @property({ type: Boolean, attribute: "has-dismiss-button" })
   public hasDismissButton = false;
 
   /**
    * Determines whether the action bar should be sticky or not.
+   *
+   * @prop {boolean} hasStickyActionBar
+   * @attr {string} sticky-action-bar
    */
   @property({ type: Boolean, attribute: "sticky-action-bar" })
   public hasStickyActionBar = false;
 
   /**
    * Determines whether the header should be sticky or not.
+   *
+   * @prop {boolean} hasStickyHeader
+   * @attr {string} sticky-header
    */
   @property({ type: Boolean, attribute: "sticky-header" })
   public hasStickyHeader = false;
@@ -87,12 +127,19 @@ export class BottomSheet extends LitElement {
   /**
    * Determines whether the bottom sheet should be expanded
    * by grabbing gesture.
+   *
+   * @prop {boolean} expandable
+   * @attr {string} expandable
    */
   @property({ type: Boolean })
   public expandable = false;
 
   /**
    * The variant of the bottom sheet.
+   *
+   * @prop {"modal" | "inline"} variant
+   * @attr {"modal" | "inline"} variant
+   * @default "modal"
    */
   @property()
   public variant: "modal" | "inline" = "modal";
@@ -102,22 +149,34 @@ export class BottomSheet extends LitElement {
    * for assistive technologies.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public label = "";
 
   /**
    * Identifies the element (or elements) that labels the element.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   *
+   * @props {string} labelledBy
+   * @attr {string} labelledBy
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public labelledBy = "";
 
   /**
    * Identifies the element that should get focused when bottom sheet opens.
+   *
+   * @props {string} focusTarget
+   * @attr {string} focus-target
+   * @default ""
    */
-  @property({ type: String, attribute: "focus-target" })
+  @property({ attribute: "focus-target" })
   public focusTarget = "";
 
   @state()
@@ -248,12 +307,14 @@ export class BottomSheet extends LitElement {
     }
   }
 
+  /** @internal */
   public override connectedCallback(): void {
     super.connectedCallback();
 
     if (this.open) this._attachEvents();
   }
 
+  /** @internal */
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
@@ -377,6 +438,8 @@ export class BottomSheet extends LitElement {
 
   /**
    * Returns the metadata of the bottom sheet.
+   *
+   * @returns {Metadata}
    */
   public get metaData(): MetaData {
     return {
@@ -429,6 +492,7 @@ export class BottomSheet extends LitElement {
     return this._snapPoints;
   }
 
+  /** @internal */
   public set snapPoints(newSnapPoints: number[]) {
     this._snapPoints = [...newSnapPoints].sort((a, b) => a - b);
   }
@@ -689,6 +753,8 @@ export class BottomSheet extends LitElement {
 
   /**
    * Strictly snaps to the provided or resolved snap point.
+   *
+   * @param {number | SnapToCallbackArgument} numberOrCallback
    */
   public strictSnapTo(numberOrCallback: number | SnapToCallbackArgument) {
     if (isSsr()) return;
@@ -716,6 +782,8 @@ export class BottomSheet extends LitElement {
    * When given a number it'll find the closest snap point,
    * so you don't need to know the exact value.
    * Use the callback method to resolve the snap point.
+   *
+   * @param {number | SnapToCallbackArgument} numberOrCallback
    */
   public snapTo(numberOrCallback: number | SnapToCallbackArgument) {
     if (isSsr()) return;
