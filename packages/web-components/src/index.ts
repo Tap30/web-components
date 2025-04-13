@@ -22,6 +22,7 @@ import { registerSegmentedViewElement } from "./segmented-view/element.ts";
 import { registerSegmentedViewItemElement } from "./segmented-view/item/element.ts";
 import { registerSkeletonElement } from "./skeleton/element.ts";
 import { registerSnackbarElement } from "./snackbar/element.ts";
+import { registerSpinnerElement } from "./spinner/element.ts";
 
 const registerAllElements = () => ({
   avatar: registerAvatarElement(),
@@ -48,6 +49,7 @@ const registerAllElements = () => ({
   "segmented-view-item": registerSegmentedViewItemElement(),
   skeleton: registerSkeletonElement(),
   snackbar: registerSnackbarElement(),
+  spinner: registerSpinnerElement(),
 });
 
 export {
@@ -76,4 +78,5 @@ export {
   registerSegmentedViewItemElement,
   registerSkeletonElement,
   registerSnackbarElement,
+  registerSpinnerElement,
 };
