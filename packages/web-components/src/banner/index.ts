@@ -1,3 +1,6 @@
 import { registerBannerElement } from "./element.ts";
 
-export const { elementClass: Banner, tagName, Slots } = registerBannerElement();
+export { Banner } from "./banner.ts";
+export { Slots } from "./constants.ts";
+
+registerBannerElement();

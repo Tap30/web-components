@@ -1,7 +1,6 @@
 import { registerBadgeWrapperElement } from "./element.ts";
 
-export const {
-  elementClass: BadgeWrapper,
-  tagName,
-  Slots,
-} = registerBadgeWrapperElement();
+export { BadgeWrapper } from "./badge-wrapper.ts";
+export { Slots } from "./constants.ts";
+
+registerBadgeWrapperElement();

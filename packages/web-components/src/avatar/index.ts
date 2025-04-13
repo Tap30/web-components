@@ -1,3 +1,6 @@
 import { registerAvatarElement } from "./element.ts";
 
-export const { elementClass: Avatar, tagName, Slots } = registerAvatarElement();
+export { Avatar } from "./avatar.ts";
+export { Slots } from "./constants.ts";
+
+registerAvatarElement();

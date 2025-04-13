@@ -1,3 +1,6 @@
 import { registerBadgeElement } from "./element.ts";
 
-export const { elementClass: Badge, tagName, Slots } = registerBadgeElement();
+export { Badge } from "./badge.ts";
+export { Slots } from "./constants.ts";
+
+registerBadgeElement();

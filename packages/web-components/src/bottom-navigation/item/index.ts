@@ -1,8 +1,7 @@
 import { registerBottomNavigationItemElement } from "./element.ts";
 
-export const {
-  elementClass: BottomNavigationItem,
-  tagName,
-  Slots,
-  eventsMap,
-} = registerBottomNavigationItemElement();
+export { Slots } from "./constants.ts";
+export * from "./events.ts";
+export { BottomNavigationItem } from "./item.ts";
+
+registerBottomNavigationItemElement();

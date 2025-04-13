@@ -25,34 +25,56 @@ import { registerSnackbarElement } from "./snackbar/element.ts";
 import { registerSpinnerElement } from "./spinner/element.ts";
 import { registerTooltipElement } from "./tooltip/element.ts";
 
-const registerAllElements = () => ({
-  avatar: registerAvatarElement(),
-  badge: registerBadgeElement(),
-  "badge-wrapper": registerBadgeWrapperElement(),
-  banner: registerBannerElement(),
-  "bottom-navigation": registerBottomNavigationElement(),
-  "bottom-navigation-item": registerBottomNavigationItemElement(),
-  "bottom-sheet": registerBottomSheetElement(),
-  "empty-state": registerEmptyStateElement(),
-  divider: registerDividerElement(),
-  "icon-button": registerIconButtonElement(),
-  button: registerButtonElement(),
-  "button-group": registerButtonGroupElement(),
-  "chat-bubble-in": registerChatBubbleInElement(),
-  "chat-bubble-out": registerChatBubbleOutElement(),
-  checkbox: registerCheckboxElement(),
-  chip: registerChipElement(),
-  "chip-group": registerChipGroupElement(),
-  modal: registerModalElement(),
-  notice: registerNoticeElement(),
-  "progress-indicator": registerProgressIndicatorElement(),
-  "segmented-view": registerSegmentedViewElement(),
-  "segmented-view-item": registerSegmentedViewItemElement(),
-  skeleton: registerSkeletonElement(),
-  snackbar: registerSnackbarElement(),
-  spinner: registerSpinnerElement(),
-  tooltip: registerTooltipElement(),
-});
+export { Avatar, Slots as AvatarSlot } from "./avatar/index.ts";
+export { Badge, Slots as BadgeSlots } from "./badge/index.ts";
+export { Banner, Slots as BannerSlots } from "./banner/index.ts";
+export {
+  BottomNavigation,
+  ActiveChangeEvent as BottomNavigationActiveChangeEvent,
+  BottomNavigationItem,
+  ItemActivateEvent as BottomNavigationItemActivateEvent,
+  ItemSlots as BottomNavigationItemSlots,
+  Slots as BottomNavigationSlots,
+} from "./bottom-navigation/index.ts";
+export {
+  BottomSheet,
+  ClosedEvent as BottomSheetClosedEvent,
+  ClosingEvent as BottomSheetClosingEvent,
+  HideEvent as BottomSheetHideEvent,
+  OpenedEvent as BottomSheetOpenedEvent,
+  OpeningEvent as BottomSheetOpeningEvent,
+  ShowEvent as BottomSheetShowEvent,
+  SnappedEvent as BottomSheetSnappedEvent,
+} from "./bottom-sheet/index.ts";
+
+const registerAllElements = () => {
+  registerAvatarElement();
+  registerBadgeElement();
+  registerBadgeWrapperElement();
+  registerBannerElement();
+  registerBottomNavigationElement();
+  registerBottomNavigationItemElement();
+  registerBottomSheetElement();
+  registerEmptyStateElement();
+  registerDividerElement();
+  registerIconButtonElement();
+  registerButtonElement();
+  registerButtonGroupElement();
+  registerChatBubbleInElement();
+  registerChatBubbleOutElement();
+  registerCheckboxElement();
+  registerChipElement();
+  registerChipGroupElement();
+  registerModalElement();
+  registerNoticeElement();
+  registerProgressIndicatorElement();
+  registerSegmentedViewElement();
+  registerSegmentedViewItemElement();
+  registerSkeletonElement();
+  registerSnackbarElement();
+  registerSpinnerElement();
+  registerTooltipElement();
+};
 
 export {
   registerAllElements,
