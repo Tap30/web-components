@@ -16,6 +16,7 @@ import { registerCheckboxElement } from "./checkbox/element.ts";
 import { registerChipGroupElement } from "./chip-group/element.ts";
 import { registerChipElement } from "./chip/element.ts";
 import { registerModalElement } from "./modal/element.ts";
+import { registerNoticeElement } from "./notice/element.ts";
 
 const registerAllElements = () => ({
   avatar: registerAvatarElement(),
@@ -36,6 +37,7 @@ const registerAllElements = () => ({
   chip: registerChipElement(),
   "chip-group": registerChipGroupElement(),
   modal: registerModalElement(),
+  notice: registerNoticeElement(),
 });
 
 export {
@@ -58,4 +60,5 @@ export {
   registerEmptyStateElement,
   registerIconButtonElement,
   registerModalElement,
+  registerNoticeElement,
 };
