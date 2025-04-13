@@ -1,3 +1,8 @@
-export { Slots } from "./constants.ts";
-export * from "./events.ts";
-export { SegmentedViewItem } from "./item.ts";
+import { registerSegmentedViewItemElement } from "./element.ts";
+
+export const {
+  elementClass: SegmentedViewItem,
+  tagName,
+  Slots,
+  eventsMap,
+} = registerSegmentedViewItemElement();

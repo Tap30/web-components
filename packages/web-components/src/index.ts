@@ -1,13 +1,10 @@
-import { registerBottomSheetElement } from "@tapsioss/web-components/bottom-sheet/element";
-import { registerDividerElement } from "@tapsioss/web-components/divider/element";
-import { registerEmptyStateElement } from "@tapsioss/web-components/empty-state/element";
-import { registerProgressIndicatorElement } from "@tapsioss/web-components/progress-indicator/element";
 import { registerAvatarElement } from "./avatar/element.ts";
 import { registerBadgeWrapperElement } from "./badge-wrapper/element.ts";
 import { registerBadgeElement } from "./badge/element.ts";
 import { registerBannerElement } from "./banner/element.ts";
 import { registerBottomNavigationElement } from "./bottom-navigation/element.ts";
 import { registerBottomNavigationItemElement } from "./bottom-navigation/item/element.ts";
+import { registerBottomSheetElement } from "./bottom-sheet/element.ts";
 import { registerButtonGroupElement } from "./button-group/element.ts";
 import { registerIconButtonElement } from "./button/icon-button/element.ts";
 import { registerButtonElement } from "./button/standard/element.ts";
@@ -16,8 +13,13 @@ import { registerChatBubbleOutElement } from "./chat-bubble/out/element.ts";
 import { registerCheckboxElement } from "./checkbox/element.ts";
 import { registerChipGroupElement } from "./chip-group/element.ts";
 import { registerChipElement } from "./chip/element.ts";
+import { registerDividerElement } from "./divider/element.ts";
+import { registerEmptyStateElement } from "./empty-state/element.ts";
 import { registerModalElement } from "./modal/element.ts";
 import { registerNoticeElement } from "./notice/element.ts";
+import { registerProgressIndicatorElement } from "./progress-indicator/element.ts";
+import { registerSegmentedViewElement } from "./segmented-view/element.ts";
+import { registerSegmentedViewItemElement } from "./segmented-view/item/element.ts";
 
 const registerAllElements = () => ({
   avatar: registerAvatarElement(),
@@ -40,6 +42,8 @@ const registerAllElements = () => ({
   modal: registerModalElement(),
   notice: registerNoticeElement(),
   "progress-indicator": registerProgressIndicatorElement(),
+  "segmented-view": registerSegmentedViewElement(),
+  "segmented-view-item": registerSegmentedViewItemElement(),
 });
 
 export {
@@ -64,4 +68,6 @@ export {
   registerModalElement,
   registerNoticeElement,
   registerProgressIndicatorElement,
+  registerSegmentedViewElement,
+  registerSegmentedViewItemElement,
 };
