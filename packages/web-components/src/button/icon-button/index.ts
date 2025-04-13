@@ -1,7 +1,14 @@
-import { registerIconButtonElement } from "./element.ts";
+import { IconButton } from "./icon-button.ts";
 
-export const {
-  elementClass: IconButton,
-  tagName,
-  Slots,
-} = registerIconButtonElement();
+export { Slots } from "./constants.ts";
+export { IconButton };
+
+export const register = () => {
+  customElements.define("tapsi-icon-button", IconButton);
+};
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "tapsi-icon-button": IconButton;
+  }
+}

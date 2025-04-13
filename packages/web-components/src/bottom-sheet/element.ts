@@ -1,11 +1,3 @@
-import { BottomSheet } from "./bottom-sheet.ts";
+import { register } from "./index.ts";
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "tapsi-bottom-sheet": BottomSheet;
-  }
-}
-
-export const registerBottomSheetElement = () => {
-  customElements.define("tapsi-bottom-sheet", BottomSheet);
-};
+register();

@@ -1,13 +1,15 @@
-import { registerBottomNavigationElement } from "./element.ts";
+import { BottomNavigation } from "./bottom-navigation.ts";
 
-export { BottomNavigation } from "./bottom-navigation.ts";
 export { Slots } from "./constants.ts";
 export * from "./events.ts";
+export { BottomNavigation };
 
-export {
-  BottomNavigationItem,
-  ActivateEvent as ItemActivateEvent,
-  Slots as ItemSlots,
-} from "./item/index.ts";
+export const register = () => {
+  customElements.define("tapsi-bottom-navigation", BottomNavigation);
+};
 
-registerBottomNavigationElement();
+declare global {
+  interface HTMLElementTagNameMap {
+    "tapsi-bottom-navigation": BottomNavigation;
+  }
+}

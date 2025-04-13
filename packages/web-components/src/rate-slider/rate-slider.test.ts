@@ -1,6 +1,6 @@
 import { describe, expect, render, test } from "@internals/test-helpers";
 import { type Locator } from "@playwright/test";
-import { type TapsiRateSlider } from "@tapsioss/web-components/rate-slider/index";
+import { type RateSlider } from "./index.ts";
 
 describe("🧩 rate-slider", () => {
   test("🧪 should be automatically focused only with `autofocus` attribute", async ({
@@ -420,15 +420,13 @@ describe("🧩 rate-slider", () => {
     await expect(rateSlider).toHaveJSProperty("value", "5");
 
     await page.evaluate(() => {
-      (document.getElementById("test-rate-slider") as TapsiRateSlider).stepUp();
+      (document.getElementById("test-rate-slider") as RateSlider).stepUp();
     });
 
     await expect(rateSlider).toHaveJSProperty("value", "6");
 
     await page.evaluate(() => {
-      const slider = document.getElementById(
-        "test-rate-slider",
-      ) as TapsiRateSlider;
+      const slider = document.getElementById("test-rate-slider") as RateSlider;
 
       slider.stepDown();
       slider.stepDown();

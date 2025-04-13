@@ -1,5 +1,13 @@
-import { registerDividerElement } from "./element.ts";
+import { Divider } from "./divider.ts";
 
-export { Divider } from "./divider.ts";
+export { Divider };
 
-registerDividerElement();
+export const register = () => {
+  customElements.define("tapsi-divider", Divider);
+};
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "tapsi-divider": Divider;
+  }
+}

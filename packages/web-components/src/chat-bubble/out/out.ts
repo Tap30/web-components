@@ -14,7 +14,7 @@ import styles from "./out.style.ts";
  *
  * @slot - The default slot for the content.
  */
-class ChatBubbleOut extends BaseChatBubble {
+export class ChatBubbleOut extends BaseChatBubble {
   /** @internal */
   public static override readonly styles = [baseStyles, styles];
   /**
@@ -64,5 +64,3 @@ class ChatBubbleOut extends BaseChatBubble {
     });
   }
 }
-
-export default ChatBubbleOut;

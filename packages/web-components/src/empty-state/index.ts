@@ -1,7 +1,14 @@
-import { registerEmptyStateElement } from "./element.ts";
+import { EmptyState } from "./empty-state.ts";
 
-export const {
-  elementClass: EmptyState,
-  tagName,
-  Slots,
-} = registerEmptyStateElement();
+export { Slots } from "./constants.ts";
+export { EmptyState };
+
+export const register = () => {
+  customElements.define("tapsi-empty-state", EmptyState);
+};
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "tapsi-empty-state": EmptyState;
+  }
+}

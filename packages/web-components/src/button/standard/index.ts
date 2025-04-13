@@ -1,3 +1,14 @@
-import { registerButtonElement } from "./element.ts";
+import { Button } from "./button.ts";
 
-export const { elementClass: Button, tagName, Slots } = registerButtonElement();
+export { Slots } from "./constants.ts";
+export { Button };
+
+export const register = () => {
+  customElements.define("tapsi-button", Button);
+};
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "tapsi-button": Button;
+  }
+}

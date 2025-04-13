@@ -1,11 +1,3 @@
-import { BottomNavigationItem } from "./item.ts";
+import { register } from "./index.ts";
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "tapsi-bottom-navigation-item": BottomNavigationItem;
-  }
-}
-
-export const registerBottomNavigationItemElement = () => {
-  customElements.define("tapsi-bottom-navigation-item", BottomNavigationItem);
-};
+register();

@@ -1,24 +1,3 @@
-import type { RegisteredCustomElement } from "../internals/types.ts";
-import { Slots } from "./constants.ts";
-import { HideEvent, ShowEvent } from "./events.ts";
-import { Snackbar } from "./snackbar.ts";
+import { register } from "./index.ts";
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "tapsi-snackbar": Snackbar;
-  }
-}
-
-export const registerSnackbarElement = () => {
-  customElements.define("tapsi-snackbar", Snackbar);
-
-  return {
-    Slots,
-    tagName: "tapsi-snackbar",
-    elementClass: Snackbar,
-    eventsMap: {
-      [HideEvent.type]: HideEvent,
-      [ShowEvent.type]: ShowEvent,
-    },
-  } as const satisfies RegisteredCustomElement;
-};
+register();

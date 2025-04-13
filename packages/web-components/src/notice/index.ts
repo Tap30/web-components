@@ -1,8 +1,15 @@
-import { registerNoticeElement } from "./element.ts";
+import { Notice } from "./notice.ts";
 
-export const {
-  elementClass: Notice,
-  tagName,
-  Slots,
-  eventsMap,
-} = registerNoticeElement();
+export { Slots } from "./constants.ts";
+export * from "./events.ts";
+export { Notice };
+
+export const register = () => {
+  customElements.define("tapsi-notice", Notice);
+};
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "tapsi-notice": Notice;
+  }
+}

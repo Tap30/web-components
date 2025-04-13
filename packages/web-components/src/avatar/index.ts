@@ -1,6 +1,14 @@
-import { registerAvatarElement } from "./element.ts";
+import { Avatar } from "./avatar.ts";
 
-export { Avatar } from "./avatar.ts";
 export { Slots } from "./constants.ts";
+export { Avatar };
 
-registerAvatarElement();
+export const register = () => {
+  customElements.define("tapsi-avatar", Avatar);
+};
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "tapsi-avatar": Avatar;
+  }
+}

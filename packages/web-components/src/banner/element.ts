@@ -1,11 +1,3 @@
-import { Banner } from "./banner.ts";
+import { register } from "./index.ts";
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "tapsi-banner": Banner;
-  }
-}
-
-export const registerBannerElement = () => {
-  customElements.define("tapsi-banner", Banner);
-};
+register();

@@ -2,11 +2,24 @@ import { html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { live } from "lit/directives/live.js";
 import { ErrorMessages } from "../base-text-input/constants.ts";
-import BaseTextInput from "../base-text-input/index.ts";
+import BaseTextInput, {
+  baseTextInputStyles,
+} from "../base-text-input/index.ts";
 import { createValidator, logger, type Validator } from "../utils/index.ts";
 import TextFieldValidator from "./Validator.ts";
 
+/**
+ * @summary An input that enables user to type in text information.
+ *
+ * @tag tapsi-text-field
+ *
+ * @slot [leading-icon] - the leading icon slot of the text-area
+ * @slot [trailing] - the trailing slot of the text-area
+ */
 export class TextField extends BaseTextInput {
+  /** @internal */
+  public static override readonly styles = [...baseTextInputStyles];
+
   /**
    * The `<input>` type to use, defaults to "text". The type greatly changes how
    * the text field behaves.
@@ -24,8 +37,12 @@ export class TextField extends BaseTextInput {
    * See
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
    * for more details on each input type.
+   *
+   * @prop {string} type
+   * @attr {string} type
+   * @default "text"
    */
-  @property({ type: String, reflect: true })
+  @property({ reflect: true })
   public type:
     | "email"
     | "number"
@@ -39,16 +56,24 @@ export class TextField extends BaseTextInput {
    * Defines the greatest value in the range of permitted values.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
+   *
+   * @prop {string} max
+   * @attr {string} max
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public max = "";
 
   /**
    * Defines the most negative value in the range of permitted values.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
+   *
+   * @prop {string} min
+   * @attr {string} min
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public min = "";
 
   /**
@@ -56,14 +81,22 @@ export class TextField extends BaseTextInput {
    * constraint validation.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#pattern
+   *
+   * @prop {string} pattern
+   * @attr {string} pattern
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public pattern = "";
 
   /**
    * Indicates that input accepts multiple email addresses.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#multiple
+   *
+   * @prop {boolean} multiple
+   * @attr {string} multiple
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public multiple = false;
@@ -73,8 +106,12 @@ export class TextField extends BaseTextInput {
    * to limit the increments at which a numeric or date-time value can be set.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+   *
+   * @prop {string} step
+   * @attr {string} step
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public step = "";
 
   /**
@@ -83,12 +120,18 @@ export class TextField extends BaseTextInput {
    * appropriate virtual keyboard.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode
+   *
+   * @prop {string} inputMode
+   * @attr {string} inputMode
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public override inputMode = "";
 
   /**
    * The text field's value as a number.
+   *
+   * @returns {number}
    */
   public get valueAsNumber() {
     const input = this.getInputElement() as HTMLInputElement | null;
@@ -161,6 +204,7 @@ export class TextField extends BaseTextInput {
     this.value = input.value;
   }
 
+  /** @internal */
   public override [createValidator](): Validator<unknown> {
     return new TextFieldValidator(() => ({
       state: this,

@@ -1,3 +1,13 @@
-import { registerSpinnerElement } from "./element.ts";
+import { Spinner } from "./spinner.ts";
 
-export const { elementClass: Spinner, tagName } = registerSpinnerElement();
+export { Spinner };
+
+export const register = () => {
+  customElements.define("tapsi-spinner", Spinner);
+};
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "tapsi-spinner": Spinner;
+  }
+}

@@ -1,8 +1,15 @@
-import { registerSnackbarElement } from "./element.ts";
+import { Snackbar } from "./snackbar.ts";
 
-export const {
-  elementClass: Snackbar,
-  tagName,
-  Slots,
-  eventsMap,
-} = registerSnackbarElement();
+export { Slots } from "./constants.ts";
+export * from "./events.ts";
+export { Snackbar };
+
+export const register = () => {
+  customElements.define("tapsi-snackbar", Snackbar);
+};
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "tapsi-snackbar": Snackbar;
+  }
+}

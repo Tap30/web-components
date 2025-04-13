@@ -1,7 +1,14 @@
-import { registerButtonGroupElement } from "./element.ts";
+import { ButtonGroup } from "./button-group.ts";
 
-export const {
-  elementClass: Button,
-  tagName,
-  Slots,
-} = registerButtonGroupElement();
+export { Slots } from "./constants.ts";
+export { ButtonGroup };
+
+export const register = () => {
+  customElements.define("tapsi-button-group", ButtonGroup);
+};
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "tapsi-button-group": ButtonGroup;
+  }
+}
