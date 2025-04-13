@@ -13,15 +13,57 @@ import {
 import { Slots } from "./constants.ts";
 import { HideEvent, ShowEvent } from "./events.ts";
 import { close, error, info, success, warning } from "./icons.ts";
+import styles from "./snackbar.style.ts";
 
+interface TapsiSnackbarEventMap extends HTMLElementEventMap {
+  [HideEvent.type]: HideEvent;
+  [ShowEvent.type]: ShowEvent;
+}
+
+/**
+ * @summary The snackbar component for brief notifications of processes that have been or will be performed.
+ *
+ * @tag tapsi-snackbar
+ *
+ * @slot [icon] - The slot for icon when color is `inverse`.
+ *
+ * @fires {ShowEvent} show - Fires when the snackbar should be visible. (cancelable)
+ * @fires {HideEvent} hide - Fires when the snackbar should be hidden. (cancelable)
+ */
 export class Snackbar extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
   public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
   /**
+   * @internal
+   */
+  declare addEventListener: <K extends keyof TapsiSnackbarEventMap>(
+    type: K,
+    listener: (this: Snackbar, ev: TapsiSnackbarEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /**
+   * @internal
+   */
+  declare removeEventListener: <K extends keyof TapsiSnackbarEventMap>(
+    type: K,
+    listener: (this: Snackbar, ev: TapsiSnackbarEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+
+  /**
    * Sets the text of the snackbar.
+   *
+   * @prop {string} text
+   * @attr {string} text
+   * @default ""
    */
   @property()
   public text = "";
@@ -29,6 +71,8 @@ export class Snackbar extends LitElement {
   /**
    * Determines whether the snackbar is open or not.
    *
+   * @prop {boolean} open
+   * @attr {string} open
    * @default false
    */
   @property({ type: Boolean, reflect: true })
@@ -37,6 +81,10 @@ export class Snackbar extends LitElement {
   /**
    * The color of the snackbar, indicating the type of message.
    * Defaults to `inverse`.
+   *
+   * @prop {"success" | "error" | "info" | "warning" | "inverse"} color
+   * @attr {"success" | "error" | "info" | "warning" | "inverse"} color
+   * @default "inverse"
    */
   @property()
   public color: "success" | "error" | "info" | "warning" | "inverse" =
@@ -44,12 +92,20 @@ export class Snackbar extends LitElement {
 
   /**
    * Indicates whether the snackbar can be dismissed.
+   *
+   * @prop {boolean} dismissible
+   * @attr {string} dismissible
+   * @default false
    */
   @property({ type: Boolean })
   public dismissible = false;
 
   /**
    * The time before the snackbar automatically closes (in milliseconds).
+   *
+   * @prop {number} duration
+   * @attr {string} duration
+   * @default -1
    */
   @property({ type: Number })
   public duration: number = -1;
@@ -88,12 +144,14 @@ export class Snackbar extends LitElement {
     /* eslint-enable @typescript-eslint/no-misused-promises */
   }
 
+  /** @internal */
   public override connectedCallback(): void {
     super.connectedCallback();
 
     if (this.open) this._attachGlobalEvents();
   }
 
+  /** @internal */
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
