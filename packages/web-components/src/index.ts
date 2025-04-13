@@ -15,6 +15,7 @@ import { registerChatBubbleOutElement } from "./chat-bubble/out/element.ts";
 import { registerCheckboxElement } from "./checkbox/element.ts";
 import { registerChipGroupElement } from "./chip-group/element.ts";
 import { registerChipElement } from "./chip/element.ts";
+import { registerModalElement } from "./modal/element.ts";
 
 const registerAllElements = () => ({
   avatar: registerAvatarElement(),
@@ -34,6 +35,7 @@ const registerAllElements = () => ({
   checkbox: registerCheckboxElement(),
   chip: registerChipElement(),
   "chip-group": registerChipGroupElement(),
+  modal: registerModalElement(),
 });
 
 export {
@@ -55,4 +57,5 @@ export {
   registerDividerElement,
   registerEmptyStateElement,
   registerIconButtonElement,
+  registerModalElement,
 };
