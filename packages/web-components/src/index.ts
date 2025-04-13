@@ -20,6 +20,7 @@ import { registerNoticeElement } from "./notice/element.ts";
 import { registerProgressIndicatorElement } from "./progress-indicator/element.ts";
 import { registerSegmentedViewElement } from "./segmented-view/element.ts";
 import { registerSegmentedViewItemElement } from "./segmented-view/item/element.ts";
+import { registerSkeletonElement } from "./skeleton/element.ts";
 
 const registerAllElements = () => ({
   avatar: registerAvatarElement(),
@@ -44,6 +45,7 @@ const registerAllElements = () => ({
   "progress-indicator": registerProgressIndicatorElement(),
   "segmented-view": registerSegmentedViewElement(),
   "segmented-view-item": registerSegmentedViewItemElement(),
+  skeleton: registerSkeletonElement(),
 });
 
 export {
@@ -70,4 +72,5 @@ export {
   registerProgressIndicatorElement,
   registerSegmentedViewElement,
   registerSegmentedViewItemElement,
+  registerSkeletonElement,
 };
