@@ -1,3 +1,5 @@
+import { registerBottomSheetElement } from "@tapsioss/web-components/bottom-sheet/element";
+import { registerEmptyStateElement } from "@tapsioss/web-components/empty-state/element";
 import { registerAvatarElement } from "./avatar/element.ts";
 import { registerBadgeWrapperElement } from "./badge-wrapper/element.ts";
 import { registerBadgeElement } from "./badge/element.ts";
@@ -20,6 +22,8 @@ const registerAllElements = () => ({
   banner: registerBannerElement(),
   "bottom-navigation": registerBottomNavigationElement(),
   "bottom-navigation-item": registerBottomNavigationItemElement(),
+  "bottom-sheet": registerBottomSheetElement(),
+  "empty-state": registerEmptyStateElement(),
   "icon-button": registerIconButtonElement(),
   button: registerButtonElement(),
   "button-group": registerButtonGroupElement(),
@@ -38,6 +42,7 @@ export {
   registerBannerElement,
   registerBottomNavigationElement,
   registerBottomNavigationItemElement,
+  registerBottomSheetElement,
   registerButtonElement,
   registerButtonGroupElement,
   registerChatBubbleInElement,
@@ -45,7 +50,6 @@ export {
   registerCheckboxElement,
   registerChipElement,
   registerChipGroupElement,
+  registerEmptyStateElement,
   registerIconButtonElement,
 };
-
-registerBottomNavigationElement();
