@@ -1,7 +1,7 @@
 import { html, nothing, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import BaseInput from "../base-input/index.ts";
+import BaseInput, { baseInputStyles } from "../base-input/index.ts";
 import {
   createValidator,
   getFormState,
@@ -14,12 +14,25 @@ import {
 } from "../utils/index.ts";
 import SingleSelectionController from "./Controller.ts";
 import RadioValidator from "./Validator.ts";
+import styles from "./radio.style.ts";
 
+/**
+ * @summary Used to select a single state from multiple options.
+ *
+ * @tag tapsi-radio
+ */
 export class Radio extends withFocusable(BaseInput) {
+  /** @internal */
+  public static override readonly styles = [baseInputStyles, styles];
+
   private _checked = false;
 
   /**
    * Whether or not the radio is selected.
+   *
+   * @prop {boolean} checked
+   * @attr {string} checked
+   * @defualt false
    */
   @property({ type: Boolean })
   public get checked() {
@@ -40,6 +53,10 @@ export class Radio extends withFocusable(BaseInput) {
    * The value of the radio that is submitted with a form when selected.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#value
+   *
+   * @prop {string} value
+   * @attr {string} value
+   * @defualt "on"
    */
   @property()
   public override value = "on";
@@ -52,6 +69,7 @@ export class Radio extends withFocusable(BaseInput) {
     this.addController(this._controller);
   }
 
+  /** @internal */
   public override connectedCallback() {
     super.connectedCallback();
 
@@ -101,22 +119,26 @@ export class Radio extends withFocusable(BaseInput) {
     return this.value;
   }
 
+  /** @internal */
   public override [getFormState]() {
     return String(this.checked);
   }
 
+  /** @internal */
   public override formResetCallback() {
     // The checked property does not reflect, so the original attribute set by
     // the user is used to determine the default value.
     this.checked = this.hasAttribute("checked");
   }
 
+  /** @internal */
   public override formStateRestoreCallback(state: string) {
     if (state === "on") return;
 
     this.checked = state === "true";
   }
 
+  /** @internal */
   public override [createValidator]() {
     return new RadioValidator(() => {
       // Validation runs on superclass construction, so selection controller
@@ -134,6 +156,7 @@ export class Radio extends withFocusable(BaseInput) {
     });
   }
 
+  /** @internal */
   public override [onReportValidity]() {
     // Perform the default behavior (showing pop-up)
   }

@@ -27,8 +27,13 @@ import {
 } from "../utils/index.ts";
 import { DEFAULT_DISPLAY_VALUE, ErrorMessages } from "./constants.ts";
 import { CompleteEvent } from "./events.ts";
+import styles from "./pin-input.style.ts";
 import { isAlphaNumeric, isNumeric, stringConverter } from "./utils.ts";
 import PinInputValidator from "./Validator.ts";
+
+interface TapsiPinInputEventMap extends HTMLElementEventMap {
+  [CompleteEvent.type]: CompleteEvent;
+}
 
 const BaseClass = withOnReportValidity(
   withConstraintValidation(
@@ -36,13 +41,41 @@ const BaseClass = withOnReportValidity(
   ),
 );
 
+/**
+ * @summary Used to capture a pin code or otp from the user.
+ *
+ * @tag tapsi-pin-input
+ *
+ * @fires {CompleteEvent} complete - Fires when all the pins have values.
+ */
 export class PinInput extends BaseClass {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
+  declare addEventListener: <K extends keyof TapsiPinInputEventMap>(
+    type: K,
+    listener: (this: PinInput, ev: TapsiPinInputEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /** @internal */
+  declare removeEventListener: <K extends keyof TapsiPinInputEventMap>(
+    type: K,
+    listener: (this: PinInput, ev: TapsiPinInputEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+
   /**
    * Indicates that the user must specify a value for the input before the
    * owning form can be submitted and will render an error state when
    * `reportValidity()` is invoked when value is empty.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required
+   *
+   * @prop {boolean} required
+   * @attr {string} required
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public required = false;
@@ -52,6 +85,10 @@ export class PinInput extends BaseClass {
    * value.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
+   *
+   * @prop {boolean} readOnly
+   * @attr {string} readonly
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public readOnly = false;
@@ -63,20 +100,32 @@ export class PinInput extends BaseClass {
    * - Otherwise, a visible label element will be rendered.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public label = "";
 
   /**
    * Identifies the element (or elements) that labels the input.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   *
+   * @prop {string} labelledBy
+   * @attr {string} labelledby
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public labelledBy = "";
 
   /**
    * Whether to hide the label or not.
+   *
+   * @prop {boolean} hideLabel
+   * @attr {string} hide-label
+   * @default false
    */
   @property({ type: Boolean, attribute: "hide-label" })
   public hideLabel = false;
@@ -87,8 +136,12 @@ export class PinInput extends BaseClass {
    * entered into the control.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder
+   *
+   * @prop {string} placeholder
+   * @attr {string} placeholder
+   * @default ""
    */
-  @property({ type: String, converter: stringConverter })
+  @property({ converter: stringConverter })
   public placeholder = "";
 
   /**
@@ -96,14 +149,22 @@ export class PinInput extends BaseClass {
    * should provide.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+   *
+   * @prop {AutoFill} autocomplete
+   * @attr {AutoFill} autocomplete
+   * @default false
    */
-  @property({ type: String })
+  @property()
   public autocomplete: AutoFill = "";
 
   /**
    * Indicates that the element should be focused on page load.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   *
+   * @prop {boolean} autofocus
+   * @attr {string} autofocus
+   * @default false
    */
   @property({ type: Boolean })
   public override autofocus = false;
@@ -111,8 +172,12 @@ export class PinInput extends BaseClass {
   /**
    * Conveys additional information below the input, such as how it should
    * be used.
+   *
+   * @prop {string} supportingText
+   * @attr {string} supporting-text
+   * @default ""
    */
-  @property({ type: String, attribute: "supporting-text" })
+  @property({ attribute: "supporting-text" })
   public supportingText = "";
 
   /**
@@ -120,6 +185,10 @@ export class PinInput extends BaseClass {
    *
    * This error state overrides the error state controlled by
    * `reportValidity()`.
+   *
+   * @prop {boolean} error
+   * @attr {string} error
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public error = false;
@@ -131,6 +200,10 @@ export class PinInput extends BaseClass {
    *
    * This error message overrides the error message displayed by
    * `reportValidity()`.
+   *
+   * @prop {string} errorText
+   * @attr {string} error-text
+   * @default ""
    */
   @property({ attribute: "error-text" })
   public errorText = "";
@@ -138,12 +211,20 @@ export class PinInput extends BaseClass {
   /**
    * Determines which values can be entered.
    * Defaults to "alphanumeric".
+   *
+   * @prop {"numeric" | "alphanumeric"} type
+   * @attr {"numeric" | "alphanumeric"} type
+   * @default "alphanumeric"
    */
   @property()
   public type: "numeric" | "alphanumeric" = "alphanumeric";
 
   /**
    * Determines whether input values should be masked or not.
+   *
+   * @prop {boolean} masked
+   * @attr {string} masked
+   * @default false
    */
   @property({ type: Boolean })
   public masked = false;
@@ -151,6 +232,10 @@ export class PinInput extends BaseClass {
   /**
    * The number of inputs.
    * Defaults to 4.
+   *
+   * @prop {number} pins
+   * @attr {string} pins
+   * @default 4
    */
   @property({ type: Number })
   public pins = 4;
@@ -158,9 +243,41 @@ export class PinInput extends BaseClass {
   /**
    * The number of each input's length.
    * Defaults to 1.
+   *
+   * @prop {number} pinLength
+   * @attr {string} pin-length
+   * @default 1
    */
   @property({ type: Number, attribute: "pin-length" })
   public pinLength = 1;
+
+  /**
+   * The current value of the input. It is always a string.
+   */
+  @property()
+  public get value() {
+    return this._value;
+  }
+
+  /**
+   * The current value of the input. It is always a string.
+   *
+   * @prop {string} value
+   * @attr {string} value
+   * @default ""
+   */
+  public set value(newValue: string) {
+    const update = () => {
+      this._value = newValue;
+      this._values = this._createPinArray(newValue);
+
+      this.requestUpdate();
+    };
+
+    if (!this.hasUpdated) {
+      void this.updateComplete.then(update);
+    } else update();
+  }
 
   @state()
   private _dirty = false;
@@ -190,6 +307,7 @@ export class PinInput extends BaseClass {
     this._handleHostKeyDown = this._handleHostKeyDown.bind(this);
   }
 
+  /** @internal */
   public override connectedCallback(): void {
     super.connectedCallback();
 
@@ -199,6 +317,7 @@ export class PinInput extends BaseClass {
     /* eslint-enable @typescript-eslint/no-misused-promises */
   }
 
+  /** @internal */
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
@@ -208,6 +327,7 @@ export class PinInput extends BaseClass {
     /* eslint-enable @typescript-eslint/no-misused-promises */
   }
 
+  /** @internal */
   public override attributeChangedCallback(
     attribute: string,
     newValue: string | null,
@@ -244,6 +364,7 @@ export class PinInput extends BaseClass {
     }
   }
 
+  /** @internal */
   public override focus(options?: FocusOptions): void {
     const firstPin = this._pins[0];
 
@@ -252,6 +373,7 @@ export class PinInput extends BaseClass {
     this._focusPin(firstPin, options);
   }
 
+  /** @internal */
   public override blur(): void {
     const firstPin = this._pins[0];
 
@@ -327,28 +449,9 @@ export class PinInput extends BaseClass {
   }
 
   /**
-   * The current value of the input. It is always a string.
-   */
-  @property()
-  public get value() {
-    return this._value;
-  }
-
-  public set value(newValue: string) {
-    const update = () => {
-      this._value = newValue;
-      this._values = this._createPinArray(newValue);
-
-      this.requestUpdate();
-    };
-
-    if (!this.hasUpdated) {
-      void this.updateComplete.then(update);
-    } else update();
-  }
-
-  /**
    * The value as an array.
+   *
+   * @prop {string[]} valueAsArray
    */
   public get valueAsArray() {
     if (isSsr() || !this.isConnected) return this._values;
@@ -381,6 +484,8 @@ export class PinInput extends BaseClass {
 
   /**
    * Retrieves or sets the function used to display values on inputs.
+   *
+   * @prop {Function} displayValue
    */
   public get displayValue() {
     if (!this._displayValue) return DEFAULT_DISPLAY_VALUE;
@@ -533,26 +638,32 @@ export class PinInput extends BaseClass {
     this._setFocusOnArray(pinArray);
   }
 
+  /** @internal */
   public override [getFormValue]() {
     return this.value;
   }
 
+  /** @internal */
   public override formResetCallback() {
     this.reset();
   }
 
+  /** @internal */
   public override formStateRestoreCallback(state: string) {
     this.value = state;
   }
 
+  /** @internal */
   public override formDisabledCallback(disabled: boolean) {
     this.disabled = disabled;
   }
 
+  /** @internal */
   public override [getValidityAnchor]() {
     return null;
   }
 
+  /** @internal */
   public override [onReportValidity](invalidEvent: Event | null) {
     // Prevent default pop-up behavior.
     invalidEvent?.preventDefault();
@@ -565,6 +676,7 @@ export class PinInput extends BaseClass {
     if (prevMessage === this._getErrorText()) this._reannounceError();
   }
 
+  /** @internal */
   public override [createValidator](): Validator<unknown> {
     return new PinInputValidator(() => ({
       pinLength: this.pinLength ?? 1,

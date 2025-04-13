@@ -69,7 +69,7 @@ export abstract class BaseTextInput extends BaseInput {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
    *
    * @prop {AutoFill} autocomplete
-   * @attr {string} autocomplete
+   * @attr {AutoFill} autocomplete
    * @default ""
    */
   @property()

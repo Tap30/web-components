@@ -1,7 +1,13 @@
-import { registerChatBubbleOutElement } from "./element.ts";
+import { ChatBubbleOut } from "./out.ts";
 
-export const {
-  Slots,
-  elementClass: ChatBubbleOut,
-  tagName,
-} = registerChatBubbleOutElement();
+export { ChatBubbleOut };
+
+export const register = () => {
+  customElements.define("tapsi-chat-bubble-out", ChatBubbleOut);
+};
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "tapsi-chat-bubble-out": ChatBubbleOut;
+  }
+}
