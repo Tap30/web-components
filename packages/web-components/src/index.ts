@@ -1,6 +1,7 @@
 import { registerBottomSheetElement } from "@tapsioss/web-components/bottom-sheet/element";
 import { registerDividerElement } from "@tapsioss/web-components/divider/element";
 import { registerEmptyStateElement } from "@tapsioss/web-components/empty-state/element";
+import { registerProgressIndicatorElement } from "@tapsioss/web-components/progress-indicator/element";
 import { registerAvatarElement } from "./avatar/element.ts";
 import { registerBadgeWrapperElement } from "./badge-wrapper/element.ts";
 import { registerBadgeElement } from "./badge/element.ts";
@@ -38,6 +39,7 @@ const registerAllElements = () => ({
   "chip-group": registerChipGroupElement(),
   modal: registerModalElement(),
   notice: registerNoticeElement(),
+  "progress-indicator": registerProgressIndicatorElement(),
 });
 
 export {
@@ -61,4 +63,5 @@ export {
   registerIconButtonElement,
   registerModalElement,
   registerNoticeElement,
+  registerProgressIndicatorElement,
 };

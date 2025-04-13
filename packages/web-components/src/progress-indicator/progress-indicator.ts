@@ -4,18 +4,34 @@ import { classMap } from "lit/directives/class-map.js";
 import { map } from "lit/directives/map.js";
 import { range } from "lit/directives/range.js";
 import { logger } from "../utils/index.ts";
+import styles from "./progress-indicator.style.ts";
+
+/**
+ * @summary A progress indicator component that guides users through any linear, multistep task by showing the user their completed, current, and future steps.
+ *
+ * @tag tapsi-progress-indicator
+ */
 
 export class ProgressIndicator extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
   /**
    * The total number of steps.
-   * Defaults to "2".
+   *
+   * @prop {string} steps
+   * @attr {string} steps
+   * @default "2"
    */
   @property()
   public steps = "2";
 
   /**
    * The current step index.
-   * Defaults to "0".
+   *
+   * @prop {string} current
+   * @attr {string} current
+   * @default "0"
    */
   @property()
   public current = "0";
@@ -25,16 +41,24 @@ export class ProgressIndicator extends LitElement {
    * for assistive technologies.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public label = "";
 
   /**
    * Defines the human-readable text alternative of value.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext
+   *
+   * @prop {string} valueText
+   * @attr {string} valueText
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public valueText = "";
 
   private _renderSteps() {
