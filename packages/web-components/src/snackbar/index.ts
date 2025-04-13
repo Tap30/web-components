@@ -4,4 +4,5 @@ export const {
   elementClass: Snackbar,
   tagName,
   Slots,
+  eventsMap,
 } = registerSnackbarElement();
