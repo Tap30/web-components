@@ -1,225 +1,274 @@
-import * as AvatarModule from "./avatar/index.ts";
-import * as BadgeWrapperModule from "./badge-wrapper/index.ts";
-import * as BadgeModule from "./badge/index.ts";
-import * as BannerModule from "./banner/index.ts";
-import * as BottomNavigationModule from "./bottom-navigation/index.ts";
-import * as BottomNavigationItemModule from "./bottom-navigation/item/index.ts";
-import * as BottomSheetModule from "./bottom-sheet/index.ts";
-import * as ButtonGroupModule from "./button-group/index.ts";
-import * as IconButtonModule from "./button/icon-button/index.ts";
-import * as ButtonModule from "./button/standard/index.ts";
-import * as ChatBubbleInModule from "./chat-bubble/in/index.ts";
-import * as ChatBubbleOutModule from "./chat-bubble/out/index.ts";
-import * as CheckboxModule from "./checkbox/index.ts";
-import * as ChipGroupModule from "./chip-group/index.ts";
-import * as ChipModule from "./chip/index.ts";
-import * as DividerModule from "./divider/index.ts";
-import * as EmptyStateModule from "./empty-state/index.ts";
-import * as FileInputModule from "./file-input/index.ts";
-import * as ModalModule from "./modal/index.ts";
-import * as NoticeModule from "./notice/index.ts";
-import * as PinInputModule from "./pin-input/index.ts";
-import * as PinwheelGroupModule from "./pinwheel-group/index.ts";
-import * as PinwheelModule from "./pinwheel/index.ts";
-import * as PinwheelItemModule from "./pinwheel/item/index.ts";
-import * as ProgressIndicatorModule from "./progress-indicator/index.ts";
-import * as RadioModule from "./radio/index.ts";
-import * as RateSliderModule from "./rate-slider/index.ts";
-import * as SegmentedViewModule from "./segmented-view/index.ts";
-import * as SegmentedViewItemModule from "./segmented-view/item/index.ts";
-import * as SkeletonModule from "./skeleton/index.ts";
-import * as SnackbarModule from "./snackbar/index.ts";
-import * as SpinnerModule from "./spinner/index.ts";
-import * as StepperModule from "./stepper/index.ts";
-import * as SwitchModule from "./switch/index.ts";
-import * as TextAreaModule from "./text-area/index.ts";
-import * as TextFieldModule from "./text-field/index.ts";
-import * as TooltipModule from "./tooltip/index.ts";
-
-const { register: registerAvatarElement } = AvatarModule;
-const { register: registerBadgeWrapperElement } = BadgeWrapperModule;
-const { register: registerBadgeElement } = BadgeModule;
-const { register: registerBannerElement } = BannerModule;
-const { register: registerBottomNavigationElement } = BottomNavigationModule;
-const { register: registerBottomNavigationItemElement } =
-  BottomNavigationItemModule;
-
-const { register: registerBottomSheetElement } = BottomSheetModule;
-const { register: registerButtonGroupElement } = ButtonGroupModule;
-const { register: registerIconButtonElement } = IconButtonModule;
-const { register: registerButtonElement } = ButtonModule;
-const { register: registerChatBubbleInElement } = ChatBubbleInModule;
-const { register: registerChatBubbleOutElement } = ChatBubbleOutModule;
-const { register: registerCheckboxElement } = CheckboxModule;
-const { register: registerChipGroupElement } = ChipGroupModule;
-const { register: registerChipElement } = ChipModule;
-const { register: registerDividerElement } = DividerModule;
-const { register: registerEmptyStateElement } = EmptyStateModule;
-const { register: registerFileInputElement } = FileInputModule;
-const { register: registerModalElement } = ModalModule;
-const { register: registerNoticeElement } = NoticeModule;
-const { register: registerPinInputElement } = PinInputModule;
-const { register: registerPinwheelGroupElement } = PinwheelGroupModule;
-const { register: registerPinwheelElement } = PinwheelModule;
-const { register: registerPinwheelItemElement } = PinwheelItemModule;
-const { register: registerProgressIndicatorElement } = ProgressIndicatorModule;
-const { register: registerRadioElement } = RadioModule;
-const { register: registerRateSliderElement } = RateSliderModule;
-const { register: registerSegmentedViewElement } = SegmentedViewModule;
-const { register: registerSegmentedViewItemElement } = SegmentedViewItemModule;
-const { register: registerSkeletonElement } = SkeletonModule;
-const { register: registerSnackbarElement } = SnackbarModule;
-const { register: registerSpinnerElement } = SpinnerModule;
-const { register: registerStepperElement } = StepperModule;
-const { register: registerSwitchElement } = SwitchModule;
-const { register: registerTextAreaElement } = TextAreaModule;
-const { register: registerTextFieldElement } = TextFieldModule;
-const { register: registerTooltipElement } = TooltipModule;
-
-export const { Avatar, Slots: AvatarSlot } = AvatarModule;
-export const { Badge, Slots: BadgeSlots } = BadgeModule;
-export const { Banner, Slots: BannerSlots } = BannerModule;
-export const {
+import {
+  Avatar,
+  Slots as AvatarSlots,
+  register as registerAvatarElement,
+} from "./avatar/index.ts";
+import {
+  BadgeWrapper,
+  Slots as BadgeWrapperSlots,
+  register as registerBadgeWrapperElement,
+} from "./badge-wrapper/index.ts";
+import {
+  Badge,
+  Slots as BadgeSlots,
+  register as registerBadgeElement,
+} from "./badge/index.ts";
+import {
+  Banner,
+  Slots as BannerSlots,
+  register as registerBannerElement,
+} from "./banner/index.ts";
+import {
   BottomNavigation,
-  ActiveChangeEvent: BottomNavigationActiveChangeEvent,
-  Slots: BottomNavigationSlots,
-} = BottomNavigationModule;
-export const {
+  ActiveChangeEvent as BottomNavigationActiveChangeEvent,
   BottomNavigationItem,
-  ActivateEvent: BottomNavigationItemActivateEvent,
-  Slots: BottomNavigationItemSlots,
-} = BottomNavigationItemModule;
-export const {
+  ItemSlots as BottomNavigationItemSlots,
+  Slots as BottomNavigationSlots,
+  register as registerBottomNavigationElement,
+} from "./bottom-navigation/index.ts";
+import {
   BottomSheet,
-  ClosedEvent: BottomSheetClosedEvent,
-  ClosingEvent: BottomSheetClosingEvent,
-  HideEvent: BottomSheetHideEvent,
-  OpenedEvent: BottomSheetOpenedEvent,
-  OpeningEvent: BottomSheetOpeningEvent,
-  ShowEvent: BottomSheetShowEvent,
-  Slots: BottomSheetSlots,
-  SnappedEvent: BottomSheetSnappedEvent,
-} = BottomSheetModule;
-export const { ButtonGroup, Slots: ButtonGroupSlots } = ButtonGroupModule;
-export const { IconButton, Slots: IconButtonSlots } = IconButtonModule;
-export const { Button, Slots: ButtonSlots } = ButtonModule;
-export const { ChatBubbleIn } = ChatBubbleInModule;
-export const { ChatBubbleOut } = ChatBubbleOutModule;
-export const { Checkbox } = CheckboxModule;
-export const {
+  ClosedEvent as BottomSheetClosedEvent,
+  ClosingEvent as BottomSheetClosingEvent,
+  HideEvent as BottomSheetHideEvent,
+  OpenedEvent as BottomSheetOpenedEvent,
+  OpeningEvent as BottomSheetOpeningEvent,
+  ShowEvent as BottomSheetShowEvent,
+  Slots as BottomSheetSlots,
+  SnappedEvent as BottomSheetSnappedEvent,
+  register as registerBottomSheetElement,
+} from "./bottom-sheet/index.ts";
+import {
+  ButtonGroup,
+  Slots as ButtonGroupSlots,
+  register as registerButtonGroupElement,
+} from "./button-group/index.ts";
+import {
+  IconButton,
+  Slots as IconButtonSlots,
+  register as registerIconButtonElement,
+} from "./button/icon-button/index.ts";
+import {
+  Button,
+  Slots as ButtonSlots,
+  register as registerButtonElement,
+} from "./button/standard/index.ts";
+import {
+  ChatBubbleIn,
+  register as registerChatBubbleInElement,
+} from "./chat-bubble/in/index.ts";
+import {
+  ChatBubbleOut,
+  register as registerChatBubbleOutElement,
+} from "./chat-bubble/out/index.ts";
+import {
+  Checkbox,
+  register as registerCheckboxElement,
+} from "./checkbox/index.ts";
+import {
   ChipGroup,
-  SelectChangeEvent: ChipGroupSelectChangeEvent,
-  Slots: ChipGroupSlots,
-} = ChipGroupModule;
-export const {
+  SelectChangeEvent as ChipGroupSelectChangeEvent,
+  Slots as ChipGroupSlots,
+  register as registerChipGroupElement,
+} from "./chip-group/index.ts";
+import {
   Chip,
-  DeselectEvent: ChipDeselectEvent,
-  SelectEvent: ChipSelectEvent,
-  Slots: ChipSlots,
-} = ChipModule;
-export const { Divider } = DividerModule;
-export const { EmptyState, Slots: EmptyStateSlots } = EmptyStateModule;
-export const {
+  DeselectEvent as ChipDeselectEvent,
+  SelectEvent as ChipSelectEvent,
+  Slots as ChipSlots,
+  register as registerChipElement,
+} from "./chip/index.ts";
+import {
+  Divider,
+  register as registerDividerElement,
+} from "./divider/index.ts";
+import {
+  EmptyState,
+  Slots as EmptyStateSlots,
+  register as registerEmptyStateElement,
+} from "./empty-state/index.ts";
+import {
   FileInput,
-  RetryEvent: FileInputRetryEvent,
-  Slots: FileInputSlots,
-} = FileInputModule;
-export const {
+  RetryEvent as FileInputRetryEvent,
+  Slots as FileInputSlots,
+  register as registerFileInputElement,
+} from "./file-input/index.ts";
+import {
   Modal,
-  HideEvent: ModalHideEvent,
-  ShowEvent: ModalShowEvent,
-  Slots: ModalSlots,
-} = ModalModule;
-export const {
+  HideEvent as ModalHideEvent,
+  ShowEvent as ModalShowEvent,
+  Slots as ModalSlots,
+  register as registerModalElement,
+} from "./modal/index.ts";
+import {
   Notice,
-  HideEvent: NoticeHideEvent,
-  ShowEvent: NoticeShowEvent,
-  Slots: NoticeSlots,
-} = NoticeModule;
-export const { PinInput, CompleteEvent: PinInputCompleteEvent } =
-  PinInputModule;
-export const { PinwheelGroup, Slots: PinwheelGroupSlots } = PinwheelGroupModule;
-export const { Pinwheel, Slots: PinwheelSlots } = PinwheelModule;
-export const { PinwheelItem, Slots: PinwheelItemSlots } = PinwheelItemModule;
-export const { ProgressIndicator } = ProgressIndicatorModule;
-export const { Radio } = RadioModule;
-export const { RateSlider } = RateSliderModule;
-export const {
+  HideEvent as NoticeHideEvent,
+  ShowEvent as NoticeShowEvent,
+  Slots as NoticeSlots,
+  register as registerNoticeElement,
+} from "./notice/index.ts";
+import {
+  PinInput,
+  CompleteEvent as PinInputCompleteEvent,
+  register as registerPinInputElement,
+} from "./pin-input/index.ts";
+import {
+  PinwheelGroup,
+  Slots as PinwheelGroupSlots,
+  register as registerPinwheelGroupElement,
+} from "./pinwheel-group/index.ts";
+import {
+  Pinwheel,
+  PinwheelItem,
+  ItemSlots as PinwheelItemSlots,
+  Slots as PinwheelSlots,
+  register as registerPinwheelElement,
+} from "./pinwheel/index.ts";
+import {
+  ProgressIndicator,
+  register as registerProgressIndicatorElement,
+} from "./progress-indicator/index.ts";
+import { Radio, register as registerRadioElement } from "./radio/index.ts";
+import {
+  RateSlider,
+  register as registerRateSliderElement,
+} from "./rate-slider/index.ts";
+import {
   SegmentedView,
-  ActiveChangeEvent: SegmentedViewActiveChangeEvent,
-  Slots: SegmentedViewSlots,
-} = SegmentedViewModule;
-export const {
+  ActiveChangeEvent as SegmentedViewActiveChangeEvent,
   SegmentedViewItem,
-  ActivateEvent: SegmentedViewItemActivateEvent,
-  Slots: SegmentedViewItemSlots,
-} = SegmentedViewItemModule;
-export const { Skeleton, Slots: SkeletonSlots } = SkeletonModule;
-export const {
+  ItemSlots as SegmentedViewItemSlots,
+  Slots as SegmentedViewSlots,
+  register as registerSegmentedViewElement,
+} from "./segmented-view/index.ts";
+import {
+  Skeleton,
+  Slots as SkeletonSlots,
+  register as registerSkeletonElement,
+} from "./skeleton/index.ts";
+import {
   Snackbar,
-  HideEvent: SnackbarHideEvent,
-  ShowEvent: SnackbarShowEvent,
-  Slots: SnackbarSlots,
-} = SnackbarModule;
-export const { Spinner } = SpinnerModule;
-export const { Stepper } = StepperModule;
-export const { Switch } = SwitchModule;
-export const { TextArea, Slots: TextAreaSlots } = TextAreaModule;
-export const { TextField, Slots: TextFieldSlots } = TextFieldModule;
-export const {
+  HideEvent as SnackbarHideEvent,
+  ShowEvent as SnackbarShowEvent,
+  Slots as SnackbarSlots,
+  register as registerSnackbarElement,
+} from "./snackbar/index.ts";
+import {
+  Spinner,
+  register as registerSpinnerElement,
+} from "./spinner/index.ts";
+import {
+  Stepper,
+  register as registerStepperElement,
+} from "./stepper/index.ts";
+import { Switch, register as registerSwitchElement } from "./switch/index.ts";
+import {
+  TextArea,
+  Slots as TextAreaSlots,
+  register as registerTextAreaElement,
+} from "./text-area/index.ts";
+import {
+  TextField,
+  Slots as TextFieldSlots,
+  register as registerTextFieldElement,
+} from "./text-field/index.ts";
+import {
   Tooltip,
-  HideEvent: TooltipHideEvent,
-  ShowEvent: TooltipShowEvent,
-} = TooltipModule;
-
-const registerAllElements = () => {
-  registerAvatarElement();
-  registerBadgeElement();
-  registerBadgeWrapperElement();
-  registerBannerElement();
-  registerBottomNavigationElement();
-  registerBottomNavigationItemElement();
-  registerBottomSheetElement();
-  registerButtonElement();
-  registerButtonGroupElement();
-  registerChatBubbleInElement();
-  registerChatBubbleOutElement();
-  registerCheckboxElement();
-  registerChipElement();
-  registerChipGroupElement();
-  registerDividerElement();
-  registerEmptyStateElement();
-  registerFileInputElement();
-  registerIconButtonElement();
-  registerModalElement();
-  registerNoticeElement();
-  registerPinInputElement();
-  registerPinwheelElement();
-  registerPinwheelGroupElement();
-  registerPinwheelItemElement();
-  registerProgressIndicatorElement();
-  registerRadioElement();
-  registerRateSliderElement();
-  registerSegmentedViewElement();
-  registerSegmentedViewItemElement();
-  registerSkeletonElement();
-  registerSnackbarElement();
-  registerSpinnerElement();
-  registerStepperElement();
-  registerSwitchElement();
-  registerTextAreaElement();
-  registerTextFieldElement();
-  registerTooltipElement();
-};
+  HideEvent as TooltipHideEvent,
+  ShowEvent as TooltipShowEvent,
+  register as registerTooltipElement,
+} from "./tooltip/index.ts";
 
 export {
-  registerAllElements,
+  Avatar,
+  AvatarSlots,
+  Badge,
+  BadgeSlots,
+  BadgeWrapper,
+  BadgeWrapperSlots,
+  Banner,
+  BannerSlots,
+  BottomNavigation,
+  BottomNavigationActiveChangeEvent,
+  BottomNavigationItem,
+  BottomNavigationItemSlots,
+  BottomNavigationSlots,
+  BottomSheet,
+  BottomSheetClosedEvent,
+  BottomSheetClosingEvent,
+  BottomSheetHideEvent,
+  BottomSheetOpenedEvent,
+  BottomSheetOpeningEvent,
+  BottomSheetShowEvent,
+  BottomSheetSlots,
+  BottomSheetSnappedEvent,
+  Button,
+  ButtonGroup,
+  ButtonGroupSlots,
+  ButtonSlots,
+  ChatBubbleIn,
+  ChatBubbleOut,
+  Checkbox,
+  Chip,
+  ChipDeselectEvent,
+  ChipGroup,
+  ChipGroupSelectChangeEvent,
+  ChipGroupSlots,
+  ChipSelectEvent,
+  ChipSlots,
+  Divider,
+  EmptyState,
+  EmptyStateSlots,
+  FileInput,
+  FileInputRetryEvent,
+  FileInputSlots,
+  IconButton,
+  IconButtonSlots,
+  Modal,
+  ModalHideEvent,
+  ModalShowEvent,
+  ModalSlots,
+  Notice,
+  NoticeHideEvent,
+  NoticeShowEvent,
+  NoticeSlots,
+  PinInput,
+  PinInputCompleteEvent,
+  Pinwheel,
+  PinwheelGroup,
+  PinwheelGroupSlots,
+  PinwheelItem,
+  PinwheelItemSlots,
+  PinwheelSlots,
+  ProgressIndicator,
+  Radio,
+  RateSlider,
+  SegmentedView,
+  SegmentedViewActiveChangeEvent,
+  SegmentedViewItem,
+  SegmentedViewItemSlots,
+  SegmentedViewSlots,
+  Skeleton,
+  SkeletonSlots,
+  Snackbar,
+  SnackbarHideEvent,
+  SnackbarShowEvent,
+  SnackbarSlots,
+  Spinner,
+  Stepper,
+  Switch,
+  TextArea,
+  TextAreaSlots,
+  TextField,
+  TextFieldSlots,
+  Tooltip,
+  TooltipHideEvent,
+  TooltipShowEvent,
   registerAvatarElement,
   registerBadgeElement,
   registerBadgeWrapperElement,
   registerBannerElement,
   registerBottomNavigationElement,
-  registerBottomNavigationItemElement,
   registerBottomSheetElement,
   registerButtonElement,
   registerButtonGroupElement,
@@ -237,12 +286,10 @@ export {
   registerPinInputElement,
   registerPinwheelElement,
   registerPinwheelGroupElement,
-  registerPinwheelItemElement,
   registerProgressIndicatorElement,
   registerRadioElement,
   registerRateSliderElement,
   registerSegmentedViewElement,
-  registerSegmentedViewItemElement,
   registerSkeletonElement,
   registerSnackbarElement,
   registerSpinnerElement,
@@ -251,4 +298,41 @@ export {
   registerTextAreaElement,
   registerTextFieldElement,
   registerTooltipElement,
+};
+
+export const registerAllElements = () => {
+  registerAvatarElement();
+  registerBadgeElement();
+  registerBadgeWrapperElement();
+  registerBannerElement();
+  registerBottomNavigationElement();
+  registerBottomSheetElement();
+  registerButtonElement();
+  registerButtonGroupElement();
+  registerChatBubbleInElement();
+  registerChatBubbleOutElement();
+  registerCheckboxElement();
+  registerChipElement();
+  registerChipGroupElement();
+  registerDividerElement();
+  registerEmptyStateElement();
+  registerFileInputElement();
+  registerIconButtonElement();
+  registerModalElement();
+  registerNoticeElement();
+  registerPinInputElement();
+  registerPinwheelElement();
+  registerPinwheelGroupElement();
+  registerProgressIndicatorElement();
+  registerRadioElement();
+  registerRateSliderElement();
+  registerSegmentedViewElement();
+  registerSkeletonElement();
+  registerSnackbarElement();
+  registerSpinnerElement();
+  registerStepperElement();
+  registerSwitchElement();
+  registerTextAreaElement();
+  registerTextFieldElement();
+  registerTooltipElement();
 };

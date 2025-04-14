@@ -1,14 +1,18 @@
+import { PinwheelItem } from "./item/item.ts";
 import { Pinwheel } from "./pinwheel.ts";
 
 export { Slots } from "./constants.ts";
-export { Pinwheel };
+export { Slots as ItemSlots } from "./item/index.ts";
+export { Pinwheel, PinwheelItem };
 
 export const register = () => {
   customElements.define("tapsi-pinwheel", Pinwheel);
+  customElements.define("tapsi-pinwheel-item", PinwheelItem);
 };
 
 declare global {
   interface HTMLElementTagNameMap {
     "tapsi-pinwheel": Pinwheel;
+    "tapsi-pinwheel-item": PinwheelItem;
   }
 }
