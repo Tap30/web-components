@@ -64,7 +64,10 @@ export class Stepper extends BaseClass {
   public size: "sm" | "md" = "md";
 
   /**
-   * The current value of the input. It is always a string.
+   * The current value of the input.
+   *
+   * @prop {string} value
+   * @default "0"
    */
   @property()
   public get value() {
@@ -92,7 +95,7 @@ export class Stepper extends BaseClass {
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext
    *
    * @prop {string} valueText
-   * @attr {string} valueText
+   * @attr {string} valuetext
    * @default ""
    */
   @property()
@@ -116,20 +119,19 @@ export class Stepper extends BaseClass {
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
    *
    * @prop {string} labelledBy
-   * @attr {string} labelledBy
+   * @attr {string} labelledby
    * @default ""
    */
   @property()
   public labelledBy = "";
 
   /**
-   * Indicates whether or not a user should be able to edit the input's
-   * value.
+   * Indicates whether a user should be able to edit the input's value.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
    *
    * @prop {boolean} readOnly
-   * @attr {string} readOnly
+   * @attr {string} readonly
    * @default ""
    */
   @property({ type: Boolean, reflect: true })
@@ -245,7 +247,8 @@ export class Stepper extends BaseClass {
   /**
    * The input's value as a number.
    *
-   * @returns {number}
+   * @prop {number} valueAsNumber
+   * @default 0
    */
   public get valueAsNumber() {
     return Number(this.value);
