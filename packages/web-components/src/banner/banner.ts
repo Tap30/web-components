@@ -10,7 +10,7 @@ import {
 } from "./constants.ts";
 
 /**
- * @summary Display a banner to a user
+ * @summary Used to display a visual promotional message.
  *
  * @tag tapsi-banner
  *
