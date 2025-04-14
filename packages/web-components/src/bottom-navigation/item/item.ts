@@ -31,6 +31,7 @@ export class BottomNavigationItem extends LitElement {
    *
    * @prop {boolean} active
    * @attr {string} active
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public get active() {
@@ -53,6 +54,7 @@ export class BottomNavigationItem extends LitElement {
    *
    * @prop {string} value
    * @attr {string} value
+   * @default ""
    */
   @property()
   public value: string = "";

@@ -103,24 +103,27 @@ export class BottomSheet extends LitElement {
    *
    * @prop {string} headingTitle
    * @attr {string} heading-title
+   * @default ""
    */
   @property({ attribute: "heading-title" })
-  public headingTitle?: string;
+  public headingTitle = "";
 
   /**
    * Sets the heading description in a declarative-way.
    *
    * @prop {string} headingDescription
    * @attr {string} heading-description
+   * @default ""
    */
   @property({ attribute: "heading-description" })
-  public headingDescription?: string;
+  public headingDescription = "";
 
   /**
    * Determines whether the grabber should be visible or not.
    *
    * @prop {boolean} hasGrabber
    * @attr {string} has-grabber
+   * @default false
    */
   @property({ type: Boolean, attribute: "has-grabber" })
   public hasGrabber = false;
@@ -130,6 +133,7 @@ export class BottomSheet extends LitElement {
    *
    * @prop {boolean} hasDismissButton
    * @attr {string} has-dismiss-button
+   * @default false
    */
   @property({ type: Boolean, attribute: "has-dismiss-button" })
   public hasDismissButton = false;
@@ -139,6 +143,7 @@ export class BottomSheet extends LitElement {
    *
    * @prop {boolean} hasStickyActionBar
    * @attr {string} sticky-action-bar
+   * @default false
    */
   @property({ type: Boolean, attribute: "sticky-action-bar" })
   public hasStickyActionBar = false;
@@ -148,6 +153,7 @@ export class BottomSheet extends LitElement {
    *
    * @prop {boolean} hasStickyHeader
    * @attr {string} sticky-header
+   * @default false
    */
   @property({ type: Boolean, attribute: "sticky-header" })
   public hasStickyHeader = false;
@@ -158,6 +164,7 @@ export class BottomSheet extends LitElement {
    *
    * @prop {boolean} expandable
    * @attr {string} expandable
+   * @default false
    */
   @property({ type: Boolean })
   public expandable = false;
@@ -465,9 +472,9 @@ export class BottomSheet extends LitElement {
   }
 
   /**
-   * Returns the metadata of the bottom sheet.
+   * The metadata of the bottom sheet.
    *
-   * @returns {Metadata}
+   * @prop {MetaData} metaData
    */
   public get metaData(): MetaData {
     return {
@@ -482,12 +489,12 @@ export class BottomSheet extends LitElement {
   }
 
   /**
-   * Gets the default snap points for the bottom sheet.
-   *
-   * @returns {[number, number]} An array containing two snap points.
+   * An array containing two snap points.
    * - The first snap point is either the container's scroll height
    * or half the window's inner height, whichever is smaller.
    * - The second snap point is 90% of the window's inner height.
+   *
+   * @prop {[number, number]} defaultSnapPoints
    */
   public get defaultSnapPoints(): [number, number] {
     if (isSsr() || !this.isConnected || !this._container) {
@@ -508,7 +515,7 @@ export class BottomSheet extends LitElement {
    * Note that snap points will be sorted sorted, no matter
    * how to set it.
    *
-   * @return {number[]} snapPoints
+   * @prop {number[]} snapPoints
    */
   @property({ attribute: false })
   public get snapPoints() {
@@ -530,6 +537,8 @@ export class BottomSheet extends LitElement {
   /**
    * Determines whether the bottom sheet should be open or not.
    *
+   * @prop {boolean} open
+   * @attr {string} open
    * @default false
    */
   @property({ type: Boolean, reflect: true })
