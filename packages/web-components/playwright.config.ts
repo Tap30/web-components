@@ -6,19 +6,19 @@ export default defineConfig({
   retries: process.env.CI ? 2 : undefined,
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI
-    ? [["github"], ["html", { open: "never" }]]
+    ? [["github"]]
     : [["list"], ["html", { open: "never" }]],
   projects: [
     {
-      name: "💻 Desktop",
+      name: "desktop",
       use: devices["Desktop Chrome"],
     },
     // {
-    //   name: "📱 iOS",
+    //   name: "iOS",
     //   use: devices["iPhone X"],
     // },
     {
-      name: "📱 Android",
+      name: "android",
       use: devices["Galaxy S9+"],
     },
   ],
@@ -33,6 +33,12 @@ export default defineConfig({
     gracefulShutdown: {
       signal: "SIGTERM",
       timeout: 1000,
+    },
+  },
+  snapshotPathTemplate: `{testDir}/{testFileDir}/test-snapshots/{arg}{ext}`,
+  expect: {
+    toHaveScreenshot: {
+      maxDiffPixels: 100,
     },
   },
 });
