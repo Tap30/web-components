@@ -5,7 +5,7 @@ import {
   type Package,
 } from "custom-elements-manifest";
 import { exec } from "node:child_process";
-import * as fs from "node:fs";
+import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { promisify } from "node:util";
 import { type DefaultTheme } from "vitepress";
@@ -26,6 +26,7 @@ const metadataFile = path.join(packageDir, "components-metadata.json");
 
 const generateCem = async (): Promise<Package> => {
   const globs: string[] = [
+    `${packageSrcDir}/index.ts`,
     `${packageSrcDir}/**/*.ts`,
     `${packageSrcDir}/**/*/*.ts`,
     `!${packageSrcDir}/utils/**`,
@@ -48,7 +49,7 @@ const generateCem = async (): Promise<Package> => {
 
   const cemFile = path.join(packageDir, "custom-elements.json");
 
-  return JSON.parse(fs.readFileSync(cemFile, "utf8")) as Package;
+  return JSON.parse(await fs.readFile(cemFile, "utf8")) as Package;
 };
 
 const getKebabCaseComponentName = (component: Declaration) => {
@@ -226,7 +227,7 @@ void (async () => {
   const cem = await generateCem();
   const metadata = generateMetadataFromCem(cem);
 
-  fs.writeFileSync(metadataFile, JSON.stringify(metadata, null, 2));
+  await fs.writeFile(metadataFile, JSON.stringify(metadata, null, 2));
 
   console.log("✅ docs metadata generated.");
 })();
