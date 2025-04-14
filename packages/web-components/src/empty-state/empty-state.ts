@@ -5,12 +5,13 @@ import { Slots } from "./constants.ts";
 import styles from "./empty-state.style.ts";
 
 /**
- * @summary An empty state component with icon and action slots.
+ * @summary Empty states are messages that users see when there is no data or
+ * content to show.
  *
  * @tag tapsi-empty-state
  *
- * @slot icon - The slot for icon element.
- * @slot action - The slot for action element.
+ * @slot [icon] - The slot for the icon.
+ * @slot [action] - The slot for the action.
  */
 export class EmptyState extends LitElement {
   /** @internal */

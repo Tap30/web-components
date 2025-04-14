@@ -55,7 +55,7 @@ export class ButtonGroup extends LitElement {
    * @attr {string} label
    * @default ""
    */
-  @property({ type: String })
+  @property()
   public label = "";
 
   protected override render() {
