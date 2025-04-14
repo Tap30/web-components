@@ -21,7 +21,7 @@ export class TextField extends BaseTextInput {
   public static override readonly styles = [...baseTextInputStyles];
 
   /**
-   * The `<input>` type to use, defaults to "text". The type greatly changes how
+   * The `<input>` type to use. The type greatly changes how
    * the text field behaves.
    *
    * Text fields support a limited number of `<input>` types:
@@ -176,7 +176,7 @@ export class TextField extends BaseTextInput {
    *
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepDown
    *
-   * @param stepDecrement The number of steps to decrement, defaults to 1.
+   * @param stepDecrement The number of steps to decrement.
    */
   public stepDown(stepDecrement?: number) {
     const input = this.getInputElement() as HTMLInputElement | null;
@@ -193,7 +193,7 @@ export class TextField extends BaseTextInput {
    *
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepUp
    *
-   * @param stepIncrement The number of steps to increment, defaults to 1.
+   * @param stepIncrement The number of steps to increment.
    */
   public stepUp(stepIncrement?: number) {
     const input = this.getInputElement() as HTMLInputElement | null;

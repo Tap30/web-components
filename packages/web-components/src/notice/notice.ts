@@ -85,7 +85,6 @@ export class Notice extends LitElement {
 
   /**
    * The color of the notice, indicating the type of message.
-   * Defaults to `info`.
    *
    * @prop {"success" | "error" | "info" | "warning"} color
    * @attr {"success" | "error" | "info" | "warning"} color
@@ -96,7 +95,6 @@ export class Notice extends LitElement {
 
   /**
    * The priority level of the notice.
-   * Defaults to `high`.
    *
    * High priority uses bolder colors and the role of `alert`
    * for screen readers, while low priority uses lighter colors
@@ -111,7 +109,6 @@ export class Notice extends LitElement {
 
   /**
    * The artwork of the notice component.
-   * Defaults to `icon`.
    *
    * Setting to `none` hides the artwork.
    * The `icon` value shows a default icon based on the color,
@@ -126,7 +123,6 @@ export class Notice extends LitElement {
 
   /**
    * The variant of the notice.
-   * Defaults to `standard`.
    *
    * @prop {"standard" | "compact"} variant
    * @attr {"standard" | "compact"} variant

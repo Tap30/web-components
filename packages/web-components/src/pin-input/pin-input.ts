@@ -210,7 +210,6 @@ export class PinInput extends BaseClass {
 
   /**
    * Determines which values can be entered.
-   * Defaults to "alphanumeric".
    *
    * @prop {"numeric" | "alphanumeric"} type
    * @attr {"numeric" | "alphanumeric"} type
@@ -231,7 +230,6 @@ export class PinInput extends BaseClass {
 
   /**
    * The number of inputs.
-   * Defaults to 4.
    *
    * @prop {number} pins
    * @attr {string} pins
@@ -242,7 +240,6 @@ export class PinInput extends BaseClass {
 
   /**
    * The number of each input's length.
-   * Defaults to 1.
    *
    * @prop {number} pinLength
    * @attr {string} pin-length

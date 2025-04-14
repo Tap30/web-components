@@ -22,7 +22,6 @@ export class TextArea extends BaseTextInput {
 
   /**
    * The number of rows to display for the text input.
-   * Defaults to 2.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#rows
    *
@@ -35,7 +34,6 @@ export class TextArea extends BaseTextInput {
 
   /**
    * The number of cols to display for the text input.
-   * Defaults to 20.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#cols
    *

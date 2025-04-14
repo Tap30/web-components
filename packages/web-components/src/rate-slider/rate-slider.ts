@@ -109,7 +109,6 @@ export class RateSlider extends BaseClass {
 
   /**
    * Defines the maximum value in the range of permitted values.
-   * Defaults to "10".
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
    *
@@ -122,7 +121,6 @@ export class RateSlider extends BaseClass {
 
   /**
    * Defines the minimum value in the range of permitted values.
-   * Defaults to "0".
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
    *

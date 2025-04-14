@@ -80,7 +80,6 @@ export class Snackbar extends LitElement {
 
   /**
    * The color of the snackbar, indicating the type of message.
-   * Defaults to `inverse`.
    *
    * @prop {"success" | "error" | "info" | "warning" | "inverse"} color
    * @attr {"success" | "error" | "info" | "warning" | "inverse"} color

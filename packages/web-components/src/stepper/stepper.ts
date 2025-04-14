@@ -137,7 +137,6 @@ export class Stepper extends BaseClass {
 
   /**
    * Defines the maximum value in the range of permitted values.
-   * Defaults to "100".
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
    *
@@ -150,7 +149,6 @@ export class Stepper extends BaseClass {
 
   /**
    * Defines the minimum value in the range of permitted values.
-   * Defaults to "0".
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
    *
@@ -164,7 +162,6 @@ export class Stepper extends BaseClass {
   /**
    * Returns or sets the element's step attribute, which works with min and max
    * to limit the increments/decrements at which the input value can be set.
-   * Defaults to "1".
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
    *
@@ -265,7 +262,7 @@ export class Stepper extends BaseClass {
    *
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepDown
    *
-   * @param stepDecrement The number of steps to decrement, defaults to 1.
+   * @param stepDecrement The number of steps to decrement.
    */
   public stepDown(stepDecrement?: number) {
     this._handleDecrease(stepDecrement);
@@ -276,7 +273,7 @@ export class Stepper extends BaseClass {
    *
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepUp
    *
-   * @param stepIncrement The number of steps to increment, defaults to 1.
+   * @param stepIncrement The number of steps to increment.
    */
   public stepUp(stepIncrement?: number) {
     this._handleIncrease(stepIncrement);
