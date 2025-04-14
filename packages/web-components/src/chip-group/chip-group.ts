@@ -2,7 +2,7 @@ import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { Chip } from "../chip/chip.ts";
-import { eventsMap } from "../chip/index.ts";
+import { DeselectEvent, SelectEvent } from "../chip/index.ts";
 import { getRenderRootSlot, logger } from "../utils/index.ts";
 import styles from "./chip-group.style.ts";
 import { Slots } from "./constants.ts";
@@ -117,13 +117,13 @@ export class ChipGroup extends LitElement {
     super.connectedCallback();
 
     this.addEventListener(
-      eventsMap.select.type,
+      SelectEvent.type,
       this._handleChipSelection as EventListener,
     );
 
     this.addEventListener(
       // @ts-expect-error its internal event name.
-      eventsMap.deselect.type,
+      DeselectEvent.type,
       this._handleChipDeselection as EventListener,
     );
   }
@@ -133,13 +133,13 @@ export class ChipGroup extends LitElement {
     super.disconnectedCallback();
 
     this.removeEventListener(
-      eventsMap.select.type,
+      SelectEvent.type,
       this._handleChipSelection as EventListener,
     );
 
     this.removeEventListener(
       // @ts-expect-error its internal event name.
-      eventsMap.deselect.type,
+      DeselectEvent.type,
       this._handleChipDeselection as EventListener,
     );
   }
