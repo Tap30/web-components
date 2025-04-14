@@ -95,7 +95,7 @@ export class Stepper extends BaseClass {
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext
    *
    * @prop {string} valueText
-   * @attr {string} valueText
+   * @attr {string} valuetext
    * @default ""
    */
   @property()
@@ -119,7 +119,7 @@ export class Stepper extends BaseClass {
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
    *
    * @prop {string} labelledBy
-   * @attr {string} labelledBy
+   * @attr {string} labelledby
    * @default ""
    */
   @property()
@@ -131,7 +131,7 @@ export class Stepper extends BaseClass {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
    *
    * @prop {boolean} readOnly
-   * @attr {string} readOnly
+   * @attr {string} readonly
    * @default ""
    */
   @property({ type: Boolean, reflect: true })

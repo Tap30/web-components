@@ -191,7 +191,7 @@ export class BottomSheet extends LitElement {
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
    *
    * @props {string} labelledBy
-   * @attr {string} labelledBy
+   * @attr {string} labelledby
    * @default ""
    */
   @property()
