@@ -265,7 +265,7 @@ export class Stepper extends BaseClass {
    *
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepDown
    *
-   * @param stepDecrement The number of steps to decrement.
+   * @param {number} [stepDecrement] - The number of steps to decrement.
    */
   public stepDown(stepDecrement?: number) {
     this._handleDecrease(stepDecrement);
@@ -276,7 +276,7 @@ export class Stepper extends BaseClass {
    *
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepUp
    *
-   * @param stepIncrement The number of steps to increment.
+   * @param {number} [stepIncrement] - The number of steps to increment.
    */
   public stepUp(stepIncrement?: number) {
     this._handleIncrease(stepIncrement);

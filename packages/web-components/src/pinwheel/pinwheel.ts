@@ -108,7 +108,8 @@ export class Pinwheel extends BaseClass {
   /**
    * The value of the currently selected item.
    *
-   * @prop {string} valueMin
+   * @prop {string} value
+   * @attr {string} value
    * @default ""
    */
   @property({ attribute: false })

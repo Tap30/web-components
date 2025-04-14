@@ -55,7 +55,7 @@ export class ProgressIndicator extends LitElement {
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext
    *
    * @prop {string} valueText
-   * @attr {string} valueText
+   * @attr {string} valuetext
    * @default ""
    */
   @property()

@@ -250,19 +250,16 @@ export class PinInput extends BaseClass {
 
   /**
    * The current value of the input. It is always a string.
+   *
+   * @prop {string} value
+   * @attr {string} value
+   * @default ""
    */
   @property()
   public get value() {
     return this._value;
   }
 
-  /**
-   * The current value of the input. It is always a string.
-   *
-   * @prop {string} value
-   * @attr {string} value
-   * @default ""
-   */
   public set value(newValue: string) {
     const update = () => {
       this._value = newValue;
