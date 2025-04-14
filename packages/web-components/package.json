@@ -11,6 +11,10 @@
       "types": "./dist/*/index.d.ts",
       "default": "./dist/*/index.js"
     },
+    "./*/element": {
+      "types": "./dist/*/element.d.ts",
+      "default": "./dist/*/element.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
