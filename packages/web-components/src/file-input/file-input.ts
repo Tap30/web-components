@@ -217,7 +217,7 @@ export class FileInput extends BaseClass {
    *
    * @prop {string} placeholder
    * @attr {string} placeholder
-   * @default ""
+   * @default "انتخاب فایل"
    */
   @property()
   public placeholder = "انتخاب فایل";
