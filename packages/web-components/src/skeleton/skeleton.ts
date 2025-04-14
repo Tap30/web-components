@@ -10,6 +10,8 @@ import styles from "./skeleton.style.ts";
  * @summary Provide a placeholder while you wait for content to load, or to visualize content that doesn't exist yet.
  *
  * @tag tapsi-skeleton
+ *
+ * @slot - The default slot for the skeleton.
  */
 export class Skeleton extends LitElement {
   /** @internal */
