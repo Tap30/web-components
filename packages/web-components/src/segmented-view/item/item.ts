@@ -53,7 +53,9 @@ export class SegmentedViewItem extends LitElement {
   /**
    * Indicates whether the item is active or not.
    *
-   * @return {boolean}
+   * @prop {boolean} active
+   * @attr {string} active
+   * @default false
    */
   @property({ type: Boolean })
   public get active() {
