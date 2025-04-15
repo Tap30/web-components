@@ -113,6 +113,7 @@ export class Radio extends withFocusable(BaseInput) {
     redispatchEvent(this, event);
   }
 
+  /** @internal */
   public override [getFormValue]() {
     if (!this.checked) return null;
 

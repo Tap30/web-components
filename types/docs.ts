@@ -1,50 +1,29 @@
-import { type CustomElement, type Export } from "custom-elements-manifest";
-import { type DefaultTheme } from "vitepress";
-
-export type HTMLTemplatePath = `${string}.html`;
-
-export type MutatorRefName = `#${string}` | `props#${string}`;
-
-export type Property = {
+export type SlotMetadata = { name: string; description: string };
+export type EventMetadata = {
   name: string;
-  defaultValue?: string | boolean | number;
-  mutators?: MutatorRefName[];
+  eventClassName: string;
+  bubbles: boolean;
+  cancelable: boolean;
 };
 
-export type SlotOption = {
+export type ComponentMetadata = {
+  summary: string;
+  relativePath: string;
+  tagName: string;
   name: string;
-  path: HTMLTemplatePath;
-  mutates?: Array<{
-    target: `props#${string}`;
-    value: string | number | boolean | object | null;
-  }>;
+  slots: Record<string, SlotMetadata>;
+  events: Record<string, EventMetadata>;
+  elementClassName: string;
+  compoundParts: Record<string, Omit<ComponentMetadata, "compoundParts">>;
 };
 
-export type DemoSlot = {
+export type PackageMetadata = {
+  endpoints: string[];
   name: string;
-  options: SlotOption[];
-};
-
-export type InteractiveDemo = {
-  requiredElements?: HTMLTemplatePath[];
-  properties: Property[];
-  slots: DemoSlot[];
-};
-
-export type ImportPaths = {
-  webComponents?: string;
-  react?: string;
-};
-
-export type ComponentMetadata = CustomElement & {
-  kebabCaseName: string;
-  interactiveDemo?: InteractiveDemo;
-  importPaths: ImportPaths;
-  slotsEnumName?: string;
-  exportedSlots?: Export[];
+  barrelExports: string[];
 };
 
 export type Metadata = {
-  components: ComponentMetadata[];
-  sidebarItems: DefaultTheme.SidebarItem[];
+  package: PackageMetadata;
+  components: Record<string, ComponentMetadata>;
 };
