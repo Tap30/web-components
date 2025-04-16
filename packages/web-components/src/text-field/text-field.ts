@@ -12,9 +12,6 @@ import TextFieldValidator from "./Validator.ts";
  * @summary An input that enables user to type in text information.
  *
  * @tag tapsi-text-field
- *
- * @slot [leading-icon] - the leading icon slot of the text-area
- * @slot [trailing] - the trailing slot of the text-area
  */
 export class TextField extends BaseTextInput {
   /** @internal */
@@ -133,7 +130,7 @@ export class TextField extends BaseTextInput {
    *
    * @returns {number}
    */
-  public get valueAsNumber() {
+  public get valueAsNumber(): number {
     const input = this.getInputElement() as HTMLInputElement | null;
 
     if (!input) return NaN;
@@ -153,7 +150,7 @@ export class TextField extends BaseTextInput {
   /**
    * The text field's value as a Date.
    */
-  public get valueAsDate() {
+  public get valueAsDate(): Date | null {
     const input = this.getInputElement() as HTMLInputElement | null;
 
     if (!input) return null;

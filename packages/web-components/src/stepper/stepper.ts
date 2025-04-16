@@ -70,8 +70,8 @@ export class Stepper extends BaseClass {
    * @default "0"
    */
   @property()
-  public get value() {
-    return this._value || this.min || `${DEFAULT_MIN}`;
+  public get value(): string {
+    return this._value || this.min || DEFAULT_MIN;
   }
 
   public set value(newValue: string) {
@@ -83,8 +83,8 @@ export class Stepper extends BaseClass {
       return;
     }
 
-    const min = Number(this.min) || DEFAULT_MIN;
-    const max = Number(this.max) || DEFAULT_MAX;
+    const min = Number(this.min) || Number(DEFAULT_MIN);
+    const max = Number(this.max) || Number(DEFAULT_MAX);
 
     this._value = String(clamp(Number(newValue), min, max));
   }
@@ -142,12 +142,12 @@ export class Stepper extends BaseClass {
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
    *
-   * @prop {string} max
+   * @prop {string} [max="100"]
    * @attr {string} max
    * @default "100"
    */
   @property()
-  public max = `${DEFAULT_MAX}`;
+  public max = DEFAULT_MAX;
 
   /**
    * Defines the minimum value in the range of permitted values.
@@ -156,10 +156,10 @@ export class Stepper extends BaseClass {
    *
    * @prop {string} min
    * @attr {string} min
-   * @default "0"
+   * @default ""
    */
   @property()
-  public min = `${DEFAULT_MIN}`;
+  public min = DEFAULT_MIN;
 
   /**
    * Returns or sets the element's step attribute, which works with min and max
@@ -250,7 +250,7 @@ export class Stepper extends BaseClass {
    * @prop {number} valueAsNumber
    * @default 0
    */
-  public get valueAsNumber() {
+  public get valueAsNumber(): number {
     return Number(this.value);
   }
 

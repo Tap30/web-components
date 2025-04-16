@@ -291,7 +291,7 @@ export class FileInput extends BaseClass {
     this._value = newValue;
   }
 
-  public get value() {
+  public get value(): string {
     return this._value;
   }
 

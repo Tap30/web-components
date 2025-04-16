@@ -1,15 +1,24 @@
 /* eslint-disable no-console */
 import {
-  type Declaration,
+  type ClassField,
+  type ClassMember,
+  type CustomElementDeclaration,
+  type CustomElementField,
   type Module,
   type Package,
+  type PropertyLike,
 } from "custom-elements-manifest";
 import { exec } from "node:child_process";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { promisify } from "node:util";
 import { getFileMeta } from "../../../scripts/utils.ts";
-import { type Metadata } from "../../../types/docs.ts";
+import {
+  type ComponentMetadata,
+  type EventMetadata,
+  type Metadata,
+  type SlotMetadata,
+} from "../../../types/docs.ts";
 
 const asyncExec = promisify(exec);
 
@@ -19,8 +28,7 @@ const packageSrcDir = path.join(packageDir, "src");
 const metadataFile = path.join(packageDir, "components-metadata.json");
 const packageJsonFile = path.join(packageDir, "package.json");
 
-const removeDoubleQuotes = (text: string) => text.replace(/"/g, "");
-
+const isConstantCase = (str: string) => /^[A-Z][A-Z0-9_]*$/.test(str);
 const parseJavascriptObject = (str: string): object => {
   // Remove the trailing comma before the closing brace
   str = str.replace(/,(\s*})/, "$1");
@@ -49,7 +57,6 @@ const generateCem = async (): Promise<Package> => {
       [
         "cem",
         "analyze",
-        "--litelement",
         "--packagejson",
         globs.map(g => `--globs ${g}`).join(" "),
       ].join(" "),
@@ -63,21 +70,22 @@ const generateCem = async (): Promise<Package> => {
   return JSON.parse(await fs.readFile(cemFile, "utf8")) as Package;
 };
 
-const getKebabCaseComponentName = (component: Declaration) => {
-  if (!("tagName" in component) || !component.tagName) return null;
-
-  const tagName = component.tagName;
-
-  return tagName.replace("tapsi-", "");
-};
-
 const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
   const metadata: Metadata = {
     package: { name: "", barrelExports: [], endpoints: [] },
     components: {},
   };
 
-  // creating package metadata
+  const constantFileExportsMap: Record<
+    string,
+    Record<string, PropertyLike>
+  > = {};
+
+  const compoundComponentsMap: Record<string, string> = {};
+
+  /**
+   * step 1: creating package metadata
+   */
   const packageJsonContents = JSON.parse(
     await fs.readFile(packageJsonFile, "utf8"),
   ) as {
@@ -90,22 +98,35 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
     .filter(e => ![".", "./custom-elements-manifest"].includes(e))
     .map(e => e.replace("./", ""));
 
-  // creating components metadata
-
-  // const filteredModules = cem.modules.filter(module => {
-  //   const hasDeclarations = (module.declarations ?? []).length > 0;
-  //   const hasCEExports = (module.exports ?? []).some(
-  //     ex => ex.kind === "custom-element-definition",
-  //   );
-  //
-  //   return hasDeclarations && hasCEExports;
-  // });
-
+  /**
+   * step 2: creating components metadata
+   */
   const modules = cem.modules.sort((a, b) => {
-    const getPriority = (file: Module) => {
-      if (file.path.endsWith("constants.ts")) return 0;
-      if (file.path.endsWith("events.ts")) return 1;
-      return 2; // everything else
+    const getPriority = (module: Module) => {
+      if (module.path.endsWith("constants.ts")) return 0;
+
+      const moduleSrc = module.path;
+      const moduleDir = path.dirname(moduleSrc);
+      const relativePath = path.relative(packageSrcDir, moduleDir);
+
+      if (
+        module.declarations?.length === 0 &&
+        relativePath.includes("/") &&
+        module.path.endsWith("/index.ts")
+      )
+        return 1; // compound components
+
+      if (
+        module.declarations?.length === 0 &&
+        !relativePath.includes("/") &&
+        module.path.endsWith("/index.ts")
+      )
+        return 2; // compound components
+      if (module.path.endsWith("events.ts")) return 5;
+
+      if (relativePath.includes("/"))
+        return 3; // everything else
+      else return 4; // everything else
     };
 
     return getPriority(a) - getPriority(b);
@@ -116,208 +137,299 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
     const moduleDir = path.dirname(moduleSrc);
     const relativePath = path.relative(packageSrcDir, moduleDir);
 
-    if (!relativePath) continue;
+    /**
+     * Check barrel file exports
+     */
+    if (!relativePath) {
+      if (module.path.endsWith("src/index.ts")) {
+        metadata.package.barrelExports = (module.exports || []).map(
+          e => e.name,
+        );
+      }
+
+      continue;
+    }
+
+    /**
+     * creating constants maps with this structure:
+     * {
+     *   [relativePathName]: {
+     *     [constant1]: constant1Declaration,
+     *     [constant2]: constant1Declaration,
+     *   },
+     * }
+     */
+    if (module.path.endsWith("/constants.ts")) {
+      module.declarations?.forEach(d => {
+        if (!constantFileExportsMap[relativePath])
+          constantFileExportsMap[relativePath] = {};
+        if (d.name) {
+          constantFileExportsMap[relativePath][d.name] = d;
+        }
+      });
+    }
 
     if (module.path.includes("/base")) continue;
+    if (module.path.endsWith("events.ts")) continue;
 
+    /**
+     * creating constants maps with this structure:
+     * {
+     *   [childRelativePath]: parentRelativePath
+     * }
+     */
+    if (
+      module.declarations?.length === 0 &&
+      relativePath.includes("/") &&
+      module.path.endsWith("/index.ts")
+    ) {
+      const parentRelativePath = relativePath.split("/")[0];
+
+      if (parentRelativePath)
+        compoundComponentsMap[relativePath] = parentRelativePath;
+    }
+
+    const isCompound = relativePath in compoundComponentsMap;
+
+    /**
+     * initiating metadata objects
+     */
     if (!metadata.components[relativePath]) {
-      metadata.components[relativePath] = {
+      const initialData = {
         relativePath,
-        compoundParts: {},
         name: "",
         tagName: "",
         elementClassName: "",
+        summary: "",
         events: {},
+        props: {},
+        methods: {},
         slots: {},
+        compoundParts: {},
       };
-    }
 
-    if (module.path.endsWith("/index.ts")) {
-      // if (!metadata.components[relativePath]) {
-      //   metadata.components[relativePath] = {
-      //     relativePath,
-      //     compoundParts: {},
-      //     name: "",
-      //     tagName: "",
-      //     elementClassName: "",
-      //     events:  {},
-      //     slots: {},
-      //   };
-      // }
-    } else if (module.path.endsWith("/constants.ts")) {
-      const slotsDeclaration = module.declarations?.find(d =>
-        d.name.endsWith("Slots"),
-      );
+      if (!isCompound) {
+        metadata.components[relativePath] = initialData;
+      } else {
+        const compoundParent = compoundComponentsMap[relativePath];
 
-      if (!slotsDeclaration) continue;
-
-      const slotContantString = slotsDeclaration.default;
-
-      metadata.components[relativePath]!.slots = Object.fromEntries(
-        Object.entries(parseJavascriptObject(slotContantString)).map(
-          ([key, value]) => [key, { name: value, description: "" }],
-        ),
-      );
-    } else if (module.path.endsWith("/events.ts")) {
-      module.declarations?.forEach(d => {
-        if (!(d.name in metadata.components[relativePath]!.events)) {
-          metadata.components[relativePath]!.events[d.name] = {
-            name: "",
-            bubbles: false,
-            cancelable: false,
-            eventClassName: "",
-          };
+        if (compoundParent && metadata.components[compoundParent]) {
+          metadata.components[compoundParent].compoundParts[relativePath] =
+            initialData;
         }
-
-        metadata.components[relativePath]!.events[d.name]!.eventClassName =
-          d.name;
-
-        const eventType = d.members?.find(m => m.name === "type");
-
-        if (eventType?.default) {
-          metadata.components[relativePath]!.events[d.name]!.name =
-            removeDoubleQuotes(eventType.default);
-        }
-      });
-    } else {
-      if (module.declarations && module.declarations.length > 0) {
-        const declaration = module.declarations[0];
-
-        if (!declaration) continue;
-
-        const tagName = declaration.tagName;
-
-        if (!tagName) continue;
-
-        const name = tagName.replace("tapsi-", "");
-        const elementClassName = declaration.name;
-        const summary = declaration.summary;
-
-        const slots = declaration.slots as []; // TODO: FIX
-
-        if (slots) {
-          const metaMap = Object.fromEntries(
-            slots.map(({ name, description }) => [name, description]),
-          );
-
-          for (const key in metadata?.components?.[relativePath]?.slots) {
-            if (metadata?.components?.[relativePath]?.slots[key] === undefined)
-              continue;
-
-            const name = metadata?.components?.[relativePath]?.slots[key].name;
-
-            if (name in metaMap) {
-              metadata.components[relativePath].slots[key].description =
-                metaMap[name];
-            }
-          }
-        }
-
-        metadata.components[relativePath].tagName = tagName;
-        metadata.components[relativePath].name = name;
-        metadata.components[relativePath].elementClassName = elementClassName;
-        metadata.components[relativePath].summary = summary;
       }
     }
 
-    // declarations.forEach(declaration => {
-    //   const kebabCaseName = getKebabCaseComponentName(declaration);
-    //
-    //   if (!kebabCaseName) return;
-    //
-    //   const setComponentsMetadata = (): void => {
-    //     const compoundPartialName = kebabCaseName.replace(
-    //       relativePath.concat("-"),
-    //       "",
-    //     );
-    //
-    //     const isCompoundPartialComponent =
-    //       compoundPartialName !== kebabCaseName;
-    //
-    //     const importPaths: ImportPaths = {};
-    //     let slotsEnumName;
-    //
-    //     if (exportedSlotNames.length === 1) {
-    //       slotsEnumName = exportedSlotNames[0];
-    //     } else if (exportedSlotNames.length > 1) {
-    //       if (isCompoundPartialComponent) {
-    //         slotsEnumName = exportedSlotNames.find(slotName =>
-    //           slotName.toLowerCase().includes(compoundPartialName),
-    //         );
-    //       } else {
-    //         slotsEnumName = exportedSlotNames.find(
-    //           slotName =>
-    //             slotName.toLowerCase().replace("slots", "").length === 0,
-    //         );
-    //       }
-    //     }
-    //
-    //     importPaths.webComponents = `@tapsioss/web-components/${relativePath}`;
-    //
-    //     const componentName = toPascalCase(kebabCaseName, "-");
-    //
-    //     importPaths.react = `@tapsioss/react-components/${componentName}`;
-    //
-    //     const component = {
-    //       ...(declaration as CustomElement),
-    //       kebabCaseName,
-    //       importPaths,
-    //       slotsEnumName,
-    //       exportedSlots,
-    //     };
-    //
-    //     components.push(component);
-    //   };
-    //
-    //   const setComponentsSidebarItems = () => {
-    //     const sidebarItem: DefaultTheme.SidebarItem = {};
-    //     const [parentPath, childPath] = relativePath.split("/");
-    //
-    //     sidebarItem.text = childPath ?? relativePath;
-    //
-    //     const isCompound = declarations.length > 1;
-    //
-    //     if (!isCompound) {
-    //       sidebarItem.link = `/components/${kebabCaseName}`;
-    //     } else {
-    //       sidebarItem.items = sidebarItemsMap[sidebarItem.text]?.items || [];
-    //
-    //       sidebarItem.items.push({
-    //         text: kebabCaseName,
-    //         link: `/components/${kebabCaseName}`,
-    //       });
-    //     }
-    //
-    //     if (!childPath) {
-    //       sidebarItemsMap[sidebarItem.text] = sidebarItem;
-    //     } else {
-    //       const parentItem = sidebarItemsMap[parentPath!];
-    //
-    //       if (parentItem) {
-    //         if (!Array.isArray(parentItem.items)) {
-    //           parentItem.items = [];
-    //         }
-    //
-    //         parentItem.items.push(sidebarItem);
-    //       } else {
-    //         sidebarItemsMap[parentPath!] = {
-    //           text: parentPath,
-    //           items: [sidebarItem],
-    //         };
-    //       }
-    //     }
-    //   };
-    //
-    //   setComponentsMetadata();
-    //   setComponentsSidebarItems();
-    // });
+    if (module.declarations && module.declarations.length > 0) {
+      const declaration = module.declarations[0] as CustomElementDeclaration;
+
+      if (!declaration) continue;
+
+      const componentMetadata: ComponentMetadata = {
+        relativePath,
+        name: "",
+        tagName: "",
+        elementClassName: "",
+        summary: "",
+        events: {},
+        props: {},
+        methods: {},
+        slots: {},
+        compoundParts: {},
+      };
+
+      if (!declaration.tagName) continue;
+
+      componentMetadata.tagName = declaration.tagName;
+
+      componentMetadata.name = componentMetadata.tagName.replace("tapsi-", "");
+      componentMetadata.elementClassName = declaration.name;
+      if (declaration.summary) {
+        componentMetadata.summary = declaration.summary;
+      }
+
+      if (declaration.slots) {
+        let componentsSlots: Record<string, string> = {};
+        const slots = declaration.slots as ClassField[];
+
+        const inheritedSlotsList = slots.filter(s => s.inheritedFrom);
+
+        if (inheritedSlotsList.length > 0) {
+          inheritedSlotsList.forEach(inheritedSlot => {
+            if (!inheritedSlot.inheritedFrom?.module) return;
+
+            const inheritedDir = path.dirname(
+              inheritedSlot.inheritedFrom.module,
+            );
+
+            const inheritedRelativePath = path.relative(
+              packageSrcDir,
+              inheritedDir,
+            );
+
+            if (!constantFileExportsMap[inheritedRelativePath]?.Slots?.default)
+              return;
+
+            const inheritedSlots =
+              constantFileExportsMap[inheritedRelativePath].Slots.default;
+
+            const inheritedSlotsMap = Object.fromEntries(
+              Object.entries(
+                parseJavascriptObject(inheritedSlots) as Record<string, string>,
+              ).map(([key, value]) => [value, key]),
+            );
+
+            componentsSlots = { ...componentsSlots, ...inheritedSlotsMap };
+          });
+        }
+
+        const slotConstant = constantFileExportsMap[relativePath]?.Slots;
+
+        if (slotConstant?.default) {
+          const componentsSlotMap = Object.fromEntries(
+            Object.entries(
+              parseJavascriptObject(slotConstant.default) as Record<
+                string,
+                string
+              >,
+            ).map(([key, value]) => [value, key]),
+          );
+
+          componentsSlots = { ...componentsSlots, ...componentsSlotMap };
+        }
+
+        const slotMetadata: SlotMetadata[] = declaration.slots?.map(s => ({
+          value: s.name,
+          description: s.description || "",
+          key: componentsSlots[s.name] || "",
+        }));
+
+        componentMetadata.slots = slotMetadata.reduce(
+          (a, b) => ({ ...a, [b.key]: b }),
+          {},
+        );
+      }
+
+      if (declaration.events) {
+        const eventsMap: Record<string, EventMetadata> = {};
+
+        declaration.events?.forEach(e => {
+          const eventMetadata: EventMetadata = {
+            name: "",
+            eventClassName: "",
+            description: "",
+            bubbles: false,
+            cancelable: false,
+          };
+
+          const eventMapKey = e.name;
+
+          eventMetadata.name = eventMapKey;
+
+          eventMetadata.eventClassName = e.type.text;
+          eventMetadata.description = e.description || "";
+
+          const eventDescriptionKeywords = ["cancelable", "bubbles"] as const;
+
+          eventDescriptionKeywords.forEach(keyword => {
+            if (e.description?.includes(`(${keyword})`)) {
+              eventMetadata.description = eventMetadata.description.replace(
+                `(${keyword})`,
+                "",
+              );
+              eventMetadata[keyword] = true;
+            }
+          });
+
+          if (eventMapKey) {
+            eventsMap[eventMapKey] = eventMetadata;
+          }
+        });
+
+        componentMetadata.events = eventsMap;
+      }
+
+      const members = declaration.members as ClassMember[];
+      const publicMembers = members.filter(m => m.privacy === "public");
+
+      publicMembers.forEach((member: ClassMember) => {
+        if (member.kind === "field") {
+          const field = member as CustomElementField;
+          const propKey = field.name;
+
+          componentMetadata.props[propKey] = {
+            name: "",
+            description: "",
+            type: "",
+            default: "",
+            attribute: "",
+          };
+          componentMetadata.props[propKey].name = propKey;
+          componentMetadata.props[propKey].type = field.type?.text || "";
+
+          if (field.default) {
+            if (!isConstantCase(field.default)) {
+              componentMetadata.props[propKey].default = field.default;
+            } else {
+              const resolvedValue =
+                constantFileExportsMap[relativePath]?.[field.default]?.default;
+
+              if (resolvedValue) {
+                componentMetadata.props[propKey].default = resolvedValue;
+              }
+            }
+          }
+
+          componentMetadata.props[propKey].description =
+            field.description || "";
+          componentMetadata.props[propKey].attribute = field.attribute || "";
+        }
+
+        if (member.kind === "method") {
+          const propKey = member.name;
+
+          componentMetadata.methods[propKey] = {
+            name: "",
+            description: "",
+            parameters: [],
+          };
+
+          componentMetadata.methods[propKey].name = propKey;
+          componentMetadata.methods[propKey].description =
+            member.description || "";
+
+          componentMetadata.methods[propKey].parameters = (
+            member.parameters || []
+          ).map(p => ({
+            name: p.name,
+            description: p.description || "",
+            type: p.type?.text || "",
+          }));
+        }
+      });
+
+      if (isCompound) {
+        const parentRelativePath = compoundComponentsMap[relativePath];
+
+        if (parentRelativePath && metadata.components[parentRelativePath]) {
+          metadata.components[parentRelativePath].compoundParts[relativePath] =
+            componentMetadata;
+        }
+      } else {
+        const existingCompoundParts =
+          metadata.components[relativePath]?.compoundParts;
+
+        metadata.components[relativePath] = {
+          ...componentMetadata,
+          ...(existingCompoundParts && {
+            compoundParts: existingCompoundParts,
+          }),
+        };
+      }
+    }
   }
 
   return metadata;
-
-  // return {
-  //   components,
-  // };
 };
 
 void (async () => {

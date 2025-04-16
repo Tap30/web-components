@@ -512,13 +512,13 @@ export class BottomSheet extends LitElement {
 
   /**
    * The snap points for bottom sheet to snap to.
-   * Note that snap points will be sorted sorted, no matter
+   * Note that snap points will be sorted, no matter
    * how to set it.
    *
    * @prop {number[]} snapPoints
    */
   @property({ attribute: false })
-  public get snapPoints() {
+  public get snapPoints(): number[] {
     if (
       !this._snapPoints ||
       this._snapPoints === SENTINEL_DEFAULT_SNAP_POINTS
@@ -529,7 +529,6 @@ export class BottomSheet extends LitElement {
     return this._snapPoints;
   }
 
-  /** @internal */
   public set snapPoints(newSnapPoints: number[]) {
     this._snapPoints = [...newSnapPoints].sort((a, b) => a - b);
   }
@@ -563,7 +562,7 @@ export class BottomSheet extends LitElement {
     } else toggle();
   }
 
-  public get open() {
+  public get open(): boolean {
     return this._open;
   }
 

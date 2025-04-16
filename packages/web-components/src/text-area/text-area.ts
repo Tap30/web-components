@@ -7,15 +7,13 @@ import BaseTextInput, {
 import { createValidator, logger, type Validator } from "../utils/index.ts";
 import TextAreaValidator from "./Validator.ts";
 import styles from "./text-area.style.ts";
+
 /**
  * @summary A multi-line input that enables user to type in text information.
  *
  * @tag tapsi-text-area
  *
- * @slot [leading-icon] - the leading icon slot of the text-area
- * @slot [trailing] - the trailing slot of the text-area
  */
-
 export class TextArea extends BaseTextInput {
   /** @internal */
   public static override readonly styles = [...baseTextInputStyles, styles];

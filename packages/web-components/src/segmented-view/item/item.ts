@@ -58,7 +58,7 @@ export class SegmentedViewItem extends LitElement {
    * @default false
    */
   @property({ type: Boolean })
-  public get active() {
+  public get active(): boolean {
     return this._active;
   }
 

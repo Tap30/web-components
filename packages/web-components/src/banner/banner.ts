@@ -66,7 +66,7 @@ export class Banner extends LitElement {
    * @default "var(--tapsi-color-surface-secondary)"
    */
   @property({ attribute: "background-color" })
-  public backgroundColor?: string = DEFAULT_BACKGROUND_COLOR;
+  public backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
   /**
    * The text color of the banner.
@@ -76,7 +76,7 @@ export class Banner extends LitElement {
    * @default "var(--tapsi-color-content-primary)"
    */
   @property({ attribute: "text-color" })
-  public textColor?: string = DEFAULT_TEXT_COLOR;
+  public textColor = DEFAULT_TEXT_COLOR;
 
   @state()
   private _hasActionSlot = false;

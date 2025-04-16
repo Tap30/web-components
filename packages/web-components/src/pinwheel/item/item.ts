@@ -23,10 +23,10 @@ export class PinwheelItem extends LitElement {
    *
    * @prop {boolean} selected
    * @attr {string} selected
-   * @default false;
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
-  public get selected() {
+  public get selected(): boolean {
     return this._selected;
   }
 
@@ -46,7 +46,7 @@ export class PinwheelItem extends LitElement {
    *
    * @prop {string} value
    * @attr {string} value
-   * @default "";
+   * @default ""
    */
   @property()
   public value = "";

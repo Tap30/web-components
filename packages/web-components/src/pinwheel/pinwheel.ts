@@ -113,7 +113,7 @@ export class Pinwheel extends BaseClass {
    * @default ""
    */
   @property({ attribute: false })
-  public get value() {
+  public get value(): string {
     return this._value;
   }
 
@@ -226,10 +226,12 @@ export class Pinwheel extends BaseClass {
     }
   }
 
+  /** @internal */
   public override focus(options?: FocusOptions) {
     this._root?.focus(options);
   }
 
+  /** @internal */
   public override blur() {
     this._root?.blur();
   }

@@ -56,10 +56,10 @@ export class Chip extends LitElement {
    *
    * @prop {boolean} selected
    * @attr {string} selected
-   * @default false;
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
-  public get selected() {
+  public get selected(): boolean {
     return this._selected;
   }
 
@@ -78,7 +78,7 @@ export class Chip extends LitElement {
    *
    * @prop {boolean} disabled
    * @attr {string} disabled
-   * @default false;
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
@@ -88,7 +88,7 @@ export class Chip extends LitElement {
    *
    * @prop {"sm" | "md"} size
    * @attr {"sm" | "md"} size
-   * @default "md";
+   * @default "md"
    */
   @property()
   public size: "sm" | "md" = "md";
@@ -98,7 +98,7 @@ export class Chip extends LitElement {
    *
    * @prop {string} value
    * @attr {string} value
-   * @default "";
+   * @default ""
    */
   @property()
   public value: string = "";

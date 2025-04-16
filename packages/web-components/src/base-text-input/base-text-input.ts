@@ -12,6 +12,10 @@ import {
 import { Slots } from "./constants.ts";
 import { stringConverter } from "./utils.ts";
 
+/**
+ * @slot [leading-icon] - the leading icon slot of the text-area
+ * @slot [trailing] - the trailing slot of the text-area
+ */
 export abstract class BaseTextInput extends BaseInput {
   /**
    * The maximum number of characters a user can enter into the text input. Set

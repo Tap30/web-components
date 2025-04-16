@@ -152,7 +152,7 @@ export class Modal extends LitElement {
     } else toggle();
   }
 
-  public get open() {
+  public get open(): boolean {
     return this._open;
   }
 

@@ -256,7 +256,7 @@ export class PinInput extends BaseClass {
    * @default ""
    */
   @property()
-  public get value() {
+  public get value(): string {
     return this._value;
   }
 
@@ -447,7 +447,7 @@ export class PinInput extends BaseClass {
    *
    * @prop {string[]} valueAsArray
    */
-  public get valueAsArray() {
+  public get valueAsArray(): string[] {
     if (isSsr() || !this.isConnected) return this._values;
 
     return this._pins.map(pin => pin.value);
@@ -481,7 +481,7 @@ export class PinInput extends BaseClass {
    *
    * @prop {Function} displayValue
    */
-  public get displayValue() {
+  public get displayValue(): (value: string) => string {
     if (!this._displayValue) return DEFAULT_DISPLAY_VALUE;
 
     return this._displayValue;

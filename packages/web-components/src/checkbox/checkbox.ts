@@ -28,7 +28,7 @@ export class Checkbox extends BaseInput {
    *
    * @prop {boolean} checked
    * @attr {string} checked
-   * @default false;
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public checked = false;
@@ -40,7 +40,7 @@ export class Checkbox extends BaseInput {
    *
    * @prop {boolean} indeterminate
    * @attr {string} indeterminate
-   * @default false;
+   * @default false
    */
   @property({ type: Boolean })
   public indeterminate = false;
@@ -52,7 +52,7 @@ export class Checkbox extends BaseInput {
    *
    * @prop {string} value
    * @attr {string} value
-   * @default "on";
+   * @default "on"
    */
   @property()
   public override value = "on";
@@ -62,7 +62,7 @@ export class Checkbox extends BaseInput {
    *
    * @prop {boolean} error
    * @attr {string} error
-   * @default false;
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public error = false;

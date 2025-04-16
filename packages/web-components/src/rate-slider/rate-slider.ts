@@ -52,7 +52,7 @@ export class RateSlider extends BaseClass {
    * @default ""
    */
   @property()
-  public get value() {
+  public get value(): string {
     return this._value;
   }
 
@@ -65,8 +65,8 @@ export class RateSlider extends BaseClass {
       return;
     }
 
-    const min = Number(this.min) || DEFAULT_MIN;
-    const max = Number(this.max) || DEFAULT_MAX;
+    const min = Number(this.min) || Number(DEFAULT_MIN);
+    const max = Number(this.max) || Number(DEFAULT_MAX);
 
     this._value = String(clamp(Number(newValue), min, max));
   }
@@ -117,7 +117,7 @@ export class RateSlider extends BaseClass {
    * @default "10"
    */
   @property()
-  public max = `${DEFAULT_MAX}`;
+  public max = DEFAULT_MAX;
 
   /**
    * Defines the minimum value in the range of permitted values.
@@ -129,7 +129,7 @@ export class RateSlider extends BaseClass {
    * @default "0"
    */
   @property()
-  public min = `${DEFAULT_MIN}`;
+  public min = DEFAULT_MIN;
 
   /**
    * Indicates that the element should be focused on page load.
@@ -232,7 +232,7 @@ export class RateSlider extends BaseClass {
    *
    * @prop {number} valueAsNumber
    */
-  public get valueAsNumber() {
+  public get valueAsNumber(): number {
     if (this.value === "") return NaN;
 
     return Number(this.value);
@@ -298,8 +298,8 @@ export class RateSlider extends BaseClass {
   }
 
   private get _stopsIterator() {
-    const min = Number(this.min) || DEFAULT_MIN;
-    const max = Number(this.max) || DEFAULT_MAX;
+    const min = Number(this.min) || Number(DEFAULT_MIN);
+    const max = Number(this.max) || Number(DEFAULT_MAX);
 
     return range(min, max + 1);
   }
@@ -450,8 +450,8 @@ export class RateSlider extends BaseClass {
 
   private _renderGradient() {
     const value = this.valueAsNumber;
-    const min = Number(this.min) || DEFAULT_MIN;
-    const max = Number(this.max) || DEFAULT_MAX;
+    const min = Number(this.min) || Number(DEFAULT_MIN);
+    const max = Number(this.max) || Number(DEFAULT_MAX);
 
     const classes: Record<string, boolean> = {
       gradient: true,

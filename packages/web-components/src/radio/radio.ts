@@ -35,7 +35,7 @@ export class Radio extends withFocusable(BaseInput) {
    * @defualt false
    */
   @property({ type: Boolean })
-  public get checked() {
+  public get checked(): boolean {
     return this._checked;
   }
 
