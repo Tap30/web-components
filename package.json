@@ -199,7 +199,7 @@
       ],
       "output": [
         "./packages/web-components/custom-elements.json",
-        "./packages/web-components/components-metadata.json"
+        "./packages/web-components/metadata.json"
       ]
     },
     "test": {

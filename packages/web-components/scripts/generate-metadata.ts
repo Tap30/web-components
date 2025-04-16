@@ -25,7 +25,7 @@ const asyncExec = promisify(exec);
 const { dirname } = getFileMeta(import.meta.url);
 const packageDir = path.join(dirname, "..");
 const packageSrcDir = path.join(packageDir, "src");
-const metadataFile = path.join(packageDir, "components-metadata.json");
+const metadataFile = path.join(packageDir, "metadata.json");
 const packageJsonFile = path.join(packageDir, "package.json");
 
 const isConstantCase = (str: string) => /^[A-Z][A-Z0-9_]*$/.test(str);

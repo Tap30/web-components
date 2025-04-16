@@ -12,7 +12,7 @@ export default {
     const workspaceDir = path.join(docsDir, "..");
     const metadataFile = path.join(
       workspaceDir,
-      "packages/web-components/components-metadata.json",
+      "packages/web-components/metadata.json",
     );
 
     const metadata = JSON.parse(

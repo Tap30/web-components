@@ -9,7 +9,7 @@ const { dirname } = getFileMeta(import.meta.url);
 const workspaceDir = path.join(dirname, "..");
 const metadataFile = path.join(
   workspaceDir,
-  "packages/web-components/components-metadata.json",
+  "packages/web-components/metadata.json",
 );
 
 const getSidebarItems = (): DefaultTheme.Sidebar => {
