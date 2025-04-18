@@ -17,10 +17,33 @@ const getSidebarItems = (): DefaultTheme.Sidebar => {
     fs.readFileSync(metadataFile).toString("utf-8"),
   ) as Metadata;
 
-  return Object.values(metadata.components).map(c => ({
+  const components = Object.values(metadata.components).map(c => ({
     text: c.name,
     link: `/components/${c.relativePath}`,
   }));
+
+  return {
+    "/components/": [
+      {
+        text: "Components",
+        items: [{ text: "Components", link: "/components" }, ...components],
+      },
+    ],
+    "/theme/": [
+      {
+        text: "Theme",
+        link: "/theme",
+        items: [
+          { text: "Palette", link: "/theme/palette" },
+          { text: "Color", link: "/theme/color" },
+          { text: "Radius", link: "/theme/radius" },
+          { text: "Spacing", link: "/theme/spacing" },
+          { text: "Stroke", link: "/theme/stroke" },
+          { text: "Typography", link: "/theme/typography" },
+        ],
+      },
+    ],
+  };
 };
 
 export default getSidebarItems();

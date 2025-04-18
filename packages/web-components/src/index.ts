@@ -55,10 +55,12 @@ import {
 } from "./button/standard/index.ts";
 import {
   ChatBubbleIn,
+  Slots as ChatBubbleInSlots,
   register as registerChatBubbleInElement,
 } from "./chat-bubble/in/index.ts";
 import {
   ChatBubbleOut,
+  Slots as ChatBubbleOutSlots,
   register as registerChatBubbleOutElement,
 } from "./chat-bubble/out/index.ts";
 import {
@@ -207,7 +209,9 @@ export {
   ButtonGroupSlots,
   ButtonSlots,
   ChatBubbleIn,
+  ChatBubbleInSlots,
   ChatBubbleOut,
+  ChatBubbleOutSlots,
   Checkbox,
   Chip,
   ChipDeselectEvent,
