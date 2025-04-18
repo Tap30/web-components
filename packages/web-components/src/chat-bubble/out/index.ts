@@ -1,5 +1,6 @@
 import { ChatBubbleOut } from "./out.ts";
 
+export { Slots } from "../base/constants.ts";
 export { ChatBubbleOut };
 
 export const register = () => {

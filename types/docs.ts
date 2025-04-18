@@ -39,12 +39,12 @@ export type ComponentMetadata = {
   methods: Record<string, MethodMetadata>;
   elementClassName: string;
   compoundParts: Record<string, Omit<ComponentMetadata, "compoundParts">>;
+  endpointExports: Record<string, string[]>;
 };
 
 export type PackageMetadata = {
   endpoints: string[];
   name: string;
-  barrelExports: string[];
 };
 
 export type Metadata = {

@@ -437,14 +437,17 @@ export class Pinwheel extends BaseClass {
     this.disabled = disabled;
   }
 
+  /** @internal */
   public override [getFormValue]() {
     return this.value;
   }
 
+  /** @internal */
   public override formResetCallback() {
     this.value = this.getAttribute("value") ?? "";
   }
 
+  /** @internal */
   public override formStateRestoreCallback(state: string) {
     this.value = state;
   }

@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+// TODO: fix type errors
+// TODO: check if the jsdocs and actual events/slots are sync
 import {
   type ClassField,
   type ClassMember,
@@ -72,7 +74,7 @@ const generateCem = async (): Promise<Package> => {
 
 const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
   const metadata: Metadata = {
-    package: { name: "", barrelExports: [], endpoints: [] },
+    package: { name: "", endpoints: [] },
     components: {},
   };
 
@@ -94,16 +96,22 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
   };
 
   metadata.package.name = packageJsonContents.name;
-  metadata.package.endpoints = Object.keys(packageJsonContents.exports)
-    .filter(e => ![".", "./custom-elements-manifest"].includes(e))
-    .map(e => e.replace("./", ""));
+  metadata.package.endpoints = Object.keys(packageJsonContents.exports).map(e =>
+    e.replace("./", "").replace(".", ""),
+  );
+
+  const componentEndpointExports = metadata.package.endpoints.filter(
+    e => !["custom-elements-manifest"].includes(e),
+  );
 
   /**
    * step 2: creating components metadata
    */
   const modules = cem.modules.sort((a, b) => {
     const getPriority = (module: Module) => {
-      if (module.path.endsWith("constants.ts")) return 0;
+      const isConstant = module.path.endsWith("constants.ts");
+
+      if (isConstant) return 0;
 
       const moduleSrc = module.path;
       const moduleDir = path.dirname(moduleSrc);
@@ -121,12 +129,27 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
         !relativePath.includes("/") &&
         module.path.endsWith("/index.ts")
       )
-        return 2; // compound components
-      if (module.path.endsWith("events.ts")) return 5;
+        return 2; // non-compound components
 
-      if (relativePath.includes("/"))
-        return 3; // everything else
-      else return 4; // everything else
+      const isComponentsBarrel = module.path.endsWith(
+        `${relativePath}/index.ts`,
+      );
+
+      if (
+        !isComponentsBarrel &&
+        !isConstant &&
+        !module.path.includes("/base") &&
+        module.declarations &&
+        module.declarations.length > 0
+      ) {
+        return 3;
+      }
+
+      if (!module.path.includes("/base") && isComponentsBarrel) {
+        return 4;
+      }
+
+      return 5;
     };
 
     return getPriority(a) - getPriority(b);
@@ -141,11 +164,11 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
      * Check barrel file exports
      */
     if (!relativePath) {
-      if (module.path.endsWith("src/index.ts")) {
-        metadata.package.barrelExports = (module.exports || []).map(
-          e => e.name,
-        );
-      }
+      // if (module.path.endsWith("src/index.ts")) {
+      //   metadata.package.barrelExports = (module.exports || []).map(
+      //     e => e.name,
+      //   );
+      // }
 
       continue;
     }
@@ -159,7 +182,9 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
      *   },
      * }
      */
-    if (module.path.endsWith("/constants.ts")) {
+    const isConstant = module.path.endsWith("/constants.ts");
+
+    if (isConstant) {
       module.declarations?.forEach(d => {
         if (!constantFileExportsMap[relativePath])
           constantFileExportsMap[relativePath] = {};
@@ -169,8 +194,7 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
       });
     }
 
-    if (module.path.includes("/base")) continue;
-    if (module.path.endsWith("events.ts")) continue;
+    if (module.path.endsWith("events.ts")) continue; // tODO: FIX
 
     /**
      * creating constants maps with this structure:
@@ -194,7 +218,14 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
     /**
      * initiating metadata objects
      */
-    if (!metadata.components[relativePath]) {
+    if (
+      !isConstant &&
+      (isCompound
+        ? compoundComponentsMap[relativePath] &&
+          !metadata.components[compoundComponentsMap[relativePath]]
+            ?.compoundParts[relativePath]
+        : !metadata.components[relativePath])
+    ) {
       const initialData = {
         relativePath,
         name: "",
@@ -206,6 +237,10 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
         methods: {},
         slots: {},
         compoundParts: {},
+        endpointExports: {
+          "": [],
+          "*": [],
+        },
       };
 
       if (!isCompound) {
@@ -220,7 +255,98 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
       }
     }
 
-    if (module.declarations && module.declarations.length > 0) {
+    const isComponentsBarrel = module.path.endsWith(`${relativePath}/index.ts`);
+
+    if (!module.path.includes("/base") && isComponentsBarrel) {
+      const endpoindExports: ComponentMetadata["endpointExports"] =
+        componentEndpointExports.reduce((a, b) => ({ ...a, [b]: [] }), {});
+
+      module.exports?.forEach(e => {
+        if (e.declaration.package?.includes("events.ts")) {
+          if (componentEndpointExports.includes("*")) {
+            if (isCompound) {
+              Object.values(
+                metadata.components?.[compoundComponentsMap[relativePath]]
+                  ?.compoundParts?.[relativePath].events || {},
+              ).forEach(e => {
+                endpoindExports["*"]?.push(e.eventClassName);
+              });
+            } else {
+              Object.values(
+                metadata.components?.[relativePath]?.events || {},
+              ).forEach(e => {
+                endpoindExports["*"]?.push(e.eventClassName);
+              });
+            }
+          }
+
+          if (componentEndpointExports.includes("")) {
+            if (isCompound) {
+              Object.values(
+                metadata.components?.[compoundComponentsMap[relativePath]]
+                  ?.compoundParts?.[relativePath].events,
+              ).forEach(e => {
+                endpoindExports[""]?.push(
+                  `${metadata.components[relativePath]?.elementClassName}${e.eventClassName}`,
+                );
+              });
+            } else {
+              Object.values(
+                metadata.components?.[relativePath]?.events,
+              ).forEach(e => {
+                endpoindExports[""]?.push(
+                  `${metadata.components[relativePath]?.elementClassName}${e.eventClassName}`,
+                );
+              });
+            }
+          }
+        }
+
+        if (e.name === "register") {
+          if (componentEndpointExports.includes("*")) {
+            endpoindExports["*"]?.push(e.name);
+          }
+
+          if (componentEndpointExports.includes("")) {
+            endpoindExports[""]?.push(
+              `${e.name}${metadata.components[relativePath]?.elementClassName}Element`,
+            );
+          }
+        }
+
+        if (e.name.endsWith("Slots")) {
+          if (componentEndpointExports.includes("*")) {
+            endpoindExports["*"]?.push(e.name);
+          }
+
+          if (componentEndpointExports.includes("")) {
+            endpoindExports[""]?.push(
+              `${metadata.components[relativePath]?.elementClassName}${e.name}`,
+            );
+          }
+        }
+      });
+
+      if (isCompound) {
+        if (
+          metadata.components?.[compoundComponentsMap[relativePath]]
+            ?.compoundParts?.[relativePath]
+        )
+          metadata.components[
+            compoundComponentsMap[relativePath]
+          ].compoundParts[relativePath].endpointExports = endpoindExports;
+      } else {
+        metadata.components[relativePath].endpointExports = endpoindExports;
+      }
+    }
+
+    if (
+      !isComponentsBarrel &&
+      !isConstant &&
+      !module.path.includes("/base") &&
+      module.declarations &&
+      module.declarations.length > 0
+    ) {
       const declaration = module.declarations[0] as CustomElementDeclaration;
 
       if (!declaration) continue;
@@ -235,7 +361,8 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
         props: {},
         methods: {},
         slots: {},
-        compoundParts: {},
+        ...(!isCompound && { compoundParts: {} }),
+        endpointExports: {},
       };
 
       if (!declaration.tagName) continue;
@@ -298,11 +425,19 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
           componentsSlots = { ...componentsSlots, ...componentsSlotMap };
         }
 
-        const slotMetadata: SlotMetadata[] = declaration.slots?.map(s => ({
-          value: s.name,
-          description: s.description || "",
-          key: componentsSlots[s.name] || "",
-        }));
+        const slotMetadata: SlotMetadata[] = declaration.slots?.map(s => {
+          const key = componentsSlots[s.name];
+
+          if (key === undefined) {
+            // throw new Error(`No Slot key was found for ${relativePath}`);
+          }
+
+          return {
+            value: s.name,
+            description: s.description || "",
+            key,
+          };
+        });
 
         componentMetadata.slots = slotMetadata.reduce(
           (a, b) => ({ ...a, [b.key]: b }),

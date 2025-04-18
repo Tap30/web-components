@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "node:path";
 import { type DefaultTheme } from "vitepress";
 import { getFileMeta } from "../scripts/utils.ts";
-import { type Metadata } from "../types/docs.ts";
+import { type Metadata } from "../types/docs";
 
 const { dirname } = getFileMeta(import.meta.url);
 
@@ -13,9 +13,14 @@ const metadataFile = path.join(
 );
 
 const getSidebarItems = (): DefaultTheme.Sidebar => {
-  return (
-    JSON.parse(fs.readFileSync(metadataFile).toString("utf-8")) as Metadata
-  ).sidebarItems;
+  const metadata = JSON.parse(
+    fs.readFileSync(metadataFile).toString("utf-8"),
+  ) as Metadata;
+
+  return Object.values(metadata.components).map(c => ({
+    text: c.name,
+    link: `/components/${c.relativePath}`,
+  }));
 };
 
 export default getSidebarItems();

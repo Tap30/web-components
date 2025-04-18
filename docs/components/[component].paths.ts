@@ -1,8 +1,15 @@
 import fs from "node:fs";
 import path from "node:path";
 import { getFileMeta } from "../../scripts/utils.ts";
-import { type ComponentMetadata, type Metadata } from "../../types/docs.ts";
+import {
+  type ComponentMetadata,
+  type Metadata,
+  type PackageMetadata,
+} from "../../types/docs.ts";
 import { codify, tabulateData } from "../utils/markdown.ts";
+
+let packagesMetadata: null | PackageMetadata = null;
+const REACT_PACKAGE_NAME = "@tapsioss/react-components";
 
 export default {
   paths() {
@@ -19,14 +26,16 @@ export default {
       fs.readFileSync(metadataFile).toString(),
     ) as Metadata;
 
-    return metadata.components.map(c => {
+    packagesMetadata = metadata.package;
+
+    return Object.values(metadata.components).map(c => {
       let content = "";
 
-      content += getComponentMarkdown(c);
+      content += getPageMarkdown(c);
 
       return {
         params: {
-          component: c.kebabCaseName,
+          component: c.relativePath,
         },
         content,
       };
@@ -34,53 +43,174 @@ export default {
   },
 };
 
-const getComponentMarkdown = (component: ComponentMetadata) => {
+const getPageMarkdown = (component: ComponentMetadata) => {
   let res = "\n";
 
   if (component) {
-    res += `# ${component.name?.split("Tapsi")[1]}\n`;
+    res += getComponentMarkdown(component);
 
-    res += `${component.summary}\n\n`;
+    const compoundParts = Object.values(component.compoundParts);
 
-    res += getImportsMarkdown(component);
+    if (compoundParts.length > 0) {
+      res += "\n## Compound Parts";
 
-    res += getUsageMarkdown(component);
-
-    res += getMembersMarkdown(component);
-
-    res += getSlotsMarkdown(component);
-
-    res += getEventsMarkdown(component);
+      compoundParts.forEach(c => {
+        res += getComponentMarkdown(c as ComponentMetadata, 3);
+      });
+    }
   }
 
   return res;
 };
 
-const getImportsMarkdown = (component: ComponentMetadata) => {
-  let res = "";
+const getComponentMarkdown = (
+  component: ComponentMetadata,
+  headingLevel = 1,
+) => {
+  let res = "\n";
 
-  res += `
-## Importing
+  if (component) {
+    res += `${"#".repeat(headingLevel)} ${component.elementClassName}\n`;
 
-::: code-group
-\`\`\`ts [Web]
-import "${component.importPaths.webComponents}";
-\`\`\`
+    res += `${component.summary}\n\n`;
 
-\`\`\`ts [React]
-import { ${component.name.replace("Tapsi", "")} } from "${component.importPaths.react}";
-\`\`\`
+    res += getImportsMarkdown(component, headingLevel);
 
-:::`;
+    res += getUsageMarkdown(component, headingLevel);
+
+    res += getPropsMarkdown(component, headingLevel);
+
+    res += getMethodsMarkdown(component, headingLevel);
+
+    res += getSlotsMarkdown(component, headingLevel);
+
+    res += getEventsMarkdown(component, headingLevel);
+  }
 
   return res;
 };
 
-const getUsageMarkdown = (component: ComponentMetadata) => {
+const getImportsMarkdown = (
+  component: ComponentMetadata,
+  headingLevel: number = 1,
+) => {
+  let res = "";
+
+  res += `${"#".repeat(headingLevel + 1)} Importing\n`;
+
+  const componentHumanReadableName = component.name.replace(/-/g, " ");
+  const compoundParts = Object.values(component.compoundParts || {});
+
+  if (headingLevel === 1) {
+    res += [
+      `To use the ${componentHumanReadableName} component,`,
+      `first you need to register the component inside the page.`,
+    ].join("\n");
+
+    const hasAutomaticRegister = "*/element" in component.endpointExports;
+    const hasManualComponentRegister =
+      component.endpointExports["*"]?.includes("register");
+
+    const manualBarrelRegisterFunctionName = component.endpointExports[
+      ""
+    ]?.find(e => e.startsWith("register"));
+
+    if (hasManualComponentRegister) {
+      res +=
+        "\n\nYou can register the component manually by importing the `register` function";
+
+      res += "\n\n";
+      res += [
+        "::: code-group",
+        "```ts [Web]",
+        `import { register } from "${packagesMetadata?.name}/${component.relativePath}";`, // remove this section from compound
+        "",
+        `register(); // Now the ${componentHumanReadableName} component is ready to use!`,
+        "```",
+        ":::",
+      ].join("\n");
+    }
+
+    if (manualBarrelRegisterFunctionName) {
+      res += `\n\nHere is another way to register the ${componentHumanReadableName} component:`;
+
+      res += "\n\n";
+      res += [
+        "::: code-group",
+        "```ts [Web]",
+        `import { ${manualBarrelRegisterFunctionName} } from "${packagesMetadata?.name}";`, // remove this section from compound
+        "",
+        `${manualBarrelRegisterFunctionName}(); // Now the ${componentHumanReadableName} component is ready to use!`,
+        "```",
+        ":::",
+      ].join("\n");
+    }
+
+    if (hasAutomaticRegister) {
+      res += `\n\nAlso you can automatically register the component by importing it with the following approach:`;
+
+      res += "\n\n";
+      res += [
+        "::: code-group",
+        "```ts [Web]",
+        `import { ${manualBarrelRegisterFunctionName} } from "${packagesMetadata?.name}/${component.relativePath}/element";`,
+        "```",
+        ":::",
+      ].join("\n");
+
+      res += "\n\n";
+      res += [
+        "::: tip",
+        "If you want to use all the component in your app, you can call `registerAllElements` at the root of your project.",
+        "```ts [Web]",
+        `import { registerAllElements } from "${packagesMetadata?.name}";`,
+        ``,
+        `registerAllElements(); // All the components are now available`,
+        "```",
+        ":::",
+      ].join("\n");
+    }
+
+    res += "\n\n";
+
+    if (compoundParts.length > 0) {
+      res += "\n\n";
+      res += [
+        "::: info",
+        `By registering the ${componentHumanReadableName} component, its compound tags will also be registered:`,
+        compoundParts.map(c => `- ${codify(c.tagName)}`).join("\n"),
+        ":::",
+      ].join("\n");
+      res += "\n\n";
+    }
+  } else {
+    res += "\n\n";
+    res += `By registering the parent component, the ${componentHumanReadableName} will also be registered.`;
+    res += "\n\n";
+  }
+
+  res +=
+    "In the React package, you can easily add the component using the following code:";
+  res += "\n\n";
+  res += [
+    "::: code-group",
+    "```ts [React]",
+    `import { ${component.elementClassName} } from "${REACT_PACKAGE_NAME}";`,
+    "```",
+    ":::",
+  ].join("\n");
+
+  return res;
+};
+
+const getUsageMarkdown = (
+  component: ComponentMetadata,
+  headingLevel: number = 1,
+) => {
   let res = "";
 
   res += `
-## Component Usage
+${"#".repeat(headingLevel + 1)} Component Usage
 
 ::: code-group
 \`\`\`html [Web]
@@ -96,85 +226,78 @@ const getUsageMarkdown = (component: ComponentMetadata) => {
   return res;
 };
 
-const getSlotsMarkdown = (component: ComponentMetadata) => {
+const getSlotsMarkdown = (
+  component: ComponentMetadata,
+  headingLevel: number = 1,
+) => {
   const slots = component?.slots || [];
   let res = "";
 
-  if ((slots?.length ?? 0) > 0) {
-    res += "\n## Slots\n";
+  if ((Object.keys(slots)?.length ?? 0) > 0) {
+    res += `\n${"#".repeat(headingLevel + 1)} Slots\n`;
 
     res += tabulateData(
-      ["Name", "Description"],
-      slots?.map(({ description, name }) => [
-        name ? codify(name) : "-",
+      ["Name", "Value", "Description"],
+      Object.values(slots)?.map(({ description, value, key }) => [
+        key ? codify(key) : "-",
+        value ? codify(value) : "-",
         description || "-",
       ]),
     );
 
-    const reactName = component.name.replace("Tapsi", "");
+    if (headingLevel === 1) {
+      const componentSlotImports = component.endpointExports["*"]?.filter(e =>
+        e.endsWith("Slots"),
+      );
 
-    res += `\n
-::: tip
+      const barrelSlotImports = component.endpointExports[""]?.filter(e =>
+        e.endsWith("Slots"),
+      );
 
-You can use slot names as variables:
-
-::: code-group
-\`\`\`ts [Web]
-import { ${component.slotsEnumName} } from "${component.importPaths.webComponents}";
-
-${slots
-  ?.map(slot => {
-    const slotEnum =
-      slot.name === "" ? "DEFAULT" : slot.name.toUpperCase().replace(/-/g, "_");
-
-    return `console.log(${component.slotsEnumName}.${slotEnum}); // "${slot.name}"`;
-  })
-  .join("\n")}
-
-\`\`\`
-
-
-\`\`\`ts [React]
-import { ${reactName}Slots } from "${component.importPaths.react?.split(`/${reactName}`)[0]}";
-
-${slots
-  ?.map(slot => {
-    const slotEnum =
-      slot.name === "" ? "DEFAULT" : slot.name.toUpperCase().replace(/-/g, "_");
-
-    return `console.log(${reactName}Slots.${slotEnum}); // "${slot.name}"`;
-  })
-  .join("\n")}
-
-\`\`\`
-
-:::\n`;
+      res += "\n\n";
+      res += [
+        "::: tip",
+        "The value of slots are available for developer as JavaScript Variables:",
+        "```ts",
+        "// Option 1",
+        `import { ${barrelSlotImports?.join(", ")} } from "${REACT_PACKAGE_NAME}";`,
+        "",
+        "// Option 2",
+        `import { ${componentSlotImports?.join(", ")} } from "${REACT_PACKAGE_NAME}/${component.relativePath}";`,
+        "```",
+        ":::",
+      ].join("\n");
+    }
   }
 
   return res;
 };
 
-const getMembersMarkdown = (component: ComponentMetadata) => {
-  const members = component.members || [];
+const getPropsMarkdown = (
+  component: ComponentMetadata,
+  headingLevel: number = 1,
+) => {
+  const props = Object.values(component.props) || [];
   let res = "";
 
-  if ((members.length ?? 0) > 0) {
-    res += "\n## Properties\n";
+  if ((props.length ?? 0) > 0) {
+    res += `\n${"#".repeat(headingLevel + 1)} Properties\n`;
 
     res += tabulateData(
-      ["Name", "Description", "Type", "Default Value"],
-      members.map(member => {
-        if (member.kind !== "field") return [];
-        const { type, name, description, default: defaultValue } = member;
+      ["Name", "Attribute Name", "Description", "Type", "Default Value"],
+      props.map(p => {
+        const { type, name, description, default: defaultValue, attribute } = p;
 
         return [
           name ? codify(name) : "-",
-          description?.replace(/\\/g, "<br>") || "",
-          type?.text
-            ? type.text
+          attribute ? codify(attribute) : "-",
+          description.replace(/\n/g, "<br>") || "",
+          // description?.replace(/\\/g, "<br>") || "",
+          type
+            ? type
                 ?.split("|")
                 .map(t => codify(t.trim().replace(/'/g, '"')))
-                .join(" \\| ")
+                .join("\\|")
             : "-",
           defaultValue ? codify(defaultValue.replace(/'/g, '"')) : "-",
         ];
@@ -185,78 +308,127 @@ const getMembersMarkdown = (component: ComponentMetadata) => {
   return res;
 };
 
-const getEventsMarkdown = (component: ComponentMetadata) => {
-  const events = component?.events || [];
+const getMethodsMarkdown = (
+  component: ComponentMetadata,
+  headingLevel: number = 1,
+) => {
+  const props = Object.values(component.methods) || [];
+  let res = "";
+
+  if ((props.length ?? 0) > 0) {
+    res += `\n${"#".repeat(headingLevel + 1)} Methods\n`;
+
+    res += tabulateData(
+      ["Name", "Description", "Parameters"],
+      props.map(p => {
+        const { name, description, parameters } = p;
+
+        return [
+          name ? codify(name) : "-",
+          description?.replace(/\n/g, "<br>") || "-",
+          parameters
+            ? parameters
+                .map(
+                  p =>
+                    `**Name**: \`${p.name}\`${p.type && `<br>**Type**:  (\`${p.type.split("|").join("\\|")}\`)`}${p.description && `: ${p.description}`}`,
+                )
+                .join("<br><br>")
+            : "-",
+        ];
+      }),
+    );
+  }
+
+  return res;
+};
+
+const getEventsMarkdown = (
+  component: ComponentMetadata,
+  headingLevel: number = 1,
+) => {
+  const events = Object.values(component?.events) || [];
   let res = "";
 
   if ((events?.length ?? 0) > 0) {
-    res += "\n## Events\n";
-
-    const reactName = component.name.replace("Tapsi", "");
+    res += `\n${"#".repeat(headingLevel + 1)} Events\n`;
 
     res += tabulateData(
-      ["Name", "Description", "Type"],
-      events?.map(({ description, name, type }) => [
-        name ? codify(name) : "-",
-        description
-          ?.replace(/cancelable/g, '<Badge type="danger">Cancelable</Badge>')
-          .replace(/bubbles/g, '<Badge type="warning">Bubbles</Badge>') || "-",
-        type?.text ? codify(type.text) : "-",
-      ]),
+      ["Name", "Description", "Type", "Bubbles", "Cancelable"],
+      events?.map(
+        ({ description, name, eventClassName, bubbles, cancelable }) => [
+          name ? codify(name) : "-",
+          description
+            ?.replace(/cancelable/g, '<Badge type="danger">Cancelable</Badge>')
+            .replace(/bubbles/g, '<Badge type="warning">Bubbles</Badge>') ||
+            "-",
+          eventClassName ? codify(eventClassName) : "-",
+          bubbles ? "Yes" : "No",
+          cancelable ? "Yes" : "No",
+        ],
+      ),
     );
 
-    const exportedEvents = events.filter(e => {
-      return (
-        !!e.type && e.type.text !== "Event" && e.type.text !== "InputEvent"
-      );
-    });
+    const componentEventImports =
+      component.endpointExports["*"]?.filter(
+        e => e.endsWith("Event") && !["Event", "InputEvent"].includes(e),
+      ) || [];
 
-    if (exportedEvents.length > 0) {
-      res += `\n
-::: tip
+    const barrelEventImports =
+      component.endpointExports[""]?.filter(
+        e => e.endsWith("Event") && !["Event", "InputEvent"].includes(e),
+      ) || [];
 
-You can import custom event names:
-
-::: code-group
-
-\`\`\`ts [Web]
-import { \n  ${exportedEvents
-        .map(e => e.type.text)
-        .join(",\n  ")}\n} from "${component.importPaths.webComponents}";
-
-${exportedEvents
-  .map(event => {
-    const eventClass = event.type.text;
-
-    return `element.addEventListener(${eventClass}.type, handle${component.name}${event.type.text.replace("Event", "")});`;
-  })
-  .join("\n")}
-
-\`\`\`
-
-\`\`\`tsx [React]
-import { \n  ${exportedEvents
-        .map(e => `${reactName}${e.type.text}`)
-        .join(
-          ",\n  ",
-        )}\n} from "${component.importPaths.react?.split(`/${reactName}`)[0]}";
-
-
-// ...
-
-<${reactName}
-${exportedEvents
-  .map(event => {
-    const eventClass = event.type.text;
-
-    return `  on${eventClass}={(e: ${reactName}${eventClass}) => {...}}`;
-  })
-  .join("\n")}
-/>
-
-\`\`\`
-
-:::`;
+    if (barrelEventImports.length > 0) {
+      res += [
+        "",
+        "::: tip",
+        "",
+        "Event details are available as JavaScript variables:",
+        "",
+        "```ts",
+        "// Option 1",
+        `import {\n ${componentEventImports.join(",\n ")}\n} from "${packagesMetadata?.name}/${component.relativePath}";`,
+        "",
+        "// Option 2",
+        `import {\n ${barrelEventImports.join(",\n ")}\n} from "${packagesMetadata?.name}";`,
+        "",
+        "```",
+        "",
+        "You can have access to the event name using the `type` property:",
+        "",
+        "```ts",
+        "// Option 1",
+        `${componentEventImports.map(e => `element.addEventListener(${e}.type, handle${e.replace("Event", "")});`).join("\n")}`,
+        "",
+        "// Option 2",
+        `${barrelEventImports.map(e => `element.addEventListener(${e}.type, handle${e.replace(component.elementClassName, "").replace("Event", "")});`).join("\n")}`,
+        "",
+        "```",
+        "",
+        ":::",
+      ].join("\n");
+      // res += `\n
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      // ${events
+      //   .map(event => {
+      //     const eventClass = event.eventClassName;
+      //
+      //     return `element.addEventListener(${eventClass}.type, handle${component.name}${event.eventClassName.replace("Event", "")});`;
+      //   })
+      //   .join("\n")}
+      //
+      //
+      // \`\`\`
+      //
+      // :::`;
     }
   }
 
