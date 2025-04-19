@@ -44,8 +44,8 @@ const getSidebarItems = (): DefaultTheme.Sidebar => {
         text: "Introduction",
         link: "/theme",
         items: [
-          { text: "Palette", link: "/theme/palette" },
           { text: "Color", link: "/theme/color" },
+          { text: "Palette", link: "/theme/palette" },
           { text: "Radius", link: "/theme/radius" },
           { text: "Spacing", link: "/theme/spacing" },
           { text: "Stroke", link: "/theme/stroke" },
