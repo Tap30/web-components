@@ -3,10 +3,13 @@ import * as React from "react";
 
 import { PinwheelItem as PinwheelItemElementClass } from "@tapsioss/web-components";
 
-if (typeof window !== "undefined" && !customElements.get("tapsi-pinwheel"))
+if (typeof window !== "undefined" && !customElements.get("tapsi-pinwheel")) {
+  /* eslint-disable no-console */
   console.warn(
     "[TAPSI][PinwheelItem]: The `tapsi-pinwheel` tag is not registered. Since `PinwheelItem` is a compound component, it should be wrapped inside `Pinwheel` component.",
   );
+  /* eslint-enable no-console */
+}
 
 const __PinwheelItem = LitReact.createComponent({
   tagName: "tapsi-pinwheel-item",

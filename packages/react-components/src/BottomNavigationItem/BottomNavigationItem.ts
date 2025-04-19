@@ -6,10 +6,13 @@ import { BottomNavigationItem as BottomNavigationItemElementClass } from "@tapsi
 if (
   typeof window !== "undefined" &&
   !customElements.get("tapsi-bottom-navigation")
-)
+) {
+  /* eslint-disable no-console */
   console.warn(
     "[TAPSI][BottomNavigationItem]: The `tapsi-bottom-navigation` tag is not registered. Since `BottomNavigationItem` is a compound component, it should be wrapped inside `BottomNavigation` component.",
   );
+  /* eslint-enable no-console */
+}
 
 const __BottomNavigationItem = LitReact.createComponent({
   tagName: "tapsi-bottom-navigation-item",

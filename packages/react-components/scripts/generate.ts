@@ -191,7 +191,7 @@ const getReactComponentCode = async (
 
   const registerSection = registerFunction
     ? `${registerFunction}();`
-    : `if (typeof window !== "undefined" && !customElements.get("${parentInfo?.tagName}")) console.warn("[TAPSI][${componentName}]: The \`${parentInfo?.tagName}\` tag is not registered. Since \`${componentName}\` is a compound component, it should be wrapped inside \`${parentInfo?.elementClassName}\` component.");`;
+    : `if (typeof window !== "undefined" && !customElements.get("${parentInfo?.tagName}")){\n/* eslint-disable no-console */\nconsole.warn("[TAPSI][${componentName}]: The \`${parentInfo?.tagName}\` tag is not registered. Since \`${componentName}\` is a compound component, it should be wrapped inside \`${parentInfo?.elementClassName}\` component.");\n/* eslint-enable no-console */}`;
 
   return Mustache.render(
     componentTemplateStr,
