@@ -2,11 +2,20 @@ import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { SystemError } from "../utils/index.ts";
 
+/**
+ * @summary A spinner component used for the loading status of a page or a block.
+ *
+ * @tag tapsi-spinner
+ */
 export class Spinner extends LitElement {
   /**
    * Determines the size of the spinner.
    * When set to 'auto', it inherits the size of its parent element.
    * Otherwise, you can specify the size in pixels.
+   *
+   * @prop {number | `${number}` | "auto"} size
+   * @attr {string} size
+   * @default "auto"
    */
   @property()
   public size: number | `${number}` | "auto" = "auto";

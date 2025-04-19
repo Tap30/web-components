@@ -12,12 +12,20 @@ import {
 import { Slots } from "./constants.ts";
 import { stringConverter } from "./utils.ts";
 
+/**
+ * @slot [leading-icon] - the leading icon slot of the input
+ * @slot [trailing] - the trailing slot of the input
+ */
 export abstract class BaseTextInput extends BaseInput {
   /**
    * The maximum number of characters a user can enter into the text input. Set
    * to -1 for none.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength
+   *
+   * @prop {number} maxLength
+   * @attr {string} maxlength
+   * @default -1
    */
   @property({ type: Number })
   public maxLength = -1;
@@ -27,6 +35,10 @@ export abstract class BaseTextInput extends BaseInput {
    * to -1 for none.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#minlength
+   *
+   * @prop {number} minLength
+   * @attr {string} minlength
+   * @default -1
    */
   @property({ type: Number })
   public minLength = -1;
@@ -37,8 +49,12 @@ export abstract class BaseTextInput extends BaseInput {
    * entered into the control.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/placeholder
+   *
+   * @prop {string} placeholder
+   * @attr {string} placeholder
+   * @default ""
    */
-  @property({ type: String, converter: stringConverter })
+  @property({ converter: stringConverter })
   public placeholder = "";
 
   /**
@@ -55,15 +71,23 @@ export abstract class BaseTextInput extends BaseInput {
    * should provide.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+   *
+   * @prop {AutoFill} autocomplete
+   * @attr {AutoFill} autocomplete
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public autocomplete: AutoFill = "";
 
   /**
    * Conveys additional information below the text input, such as how it should
    * be used.
+   *
+   * @prop {string} supportingText
+   * @attr {string} supporting-text
+   * @default ""
    */
-  @property({ type: String, attribute: "supporting-text" })
+  @property({ attribute: "supporting-text" })
   public supportingText = "";
 
   /**
@@ -71,6 +95,10 @@ export abstract class BaseTextInput extends BaseInput {
    *
    * This error state overrides the error state controlled by
    * `reportValidity()`.
+   *
+   * @prop {boolean} error
+   * @attr {string} error
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public error = false;
@@ -82,6 +110,10 @@ export abstract class BaseTextInput extends BaseInput {
    *
    * This error message overrides the error message displayed by
    * `reportValidity()`.
+   *
+   * @prop {string} errorText
+   * @attr {string} error-text
+   * @default ""
    */
   @property({ attribute: "error-text" })
   public errorText = "";
@@ -93,30 +125,50 @@ export abstract class BaseTextInput extends BaseInput {
    * - Otherwise, a visible label element will be rendered.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public override label = "";
 
   /**
    * Whether to hide the label or not.
+   *
+   * @prop {boolean} hideLabel
+   * @attr {string} hide-label
+   * @default false
    */
   @property({ type: Boolean, attribute: "hide-label" })
   public hideLabel = false;
 
   /**
    * Whether the input is rounded or not.
+   *
+   * @prop {boolean} rounded
+   * @attr {string} rounded
+   * @default false
    */
   @property({ type: Boolean })
   public rounded = false;
 
   /**
    * The size of the input.
+   *
+   * @prop {"sm" | "md"} size
+   * @attr {"sm" | "md"} size
+   * @default "md"
    */
   @property()
   public size: "sm" | "md" = "md";
 
   /**
    * Whether to show the active border around the input or not.
+   *
+   * @prop {boolean} noActiveBorder
+   * @attr {string} no-active-border
+   * @default false
    */
   @property({ type: Boolean, attribute: "no-active-border" })
   public noActiveBorder = false;
@@ -154,6 +206,8 @@ export abstract class BaseTextInput extends BaseInput {
    * Selects all the text in the text field.
    *
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select
+   *
+   * @internal
    */
   public select() {
     this.getInputElement()?.select();
@@ -194,6 +248,7 @@ export abstract class BaseTextInput extends BaseInput {
     this._refreshErrorAlert = true;
   }
 
+  /** @internal */
   public override attributeChangedCallback(
     attribute: string,
     newValue: string | null,
@@ -260,22 +315,27 @@ export abstract class BaseTextInput extends BaseInput {
     redispatchEvent(this, event);
   }
 
+  /** @internal */
   public override [getFormValue]() {
     return this.value;
   }
 
+  /** @internal */
   public override formResetCallback() {
     this.reset();
   }
 
+  /** @internal */
   public override formStateRestoreCallback(state: string) {
     this.value = state;
   }
 
+  /** @internal */
   public override [getValidityAnchor]() {
     return this.getInputElement();
   }
 
+  /** @internal */
   public override [onReportValidity](invalidEvent: Event | null) {
     // Prevent default pop-up behavior.
     invalidEvent?.preventDefault();

@@ -1,1 +1,1 @@
-export { PinwheelGroup, Slots as PinwheelGroupSlots } from "./PinwheelGroup.ts";
+export * from "./PinwheelGroup.ts";

@@ -1,1 +1,1 @@
-export { ProgressIndicator } from "./ProgressIndicator.ts";
+export * from "./ProgressIndicator.ts";

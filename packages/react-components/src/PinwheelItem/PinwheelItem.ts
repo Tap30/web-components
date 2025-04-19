@@ -1,18 +1,22 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/pinwheel";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import { PinwheelItem as PinwheelItemElementClass } from "@tapsioss/web-components";
+
+if (typeof window !== "undefined" && !customElements.get("tapsi-pinwheel")) {
+  /* eslint-disable no-console */
+  console.warn(
+    "[TAPSI][PinwheelItem]: The `tapsi-pinwheel` tag is not registered. Since `PinwheelItem` is a compound component, it should be wrapped inside `Pinwheel` component.",
+  );
+  /* eslint-enable no-console */
+}
+
 const __PinwheelItem = LitReact.createComponent({
   tagName: "tapsi-pinwheel-item",
-  elementClass: ComponentNamespace.TapsiPinwheelItem,
+  elementClass: PinwheelItemElementClass,
   react: React,
   events: {},
 });
-
-export { Slots } from "@tapsioss/web-components/pinwheel/item";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const PinwheelItem = __PinwheelItem;
 

@@ -1,8 +1,5 @@
 import { describe, expect, render, test } from "@internals/test-helpers";
-import {
-  type States,
-  STATUS_TO_LOCALE_MAP,
-} from "@tapsioss/web-components/chat-bubble/in/constants";
+import { type States, STATUS_TO_LOCALE_MAP } from "./in/constants.ts";
 
 describe("🧩 chat-bubble", () => {
   describe("🧩 chat-bubble-in", () => {

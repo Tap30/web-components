@@ -1,1 +1,1 @@
-export { Avatar, Slots as AvatarSlots } from "./Avatar.ts";
+export * from "./Avatar.ts";

@@ -8,7 +8,7 @@ import {
   setupMocks,
   test,
 } from "@internals/test-helpers";
-import { type TapsiBottomNavigationItem } from "@tapsioss/web-components/bottom-navigation/index";
+import { type BottomNavigationItem } from "./item/index.ts";
 
 describe("🧩 bottom-navigation-item", () => {
   afterEach(async ({ page }) => {
@@ -88,7 +88,7 @@ describe("🧩 bottom-navigation-item", () => {
     await page.evaluate(() => {
       const item = document.getElementById(
         "test-bottom-navigation-item-1",
-      ) as TapsiBottomNavigationItem;
+      ) as BottomNavigationItem;
 
       item.active = true;
     });

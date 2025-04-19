@@ -1,18 +1,22 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/banner";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  Banner as BannerElementClass,
+  BannerSlots,
+  registerBannerElement,
+} from "@tapsioss/web-components";
+
+registerBannerElement();
+
 const __Banner = LitReact.createComponent({
   tagName: "tapsi-banner",
-  elementClass: ComponentNamespace.TapsiBanner,
+  elementClass: BannerElementClass,
   react: React,
   events: {},
 });
 
-export { Slots } from "@tapsioss/web-components/banner";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
+export { BannerSlots };
 
 const Banner = __Banner;
 

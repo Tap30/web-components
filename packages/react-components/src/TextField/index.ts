@@ -1,1 +1,1 @@
-export { TextField, Slots as TextFieldSlots } from "./TextField.ts";
+export * from "./TextField.ts";

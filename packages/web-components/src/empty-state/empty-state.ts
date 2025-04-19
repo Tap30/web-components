@@ -2,24 +2,49 @@ import { html, LitElement, type PropertyValues } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { isSsr } from "../utils/index.ts";
 import { Slots } from "./constants.ts";
+import styles from "./empty-state.style.ts";
 
+/**
+ * @summary Empty states are messages that users see when there is no data or
+ * content to show.
+ *
+ * @tag tapsi-empty-state
+ *
+ * @slot [icon] - The slot for the icon.
+ * @slot [action] - The slot for the action.
+ */
 export class EmptyState extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
   /**
    * The title of the empty state.
+   *
+   * @prop {string} title
+   * @attr {string} title
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public override title = "";
 
   /**
    * The description of the empty state.
+   *
+   * @prop {string} description
+   * @attr {string} description
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public description = "";
 
   /**
    * The alignment of the content.
+   *
+   * @prop {string} contentAlignment
+   * @attr {string} content-alignment
+   * @default "auto"
    */
-  @property({ type: String, attribute: "content-alignment" })
+  @property({ attribute: "content-alignment" })
   public contentAlignment: "center" | "auto" = "auto";
 
   @state()

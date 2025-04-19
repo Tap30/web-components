@@ -13,13 +13,11 @@ export type PinInputState = {
 
   /**
    * The number of inputs.
-   * Defaults to 4.
    */
   readonly pins: number;
 
   /**
    * The number of each input's length.
-   * Defaults to 1.
    */
   readonly pinLength: number;
 };

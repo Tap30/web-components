@@ -1,18 +1,25 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/segmented-view";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import { SegmentedViewItem as SegmentedViewItemElementClass } from "@tapsioss/web-components";
+
+if (
+  typeof window !== "undefined" &&
+  !customElements.get("tapsi-segmented-view")
+) {
+  /* eslint-disable no-console */
+  console.warn(
+    "[TAPSI][SegmentedViewItem]: The `tapsi-segmented-view` tag is not registered. Since `SegmentedViewItem` is a compound component, it should be wrapped inside `SegmentedView` component.",
+  );
+  /* eslint-enable no-console */
+}
+
 const __SegmentedViewItem = LitReact.createComponent({
   tagName: "tapsi-segmented-view-item",
-  elementClass: ComponentNamespace.TapsiSegmentedViewItem,
+  elementClass: SegmentedViewItemElementClass,
   react: React,
   events: {},
 });
-
-export { Slots } from "@tapsioss/web-components/segmented-view/item";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const SegmentedViewItem = __SegmentedViewItem;
 

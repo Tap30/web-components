@@ -1,1 +1,1 @@
-export { Switch } from "./Switch.ts";
+export * from "./Switch.ts";

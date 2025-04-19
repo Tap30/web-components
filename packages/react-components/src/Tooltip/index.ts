@@ -1,5 +1,1 @@
-export {
-  Tooltip,
-  HideEvent as TooltipHideEvent,
-  ShowEvent as TooltipShowEvent,
-} from "./Tooltip.ts";
+export * from "./Tooltip.ts";

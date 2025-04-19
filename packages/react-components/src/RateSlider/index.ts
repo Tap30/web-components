@@ -1,1 +1,1 @@
-export { RateSlider } from "./RateSlider.ts";
+export * from "./RateSlider.ts";

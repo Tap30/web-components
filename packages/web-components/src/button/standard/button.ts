@@ -1,10 +1,24 @@
 import { html, type PropertyValues, type TemplateResult } from "lit";
 import { queryAssignedNodes, state } from "lit/decorators.js";
 import { isSsr } from "../../utils/index.ts";
-import { BaseButton } from "../base/index.ts";
+import { BaseButton, baseButtonStyles } from "../base/index.ts";
+import styles from "./button.style.ts";
 import { Slots } from "./constants.ts";
 
+/**
+ * @summary Buttons allow users to take actions, and make choices, with a
+ * single tap.
+ *
+ * @tag tapsi-button
+ *
+ * @slot - The default slot to use for the content.
+ * @slot [leading-icon] - The slot for an optional leading icon element.
+ * @slot [trailing-icon] - The slot for an optional trailing icon element.
+ */
 export class Button extends BaseButton {
+  /** @internal */
+  public static override readonly styles = [baseButtonStyles, styles];
+
   @state()
   private _hasLeadingIconSlot = false;
 

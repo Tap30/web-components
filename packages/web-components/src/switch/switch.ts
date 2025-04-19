@@ -1,7 +1,7 @@
 import { html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import BaseInput from "../base-input/index.ts";
+import BaseInput, { baseInputStyles } from "../base-input/index.ts";
 import CheckboxValidator from "../checkbox/Validator.ts";
 import { KeyboardKeys } from "../internals/index.ts";
 import {
@@ -14,10 +14,17 @@ import {
   waitAMicrotask,
 } from "../utils/index.ts";
 import { ErrorMessages } from "./constants.ts";
+import styles from "./switch.style.ts";
 
 export class Switch extends BaseInput {
+  /** @internal */
+  public static override readonly styles = [baseInputStyles, styles];
   /**
    * Whether or not the switch is selected.
+   *
+   * @prop {boolean} selected
+   * @attr {string} selected
+   * @default false
    */
   @property({ type: Boolean })
   public selected = false;
@@ -26,6 +33,10 @@ export class Switch extends BaseInput {
    * The value of the switch that is submitted with a form when selected.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#value
+   *
+   * @prop {string} value
+   * @attr {string} value
+   * @default "on"
    */
   @property()
   public override value = "on";
@@ -63,28 +74,33 @@ export class Switch extends BaseInput {
     }
   }
 
+  /** @internal */
   public override [getFormValue]() {
     if (!this.selected) return null;
 
     return this.value;
   }
 
+  /** @internal */
   public override [getFormState]() {
     return String(this.selected);
   }
 
+  /** @internal */
   public override formResetCallback() {
     // The selected property does not reflect, so the original attribute set by
     // the user is used to determine the default value.
     this.selected = this.hasAttribute("selected");
   }
 
+  /** @internal */
   public override formStateRestoreCallback(state: string) {
     if (state === "on") return;
 
     this.selected = state === "true";
   }
 
+  /** @internal */
   public override [createValidator]() {
     return new CheckboxValidator(() => ({
       checked: this.selected,
@@ -92,6 +108,7 @@ export class Switch extends BaseInput {
     }));
   }
 
+  /** @internal */
   public override [onReportValidity]() {
     // Perform the default behavior (showing pop-up)
   }

@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import type { CustomElement, Export } from "custom-elements-manifest";
 import Mustache from "mustache";
 import { exec } from "node:child_process";
 import * as fs from "node:fs";
@@ -14,21 +13,34 @@ import {
   fileExists,
   getFileMeta,
 } from "../../../scripts/utils.ts";
-import { type ComponentMetadata, type Metadata } from "../../../types/docs.ts";
+import {
+  type ComponentMetadata,
+  type EventMetadata,
+  type Metadata,
+  type PackageMetadata,
+} from "../../../types/docs.ts";
+
+type ReactEventMetadata = {
+  key: `on${string}`;
+  name: string;
+  class: string;
+};
+
+type ParentInfo = Pick<ComponentMetadata, "tagName" | "elementClassName">;
 
 type ReactMetadata = {
   componentName: string;
-  elementClass: string;
   elementTag: string;
-  events: CustomElement["events"];
-  webComponentImportPath: string;
-  slotImportPath?: string;
-  slots?: Export[];
+  elementClass: string;
+  parentInfo: ParentInfo | null;
+  events: ReactEventMetadata[];
+  registerFunction?: string;
+  slotVariableNames: string[];
+  importPath: string;
 };
 
 const asyncExec = promisify(exec);
 
-const COMPONENT_NAMESPACE = "ComponentNamespace";
 const LIT_REACT_NAMESPACE = "LitReact";
 
 const { dirname } = getFileMeta(import.meta.url);
@@ -42,81 +54,84 @@ const barrelFilePath = path.join(srcDir, "index.ts");
 const componentTemplatePath = path.join(templatesDir, "component.txt");
 const metadataPath = path.resolve(
   packageDir,
-  "../web-components/components-metadata.json",
+  "../web-components/metadata.json",
 );
-
-const START_COMMENT = "/* START: AUTO-GENERATED [DO_NOT_REMOVE] */";
-const END_COMMENT = "/* END: AUTO-GENERATED [DO_NOT_REMOVE] */";
 
 const createReactMetadata = (
   componentMetadata: ComponentMetadata,
+  packageMetadata: PackageMetadata,
+  compoundParentsMap: Record<string, ParentInfo>,
 ): ReactMetadata => {
   const {
-    name: elementClass,
     tagName: elementTag,
-    events,
-    importPaths,
-    exportedSlots: slots,
+    events: elementEvents,
+    endpointExports,
+    relativePath,
+    elementClassName,
   } = componentMetadata;
 
-  const componentName = elementClass.replace("Tapsi", "");
+  const importPath = packageMetadata.name;
+  const componentName = elementClassName;
 
-  if (!elementTag) {
-    throw new Error(`No tag was found for ${componentName}`);
-  }
-
-  const webComponentImportPath = importPaths.webComponents;
-
-  if (!webComponentImportPath) {
+  if (!importPath) {
     throw new Error(`No import path was found for ${componentName}`);
   }
 
-  let slotImportPath = webComponentImportPath;
+  const events: ReactEventMetadata[] = Object.values(elementEvents)
+    .filter(e => e.eventClassName !== "Event")
+    .map((e: EventMetadata): ReactEventMetadata => {
+      const eventClass = endpointExports[""]?.find(ex =>
+        ex.endsWith(e.eventClassName),
+      );
 
-  if (elementTag.endsWith("-item")) {
-    slotImportPath += "/item";
+      if (!eventClass) {
+        throw new Error(
+          `No export was found in barrel file for ${e.eventClassName}`,
+        );
+      }
+
+      return {
+        name: e.name,
+        key: `on${e.eventClassName.replace(elementClassName, "").replace("Event", "")}`,
+        class: eventClass,
+      };
+    });
+
+  const registerFunction = endpointExports[""]?.find(e =>
+    e.startsWith("register"),
+  );
+
+  let parentInfo = null;
+
+  if (!registerFunction) {
+    const parent = compoundParentsMap[relativePath];
+
+    if (parent) {
+      parentInfo = parent;
+    } else
+      throw new Error(`No register function was found for ${elementClassName}`);
   }
 
+  const slotVariableNames = (endpointExports[""] ?? []).filter(e =>
+    e.endsWith("Slots"),
+  );
+
   return {
-    elementClass,
+    elementClass: elementClassName,
     componentName,
     elementTag,
     events,
-    webComponentImportPath,
-    slotImportPath,
-    slots,
+    importPath,
+    registerFunction,
+    slotVariableNames,
+    parentInfo,
   };
 };
 
-const getEventsExportsList = ({ events }: ReactMetadata): string[] =>
-  events?.filter(e => e.type.text !== "Event").map(e => e.type.text) || [];
-
-const getSlotsExportsList = ({ slots }: ReactMetadata): string[] => {
-  return slots?.filter(s => s.name === "Slots").map(s => s.name) || [];
-};
-
-const getExportsList = (reactMetadata: ReactMetadata) => {
-  return [
-    ...getEventsExportsList(reactMetadata),
-    ...getSlotsExportsList(reactMetadata),
-  ];
-};
-
-const getModuleBarrelFileComponentImport = (reactMetadata: ReactMetadata) => {
-  const renamedExportsList = getExportsList(reactMetadata).map(
-    e => `${e} as ${reactMetadata.componentName}${e}`,
-  );
-
-  const exportsList = [reactMetadata.componentName, ...renamedExportsList];
-
-  return `export { ${exportsList.join(", ")} } from "./${reactMetadata.componentName}.ts";\n`;
-};
-
-const getReactComponentImports = (reactMetadata: ReactMetadata) => {
+const getReactComponentImports = () => {
   return [
     `import * as ${LIT_REACT_NAMESPACE} from "@lit/react";`,
     `import * as React from "react";`,
-    `import * as ${COMPONENT_NAMESPACE} from "${reactMetadata.webComponentImportPath}";`,
     'import { type ReactWebComponent } from "@lit/react";',
   ].join("\n");
 };
@@ -127,11 +142,11 @@ const getReactComponentCode = async (
   const {
     componentName,
     elementTag,
-    elementClass,
+    elementClass: rawElementClass,
     events: _events,
-    webComponentImportPath,
-    slots,
-    slotImportPath,
+    registerFunction,
+    slotVariableNames,
+    parentInfo,
   } = reactMetadata;
 
   const componentTemplateStr = await fs.promises.readFile(
@@ -143,42 +158,49 @@ const getReactComponentCode = async (
     _events
       ?.map(event => {
         const eventName = event.name;
-        const eventClass = event.type.text;
-
-        const eventNameInReact = [
-          `on`,
-          String(eventName).charAt(0).toUpperCase() +
-            String(eventName).slice(1),
-        ].join("");
+        const eventClass = event.class;
+        const eventNameInReact = event.key;
 
         if (eventClass === "Event") {
           return null;
         }
 
-        return `${eventNameInReact}: '${eventName}' as ${LIT_REACT_NAMESPACE}.EventName<${COMPONENT_NAMESPACE}.${eventClass}>`;
+        return `${eventNameInReact}: '${eventName}' as ${LIT_REACT_NAMESPACE}.EventName<${eventClass}>`;
       })
       .filter(event => event !== null)
       .join(",") || ""
   } }`;
 
-  let exports = "";
+  const exportsList = [
+    ...reactMetadata.events.map(e => e.class),
+    ...reactMetadata.slotVariableNames,
+  ];
 
-  const eventExportsList = getEventsExportsList(reactMetadata);
+  const exports =
+    exportsList.length > 0 ? `export { ${exportsList.join(", ")} };` : "";
 
-  if (eventExportsList.length > 0) {
-    exports = `export { ${eventExportsList.join(",")} } from '${webComponentImportPath}'\n`;
-  }
+  const elementClass = `${componentName}ElementClass`;
+  const importsList = [
+    `${rawElementClass} as ${elementClass}`,
+    registerFunction,
+    ..._events.map(e => e.class),
+    ...slotVariableNames,
+  ];
 
-  if ((slots?.length ?? 0) > 0 && !!slotImportPath) {
-    exports += `export { Slots } from "${slotImportPath}"\n`;
-  }
+  const imports = `import { ${importsList.join(", ")} } from "${reactMetadata.importPath}";`;
+
+  const registerSection = registerFunction
+    ? `${registerFunction}();`
+    : `if (typeof window !== "undefined" && !customElements.get("${parentInfo?.tagName}")){\n/* eslint-disable no-console */\nconsole.warn("[TAPSI][${componentName}]: The \`${parentInfo?.tagName}\` tag is not registered. Since \`${componentName}\` is a compound component, it should be wrapped inside \`${parentInfo?.elementClassName}\` component.");\n/* eslint-enable no-console */}`;
 
   return Mustache.render(
     componentTemplateStr,
     {
+      imports,
+      register: registerSection,
       componentName,
       elementTag,
-      elementClass: `${COMPONENT_NAMESPACE}.${elementClass}`,
+      elementClass,
       events,
       exports,
     },
@@ -204,90 +226,94 @@ const transformToComponentModule = new Transform({
     _,
     callback,
   ) {
-    const metadata = chunk.value.components;
+    const metadata = chunk.value;
+    const componentsMetadata = metadata.components;
+    const packageMetadata = metadata.package;
 
-    for (const componentMetadata of metadata) {
-      const reactMetadata = createReactMetadata(componentMetadata);
-      const { componentName } = reactMetadata;
+    const flattenComponents = (
+      components: Record<string, ComponentMetadata>,
+    ): {
+      flatComponents: Record<string, ComponentMetadata>;
+      compoundParentsMap: Record<string, ParentInfo>;
+    } => {
+      const flatComponents: Record<string, ComponentMetadata> = {};
+      const compoundParentsMap: Record<
+        string,
+        { tagName: string; elementClassName: string }
+      > = {};
 
-      const moduleDir = path.join(srcDir, `${componentName}`);
+      function traverse(
+        key: string,
+        metadata: ComponentMetadata | Omit<ComponentMetadata, "compoundParts">,
+        parent?: { tagName: string; elementClassName: string },
+      ) {
+        const fullMetadata: ComponentMetadata = {
+          ...metadata,
+          compoundParts:
+            "compoundParts" in metadata ? metadata.compoundParts : {},
+        };
 
-      await ensureDirExists(moduleDir);
-      const moduleBarrelFilePath = path.join(moduleDir, "index.ts");
+        flatComponents[key] = fullMetadata;
 
-      if (fileExists(moduleBarrelFilePath)) {
-        await fs.promises.rm(moduleBarrelFilePath);
+        if (parent) {
+          compoundParentsMap[key] = parent;
+        }
+
+        for (const [compoundTag, compoundPart] of Object.entries(
+          fullMetadata.compoundParts,
+        )) {
+          traverse(compoundTag, compoundPart, {
+            tagName: fullMetadata.tagName,
+            elementClassName: fullMetadata.elementClassName,
+          });
+        }
       }
 
-      const modulePath = path.join(moduleDir, `${componentName}.ts`);
+      for (const [tagName, componentMetadata] of Object.entries(components)) {
+        traverse(tagName, componentMetadata);
+      }
 
-      const moduleExists = fileExists(modulePath);
-      const componentCode = await getReactComponentCode(reactMetadata);
+      return { flatComponents, compoundParentsMap };
+    };
 
-      await fs.promises.appendFile(
-        moduleBarrelFilePath,
-        getModuleBarrelFileComponentImport(reactMetadata),
-        {
-          encoding: "utf-8",
-        },
-      );
+    const { flatComponents, compoundParentsMap } =
+      flattenComponents(componentsMetadata);
 
-      if (moduleExists) {
-        const tempModulePath = path.join(moduleDir, `${componentName}.temp.ts`);
+    for (const [_, componentMetadata] of Object.entries(flatComponents)) {
+      if (componentMetadata.tagName) {
+        const reactMetadata = createReactMetadata(
+          componentMetadata,
+          packageMetadata,
+          compoundParentsMap,
+        );
 
-        const readModule = fs.createReadStream(modulePath, {
-          encoding: "utf-8",
-          autoClose: true,
-        });
+        const { componentName } = reactMetadata;
 
-        const injectComponentCode = new Transform({
-          transform(chunk: Buffer, _, callback) {
-            const lines = chunk.toString("utf-8").split("\n");
+        const moduleDir = path.join(srcDir, `${componentName}`);
 
-            let isInsideBlock = false;
+        await ensureDirExists(moduleDir);
+        const moduleBarrelFilePath = path.join(moduleDir, "index.ts");
 
-            const transformedLines = lines
-              .map(line => {
-                if (line.trim() === START_COMMENT) {
-                  isInsideBlock = true;
+        if (fileExists(moduleBarrelFilePath)) {
+          await fs.promises.rm(moduleBarrelFilePath);
+        }
 
-                  return `${line}\n${componentCode}`;
-                } else if (line.trim() === END_COMMENT) {
-                  isInsideBlock = false;
+        const modulePath = path.join(moduleDir, `${componentName}.ts`);
 
-                  return line;
-                } else if (isInsideBlock) {
-                  // Skip lines within block
-                  return null;
-                }
+        const componentCode = await getReactComponentCode(reactMetadata);
 
-                return line;
-              })
-              .filter(lines => lines !== null);
-
-            callback(null, transformedLines.join("\n"));
+        await fs.promises.appendFile(
+          moduleBarrelFilePath,
+          `export * from "./${reactMetadata.componentName}.ts";\n`,
+          {
+            encoding: "utf-8",
           },
-        });
+        );
 
-        const writeToTemp = fs.createWriteStream(tempModulePath, {
-          encoding: "utf-8",
-          flags: "w",
-          autoClose: true,
-        });
-
-        readModule
-          .pipe(injectComponentCode)
-          .pipe(writeToTemp)
-          .on("finish", () => {
-            fs.renameSync(tempModulePath, modulePath);
-          });
-      } else {
         const moduleContent = [
-          getReactComponentImports(reactMetadata),
+          getReactComponentImports(),
           "\n",
-          START_COMMENT,
           componentCode,
-          END_COMMENT,
           "\n",
           getReactComponentExports(componentName),
         ].join("\n");
@@ -296,15 +322,15 @@ const transformToComponentModule = new Transform({
           encoding: "utf-8",
           flag: "w",
         });
-      }
 
-      await fs.promises.appendFile(
-        barrelFilePath,
-        `export * from "./${componentName}/index.ts";\n`,
-        {
-          encoding: "utf-8",
-        },
-      );
+        await fs.promises.appendFile(
+          barrelFilePath,
+          `export * from "./${componentName}/index.ts";\n`,
+          {
+            encoding: "utf-8",
+          },
+        );
+      }
     }
 
     callback();

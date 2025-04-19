@@ -4,8 +4,20 @@ import { html, LitElement, type PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 import { logger } from "../../utils/index.ts";
 import ItemSelectionController from "./Controller.ts";
+import styles from "./item.style.ts";
 
+/**
+ * @summary The item part of the segmented view.
+ *
+ * @tag tapsi-segmented-view-item
+ *
+ * @slot - The default slot for the content/label.
+ */
 export class SegmentedViewItem extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
   public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
@@ -15,6 +27,10 @@ export class SegmentedViewItem extends LitElement {
 
   /**
    * The size of the item.
+   *
+   * @prop {"sm" | "md"} size
+   * @attr {"sm" | "md"} size
+   * @default "md"
    */
   @property()
   public size: "sm" | "md" = "md";
@@ -26,15 +42,23 @@ export class SegmentedViewItem extends LitElement {
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-controls
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/tabpanel_role
+   *
+   * @prop {string} controls
+   * @attr {string} controls
+   * @default ""
    */
   @property()
   public controls = "";
 
   /**
    * Indicates whether the item is active or not.
+   *
+   * @prop {boolean} active
+   * @attr {string} active
+   * @default false
    */
   @property({ type: Boolean })
-  public get active() {
+  public get active(): boolean {
     return this._active;
   }
 
@@ -51,8 +75,12 @@ export class SegmentedViewItem extends LitElement {
   /**
    * The value associated with the item.
    * This value has to be unique among sibling items.
+   *
+   * @prop {string} value
+   * @attr {string} value
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public value: string = "";
 
   @query("#root")
@@ -60,6 +88,7 @@ export class SegmentedViewItem extends LitElement {
 
   private readonly _selectionController = new ItemSelectionController(this);
 
+  /** @internal */
   public override get tabIndex() {
     return this._root?.tabIndex ?? 0;
   }
@@ -86,10 +115,12 @@ export class SegmentedViewItem extends LitElement {
     }
   }
 
+  /** @internal */
   public override focus(options?: FocusOptions): void {
     this._root?.focus(options);
   }
 
+  /** @internal */
   public override blur(): void {
     this._root?.blur();
   }

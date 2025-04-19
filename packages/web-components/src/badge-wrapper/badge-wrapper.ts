@@ -2,25 +2,49 @@ import { html, LitElement, type PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { getRenderRootSlot, runAfterRepaint } from "../utils/index.ts";
+import styles from "./badge-wrapper.style.ts";
 import { Slots } from "./constants.ts";
 
+/**
+ * @summary A wrapper component to position a badge relative to an anchor.
+ *
+ * @tag tapsi-badge-wrapper
+ *
+ * @slot - The default slot for the anchor element.
+ * @slot [badge] - The slot for the badge to be positioned.
+ */
 export class BadgeWrapper extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
   /**
    * The shape of the anchor.
+   *
+   * @prop {"rectangle" | "circle" | "pill"} anchorShape
+   * @attr {"rectangle" | "circle" | "pill"} anchor-shape
+   * @default "rectangle"
    */
-  @property({ type: String, attribute: "anchor-shape" })
+  @property({ attribute: "anchor-shape" })
   public anchorShape: "rectangle" | "circle" | "pill" = "rectangle";
 
   /**
    * The horizontal placement of the badge.
+   *
+   * @prop {"left" | "right"} badgeSide
+   * @attr {"left" | "right"} badge-side
+   * @default "right"
    */
-  @property({ type: String, attribute: "badge-side" })
+  @property({ attribute: "badge-side" })
   public badgeSide: "left" | "right" = "right";
 
   /**
    * The vertical alignment of the badge.
+   *
+   * @prop {"top" | "middle"} badgeAlignment
+   * @attr {"top" | "middle"} badge-alignment
+   * @default "top"
    */
-  @property({ type: String, attribute: "badge-alignment" })
+  @property({ attribute: "badge-alignment" })
   public badgeAlignment: "top" | "middle" = "top";
 
   protected override updated(changed: PropertyValues<this>) {

@@ -4,13 +4,25 @@ import { html, type TemplateResult } from "lit";
 import type { DirectiveResult } from "lit/async-directive";
 import { property } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
-import { BaseChatBubble } from "../base/index.ts";
+import { BaseChatBubble, baseStyles } from "../base/index.ts";
+import styles from "./out.style.ts";
 
-class ChatBubbleOut extends BaseChatBubble {
+/**
+ * @summary Displays the incoming chat message bubble.
+ *
+ * @tag tapsi-chat-bubble-out
+ */
+export class ChatBubbleOut extends BaseChatBubble {
+  /** @internal */
+  public static override readonly styles = [baseStyles, styles];
   /**
    * The source of the avatar image.
+   *
+   * @prop {string} avatarSrc
+   * @attr {string} avatar-src
+   * @default ""
    */
-  @property({ type: String, attribute: "avatar-src" })
+  @property({ attribute: "avatar-src" })
   public avatarSrc = "";
 
   constructor() {
@@ -50,5 +62,3 @@ class ChatBubbleOut extends BaseChatBubble {
     });
   }
 }
-
-export default ChatBubbleOut;

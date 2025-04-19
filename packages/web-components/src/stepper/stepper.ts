@@ -20,10 +20,22 @@ import {
 } from "../utils/index.ts";
 import { DEFAULT_MAX, DEFAULT_MIN } from "./constants.ts";
 import { minus, plus } from "./icons.ts";
+import styles from "./stepper.style.ts";
 
 const BaseClass = withFormAssociated(withElementInternals(LitElement));
 
+/**
+ * @summary A simple input component that allows users to increment or decrement a numeric value using the provided buttons.
+ *
+ * @tag tapsi-stepper
+ *
+ * @fires {Event} change - Fires when value changes. (bubbles)
+ */
 export class Stepper extends BaseClass {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
   static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
@@ -33,22 +45,33 @@ export class Stepper extends BaseClass {
 
   /**
    * The unit of the value.
+   *
+   * @prop {string} unit
+   * @attr {string} unit
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public unit = "";
 
   /**
    * The size of the input.
+   *
+   * @prop {"sm" | "md"} size
+   * @attr {"sm" | "md"} size
+   * @default "md"
    */
-  @property({ type: String })
+  @property()
   public size: "sm" | "md" = "md";
 
   /**
-   * The current value of the input. It is always a string.
+   * The current value of the input.
+   *
+   * @prop {string} value
+   * @default "0"
    */
   @property()
-  public get value() {
-    return this._value || this.min || `${DEFAULT_MIN}`;
+  public get value(): string {
+    return this._value || this.min || DEFAULT_MIN;
   }
 
   public set value(newValue: string) {
@@ -60,8 +83,8 @@ export class Stepper extends BaseClass {
       return;
     }
 
-    const min = Number(this.min) || DEFAULT_MIN;
-    const max = Number(this.max) || DEFAULT_MAX;
+    const min = Number(this.min) || Number(DEFAULT_MIN);
+    const max = Number(this.max) || Number(DEFAULT_MAX);
 
     this._value = String(clamp(Number(newValue), min, max));
   }
@@ -70,67 +93,95 @@ export class Stepper extends BaseClass {
    * Defines the human-readable text alternative of value.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext
+   *
+   * @prop {string} valueText
+   * @attr {string} valuetext
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public valueText = "";
 
   /**
    * Defines a string value that can be used to name input.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public label = "";
 
   /**
    * Identifies the element (or elements) that labels the input.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   *
+   * @prop {string} labelledBy
+   * @attr {string} labelledby
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public labelledBy = "";
 
   /**
-   * Indicates whether or not a user should be able to edit the input's
-   * value.
+   * Indicates whether a user should be able to edit the input's value.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
+   *
+   * @prop {boolean} readOnly
+   * @attr {string} readonly
+   * @default ""
    */
   @property({ type: Boolean, reflect: true })
   public readOnly = false;
 
   /**
    * Defines the maximum value in the range of permitted values.
-   * Defaults to "100".
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
+   *
+   * @prop {string} [max="100"]
+   * @attr {string} max
+   * @default "100"
    */
-  @property({ type: String })
-  public max = `${DEFAULT_MAX}`;
+  @property()
+  public max = DEFAULT_MAX;
 
   /**
    * Defines the minimum value in the range of permitted values.
-   * Defaults to "0".
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
+   *
+   * @prop {string} min
+   * @attr {string} min
+   * @default ""
    */
-  @property({ type: String })
-  public min = `${DEFAULT_MIN}`;
+  @property()
+  public min = DEFAULT_MIN;
 
   /**
    * Returns or sets the element's step attribute, which works with min and max
    * to limit the increments/decrements at which the input value can be set.
-   * Defaults to "1".
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+   *
+   * @prop {string} step
+   * @attr {string} step
+   * @default "1"
    */
-  @property({ type: String })
+  @property()
   public step = "1";
 
   /**
    * Indicates that the element should be focused on page load.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   *
+   * @prop {boolean} autofocus
+   * @attr {string} autofocus
+   * @default ""
    */
   @property({ type: Boolean })
   public override autofocus = false;
@@ -158,6 +209,7 @@ export class Stepper extends BaseClass {
     }
   }
 
+  /** @internal */
   public override connectedCallback(): void {
     super.connectedCallback();
 
@@ -165,6 +217,7 @@ export class Stepper extends BaseClass {
     this.addEventListener("keydown", this._handleKeyDown);
   }
 
+  /** @internal */
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
@@ -193,8 +246,11 @@ export class Stepper extends BaseClass {
 
   /**
    * The input's value as a number.
+   *
+   * @prop {number} valueAsNumber
+   * @default 0
    */
-  public get valueAsNumber() {
+  public get valueAsNumber(): number {
     return Number(this.value);
   }
 
@@ -209,7 +265,7 @@ export class Stepper extends BaseClass {
    *
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepDown
    *
-   * @param stepDecrement The number of steps to decrement, defaults to 1.
+   * @param {number} [stepDecrement] - The number of steps to decrement.
    */
   public stepDown(stepDecrement?: number) {
     this._handleDecrease(stepDecrement);
@@ -220,33 +276,39 @@ export class Stepper extends BaseClass {
    *
    * https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/stepUp
    *
-   * @param stepIncrement The number of steps to increment, defaults to 1.
+   * @param {number} [stepIncrement] - The number of steps to increment.
    */
   public stepUp(stepIncrement?: number) {
     this._handleIncrease(stepIncrement);
   }
 
+  /** @internal */
   public override focus(options?: FocusOptions) {
     this.renderRoot?.querySelector<HTMLElement>("#input")?.focus(options);
   }
 
+  /** @internal */
   public override blur() {
     this.renderRoot?.querySelector<HTMLElement>("#input")?.blur();
   }
 
+  /** @internal */
   public override formDisabledCallback(disabled: boolean) {
     this.disabled = disabled;
   }
 
+  /** @internal */
   public override [getFormValue]() {
     return this.value;
   }
 
+  /** @internal */
   public override formResetCallback() {
     this.value = this.getAttribute("value") ?? "";
     this.valueText = this.getAttribute("valuetext") ?? "";
   }
 
+  /** @internal */
   public override formStateRestoreCallback(state: string) {
     this.value = state;
   }

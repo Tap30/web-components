@@ -1,1 +1,1 @@
-export { Skeleton, Slots as SkeletonSlots } from "./Skeleton.ts";
+export * from "./Skeleton.ts";

@@ -1,5 +1,1 @@
-export {
-  SegmentedView,
-  ActiveChangeEvent as SegmentedViewActiveChangeEvent,
-  Slots as SegmentedViewSlots,
-} from "./SegmentedView.ts";
+export * from "./SegmentedView.ts";

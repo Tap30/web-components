@@ -20,10 +20,24 @@ import {
 } from "../utils/index.ts";
 import { ErrorMessages, scope, Slots } from "./constants.ts";
 import { PinwheelItem } from "./item/index.ts";
+import styles from "./pinwheel.style.ts";
 
 const BaseClass = withFormAssociated(withElementInternals(LitElement));
 
+/**
+ * @summary Used to select options.
+ *
+ * @tag tapsi-pinwheel
+ *
+ * @slot - The default slot for the content.
+ *
+ * @fires {Event} change - Fires when the pinwheel selected state changes. (bubbles)
+ */
 export class Pinwheel extends BaseClass {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
   static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
@@ -34,8 +48,12 @@ export class Pinwheel extends BaseClass {
    * Use it when your items' values are sequential numbers.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemin
+   *
+   * @prop {string} valueMin
+   * @attr {string} valuemin
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public valueMin = "";
 
   /**
@@ -43,39 +61,59 @@ export class Pinwheel extends BaseClass {
    * Use it when your items' values are sequential numbers.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuemax
+   *
+   * @prop {string} valueMax
+   * @attr {string} valuemax
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public valueMax = "";
 
   /**
    * Defines a string value that can be used to name input.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public label = "";
 
   /**
    * Identifies the element (or elements) that labels the input.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   *
+   * @prop {string} labelledBy
+   * @attr {string} labelledby
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public labelledBy = "";
 
   /**
    * Indicates that the element should be focused on page load.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   *
+   * @prop {boolean} autofocus
+   * @attr {string} autofocus
+   * @default false
    */
   @property({ type: Boolean })
   public override autofocus = false;
 
   /**
    * The value of the currently selected item.
+   *
+   * @prop {string} value
+   * @attr {string} value
+   * @default ""
    */
   @property({ attribute: false })
-  public get value() {
+  public get value(): string {
     return this._value;
   }
 
@@ -188,10 +226,12 @@ export class Pinwheel extends BaseClass {
     }
   }
 
+  /** @internal */
   public override focus(options?: FocusOptions) {
     this._root?.focus(options);
   }
 
+  /** @internal */
   public override blur() {
     this._root?.blur();
   }
@@ -397,14 +437,17 @@ export class Pinwheel extends BaseClass {
     this.disabled = disabled;
   }
 
+  /** @internal */
   public override [getFormValue]() {
     return this.value;
   }
 
+  /** @internal */
   public override formResetCallback() {
     this.value = this.getAttribute("value") ?? "";
   }
 
+  /** @internal */
   public override formStateRestoreCallback(state: string) {
     this.value = state;
   }
