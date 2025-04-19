@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   Switch as SwitchElementClass,
   registerSwitchElement,
@@ -15,8 +14,6 @@ const __Switch = LitReact.createComponent({
   react: React,
   events: {},
 });
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Switch = __Switch;
 

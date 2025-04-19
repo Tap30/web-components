@@ -1,6 +1,1 @@
-export {
-  Notice,
-  NoticeHideEvent,
-  NoticeShowEvent,
-  NoticeSlots,
-} from "./Notice.ts";
+export * from "./Notice.ts";

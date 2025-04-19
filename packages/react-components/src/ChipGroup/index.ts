@@ -1,5 +1,1 @@
-export {
-  ChipGroup,
-  ChipGroupSelectChangeEvent,
-  ChipGroupSlots,
-} from "./ChipGroup.ts";
+export * from "./ChipGroup.ts";

@@ -1,1 +1,1 @@
-export { EmptyState, EmptyStateSlots } from "./EmptyState.ts";
+export * from "./EmptyState.ts";

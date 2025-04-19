@@ -1,1 +1,1 @@
-export { Stepper } from "./Stepper.ts";
+export * from "./Stepper.ts";

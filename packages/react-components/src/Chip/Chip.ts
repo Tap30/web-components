@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   ChipDeselectEvent,
   Chip as ChipElementClass,
@@ -23,8 +22,6 @@ const __Chip = LitReact.createComponent({
 });
 
 export { ChipDeselectEvent, ChipSelectEvent, ChipSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Chip = __Chip;
 

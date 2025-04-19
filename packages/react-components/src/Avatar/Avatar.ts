@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   Avatar as AvatarElementClass,
   AvatarSlots,
@@ -18,8 +17,6 @@ const __Avatar = LitReact.createComponent({
 });
 
 export { AvatarSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Avatar = __Avatar;
 

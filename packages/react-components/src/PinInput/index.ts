@@ -1,1 +1,1 @@
-export { PinInput, PinInputCompleteEvent } from "./PinInput.ts";
+export * from "./PinInput.ts";

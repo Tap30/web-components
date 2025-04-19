@@ -1,1 +1,1 @@
-export { ChatBubbleIn, ChatBubbleInSlots } from "./ChatBubbleIn.ts";
+export * from "./ChatBubbleIn.ts";

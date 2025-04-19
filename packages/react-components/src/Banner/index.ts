@@ -1,1 +1,1 @@
-export { Banner, BannerSlots } from "./Banner.ts";
+export * from "./Banner.ts";

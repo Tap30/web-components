@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   registerSkeletonElement,
   Skeleton as SkeletonElementClass,
@@ -18,8 +17,6 @@ const __Skeleton = LitReact.createComponent({
 });
 
 export { SkeletonSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Skeleton = __Skeleton;
 

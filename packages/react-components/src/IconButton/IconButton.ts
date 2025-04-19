@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   IconButton as IconButtonElementClass,
   IconButtonSlots,
@@ -18,8 +17,6 @@ const __IconButton = LitReact.createComponent({
 });
 
 export { IconButtonSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const IconButton = __IconButton;
 

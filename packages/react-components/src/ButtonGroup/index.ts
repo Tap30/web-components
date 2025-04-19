@@ -1,1 +1,1 @@
-export { ButtonGroup, ButtonGroupSlots } from "./ButtonGroup.ts";
+export * from "./ButtonGroup.ts";

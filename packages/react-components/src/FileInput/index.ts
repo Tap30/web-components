@@ -1,1 +1,1 @@
-export { FileInput, FileInputRetryEvent, FileInputSlots } from "./FileInput.ts";
+export * from "./FileInput.ts";

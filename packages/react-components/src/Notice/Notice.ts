@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   Notice as NoticeElementClass,
   NoticeHideEvent,
@@ -23,8 +22,6 @@ const __Notice = LitReact.createComponent({
 });
 
 export { NoticeHideEvent, NoticeShowEvent, NoticeSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Notice = __Notice;
 

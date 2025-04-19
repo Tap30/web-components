@@ -1,1 +1,1 @@
-export { Button, ButtonSlots } from "./Button.ts";
+export * from "./Button.ts";

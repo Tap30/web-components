@@ -1,1 +1,1 @@
-export { Chip, ChipDeselectEvent, ChipSelectEvent, ChipSlots } from "./Chip.ts";
+export * from "./Chip.ts";

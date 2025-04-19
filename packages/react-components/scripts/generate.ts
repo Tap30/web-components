@@ -57,9 +57,6 @@ const metadataPath = path.resolve(
   "../web-components/metadata.json",
 );
 
-const START_COMMENT = "/* START: AUTO-GENERATED [DO_NOT_REMOVE] */";
-const END_COMMENT = "/* END: AUTO-GENERATED [DO_NOT_REMOVE] */";
-
 const createReactMetadata = (
   componentMetadata: ComponentMetadata,
   packageMetadata: PackageMetadata,
@@ -131,16 +128,6 @@ const createReactMetadata = (
   };
 };
 
-const getModuleBarrelFileComponentImport = (reactMetadata: ReactMetadata) => {
-  const importsList = [
-    reactMetadata.componentName,
-    ...reactMetadata.events.map(e => e.class),
-    ...reactMetadata.slotVariableNames,
-  ];
-
-  return `export { ${importsList.join(", ")} } from "./${reactMetadata.componentName}.ts";\n`;
-};
-
 const getReactComponentImports = () => {
   return [
     `import * as ${LIT_REACT_NAMESPACE} from "@lit/react";`,
@@ -204,7 +191,7 @@ const getReactComponentCode = async (
 
   const registerSection = registerFunction
     ? `${registerFunction}();`
-    : `if (!customElements.get("${parentInfo?.tagName}")) throw new Error("[TAPSI][${componentName}]: The \`${parentInfo?.tagName}\` tag is not registered. Since \`${componentName}\` is a compound component, it should be wrapped inside \`${parentInfo?.elementClassName}\` component.");`;
+    : `if (typeof window !== "undefined" && !customElements.get("${parentInfo?.tagName}")) console.warn("[TAPSI][${componentName}]: The \`${parentInfo?.tagName}\` tag is not registered. Since \`${componentName}\` is a compound component, it should be wrapped inside \`${parentInfo?.elementClassName}\` component.");`;
 
   return Mustache.render(
     componentTemplateStr,
@@ -313,85 +300,28 @@ const transformToComponentModule = new Transform({
 
         const modulePath = path.join(moduleDir, `${componentName}.ts`);
 
-        const moduleExists = fileExists(modulePath);
         const componentCode = await getReactComponentCode(reactMetadata);
 
         await fs.promises.appendFile(
           moduleBarrelFilePath,
-          getModuleBarrelFileComponentImport(reactMetadata),
+          `export * from "./${reactMetadata.componentName}.ts";\n`,
           {
             encoding: "utf-8",
           },
         );
 
-        if (moduleExists) {
-          const tempModulePath = path.join(
-            moduleDir,
-            `${componentName}.temp.ts`,
-          );
+        const moduleContent = [
+          getReactComponentImports(),
+          "\n",
+          componentCode,
+          "\n",
+          getReactComponentExports(componentName),
+        ].join("\n");
 
-          const readModule = fs.createReadStream(modulePath, {
-            encoding: "utf-8",
-            autoClose: true,
-          });
-
-          const injectComponentCode = new Transform({
-            transform(chunk: Buffer, _, callback) {
-              const lines = chunk.toString("utf-8").split("\n");
-
-              let isInsideBlock = false;
-
-              const transformedLines = lines
-                .map(line => {
-                  if (line.trim() === START_COMMENT) {
-                    isInsideBlock = true;
-
-                    return `${line}\n${componentCode}`;
-                  } else if (line.trim() === END_COMMENT) {
-                    isInsideBlock = false;
-
-                    return line;
-                  } else if (isInsideBlock) {
-                    // Skip lines within block
-                    return null;
-                  }
-
-                  return line;
-                })
-                .filter(lines => lines !== null);
-
-              callback(null, transformedLines.join("\n"));
-            },
-          });
-
-          const writeToTemp = fs.createWriteStream(tempModulePath, {
-            encoding: "utf-8",
-            flags: "w",
-            autoClose: true,
-          });
-
-          readModule
-            .pipe(injectComponentCode)
-            .pipe(writeToTemp)
-            .on("finish", () => {
-              fs.renameSync(tempModulePath, modulePath);
-            });
-        } else {
-          const moduleContent = [
-            getReactComponentImports(),
-            "\n",
-            START_COMMENT,
-            componentCode,
-            END_COMMENT,
-            "\n",
-            getReactComponentExports(componentName),
-          ].join("\n");
-
-          await fs.promises.writeFile(modulePath, moduleContent, {
-            encoding: "utf-8",
-            flag: "w",
-          });
-        }
+        await fs.promises.writeFile(modulePath, moduleContent, {
+          encoding: "utf-8",
+          flag: "w",
+        });
 
         await fs.promises.appendFile(
           barrelFilePath,

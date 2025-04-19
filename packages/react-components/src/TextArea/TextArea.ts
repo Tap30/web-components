@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   registerTextAreaElement,
   TextArea as TextAreaElementClass,
@@ -18,8 +17,6 @@ const __TextArea = LitReact.createComponent({
 });
 
 export { TextAreaSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const TextArea = __TextArea;
 

@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   registerTextFieldElement,
   TextField as TextFieldElementClass,
@@ -18,8 +17,6 @@ const __TextField = LitReact.createComponent({
 });
 
 export { TextFieldSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const TextField = __TextField;
 

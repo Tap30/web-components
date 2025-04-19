@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   registerTooltipElement,
   Tooltip as TooltipElementClass,
@@ -22,8 +21,6 @@ const __Tooltip = LitReact.createComponent({
 });
 
 export { TooltipHideEvent, TooltipShowEvent };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Tooltip = __Tooltip;
 

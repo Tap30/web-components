@@ -1,1 +1,1 @@
-export { BadgeWrapper, BadgeWrapperSlots } from "./BadgeWrapper.ts";
+export * from "./BadgeWrapper.ts";

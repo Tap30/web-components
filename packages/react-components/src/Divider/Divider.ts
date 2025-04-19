@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   Divider as DividerElementClass,
   registerDividerElement,
@@ -15,8 +14,6 @@ const __Divider = LitReact.createComponent({
   react: React,
   events: {},
 });
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Divider = __Divider;
 

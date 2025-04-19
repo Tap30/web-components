@@ -1,1 +1,1 @@
-export { BottomNavigationItem } from "./BottomNavigationItem.ts";
+export * from "./BottomNavigationItem.ts";

@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   ChatBubbleOut as ChatBubbleOutElementClass,
   ChatBubbleOutSlots,
@@ -18,8 +17,6 @@ const __ChatBubbleOut = LitReact.createComponent({
 });
 
 export { ChatBubbleOutSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const ChatBubbleOut = __ChatBubbleOut;
 

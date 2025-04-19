@@ -1,6 +1,1 @@
-export {
-  Snackbar,
-  SnackbarHideEvent,
-  SnackbarShowEvent,
-  SnackbarSlots,
-} from "./Snackbar.ts";
+export * from "./Snackbar.ts";

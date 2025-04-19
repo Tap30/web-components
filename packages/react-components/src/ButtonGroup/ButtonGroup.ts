@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   ButtonGroup as ButtonGroupElementClass,
   ButtonGroupSlots,
@@ -18,8 +17,6 @@ const __ButtonGroup = LitReact.createComponent({
 });
 
 export { ButtonGroupSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const ButtonGroup = __ButtonGroup;
 

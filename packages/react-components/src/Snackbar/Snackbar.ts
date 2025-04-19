@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   registerSnackbarElement,
   Snackbar as SnackbarElementClass,
@@ -23,8 +22,6 @@ const __Snackbar = LitReact.createComponent({
 });
 
 export { SnackbarHideEvent, SnackbarShowEvent, SnackbarSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Snackbar = __Snackbar;
 

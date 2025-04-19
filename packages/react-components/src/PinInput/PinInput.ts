@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   PinInputCompleteEvent,
   PinInput as PinInputElementClass,
@@ -20,8 +19,6 @@ const __PinInput = LitReact.createComponent({
 });
 
 export { PinInputCompleteEvent };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const PinInput = __PinInput;
 

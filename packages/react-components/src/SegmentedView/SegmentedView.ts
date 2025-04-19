@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   registerSegmentedViewElement,
   SegmentedViewActiveChangeEvent,
@@ -27,8 +26,6 @@ export {
   SegmentedViewItemSlots,
   SegmentedViewSlots,
 };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const SegmentedView = __SegmentedView;
 

@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   Banner as BannerElementClass,
   BannerSlots,
@@ -18,8 +17,6 @@ const __Banner = LitReact.createComponent({
 });
 
 export { BannerSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Banner = __Banner;
 

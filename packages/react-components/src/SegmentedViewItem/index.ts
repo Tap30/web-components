@@ -1,1 +1,1 @@
-export { SegmentedViewItem } from "./SegmentedViewItem.ts";
+export * from "./SegmentedViewItem.ts";

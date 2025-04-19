@@ -1,1 +1,1 @@
-export { TextArea, TextAreaSlots } from "./TextArea.ts";
+export * from "./TextArea.ts";

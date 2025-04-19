@@ -1,1 +1,1 @@
-export { Tooltip, TooltipHideEvent, TooltipShowEvent } from "./Tooltip.ts";
+export * from "./Tooltip.ts";

@@ -1,1 +1,1 @@
-export { Modal, ModalHideEvent, ModalShowEvent, ModalSlots } from "./Modal.ts";
+export * from "./Modal.ts";

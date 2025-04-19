@@ -1,1 +1,1 @@
-export { Badge, BadgeSlots } from "./Badge.ts";
+export * from "./Badge.ts";

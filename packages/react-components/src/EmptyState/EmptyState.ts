@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   EmptyState as EmptyStateElementClass,
   EmptyStateSlots,
@@ -18,8 +17,6 @@ const __EmptyState = LitReact.createComponent({
 });
 
 export { EmptyStateSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const EmptyState = __EmptyState;
 

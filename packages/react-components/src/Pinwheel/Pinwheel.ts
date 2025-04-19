@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   Pinwheel as PinwheelElementClass,
   PinwheelItemSlots,
@@ -19,8 +18,6 @@ const __Pinwheel = LitReact.createComponent({
 });
 
 export { PinwheelItemSlots, PinwheelSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Pinwheel = __Pinwheel;
 

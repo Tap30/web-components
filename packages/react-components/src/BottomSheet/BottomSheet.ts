@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   BottomSheetClosedEvent,
   BottomSheetClosingEvent,
@@ -42,8 +41,6 @@ export {
   BottomSheetSlots,
   BottomSheetSnappedEvent,
 };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const BottomSheet = __BottomSheet;
 

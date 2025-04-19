@@ -1,7 +1,6 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
 import {
   ChipGroup as ChipGroupElementClass,
   ChipGroupSelectChangeEvent,
@@ -22,8 +21,6 @@ const __ChipGroup = LitReact.createComponent({
 });
 
 export { ChipGroupSelectChangeEvent, ChipGroupSlots };
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const ChipGroup = __ChipGroup;
 
