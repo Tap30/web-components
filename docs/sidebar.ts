@@ -12,27 +12,36 @@ const metadataFile = path.join(
   "packages/web-components/metadata.json",
 );
 
+const kebabToTitleCase = (input: string): string => {
+  return input
+    .split("-")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
 const getSidebarItems = (): DefaultTheme.Sidebar => {
   const metadata = JSON.parse(
     fs.readFileSync(metadataFile).toString("utf-8"),
   ) as Metadata;
 
-  const components = Object.values(metadata.components).map(c => ({
-    text: c.name,
-    link: `/components/${c.relativePath}`,
-  }));
+  const components = Object.values(metadata.components)
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map(c => ({
+      text: kebabToTitleCase(c.name),
+      link: `/components/${c.relativePath}`,
+    }));
 
   return {
     "/components/": [
       {
-        text: "Components",
+        text: "Introduction",
         link: "/components",
         items: components,
       },
     ],
     "/theme/": [
       {
-        text: "Theme",
+        text: "Introduction",
         link: "/theme",
         items: [
           { text: "Palette", link: "/theme/palette" },

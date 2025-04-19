@@ -99,9 +99,7 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
 
   const compoundComponentsMap: Record<string, string> = {};
 
-  /**
-   * step 1: creating package metadata
-   */
+  // step 1: creating package metadata
   const packageJsonContents = JSON.parse(
     await fs.readFile(packageJsonFile, "utf8"),
   ) as {
@@ -118,10 +116,17 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
     e => !["custom-elements-manifest"].includes(e),
   );
 
+  // step 2: creating components metadata
+
   /**
-   * step 2: creating components metadata
+   * We need to sort modules with this order:
+   * - constant files: to make a map of all content of constant files, used in processing the components
+   * - event files: to make a map of all content of constant files, used in processing the components
+   * - the barrel file of compound components, to make a map of compound components to their parents
+   * - the barrel file of non-compound components
+   * - component files
    */
-  const modules = cem.modules.sort((a, b) => {
+  const sortedModules = cem.modules.sort((a, b) => {
     const getPriority = (module: Module) => {
       const isConstant = module.path.endsWith("constants.ts");
 
@@ -173,21 +178,15 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
     return getPriority(a) - getPriority(b);
   });
 
-  for (const module of modules) {
+  for (const module of sortedModules) {
     const moduleSrc = module.path;
     const moduleDir = path.dirname(moduleSrc);
     const relativePath = path.relative(packageSrcDir, moduleDir);
 
     /**
-     * Check barrel file exports
+     * Package Barrel file
      */
     if (!relativePath) {
-      // if (module.path.endsWith("src/index.ts")) {
-      //   metadata.package.barrelExports = (module.exports || []).map(
-      //     e => e.name,
-      //   );
-      // }
-
       continue;
     }
 
@@ -214,6 +213,14 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
       continue;
     }
 
+    /**
+     * creating events maps with this structure:
+     * {
+     *   [relativePathName]: [
+     *     { name: 'eventName', class: 'EventNameEvent' }
+     *   ],
+     * }
+     */
     if (module.path.endsWith("events.ts")) {
       eventFileExportsMap[relativePath] = (module.declarations ?? []).map(
         (e: ClassLike) => {
@@ -236,7 +243,7 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
     }
 
     /**
-     * creating constants maps with this structure:
+     * creating compound components maps with this structure:
      * {
      *   [childRelativePath]: parentRelativePath
      * }
@@ -255,7 +262,7 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
     const isCompound = relativePath in compoundComponentsMap;
 
     /**
-     * initiating metadata objects
+     * initiating metadata objects if not exists
      */
     if (
       !isConstant &&
