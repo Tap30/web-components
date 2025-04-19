@@ -19,7 +19,7 @@ interface TapsiNoticeEventMap extends HTMLElementEventMap {
  *
  * @tag tapsi-notice
  *
- * @slot [actions] - The slot for actions associated with the notice component, typically a collection of `tapsi-button` components.
+ * @slot [action] - The slot for actions associated with the notice component, typically a collection of `tapsi-button` components.
  * @slot [artwork] - The slot for custom artwork the notice component. To display this slot, set the `artwork` property to `custom`.
  *
  * @fires {ShowEvent} show - Fires when the tooltip should be visible.

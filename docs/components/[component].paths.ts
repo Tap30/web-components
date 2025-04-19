@@ -163,7 +163,7 @@ const getImportsMarkdown = (
         "::: tip",
         "If you want to use all the component in your app, you can call `registerAllElements` at the root of your project.",
         "```ts [Web]",
-        `import { registerAllElements } from "${packagesMetadata?.name}";`,
+        `import "${packagesMetadata?.name}";`,
         ``,
         `registerAllElements(); // All the components are now available`,
         "```",
@@ -288,17 +288,29 @@ const getPropsMarkdown = (
       props.map(p => {
         const { type, name, description, default: defaultValue, attribute } = p;
 
+        const types = type
+          .split("|")
+          .map(t => t.trim())
+          .filter(Boolean);
+
+        let typesString = "";
+
+        switch (types.length) {
+          case 1:
+            typesString = `\`${types[0]}\``;
+            break;
+          case 2:
+            typesString = types.map(t => `\`${t}\``).join(" \\| ");
+            break;
+          default:
+            typesString = types.map(t => `\\| \`${t.trim()}\``).join("<br>");
+        }
+
         return [
           name ? codify(name) : "-",
           attribute ? codify(attribute) : "-",
           description.replace(/\n/g, "<br>") || "",
-          // description?.replace(/\\/g, "<br>") || "",
-          type
-            ? type
-                ?.split("|")
-                .map(t => codify(t.trim().replace(/'/g, '"')))
-                .join("\\|")
-            : "-",
+          type ? typesString : "-",
           defaultValue ? codify(defaultValue.replace(/'/g, '"')) : "-",
         ];
       }),

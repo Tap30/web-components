@@ -14,8 +14,6 @@ import styles from "./in.style.ts";
  * @summary Displays the user entered chat message bubble.
  *
  * @tag tapsi-chat-bubble-in
- *
- * @slot - The default slot for the content.
  */
 export class ChatBubbleIn extends BaseChatBubble {
   /** @internal */

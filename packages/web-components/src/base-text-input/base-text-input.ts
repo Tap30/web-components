@@ -13,8 +13,8 @@ import { Slots } from "./constants.ts";
 import { stringConverter } from "./utils.ts";
 
 /**
- * @slot [leading-icon] - the leading icon slot of the text-area
- * @slot [trailing] - the trailing slot of the text-area
+ * @slot [leading-icon] - the leading icon slot of the input
+ * @slot [trailing] - the trailing slot of the input
  */
 export abstract class BaseTextInput extends BaseInput {
   /**

@@ -3,6 +3,9 @@ import type { DirectiveResult } from "lit/async-directive.js";
 import { property } from "lit/decorators.js";
 import { type ClassMapDirective } from "lit/directives/class-map.js";
 
+/**
+ * @slot - The default slot for the content.
+ */
 abstract class BaseChatBubble extends LitElement {
   @property()
   protected author: "in" | "out" = "in";
