@@ -34,7 +34,7 @@ const BaseClass = withFormAssociated(withElementInternals(LitElement));
  */
 export class RateSlider extends BaseClass {
   /** @internal */
-  static override readonly styles = [styles];
+  public static override readonly styles = [styles];
 
   /** @internal */
   static override shadowRootOptions: ShadowRootInit = {

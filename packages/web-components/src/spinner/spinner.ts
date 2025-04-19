@@ -1,6 +1,7 @@
 import { html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { SystemError } from "../utils/index.ts";
+import styles from "./spinner.style.ts";
 
 /**
  * @summary A spinner component used for the loading status of a page or a block.
@@ -8,6 +9,9 @@ import { SystemError } from "../utils/index.ts";
  * @tag tapsi-spinner
  */
 export class Spinner extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
   /**
    * Determines the size of the spinner.
    * When set to 'auto', it inherits the size of its parent element.
