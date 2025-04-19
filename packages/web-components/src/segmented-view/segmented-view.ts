@@ -13,7 +13,7 @@ import styles from "./segmented-view.style.ts";
  *
  * @slot - The default slot for segmented view items.
  *
- * @fires {ActiveChangeEvent} activechange - Fired when the items activation state changes (bubbles).
+ * @fires {ActiveChangeEvent} activechange - Fired when the items activation state changes. (bubbles)
  */
 export class SegmentedView extends LitElement {
   /** @internal */

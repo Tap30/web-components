@@ -22,8 +22,8 @@ interface TapsiChipEventMap extends HTMLElementEventMap {
  * @slot [leading-icon] - The slot for an optional leading icon.
  * @slot [trailing-icon] - The slot for an optional trailing icon.
  *
- * @fires {SelectEvent} select - Fired when the chip is selected (bubbles).
- * @fires {DeselectEvent} deselect - Fired when the chip is deselected (bubbles).
+ * @fires {SelectEvent} select - Fired when the chip is selected. (bubbles)
+ * @fires {DeselectEvent} deselect - Fired when the chip is deselected. (bubbles)
  */
 export class Chip extends LitElement {
   /** @internal */

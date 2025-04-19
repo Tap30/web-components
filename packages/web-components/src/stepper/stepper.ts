@@ -29,7 +29,7 @@ const BaseClass = withFormAssociated(withElementInternals(LitElement));
  *
  * @tag tapsi-stepper
  *
- * @fires {Event} change - Fires when value changes (bubbles).
+ * @fires {Event} change - Fires when value changes. (bubbles)
  */
 export class Stepper extends BaseClass {
   /** @internal */

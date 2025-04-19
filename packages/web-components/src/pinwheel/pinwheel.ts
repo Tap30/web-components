@@ -31,7 +31,7 @@ const BaseClass = withFormAssociated(withElementInternals(LitElement));
  *
  * @slot - The default slot for the content.
  *
- * @fires {Event} change - Fires when the pinwheel selected state changes (bubbles).
+ * @fires {Event} change - Fires when the pinwheel selected state changes. (bubbles)
  */
 export class Pinwheel extends BaseClass {
   /** @internal */

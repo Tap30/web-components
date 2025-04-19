@@ -218,7 +218,7 @@ ${"#".repeat(headingLevel + 1)} Component Usage
 \`\`\`
 
 \`\`\`tsx [React]
-<${component.name.replace("Tapsi", "")} />
+<${component.elementClassName} />
 \`\`\`
 :::
 `;

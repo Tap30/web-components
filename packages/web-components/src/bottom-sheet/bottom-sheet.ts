@@ -63,12 +63,12 @@ interface TapsiBottomSheetEventMap extends HTMLElementEventMap {
  * @slot [action-bar] - The slot for the action bar content.
  *
  * @fires {SnappedEvent} snapped - Fired when the bottom-sheet is snapped to a specific position.
- * @fires {OpeningEvent} opening - Fired when the bottom-sheet starts to open (cancelable).
- * @fires {ClosingEvent} closing - Fired when the bottom-sheet starts to close (cancelable).
+ * @fires {OpeningEvent} opening - Fired when the bottom-sheet starts to open. (cancelable)
+ * @fires {ClosingEvent} closing - Fired when the bottom-sheet starts to close. (cancelable)
  * @fires {OpenedEvent} opened - Fired when the bottom-sheet has fully opened.
  * @fires {ClosedEvent} closed - Fired when the bottom-sheet has fully closed.
- * @fires {HideEvent} hide - Fired when the bottom-sheet is hidden (cancelable).
- * @fires {ShowEvent} show - Fired when the bottom-sheet is shown (cancelable).
+ * @fires {HideEvent} hide - Fired when the bottom-sheet is hidden. (cancelable)
+ * @fires {ShowEvent} show - Fired when the bottom-sheet is shown. (cancelable)
  */
 export class BottomSheet extends LitElement {
   /** @internal */

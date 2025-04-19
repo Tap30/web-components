@@ -30,7 +30,7 @@ const BaseClass = withFormAssociated(withElementInternals(LitElement));
  *
  * @tag tapsi-rate-slider
  *
- * @fires {Event} change - Fired when value changes (bubbles).
+ * @fires {Event} change - Fired when value changes.
  */
 export class RateSlider extends BaseClass {
   /** @internal */

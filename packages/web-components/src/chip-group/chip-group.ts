@@ -19,7 +19,7 @@ interface TapsiChipGroupEventMap extends HTMLElementEventMap {
  *
  * @slot - Default slot for the content of chip.
  *
- * @fires {SelectChangeEvent} selectchange - Fired when the chip selection state changes. (bubbles).
+ * @fires {SelectChangeEvent} selectchange - Fired when the chip selection state changes. (bubbles)
  */
 export class ChipGroup extends LitElement {
   /** @internal */

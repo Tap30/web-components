@@ -26,7 +26,8 @@ const getSidebarItems = (): DefaultTheme.Sidebar => {
     "/components/": [
       {
         text: "Components",
-        items: [{ text: "Components", link: "/components" }, ...components],
+        link: "/components",
+        items: components,
       },
     ],
     "/theme/": [

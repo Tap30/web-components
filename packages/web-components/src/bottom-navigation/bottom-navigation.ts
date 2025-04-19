@@ -17,7 +17,7 @@ interface TapsiBottomNavigationEventMap extends HTMLElementEventMap {
  *
  * @slot - The default slot for navigation items.
  *
- * @fires {ActiveChangeEvent} activechange - Fired when the items activation state changes (bubbles).
+ * @fires {ActiveChangeEvent} activechange - Fired when the items activation state changes. (bubbles)
  */
 export class BottomNavigation extends LitElement {
   /** @internal */

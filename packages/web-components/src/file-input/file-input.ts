@@ -54,7 +54,7 @@ const BaseClass = withOnReportValidity(
  *
  * @slot [placeholder-icon] - The slot for icon placeholder.
  *
- * @fires {RetryEvent} retry - Fires when the retry button is clicked (bubbles).
+ * @fires {RetryEvent} retry - Fires when the retry button is clicked. (bubbles)
  */
 export class FileInput extends BaseClass {
   /** @internal */
