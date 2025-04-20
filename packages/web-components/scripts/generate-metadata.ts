@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import {
   type ClassField,
-  type ClassLike,
-  type ClassMember,
+  type ClassMethod,
   type CustomElementDeclaration,
+  type CustomElementExport,
   type CustomElementField,
+  type Declaration,
   type Module,
   type Package,
   type PropertyLike,
@@ -14,12 +15,7 @@ import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { promisify } from "node:util";
 import { getFileMeta } from "../../../scripts/utils.ts";
-import {
-  type ComponentMetadata,
-  type EventMetadata,
-  type Metadata,
-  type SlotMetadata,
-} from "../../../types/docs.ts";
+import { type ComponentMetadata, type Metadata } from "../../../types/docs.ts";
 
 const asyncExec = promisify(exec);
 
@@ -28,611 +24,487 @@ const packageDir = path.join(dirname, "..");
 const packageSrcDir = path.join(packageDir, "src");
 const metadataFile = path.join(packageDir, "metadata.json");
 const packageJsonFile = path.join(packageDir, "package.json");
+const cemFile = path.join(packageDir, "custom-elements.json");
 
-const arraysEqual = (a: Array<unknown>, b: Array<unknown>) => {
-  if (a === b) return true;
-  if (a == null || b == null) return false;
-  if (a.length !== b.length) return false;
+/**
+ * Parses a string representation of a JavaScript object.
+ * Specifically, it removes trailing commas and adds quotes around unquoted keys.
+ *
+ * @param str The string to parse.
+ * @returns  The parsed object, or an empty object on parsing failure.
+ */
+const parseJavascriptObject = (str: string): Record<string, string> => {
+  str = str.replace(/,(\s*})/, "$1"); // Remove trailing commas.
+  str = str.replace(/([{,]\s*)([A-Z_]+)(\s*:)/g, '$1"$2"$3'); // Quote unquoted keys.
 
-  for (let i = 0; i < a.length; ++i) {
-    if (a[i] !== b[i]) return false;
+  try {
+    return JSON.parse(str) as Record<string, string>;
+  } catch (error) {
+    console.error("Error parsing JavaScript object:", str, error);
+    return {}; // Return empty object on error, to prevent script termination.
   }
-
-  return true;
 };
 
-const isConstantCase = (str: string) => /^[A-Z][A-Z0-9_]*$/.test(str);
-const parseJavascriptObject = (str: string): object => {
-  // Remove the trailing comma before the closing brace
-  str = str.replace(/,(\s*})/, "$1");
-
-  // Add double quotes around unquoted keys
-  str = str.replace(/([{,]\s*)([A-Z_]+)(\s*:)/g, '$1"$2"$3');
-
-  return JSON.parse(str) as object;
-};
-
+/**
+ * Generates the Custom Elements Manifest (CEM) file using the CEM CLI.
+ *
+ * @returns Promise resolving to the parsed CEM Package object.
+ */
 const generateCem = async (): Promise<Package> => {
+  // Define glob patterns to include component source files.
   const globs: string[] = [
     `${packageSrcDir}/index.ts`,
     `${packageSrcDir}/**/*.ts`,
     `${packageSrcDir}/**/*/*.ts`,
+    // Exclude style files.
     `!${packageSrcDir}/**/*.style.ts`,
     `!${packageSrcDir}/**/*/*.style.ts`,
+    // Exclude utility-like files.
     `!${packageSrcDir}/**/{Controller,Validator,icons,utils}.ts`,
     `!${packageSrcDir}/**/*/{Controller,Validator,icons,utils}.ts`,
     `!${packageSrcDir}/utils/**`,
     `!${packageSrcDir}/internals/**`,
   ];
 
-  const { stderr: cemAnalyzeStderr, stdout: cemAnalyzeStdout } =
-    await asyncExec(
-      [
-        "cem",
-        "analyze",
-        "--packagejson",
-        globs.map(g => `--globs ${g}`).join(" "),
-      ].join(" "),
-    );
+  // Construct the CEM CLI command.
+  const cemCommand = [
+    "cem",
+    "analyze",
+    "--packagejson",
+    globs.map(g => `--globs ${g}`).join(" "),
+  ].join(" ");
 
-  if (cemAnalyzeStdout) console.log(cemAnalyzeStdout);
-  if (cemAnalyzeStderr) console.error(cemAnalyzeStderr);
+  console.log("🛠️  Generating Custom Elements Manifest (CEM)...");
+  try {
+    const { stderr, stdout } = await asyncExec(cemCommand);
 
-  const cemFile = path.join(packageDir, "custom-elements.json");
+    if (stdout) console.log("CEM Output:", stdout);
+    if (stderr) console.error("CEM Error:", stderr);
 
-  return JSON.parse(await fs.readFile(cemFile, "utf8")) as Package;
+    // Read and parse the generated CEM file.
+    const cemContent = await fs.readFile(cemFile, "utf8");
+
+    return JSON.parse(cemContent) as Package;
+  } catch (error) {
+    console.error("❌ Error generating or reading CEM:", error);
+
+    throw error; // Re-throw to stop the metadata generation.
+  }
 };
 
+/**
+ * Generates the component metadata JSON from the parsed Custom Elements Manifest.
+ * This is the core logic.
+ *
+ * @param cem The parsed Custom Elements Manifest Package object.
+ * @returns Promise resolving to the generated Metadata object.
+ */
 const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
   const metadata: Metadata = {
     package: { name: "", endpoints: [] },
     components: {},
   };
 
+  // { [relativePath]: { [constantName]: constantDeclaration } }
   const constantFileExportsMap: Record<
     string,
     Record<string, PropertyLike>
   > = {};
 
-  const eventFileExportsMap: Record<string, { name: string; class: string }[]> =
-    {};
+  // { [relativePath]: [{ name, class }] }
+  const eventFileExportsMap: Record<
+    string,
+    {
+      name: string;
+      class: string;
+    }[]
+  > = {};
 
-  const compoundComponentsMap: Record<string, string> = {};
-
-  // step 1: creating package metadata
-  const packageJsonContents = JSON.parse(
-    await fs.readFile(packageJsonFile, "utf8"),
-  ) as {
-    name: string;
-    exports: Record<string, never>;
-  };
-
-  metadata.package.name = packageJsonContents.name;
-  metadata.package.endpoints = Object.keys(packageJsonContents.exports).map(e =>
-    e.replace("./", "").replace(".", ""),
-  );
-
-  const componentEndpointExports = metadata.package.endpoints.filter(
-    e => !["custom-elements-manifest"].includes(e),
-  );
-
-  // step 2: creating components metadata
-
-  /**
-   * We need to sort modules with this order:
-   * - constant files: to make a map of all content of constant files, used in processing the components
-   * - event files: to make a map of all content of constant files, used in processing the components
-   * - the barrel file of compound components, to make a map of compound components to their parents
-   * - the barrel file of non-compound components
-   * - component files
-   */
-  const sortedModules = cem.modules.sort((a, b) => {
-    const getPriority = (module: Module) => {
-      const isConstant = module.path.endsWith("constants.ts");
-
-      if (isConstant) return 0;
-
-      const isEvent = module.path.endsWith("events.ts");
-
-      if (isEvent) return 1;
-
-      const moduleSrc = module.path;
-      const moduleDir = path.dirname(moduleSrc);
-      const relativePath = path.relative(packageSrcDir, moduleDir);
-
-      if (
-        module.declarations?.length === 0 &&
-        relativePath.includes("/") &&
-        module.path.endsWith("/index.ts")
-      )
-        return 2; // compound components
-
-      if (
-        module.declarations?.length === 0 &&
-        !relativePath.includes("/") &&
-        module.path.endsWith("/index.ts")
-      )
-        return 3; // non-compound components
-
-      const isComponentsBarrel = module.path.endsWith(
-        `${relativePath}/index.ts`,
-      );
-
-      if (
-        !isComponentsBarrel &&
-        !isConstant &&
-        !module.path.includes("/base") &&
-        module.declarations &&
-        module.declarations.length > 0
-      ) {
-        return 4;
-      }
-
-      if (!module.path.includes("/base") && isComponentsBarrel) {
-        return 5;
-      }
-
-      return 6;
+  try {
+    const { exports, name } = JSON.parse(
+      await fs.readFile(packageJsonFile, "utf8"),
+    ) as {
+      name: string;
+      exports: Record<string, string>;
     };
 
-    return getPriority(a) - getPriority(b);
-  });
+    metadata.package.name = name;
+    metadata.package.endpoints = Object.keys(exports)
+      .map(e => e.replace("./", "").replace(".", ""))
+      .filter(e => e !== "custom-elements-manifest");
 
-  for (const module of sortedModules) {
-    const moduleSrc = module.path;
-    const moduleDir = path.dirname(moduleSrc);
-    const relativePath = path.relative(packageSrcDir, moduleDir);
+    console.log("📦 Package metadata:", metadata.package);
+  } catch (error) {
+    console.error("❌ Error reading package.json:", error);
 
-    /**
-     * Package Barrel file
-     */
-    if (!relativePath) {
-      continue;
+    throw error;
+  }
+
+  const getCustomElementDefinitions = (
+    module: Module,
+  ): CustomElementExport[] => {
+    return (module.exports ?? []).filter(
+      ex => ex.kind === "custom-element-definition",
+    );
+  };
+
+  const isConstantModule = (moduleName: string): boolean =>
+    moduleName === "constants";
+
+  const isEventsModule = (moduleName: string): boolean =>
+    moduleName === "events";
+
+  const isIndexModule = (moduleName: string): boolean => moduleName === "index";
+
+  const getModulePriority = (module: Module): number => {
+    const pathInfo = path.parse(module.path);
+
+    if (isConstantModule(pathInfo.name)) return 0; // Constants first
+    if (isEventsModule(pathInfo.name)) return 1; // Events second
+    if (!isIndexModule(pathInfo.name)) return 2; // Modules third
+
+    return 3; // Indices last
+  };
+
+  // Iterate through modules in a specific order to ensure correct data processing.
+  const modules = cem.modules
+    .filter(module => module.declarations && module.declarations.length > 0)
+    .sort((a, b) => {
+      return getModulePriority(a) - getModulePriority(b);
+    });
+
+  console.log("📂 Processing CEM modules...");
+  // Modules with declarations and in order of: constants-events-index-else
+  for (const module of modules) {
+    const pathInfo = path.parse(module.path);
+
+    const moduleDir = pathInfo.dir;
+    const moduleDirPath = path.relative(packageSrcDir, moduleDir);
+
+    // Handle Constants
+    if (isConstantModule(pathInfo.name)) {
+      constantFileExportsMap[moduleDirPath] = {};
+
+      module.declarations!.forEach(d => {
+        constantFileExportsMap[moduleDirPath]![d.name] = d;
+      });
+
+      continue; // Processed, go to next module.
     }
 
-    /**
-     * creating constants maps with this structure:
-     * {
-     *   [relativePathName]: {
-     *     [constant1]: constant1Declaration,
-     *     [constant2]: constant1Declaration,
-     *   },
-     * }
-     */
-    const isConstant = module.path.endsWith("/constants.ts");
+    // Handle Events
+    if (isEventsModule(pathInfo.name)) {
+      eventFileExportsMap[moduleDirPath] = [];
 
-    if (isConstant) {
-      module.declarations?.forEach(d => {
-        if (!constantFileExportsMap[relativePath])
-          constantFileExportsMap[relativePath] = {};
-        if (d.name) {
-          constantFileExportsMap[relativePath][d.name] = d;
+      module.declarations!.forEach((d: Declaration) => {
+        if (d.kind !== "class") return;
+
+        const staticType = d.members?.find(
+          member =>
+            member.kind === "field" &&
+            member.static === true &&
+            member.name === "type",
+        );
+
+        if (!staticType) return;
+
+        const eventName = (staticType as ClassField).default;
+
+        if (!eventName) {
+          console.warn(
+            `⚠️ No name found for event class ${d.name} in ${module.path}! Skipping.`,
+          );
+
+          return;
         }
+
+        eventFileExportsMap[moduleDirPath]!.push({
+          name: eventName.replace(/"/g, ""),
+          class: d.name,
+        });
       });
 
       continue;
     }
 
-    /**
-     * creating events maps with this structure:
-     * {
-     *   [relativePathName]: [
-     *     { name: 'eventName', class: 'EventNameEvent' }
-     *   ],
-     * }
-     */
-    if (module.path.endsWith("events.ts")) {
-      eventFileExportsMap[relativePath] = (module.declarations ?? []).map(
-        (e: ClassLike) => {
-          const eventName = e.members?.filter(x => x.kind === "field")?.[0]
-            ?.default;
+    // Handle modules
+    if (!isIndexModule(pathInfo.name)) {
+      const component = module.declarations!.find(
+        d => d.kind === "class" && "tagName" in d,
+      ) as CustomElementDeclaration | undefined;
 
-          if (!eventName)
-            throw new Error(
-              `No name was found for ${e.name} event in ${module.path}!`,
-            );
+      if (!component) continue;
 
-          return {
-            name: eventName.replace(/"/g, ""),
-            class: e.name,
+      const {
+        name: elementClassName,
+        tagName = "",
+        summary = "",
+        members = [],
+        events = [],
+        slots = [],
+      } = component;
+
+      const methods = members.filter(
+        m => m.privacy === "public" && m.kind === "method",
+      ) as ClassMethod[];
+
+      const methodsMap: ComponentMetadata["methods"] = methods.reduce(
+        (result, method) => {
+          result[method.name] = {
+            name: method.name,
+            description: method.description ?? "",
+            parameters: (method.parameters ?? []).map(p => ({
+              name: p.name,
+              description: p.description ?? "",
+              type: p.type?.text ?? "",
+            })),
           };
+
+          return result;
         },
+        {} as ComponentMetadata["methods"],
       );
 
+      const eventsMap: ComponentMetadata["events"] = events.reduce(
+        (result, event) => {
+          const match = eventFileExportsMap[moduleDirPath]?.some(
+            e => (e.name = event.name),
+          );
+
+          if (!match) {
+            console.warn(`Events mismatch: ${moduleDirPath}`, {
+              name: event.name,
+            });
+
+            return result;
+          }
+
+          let description = event.description ?? "";
+
+          const eventDescriptionKeywords = ["cancelable", "bubbles"] as const;
+          const eventFlags = {
+            cancelable: false,
+            bubbles: false,
+          };
+
+          eventDescriptionKeywords.forEach(keyword => {
+            if (description.includes(`(${keyword})`)) {
+              description = description.replace(`(${keyword})`, "");
+              eventFlags[keyword] = true;
+            }
+          });
+
+          const eventClassName = event.type?.text ?? "";
+
+          result[event.name] = {
+            name: event.name,
+            eventClassName,
+            description,
+            ...eventFlags,
+          };
+
+          return result;
+        },
+        {} as ComponentMetadata["events"],
+      );
+
+      const slotsMap = slots.reduce(
+        (result, slot) => {
+          let exportsMapKey = "";
+
+          if ("inheritedFrom" in slot) {
+            const originPath = (
+              (slot as ClassField).inheritedFrom!.module ||
+              (slot as ClassField).inheritedFrom!.package ||
+              ""
+            ).replace(/"/g, "");
+
+            const originDirPath = path.relative(
+              packageSrcDir,
+              path.dirname(originPath),
+            );
+
+            exportsMapKey = originDirPath;
+          } else {
+            exportsMapKey = moduleDirPath;
+          }
+
+          const jsStringifiedValue =
+            constantFileExportsMap[exportsMapKey]?.["Slots"]?.default ?? "";
+
+          const parsedObj = parseJavascriptObject(jsStringifiedValue);
+
+          Object.entries(parsedObj).forEach(([k, v]) => {
+            result[k] = {
+              key: k,
+              value: v,
+              description: slot.description ?? "",
+            };
+          });
+
+          return result;
+        },
+        {} as ComponentMetadata["slots"],
+      );
+
+      const props = members.filter(
+        m => m.privacy === "public" && m.kind === "field",
+      ) as (ClassField | CustomElementField)[];
+
+      const propsMap: ComponentMetadata["props"] = props.reduce(
+        (result, prop) => {
+          result[prop.name] = {
+            name: prop.name,
+            description: prop.description ?? "",
+            attribute: "attribute" in prop ? (prop.attribute ?? "") : "",
+            default: prop.default ?? "",
+            type: prop.type?.text ?? "",
+          };
+
+          return result;
+        },
+        {} as ComponentMetadata["props"],
+      );
+
+      metadata.components[moduleDirPath] = {
+        tagName,
+        elementClassName,
+        summary,
+        name: tagName.replace("tapsi-", ""),
+        events: eventsMap,
+        methods: methodsMap,
+        props: propsMap,
+        relativePath: moduleDirPath,
+        slots: slotsMap,
+        endpointExports: {},
+        compoundParts: {},
+      };
+
       continue;
     }
 
-    /**
-     * creating compound components maps with this structure:
-     * {
-     *   [childRelativePath]: parentRelativePath
-     * }
-     */
-    if (
-      module.declarations?.length === 0 &&
-      relativePath.includes("/") &&
-      module.path.endsWith("/index.ts")
-    ) {
-      const parentRelativePath = relativePath.split("/")[0];
+    // Handle Indices.
 
-      if (parentRelativePath)
-        compoundComponentsMap[relativePath] = parentRelativePath;
+    // Skip base modules.
+    if (moduleDirPath.split("-").includes("base")) continue;
+    // Skip main barrel index.
+    if (moduleDirPath === "") continue;
+
+    const ceds = getCustomElementDefinitions(module);
+
+    if (ceds.length === 0) continue;
+
+    // Handle components.
+    const { endpoints } = metadata.package;
+    const endpointExports: ComponentMetadata["endpointExports"] = {};
+
+    const barrelIndexEndpoint = endpoints.find(e => e === "");
+    const relativeIndexEndpoint = endpoints.find(e => e === "*");
+
+    if (typeof barrelIndexEndpoint === "string") {
+      endpointExports[barrelIndexEndpoint] = [];
     }
 
-    const isCompound = relativePath in compoundComponentsMap;
-
-    /**
-     * initiating metadata objects if not exists
-     */
-    if (
-      !isConstant &&
-      (isCompound
-        ? compoundComponentsMap[relativePath] &&
-          !metadata.components[compoundComponentsMap[relativePath]]
-            ?.compoundParts[relativePath]
-        : !metadata.components[relativePath])
-    ) {
-      const initialData = {
-        relativePath,
-        name: "",
-        tagName: "",
-        elementClassName: "",
-        summary: "",
-        events: {},
-        props: {},
-        methods: {},
-        slots: {},
-        compoundParts: {},
-        endpointExports: {
-          "": [],
-          "*": [],
-        },
-      };
-
-      if (!isCompound) {
-        metadata.components[relativePath] = initialData;
-      } else {
-        const compoundParent = compoundComponentsMap[relativePath];
-
-        if (compoundParent && metadata.components[compoundParent]) {
-          metadata.components[compoundParent].compoundParts[relativePath] =
-            initialData;
-        }
-      }
+    if (typeof relativeIndexEndpoint === "string") {
+      endpointExports[relativeIndexEndpoint] = [];
     }
 
-    const isComponentsBarrel = module.path.endsWith(`${relativePath}/index.ts`);
+    const component = metadata.components[moduleDirPath];
 
-    if (!module.path.includes("/base") && isComponentsBarrel) {
-      const endpointExports: ComponentMetadata["endpointExports"] =
-        componentEndpointExports.reduce((a, b) => ({ ...a, [b]: [] }), {});
+    if (!component) continue;
 
-      module.exports?.forEach(e => {
-        if (e.declaration.package?.includes("events.ts")) {
-          if (componentEndpointExports.includes("*")) {
-            if (isCompound) {
-              if (
-                compoundComponentsMap[relativePath] &&
-                metadata.components?.[compoundComponentsMap[relativePath]]
-              ) {
-                Object.values(
-                  metadata.components?.[compoundComponentsMap[relativePath]]
-                    ?.compoundParts?.[relativePath]?.events || {},
-                ).forEach(e => {
-                  endpointExports["*"]?.push(e.eventClassName);
-                });
-              }
-            } else {
-              Object.values(
-                metadata.components?.[relativePath]?.events || {},
-              ).forEach(e => {
-                endpointExports["*"]?.push(e.eventClassName);
-              });
-            }
-          }
+    const eventsMap = component.events;
 
-          if (componentEndpointExports.includes("")) {
-            if (isCompound) {
-              if (
-                compoundComponentsMap[relativePath] &&
-                metadata.components?.[compoundComponentsMap[relativePath]]
-              ) {
-                Object.values(
-                  metadata.components?.[compoundComponentsMap[relativePath]]
-                    ?.compoundParts?.[relativePath]?.events || {},
-                ).forEach(e => {
-                  endpointExports[""]?.push(
-                    `${metadata.components[relativePath]?.elementClassName}${e.eventClassName}`,
-                  );
-                });
-              }
-            } else {
-              Object.values(
-                metadata.components?.[relativePath]?.events || {},
-              ).forEach(e => {
-                endpointExports[""]?.push(
-                  `${metadata.components[relativePath]?.elementClassName}${e.eventClassName}`,
-                );
-              });
-            }
-          }
-        }
+    (module.exports ?? []).forEach(exp => {
+      const exportPath = (
+        exp.declaration.module ||
+        exp.declaration.package ||
+        ""
+      ).replace(/"/g, "");
 
-        if (e.name === "register") {
-          if (componentEndpointExports.includes("*")) {
-            endpointExports["*"]?.push(e.name);
-          }
+      const exportPathInfo = path.parse(exportPath);
 
-          if (componentEndpointExports.includes("")) {
-            endpointExports[""]?.push(
-              `${e.name}${metadata.components[relativePath]?.elementClassName}Element`,
-            );
-          }
-        }
+      const titleCasedName =
+        exp.name.charAt(0).toUpperCase() + exp.name.substring(1);
 
-        if (e.name.endsWith("Slots")) {
-          if (componentEndpointExports.includes("*")) {
-            endpointExports["*"]?.push(e.name);
-          }
-
-          if (componentEndpointExports.includes("")) {
-            endpointExports[""]?.push(
-              `${metadata.components[relativePath]?.elementClassName}${e.name}`,
-            );
-          }
-        }
-      });
-
-      if (isCompound) {
-        if (
-          compoundComponentsMap[relativePath] &&
-          metadata.components?.[compoundComponentsMap[relativePath]]
-            ?.compoundParts?.[relativePath]
-        )
-          metadata.components[
-            compoundComponentsMap[relativePath]
-          ]!.compoundParts[relativePath]!.endpointExports = endpointExports;
-      } else {
-        metadata.components[relativePath]!.endpointExports = endpointExports;
-      }
-    }
-
-    if (
-      !isComponentsBarrel &&
-      !isConstant &&
-      !module.path.includes("/base") &&
-      module.declarations &&
-      module.declarations.length > 0
-    ) {
-      const declaration = module.declarations[0] as CustomElementDeclaration;
-
-      if (!declaration) continue;
-
-      const componentMetadata:
-        | ComponentMetadata
-        | Omit<ComponentMetadata, "compoundParts"> = {
-        relativePath,
-        name: "",
-        tagName: "",
-        elementClassName: "",
-        summary: "",
-        events: {},
-        props: {},
-        methods: {},
-        slots: {},
-        ...(!isCompound && { compoundParts: {} }),
-        endpointExports: {},
-      };
-
-      if (!declaration.tagName) continue;
-
-      componentMetadata.tagName = declaration.tagName;
-
-      componentMetadata.name = componentMetadata.tagName.replace("tapsi-", "");
-      componentMetadata.elementClassName = declaration.name;
-      if (declaration.summary) {
-        componentMetadata.summary = declaration.summary;
-      }
-
-      if (declaration.slots) {
-        let componentsSlots: Record<string, string> = {};
-        const slots = declaration.slots as ClassField[];
-        const inheritedSlotsList = slots.filter(s => s.inheritedFrom);
-
-        if (inheritedSlotsList.length > 0) {
-          inheritedSlotsList.forEach(inheritedSlot => {
-            if (!inheritedSlot.inheritedFrom?.module) return;
-
-            const inheritedDir = path.dirname(
-              inheritedSlot.inheritedFrom.module,
-            );
-
-            const inheritedRelativePath = path.relative(
-              packageSrcDir,
-              inheritedDir,
-            );
-
-            if (!constantFileExportsMap[inheritedRelativePath]?.Slots?.default)
-              return;
-
-            const inheritedSlots =
-              constantFileExportsMap[inheritedRelativePath].Slots.default;
-
-            const inheritedSlotsMap = Object.fromEntries(
-              Object.entries(
-                parseJavascriptObject(inheritedSlots) as Record<string, string>,
-              ).map(([key, value]) => [value, key]),
-            );
-
-            componentsSlots = { ...componentsSlots, ...inheritedSlotsMap };
-          });
-        }
-
-        const slotConstant = constantFileExportsMap[relativePath]?.Slots;
-
-        if (slotConstant?.default) {
-          const componentsSlotMap = Object.fromEntries(
-            Object.entries(
-              parseJavascriptObject(slotConstant.default) as Record<
-                string,
-                string
-              >,
-            ).map(([key, value]) => [value, key]),
-          );
-
-          componentsSlots = { ...componentsSlots, ...componentsSlotMap };
-        }
-
-        const slotMetadata: SlotMetadata[] = declaration.slots?.map(s => {
-          const key = componentsSlots[s.name];
-
-          if (key === undefined) {
-            throw new Error(`No Slot key was found for ${relativePath}`);
-          }
-
-          return {
-            value: s.name,
-            description: s.description || "",
-            key,
-          };
-        });
-
-        componentMetadata.slots = slotMetadata.reduce(
-          (a, b) => ({ ...a, [b.key]: b }),
-          {},
-        );
-      }
-
-      if (declaration.events) {
-        const eventsMap: Record<string, EventMetadata> = {};
-
-        const eventNamesInJsdoc = declaration.events
-          .filter(e => e.name && e.type?.text !== "Event")
-          .map(e => e.name)
-          .sort();
-
-        const eventNamesInEventsFile = (eventFileExportsMap[relativePath] ?? [])
-          .map(e => e.name)
-          .sort();
-
-        if (!arraysEqual(eventNamesInJsdoc, eventNamesInEventsFile)) {
-          throw new Error(
-            `Events are not sync for ${relativePath} in jsdoc (${eventNamesInJsdoc.join(", ") || "nothing!"}) and events.ts (${eventNamesInEventsFile.join(", ") || "nothing!"}).`,
-          );
-        }
-
-        declaration.events?.forEach(e => {
-          const eventMetadata: EventMetadata = {
-            name: "",
-            eventClassName: "",
-            description: "",
-            bubbles: false,
-            cancelable: false,
-          };
-
-          const eventMapKey = e.name;
-
-          eventMetadata.name = eventMapKey;
-
-          eventMetadata.eventClassName = e.type.text;
-          eventMetadata.description = e.description || "";
-
-          const eventDescriptionKeywords = ["cancelable", "bubbles"] as const;
-
-          eventDescriptionKeywords.forEach(keyword => {
-            if (e.description?.includes(`(${keyword})`)) {
-              eventMetadata.description = eventMetadata.description.replace(
-                `(${keyword})`,
-                "",
+      if (exportPathInfo.name === "events") {
+        if (exp.name === "*") {
+          Object.values(eventsMap).forEach(event => {
+            if (typeof barrelIndexEndpoint === "string") {
+              endpointExports[barrelIndexEndpoint]!.push(
+                `${component.elementClassName ?? ""}${event.eventClassName}`,
               );
-              eventMetadata[keyword] = true;
+            }
+
+            if (typeof relativeIndexEndpoint === "string") {
+              endpointExports[relativeIndexEndpoint]!.push(
+                event.eventClassName,
+              );
             }
           });
-
-          if (eventMapKey) {
-            eventsMap[eventMapKey] = eventMetadata;
-          }
-        });
-
-        componentMetadata.events = eventsMap;
-      }
-
-      const members = declaration.members as ClassMember[];
-      const publicMembers = members.filter(m => m.privacy === "public");
-
-      publicMembers.forEach((member: ClassMember) => {
-        if (member.kind === "field") {
-          const field = member as CustomElementField;
-          const propKey = field.name;
-
-          componentMetadata.props[propKey] = {
-            name: "",
-            description: "",
-            type: "",
-            default: "",
-            attribute: "",
-          };
-          componentMetadata.props[propKey].name = propKey;
-          componentMetadata.props[propKey].type = field.type?.text || "";
-
-          if (field.default) {
-            if (!isConstantCase(field.default)) {
-              componentMetadata.props[propKey].default = field.default;
-            } else {
-              const resolvedValue =
-                constantFileExportsMap[relativePath]?.[field.default]?.default;
-
-              if (resolvedValue) {
-                componentMetadata.props[propKey].default = resolvedValue;
-              }
-            }
+        } else {
+          if (typeof barrelIndexEndpoint === "string") {
+            endpointExports[barrelIndexEndpoint]!.push(
+              `${component.elementClassName ?? ""}${titleCasedName}`,
+            );
           }
 
-          componentMetadata.props[propKey].description =
-            field.description || "";
-          componentMetadata.props[propKey].attribute = field.attribute || "";
-        }
-
-        if (member.kind === "method") {
-          const propKey = member.name;
-
-          componentMetadata.methods[propKey] = {
-            name: "",
-            description: "",
-            parameters: [],
-          };
-
-          componentMetadata.methods[propKey].name = propKey;
-          componentMetadata.methods[propKey].description =
-            member.description || "";
-
-          componentMetadata.methods[propKey].parameters = (
-            member.parameters || []
-          ).map(p => ({
-            name: p.name,
-            description: p.description || "",
-            type: p.type?.text || "",
-          }));
-        }
-      });
-
-      if (isCompound) {
-        const parentRelativePath = compoundComponentsMap[relativePath];
-
-        if (parentRelativePath && metadata.components[parentRelativePath]) {
-          metadata.components[parentRelativePath].compoundParts[relativePath] =
-            componentMetadata;
+          if (typeof relativeIndexEndpoint === "string") {
+            endpointExports[relativeIndexEndpoint]!.push(exp.name);
+          }
         }
       } else {
-        const existingCompoundParts =
-          metadata.components[relativePath]?.compoundParts;
+        if (exp.kind === "custom-element-definition") return;
 
-        metadata.components[relativePath] = {
-          ...componentMetadata,
-          compoundParts: existingCompoundParts ?? {},
-        };
+        let barrelName = `${component.elementClassName ?? ""}${titleCasedName}`;
+
+        if (exp.name === "register") {
+          barrelName = `${exp.name}${component.elementClassName ?? ""}`;
+        }
+
+        if (typeof barrelIndexEndpoint === "string") {
+          endpointExports[barrelIndexEndpoint]!.push(barrelName);
+        }
+
+        if (typeof relativeIndexEndpoint === "string") {
+          endpointExports[relativeIndexEndpoint]!.push(exp.name);
+        }
       }
-    }
+    });
+
+    component.endpointExports = endpointExports;
+
+    if (ceds.length <= 1) continue;
+
+    // Compound barrel
+    let parentPath = "";
+    const partPaths: string[] = [];
+
+    ceds.forEach(ced => {
+      const cedPathInfo = path.parse(ced.declaration.module ?? "");
+
+      if (moduleDirPath === cedPathInfo.name) {
+        parentPath = moduleDirPath;
+      } else {
+        const partPath = path.relative(packageSrcDir, cedPathInfo.dir);
+
+        partPaths.push(partPath);
+      }
+    });
+
+    partPaths.forEach(partPath => {
+      const parent = metadata.components[parentPath];
+
+      if (!parent) return;
+
+      const part = metadata.components[partPath];
+
+      if (!part) return;
+
+      parent.compoundParts[partPath] = part;
+
+      delete metadata.components[partPath];
+    });
   }
 
   return metadata;

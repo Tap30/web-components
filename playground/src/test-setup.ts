@@ -1,5 +1,5 @@
 import "@tapsioss/theme/css-variables";
 
-import { registerAllElements } from "@tapsioss/web-components";
+import { registerAll } from "@tapsioss/web-components";
 
-registerAllElements();
+registerAll();

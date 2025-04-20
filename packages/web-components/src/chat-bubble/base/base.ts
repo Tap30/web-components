@@ -6,7 +6,7 @@ import { type ClassMapDirective } from "lit/directives/class-map.js";
 /**
  * @slot - The default slot for the content.
  */
-abstract class BaseChatBubble extends LitElement {
+export abstract class BaseChatBubble extends LitElement {
   @property()
   protected author: "in" | "out" = "in";
 
@@ -72,5 +72,3 @@ abstract class BaseChatBubble extends LitElement {
     `;
   }
 }
-
-export default BaseChatBubble;

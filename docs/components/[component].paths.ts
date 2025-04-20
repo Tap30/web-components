@@ -161,11 +161,11 @@ const getImportsMarkdown = (
       res += "\n\n";
       res += [
         "::: tip",
-        "If you want to use all the component in your app, you can call `registerAllElements` at the root of your project.",
+        "If you want to use all the component in your app, you can call `registerAll` at the root of your project.",
         "```ts [Web]",
         `import "${packagesMetadata?.name}";`,
         ``,
-        `registerAllElements(); // All the components are now available`,
+        `registerAll(); // All the components are now available`,
         "```",
         ":::",
       ].join("\n");
