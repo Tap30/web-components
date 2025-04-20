@@ -27,18 +27,14 @@ export class Tooltip extends LitElement {
   /** @internal */
   public static override readonly styles = [styles];
 
-  /**
-   * @internal
-   */
+  /** @internal */
   declare addEventListener: <K extends keyof TapsiTooltipEventMap>(
     type: K,
     listener: (this: Tooltip, ev: TapsiTooltipEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   declare removeEventListener: <K extends keyof TapsiTooltipEventMap>(
     type: K,
     listener: (this: Tooltip, ev: TapsiTooltipEventMap[K]) => void,

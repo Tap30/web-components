@@ -6,6 +6,10 @@ import { ActivateEvent } from "./item/events.ts";
 import { type SegmentedViewItem } from "./item/item.ts";
 import styles from "./segmented-view.style.ts";
 
+interface TapsiSegmentedViewEventMap extends HTMLElementEventMap {
+  [ActiveChangeEvent.type]: ActiveChangeEvent;
+}
+
 /**
  * @summary The segmented view component that makes exploring and switching between different views easy.
  *
@@ -18,6 +22,20 @@ import styles from "./segmented-view.style.ts";
 export class SegmentedView extends LitElement {
   /** @internal */
   public static override readonly styles = [styles];
+
+  /** @internal */
+  declare addEventListener: <K extends keyof TapsiSegmentedViewEventMap>(
+    type: K,
+    listener: (this: SegmentedView, ev: TapsiSegmentedViewEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /** @internal */
+  declare removeEventListener: <K extends keyof TapsiSegmentedViewEventMap>(
+    type: K,
+    listener: (this: SegmentedView, ev: TapsiSegmentedViewEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
 
   /**
    * Defines a string value that can be used to set a label
@@ -43,6 +61,7 @@ export class SegmentedView extends LitElement {
     super.connectedCallback();
 
     this.addEventListener(
+      // @ts-expect-error its internal event name.
       ActivateEvent.type,
       this._handleItemActivate as EventListener,
     );
@@ -53,6 +72,7 @@ export class SegmentedView extends LitElement {
     super.disconnectedCallback();
 
     this.removeEventListener(
+      // @ts-expect-error its internal event name.
       ActivateEvent.type,
       this._handleItemActivate as EventListener,
     );

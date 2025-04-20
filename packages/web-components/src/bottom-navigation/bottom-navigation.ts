@@ -3,7 +3,7 @@ import { property } from "lit/decorators.js";
 import { logger } from "../utils/index.ts";
 import styles from "./bottom-navigation.style.ts";
 import { ActiveChangeEvent } from "./events.ts";
-import { type ActivateEvent } from "./item/events.ts";
+import { ActivateEvent } from "./item/events.ts";
 import { type BottomNavigationItem } from "./item/item.ts";
 
 interface TapsiBottomNavigationEventMap extends HTMLElementEventMap {
@@ -42,9 +42,7 @@ export class BottomNavigation extends LitElement {
     this._handleItemActivation = this._handleItemActivation.bind(this);
   }
 
-  /**
-   * @internal
-   */
+  /** @internal */
   declare addEventListener: <K extends keyof TapsiBottomNavigationEventMap>(
     type: K,
     listener: (
@@ -54,9 +52,7 @@ export class BottomNavigation extends LitElement {
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   declare removeEventListener: <K extends keyof TapsiBottomNavigationEventMap>(
     type: K,
     listener: (
@@ -69,9 +65,9 @@ export class BottomNavigation extends LitElement {
   /** @internal */
   public override connectedCallback() {
     super.connectedCallback();
-
     this.addEventListener(
-      ActiveChangeEvent.type,
+      // @ts-expect-error its internal event name.
+      ActivateEvent.type,
       this._handleItemActivation as EventListener,
     );
   }
@@ -81,7 +77,8 @@ export class BottomNavigation extends LitElement {
     super.disconnectedCallback();
 
     this.removeEventListener(
-      ActiveChangeEvent.type,
+      // @ts-expect-error its internal event name.
+      ActivateEvent.type,
       this._handleItemActivation as EventListener,
     );
   }

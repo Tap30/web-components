@@ -40,18 +40,14 @@ export class Snackbar extends LitElement {
     delegatesFocus: true,
   };
 
-  /**
-   * @internal
-   */
+  /** @internal */
   declare addEventListener: <K extends keyof TapsiSnackbarEventMap>(
     type: K,
     listener: (this: Snackbar, ev: TapsiSnackbarEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   declare removeEventListener: <K extends keyof TapsiSnackbarEventMap>(
     type: K,
     listener: (this: Snackbar, ev: TapsiSnackbarEventMap[K]) => void,

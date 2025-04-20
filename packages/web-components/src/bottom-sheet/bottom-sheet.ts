@@ -80,18 +80,14 @@ export class BottomSheet extends LitElement {
     delegatesFocus: true,
   };
 
-  /**
-   * @internal
-   */
+  /** @internal */
   declare addEventListener: <K extends keyof TapsiBottomSheetEventMap>(
     type: K,
     listener: (this: BottomSheet, ev: TapsiBottomSheetEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   declare removeEventListener: <K extends keyof TapsiBottomSheetEventMap>(
     type: K,
     listener: (this: BottomSheet, ev: TapsiBottomSheetEventMap[K]) => void,

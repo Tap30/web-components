@@ -35,18 +35,14 @@ export class Notice extends LitElement {
     delegatesFocus: true,
   };
 
-  /**
-   * @internal
-   */
+  /** @internal */
   declare addEventListener: <K extends keyof TapsiNoticeEventMap>(
     type: K,
     listener: (this: Notice, ev: TapsiNoticeEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) => void;
 
-  /**
-   * @internal
-   */
+  /** @internal */
   declare removeEventListener: <K extends keyof TapsiNoticeEventMap>(
     type: K,
     listener: (this: Notice, ev: TapsiNoticeEventMap[K]) => void,
