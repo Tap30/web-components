@@ -2,5 +2,3 @@
 /* eslint-disable import/extensions */
 export * from "./checkLockFile";
 export * from "./checkPlayground";
-export * from "./checkPRAssignee";
-export * from "./checkPRSize";

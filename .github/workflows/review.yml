@@ -1,4 +1,4 @@
-name: ⚡ Danger
+name: 🔍 Review
 
 on:
   pull_request:
@@ -7,20 +7,27 @@ on:
       - edited
       - synchronize
       - reopened
-      - assigned
-      - unassigned
-      - review_requested
-      - review_request_removed
-
+      - ready_for_review
+  workflow_run:
+    workflows: ["🧑‍💻 Development"]
+    types:
+      - completed
   workflow_call:
+    
 
 permissions:
   contents: read
   pull-requests: write
 
 jobs:
+  add-reviews:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kentaro-m/auto-assign-action@v2.0.0
+        with:
+          configuration-path: '.github/review.config.yml' # Only needed if you use something other than .github/auto_assign.yml
   danger:
-    name: ⚡ Run Danger
+    name: ⚡ Danger Check
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
