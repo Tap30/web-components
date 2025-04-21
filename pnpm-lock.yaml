@@ -17,6 +17,9 @@ importers:
       '@eslint/js':
         specifier: ^9.22.0
         version: 9.22.0
+      '@internals/danger':
+        specifier: workspace:*
+        version: link:internals/danger
       '@lit/react':
         specifier: ^1.0.7
         version: 1.0.7(@types/react@18.3.18)
@@ -177,6 +180,8 @@ importers:
       '@types/body-scroll-lock':
         specifier: ^3.1.2
         version: 3.1.2
+
+  internals/danger: {}
 
   internals/test-helpers: {}
 

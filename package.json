@@ -46,7 +46,7 @@
       ],
       "output": []
     },
-    "lint": {
+    "check:lint": {
       "dependencies": [
         "lint:ts",
         "lint:ecma"
@@ -226,6 +226,7 @@
     }
   },
   "devDependencies": {
+    "@internals/danger": "workspace:*",
     "@axe-core/playwright": "^4.10.1",
     "@custom-elements-manifest/analyzer": "^0.10.4",
     "@eslint/js": "^9.22.0",

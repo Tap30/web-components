@@ -1,5 +1,6 @@
 packages:
   - "packages/*"
   - "internals/test-helpers"
+  - "internals/danger"
   - "playground"
   - "docs"
