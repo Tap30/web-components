@@ -104,5 +104,4 @@ jobs:
   trigger-review:
     name: 🚀 Trigger Review
     needs: [lint, test]
-    if: ${{ success() }}
     uses: ./.github/workflows/review.yml
