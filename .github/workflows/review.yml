@@ -17,7 +17,7 @@ jobs:
     name: 👥 Auto-assign Reviewer and Assignee
     runs-on: ubuntu-latest
     # ----> This is the crucial condition <----
-    if: github.event.workflow_run.conclusion == 'success'
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: 👤 assigning reviewer and assignee
         uses: kentaro-m/auto-assign-action@v2.0.0
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     # ----> This is the crucial condition <----
-    if: github.event.workflow_run.conclusion == 'success'
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       # Check out the specific commit/branch associated with the completed workflow run
       - name: ☁️ checkout repository associated with PR
