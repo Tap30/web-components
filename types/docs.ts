@@ -32,6 +32,7 @@ export type ComponentMetadata = {
   summary: string;
   relativePath: string;
   tagName: string;
+  titleCaseName: string;
   name: string;
   slots: Record<string, SlotMetadata>;
   events: Record<string, EventMetadata>;

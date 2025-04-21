@@ -26,6 +26,13 @@ const metadataFile = path.join(packageDir, "metadata.json");
 const packageJsonFile = path.join(packageDir, "package.json");
 const cemFile = path.join(packageDir, "custom-elements.json");
 
+const kebabToTitleCase = (input: string): string => {
+  return input
+    .split("-")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
 /**
  * Parses a string representation of a JavaScript object.
  * Specifically, it removes trailing commas and adds quotes around unquoted keys.
@@ -365,11 +372,14 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
         {} as ComponentMetadata["props"],
       );
 
+      const name = tagName.replace("tapsi-", "");
+
       metadata.components[moduleDirPath] = {
         tagName,
         elementClassName,
         summary,
-        name: tagName.replace("tapsi-", ""),
+        name,
+        titleCaseName: kebabToTitleCase(name),
         events: eventsMap,
         methods: methodsMap,
         props: propsMap,
@@ -503,6 +513,13 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
       if (!part) return;
 
       parent.compoundParts[partPath] = part;
+      const compoundPartName =
+        parent.compoundParts[partPath].relativePath.split("/")[1];
+
+      if (compoundPartName) {
+        parent.compoundParts[partPath].titleCaseName =
+          kebabToTitleCase(compoundPartName);
+      }
 
       delete metadata.components[partPath];
     });

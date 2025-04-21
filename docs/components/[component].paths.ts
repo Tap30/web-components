@@ -70,7 +70,7 @@ const getComponentMarkdown = (
   let res = "\n";
 
   if (component) {
-    res += `${"#".repeat(headingLevel)} ${component.elementClassName}\n`;
+    res += `${"#".repeat(headingLevel)} ${component.titleCaseName}\n`;
 
     res += `${component.summary}\n\n`;
 
@@ -96,7 +96,7 @@ const getImportsMarkdown = (
 ) => {
   let res = "";
 
-  res += `${"#".repeat(headingLevel + 1)} Importing\n`;
+  res += `${"#".repeat(headingLevel + 1)} Importing {#importing${headingLevel > 1 ? `-${component.relativePath.split("/")[1]}` : ""}}\n`;
 
   const componentHumanReadableName = component.name.replace(/-/g, " ");
   const compoundParts = Object.values(component.compoundParts || {});
@@ -209,11 +209,11 @@ const getUsageMarkdown = (
   component: ComponentMetadata,
   headingLevel: number = 1,
 ) => {
-  let res = "";
+  let res = "\n";
+
+  res += `${"#".repeat(headingLevel + 1)} Component Usage {#component-usage${headingLevel > 1 ? `-${component.relativePath.split("/")[1]}` : ""}}\n`;
 
   res += `
-${"#".repeat(headingLevel + 1)} Component Usage
-
 ::: code-group
 \`\`\`html [Web]
 <${component.tagName}></${component.tagName}>
@@ -233,10 +233,10 @@ const getSlotsMarkdown = (
   headingLevel: number = 1,
 ) => {
   const slots = component?.slots || [];
-  let res = "";
+  let res = "\n";
 
   if ((Object.keys(slots)?.length ?? 0) > 0) {
-    res += `\n${"#".repeat(headingLevel + 1)} Slots\n`;
+    res += `${"#".repeat(headingLevel + 1)} Slots {#slots${headingLevel > 1 ? `-${component.relativePath.split("/")[1]}` : ""}}\n`;
 
     res += tabulateData(
       ["Name", "Value", "Description"],
@@ -288,10 +288,10 @@ const getPropsMarkdown = (
   headingLevel: number = 1,
 ) => {
   const props = Object.values(component.props) || [];
-  let res = "";
+  let res = "\n";
 
   if ((props.length ?? 0) > 0) {
-    res += `\n${"#".repeat(headingLevel + 1)} Properties\n`;
+    res += `${"#".repeat(headingLevel + 1)} Properties {#properties${headingLevel > 1 ? `-${component.relativePath.split("/")[1]}` : ""}}\n`;
 
     res += tabulateData(
       ["Name", "Attribute Name", "Description", "Type", "Default Value"],
@@ -335,10 +335,10 @@ const getMethodsMarkdown = (
   headingLevel: number = 1,
 ) => {
   const props = Object.values(component.methods) || [];
-  let res = "";
+  let res = "\n";
 
   if ((props.length ?? 0) > 0) {
-    res += `\n${"#".repeat(headingLevel + 1)} Methods\n`;
+    res += `${"#".repeat(headingLevel + 1)} Methods {#methods${headingLevel > 1 ? `-${component.relativePath.split("/")[1]}` : ""}}\n`;
 
     res += tabulateData(
       ["Name", "Description", "Parameters"],
@@ -369,10 +369,10 @@ const getEventsMarkdown = (
   headingLevel: number = 1,
 ) => {
   const events = Object.values(component?.events) || [];
-  let res = "";
+  let res = "\n";
 
   if ((events?.length ?? 0) > 0) {
-    res += `\n${"#".repeat(headingLevel + 1)} Events\n`;
+    res += `${"#".repeat(headingLevel + 1)} Events {#events${headingLevel > 1 ? `-${component.relativePath.split("/")[1]}` : ""}}\n`;
 
     res += tabulateData(
       ["Name", "Description", "Type", "Bubbles", "Cancelable"],
@@ -384,8 +384,8 @@ const getEventsMarkdown = (
             .replace(/bubbles/g, '<Badge type="warning">Bubbles</Badge>') ||
             "-",
           eventClassName ? codify(eventClassName) : "-",
-          bubbles ? "Yes" : "No",
-          cancelable ? "Yes" : "No",
+          bubbles ? "✅" : "❌",
+          cancelable ? "✅" : "❌",
         ],
       ),
     );
@@ -429,28 +429,6 @@ const getEventsMarkdown = (
         "",
         ":::",
       ].join("\n");
-      // res += `\n
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      // ${events
-      //   .map(event => {
-      //     const eventClass = event.eventClassName;
-      //
-      //     return `element.addEventListener(${eventClass}.type, handle${component.name}${event.eventClassName.replace("Event", "")});`;
-      //   })
-      //   .join("\n")}
-      //
-      //
-      // \`\`\`
-      //
-      // :::`;
     }
   }
 
