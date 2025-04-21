@@ -21,7 +21,7 @@ export const checkLockFile: PluginRuntime = async client => {
       [
         "The dependencies in package.json have been modified, but the lock file (pnpm-lock.yaml) is not updated.",
         "Ensure both files are synchronized to prevent potential dependency mismatches using `pnpm install` command",
-      ].join("/n"),
+      ].join("\n"),
     );
   }
 };

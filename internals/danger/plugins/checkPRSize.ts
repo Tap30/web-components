@@ -14,6 +14,8 @@ export const checkPRSize: PluginRuntime<CheckPlaygroundOptions> = (
     throw new Error("the bigPRThreshold options is required!");
   }
 
+  console.log(client.github.pr);
+
   if (
     client.github.pr.additions + client.github.pr.deletions >
     options.bigPRThreshold
@@ -23,7 +25,7 @@ export const checkPRSize: PluginRuntime<CheckPlaygroundOptions> = (
       [
         "Pull Request size seems relatively large.",
         "If Pull Request contains multiple changes, split each into separate PR will helps faster, easier review.",
-      ].join("/n"),
+      ].join("\n"),
     );
   }
 };
