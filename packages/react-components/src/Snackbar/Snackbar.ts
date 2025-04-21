@@ -1,21 +1,27 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/snackbar";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  registerSnackbar,
+  Snackbar as SnackbarElementClass,
+  SnackbarHideEvent,
+  SnackbarShowEvent,
+  SnackbarSlots,
+} from "@tapsioss/web-components";
+
+registerSnackbar();
+
 const __Snackbar = LitReact.createComponent({
   tagName: "tapsi-snackbar",
-  elementClass: ComponentNamespace.TapsiSnackbar,
+  elementClass: SnackbarElementClass,
   react: React,
   events: {
-    onShow: "show" as LitReact.EventName<ComponentNamespace.ShowEvent>,
-    onHide: "hide" as LitReact.EventName<ComponentNamespace.HideEvent>,
+    onShow: "show" as LitReact.EventName<SnackbarShowEvent>,
+    onHide: "hide" as LitReact.EventName<SnackbarHideEvent>,
   },
 });
 
-export { HideEvent, ShowEvent, Slots } from "@tapsioss/web-components/snackbar";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
+export { SnackbarHideEvent, SnackbarShowEvent, SnackbarSlots };
 
 const Snackbar = __Snackbar;
 

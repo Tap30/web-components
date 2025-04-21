@@ -7,13 +7,48 @@ import { KeyboardKeys } from "../internals/index.ts";
 import { isSsr, waitAMicrotask } from "../utils/index.ts";
 import { HideEvent, ShowEvent } from "./events.ts";
 import { dismiss } from "./icons.ts";
+import styles from "./tooltip.style.ts";
 import { rotateArrow, translate } from "./utils.ts";
 
+interface TapsiTooltipEventMap extends HTMLElementEventMap {
+  [HideEvent.type]: HideEvent;
+  [ShowEvent.type]: ShowEvent;
+}
+
+/**
+ * @summary A simple text popup box.
+ *
+ * @tag tapsi-tooltip
+ *
+ * @fires {ShowEvent} show - Fires when the tooltip should be visible. (cancelable)
+ * @fires {HideEvent} hide - Fires when the tooltip should be hidden. (cancelable)
+ */
 export class Tooltip extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
+  declare addEventListener: <K extends keyof TapsiTooltipEventMap>(
+    type: K,
+    listener: (this: Tooltip, ev: TapsiTooltipEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /** @internal */
+  declare removeEventListener: <K extends keyof TapsiTooltipEventMap>(
+    type: K,
+    listener: (this: Tooltip, ev: TapsiTooltipEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+
   /**
    * Controls how to position the tooltip relative to the anchor.
+   *
+   * @prop {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"} placement
+   * @attr {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"} placement
+   * @default "top"
    */
-  @property({ type: String })
+  @property()
   public placement:
     | "top"
     | "top-start"
@@ -30,42 +65,70 @@ export class Tooltip extends LitElement {
 
   /**
    * Whether tooltip is dismissable or not.
+   *
+   * @prop {boolean} dismissible
+   * @attr {string} dismissible
+   * @default false
    */
   @property({ type: Boolean })
   public dismissible = false;
 
   /**
    * The text content of the tooltip.
+   *
+   * @prop {string} text
+   * @attr {string} text
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public text = "";
 
   /**
    * The id of the anchor element.
+   *
+   * @prop {string} anchor
+   * @attr {string} anchor
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public anchor = "";
 
   /**
    * Whether the tooltip is visible or not.
+   *
+   * @prop {boolean} visible
+   * @attr {string} visible
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public visible = false;
 
   /**
    * Whether to prevent showing tooltip on hover or not.
+   *
+   * @prop {boolean} noHoverActivation
+   * @attr {string} no-hover-activation
+   * @default false
    */
   @property({ type: Boolean, attribute: "no-hover-activation" })
   public noHoverActivation = false;
 
   /**
    * Whether to prevent showing tooltip on focus or not.
+   *
+   * @prop {boolean} noFocusActivation
+   * @attr {string} no-focus-activation
+   * @default false
    */
   @property({ type: Boolean, attribute: "no-focus-activation" })
   public noFocusActivation = false;
 
   /**
    * Whether to hide tooltip on escape or not.
+   *
+   * @prop {boolean} noEscapeDeactivation
+   * @attr {string} no-escape-deactivation
+   * @default false
    */
   @property({ type: Boolean, attribute: "no-escape-deactivation" })
   public noEscapeDeactivation = false;
@@ -98,6 +161,7 @@ export class Tooltip extends LitElement {
     }
   }
 
+  /** @internal */
   public override connectedCallback() {
     super.connectedCallback();
 
@@ -117,6 +181,7 @@ export class Tooltip extends LitElement {
     }
   }
 
+  /** @internal */
   public override disconnectedCallback() {
     super.disconnectedCallback();
 

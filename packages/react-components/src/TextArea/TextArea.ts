@@ -1,18 +1,22 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/text-area";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  registerTextArea,
+  TextArea as TextAreaElementClass,
+  TextAreaSlots,
+} from "@tapsioss/web-components";
+
+registerTextArea();
+
 const __TextArea = LitReact.createComponent({
   tagName: "tapsi-text-area",
-  elementClass: ComponentNamespace.TapsiTextArea,
+  elementClass: TextAreaElementClass,
   react: React,
   events: {},
 });
 
-export { Slots } from "@tapsioss/web-components/text-area";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
+export { TextAreaSlots };
 
 const TextArea = __TextArea;
 

@@ -1,1 +1,1 @@
-export { Divider } from "./Divider.ts";
+export * from "./Divider.ts";

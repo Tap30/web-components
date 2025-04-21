@@ -17,27 +17,74 @@ import {
 } from "../utils/index.ts";
 import { Slots } from "./constants.ts";
 import { HideEvent, ShowEvent } from "./events.ts";
+import styles from "./modal.style.ts";
 
+interface TapsiModalEventMap extends HTMLElementEventMap {
+  [HideEvent.type]: HideEvent;
+  [ShowEvent.type]: ShowEvent;
+}
+
+/**
+ * @summary Display a modal dialog box, providing a title, content area, and action buttons.
+ *
+ * @tag tapsi-modal
+ *
+ * @slot [image] - The slot for imagery element.
+ * @slot [action-bar] - The slot for actionbar element.
+ *
+ * @fires {ShowEvent} show - Fires when the modal should be visible. (cancelable)
+ * @fires {HideEvent} hide - Fires when the modal should be hidden. (cancelable)
+ */
 export class Modal extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
   public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
+  /** @internal */
+  declare addEventListener: <K extends keyof TapsiModalEventMap>(
+    type: K,
+    listener: (this: Modal, ev: TapsiModalEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /** @internal */
+  declare removeEventListener: <K extends keyof TapsiModalEventMap>(
+    type: K,
+    listener: (this: Modal, ev: TapsiModalEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+
   /**
    * Sets the title of the modal.
+   *
+   * @prop {string} heading
+   * @attr {string} heading
+   * @default ""
    */
   @property()
   public heading = "";
 
   /**
    * Sets the description text for the modal.
+   *
+   * @prop {string} description
+   * @attr {string} description
+   * @default ""
    */
   @property()
   public description = "";
 
   /**
    * Determines the alignment of the modal's content.
+   *
+   * @prop {"start" | "center"} alignment
+   * @attr {"start" | "center"} alignment
+   * @default "start"
    */
   @property()
   public alignment: "start" | "center" = "start";
@@ -101,7 +148,7 @@ export class Modal extends LitElement {
     } else toggle();
   }
 
-  public get open() {
+  public get open(): boolean {
     return this._open;
   }
 
@@ -156,12 +203,14 @@ export class Modal extends LitElement {
     document.removeEventListener("keydown", this._handleDocumentKeyDown);
   }
 
+  /** @internal */
   public override connectedCallback(): void {
     super.connectedCallback();
 
     if (this.open) this._attachGlobalEvents();
   }
 
+  /** @internal */
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
@@ -196,6 +245,9 @@ export class Modal extends LitElement {
     }
   }
 
+  /**
+   * Show the modal.
+   */
   public show() {
     if (this.open) return;
 
@@ -206,6 +258,9 @@ export class Modal extends LitElement {
     if (!eventAllowed) this.open = false;
   }
 
+  /**
+   * Hide the modal.
+   */
   public hide() {
     if (!this.open) return;
 

@@ -9,7 +9,7 @@ import {
   test,
 } from "@internals/test-helpers";
 import { ErrorMessages } from "../base-text-input/constants.ts";
-import { type TapsiTextField } from "./index.ts";
+import { type TextField } from "./index.ts";
 
 describe("🧩 text-field", () => {
   afterEach(async ({ page }) => {
@@ -173,7 +173,7 @@ describe("🧩 text-field", () => {
 
     const date = new Date("2023-12-25");
 
-    await textField.evaluate((el: TapsiTextField, date: Date) => {
+    await textField.evaluate((el: TextField, date: Date) => {
       el.valueAsDate = date;
     }, date);
     await expect(textField).toHaveJSProperty("valueAsDate", date);
@@ -189,12 +189,12 @@ describe("🧩 text-field", () => {
 
     const textField = page.getByTestId("test-text-field");
 
-    await textField.evaluate((el: TapsiTextField) => {
+    await textField.evaluate((el: TextField) => {
       el.stepDown(2);
     });
     await expect(textField).toHaveJSProperty("valueAsNumber", 6);
 
-    await textField.evaluate((el: TapsiTextField) => {
+    await textField.evaluate((el: TextField) => {
       el.stepUp(4);
     });
     await expect(textField).toHaveJSProperty("valueAsNumber", 14);

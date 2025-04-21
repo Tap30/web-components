@@ -1,21 +1,24 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/pin-input";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  PinInputCompleteEvent,
+  PinInput as PinInputElementClass,
+  registerPinInput,
+} from "@tapsioss/web-components";
+
+registerPinInput();
+
 const __PinInput = LitReact.createComponent({
   tagName: "tapsi-pin-input",
-  elementClass: ComponentNamespace.TapsiPinInput,
+  elementClass: PinInputElementClass,
   react: React,
   events: {
-    onComplete:
-      "complete" as LitReact.EventName<ComponentNamespace.CompleteEvent>,
+    onComplete: "complete" as LitReact.EventName<PinInputCompleteEvent>,
   },
 });
 
-export { CompleteEvent } from "@tapsioss/web-components/pin-input";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
+export { PinInputCompleteEvent };
 
 const PinInput = __PinInput;
 

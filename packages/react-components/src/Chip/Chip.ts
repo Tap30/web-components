@@ -1,26 +1,27 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/chip";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  ChipDeselectEvent,
+  Chip as ChipElementClass,
+  ChipSelectEvent,
+  ChipSlots,
+  registerChip,
+} from "@tapsioss/web-components";
+
+registerChip();
+
 const __Chip = LitReact.createComponent({
   tagName: "tapsi-chip",
-  elementClass: ComponentNamespace.TapsiChip,
+  elementClass: ChipElementClass,
   react: React,
   events: {
-    onSelect: "select" as LitReact.EventName<ComponentNamespace.SelectEvent>,
-    onDeselect:
-      "deselect" as LitReact.EventName<ComponentNamespace.DeselectEvent>,
+    onSelect: "select" as LitReact.EventName<ChipSelectEvent>,
+    onDeselect: "deselect" as LitReact.EventName<ChipDeselectEvent>,
   },
 });
 
-export {
-  DeselectEvent,
-  SelectEvent,
-  Slots,
-} from "@tapsioss/web-components/chip";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
+export { ChipDeselectEvent, ChipSelectEvent, ChipSlots };
 
 const Chip = __Chip;
 

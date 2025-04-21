@@ -27,6 +27,7 @@ import {
 } from "../utils/index.ts";
 import { ErrorMessages, scope, Slots } from "./constants.ts";
 import { RetryEvent } from "./events.ts";
+import styles from "./file-input.style.ts";
 import { clear, error, image } from "./icons.ts";
 import {
   getProgressUiParams,
@@ -36,19 +37,53 @@ import {
 } from "./utils.ts";
 import FileInputValidator from "./Validator.ts";
 
+interface TapsiFileInputEventMap extends HTMLElementEventMap {
+  [RetryEvent.type]: RetryEvent;
+}
+
 const BaseClass = withOnReportValidity(
   withConstraintValidation(
     withFormAssociated(withElementInternals(LitElement)),
   ),
 );
 
+/**
+ * @summary Used to select and upload files or drag and drop files.
+ *
+ * @tag tapsi-file-input
+ *
+ * @slot [placeholder-icon] - The slot for icon placeholder.
+ *
+ * @fires {RetryEvent} retry - Fires when the retry button is clicked. (bubbles)
+ */
 export class FileInput extends BaseClass {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
+  declare addEventListener: <K extends keyof TapsiFileInputEventMap>(
+    type: K,
+    listener: (this: FileInput, ev: TapsiFileInputEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /** @internal */
+  declare removeEventListener: <K extends keyof TapsiFileInputEventMap>(
+    type: K,
+    listener: (this: FileInput, ev: TapsiFileInputEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+
   /**
    * Identifies the element (or elements) that labels the input.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   *
+   * @prop {string} labelledBy
+   * @attr {string} labelledby
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public labelledBy = "";
 
   /**
@@ -57,6 +92,10 @@ export class FileInput extends BaseClass {
    * - If `false`, the component is not in a loading state.
    * - If `true`, a spinner will appear indicating the component is loading.
    * - If a number between 0 and 100, it shows the percentage of the loading state.
+   *
+   * @prop {boolean | number} loading
+   * @attr {string} loading
+   * @default false
    */
   @property({ converter: loadingConverter })
   public loading: boolean | number = false;
@@ -64,12 +103,20 @@ export class FileInput extends BaseClass {
   /**
    * Conveys additional information below the file input, such as how it should
    * be used.
+   *
+   * @prop {string} supportingText
+   * @attr {string} supporting-text
+   * @default ""
    */
-  @property({ type: String, attribute: "supporting-text" })
+  @property({ attribute: "supporting-text" })
   public supportingText = "";
 
   /**
    * Whether the file input allows the user to select more than one file.
+   *
+   * @prop {boolean} multiple
+   * @attr {string} multiple
+   * @default false
    */
   @property({ type: Boolean })
   public multiple = false;
@@ -79,14 +126,22 @@ export class FileInput extends BaseClass {
    * value.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly
+   *
+   * @prop {boolean} readOnly
+   * @attr {string} readonly
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public readOnly = false;
 
   /**
    * The text showing in file input when it is in loading state.
+   *
+   * @prop {string} loadingText
+   * @attr {string} loading-text
+   * @default "در حال بارگذاری..."
    */
-  @property({ type: String, attribute: "loading-text" })
+  @property({ attribute: "loading-text" })
   public loadingText = "در حال بارگذاری...";
 
   /**
@@ -96,18 +151,30 @@ export class FileInput extends BaseClass {
    *
    * This error message overrides the error message displayed by
    * `reportValidity()`.
+   *
+   * @prop {string} errotText
+   * @attr {string} error-text
+   * @default ""
    */
   @property({ attribute: "error-text" })
   public errorText = "";
 
   /**
    * Whether the file input has error.
+   *
+   * @prop {boolean} error
+   * @attr {string} error
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public error = false;
 
   /**
    * Whether the file input has retry button in error state.
+   *
+   * @prop {boolean} retryableError
+   * @attr {string} retryable-error
+   * @default false
    */
   @property({ type: Boolean, attribute: "retryable-error" })
   public retryableError = false;
@@ -116,12 +183,19 @@ export class FileInput extends BaseClass {
    * Used for showing camera for mobile devices.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#capture
+   *
+   * @prop {string} capture
+   * @attr {string} capture
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public capture = "";
 
   /**
    * The list of selected files.
+   *
+   * @prop {FileList | null} files
+   * @default null
    */
   @property({ attribute: false })
   public files: FileList | null = null;
@@ -130,14 +204,22 @@ export class FileInput extends BaseClass {
    * Specifying what file format does the file input accepts.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept
+   *
+   * @prop {string} accept
+   * @attr {string} accept
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public accept = "";
 
   /**
    * A placeholder text for the input component when no file has been selected.
+   *
+   * @prop {string} placeholder
+   * @attr {string} placeholder
+   * @default "انتخاب فایل"
    */
-  @property({ type: String })
+  @property()
   public placeholder = "انتخاب فایل";
 
   /**
@@ -147,12 +229,20 @@ export class FileInput extends BaseClass {
    * - Otherwise, a visible label element will be rendered.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public label = "";
 
   /**
    * Whether to hide the label or not.
+   *
+   * @prop {boolean} hideLabel
+   * @attr {string} hide-label
+   * @default false
    */
   @property({ type: Boolean, attribute: "hide-label" })
   public hideLabel = false;
@@ -163,6 +253,10 @@ export class FileInput extends BaseClass {
    * `reportValidity()` is invoked when value is empty.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required
+   *
+   * @prop {boolean} required
+   * @attr {string} required
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public required = false;
@@ -171,9 +265,35 @@ export class FileInput extends BaseClass {
    * Indicates that the element should be focused on page load.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   *
+   * @prop {boolean} autofocus
+   * @attr {string} autofocus
+   * @default false
    */
   @property({ type: Boolean })
   public override autofocus = false;
+
+  /**
+   * The current value of the input. It is always a string.
+   *
+   * @prop {string} value
+   * @attr {string} value
+   * @default ""
+   */
+  @property()
+  public set value(newValue: string) {
+    if (newValue) {
+      logger(ErrorMessages.INVALID_VALUE, scope, "error");
+
+      return;
+    }
+
+    this._value = newValue;
+  }
+
+  public get value(): string {
+    return this._value;
+  }
 
   @state()
   private _hasPlaceholderIconSlot = false;
@@ -243,6 +363,7 @@ export class FileInput extends BaseClass {
     this._logErrors();
   }
 
+  /** @internal */
   public override connectedCallback() {
     super.connectedCallback();
 
@@ -252,6 +373,7 @@ export class FileInput extends BaseClass {
     this.addEventListener("click", this._handleActivationClick);
   }
 
+  /** @internal */
   public override disconnectedCallback() {
     super.disconnectedCallback();
 
@@ -261,10 +383,12 @@ export class FileInput extends BaseClass {
     this.removeEventListener("click", this._handleActivationClick);
   }
 
+  /** @internal */
   public override focus(options?: FocusOptions) {
     this._root?.focus(options);
   }
 
+  /** @internal */
   public override blur() {
     this._root?.blur();
   }
@@ -337,22 +461,27 @@ export class FileInput extends BaseClass {
     return this.error || this._nativeError;
   }
 
+  /** @internal */
   public override [getFormValue]() {
     return this._value;
   }
 
+  /** @internal */
   public override [getFormState]() {
     return String(this._value);
   }
 
+  /** @internal */
   public override formResetCallback() {
     this.reset();
   }
 
+  /** @internal */
   public override formStateRestoreCallback(state: string) {
     this._value = state;
   }
 
+  /** @internal */
   public override [createValidator]() {
     return new FileInputValidator(() => ({
       required: this.required ?? false,
@@ -371,14 +500,17 @@ export class FileInput extends BaseClass {
     this._refreshErrorAlert = true;
   }
 
+  /** @internal */
   public override formDisabledCallback(disabled: boolean) {
     this.disabled = disabled;
   }
 
+  /** @internal */
   public override [getValidityAnchor]() {
     return null;
   }
 
+  /** @internal */
   public override [onReportValidity](invalidEvent: Event | null) {
     // Prevent default pop-up behavior.
     invalidEvent?.preventDefault();
@@ -429,21 +561,6 @@ export class FileInput extends BaseClass {
     this._previewSrc = null;
     this._nativeError = false;
     this._nativeErrorText = "";
-  }
-
-  @property()
-  public set value(newValue: string) {
-    if (newValue) {
-      logger(ErrorMessages.INVALID_VALUE, scope, "error");
-
-      return;
-    }
-
-    this._value = newValue;
-  }
-
-  public get value() {
-    return this._value;
   }
 
   private _getErrorText() {

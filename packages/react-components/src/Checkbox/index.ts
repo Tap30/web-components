@@ -1,1 +1,1 @@
-export { Checkbox } from "./Checkbox.ts";
+export * from "./Checkbox.ts";

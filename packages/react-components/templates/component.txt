@@ -1,3 +1,7 @@
+{{imports}}
+
+{{register}}
+
 const __{{componentName}} = LitReact.createComponent({
   tagName: "{{elementTag}}",
   elementClass: {{elementClass}},

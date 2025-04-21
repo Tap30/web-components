@@ -1,58 +1,18 @@
-import { customElement } from "lit/decorators.js";
-import styles from "./chip-group.style.ts";
+import { isSsr } from "../utils/index.ts";
 import { ChipGroup } from "./chip-group.ts";
-import { type SelectChangeEvent } from "./events.ts";
 
 export { Slots } from "./constants.ts";
 export * from "./events.ts";
+export { ChipGroup };
 
-/**
- * @summary A chip group component.
- *
- * @tag tapsi-chip-group
- *
- * @slot - The default slot for chips.
- *
- * @fires {SelectChangeEvent} selectchange - Fired when the chip selection state changes. (bubbles).
- *
- * @prop {'single' | 'multiple'} [select-mode='multiple'] - The select mode of the chip group.
- * @prop {'horizontal' | 'vertical'} [orientation='horizontal'] - The orientation of the chip group.
- * @prop {string} [label=""] -
- * Defines a string value that can be used to set a label
- * for assistive technologies.
- *
- * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
- */
+export const register = () => {
+  if (isSsr()) return;
 
-@customElement("tapsi-chip-group")
-export class TapsiChipGroup extends ChipGroup {
-  public static override readonly styles = [styles];
-
-  /**
-   * @internal
-   */
-  declare addEventListener: <K extends keyof TapsiChipGroupEventMap>(
-    type: K,
-    listener: (this: TapsiChipGroup, ev: TapsiChipGroupEventMap[K]) => void,
-    options?: boolean | AddEventListenerOptions,
-  ) => void;
-
-  /**
-   * @internal
-   */
-  declare removeEventListener: <K extends keyof TapsiChipGroupEventMap>(
-    type: K,
-    listener: (this: TapsiChipGroup, ev: TapsiChipGroupEventMap[K]) => void,
-    options?: boolean | EventListenerOptions,
-  ) => void;
-}
-
-interface TapsiChipGroupEventMap extends HTMLElementEventMap {
-  [SelectChangeEvent.type]: SelectChangeEvent;
-}
+  customElements.define("tapsi-chip-group", ChipGroup);
+};
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tapsi-chip-group": TapsiChipGroup;
+    "tapsi-chip-group": ChipGroup;
   }
 }

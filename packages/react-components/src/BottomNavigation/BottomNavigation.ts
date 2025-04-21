@@ -1,24 +1,31 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/bottom-navigation";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  BottomNavigationActiveChangeEvent,
+  BottomNavigation as BottomNavigationElementClass,
+  BottomNavigationItemSlots,
+  BottomNavigationSlots,
+  registerBottomNavigation,
+} from "@tapsioss/web-components";
+
+registerBottomNavigation();
+
 const __BottomNavigation = LitReact.createComponent({
   tagName: "tapsi-bottom-navigation",
-  elementClass: ComponentNamespace.TapsiBottomNavigation,
+  elementClass: BottomNavigationElementClass,
   react: React,
   events: {
-    onActivechange:
-      "activechange" as LitReact.EventName<ComponentNamespace.ActiveChangeEvent>,
+    onActiveChange:
+      "activechange" as LitReact.EventName<BottomNavigationActiveChangeEvent>,
   },
 });
 
 export {
-  ActiveChangeEvent,
-  Slots,
-} from "@tapsioss/web-components/bottom-navigation";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
+  BottomNavigationActiveChangeEvent,
+  BottomNavigationItemSlots,
+  BottomNavigationSlots,
+};
 
 const BottomNavigation = __BottomNavigation;
 

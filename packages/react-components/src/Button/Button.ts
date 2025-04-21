@@ -1,18 +1,22 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/button/standard";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  Button as ButtonElementClass,
+  ButtonSlots,
+  registerButton,
+} from "@tapsioss/web-components";
+
+registerButton();
+
 const __Button = LitReact.createComponent({
   tagName: "tapsi-button",
-  elementClass: ComponentNamespace.TapsiButton,
+  elementClass: ButtonElementClass,
   react: React,
   events: {},
 });
 
-export { Slots } from "@tapsioss/web-components/button/standard";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
+export { ButtonSlots };
 
 const Button = __Button;
 

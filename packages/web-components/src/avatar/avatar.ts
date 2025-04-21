@@ -1,37 +1,68 @@
 import { LitElement, type PropertyValues, html } from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
+import styles from "./avatar.style.ts";
 
+/**
+ * @summary Avatars display user profile image, initials or fallback icon.
+ *
+ * @tag tapsi-avatar
+ *
+ * @slot - The default slot to use when image is not present.
+ */
 export class Avatar extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
   @state()
   private _hasError = false;
 
   /**
    * The image source to use for the avatar.
+   *
+   * @prop {string} image
+   * @attr {string} image
+   * @default ""
    */
   @property()
   public image = "";
 
   /**
    * A label to use to describe the avatar to assistive devices.
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
   @property()
   public label = "";
 
   /**
    * The alternative text description of the avatar image, used for accessibility.
+   *
+   * @prop {string} alt
+   * @attr {string} alt
+   * @default ""
    */
   @property()
   public alt = "";
 
   /**
    * Indicates how the browser should load the image.
+   *
+   * @prop {"eager" | "lazy"} loading
+   * @attr {"eager" | "lazy"} loading
+   * @default "eager"
    */
   @property()
   public loading: "eager" | "lazy" = "eager";
 
   /**
    * The size of the avatar.
+   *
+   * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xlg' | 'xxlg'} size
+   * @attr {'xs' | 'sm' | 'md' | 'lg' | 'xlg' | 'xxlg'} size
+   * @default "md"
    */
   @property()
   public size: "xs" | "sm" | "md" | "lg" | "xlg" | "xxlg" = "md";

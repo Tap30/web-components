@@ -1,16 +1,19 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/progress-indicator";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  ProgressIndicator as ProgressIndicatorElementClass,
+  registerProgressIndicator,
+} from "@tapsioss/web-components";
+
+registerProgressIndicator();
+
 const __ProgressIndicator = LitReact.createComponent({
   tagName: "tapsi-progress-indicator",
-  elementClass: ComponentNamespace.TapsiProgressIndicator,
+  elementClass: ProgressIndicatorElementClass,
   react: React,
   events: {},
 });
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const ProgressIndicator = __ProgressIndicator;
 

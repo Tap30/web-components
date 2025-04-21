@@ -1,37 +1,17 @@
-import { customElement } from "lit/decorators.js";
-import styles from "./button-group.style.ts";
+import { isSsr } from "../utils/index.ts";
 import { ButtonGroup } from "./button-group.ts";
 
 export { Slots } from "./constants.ts";
+export { ButtonGroup };
 
-/**
- * @summary The button group component.
- *
- * @tag tapsi-button-group
- *
- * @prop {"horizontal" | "vertical"} [orientation="horizontal"] -
- * Defines the orientation of the button group.
- *
- * @prop {"start" | "center"} [alignment="start"] -
- * Sets the alignment of the items within the button group.
- *
- * @prop {boolean} [fluid-items=false] -
- * If true, the items in the button group will expand to fill the available space.
- *
- * @prop {string} [label=""] -
- * Defines a string value that can be used to set a label
- * for assistive technologies.
- *
- * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
- * @slot button - The slot for buttons.
- */
-@customElement("tapsi-button-group")
-export class TapsiButtonGroup extends ButtonGroup {
-  public static override readonly styles = [styles];
-}
+export const register = () => {
+  if (isSsr()) return;
+
+  customElements.define("tapsi-button-group", ButtonGroup);
+};
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tapsi-button-group": TapsiButtonGroup;
+    "tapsi-button-group": ButtonGroup;
   }
 }

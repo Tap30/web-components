@@ -1,29 +1,17 @@
-import { customElement } from "lit/decorators.js";
-import styles from "./empty-state.style.ts";
+import { isSsr } from "../utils/index.ts";
 import { EmptyState } from "./empty-state.ts";
 
 export { Slots } from "./constants.ts";
+export { EmptyState };
 
-/**
- * @summary An empty state component with icon and action slots.
- *
- * @tag tapsi-empty-state
- *
- * @slot icon - The slot for icon element.
- * @slot action - The slot for action element.
- *
- * @prop {string} [title=''] - The title of the empty state.
- * @prop {string} [description=''] - The description of the empty state.
- * @prop {'auto' | 'center'} [content-alignment='auto'] - The alignment of the content.
- */
+export const register = () => {
+  if (isSsr()) return;
 
-@customElement("tapsi-empty-state")
-export class TapsiEmptyState extends EmptyState {
-  public static override readonly styles = [styles];
-}
+  customElements.define("tapsi-empty-state", EmptyState);
+};
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tapsi-empty-state": TapsiEmptyState;
+    "tapsi-empty-state": EmptyState;
   }
 }

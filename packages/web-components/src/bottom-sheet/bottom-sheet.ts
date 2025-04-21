@@ -29,6 +29,7 @@ import {
   ScrollLocker,
   waitAMicrotask,
 } from "../utils/index.ts";
+import styles from "./bottom-sheet.style.ts";
 import { SENTINEL_DEFAULT_SNAP_POINTS, Slots, Status } from "./constants.ts";
 import {
   ClosedEvent,
@@ -42,44 +43,113 @@ import {
 import { dismiss } from "./icons.ts";
 import type { MetaData, SnapToCallbackArgument, StatusEnum } from "./types";
 
+interface TapsiBottomSheetEventMap extends HTMLElementEventMap {
+  [ClosedEvent.type]: ClosedEvent;
+  [ClosingEvent.type]: ClosingEvent;
+  [HideEvent.type]: HideEvent;
+  [OpenedEvent.type]: OpenedEvent;
+  [OpeningEvent.type]: OpeningEvent;
+  [ShowEvent.type]: ShowEvent;
+  [SnappedEvent.type]: SnappedEvent;
+}
+
+/**
+ * @summary The Bottom sheet component that shows the secondary content anchored to the bottom of the screen.
+ *
+ * @tag tapsi-bottom-sheet
+ *
+ * @slot [header] - The slot for the header content.
+ * @slot [body] - The slot for the main body content.
+ * @slot [action-bar] - The slot for the action bar content.
+ *
+ * @fires {SnappedEvent} snapped - Fired when the bottom-sheet is snapped to a specific position.
+ * @fires {OpeningEvent} opening - Fired when the bottom-sheet starts to open. (cancelable)
+ * @fires {ClosingEvent} closing - Fired when the bottom-sheet starts to close. (cancelable)
+ * @fires {OpenedEvent} opened - Fired when the bottom-sheet has fully opened.
+ * @fires {ClosedEvent} closed - Fired when the bottom-sheet has fully closed.
+ * @fires {HideEvent} hide - Fired when the bottom-sheet is hidden. (cancelable)
+ * @fires {ShowEvent} show - Fired when the bottom-sheet is shown. (cancelable)
+ */
 export class BottomSheet extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
   public static override readonly shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
+  /** @internal */
+  declare addEventListener: <K extends keyof TapsiBottomSheetEventMap>(
+    type: K,
+    listener: (this: BottomSheet, ev: TapsiBottomSheetEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /** @internal */
+  declare removeEventListener: <K extends keyof TapsiBottomSheetEventMap>(
+    type: K,
+    listener: (this: BottomSheet, ev: TapsiBottomSheetEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+
   /**
    * Sets the heading title in a declarative-way.
+   *
+   * @prop {string} headingTitle
+   * @attr {string} heading-title
+   * @default ""
    */
   @property({ attribute: "heading-title" })
-  public headingTitle?: string;
+  public headingTitle = "";
 
   /**
    * Sets the heading description in a declarative-way.
+   *
+   * @prop {string} headingDescription
+   * @attr {string} heading-description
+   * @default ""
    */
   @property({ attribute: "heading-description" })
-  public headingDescription?: string;
+  public headingDescription = "";
 
   /**
    * Determines whether the grabber should be visible or not.
+   *
+   * @prop {boolean} hasGrabber
+   * @attr {string} has-grabber
+   * @default false
    */
   @property({ type: Boolean, attribute: "has-grabber" })
   public hasGrabber = false;
 
   /**
    * Determines whether the dismiss button should be visible or not.
+   *
+   * @prop {boolean} hasDismissButton
+   * @attr {string} has-dismiss-button
+   * @default false
    */
   @property({ type: Boolean, attribute: "has-dismiss-button" })
   public hasDismissButton = false;
 
   /**
    * Determines whether the action bar should be sticky or not.
+   *
+   * @prop {boolean} hasStickyActionBar
+   * @attr {string} sticky-action-bar
+   * @default false
    */
   @property({ type: Boolean, attribute: "sticky-action-bar" })
   public hasStickyActionBar = false;
 
   /**
    * Determines whether the header should be sticky or not.
+   *
+   * @prop {boolean} hasStickyHeader
+   * @attr {string} sticky-header
+   * @default false
    */
   @property({ type: Boolean, attribute: "sticky-header" })
   public hasStickyHeader = false;
@@ -87,12 +157,20 @@ export class BottomSheet extends LitElement {
   /**
    * Determines whether the bottom sheet should be expanded
    * by grabbing gesture.
+   *
+   * @prop {boolean} expandable
+   * @attr {string} expandable
+   * @default false
    */
   @property({ type: Boolean })
   public expandable = false;
 
   /**
    * The variant of the bottom sheet.
+   *
+   * @prop {"modal" | "inline"} variant
+   * @attr {"modal" | "inline"} variant
+   * @default "modal"
    */
   @property()
   public variant: "modal" | "inline" = "modal";
@@ -102,22 +180,34 @@ export class BottomSheet extends LitElement {
    * for assistive technologies.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public label = "";
 
   /**
    * Identifies the element (or elements) that labels the element.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   *
+   * @props {string} labelledBy
+   * @attr {string} labelledby
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public labelledBy = "";
 
   /**
    * Identifies the element that should get focused when bottom sheet opens.
+   *
+   * @props {string} focusTarget
+   * @attr {string} focus-target
+   * @default ""
    */
-  @property({ type: String, attribute: "focus-target" })
+  @property({ attribute: "focus-target" })
   public focusTarget = "";
 
   @state()
@@ -248,12 +338,14 @@ export class BottomSheet extends LitElement {
     }
   }
 
+  /** @internal */
   public override connectedCallback(): void {
     super.connectedCallback();
 
     if (this.open) this._attachEvents();
   }
 
+  /** @internal */
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
@@ -376,7 +468,9 @@ export class BottomSheet extends LitElement {
   }
 
   /**
-   * Returns the metadata of the bottom sheet.
+   * The metadata of the bottom sheet.
+   *
+   * @prop {MetaData} metaData
    */
   public get metaData(): MetaData {
     return {
@@ -391,12 +485,12 @@ export class BottomSheet extends LitElement {
   }
 
   /**
-   * Gets the default snap points for the bottom sheet.
-   *
-   * @returns {[number, number]} An array containing two snap points.
+   * An array containing two snap points.
    * - The first snap point is either the container's scroll height
    * or half the window's inner height, whichever is smaller.
    * - The second snap point is 90% of the window's inner height.
+   *
+   * @prop {[number, number]} defaultSnapPoints
    */
   public get defaultSnapPoints(): [number, number] {
     if (isSsr() || !this.isConnected || !this._container) {
@@ -414,11 +508,13 @@ export class BottomSheet extends LitElement {
 
   /**
    * The snap points for bottom sheet to snap to.
-   * Note that snap points will be sorted sorted, no matter
+   * Note that snap points will be sorted, no matter
    * how to set it.
+   *
+   * @prop {number[]} snapPoints
    */
   @property({ attribute: false })
-  public get snapPoints() {
+  public get snapPoints(): number[] {
     if (
       !this._snapPoints ||
       this._snapPoints === SENTINEL_DEFAULT_SNAP_POINTS
@@ -436,6 +532,8 @@ export class BottomSheet extends LitElement {
   /**
    * Determines whether the bottom sheet should be open or not.
    *
+   * @prop {boolean} open
+   * @attr {string} open
    * @default false
    */
   @property({ type: Boolean, reflect: true })
@@ -460,7 +558,7 @@ export class BottomSheet extends LitElement {
     } else toggle();
   }
 
-  public get open() {
+  public get open(): boolean {
     return this._open;
   }
 
@@ -689,6 +787,8 @@ export class BottomSheet extends LitElement {
 
   /**
    * Strictly snaps to the provided or resolved snap point.
+   *
+   * @param {number | SnapToCallbackArgument} numberOrCallback
    */
   public strictSnapTo(numberOrCallback: number | SnapToCallbackArgument) {
     if (isSsr()) return;
@@ -716,6 +816,8 @@ export class BottomSheet extends LitElement {
    * When given a number it'll find the closest snap point,
    * so you don't need to know the exact value.
    * Use the callback method to resolve the snap point.
+   *
+   * @param {number | SnapToCallbackArgument} numberOrCallback
    */
   public snapTo(numberOrCallback: number | SnapToCallbackArgument) {
     if (isSsr()) return;

@@ -1,18 +1,25 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/bottom-navigation";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import { BottomNavigationItem as BottomNavigationItemElementClass } from "@tapsioss/web-components";
+
+if (
+  typeof window !== "undefined" &&
+  !customElements.get("tapsi-bottom-navigation")
+) {
+  /* eslint-disable no-console */
+  console.warn(
+    "[TAPSI][BottomNavigationItem]: The `tapsi-bottom-navigation` tag is not registered. Since `BottomNavigationItem` is a compound component, it should be wrapped inside `BottomNavigation` component.",
+  );
+  /* eslint-enable no-console */
+}
+
 const __BottomNavigationItem = LitReact.createComponent({
   tagName: "tapsi-bottom-navigation-item",
-  elementClass: ComponentNamespace.TapsiBottomNavigationItem,
+  elementClass: BottomNavigationItemElementClass,
   react: React,
   events: {},
 });
-
-export { Slots } from "@tapsioss/web-components/bottom-navigation/item";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const BottomNavigationItem = __BottomNavigationItem;
 

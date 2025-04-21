@@ -1,4 +1,1 @@
-export {
-  SegmentedViewItem,
-  Slots as SegmentedViewItemSlots,
-} from "./SegmentedViewItem.ts";
+export * from "./SegmentedViewItem.ts";

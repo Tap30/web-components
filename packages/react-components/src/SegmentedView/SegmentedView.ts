@@ -1,24 +1,31 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/segmented-view";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  registerSegmentedView,
+  SegmentedViewActiveChangeEvent,
+  SegmentedView as SegmentedViewElementClass,
+  SegmentedViewItemSlots,
+  SegmentedViewSlots,
+} from "@tapsioss/web-components";
+
+registerSegmentedView();
+
 const __SegmentedView = LitReact.createComponent({
   tagName: "tapsi-segmented-view",
-  elementClass: ComponentNamespace.TapsiSegmentedView,
+  elementClass: SegmentedViewElementClass,
   react: React,
   events: {
-    onActivechange:
-      "activechange" as LitReact.EventName<ComponentNamespace.ActiveChangeEvent>,
+    onActiveChange:
+      "activechange" as LitReact.EventName<SegmentedViewActiveChangeEvent>,
   },
 });
 
 export {
-  ActiveChangeEvent,
-  Slots,
-} from "@tapsioss/web-components/segmented-view";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
+  SegmentedViewActiveChangeEvent,
+  SegmentedViewItemSlots,
+  SegmentedViewSlots,
+};
 
 const SegmentedView = __SegmentedView;
 

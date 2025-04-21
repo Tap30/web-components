@@ -2,48 +2,81 @@ import { LitElement, type PropertyValues, html } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { isSsr } from "../utils/index.ts";
+import styles from "./banner.style.ts";
 import {
   DEFAULT_BACKGROUND_COLOR,
   DEFAULT_TEXT_COLOR,
   Slots,
 } from "./constants.ts";
 
+/**
+ * @summary Used to display a visual promotional message.
+ *
+ * @tag tapsi-banner
+ *
+ * @slot - The default slot to render extra elements when variant is `hero`.
+ * @slot [action] - The slot for action element.
+ */
 export class Banner extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
   /**
    * The heading text to display in the banner.
+   *
+   * @prop {string} heading
+   * @attr {string} heading
    */
   @property()
   public heading?: string;
 
   /**
    * The description text to display in the banner.
+   *
+   * @prop {string} description
+   * @attr {string} description
    */
   @property()
   public description?: string;
 
   /**
    * The URL of the background image to display in the banner.
+   *
+   * @prop {string} image
+   * @attr {string} image
    */
   @property()
   public image?: string;
 
   /**
    * The variant style of the banner.
+   *
+   * @prop {"default" | "hero"} variant
+   * @attr {"default" | "hero"} variant
+   * @default "default"
    */
   @property()
   public variant: "default" | "hero" = "default";
 
   /**
    * The background color of the banner.
+   *
+   * @prop {string} backgroundColor
+   * @attr {string} background-color
+   * @default "var(--tapsi-color-surface-secondary)"
    */
   @property({ attribute: "background-color" })
-  public backgroundColor?: string = DEFAULT_BACKGROUND_COLOR;
+  public backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
   /**
    * The text color of the banner.
+   *
+   * @prop {string} textColor
+   * @attr {string} text-color
+   * @default "var(--tapsi-color-content-primary)"
    */
   @property({ attribute: "text-color" })
-  public textColor?: string = DEFAULT_TEXT_COLOR;
+  public textColor = DEFAULT_TEXT_COLOR;
 
   @state()
   private _hasActionSlot = false;
