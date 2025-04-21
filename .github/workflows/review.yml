@@ -1,10 +1,7 @@
 name: 🔍 Review
 
 on:
-  workflow_run:
-    workflows: ["🧑‍💻 Development"]
-    types:
-      - completed
+  workflow_call:
 
 permissions:
   contents: read
