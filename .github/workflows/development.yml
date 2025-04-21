@@ -102,6 +102,6 @@ jobs:
             ```
 
   trigger-review:
-    name: 🚀 Trigger Review
+    name: 🧐 Automatic Review
     needs: [lint, test]
     uses: ./.github/workflows/review.yml
