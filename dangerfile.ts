@@ -12,7 +12,7 @@ void (async () => {
 
   dangerClient.use(checkLockFile);
   dangerClient.use(checkPlayground);
-  dangerClient.use(checkPRSize);
+  dangerClient.use(checkPRSize, { bigPRThreshold: 100 });
   dangerClient.use(checkPRAssignee);
 
   await dangerClient.analyze();
