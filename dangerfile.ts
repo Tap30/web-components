@@ -7,7 +7,7 @@ import {
 } from "@internals/danger";
 import { danger } from "danger";
 
-await (async function tasks() {
+void (async () => {
   const dangerClient = new DangerClient(danger);
 
   dangerClient.use(checkLockFile);
