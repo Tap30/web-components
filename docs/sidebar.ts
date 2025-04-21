@@ -24,35 +24,32 @@ const getSidebarItems = (): DefaultTheme.Sidebar => {
       link: `/components/${c.relativePath}`,
     }));
 
+  const componentsSidebar = [
+    {
+      text: "Introduction",
+      link: "/",
+      items: components,
+    },
+  ];
+
+  const themeSidebar = [
+    {
+      text: "Introduction",
+      link: "/theme",
+      items: [
+        { text: "Color", link: "/theme/color" },
+        { text: "Palette", link: "/theme/palette" },
+        { text: "Radius", link: "/theme/radius" },
+        { text: "Spacing", link: "/theme/spacing" },
+        { text: "Stroke", link: "/theme/stroke" },
+        { text: "Typography", link: "/theme/typography" },
+      ],
+    },
+  ];
+
   return {
-    "/components/": [
-      {
-        text: "Introduction",
-        link: "/",
-        items: components,
-      },
-    ],
-    "/theme/": [
-      {
-        text: "Introduction",
-        link: "/theme",
-        items: [
-          { text: "Color", link: "/theme/color" },
-          { text: "Palette", link: "/theme/palette" },
-          { text: "Radius", link: "/theme/radius" },
-          { text: "Spacing", link: "/theme/spacing" },
-          { text: "Stroke", link: "/theme/stroke" },
-          { text: "Typography", link: "/theme/typography" },
-        ],
-      },
-    ],
-    "/": [
-      {
-        text: "Introduction",
-        link: "/",
-        items: components,
-      },
-    ],
+    "/components": componentsSidebar,
+    "/theme": themeSidebar,
   };
 };
 
