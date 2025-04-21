@@ -169,6 +169,12 @@ import {
   register as registerTooltip,
 } from "./tooltip/index.ts";
 
+import {
+  DiscountCard,
+  Slots as DiscountCardSlots,
+  register as registerDiscountCard,
+} from "./discount-card/index.ts";
+
 export {
   Avatar,
   AvatarSlots,
@@ -208,6 +214,8 @@ export {
   ChipGroupSlots,
   ChipSelectEvent,
   ChipSlots,
+  DiscountCard,
+  DiscountCardSlots,
   Divider,
   EmptyState,
   EmptyStateSlots,
@@ -269,6 +277,7 @@ export {
   registerCheckbox,
   registerChip,
   registerChipGroup,
+  registerDiscountCard,
   registerDivider,
   registerEmptyState,
   registerFileInput,
@@ -327,4 +336,5 @@ export const registerAll = () => {
   registerTextArea();
   registerTextField();
   registerTooltip();
+  registerDiscountCard();
 };
