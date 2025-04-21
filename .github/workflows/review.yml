@@ -1,18 +1,10 @@
 name: 🔍 Review
 
 on:
-  pull_request:
-    types:
-      - opened
-      - edited
-      - synchronize
-      - reopened
-      - ready_for_review
   workflow_run:
     workflows: ["🧑‍💻 Development"]
     types:
       - completed
-  workflow_call:
     
 
 permissions:
@@ -21,11 +13,11 @@ permissions:
 
 jobs:
   add-reviews:
+    name: 👥 Auto-assign Reviewer and Assignee
     runs-on: ubuntu-latest
     steps:
-      - uses: kentaro-m/auto-assign-action@v2.0.0
-        with:
-          configuration-path: '.github/review.config.yml' # Only needed if you use something other than .github/auto_assign.yml
+      - name: 👤 assigning reviewr and assignee
+        uses: kentaro-m/auto-assign-action@v2.0.0
   danger:
     name: ⚡ Danger Check
     runs-on: ubuntu-latest
