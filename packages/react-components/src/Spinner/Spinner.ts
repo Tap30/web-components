@@ -3,10 +3,10 @@ import * as React from "react";
 
 import {
   Spinner as SpinnerElementClass,
-  registerSpinnerElement,
+  registerSpinner,
 } from "@tapsioss/web-components";
 
-registerSpinnerElement();
+registerSpinner();
 
 const __Spinner = LitReact.createComponent({
   tagName: "tapsi-spinner",

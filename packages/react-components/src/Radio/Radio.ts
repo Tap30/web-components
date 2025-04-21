@@ -3,10 +3,10 @@ import * as React from "react";
 
 import {
   Radio as RadioElementClass,
-  registerRadioElement,
+  registerRadio,
 } from "@tapsioss/web-components";
 
-registerRadioElement();
+registerRadio();
 
 const __Radio = LitReact.createComponent({
   tagName: "tapsi-radio",

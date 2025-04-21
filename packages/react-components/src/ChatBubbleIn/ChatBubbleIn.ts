@@ -4,10 +4,10 @@ import * as React from "react";
 import {
   ChatBubbleIn as ChatBubbleInElementClass,
   ChatBubbleInSlots,
-  registerChatBubbleInElement,
+  registerChatBubbleIn,
 } from "@tapsioss/web-components";
 
-registerChatBubbleInElement();
+registerChatBubbleIn();
 
 const __ChatBubbleIn = LitReact.createComponent({
   tagName: "tapsi-chat-bubble-in",

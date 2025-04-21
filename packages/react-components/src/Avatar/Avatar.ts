@@ -4,10 +4,10 @@ import * as React from "react";
 import {
   Avatar as AvatarElementClass,
   AvatarSlots,
-  registerAvatarElement,
+  registerAvatar,
 } from "@tapsioss/web-components";
 
-registerAvatarElement();
+registerAvatar();
 
 const __Avatar = LitReact.createComponent({
   tagName: "tapsi-avatar",

@@ -5,10 +5,10 @@ import {
   Pinwheel as PinwheelElementClass,
   PinwheelItemSlots,
   PinwheelSlots,
-  registerPinwheelElement,
+  registerPinwheel,
 } from "@tapsioss/web-components";
 
-registerPinwheelElement();
+registerPinwheel();
 
 const __Pinwheel = LitReact.createComponent({
   tagName: "tapsi-pinwheel",

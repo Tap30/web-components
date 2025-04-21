@@ -5,10 +5,10 @@ import {
   FileInput as FileInputElementClass,
   FileInputRetryEvent,
   FileInputSlots,
-  registerFileInputElement,
+  registerFileInput,
 } from "@tapsioss/web-components";
 
-registerFileInputElement();
+registerFileInput();
 
 const __FileInput = LitReact.createComponent({
   tagName: "tapsi-file-input",

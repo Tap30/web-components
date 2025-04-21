@@ -3,10 +3,10 @@ import * as React from "react";
 
 import {
   Checkbox as CheckboxElementClass,
-  registerCheckboxElement,
+  registerCheckbox,
 } from "@tapsioss/web-components";
 
-registerCheckboxElement();
+registerCheckbox();
 
 const __Checkbox = LitReact.createComponent({
   tagName: "tapsi-checkbox",

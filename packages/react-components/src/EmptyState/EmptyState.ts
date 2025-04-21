@@ -4,10 +4,10 @@ import * as React from "react";
 import {
   EmptyState as EmptyStateElementClass,
   EmptyStateSlots,
-  registerEmptyStateElement,
+  registerEmptyState,
 } from "@tapsioss/web-components";
 
-registerEmptyStateElement();
+registerEmptyState();
 
 const __EmptyState = LitReact.createComponent({
   tagName: "tapsi-empty-state",

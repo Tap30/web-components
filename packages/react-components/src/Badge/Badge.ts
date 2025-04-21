@@ -4,10 +4,10 @@ import * as React from "react";
 import {
   Badge as BadgeElementClass,
   BadgeSlots,
-  registerBadgeElement,
+  registerBadge,
 } from "@tapsioss/web-components";
 
-registerBadgeElement();
+registerBadge();
 
 const __Badge = LitReact.createComponent({
   tagName: "tapsi-badge",

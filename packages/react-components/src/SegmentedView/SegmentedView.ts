@@ -2,14 +2,14 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  registerSegmentedViewElement,
+  registerSegmentedView,
   SegmentedViewActiveChangeEvent,
   SegmentedView as SegmentedViewElementClass,
   SegmentedViewItemSlots,
   SegmentedViewSlots,
 } from "@tapsioss/web-components";
 
-registerSegmentedViewElement();
+registerSegmentedView();
 
 const __SegmentedView = LitReact.createComponent({
   tagName: "tapsi-segmented-view",

@@ -4,10 +4,10 @@ import * as React from "react";
 import {
   Banner as BannerElementClass,
   BannerSlots,
-  registerBannerElement,
+  registerBanner,
 } from "@tapsioss/web-components";
 
-registerBannerElement();
+registerBanner();
 
 const __Banner = LitReact.createComponent({
   tagName: "tapsi-banner",

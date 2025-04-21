@@ -2,12 +2,12 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  registerSkeletonElement,
+  registerSkeleton,
   Skeleton as SkeletonElementClass,
   SkeletonSlots,
 } from "@tapsioss/web-components";
 
-registerSkeletonElement();
+registerSkeleton();
 
 const __Skeleton = LitReact.createComponent({
   tagName: "tapsi-skeleton",

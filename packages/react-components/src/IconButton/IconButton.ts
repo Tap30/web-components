@@ -4,10 +4,10 @@ import * as React from "react";
 import {
   IconButton as IconButtonElementClass,
   IconButtonSlots,
-  registerIconButtonElement,
+  registerIconButton,
 } from "@tapsioss/web-components";
 
-registerIconButtonElement();
+registerIconButton();
 
 const __IconButton = LitReact.createComponent({
   tagName: "tapsi-icon-button",

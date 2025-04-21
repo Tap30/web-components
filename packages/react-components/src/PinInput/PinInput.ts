@@ -4,10 +4,10 @@ import * as React from "react";
 import {
   PinInputCompleteEvent,
   PinInput as PinInputElementClass,
-  registerPinInputElement,
+  registerPinInput,
 } from "@tapsioss/web-components";
 
-registerPinInputElement();
+registerPinInput();
 
 const __PinInput = LitReact.createComponent({
   tagName: "tapsi-pin-input",

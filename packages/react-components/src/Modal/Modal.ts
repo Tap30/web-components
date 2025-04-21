@@ -6,10 +6,10 @@ import {
   ModalHideEvent,
   ModalShowEvent,
   ModalSlots,
-  registerModalElement,
+  registerModal,
 } from "@tapsioss/web-components";
 
-registerModalElement();
+registerModal();
 
 const __Modal = LitReact.createComponent({
   tagName: "tapsi-modal",

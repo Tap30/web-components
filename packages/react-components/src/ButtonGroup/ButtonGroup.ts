@@ -4,10 +4,10 @@ import * as React from "react";
 import {
   ButtonGroup as ButtonGroupElementClass,
   ButtonGroupSlots,
-  registerButtonGroupElement,
+  registerButtonGroup,
 } from "@tapsioss/web-components";
 
-registerButtonGroupElement();
+registerButtonGroup();
 
 const __ButtonGroup = LitReact.createComponent({
   tagName: "tapsi-button-group",

@@ -3,10 +3,10 @@ import * as React from "react";
 
 import {
   Stepper as StepperElementClass,
-  registerStepperElement,
+  registerStepper,
 } from "@tapsioss/web-components";
 
-registerStepperElement();
+registerStepper();
 
 const __Stepper = LitReact.createComponent({
   tagName: "tapsi-stepper",

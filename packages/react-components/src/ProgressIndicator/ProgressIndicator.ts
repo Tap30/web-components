@@ -3,10 +3,10 @@ import * as React from "react";
 
 import {
   ProgressIndicator as ProgressIndicatorElementClass,
-  registerProgressIndicatorElement,
+  registerProgressIndicator,
 } from "@tapsioss/web-components";
 
-registerProgressIndicatorElement();
+registerProgressIndicator();
 
 const __ProgressIndicator = LitReact.createComponent({
   tagName: "tapsi-progress-indicator",

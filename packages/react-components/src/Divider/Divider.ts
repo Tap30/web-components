@@ -3,10 +3,10 @@ import * as React from "react";
 
 import {
   Divider as DividerElementClass,
-  registerDividerElement,
+  registerDivider,
 } from "@tapsioss/web-components";
 
-registerDividerElement();
+registerDivider();
 
 const __Divider = LitReact.createComponent({
   tagName: "tapsi-divider",

@@ -2,14 +2,14 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  registerSnackbarElement,
+  registerSnackbar,
   Snackbar as SnackbarElementClass,
   SnackbarHideEvent,
   SnackbarShowEvent,
   SnackbarSlots,
 } from "@tapsioss/web-components";
 
-registerSnackbarElement();
+registerSnackbar();
 
 const __Snackbar = LitReact.createComponent({
   tagName: "tapsi-snackbar",

@@ -2,12 +2,12 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  registerTextAreaElement,
+  registerTextArea,
   TextArea as TextAreaElementClass,
   TextAreaSlots,
 } from "@tapsioss/web-components";
 
-registerTextAreaElement();
+registerTextArea();
 
 const __TextArea = LitReact.createComponent({
   tagName: "tapsi-text-area",

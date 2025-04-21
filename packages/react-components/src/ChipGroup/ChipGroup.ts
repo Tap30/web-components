@@ -5,10 +5,10 @@ import {
   ChipGroup as ChipGroupElementClass,
   ChipGroupSelectChangeEvent,
   ChipGroupSlots,
-  registerChipGroupElement,
+  registerChipGroup,
 } from "@tapsioss/web-components";
 
-registerChipGroupElement();
+registerChipGroup();
 
 const __ChipGroup = LitReact.createComponent({
   tagName: "tapsi-chip-group",

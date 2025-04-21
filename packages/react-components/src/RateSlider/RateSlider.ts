@@ -3,10 +3,10 @@ import * as React from "react";
 
 import {
   RateSlider as RateSliderElementClass,
-  registerRateSliderElement,
+  registerRateSlider,
 } from "@tapsioss/web-components";
 
-registerRateSliderElement();
+registerRateSlider();
 
 const __RateSlider = LitReact.createComponent({
   tagName: "tapsi-rate-slider",

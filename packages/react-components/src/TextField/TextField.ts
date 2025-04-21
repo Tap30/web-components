@@ -2,12 +2,12 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  registerTextFieldElement,
+  registerTextField,
   TextField as TextFieldElementClass,
   TextFieldSlots,
 } from "@tapsioss/web-components";
 
-registerTextFieldElement();
+registerTextField();
 
 const __TextField = LitReact.createComponent({
   tagName: "tapsi-text-field",

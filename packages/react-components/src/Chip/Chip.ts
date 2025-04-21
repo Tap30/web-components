@@ -6,10 +6,10 @@ import {
   Chip as ChipElementClass,
   ChipSelectEvent,
   ChipSlots,
-  registerChipElement,
+  registerChip,
 } from "@tapsioss/web-components";
 
-registerChipElement();
+registerChip();
 
 const __Chip = LitReact.createComponent({
   tagName: "tapsi-chip",

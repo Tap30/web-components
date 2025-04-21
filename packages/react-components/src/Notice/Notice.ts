@@ -6,10 +6,10 @@ import {
   NoticeHideEvent,
   NoticeShowEvent,
   NoticeSlots,
-  registerNoticeElement,
+  registerNotice,
 } from "@tapsioss/web-components";
 
-registerNoticeElement();
+registerNotice();
 
 const __Notice = LitReact.createComponent({
   tagName: "tapsi-notice",

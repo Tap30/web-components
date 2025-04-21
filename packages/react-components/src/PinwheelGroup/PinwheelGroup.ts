@@ -4,10 +4,10 @@ import * as React from "react";
 import {
   PinwheelGroup as PinwheelGroupElementClass,
   PinwheelGroupSlots,
-  registerPinwheelGroupElement,
+  registerPinwheelGroup,
 } from "@tapsioss/web-components";
 
-registerPinwheelGroupElement();
+registerPinwheelGroup();
 
 const __PinwheelGroup = LitReact.createComponent({
   tagName: "tapsi-pinwheel-group",

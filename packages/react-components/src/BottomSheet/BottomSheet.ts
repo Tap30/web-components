@@ -11,10 +11,10 @@ import {
   BottomSheetShowEvent,
   BottomSheetSlots,
   BottomSheetSnappedEvent,
-  registerBottomSheetElement,
+  registerBottomSheet,
 } from "@tapsioss/web-components";
 
-registerBottomSheetElement();
+registerBottomSheet();
 
 const __BottomSheet = LitReact.createComponent({
   tagName: "tapsi-bottom-sheet",

@@ -3,10 +3,10 @@ import * as React from "react";
 
 import {
   Switch as SwitchElementClass,
-  registerSwitchElement,
+  registerSwitch,
 } from "@tapsioss/web-components";
 
-registerSwitchElement();
+registerSwitch();
 
 const __Switch = LitReact.createComponent({
   tagName: "tapsi-switch",

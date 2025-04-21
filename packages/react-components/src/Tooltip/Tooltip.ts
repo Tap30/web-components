@@ -2,13 +2,13 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  registerTooltipElement,
+  registerTooltip,
   Tooltip as TooltipElementClass,
   TooltipHideEvent,
   TooltipShowEvent,
 } from "@tapsioss/web-components";
 
-registerTooltipElement();
+registerTooltip();
 
 const __Tooltip = LitReact.createComponent({
   tagName: "tapsi-tooltip",

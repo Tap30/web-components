@@ -6,10 +6,10 @@ import {
   BottomNavigation as BottomNavigationElementClass,
   BottomNavigationItemSlots,
   BottomNavigationSlots,
-  registerBottomNavigationElement,
+  registerBottomNavigation,
 } from "@tapsioss/web-components";
 
-registerBottomNavigationElement();
+registerBottomNavigation();
 
 const __BottomNavigation = LitReact.createComponent({
   tagName: "tapsi-bottom-navigation",
