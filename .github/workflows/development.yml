@@ -1,4 +1,4 @@
-name: 🧑‍💻 Development
+name: "🧑‍💻 Development"
 
 on:
   pull_request:
@@ -37,7 +37,7 @@ jobs:
         run: pnpm install
 
       - name: 🔍 lint code
-        run: pnpm lint
+        run: pnpm check:lint
 
   test:
     needs: lint

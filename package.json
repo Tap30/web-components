@@ -24,7 +24,8 @@
     "build:docs": "wireit",
     "test": "wireit",
     "test:update-snapshots": "pnpm --filter @tapsioss/web-components run test:update-snapshots",
-    "lint": "wireit",
+    "check:danger": "danger ci --verbose --failOnErrors",
+    "check:lint": "wireit",
     "fmt": "wireit",
     "dev:packages": "pnpm run -r --parallel --filter=!@tapsioss/docs dev",
     "dev:playground": "pnpm --filter @tapsioss/playground run start:dev",
@@ -45,7 +46,7 @@
       ],
       "output": []
     },
-    "lint": {
+    "check:lint": {
       "dependencies": [
         "lint:ts",
         "lint:ecma"
@@ -225,6 +226,7 @@
     }
   },
   "devDependencies": {
+    "@internals/danger": "workspace:*",
     "@axe-core/playwright": "^4.10.1",
     "@custom-elements-manifest/analyzer": "^0.10.4",
     "@eslint/js": "^9.22.0",
@@ -240,6 +242,7 @@
     "@types/stream-json": "^1.7.8",
     "@vitejs/plugin-react": "^4.3.4",
     "custom-elements-manifest": "^2.1.0",
+    "danger": "^12.3.4",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.9.1",

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import icons from "@tapsioss/icons";
 import Mustache from "mustache";
 import { exec } from "node:child_process";
@@ -89,4 +88,3 @@ void (async () => {
   await generateComponents();
   console.timeEnd("build");
 })();
-/* eslint-enable no-console */
