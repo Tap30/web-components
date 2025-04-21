@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   type ClassField,
   type ClassMethod,
@@ -539,4 +538,3 @@ void (async () => {
 
   console.log("✅ docs metadata generated.");
 })();
-/* eslint-enable no-console */

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import globAsync from "fast-glob";
 import Mustache from "mustache";
 import { exec } from "node:child_process";
@@ -140,4 +139,3 @@ void (async () => {
   await generatePaths();
   console.timeEnd("build");
 })();
-/* eslint-enable no-console */

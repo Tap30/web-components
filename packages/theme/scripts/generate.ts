@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import globAsync from "fast-glob";
 import { exec } from "node:child_process";
 import * as fs from "node:fs/promises";
@@ -95,4 +94,3 @@ void (async () => {
   await generate();
   console.timeEnd("generate");
 })();
-/* eslint-enable no-console */

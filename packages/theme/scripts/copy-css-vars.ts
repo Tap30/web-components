@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import globAsync from "fast-glob";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
@@ -33,4 +32,3 @@ void (async () => {
   await copyCssVars();
   console.timeEnd("copy-css-vars");
 })();
-/* eslint-enable no-console */

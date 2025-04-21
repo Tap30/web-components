@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Mustache from "mustache";
 import { exec } from "node:child_process";
 import * as fs from "node:fs";
@@ -364,4 +363,3 @@ void (async () => {
       console.timeEnd("generate");
     });
 })();
-/* eslint-enable no-console */
