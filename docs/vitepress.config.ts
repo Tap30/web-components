@@ -36,8 +36,6 @@ export default defineConfig({
     },
   },
   rewrites: {
-    // "index.md": "components.md",
-    // "index.md": "components.md",
     "theme/index.md": "theme.md",
     "components/index.md": "components.md",
   },
