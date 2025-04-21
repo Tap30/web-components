@@ -1,4 +1,4 @@
-name: 🚀 Publish
+name: 🚀 Release
 
 on:
   release:
@@ -84,3 +84,50 @@ jobs:
         run: pnpm release:${{ env.PACKAGE_NAME }}
         env:
           NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+
+  build-docs:
+    name: 🏗️ Build Docs
+    needs: publish-npm
+    runs-on: ubuntu-latest
+    steps:
+      - name: ☁️ checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔧 setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: 🔧 setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: 🔧 setup pages
+        uses: actions/configure-pages@v4
+
+      - name: 📦 install dependencies
+        run: pnpm install
+
+      - name: 🧱 build docs
+        run: pnpm build:docs
+
+      - name: 🗄️ upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+  deploy-docs:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build-docs
+    runs-on: ubuntu-latest
+    name: 🚀 Deploy Docs
+    steps:
+      - name: 🚀 deploy documentation to github pages
+        id: deployment
+        uses: actions/deploy-pages@v4
