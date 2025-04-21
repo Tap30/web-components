@@ -14,7 +14,9 @@ export const checkPRSize: PluginRuntime<CheckPlaygroundOptions> = (
     throw new Error("the bigPRThreshold options is required!");
   }
 
-  console.log(client.github.pr);
+  console.log(client.git.created_files);
+  console.log(client.git.created_files);
+  console.log(client.git.modified_files);
 
   if (
     client.github.pr.additions + client.github.pr.deletions >
