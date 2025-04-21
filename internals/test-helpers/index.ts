@@ -1,4 +1,4 @@
-import AxeBuilder from "@axe-core/playwright";
+import { AxeBuilder } from "@axe-core/playwright";
 import { type Page, test as base } from "@playwright/test";
 
 const test = base.extend({

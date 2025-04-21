@@ -1,4 +1,6 @@
-export * from "./checkLockFile.ts";
-export * from "./checkPlayground.ts";
-export * from "./checkPRAssignee.ts";
-export * from "./checkPRSize.ts";
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable import/extensions */
+export * from "./checkLockFile";
+export * from "./checkPlayground";
+export * from "./checkPRAssignee";
+export * from "./checkPRSize";

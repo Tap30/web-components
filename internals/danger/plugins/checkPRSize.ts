@@ -1,4 +1,6 @@
-import { type PluginRuntime } from "../DangerClient.ts";
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable import/extensions */
+import { type PluginRuntime } from "../DangerClient";
 
 type CheckPlaygroundOptions = {
   bigPRThreshold: number;
