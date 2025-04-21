@@ -8,39 +8,28 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write # Needed for auto-assign and potentially Danger comments
-  actions: read        # Needed to read workflow run conclusion
+  pull-requests: write
+  actions: read
 
 jobs:
-  # Add this condition to check if the triggering workflow was successful
   add-reviews:
     name: 👥 Auto-assign Reviewer and Assignee
     runs-on: ubuntu-latest
-    # ----> This is the crucial condition <----
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: 👤 assigning reviewer and assignee
         uses: kentaro-m/auto-assign-action@v2.0.0
-        # Ensure this action correctly infers the PR from the workflow_run context
-        # It usually does, but keep an eye on it.
 
-  # Also add the condition here
   danger:
     name: ⚡ Danger Check
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    # ----> This is the crucial condition <----
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      # Check out the specific commit/branch associated with the completed workflow run
       - name: ☁️ checkout repository associated with PR
         uses: actions/checkout@v4
         with:
-          # Use the head_sha or head_branch from the triggering workflow run event
-          # head_branch is generally safer if the branch still exists
           ref: ${{ github.event.workflow_run.head_branch }}
-          # Alternatively, use head_sha:
-          # ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: 🔧 setup pnpm
         uses: pnpm/action-setup@v3
@@ -59,5 +48,4 @@ jobs:
       - name: ⚡ run danger file
         run: pnpm check:danger
         env:
-          # Ensure Danger uses the correct token to comment on the PR
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
