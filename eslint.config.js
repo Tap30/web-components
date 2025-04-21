@@ -60,9 +60,26 @@ export default config(
     },
   },
   {
+    files: ["*", "!**/scripts/**/*"],
+    rules: {
+      "no-console": "warn",
+    },
+  },
+  {
+    files: ["*", "!internals/danger/**/*"],
+    rules: {
+      "import/extensions": [
+        "error",
+        "always",
+        {
+          ignorePackages: true,
+        },
+      ],
+    },
+  },
+  {
     rules: {
       "no-alert": "error",
-      "no-console": "warn",
       "prefer-const": "error",
       "default-case": "error",
       "eol-last": "error",
@@ -71,13 +88,6 @@ export default config(
       "no-unused-private-class-members": "warn",
       "no-promise-executor-return": "error",
       "no-unmodified-loop-condition": "warn",
-      "import/extensions": [
-        "error",
-        "always",
-        {
-          ignorePackages: true,
-        },
-      ],
       eqeqeq: ["error", "smart"],
       "no-duplicate-imports": [
         "error",
@@ -139,6 +149,8 @@ export default config(
         },
       ],
     },
+  },
+  {
     settings: {
       "import/resolver": {
         typescript: {
