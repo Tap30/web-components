@@ -1,21 +1,26 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/chip-group";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  ChipGroup as ChipGroupElementClass,
+  ChipGroupSelectChangeEvent,
+  ChipGroupSlots,
+  registerChipGroup,
+} from "@tapsioss/web-components";
+
+registerChipGroup();
+
 const __ChipGroup = LitReact.createComponent({
   tagName: "tapsi-chip-group",
-  elementClass: ComponentNamespace.TapsiChipGroup,
+  elementClass: ChipGroupElementClass,
   react: React,
   events: {
-    onSelectchange:
-      "selectchange" as LitReact.EventName<ComponentNamespace.SelectChangeEvent>,
+    onSelectChange:
+      "selectchange" as LitReact.EventName<ChipGroupSelectChangeEvent>,
   },
 });
 
-export { SelectChangeEvent, Slots } from "@tapsioss/web-components/chip-group";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
+export { ChipGroupSelectChangeEvent, ChipGroupSlots };
 
 const ChipGroup = __ChipGroup;
 

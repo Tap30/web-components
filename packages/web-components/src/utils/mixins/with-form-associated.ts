@@ -203,7 +203,7 @@ const withFormAssociated = <
       form APIs, and Lit updates attributes async by default.
     */
     @property({ noAccessor: true })
-    get name(): string {
+    public get name(): string {
       return this.getAttribute("name") ?? "";
     }
 

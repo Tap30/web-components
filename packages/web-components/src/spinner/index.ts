@@ -1,24 +1,16 @@
-import { customElement } from "lit/decorators.js";
-import styles from "./spinner.style.ts";
+import { isSsr } from "../utils/index.ts";
 import { Spinner } from "./spinner.ts";
 
-/**
- * @summary A spinner component for loading states.
- *
- * @tag tapsi-spinner
- *
- * @prop {number | `${number}` | 'auto'} [size='auto'] -
- * Determines the size of the spinner.
- * When set to 'auto', it inherits the size of its parent element.
- * Otherwise, you can specify the size in pixels.
- */
-@customElement("tapsi-spinner")
-export class TapsiSpinner extends Spinner {
-  public static override readonly styles = [styles];
-}
+export { Spinner };
+
+export const register = () => {
+  if (isSsr()) return;
+
+  customElements.define("tapsi-spinner", Spinner);
+};
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tapsi-spinner": TapsiSpinner;
+    "tapsi-spinner": Spinner;
   }
 }

@@ -1,17 +1,39 @@
 import { LitElement, html, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { logger } from "../utils/index.ts";
+import styles from "./bottom-navigation.style.ts";
 import { ActiveChangeEvent } from "./events.ts";
-import { ActivateEvent, type BottomNavigationItem } from "./item/index.ts";
+import { ActivateEvent } from "./item/events.ts";
+import { type BottomNavigationItem } from "./item/item.ts";
 
+interface TapsiBottomNavigationEventMap extends HTMLElementEventMap {
+  [ActiveChangeEvent.type]: ActiveChangeEvent;
+}
+
+/**
+ * @summary The bottom navigation component that offers global, persistent navigation throughout an app.
+ *
+ * @tag tapsi-bottom-navigation
+ *
+ * @slot - The default slot for navigation items.
+ *
+ * @fires {ActiveChangeEvent} activechange - Fired when the items activation state changes. (bubbles)
+ */
 export class BottomNavigation extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
   /**
    * Defines a string value that can be used to set a label
    * for assistive technologies.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public label = "";
 
   constructor() {
@@ -20,19 +42,42 @@ export class BottomNavigation extends LitElement {
     this._handleItemActivation = this._handleItemActivation.bind(this);
   }
 
+  /** @internal */
+  declare addEventListener: <K extends keyof TapsiBottomNavigationEventMap>(
+    type: K,
+    listener: (
+      this: BottomNavigation,
+      ev: TapsiBottomNavigationEventMap[K],
+    ) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /** @internal */
+  declare removeEventListener: <K extends keyof TapsiBottomNavigationEventMap>(
+    type: K,
+    listener: (
+      this: BottomNavigation,
+      ev: TapsiBottomNavigationEventMap[K],
+    ) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+
+  /** @internal */
   public override connectedCallback() {
     super.connectedCallback();
-
     this.addEventListener(
+      // @ts-expect-error its internal event name.
       ActivateEvent.type,
       this._handleItemActivation as EventListener,
     );
   }
 
+  /** @internal */
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     this.removeEventListener(
+      // @ts-expect-error its internal event name.
       ActivateEvent.type,
       this._handleItemActivation as EventListener,
     );

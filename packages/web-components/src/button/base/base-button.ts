@@ -25,12 +25,15 @@ import {
 const BaseClass = withElementInternals(withFocusable(LitElement));
 
 export abstract class BaseButton extends BaseClass implements FormSubmitter {
+  /** @internal */
   static {
     setupFormSubmitter(BaseButton);
   }
 
+  /** @internal */
   public static formAssociated = true;
 
+  /** @internal */
   public static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
@@ -40,6 +43,8 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   /**
    * Whether the button is disabled.
    *
+   * @prop {boolean} disabled
+   * @attr {string} disabled
    * @default false
    */
   @property({ type: Boolean, reflect: true })
@@ -47,18 +52,29 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
 
   /**
    * The type of the button.
+   *
+   * @prop {"button" | "submit" | "reset"} type
+   * @attr {string} type
+   * @default "submit"
    */
   @property()
-  public type: FormSubmitterType = "button";
+  public type: FormSubmitterType = "submit";
 
   /**
    * The accessible label for the button.
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
   @property()
   public label: string = "";
 
   /**
    * Whether the button is in a loading state.
+   *
+   * @prop {boolean} loading
+   * @attr {string} loading
    * @default false
    */
   @property({ type: Boolean, reflect: true })
@@ -66,6 +82,9 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
 
   /**
    * The size of the button.
+   *
+   * @prop {"sm" | "md" | "lg"} size
+   * @attr {"sm" | "md" | "lg"} size
    * @default "md"
    */
   @property()
@@ -73,6 +92,10 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
 
   /**
    * The URL that the link button points to.
+   *
+   * @prop {string} href
+   * @attr {string} href
+   * @default ""
    */
   @property()
   public href = "";
@@ -81,6 +104,10 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
    * The filename to use when downloading the linked resource.
    * If not specified, the browser will determine a filename.
    * This is only applicable when the button is used as a link (`href` is set).
+   *
+   * @prop {string} download
+   * @attr {string} download
+   * @default ""
    */
   @property()
   public download = "";
@@ -88,6 +115,10 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   /**
    * Where to display the linked `href` URL for a link button. Common options
    * include `_blank` to open in a new tab.
+   *
+   * @prop {"_blank" | "_parent" | "_self" | "_top" | ""} target
+   * @attr {"_blank" | "_parent" | "_self" | "_top" | ""} target
+   * @default ""
    */
   @property()
   public target: "_blank" | "_parent" | "_self" | "_top" | "" = "";
@@ -96,12 +127,19 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
    * Indicates that the element should be focused on page load.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   *
+   * @prop {boolean} autofocus
+   * @attr {string} autofocus
+   * @default false
    */
   @property({ type: Boolean })
   public override autofocus = false;
 
   /**
    * The variant style of the button.
+   *
+   * @prop {"primary" | "ghost" | "naked" | "elevated" | "destructive" | "brand"} variant
+   * @attr {"primary" | "ghost" | "naked" | "elevated" | "destructive" | "brand"} variant
    * @default "primary"
    */
   @property()
@@ -116,6 +154,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   @query("#root")
   private readonly _root!: HTMLElement | null;
 
+  /** @internal */
   public get form() {
     return this[internals].form;
   }
@@ -133,6 +172,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     } else this[isFocusable] = true;
   }
 
+  /** @internal */
   public override connectedCallback() {
     super.connectedCallback();
 
@@ -141,6 +181,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     this.addEventListener("click", this._handleClick);
   }
 
+  /** @internal */
   public override disconnectedCallback() {
     super.disconnectedCallback();
 
@@ -205,10 +246,12 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     dispatchActivationClick(this._root);
   }
 
+  /** @internal */
   public override focus(options?: FocusOptions) {
     this._root?.focus(options);
   }
 
+  /** @internal */
   public override blur() {
     this._root?.blur();
   }

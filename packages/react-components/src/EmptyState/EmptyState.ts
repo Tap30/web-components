@@ -1,18 +1,22 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/empty-state";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  EmptyState as EmptyStateElementClass,
+  EmptyStateSlots,
+  registerEmptyState,
+} from "@tapsioss/web-components";
+
+registerEmptyState();
+
 const __EmptyState = LitReact.createComponent({
   tagName: "tapsi-empty-state",
-  elementClass: ComponentNamespace.TapsiEmptyState,
+  elementClass: EmptyStateElementClass,
   react: React,
   events: {},
 });
 
-export { Slots } from "@tapsioss/web-components/empty-state";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
+export { EmptyStateSlots };
 
 const EmptyState = __EmptyState;
 

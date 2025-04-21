@@ -1,16 +1,19 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/rate-slider";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  RateSlider as RateSliderElementClass,
+  registerRateSlider,
+} from "@tapsioss/web-components";
+
+registerRateSlider();
+
 const __RateSlider = LitReact.createComponent({
   tagName: "tapsi-rate-slider",
-  elementClass: ComponentNamespace.TapsiRateSlider,
+  elementClass: RateSliderElementClass,
   react: React,
   events: {},
 });
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const RateSlider = __RateSlider;
 

@@ -1,16 +1,19 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/checkbox";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  Checkbox as CheckboxElementClass,
+  registerCheckbox,
+} from "@tapsioss/web-components";
+
+registerCheckbox();
+
 const __Checkbox = LitReact.createComponent({
   tagName: "tapsi-checkbox",
-  elementClass: ComponentNamespace.TapsiCheckbox,
+  elementClass: CheckboxElementClass,
   react: React,
   events: {},
 });
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
 
 const Checkbox = __Checkbox;
 

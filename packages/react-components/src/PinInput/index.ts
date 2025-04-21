@@ -1,4 +1,1 @@
-export {
-  PinInput,
-  CompleteEvent as PinInputCompleteEvent,
-} from "./PinInput.ts";
+export * from "./PinInput.ts";

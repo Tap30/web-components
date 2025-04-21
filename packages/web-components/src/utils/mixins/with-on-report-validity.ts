@@ -282,7 +282,7 @@ const withOnReportValidity = <
       );
     }
 
-    override checkValidity() {
+    public override checkValidity() {
       this._doNotReportInvalid = true;
 
       const valid = super.checkValidity();
@@ -292,7 +292,7 @@ const withOnReportValidity = <
       return valid;
     }
 
-    override reportValidity() {
+    public override reportValidity() {
       this._isSelfReportingValidity = true;
 
       const valid = super.reportValidity();

@@ -7,69 +7,132 @@ import { isSsr, logger } from "../utils/index.ts";
 import { Slots } from "./constants.ts";
 import { HideEvent, ShowEvent } from "./events.ts";
 import { close, error, info, success, warning } from "./icons.ts";
+import styles from "./notice.style.ts";
 
+interface TapsiNoticeEventMap extends HTMLElementEventMap {
+  [HideEvent.type]: HideEvent;
+  [ShowEvent.type]: ShowEvent;
+}
+
+/**
+ * @summary Display notice messages that require attention.
+ *
+ * @tag tapsi-notice
+ *
+ * @slot [action] - The slot for actions associated with the notice component, typically a collection of `tapsi-button` components.
+ * @slot [artwork] - The slot for custom artwork the notice component. To display this slot, set the `artwork` property to `custom`.
+ *
+ * @fires {ShowEvent} show - Fires when the tooltip should be visible.
+ * @fires {HideEvent} hide - Fires when the tooltip should be hidden.
+ */
 export class Notice extends LitElement {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
   public static override readonly shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
 
+  /** @internal */
+  declare addEventListener: <K extends keyof TapsiNoticeEventMap>(
+    type: K,
+    listener: (this: Notice, ev: TapsiNoticeEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ) => void;
+
+  /** @internal */
+  declare removeEventListener: <K extends keyof TapsiNoticeEventMap>(
+    type: K,
+    listener: (this: Notice, ev: TapsiNoticeEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ) => void;
+
   /**
    * Indicates whether the notice is visible or not.
+   *
+   * @prop {boolean} visible
+   * @attr {string} visible
+   * @default false
    */
   @property({ type: Boolean, reflect: true })
   public visible = false;
 
   /**
    * The title of the notice.
+   *
+   * @prop {string} heading
+   * @attr {string} heading
+   * @default ""
    */
   @property()
   public heading = "";
 
   /**
    * The description of the notice.
+   *
+   * @prop {string} description
+   * @attr {string} description
+   * @default ""
    */
   @property()
   public description = "";
 
   /**
    * The color of the notice, indicating the type of message.
-   * Defaults to `info`.
+   *
+   * @prop {"success" | "error" | "info" | "warning"} color
+   * @attr {"success" | "error" | "info" | "warning"} color
+   * @default "info"
    */
   @property()
   public color: "success" | "error" | "info" | "warning" = "info";
 
   /**
    * The priority level of the notice.
-   * Defaults to `high`.
    *
    * High priority uses bolder colors and the role of `alert`
    * for screen readers, while low priority uses lighter colors
    * and the role of `status`.
+   *
+   * @prop {"high" | "low"} priority
+   * @attr {"high" | "low"} priority
+   * @default "high"
    */
   @property()
   public priority: "high" | "low" = "high";
 
   /**
    * The artwork of the notice component.
-   * Defaults to `icon`.
    *
    * Setting to `none` hides the artwork.
    * The `icon` value shows a default icon based on the color,
    * and `custom` enables the use of the `artwork` slot.
+   *
+   * @prop {"none" | "icon" | "custom"} artwork
+   * @attr {"none" | "icon" | "custom"} artwork
+   * @default "icon"
    */
   @property()
   public artwork: "none" | "icon" | "custom" = "icon";
 
   /**
    * The variant of the notice.
-   * Defaults to `standard`.
+   *
+   * @prop {"standard" | "compact"} variant
+   * @attr {"standard" | "compact"} variant
+   * @default "standard"
    */
   @property()
   public variant: "standard" | "compact" = "standard";
 
   /**
    * Indicates whether the notice can be dismissed.
+   *
+   * @prop {boolean} dismissible
+   * @attr {string} dismissible
+   * @default false
    */
   @property({ type: Boolean })
   public dismissible = false;

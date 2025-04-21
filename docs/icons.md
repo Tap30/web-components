@@ -2,6 +2,7 @@
 prev: false
 next: false
 outline: "deep"
+sidebar: false
 ---
 
 <style>
@@ -151,23 +152,31 @@ yarn add @tapsioss/react-icons
 
 ## Properties
 
-::: tip Note These properties apply to both the Web and React versions of our
-icons (with minor syntax differences depending on your framework). :::
+::: tip Note 
+
+These properties apply to both the Web and React versions of our
+icons (with minor syntax differences depending on your framework). 
+
+:::
 
 <div class="table-wrapper">
 
-| Name      | Description                                                                                                                 | Default Value |
-| --------- | --------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| `viewbox` | The viewBox of the SVG. Allows you to redefine what the coordinates without units mean inside an SVG element.               | `0 0 24 24`   |
-| `title`   | Provides a human-readable title for the element that contains it. [More Info](https://www.w3.org/TR/SVG-access/#Equivalent) | -             |
-| `size`    | The size of the icon. If set to `"auto"`, the icon will use the parent's width and height.                                  | `"auto"`      |
+| Name      | Description                                                                                                                 | Default Value  |
+|-----------|-----------------------------------------------------------------------------------------------------------------------------|----------------|
+| `viewbox` | The viewBox of the SVG. Allows you to redefine what the coordinates without units mean inside an SVG element.               | `0 0 24 24`    |
+| `title`   | Provides a human-readable title for the element that contains it. [More Info](https://www.w3.org/TR/SVG-access/#Equivalent) | -              |
+| `size`    | The size of the icon. If set to `"auto"`, the icon will use the parent's width and height.                                  | `"auto"`       |
 
 </div>
 
-::: info Color Inheritance All Tapsi icons inherit their color from their parent
+::: info
+
+Color Inheritance All Tapsi icons inherit their color from their parent
 element using `currentColor`. To change the icon color, simply style the `color`
 property on the parent (or the icon itself), and the icon’s fill will update
-accordingly. :::
+accordingly. 
+
+:::
 
 ## Icons usage
 

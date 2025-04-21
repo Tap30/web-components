@@ -1,18 +1,23 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/pinwheel";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  Pinwheel as PinwheelElementClass,
+  PinwheelItemSlots,
+  PinwheelSlots,
+  registerPinwheel,
+} from "@tapsioss/web-components";
+
+registerPinwheel();
+
 const __Pinwheel = LitReact.createComponent({
   tagName: "tapsi-pinwheel",
-  elementClass: ComponentNamespace.TapsiPinwheel,
+  elementClass: PinwheelElementClass,
   react: React,
   events: {},
 });
 
-export { Slots } from "@tapsioss/web-components/pinwheel";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
+export { PinwheelItemSlots, PinwheelSlots };
 
 const Pinwheel = __Pinwheel;
 

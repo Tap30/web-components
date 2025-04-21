@@ -1,21 +1,26 @@
 import * as LitReact from "@lit/react";
-import * as ComponentNamespace from "@tapsioss/web-components/tooltip";
 import * as React from "react";
 
-/* START: AUTO-GENERATED [DO_NOT_REMOVE] */
+import {
+  registerTooltip,
+  Tooltip as TooltipElementClass,
+  TooltipHideEvent,
+  TooltipShowEvent,
+} from "@tapsioss/web-components";
+
+registerTooltip();
+
 const __Tooltip = LitReact.createComponent({
   tagName: "tapsi-tooltip",
-  elementClass: ComponentNamespace.TapsiTooltip,
+  elementClass: TooltipElementClass,
   react: React,
   events: {
-    onShow: "show" as LitReact.EventName<ComponentNamespace.ShowEvent>,
-    onHide: "hide" as LitReact.EventName<ComponentNamespace.HideEvent>,
+    onShow: "show" as LitReact.EventName<TooltipShowEvent>,
+    onHide: "hide" as LitReact.EventName<TooltipHideEvent>,
   },
 });
 
-export { HideEvent, ShowEvent } from "@tapsioss/web-components/tooltip";
-
-/* END: AUTO-GENERATED [DO_NOT_REMOVE] */
+export { TooltipHideEvent, TooltipShowEvent };
 
 const Tooltip = __Tooltip;
 

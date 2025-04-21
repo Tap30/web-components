@@ -1,50 +1,54 @@
-import { type CustomElement, type Export } from "custom-elements-manifest";
-import { type DefaultTheme } from "vitepress";
-
-export type HTMLTemplatePath = `${string}.html`;
-
-export type MutatorRefName = `#${string}` | `props#${string}`;
-
-export type Property = {
+export type SlotMetadata = {
+  value: string;
+  description: string;
+  key: string;
+};
+export type EventMetadata = {
   name: string;
-  defaultValue?: string | boolean | number;
-  mutators?: MutatorRefName[];
+  eventClassName: string;
+  description: string;
+  bubbles: boolean;
+  cancelable: boolean;
 };
-
-export type SlotOption = {
+export type PropMetadata = {
   name: string;
-  path: HTMLTemplatePath;
-  mutates?: Array<{
-    target: `props#${string}`;
-    value: string | number | boolean | object | null;
-  }>;
+  description: string;
+  type: string;
+  default: string;
+  attribute: string;
 };
-
-export type DemoSlot = {
+export type MethodParameterMetadata = {
   name: string;
-  options: SlotOption[];
+  description: string;
+  type: string;
+};
+export type MethodMetadata = {
+  name: string;
+  description: string;
+  parameters: MethodParameterMetadata[];
 };
 
-export type InteractiveDemo = {
-  requiredElements?: HTMLTemplatePath[];
-  properties: Property[];
-  slots: DemoSlot[];
+export type ComponentMetadata = {
+  summary: string;
+  relativePath: string;
+  tagName: string;
+  titleCaseName: string;
+  name: string;
+  slots: Record<string, SlotMetadata>;
+  events: Record<string, EventMetadata>;
+  props: Record<string, PropMetadata>;
+  methods: Record<string, MethodMetadata>;
+  elementClassName: string;
+  compoundParts: Record<string, Omit<ComponentMetadata, "compoundParts">>;
+  endpointExports: Record<string, string[]>;
 };
 
-export type ImportPaths = {
-  webComponents?: string;
-  react?: string;
-};
-
-export type ComponentMetadata = CustomElement & {
-  kebabCaseName: string;
-  interactiveDemo?: InteractiveDemo;
-  importPaths: ImportPaths;
-  slotsEnumName?: string;
-  exportedSlots?: Export[];
+export type PackageMetadata = {
+  endpoints: string[];
+  name: string;
 };
 
 export type Metadata = {
-  components: ComponentMetadata[];
-  sidebarItems: DefaultTheme.SidebarItem[];
+  package: PackageMetadata;
+  components: Record<string, ComponentMetadata>;
 };

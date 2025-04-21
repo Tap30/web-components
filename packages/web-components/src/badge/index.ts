@@ -1,29 +1,17 @@
-import { customElement } from "lit/decorators.js";
-import styles from "./badge.style.ts";
+import { isSsr } from "../utils/index.ts";
 import { Badge } from "./badge.ts";
 
 export { Slots } from "./constants.ts";
+export { Badge };
 
-/**
- * @summary The badge component.
- *
- * @tag tapsi-badge
- *
- * @slot icon - The slot for icon element.
- *
- * @prop {string | number} [value=''] - The value of the badge.
- * @prop {'pill' | 'numeral' | 'dot'} [variant='pill'] - The variant of the badge.
- * @prop {'success' | 'error' | 'info' | 'warning' | 'neutral'} [color='neutral'] - The color of the badge.
- * @prop {'high' | 'low'} [priority='high'] - The priority level of the badge.
- * @prop {'md' | 'sm'} [size='md'] - The size of the badge.
- */
-@customElement("tapsi-badge")
-export class TapsiBadge extends Badge {
-  public static override readonly styles = [styles];
-}
+export const register = () => {
+  if (isSsr()) return;
+
+  customElements.define("tapsi-badge", Badge);
+};
 
 declare global {
   interface HTMLElementTagNameMap {
-    "tapsi-badge": TapsiBadge;
+    "tapsi-badge": Badge;
   }
 }

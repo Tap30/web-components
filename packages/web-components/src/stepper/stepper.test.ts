@@ -1,6 +1,6 @@
 import { describe, expect, render, test } from "@internals/test-helpers";
 import { type Page } from "@playwright/test";
-import { type TapsiStepper } from "@tapsioss/web-components/stepper";
+import { type Stepper } from "./index.ts";
 
 const getStepperElements = (page: Page) => {
   const stepper = page.getByTestId("test-stepper");
@@ -267,13 +267,13 @@ describe("🧩 stepper", () => {
     await expect(stepper).toHaveJSProperty("value", "5");
 
     await page.evaluate(() => {
-      (document.getElementById("test-stepper") as TapsiStepper).stepUp();
+      (document.getElementById("test-stepper") as Stepper).stepUp();
     });
 
     await expect(stepper).toHaveJSProperty("value", "6");
 
     await page.evaluate(() => {
-      const slider = document.getElementById("test-stepper") as TapsiStepper;
+      const slider = document.getElementById("test-stepper") as Stepper;
 
       slider.stepDown();
       slider.stepDown();
@@ -334,7 +334,7 @@ describe("🧩 stepper", () => {
     await expect(stepper).toHaveJSProperty("value", "0");
 
     await page.evaluate(() => {
-      const stepper = document.getElementById("test-stepper") as TapsiStepper;
+      const stepper = document.getElementById("test-stepper") as Stepper;
 
       stepper.stepUp();
       stepper.stepUp();

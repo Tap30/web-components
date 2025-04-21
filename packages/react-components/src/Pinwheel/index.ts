@@ -1,1 +1,1 @@
-export { Pinwheel, Slots as PinwheelSlots } from "./Pinwheel.ts";
+export * from "./Pinwheel.ts";

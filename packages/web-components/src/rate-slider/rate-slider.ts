@@ -21,10 +21,22 @@ import {
   withFormAssociated,
 } from "../utils/index.ts";
 import { DEFAULT_MAX, DEFAULT_MIN } from "./constants.ts";
+import styles from "./rate-slider.style.ts";
 
 const BaseClass = withFormAssociated(withElementInternals(LitElement));
 
+/**
+ * @summary A Slider component for displaying rate in range.
+ *
+ * @tag tapsi-rate-slider
+ *
+ * @fires {Event} change - Fired when value changes.
+ */
 export class RateSlider extends BaseClass {
+  /** @internal */
+  public static override readonly styles = [styles];
+
+  /** @internal */
   static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
@@ -34,9 +46,13 @@ export class RateSlider extends BaseClass {
 
   /**
    * The current value of the input. It is always a string.
+   *
+   * @prop {string} value
+   * @attr {string} value
+   * @default ""
    */
   @property()
-  public get value() {
+  public get value(): string {
     return this._value;
   }
 
@@ -49,8 +65,8 @@ export class RateSlider extends BaseClass {
       return;
     }
 
-    const min = Number(this.min) || DEFAULT_MIN;
-    const max = Number(this.max) || DEFAULT_MAX;
+    const min = Number(this.min) || Number(DEFAULT_MIN);
+    const max = Number(this.max) || Number(DEFAULT_MAX);
 
     this._value = String(clamp(Number(newValue), min, max));
   }
@@ -59,48 +75,70 @@ export class RateSlider extends BaseClass {
    * Defines the human-readable text alternative of value.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-valuetext
+   *
+   * @prop {string} valueText
+   * @attr {string} valuetext
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public valueText = "";
 
   /**
    * Defines a string value that can be used to name input.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+   *
+   * @prop {string} label
+   * @attr {string} label
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public label = "";
 
   /**
    * Identifies the element (or elements) that labels the input.
    *
    * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+   *
+   * @prop {string} labelledBy
+   * @attr {string} labelledby
+   * @default ""
    */
-  @property({ type: String })
+  @property()
   public labelledBy = "";
 
   /**
    * Defines the maximum value in the range of permitted values.
-   * Defaults to "10".
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
+   *
+   * @prop {string} max
+   * @attr {string} max
+   * @default "10"
    */
-  @property({ type: String })
-  public max = `${DEFAULT_MAX}`;
+  @property()
+  public max = DEFAULT_MAX;
 
   /**
    * Defines the minimum value in the range of permitted values.
-   * Defaults to "0".
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
+   *
+   * @prop {string} min
+   * @attr {string} min
+   * @default "0"
    */
-  @property({ type: String })
-  public min = `${DEFAULT_MIN}`;
+  @property()
+  public min = DEFAULT_MIN;
 
   /**
    * Indicates that the element should be focused on page load.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autofocus
+   *
+   * @prop {boolean} autofocus
+   * @attr {string} autofocus
+   * @default false
    */
   @property({ type: Boolean })
   public override autofocus = false;
@@ -147,6 +185,7 @@ export class RateSlider extends BaseClass {
     });
   }
 
+  /** @internal */
   public override connectedCallback() {
     super.connectedCallback();
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -162,6 +201,7 @@ export class RateSlider extends BaseClass {
     document.addEventListener("touchend", this._handleDragEnd);
   }
 
+  /** @internal */
   public override disconnectedCallback() {
     super.disconnectedCallback();
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -189,8 +229,10 @@ export class RateSlider extends BaseClass {
 
   /**
    * The input's value as a number.
+   *
+   * @prop {number} valueAsNumber
    */
-  public get valueAsNumber() {
+  public get valueAsNumber(): number {
     if (this.value === "") return NaN;
 
     return Number(this.value);
@@ -224,34 +266,40 @@ export class RateSlider extends BaseClass {
     this._handleIncrease();
   }
 
+  /** @internal */
   public override focus(options?: FocusOptions) {
     this._root?.focus(options);
   }
 
+  /** @internal */
   public override blur() {
     this._root?.blur();
   }
 
+  /** @internal */
   public override formDisabledCallback(disabled: boolean) {
     this.disabled = disabled;
   }
 
+  /** @internal */
   public override [getFormValue]() {
     return this.value;
   }
 
+  /** @internal */
   public override formResetCallback() {
     this.value = this.getAttribute("value") ?? "";
     this.valueText = this.getAttribute("valuetext") ?? "";
   }
 
+  /** @internal */
   public override formStateRestoreCallback(state: string) {
     this.value = state;
   }
 
   private get _stopsIterator() {
-    const min = Number(this.min) || DEFAULT_MIN;
-    const max = Number(this.max) || DEFAULT_MAX;
+    const min = Number(this.min) || Number(DEFAULT_MIN);
+    const max = Number(this.max) || Number(DEFAULT_MAX);
 
     return range(min, max + 1);
   }
@@ -402,8 +450,8 @@ export class RateSlider extends BaseClass {
 
   private _renderGradient() {
     const value = this.valueAsNumber;
-    const min = Number(this.min) || DEFAULT_MIN;
-    const max = Number(this.max) || DEFAULT_MAX;
+    const min = Number(this.min) || Number(DEFAULT_MIN);
+    const max = Number(this.max) || Number(DEFAULT_MAX);
 
     const classes: Record<string, boolean> = {
       gradient: true,
