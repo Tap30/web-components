@@ -31,6 +31,8 @@ export default css`
     flex: 1;
 
     background-color: var(--progress-indicator-step-background-color);
+
+    border-radius: var(--tapsi-radius-1);
   }
 
   .step.active {
