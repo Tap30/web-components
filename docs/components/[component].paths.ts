@@ -70,7 +70,7 @@ const getComponentMarkdown = (
   let res = "\n";
 
   if (component) {
-    res += `${"#".repeat(headingLevel)} ${component.titleCaseName}\n`;
+    res += `${"#".repeat(headingLevel)} ${component.titleCaseName}${Object.keys(component.compoundParts).length > 0 ? ' <Badge type="warning">Compound</Badge>' : ""}\n`;
 
     res += `${component.summary}\n\n`;
 
