@@ -1,8 +1,11 @@
+import { isSsr } from "../utils/index.ts";
 import { ProgressIndicator } from "./progress-indicator.ts";
 
 export { ProgressIndicator };
 
 export const register = () => {
+  if (isSsr()) return;
+
   customElements.define("tapsi-progress-indicator", ProgressIndicator);
 };
 

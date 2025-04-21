@@ -1,9 +1,12 @@
+import { isSsr } from "../utils/index.ts";
 import { ButtonGroup } from "./button-group.ts";
 
 export { Slots } from "./constants.ts";
 export { ButtonGroup };
 
 export const register = () => {
+  if (isSsr()) return;
+
   customElements.define("tapsi-button-group", ButtonGroup);
 };
 
