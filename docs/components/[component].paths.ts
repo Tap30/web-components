@@ -11,23 +11,23 @@ import { codify, tabulateData } from "../utils/markdown.ts";
 let packagesMetadata: null | PackageMetadata = null;
 const REACT_PACKAGE_NAME = "@tapsioss/react-components";
 
+const { dirname } = getFileMeta(import.meta.url);
+
+const docsDir = path.resolve(dirname, "..");
+const workspaceDir = path.join(docsDir, "..");
+const metadataFile = path.join(
+  workspaceDir,
+  "packages/web-components/metadata.json",
+);
+
+const metadata = JSON.parse(
+  fs.readFileSync(metadataFile).toString(),
+) as Metadata;
+
+packagesMetadata = metadata.package;
+
 export default {
   paths() {
-    const { dirname } = getFileMeta(import.meta.url);
-
-    const docsDir = path.resolve(dirname, "..");
-    const workspaceDir = path.join(docsDir, "..");
-    const metadataFile = path.join(
-      workspaceDir,
-      "packages/web-components/metadata.json",
-    );
-
-    const metadata = JSON.parse(
-      fs.readFileSync(metadataFile).toString(),
-    ) as Metadata;
-
-    packagesMetadata = metadata.package;
-
     return Object.values(metadata.components).map(c => {
       let content = "";
 
@@ -107,7 +107,9 @@ const getImportsMarkdown = (
       `first you need to register the component inside the page.`,
     ].join("\n");
 
-    const hasAutomaticRegister = "*/element" in component.endpointExports;
+    const hasAutomaticRegister =
+      packagesMetadata.endpoints.includes("*/element");
+
     const hasManualComponentRegister =
       component.endpointExports["*"]?.includes("register");
 
@@ -258,7 +260,15 @@ const getSlotsMarkdown = (
       res += [
         "::: tip",
         "The value of slots are available for developer as JavaScript Variables:",
-        "```ts",
+        "::: code-group",
+        "```ts [Web]",
+        "// Option 1",
+        `import { ${barrelSlotImports?.join(", ")} } from "${packagesMetadata?.name}";`,
+        "",
+        "// Option 2",
+        `import { ${componentSlotImports?.join(", ")} } from "${packagesMetadata?.name}/${component.relativePath}";`,
+        "```",
+        "```ts [React]",
         "// Option 1",
         `import { ${barrelSlotImports?.join(", ")} } from "${REACT_PACKAGE_NAME}";`,
         "",

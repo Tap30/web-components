@@ -18,9 +18,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./custom-elements-manifest": {
-      "default": "./custom-elements.json"
     }
   },
   "scripts": {
@@ -42,6 +39,5 @@
   },
   "devDependencies": {
     "@internals/test-helpers": "workspace:*"
-  },
-  "customElements": "custom-elements.json"
+  }
 }

@@ -70,7 +70,6 @@ const generateCem = async (): Promise<Package> => {
   const cemCommand = [
     "cem",
     "analyze",
-    "--packagejson",
     globs.map(g => `--globs ${g}`).join(" "),
   ].join(" ");
 
@@ -129,9 +128,9 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
     };
 
     metadata.package.name = name;
-    metadata.package.endpoints = Object.keys(exports)
-      .map(e => e.replace("./", "").replace(".", ""))
-      .filter(e => e !== "custom-elements-manifest");
+    metadata.package.endpoints = Object.keys(exports).map(e =>
+      e.replace("./", "").replace(".", ""),
+    );
 
     console.log("📦 Package metadata:", metadata.package);
   } catch (error) {
@@ -429,19 +428,21 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
 
       if (exportPathInfo.name === "events") {
         if (exp.name === "*") {
-          Object.values(eventsMap).forEach(event => {
-            if (typeof barrelIndexEndpoint === "string") {
-              endpointExports[barrelIndexEndpoint]!.push(
-                `${component.elementClassName ?? ""}${event.eventClassName}`,
-              );
-            }
+          Object.values(eventsMap)
+            .filter(event => event.eventClassName !== "Event")
+            .forEach(event => {
+              if (typeof barrelIndexEndpoint === "string") {
+                endpointExports[barrelIndexEndpoint]!.push(
+                  `${component.elementClassName ?? ""}${event.eventClassName}`,
+                );
+              }
 
-            if (typeof relativeIndexEndpoint === "string") {
-              endpointExports[relativeIndexEndpoint]!.push(
-                event.eventClassName,
-              );
-            }
-          });
+              if (typeof relativeIndexEndpoint === "string") {
+                endpointExports[relativeIndexEndpoint]!.push(
+                  event.eventClassName,
+                );
+              }
+            });
         } else {
           if (typeof barrelIndexEndpoint === "string") {
             endpointExports[barrelIndexEndpoint]!.push(
@@ -456,7 +457,7 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
       } else {
         if (exp.kind === "custom-element-definition") return;
 
-        let barrelName = `${component.elementClassName ?? ""}${titleCasedName}`;
+        let barrelName = `${component.elementClassName ?? ""}${titleCasedName !== component.elementClassName ? titleCasedName : ""}`;
 
         if (exp.name === "register") {
           barrelName = `${exp.name}${component.elementClassName ?? ""}`;
