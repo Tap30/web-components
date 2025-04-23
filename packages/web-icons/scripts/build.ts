@@ -55,7 +55,7 @@ const generateComponents = async () => {
 
     return Promise.all([
       fs.writeFile(
-        path.join(distDir, `${iconInfo.pascalName}.ts`),
+        path.join(distDir, `${iconInfo.kebabName}.ts`),
         webIconCode,
         {
           encoding: "utf-8",
@@ -64,7 +64,7 @@ const generateComponents = async () => {
       ),
       fs.appendFile(
         path.join(distDir, "index.ts"),
-        `export { default as ${iconInfo.pascalName} } from "./${iconInfo.pascalName}";\n`,
+        `export { default as ${iconInfo.pascalName} } from "./${iconInfo.kebabName}";\n`,
         {
           encoding: "utf-8",
         },
