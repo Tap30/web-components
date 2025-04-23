@@ -99,9 +99,6 @@ const palette = {
 
 const color = {
   brand: "var(--tapsi-palette-orange-400)",
-  gradient: {
-    brand: "linear-gradient(91.39deg,#ff7733 0%,#ff5722 50.15%,#e64917 100%)",
-  },
   surface: {
     black: "var(--tapsi-palette-black)",
     white: "var(--tapsi-palette-white)",
@@ -149,6 +146,20 @@ const color = {
     positive: "var(--tapsi-palette-green-200)",
     warning: "var(--tapsi-palette-yellow-200)",
     "inverse-primary": "var(--tapsi-palette-gray-700)",
+  },
+  gradient: {
+    surface: {
+      brand: "linear-gradient(91.39deg,#ff7733 0%,#ff5722 50.15%,#e64917 100%)",
+      "brand-light": "linear-gradient(90deg, #FFF0E9 0%, #F4F1F0 100%)",
+      blue: "linear-gradient(90deg, #D8E1EB 0%, #F0F5F4 100%)",
+      red: "linear-gradient(90deg, #FFDEDC 0%, #F8EEED 100%)",
+      gray: "linear-gradient(90deg, #EAEDED 0%, #F5F7F7 100%)",
+      white: "linear-gradient(0deg, #FFF 0%, rgba(255, 255, 255, 0.00) 100%)",
+      tip: "linear-gradient(98deg, #DEF0E7 12.8%, #DDE8EE 50%, #EFEBE9 87.2%)",
+    },
+    background: {
+      "white-to-gray": "linear-gradient(180deg, #FFF 0%, #F5F7F7 100%)",
+    },
   },
 } as const satisfies Color;
 

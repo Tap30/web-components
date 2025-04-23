@@ -72,7 +72,7 @@ export default css`
   }
 
   .root.brand {
-    --button-background: var(--tapsi-color-gradient-brand);
+    --button-background: var(--tapsi-color-gradient-surface-brand);
     --button-color: var(--tapsi-color-content-on-inverse);
   }
 
