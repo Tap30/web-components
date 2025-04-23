@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: ☁️ checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: 🔧 setup pnpm
         uses: pnpm/action-setup@v3
@@ -37,7 +39,10 @@ jobs:
           cache: "pnpm"
 
       - name: 📦 install dependencies
-        run: pnpm install
+        run: |
+          git checkout main
+          git checkout ${{ github.sha }}
+          pnpm install
 
       - name: 📋 Changeset status
         run: pnpm changeset:status
