@@ -2,4 +2,4 @@
 "@tapsioss/theme": patch
 ---
 
-Feat: add purple color to tokens
+Feat: add indigo color to tokens
