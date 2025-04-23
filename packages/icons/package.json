@@ -1,5 +1,4 @@
 {
-  "sideEffects": false,
   "name": "@tapsioss/icons",
   "description": "SVG path metadata and definitions for Tapsi Design System icons.",
   "version": "0.2.1",
