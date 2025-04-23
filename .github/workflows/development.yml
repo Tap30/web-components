@@ -15,6 +15,33 @@ permissions:
   actions: read
 
 jobs:
+  # Enforce that all PRs that change packages need changesets.
+  # Changes without changesets result in this job failing.
+  changeset-status-check:
+    name: 🔍 Changeset Status Check
+    runs-on: ubuntu-latest
+    # TODO: Skip if it's a release PR that doesn't need this check.
+    steps:
+      - name: ☁️ checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: 🔧 setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: 📦 install dependencies
+        run: pnpm install
+
+      - name: 📋 Changeset status
+        run: pnpm changeset:status
+
   lint:
     name: 🔍 Run linter
     runs-on: ubuntu-latest
@@ -111,5 +138,5 @@ jobs:
 
   trigger-review:
     name: Automatic Review
-    needs: [lint, test]
+    needs: [changeset-status-check, lint, test]
     uses: ./.github/workflows/review.yml
