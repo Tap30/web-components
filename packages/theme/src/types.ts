@@ -24,7 +24,13 @@ export type Palette = {
 
 export type Color = {
   brand: string;
-  gradient: Record<"brand", string>;
+  gradient: {
+    surface: Record<
+      "brand" | "brand-light" | "blue" | "red" | "gray" | "white" | "tip",
+      string
+    >;
+    background: Record<"white-to-gray", string>;
+  };
   surface: Record<
     | "primary"
     | "secondary"
