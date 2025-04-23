@@ -8,6 +8,8 @@
     "node": ">=20"
   },
   "scripts": {
+    "changeset:create": "changeset add",
+    "changeset:apply": "changeset version",
     "release:web-components": "pnpm --filter @tapsioss/web-components run release",
     "release:react-components": "pnpm --filter @tapsioss/react-components run release",
     "release:theme": "pnpm --filter @tapsioss/theme run release",
