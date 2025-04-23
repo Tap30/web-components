@@ -1,0 +1,21 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "repo": "Tap30/web-components"
+    }
+  ],
+  "commit": false,
+  "fixed": [],
+  "linked": [
+    ["@tapsioss/web-components", "@tapsioss/react-components"],
+    ["@tapsioss/icons", "@tapsioss/web-icons", "@tapsioss/react-icons"]
+  ],
+  "access": "public",
+  "baseBranch": "main",
+  "bumpVersionsWithWorkspaceProtocolOnly": true,
+  "prettier": true,
+  "updateInternalDependencies": "patch",
+  "ignore": ["@internals/*", "@tapsioss/{docs,playground}"]
+}
