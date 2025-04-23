@@ -3,6 +3,12 @@
   "name": "@tapsioss/react-icons",
   "version": "0.3.1",
   "type": "module",
+  "homepage": "https://tap30.github.io/web-components",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tap30/web-components.git",
+    "directory": "packages/react-icons"
+  },
   "files": [
     "./dist/**/*.js",
     "./dist/**/*.d.ts",

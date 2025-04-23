@@ -6,6 +6,12 @@
     "./dist",
     "custom-elements.json"
   ],
+  "homepage": "https://tap30.github.io/web-components",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tap30/web-components.git",
+    "directory": "packages/web-components"
+  },
   "exports": {
     "./*": {
       "types": "./dist/*/index.d.ts",

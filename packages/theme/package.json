@@ -5,6 +5,12 @@
   "files": [
     "./dist"
   ],
+  "homepage": "https://tap30.github.io/web-components",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tap30/web-components.git",
+    "directory": "packages/theme"
+  },
   "types": "./dist/types.d.ts",
   "exports": {
     "./types": "./dist/types.d.ts",
