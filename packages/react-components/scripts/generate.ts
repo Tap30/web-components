@@ -208,13 +208,6 @@ const getReactComponentCode = async (
   );
 };
 
-const getReactComponentExports = (componentName: string) => {
-  return [
-    `const ${componentName} = __${componentName};\n`,
-    `export { ${componentName} };`,
-  ].join("\n");
-};
-
 const transformToComponentModule = new Transform({
   objectMode: true,
   async transform(
@@ -313,8 +306,6 @@ const transformToComponentModule = new Transform({
           getReactComponentImports(),
           "\n",
           componentCode,
-          "\n",
-          getReactComponentExports(componentName),
         ].join("\n");
 
         await fs.promises.writeFile(modulePath, moduleContent, {
