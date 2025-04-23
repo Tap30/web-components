@@ -1,12 +1,12 @@
 <div align="center">
 
-# @tapsioss/react-icons
+# `@tapsioss/react-icons`
 
 </div>
 
 <div align="center">
 
-A set of React icon components in Tapsi design system.
+Tapsi Design System icons implemented as React components.
 
 </div>
 

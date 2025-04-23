@@ -1,12 +1,13 @@
 <div align="center">
 
-# @tapsioss/theme
+# `@tapsioss/theme`
 
 </div>
 
 <div align="center">
 
-The theme package for Tapsi design system.
+Theming package providing CSS custom properties and JS constants for Tapsi
+Design System.
 
 </div>
 

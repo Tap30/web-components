@@ -1,5 +1,6 @@
 {
   "name": "@tapsioss/react-components",
+  "description": "Collection of React components for the Tapsi Design System UI.",
   "version": "0.3.1",
   "type": "module",
   "files": [

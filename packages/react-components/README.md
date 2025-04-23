@@ -1,12 +1,12 @@
 <div align="center">
 
-# @tapsioss/react-components
+# `@tapsioss/react-components`
 
 </div>
 
 <div align="center">
 
-A set of React components for Tapsi design system.
+Collection of React components for the Tapsi Design System UI.
 
 </div>
 

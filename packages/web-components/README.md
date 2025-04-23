@@ -1,12 +1,12 @@
 <div align="center">
 
-# @tapsioss/web-components
+# `@tapsioss/web-components`
 
 </div>
 
 <div align="center">
 
-A set of web components for Tapsi design system.
+Collection of framework-agnostic Web Components for the Tapsi Design System UI.
 
 </div>
 

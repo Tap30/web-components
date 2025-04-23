@@ -1,6 +1,7 @@
 {
   "sideEffects": false,
   "name": "@tapsioss/react-icons",
+  "description": "Tapsi Design System icons implemented as React components.",
   "version": "0.3.1",
   "type": "module",
   "homepage": "https://tap30.github.io/web-components",

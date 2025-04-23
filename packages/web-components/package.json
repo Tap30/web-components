@@ -1,5 +1,6 @@
 {
   "name": "@tapsioss/web-components",
+  "description": "Collection of framework-agnostic Web Components for the Tapsi Design System UI.",
   "version": "0.11.1",
   "type": "module",
   "files": [

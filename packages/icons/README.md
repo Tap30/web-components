@@ -1,12 +1,12 @@
 <div align="center">
 
-# @tapsioss/icons
+# `@tapsioss/icons`
 
 </div>
 
 <div align="center">
 
-Tapsi design system icons metadata.
+SVG path metadata and definitions for Tapsi Design System icons.
 
 </div>
 

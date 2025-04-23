@@ -1,12 +1,12 @@
 <div align="center">
 
-# @tapsioss/web-icons
+# `@tapsioss/web-icons`
 
 </div>
 
 <div align="center">
 
-A set of web icon components in Tapsi design system.
+Tapsi Design System icons implemented as standard Web Components.
 
 </div>
 
