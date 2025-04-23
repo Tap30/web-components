@@ -8,13 +8,9 @@ import {
 
 registerSpinner();
 
-const __Spinner = LitReact.createComponent({
+export const Spinner = LitReact.createComponent({
   tagName: "tapsi-spinner",
   elementClass: SpinnerElementClass,
   react: React,
   events: {},
 });
-
-const Spinner = __Spinner;
-
-export { Spinner };

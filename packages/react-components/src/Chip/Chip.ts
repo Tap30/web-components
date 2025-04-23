@@ -11,7 +11,7 @@ import {
 
 registerChip();
 
-const __Chip = LitReact.createComponent({
+export const Chip = LitReact.createComponent({
   tagName: "tapsi-chip",
   elementClass: ChipElementClass,
   react: React,
@@ -22,7 +22,3 @@ const __Chip = LitReact.createComponent({
 });
 
 export { ChipDeselectEvent, ChipSelectEvent, ChipSlots };
-
-const Chip = __Chip;
-
-export { Chip };

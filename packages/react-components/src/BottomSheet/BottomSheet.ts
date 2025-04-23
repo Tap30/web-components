@@ -16,7 +16,7 @@ import {
 
 registerBottomSheet();
 
-const __BottomSheet = LitReact.createComponent({
+export const BottomSheet = LitReact.createComponent({
   tagName: "tapsi-bottom-sheet",
   elementClass: BottomSheetElementClass,
   react: React,
@@ -41,7 +41,3 @@ export {
   BottomSheetSlots,
   BottomSheetSnappedEvent,
 };
-
-const BottomSheet = __BottomSheet;
-
-export { BottomSheet };

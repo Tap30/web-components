@@ -8,13 +8,9 @@ import {
 
 registerCheckbox();
 
-const __Checkbox = LitReact.createComponent({
+export const Checkbox = LitReact.createComponent({
   tagName: "tapsi-checkbox",
   elementClass: CheckboxElementClass,
   react: React,
   events: {},
 });
-
-const Checkbox = __Checkbox;
-
-export { Checkbox };

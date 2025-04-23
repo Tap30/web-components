@@ -9,7 +9,7 @@ import {
 
 registerChatBubbleOut();
 
-const __ChatBubbleOut = LitReact.createComponent({
+export const ChatBubbleOut = LitReact.createComponent({
   tagName: "tapsi-chat-bubble-out",
   elementClass: ChatBubbleOutElementClass,
   react: React,
@@ -17,7 +17,3 @@ const __ChatBubbleOut = LitReact.createComponent({
 });
 
 export { ChatBubbleOutSlots };
-
-const ChatBubbleOut = __ChatBubbleOut;
-
-export { ChatBubbleOut };

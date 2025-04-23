@@ -8,13 +8,9 @@ import {
 
 registerProgressIndicator();
 
-const __ProgressIndicator = LitReact.createComponent({
+export const ProgressIndicator = LitReact.createComponent({
   tagName: "tapsi-progress-indicator",
   elementClass: ProgressIndicatorElementClass,
   react: React,
   events: {},
 });
-
-const ProgressIndicator = __ProgressIndicator;
-
-export { ProgressIndicator };

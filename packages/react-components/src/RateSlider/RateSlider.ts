@@ -8,13 +8,9 @@ import {
 
 registerRateSlider();
 
-const __RateSlider = LitReact.createComponent({
+export const RateSlider = LitReact.createComponent({
   tagName: "tapsi-rate-slider",
   elementClass: RateSliderElementClass,
   react: React,
   events: {},
 });
-
-const RateSlider = __RateSlider;
-
-export { RateSlider };

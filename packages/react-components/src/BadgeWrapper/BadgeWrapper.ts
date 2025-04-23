@@ -9,7 +9,7 @@ import {
 
 registerBadgeWrapper();
 
-const __BadgeWrapper = LitReact.createComponent({
+export const BadgeWrapper = LitReact.createComponent({
   tagName: "tapsi-badge-wrapper",
   elementClass: BadgeWrapperElementClass,
   react: React,
@@ -17,7 +17,3 @@ const __BadgeWrapper = LitReact.createComponent({
 });
 
 export { BadgeWrapperSlots };
-
-const BadgeWrapper = __BadgeWrapper;
-
-export { BadgeWrapper };

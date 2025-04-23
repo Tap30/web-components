@@ -9,7 +9,7 @@ import {
 
 registerSkeleton();
 
-const __Skeleton = LitReact.createComponent({
+export const Skeleton = LitReact.createComponent({
   tagName: "tapsi-skeleton",
   elementClass: SkeletonElementClass,
   react: React,
@@ -17,7 +17,3 @@ const __Skeleton = LitReact.createComponent({
 });
 
 export { SkeletonSlots };
-
-const Skeleton = __Skeleton;
-
-export { Skeleton };

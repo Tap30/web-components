@@ -14,13 +14,9 @@ if (
   /* eslint-enable no-console */
 }
 
-const __BottomNavigationItem = LitReact.createComponent({
+export const BottomNavigationItem = LitReact.createComponent({
   tagName: "tapsi-bottom-navigation-item",
   elementClass: BottomNavigationItemElementClass,
   react: React,
   events: {},
 });
-
-const BottomNavigationItem = __BottomNavigationItem;
-
-export { BottomNavigationItem };

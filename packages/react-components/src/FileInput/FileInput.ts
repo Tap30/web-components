@@ -10,7 +10,7 @@ import {
 
 registerFileInput();
 
-const __FileInput = LitReact.createComponent({
+export const FileInput = LitReact.createComponent({
   tagName: "tapsi-file-input",
   elementClass: FileInputElementClass,
   react: React,
@@ -18,7 +18,3 @@ const __FileInput = LitReact.createComponent({
 });
 
 export { FileInputRetryEvent, FileInputSlots };
-
-const FileInput = __FileInput;
-
-export { FileInput };

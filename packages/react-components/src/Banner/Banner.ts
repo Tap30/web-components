@@ -9,7 +9,7 @@ import {
 
 registerBanner();
 
-const __Banner = LitReact.createComponent({
+export const Banner = LitReact.createComponent({
   tagName: "tapsi-banner",
   elementClass: BannerElementClass,
   react: React,
@@ -17,7 +17,3 @@ const __Banner = LitReact.createComponent({
 });
 
 export { BannerSlots };
-
-const Banner = __Banner;
-
-export { Banner };

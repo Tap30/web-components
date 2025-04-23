@@ -14,13 +14,9 @@ if (
   /* eslint-enable no-console */
 }
 
-const __SegmentedViewItem = LitReact.createComponent({
+export const SegmentedViewItem = LitReact.createComponent({
   tagName: "tapsi-segmented-view-item",
   elementClass: SegmentedViewItemElementClass,
   react: React,
   events: {},
 });
-
-const SegmentedViewItem = __SegmentedViewItem;
-
-export { SegmentedViewItem };

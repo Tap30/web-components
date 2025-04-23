@@ -9,7 +9,7 @@ import {
 
 registerAvatar();
 
-const __Avatar = LitReact.createComponent({
+export const Avatar = LitReact.createComponent({
   tagName: "tapsi-avatar",
   elementClass: AvatarElementClass,
   react: React,
@@ -17,7 +17,3 @@ const __Avatar = LitReact.createComponent({
 });
 
 export { AvatarSlots };
-
-const Avatar = __Avatar;
-
-export { Avatar };
