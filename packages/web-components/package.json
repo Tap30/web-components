@@ -1,11 +1,18 @@
 {
   "name": "@tapsioss/web-components",
+  "description": "Collection of framework-agnostic Web Components for the Tapsi Design System.",
   "version": "0.11.1",
   "type": "module",
   "files": [
     "./dist",
-    "custom-elements.json"
+    "./README.md"
   ],
+  "homepage": "https://tap30.github.io/web-components",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tap30/web-components.git",
+    "directory": "packages/web-components"
+  },
   "exports": {
     "./*": {
       "types": "./dist/*/index.d.ts",

@@ -1,12 +1,12 @@
 <div align="center">
 
-# Tapsi Design System's Monorepo
+# `@tapsioss/icons`
 
 </div>
 
 <div align="center">
 
-A monorepo for the core libraries of our Design System.
+SVG path metadata and definitions for Tapsi Design System icons.
 
 </div>
 

@@ -1,12 +1,12 @@
 <div align="center">
 
-# Tapsi Design System's Monorepo
+# `@tapsioss/web-components`
 
 </div>
 
 <div align="center">
 
-A monorepo for the core libraries of our Design System.
+Collection of framework-agnostic Web Components for the Tapsi Design System.
 
 </div>
 

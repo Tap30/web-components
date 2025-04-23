@@ -1,12 +1,12 @@
 <div align="center">
 
-# Tapsi Design System's Monorepo
+# `@tapsioss/web-icons`
 
 </div>
 
 <div align="center">
 
-A monorepo for the core libraries of our Design System.
+Tapsi Design System icons implemented as standard Web Components.
 
 </div>
 

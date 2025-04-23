@@ -1,12 +1,13 @@
 <div align="center">
 
-# Tapsi Design System's Monorepo
+# `@tapsioss/theme`
 
 </div>
 
 <div align="center">
 
-A monorepo for the core libraries of our Design System.
+Theming package providing design tokens as CSS and JS variables for the Tapsi
+Design System.
 
 </div>
 

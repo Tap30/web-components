@@ -1,9 +1,9 @@
-# Contributing to TAPSI Design System's Monorepo
+# Contributing to Tapsi Design System's Monorepo
 
 If you're reading this, you're definitely awesome! <br /> The following is a set
-of guidelines for contributing to TAPSI Design System's Monorepo, which are
+of guidelines for contributing to Tapsi Design System's Monorepo, which are
 hosted in the
-[TAPSI Design System's Monorepo](https://github.com/Tap30/web-components). These
+[Tapsi Design System's Monorepo](https://github.com/Tap30/web-components). These
 are mostly guidelines, not rules. Use your best judgment, and feel free to
 propose changes to this document in a pull request.
 
