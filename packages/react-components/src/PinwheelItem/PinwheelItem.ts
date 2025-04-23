@@ -11,13 +11,9 @@ if (typeof window !== "undefined" && !customElements.get("tapsi-pinwheel")) {
   /* eslint-enable no-console */
 }
 
-const __PinwheelItem = LitReact.createComponent({
+export const PinwheelItem = LitReact.createComponent({
   tagName: "tapsi-pinwheel-item",
   elementClass: PinwheelItemElementClass,
   react: React,
   events: {},
 });
-
-const PinwheelItem = __PinwheelItem;
-
-export { PinwheelItem };

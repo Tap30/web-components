@@ -8,13 +8,9 @@ import {
 
 registerStepper();
 
-const __Stepper = LitReact.createComponent({
+export const Stepper = LitReact.createComponent({
   tagName: "tapsi-stepper",
   elementClass: StepperElementClass,
   react: React,
   events: {},
 });
-
-const Stepper = __Stepper;
-
-export { Stepper };

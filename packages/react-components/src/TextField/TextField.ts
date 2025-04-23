@@ -9,7 +9,7 @@ import {
 
 registerTextField();
 
-const __TextField = LitReact.createComponent({
+export const TextField = LitReact.createComponent({
   tagName: "tapsi-text-field",
   elementClass: TextFieldElementClass,
   react: React,
@@ -17,7 +17,3 @@ const __TextField = LitReact.createComponent({
 });
 
 export { TextFieldSlots };
-
-const TextField = __TextField;
-
-export { TextField };

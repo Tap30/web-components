@@ -9,7 +9,7 @@ import {
 
 registerEmptyState();
 
-const __EmptyState = LitReact.createComponent({
+export const EmptyState = LitReact.createComponent({
   tagName: "tapsi-empty-state",
   elementClass: EmptyStateElementClass,
   react: React,
@@ -17,7 +17,3 @@ const __EmptyState = LitReact.createComponent({
 });
 
 export { EmptyStateSlots };
-
-const EmptyState = __EmptyState;
-
-export { EmptyState };

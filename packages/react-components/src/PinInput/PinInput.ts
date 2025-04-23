@@ -9,7 +9,7 @@ import {
 
 registerPinInput();
 
-const __PinInput = LitReact.createComponent({
+export const PinInput = LitReact.createComponent({
   tagName: "tapsi-pin-input",
   elementClass: PinInputElementClass,
   react: React,
@@ -19,7 +19,3 @@ const __PinInput = LitReact.createComponent({
 });
 
 export { PinInputCompleteEvent };
-
-const PinInput = __PinInput;
-
-export { PinInput };

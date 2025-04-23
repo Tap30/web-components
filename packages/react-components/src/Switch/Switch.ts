@@ -8,13 +8,9 @@ import {
 
 registerSwitch();
 
-const __Switch = LitReact.createComponent({
+export const Switch = LitReact.createComponent({
   tagName: "tapsi-switch",
   elementClass: SwitchElementClass,
   react: React,
   events: {},
 });
-
-const Switch = __Switch;
-
-export { Switch };

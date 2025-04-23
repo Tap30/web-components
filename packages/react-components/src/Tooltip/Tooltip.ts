@@ -10,7 +10,7 @@ import {
 
 registerTooltip();
 
-const __Tooltip = LitReact.createComponent({
+export const Tooltip = LitReact.createComponent({
   tagName: "tapsi-tooltip",
   elementClass: TooltipElementClass,
   react: React,
@@ -21,7 +21,3 @@ const __Tooltip = LitReact.createComponent({
 });
 
 export { TooltipHideEvent, TooltipShowEvent };
-
-const Tooltip = __Tooltip;
-
-export { Tooltip };

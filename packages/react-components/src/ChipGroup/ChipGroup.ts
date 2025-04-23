@@ -10,7 +10,7 @@ import {
 
 registerChipGroup();
 
-const __ChipGroup = LitReact.createComponent({
+export const ChipGroup = LitReact.createComponent({
   tagName: "tapsi-chip-group",
   elementClass: ChipGroupElementClass,
   react: React,
@@ -21,7 +21,3 @@ const __ChipGroup = LitReact.createComponent({
 });
 
 export { ChipGroupSelectChangeEvent, ChipGroupSlots };
-
-const ChipGroup = __ChipGroup;
-
-export { ChipGroup };

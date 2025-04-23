@@ -11,7 +11,7 @@ import {
 
 registerSegmentedView();
 
-const __SegmentedView = LitReact.createComponent({
+export const SegmentedView = LitReact.createComponent({
   tagName: "tapsi-segmented-view",
   elementClass: SegmentedViewElementClass,
   react: React,
@@ -26,7 +26,3 @@ export {
   SegmentedViewItemSlots,
   SegmentedViewSlots,
 };
-
-const SegmentedView = __SegmentedView;
-
-export { SegmentedView };

@@ -9,7 +9,7 @@ import {
 
 registerButton();
 
-const __Button = LitReact.createComponent({
+export const Button = LitReact.createComponent({
   tagName: "tapsi-button",
   elementClass: ButtonElementClass,
   react: React,
@@ -17,7 +17,3 @@ const __Button = LitReact.createComponent({
 });
 
 export { ButtonSlots };
-
-const Button = __Button;
-
-export { Button };
