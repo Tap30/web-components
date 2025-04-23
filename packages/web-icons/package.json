@@ -10,9 +10,7 @@
     "directory": "packages/web-icons"
   },
   "files": [
-    "./dist/**/*.js",
-    "./dist/**/*.d.ts",
-    "./dist/**/package.json",
+    "./dist",
     "./README.md"
   ],
   "main": "./dist/index.js",

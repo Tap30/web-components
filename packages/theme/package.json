@@ -1,6 +1,6 @@
 {
   "name": "@tapsioss/theme",
-  "description": "Theming package providing CSS custom properties and JS constants for Tapsi Design System.",
+  "description": "Theming package providing design tokens as CSS and JS variables for the Tapsi Design System.",
   "version": "0.5.2",
   "type": "module",
   "files": [

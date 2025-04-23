@@ -6,7 +6,7 @@
 
 <div align="center">
 
-Collection of framework-agnostic Web Components for the Tapsi Design System UI.
+Collection of framework-agnostic Web Components for the Tapsi Design System.
 
 </div>
 

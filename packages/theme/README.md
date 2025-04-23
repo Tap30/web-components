@@ -6,7 +6,7 @@
 
 <div align="center">
 
-Theming package providing CSS custom properties and JS constants for Tapsi
+Theming package providing design tokens as CSS and JS variables for the Tapsi
 Design System.
 
 </div>

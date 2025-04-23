@@ -1,11 +1,10 @@
 {
   "name": "@tapsioss/web-components",
-  "description": "Collection of framework-agnostic Web Components for the Tapsi Design System UI.",
+  "description": "Collection of framework-agnostic Web Components for the Tapsi Design System.",
   "version": "0.11.1",
   "type": "module",
   "files": [
     "./dist",
-    "custom-elements.json",
     "./README.md"
   ],
   "homepage": "https://tap30.github.io/web-components",
