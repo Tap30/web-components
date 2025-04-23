@@ -1,0 +1,141 @@
+name: 🚀 Release
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  build:
+    name: 🏗️ Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: ☁️ checkout repository
+        uses: actions/checkout@v4
+
+      - name: ✍️ set PACKAGE_NAME variable
+        id: set-package-name
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          echo "PACKAGE_NAME=$(echo $TAG_NAME | cut -d '@' -f 1)" >> $GITHUB_ENV
+
+      - name: 🔧 setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: 🔧 setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: 📦 install dependencies
+        run: pnpm install
+
+      # Set up GitHub Actions caching for Wireit.
+      - name: 🔌 setup wireit cache
+        uses: google/wireit@setup-github-actions-caching/v2
+
+      - name: 🧱 build package
+        run: pnpm build:${{ env.PACKAGE_NAME }}
+
+      - name: 🗄️ archive package
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: packages/${{ env.PACKAGE_NAME }}/dist
+
+  publish-npm:
+    needs: build
+    name: 🚀 Publish on NPM registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: ☁️ checkout repository
+        uses: actions/checkout@v4
+
+      - name: ✍️ set PACKAGE_NAME variable
+        id: set-package-name
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          echo "PACKAGE_NAME=$(echo $TAG_NAME | cut -d '@' -f 1)" >> $GITHUB_ENV
+
+      - name: 🔧 setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: 🔧 setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          registry-url: https://registry.npmjs.org/
+
+      - name: 📦 install dependencies
+        run: pnpm install
+
+      - name: 🚚 download package
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: packages/${{ env.PACKAGE_NAME }}/dist
+
+      - name: 🚀 publish package
+        run: pnpm release:${{ env.PACKAGE_NAME }}
+        env:
+          NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+
+  build-docs:
+    name: 🏗️ Build Docs
+    needs: publish-npm
+    runs-on: ubuntu-latest
+    steps:
+      - name: ☁️ checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔧 setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: 🔧 setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: 🔧 setup pages
+        uses: actions/configure-pages@v4
+
+      - name: 📦 install dependencies
+        run: pnpm install
+
+      # Set up GitHub Actions caching for Wireit.
+      - name: 🔌 setup wireit cache
+        uses: google/wireit@setup-github-actions-caching/v2
+
+      - name: 🧱 build docs
+        run: pnpm build:docs
+
+      - name: 🗄️ upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+  deploy-docs:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build-docs
+    runs-on: ubuntu-latest
+    name: 🚀 Deploy Docs
+    steps:
+      - name: 🚀 deploy documentation to github pages
+        id: deployment
+        uses: actions/deploy-pages@v4

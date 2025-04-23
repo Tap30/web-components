@@ -2,15 +2,17 @@
 addReviewers: true
 
 # Set to true to add assignees to pull requests
-addAssignees: false
+addAssignees: true
 
 # A list of reviewers to be added to pull requests (GitHub user name)
 reviewers:
+  - amir78729
   - mimshins
 
 # A number of reviewers added to the pull request
 # Set 0 to add all the reviewers (default: 0)
-numberOfReviewers: 0
+numberOfReviewers: 2
+
 # A list of assignees, overrides reviewers if set
 assignees:
   - amir78729
@@ -19,7 +21,7 @@ assignees:
 # A number of assignees to add to the pull request
 # Set to 0 to add all of the assignees.
 # Uses numberOfReviewers if unset.
-numberOfAssignees: 2
+numberOfAssignees: 1
 
 # A list of keywords to be skipped the process that add reviewers if pull requests include it
 skipKeywords:
