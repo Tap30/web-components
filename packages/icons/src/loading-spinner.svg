@@ -1,10 +1,14 @@
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path opacity="0.12" fill-rule="evenodd" clip-rule="evenodd" d="M12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="black"/>
-<path d="M12 5C15.866 5 19 8.13401 19 12C19 13.3943 18.5924 14.6933 17.8898 15.7845C17.4413 16.481 17.4246 17.4246 18.0104 18.0104C18.5962 18.5962 19.5567 18.6017 20.0489 17.9354C21.2751 16.2753 22 14.2223 22 12C22 6.47715 17.5228 2 12 2V5Z" fill="url(#paint0_angular_24_547)"/>
-<defs>
-<radialGradient id="paint0_angular_24_547" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(12 11.9892) rotate(-89.888) scale(9.98922 10)">
-<stop stop-color="#E0E0E0" stop-opacity="0"/>
-<stop offset="0.37"/>
-</radialGradient>
-</defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path fill="#000" fill-rule="evenodd" d="M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14Zm0 3c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Z" clip-rule="evenodd" opacity=".12"/>
+  <g clip-path="url(#a)" data-figma-skip-parse="true">
+    <foreignObject width="2605.73" height="2605.73" x="-1302.86" y="-1302.86" transform="matrix(.00002 -.00999 .01 .00002 12 11.99)">
+      <div xmlns="http://www.w3.org/1999/xhtml" opacity="1" style="background:conic-gradient(from 90deg,rgba(224,224,224,0) 0deg,#000 133.2deg,rgba(224,224,224,0) 360deg);height:100%;width:100%"/>
+    </foreignObject>
+  </g>
+  <path d="M12 5a7 7 0 0 1 5.89 10.784c-.449.697-.465 1.64.12 2.226.586.586 1.547.592 2.039-.075A9.955 9.955 0 0 0 22 12c0-5.523-4.477-10-10-10v3Z" data-figma-gradient-fill="{&quot;type&quot;:&quot;GRADIENT_ANGULAR&quot;,&quot;stops&quot;:[{&quot;color&quot;:{&quot;r&quot;:0.87843137979507446,&quot;g&quot;:0.87843137979507446,&quot;b&quot;:0.87843137979507446,&quot;a&quot;:0.0},&quot;position&quot;:0.0},{&quot;color&quot;:{&quot;r&quot;:0.0,&quot;g&quot;:0.0,&quot;b&quot;:0.0,&quot;a&quot;:1.0},&quot;position&quot;:0.37000000476837158}],&quot;stopsVar&quot;:[{&quot;color&quot;:{&quot;r&quot;:0.87843137979507446,&quot;g&quot;:0.87843137979507446,&quot;b&quot;:0.87843137979507446,&quot;a&quot;:0.0},&quot;position&quot;:0.0},{&quot;color&quot;:{&quot;r&quot;:0.0,&quot;g&quot;:0.0,&quot;b&quot;:0.0,&quot;a&quot;:1.0},&quot;position&quot;:0.37000000476837158}],&quot;transform&quot;:{&quot;m00&quot;:0.039062645286321640,&quot;m01&quot;:20.0,&quot;m02&quot;:1.9804686307907104,&quot;m10&quot;:-19.978404998779297,&quot;m11&quot;:0.039104867726564407,&quot;m12&quot;:21.958852767944336},&quot;opacity&quot;:1.0,&quot;blendMode&quot;:&quot;NORMAL&quot;,&quot;visible&quot;:true}"/>
+  <defs>
+    <clipPath id="a">
+      <path d="M12 5a7 7 0 0 1 5.89 10.784c-.449.697-.465 1.64.12 2.226.586.586 1.547.592 2.039-.075A9.955 9.955 0 0 0 22 12c0-5.523-4.477-10-10-10v3Z"/>
+    </clipPath>
+  </defs>
 </svg>
