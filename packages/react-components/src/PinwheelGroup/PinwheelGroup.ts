@@ -9,7 +9,7 @@ import {
 
 registerPinwheelGroup();
 
-const __PinwheelGroup = LitReact.createComponent({
+export const PinwheelGroup = LitReact.createComponent({
   tagName: "tapsi-pinwheel-group",
   elementClass: PinwheelGroupElementClass,
   react: React,
@@ -17,7 +17,3 @@ const __PinwheelGroup = LitReact.createComponent({
 });
 
 export { PinwheelGroupSlots };
-
-const PinwheelGroup = __PinwheelGroup;
-
-export { PinwheelGroup };

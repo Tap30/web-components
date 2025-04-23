@@ -10,7 +10,7 @@ import {
 
 registerPinwheel();
 
-const __Pinwheel = LitReact.createComponent({
+export const Pinwheel = LitReact.createComponent({
   tagName: "tapsi-pinwheel",
   elementClass: PinwheelElementClass,
   react: React,
@@ -18,7 +18,3 @@ const __Pinwheel = LitReact.createComponent({
 });
 
 export { PinwheelItemSlots, PinwheelSlots };
-
-const Pinwheel = __Pinwheel;
-
-export { Pinwheel };

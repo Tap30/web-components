@@ -8,13 +8,9 @@ import {
 
 registerRadio();
 
-const __Radio = LitReact.createComponent({
+export const Radio = LitReact.createComponent({
   tagName: "tapsi-radio",
   elementClass: RadioElementClass,
   react: React,
   events: {},
 });
-
-const Radio = __Radio;
-
-export { Radio };

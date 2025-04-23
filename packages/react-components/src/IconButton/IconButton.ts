@@ -9,7 +9,7 @@ import {
 
 registerIconButton();
 
-const __IconButton = LitReact.createComponent({
+export const IconButton = LitReact.createComponent({
   tagName: "tapsi-icon-button",
   elementClass: IconButtonElementClass,
   react: React,
@@ -17,7 +17,3 @@ const __IconButton = LitReact.createComponent({
 });
 
 export { IconButtonSlots };
-
-const IconButton = __IconButton;
-
-export { IconButton };

@@ -2,7 +2,7 @@
 
 {{register}}
 
-const __{{componentName}} = LitReact.createComponent({
+export const {{componentName}} = LitReact.createComponent({
   tagName: "{{elementTag}}",
   elementClass: {{elementClass}},
   react: React,

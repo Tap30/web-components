@@ -11,7 +11,7 @@ import {
 
 registerSnackbar();
 
-const __Snackbar = LitReact.createComponent({
+export const Snackbar = LitReact.createComponent({
   tagName: "tapsi-snackbar",
   elementClass: SnackbarElementClass,
   react: React,
@@ -22,7 +22,3 @@ const __Snackbar = LitReact.createComponent({
 });
 
 export { SnackbarHideEvent, SnackbarShowEvent, SnackbarSlots };
-
-const Snackbar = __Snackbar;
-
-export { Snackbar };

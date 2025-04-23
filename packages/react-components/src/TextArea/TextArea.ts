@@ -9,7 +9,7 @@ import {
 
 registerTextArea();
 
-const __TextArea = LitReact.createComponent({
+export const TextArea = LitReact.createComponent({
   tagName: "tapsi-text-area",
   elementClass: TextAreaElementClass,
   react: React,
@@ -17,7 +17,3 @@ const __TextArea = LitReact.createComponent({
 });
 
 export { TextAreaSlots };
-
-const TextArea = __TextArea;
-
-export { TextArea };

@@ -8,13 +8,9 @@ import {
 
 registerDivider();
 
-const __Divider = LitReact.createComponent({
+export const Divider = LitReact.createComponent({
   tagName: "tapsi-divider",
   elementClass: DividerElementClass,
   react: React,
   events: {},
 });
-
-const Divider = __Divider;
-
-export { Divider };

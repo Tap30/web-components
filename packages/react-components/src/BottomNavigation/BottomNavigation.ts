@@ -11,7 +11,7 @@ import {
 
 registerBottomNavigation();
 
-const __BottomNavigation = LitReact.createComponent({
+export const BottomNavigation = LitReact.createComponent({
   tagName: "tapsi-bottom-navigation",
   elementClass: BottomNavigationElementClass,
   react: React,
@@ -26,7 +26,3 @@ export {
   BottomNavigationItemSlots,
   BottomNavigationSlots,
 };
-
-const BottomNavigation = __BottomNavigation;
-
-export { BottomNavigation };

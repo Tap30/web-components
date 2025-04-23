@@ -9,7 +9,7 @@ import {
 
 registerButtonGroup();
 
-const __ButtonGroup = LitReact.createComponent({
+export const ButtonGroup = LitReact.createComponent({
   tagName: "tapsi-button-group",
   elementClass: ButtonGroupElementClass,
   react: React,
@@ -17,7 +17,3 @@ const __ButtonGroup = LitReact.createComponent({
 });
 
 export { ButtonGroupSlots };
-
-const ButtonGroup = __ButtonGroup;
-
-export { ButtonGroup };
