@@ -19,7 +19,7 @@ export type Palette = {
   green: Record<ColorSetSteps, string>;
   yellow: Record<ColorSetSteps, string>;
   red: Record<ColorSetSteps, string>;
-  purple: Record<ColorSetSteps, string>;
+  indigo: Record<ColorSetSteps, string>;
 };
 
 export type Color = {
