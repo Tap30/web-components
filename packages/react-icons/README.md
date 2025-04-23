@@ -14,7 +14,7 @@ A set of React icon components in Tapsi design system.
 
 ## Public Documentation
 
-You can find the complete documentation for the TAPSI Design System at
+You can find the complete documentation for the Tapsi Design System at
 [our public documetation website](https://tap30.github.io/web-components), where
 you'll find everything from getting started guides and component references to
 design tokens and development guidelines—all designed to help you build with or

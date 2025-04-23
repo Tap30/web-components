@@ -2,6 +2,12 @@
   "name": "@tapsioss/web-icons",
   "version": "0.2.3",
   "type": "module",
+  "homepage": "https://tap30.github.io/web-components",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tap30/web-components.git",
+    "directory": "packages/web-icons"
+  },
   "files": [
     "./dist/**/*.js",
     "./dist/**/*.d.ts",

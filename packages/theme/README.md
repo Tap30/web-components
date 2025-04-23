@@ -1,12 +1,12 @@
 <div align="center">
 
-# @tapsioss/web-components
+# @tapsioss/theme
 
 </div>
 
 <div align="center">
 
-A set of web components for Tapsi design system.
+The theme package for Tapsi design system.
 
 </div>
 
