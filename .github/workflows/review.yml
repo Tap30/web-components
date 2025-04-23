@@ -1,10 +1,7 @@
 name: 🔍 Review
 
 on:
-  workflow_run:
-    workflows: ["🧑‍💻 Development"]
-    types:
-      - completed
+  workflow_call:
 
 permissions:
   contents: read
@@ -12,19 +9,10 @@ permissions:
   actions: read
 
 jobs:
-  add-reviews:
-    name: 👥 Auto-assign Reviewer and Assignee
-    runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    steps:
-      - name: 👤 assigning reviewer and assignee
-        uses: kentaro-m/auto-assign-action@v2.0.0
-
   danger:
     name: ⚡ Danger Check
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: ☁️ checkout repository associated with PR
         uses: actions/checkout@v4
@@ -49,3 +37,11 @@ jobs:
         run: pnpm check:danger
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  add-reviews:
+    name: 👥 Auto-assign Reviewer and Assignee
+    needs: [danger]
+    runs-on: ubuntu-latest
+    steps:
+      - name: 👤 assigning reviewer and assignee
+        uses: kentaro-m/auto-assign-action@v2.0.0
