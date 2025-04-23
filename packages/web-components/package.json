@@ -4,7 +4,8 @@
   "type": "module",
   "files": [
     "./dist",
-    "custom-elements.json"
+    "custom-elements.json",
+    "./README.md"
   ],
   "homepage": "https://tap30.github.io/web-components",
   "repository": {

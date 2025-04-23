@@ -3,7 +3,8 @@
   "version": "0.3.1",
   "type": "module",
   "files": [
-    "./dist"
+    "./dist",
+    "./README.md"
   ],
   "homepage": "https://tap30.github.io/web-components",
   "repository": {
