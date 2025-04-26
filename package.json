@@ -17,7 +17,7 @@
     "changesets:create": "changeset add",
     "changesets:apply": "changeset version",
     "changesets:status": "changeset status --since=main",
-    "release": "changeset publish --tag latest",
+    "release": "pnpm build:packages && changeset publish --tag latest",
     "build": "wireit",
     "build:packages": "wireit",
     "build:docs": "wireit",
