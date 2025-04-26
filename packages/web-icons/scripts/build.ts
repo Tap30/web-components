@@ -15,6 +15,9 @@ const distDir = path.join(packageDir, "dist");
 const templatesDir = path.join(packageDir, "templates");
 
 const iconTemplate = path.join(templatesDir, "web-icon.txt");
+const elementTemplate = path.join(templatesDir, "element.txt");
+const componentBarrelTemplate = path.join(templatesDir, "componentBarrel.txt");
+
 const tsconfigFile = path.join(packageDir, "tsconfig.build.json");
 const baseIconFile = path.join(packageDir, "src/base-icon.ts");
 
@@ -27,6 +30,17 @@ const generateComponents = async () => {
   const iconTemplateStr = await fs.readFile(iconTemplate, {
     encoding: "utf-8",
   });
+
+  const elementTemplateStr = await fs.readFile(elementTemplate, {
+    encoding: "utf-8",
+  });
+
+  const componentBarrelTemplateStr = await fs.readFile(
+    componentBarrelTemplate,
+    {
+      encoding: "utf-8",
+    },
+  );
 
   const webComponentPromises = Object.keys(icons).map(async key => {
     const iconInfo = icons[key]!;
@@ -53,9 +67,40 @@ const generateComponents = async () => {
       { escape: v => v as string },
     );
 
+    const elementCode = Mustache.render(
+      elementTemplateStr,
+      {
+        name: iconInfo.pascalName,
+        elementTag: iconInfo.kebabName,
+      },
+      {},
+      { escape: v => v as string },
+    );
+
+    const componentBarrelCode = Mustache.render(
+      componentBarrelTemplateStr,
+      {
+        elementTag: iconInfo.kebabName,
+      },
+      {},
+      { escape: v => v as string },
+    );
+
+    const iconDir = path.join(distDir, iconInfo.kebabName);
+
+    await ensureDirExists(iconDir);
+
     return Promise.all([
+      fs.writeFile(path.join(iconDir, "element.ts"), elementCode, {
+        encoding: "utf-8",
+        flag: "w",
+      }),
+      fs.writeFile(path.join(iconDir, "index.ts"), componentBarrelCode, {
+        encoding: "utf-8",
+        flag: "w",
+      }),
       fs.writeFile(
-        path.join(distDir, `${iconInfo.kebabName}.ts`),
+        path.join(iconDir, `${iconInfo.kebabName}.ts`),
         webIconCode,
         {
           encoding: "utf-8",
@@ -64,7 +109,7 @@ const generateComponents = async () => {
       ),
       fs.appendFile(
         path.join(distDir, "index.ts"),
-        `export * from "./${iconInfo.kebabName}.ts";\n`,
+        `export * from "./${iconInfo.kebabName}/index.ts";\n`,
         {
           encoding: "utf-8",
         },
