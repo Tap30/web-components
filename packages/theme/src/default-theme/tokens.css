@@ -125,37 +125,6 @@
     #fff0e9 0%,
     #f4f1f0 100%
   );
-  --tapsi-color-gradient-surface-blue: linear-gradient(
-    90deg,
-    #d8e1eb 0%,
-    #f0f5f4 100%
-  );
-  --tapsi-color-gradient-surface-red: linear-gradient(
-    90deg,
-    #ffdedc 0%,
-    #f8eeed 100%
-  );
-  --tapsi-color-gradient-surface-gray: linear-gradient(
-    90deg,
-    #eaeded 0%,
-    #f5f7f7 100%
-  );
-  --tapsi-color-gradient-surface-white: linear-gradient(
-    0deg,
-    #fff 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  --tapsi-color-gradient-surface-tip: linear-gradient(
-    98deg,
-    #def0e7 12.8%,
-    #dde8ee 50%,
-    #efebe9 87.2%
-  );
-  --tapsi-color-gradient-background-white-to-gray: linear-gradient(
-    180deg,
-    #fff 0%,
-    #f5f7f7 100%
-  );
   --tapsi-radius-0: 0;
   --tapsi-radius-1: 0.125rem;
   --tapsi-radius-2: 0.25rem;
