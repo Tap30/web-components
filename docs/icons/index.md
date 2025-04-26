@@ -87,11 +87,17 @@ Assume we are going to use the "Alarm Clock" icon. First, import the component:
 
 ::: code-group
 
-```ts [Web]
+```ts [Web (Manual)]
 import { registerAlarmClock } from "@tapsioss/web-icons/alarm-clock";
 
 // You can register icons in your projects (usually inside the root of your project)
 registerAlarmClock(); // Now you can use the alarm clock icon anywhere.
+```
+
+```ts [Web (Automatic)]
+import "@tapsioss/web-icons/alarm-clock/element";
+
+// Now you can use the alarm clock icon anywhere.
 ```
 
 ```tsx [React]
