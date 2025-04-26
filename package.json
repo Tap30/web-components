@@ -13,6 +13,7 @@
     "node": ">=20"
   },
   "scripts": {
+    "changesets:empty": "changeset add --empty",
     "changesets:create": "changeset add",
     "changesets:apply": "changeset version",
     "changesets:status": "changeset status --since=main",
