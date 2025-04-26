@@ -76,6 +76,9 @@ jobs:
       - name: 🔍 lint code
         run: pnpm check:lint
 
+      - name: 🔍 check code style
+        run: pnpm check:format
+
   test:
     needs: lint
     name: 🧪 Run tests
