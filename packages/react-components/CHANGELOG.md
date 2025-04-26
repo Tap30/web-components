@@ -1,5 +1,16 @@
 # @tapsioss/react-components
 
+## 0.12.1
+
+### Patch Changes
+
+- [`e006621`](https://github.com/Tap30/web-components/commit/e00662136bb76b6af1634ee118d9bd3c536bf376)
+  Thanks [@mimshins](https://github.com/mimshins)! - Fix: output distribution
+
+- Updated dependencies
+  [[`e006621`](https://github.com/Tap30/web-components/commit/e00662136bb76b6af1634ee118d9bd3c536bf376)]:
+  - @tapsioss/web-components@0.12.1
+
 ## 0.12.0
 
 ### Patch Changes
