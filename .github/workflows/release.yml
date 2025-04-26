@@ -56,6 +56,7 @@ jobs:
           createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
 
   prepare-docs:
     name: ⚙️ Prepare Documentation
