@@ -45,7 +45,7 @@ jobs:
           pnpm install
 
       - name: 📋 Changeset status
-        run: pnpm changeset:status
+        run: pnpm changesets:status
 
   lint:
     name: 🔍 Run linter
