@@ -1,6 +1,6 @@
 import BaseIcon from "./base-icon.ts";
 
-class {{name}} extends BaseIcon {
+export class {{name}} extends BaseIcon {
   constructor() {
     super();
 
@@ -8,13 +8,12 @@ class {{name}} extends BaseIcon {
   }
 }
 
-customElements.define("tapsi-icon-{{elementTag}}", {{name}});
+export const register{{name}} = () => {
+  customElements.define("tapsi-icon-{{elementTag}}", {{name}});
+}
 
 declare global {
   interface HTMLElementTagNameMap {
     "tapsi-icon-{{elementTag}}": {{name}};
   }
 }
-
-
-export default {{name}};

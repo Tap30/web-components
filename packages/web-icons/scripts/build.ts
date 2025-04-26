@@ -64,7 +64,7 @@ const generateComponents = async () => {
       ),
       fs.appendFile(
         path.join(distDir, "index.ts"),
-        `export { default as ${iconInfo.pascalName} } from "./${iconInfo.kebabName}";\n`,
+        `export * from "./${iconInfo.kebabName}.ts";\n`,
         {
           encoding: "utf-8",
         },
