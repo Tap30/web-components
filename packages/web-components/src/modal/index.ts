@@ -7,6 +7,7 @@ export { Modal };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-modal")) return;
 
   customElements.define("tapsi-modal", Modal);
 };

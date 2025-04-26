@@ -7,6 +7,7 @@ export { Notice };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-notice")) return;
 
   customElements.define("tapsi-notice", Notice);
 };

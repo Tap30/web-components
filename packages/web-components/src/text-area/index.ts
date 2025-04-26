@@ -6,6 +6,7 @@ export { TextArea };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-text-area")) return;
 
   customElements.define("tapsi-text-area", TextArea);
 };

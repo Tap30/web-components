@@ -5,6 +5,7 @@ export { Divider };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-divider")) return;
 
   customElements.define("tapsi-divider", Divider);
 };

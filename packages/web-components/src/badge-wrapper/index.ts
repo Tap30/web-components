@@ -6,6 +6,7 @@ export { BadgeWrapper };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-badge-wrapper")) return;
 
   customElements.define("tapsi-badge-wrapper", BadgeWrapper);
 };

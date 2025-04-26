@@ -5,6 +5,7 @@ export { Checkbox };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-checkbox")) return;
 
   customElements.define("tapsi-checkbox", Checkbox);
 };

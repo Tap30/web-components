@@ -6,6 +6,7 @@ export { Avatar };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-avatar")) return;
 
   customElements.define("tapsi-avatar", Avatar);
 };

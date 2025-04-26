@@ -7,6 +7,7 @@ export { BottomSheet };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-bottom-sheet")) return;
 
   customElements.define("tapsi-bottom-sheet", BottomSheet);
 };

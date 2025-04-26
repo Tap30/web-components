@@ -6,6 +6,7 @@ export { Button };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-button")) return;
 
   customElements.define("tapsi-button", Button);
 };

@@ -6,6 +6,7 @@ export { Tooltip };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-tooltip")) return;
 
   customElements.define("tapsi-tooltip", Tooltip);
 };

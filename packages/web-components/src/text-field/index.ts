@@ -6,6 +6,7 @@ export { TextField };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-text-field")) return;
 
   customElements.define("tapsi-text-field", TextField);
 };

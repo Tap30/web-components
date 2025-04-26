@@ -7,6 +7,7 @@ export { Chip };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-chip")) return;
 
   customElements.define("tapsi-chip", Chip);
 };
