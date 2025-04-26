@@ -117,35 +117,37 @@ const getImportsMarkdown = (
       ""
     ]?.find(e => e.startsWith("register"));
 
-    if (hasManualComponentRegister) {
-      res +=
-        "\n\nYou can register the component manually by importing the `register` function";
-
-      res += "\n\n";
+    if (hasManualComponentRegister || manualBarrelRegisterFunctionName) {
       res += [
-        "::: code-group",
-        "```ts [Web]",
-        `import { register } from "${packagesMetadata?.name}/${component.relativePath}";`, // remove this section from compound
         "",
-        `register(); // Now the ${componentHumanReadableName} component is ready to use!`,
-        "```",
-        ":::",
-      ].join("\n");
-    }
-
-    if (manualBarrelRegisterFunctionName) {
-      res += `\n\nHere is another way to register the ${componentHumanReadableName} component:`;
-
-      res += "\n\n";
-      res += [
-        "::: code-group",
-        "```ts [Web]",
-        `import { ${manualBarrelRegisterFunctionName} } from "${packagesMetadata?.name}";`, // remove this section from compound
+        "You can register the component manually by importing the register function:",
         "",
-        `${manualBarrelRegisterFunctionName}(); // Now the ${componentHumanReadableName} component is ready to use!`,
-        "```",
-        ":::",
+        "::: code-group",
       ].join("\n");
+
+      if (hasManualComponentRegister) {
+        res += "\n\n";
+        res += [
+          `\`\`\`ts [Web${manualBarrelRegisterFunctionName ? " (Option 1)" : ""}]`,
+          `import { register } from "${packagesMetadata?.name}/${component.relativePath}";`, // remove this section from compound
+          "",
+          `register(); // Now the ${componentHumanReadableName} component is ready to use!`,
+          "```",
+        ].join("\n");
+      }
+
+      if (manualBarrelRegisterFunctionName) {
+        res += [
+          "",
+          `\`\`\`ts [Web${hasManualComponentRegister ? " (Option 2)" : ""}]`,
+          `import { ${manualBarrelRegisterFunctionName} } from "${packagesMetadata?.name}";`, // remove this section from compound
+          "",
+          `${manualBarrelRegisterFunctionName}(); // Now the ${componentHumanReadableName} component is ready to use!`,
+          "```",
+        ].join("\n");
+      }
+
+      res += ["", ":::"].join("\n");
     }
 
     if (hasAutomaticRegister) {
@@ -155,7 +157,7 @@ const getImportsMarkdown = (
       res += [
         "::: code-group",
         "```ts [Web]",
-        `import { ${manualBarrelRegisterFunctionName} } from "${packagesMetadata?.name}/${component.relativePath}/element";`,
+        `import "${packagesMetadata?.name}/${component.relativePath}/element";`,
         "```",
         ":::",
       ].join("\n");
@@ -165,7 +167,7 @@ const getImportsMarkdown = (
         "::: tip",
         "If you want to use all the component in your app, you can call `registerAll` at the root of your project.",
         "```ts [Web]",
-        `import "${packagesMetadata?.name}";`,
+        `import { registerAll } from "${packagesMetadata?.name}";`,
         ``,
         `registerAll(); // All the components are now available`,
         "```",
