@@ -40,6 +40,10 @@ export default css`
     display: none;
   }
 
+  .root.no-transition {
+    scroll-behavior: unset;
+  }
+
   .root:focus-visible {
     outline: ${FOCUS_RING_LINE};
     outline-offset: ${FOCUS_RING_OFFSET};
@@ -50,12 +54,6 @@ export default css`
 
     display: flex;
     flex-direction: column;
-
-    transition: transform 240ms ease;
-  }
-
-  .container.disable-transition {
-    transition: none;
   }
 
   .placeholder {
@@ -64,12 +62,4 @@ export default css`
 
     flex-shrink: 0;
   }
-
-  /* .item:first-child {
-    padding-top: var(--tapsi-pinwheel-item-height, var(--tapsi-spacing-11));
-  }
-
-  .item:last-child {
-    padding-bottom: var(--tapsi-pinwheel-item-height, var(--tapsi-spacing-11));
-  } */
 `;

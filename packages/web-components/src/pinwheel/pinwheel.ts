@@ -125,7 +125,9 @@ export class Pinwheel extends BaseClass {
     if (isSsr() || !this.isConnected) return;
 
     if (!this.hasUpdated && newValue !== "") {
-      void this.updateComplete.then(() => this._setSelectedItem(newValue));
+      void this.updateComplete.then(() => {
+        this._setSelectedItem(newValue);
+      });
     } else this._setSelectedItem(newValue);
   }
 
@@ -140,6 +142,9 @@ export class Pinwheel extends BaseClass {
 
   @state()
   private _cachedItems: PinwheelItem[] | null = null;
+
+  @state()
+  private _noTransition = true;
 
   @query("#root")
   private _root!: HTMLElement | null;
@@ -198,20 +203,19 @@ export class Pinwheel extends BaseClass {
     }
   }
 
-  public setViewOnItem(itemValue: string): void {
+  private _getScrollDistance(value = this.value): number {
     // Invalidate cache since this function will only be called programmatically
     // and we need to get the latest items every time.
     this._cachedItems = null;
 
-    if (!this._container || !this._root) return;
-
     const items = this._items;
 
-    if (items.length <= 1) return;
+    if (items.length <= 1) return 0;
+    if (!this._container) return 0;
 
-    const itemIdx = items.findIndex(item => item.value === itemValue);
+    const itemIdx = items.findIndex(item => item.value === value);
 
-    if (itemIdx === -1) return;
+    if (itemIdx === -1) return 0;
 
     const containerRect = getBoundingClientRect(this._container);
 
@@ -219,6 +223,14 @@ export class Pinwheel extends BaseClass {
       containerRect.height / (items.length + /* Two placeholders */ 2);
 
     const dy = itemHeight * itemIdx;
+
+    return dy;
+  }
+
+  public setViewOnItem(itemValue: string): void {
+    if (!this._container || !this._root) return;
+
+    const dy = this._getScrollDistance(itemValue);
 
     if (this._root.scrollTop !== dy) {
       this._isProgrammaticallyScrolling = true;
@@ -294,11 +306,7 @@ export class Pinwheel extends BaseClass {
   private _emitValueChange(newValue: string) {
     if (this.disabled) return;
 
-    if (newValue === this.value) {
-      this.setViewOnItem(newValue);
-
-      return;
-    }
+    this.setViewOnItem(newValue);
 
     this.value = newValue;
 
@@ -402,6 +410,10 @@ export class Pinwheel extends BaseClass {
     if (this._isProgrammaticallyScrolling) {
       this._isProgrammaticallyScrolling = false;
 
+      const dy = this._getScrollDistance();
+
+      if (dy === this._root.scrollTop) this._noTransition = false;
+
       return;
     }
 
@@ -472,6 +484,7 @@ export class Pinwheel extends BaseClass {
     const rootClasses = classMap({
       root: true,
       disabled: this.disabled,
+      "no-transition": this._noTransition,
     });
 
     return html`
