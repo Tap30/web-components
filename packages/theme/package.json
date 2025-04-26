@@ -13,9 +13,10 @@
     "url": "https://github.com/Tap30/web-components.git",
     "directory": "packages/theme"
   },
-  "types": "./dist/types.d.ts",
+  "main": "./dist/default-theme/tokens.css",
+  "types": "./dist/index.d.ts",
   "exports": {
-    "./types": "./dist/types.d.ts",
+    ".": "./dist/default-theme/tokens.css",
     "./css-variables": "./dist/default-theme/tokens.css",
     "./*/css-variables": "./dist/*/tokens.css",
     "./tokens": {
