@@ -25,7 +25,8 @@
     "test:update-snapshots": "pnpm --filter @tapsioss/web-components run test:update-snapshots",
     "check:danger": "danger ci --verbose --failOnErrors",
     "check:lint": "wireit",
-    "fmt": "wireit",
+    "check:format": "wireit",
+    "format": "wireit",
     "dev:packages": "pnpm run -r --parallel --filter=!@tapsioss/docs dev",
     "dev:playground": "pnpm --filter @tapsioss/playground run start:dev",
     "dev:docs:vitepress": "pnpm --filter @tapsioss/docs run dev",
@@ -35,11 +36,23 @@
     "gen:metadata": "wireit"
   },
   "wireit": {
-    "fmt": {
+    "check:format": {
+      "command": "prettier . --check --cache",
+      "files": [
+        "./.prettierrc",
+        "./.prettierignore",
+        "**/*.{js,jsx,ts,tsx,md,json,css}",
+        "!**/dist/**/*",
+        "!pnpm-lock.yaml"
+      ],
+      "output": []
+    },
+    "format": {
       "command": "prettier . --write --cache",
       "files": [
         "./.prettierrc",
-        "**/*.{ts,tsx}",
+        "./.prettierignore",
+        "**/*.{js,jsx,ts,tsx,md,json,css}",
         "!**/dist/**/*",
         "!pnpm-lock.yaml"
       ],
