@@ -47,9 +47,18 @@ const getSidebarItems = (): DefaultTheme.Sidebar => {
     },
   ];
 
+  const iconsSidebar = [
+    {
+      text: "Introduction",
+      link: "/icons",
+      items: [{ text: "Explore Icons", link: "/icons/explore" }],
+    },
+  ];
+
   return {
     "/components": componentsSidebar,
     "/theme": themeSidebar,
+    "/icons": iconsSidebar,
   };
 };
 
