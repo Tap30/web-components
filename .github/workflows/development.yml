@@ -144,6 +144,4 @@ jobs:
   trigger-review:
     name: Automatic Review
     needs: [changeset-status-check, lint, test]
-    permissions:
-      pull-requests: write
     uses: ./.github/workflows/review.yml
