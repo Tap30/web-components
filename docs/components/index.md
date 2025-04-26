@@ -59,7 +59,7 @@ yarn add @tapsioss/react-components
 ::: info
 
 Both `@tapsioss/web-components` and `@tapsioss/react-components` rely on the
-[`@tapsioss/theme`](/theme.html) package for consistent styling. Be sure to include
-this package in your project to ensure the components render correctly.
+[`@tapsioss/theme`](/theme.html) package for consistent styling. Be sure to
+include this package in your project to ensure the components render correctly.
 
 :::
