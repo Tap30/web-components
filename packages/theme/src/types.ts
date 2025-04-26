@@ -19,17 +19,13 @@ export type Palette = {
   green: Record<ColorSetSteps, string>;
   yellow: Record<ColorSetSteps, string>;
   red: Record<ColorSetSteps, string>;
-  purple: Record<ColorSetSteps, string>;
+  indigo: Record<ColorSetSteps, string>;
 };
 
 export type Color = {
   brand: string;
   gradient: {
-    surface: Record<
-      "brand" | "brand-light" | "blue" | "red" | "gray" | "white" | "tip",
-      string
-    >;
-    background: Record<"white-to-gray", string>;
+    surface: Record<"brand" | "brand-light", string>;
   };
   surface: Record<
     | "primary"
