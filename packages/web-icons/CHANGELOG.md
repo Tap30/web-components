@@ -1,5 +1,14 @@
 # @tapsioss/web-icons
 
+## 0.4.2
+
+### Patch Changes
+
+- [#450](https://github.com/Tap30/web-components/pull/450)
+  [`a3017e9`](https://github.com/Tap30/web-components/commit/a3017e909384d50dfbcbf4f1eb745575a98d68be)
+  Thanks [@amir78729](https://github.com/amir78729)! - Fix: check if a component
+  is not already registered in `register` functions
+
 ## 0.4.1
 
 ### Patch Changes
