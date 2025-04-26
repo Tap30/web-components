@@ -13,22 +13,13 @@
     "node": ">=20"
   },
   "scripts": {
-    "changeset:create": "changeset add",
-    "changeset:apply": "changeset version",
-    "changeset:status": "changeset status --since=main",
-    "release:web-components": "pnpm --filter @tapsioss/web-components run release",
-    "release:react-components": "pnpm --filter @tapsioss/react-components run release",
-    "release:theme": "pnpm --filter @tapsioss/theme run release",
-    "release:icons": "pnpm --filter @tapsioss/icons run release",
-    "release:web-icons": "pnpm --filter @tapsioss/web-icons run release",
-    "release:react-icons": "pnpm --filter @tapsioss/react-icons run release",
+    "changesets:empty": "changeset add --empty",
+    "changesets:create": "changeset add",
+    "changesets:apply": "changeset version",
+    "changesets:status": "changeset status --since=main",
+    "release": "changeset publish --tag latest",
+    "build": "wireit",
     "build:packages": "wireit",
-    "build:web-components": "wireit",
-    "build:react-components": "wireit",
-    "build:theme": "wireit",
-    "build:icons": "wireit",
-    "build:web-icons": "wireit",
-    "build:react-icons": "wireit",
     "build:docs": "wireit",
     "test": "wireit",
     "test:update-snapshots": "pnpm --filter @tapsioss/web-components run test:update-snapshots",
@@ -80,14 +71,20 @@
       ],
       "output": []
     },
+    "build": {
+      "dependencies": [
+        "build:packages",
+        "build:docs"
+      ]
+    },
     "build:packages": {
       "dependencies": [
         "build:theme",
-        "build:web-components",
-        "build:react-components",
         "build:icons",
         "build:web-icons",
-        "build:react-icons"
+        "build:react-icons",
+        "build:web-components",
+        "build:react-components"
       ]
     },
     "build:theme": {
