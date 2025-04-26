@@ -9,6 +9,9 @@ export class {{name}} extends BaseIcon {
 }
 
 export const register{{name}} = () => {
+  if (typeof window === "undefined") return;
+  if (customElements.get("tapsi-icon-{{elementTag}}")) return;
+  
   customElements.define("tapsi-icon-{{elementTag}}", {{name}});
 }
 
