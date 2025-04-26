@@ -61,6 +61,7 @@ describe("🧩 icon-button", () => {
     const root = page.getByRole("link");
 
     await expect(root).toHaveAttribute("target", "_blank");
+    await expect(root).toHaveAttribute("rel", "noopener noreferrer");
 
     const [newPage] = await Promise.all([
       // Wait for a new page to be opened

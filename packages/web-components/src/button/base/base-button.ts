@@ -274,6 +274,8 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   }
 
   private _renderAsLink(classes: ReturnType<typeof classMap>) {
+    const rel = this.target === "_blank" ? "noopener noreferrer" : nothing;
+
     return html`
       <a
         id="root"
@@ -283,6 +285,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
         href=${this.href}
         download=${this.download || nothing}
         target=${this.target || nothing}
+        rel=${rel}
         ?disabled=${this.disabled}
         aria-label=${this.label || nothing}
         aria-busy=${this.loading}
