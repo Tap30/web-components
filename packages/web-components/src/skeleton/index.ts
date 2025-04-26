@@ -6,6 +6,7 @@ export { Skeleton };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-skeleton")) return;
 
   customElements.define("tapsi-skeleton", Skeleton);
 };

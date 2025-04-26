@@ -9,8 +9,13 @@ export { Pinwheel, PinwheelItem };
 export const register = () => {
   if (isSsr()) return;
 
-  customElements.define("tapsi-pinwheel", Pinwheel);
-  customElements.define("tapsi-pinwheel-item", PinwheelItem);
+  if (!customElements.get("tapsi-pinwheel")) {
+    customElements.define("tapsi-pinwheel", Pinwheel);
+  }
+
+  if (!customElements.get("tapsi-pinwheel-item")) {
+    customElements.define("tapsi-pinwheel-item", PinwheelItem);
+  }
 };
 
 declare global {

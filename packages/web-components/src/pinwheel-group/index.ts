@@ -6,6 +6,7 @@ export { PinwheelGroup };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-pinwheel-group")) return;
 
   customElements.define("tapsi-pinwheel-group", PinwheelGroup);
 };

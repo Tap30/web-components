@@ -5,6 +5,7 @@ export { ProgressIndicator };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-progress-indicator")) return;
 
   customElements.define("tapsi-progress-indicator", ProgressIndicator);
 };

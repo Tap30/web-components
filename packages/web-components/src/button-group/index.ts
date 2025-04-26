@@ -6,6 +6,7 @@ export { ButtonGroup };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-button-group")) return;
 
   customElements.define("tapsi-button-group", ButtonGroup);
 };

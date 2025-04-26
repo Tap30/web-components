@@ -7,6 +7,7 @@ export { FileInput };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-file-input")) return;
 
   customElements.define("tapsi-file-input", FileInput);
 };

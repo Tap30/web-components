@@ -83,16 +83,19 @@ accordingly.
 
 ## Icons usage
 
-Assume we are going to use the "Clock" icon. First, import the component:
+Assume we are going to use the "Alarm Clock" icon. First, import the component:
 
 ::: code-group
 
 ```ts [Web]
-import "@tapsioss/web-icons/clock";
+import { registerAlarmClock } from "@tapsioss/web-icons/alarm-clock";
+
+// You can register icons in your projects (usually inside the root of your project)
+registerAlarmClock(); // Now you can use the alarm clock icon anywhere.
 ```
 
 ```tsx [React]
-import { Clock } from "@tapsioss/react-icons";
+import { AlarmClock } from "@tapsioss/react-icons/AlarmClock";
 ```
 
 :::
@@ -102,14 +105,14 @@ Then you can easily use the component with the following syntax:
 ::: code-group
 
 ```html [Web]
-<tapsi-icon-clock
+<tapsi-icon-alarm-clock
   size="24"
   title="a clock icon"
 ></tapsi-icon-clock>
 ```
 
 ```tsx [React]
-<Clock
+<AlarmClock
   size={24}
   title="a clock icon"
 />

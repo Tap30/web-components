@@ -6,6 +6,7 @@ export { Banner };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-banner")) return;
 
   customElements.define("tapsi-banner", Banner);
 };

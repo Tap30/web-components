@@ -113,8 +113,10 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   public download = "";
 
   /**
-   * Where to display the linked `href` URL for a link button. Common options
-   * include `_blank` to open in a new tab.
+   * Where to display the linked `href` URL for a link button. Common options include
+   * `_blank` to open in a new tab. When the `target` is set to `_blank`, the `rel` attribute
+   * of the anchor tag will automatically be set to `"noopener noreferrer"` to enhance
+   * security and prevent potential tab exploitation.
    *
    * @prop {"_blank" | "_parent" | "_self" | "_top" | ""} target
    * @attr {"_blank" | "_parent" | "_self" | "_top" | ""} target

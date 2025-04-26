@@ -6,6 +6,7 @@ export { Badge };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-badge")) return;
 
   customElements.define("tapsi-badge", Badge);
 };

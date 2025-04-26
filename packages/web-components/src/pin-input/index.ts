@@ -6,6 +6,7 @@ export { PinInput };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-pin-input")) return;
 
   customElements.define("tapsi-pin-input", PinInput);
 };

@@ -6,6 +6,7 @@ export { EmptyState };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-empty-state")) return;
 
   customElements.define("tapsi-empty-state", EmptyState);
 };

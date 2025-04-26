@@ -5,6 +5,7 @@ export { Radio };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-radio")) return;
 
   customElements.define("tapsi-radio", Radio);
 };

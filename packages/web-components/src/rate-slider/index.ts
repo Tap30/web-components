@@ -5,6 +5,7 @@ export { RateSlider };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-rate-slider")) return;
 
   customElements.define("tapsi-rate-slider", RateSlider);
 };

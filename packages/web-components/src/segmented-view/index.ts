@@ -10,8 +10,13 @@ export { SegmentedView, SegmentedViewItem };
 export const register = () => {
   if (isSsr()) return;
 
-  customElements.define("tapsi-segmented-view", SegmentedView);
-  customElements.define("tapsi-segmented-view-item", SegmentedViewItem);
+  if (!customElements.get("tapsi-segmented-view")) {
+    customElements.define("tapsi-segmented-view", SegmentedView);
+  }
+
+  if (!customElements.get("tapsi-segmented-view-item")) {
+    customElements.define("tapsi-segmented-view-item", SegmentedViewItem);
+  }
 };
 
 declare global {

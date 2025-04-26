@@ -6,6 +6,7 @@ export { ChatBubbleIn };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-chat-bubble-in")) return;
 
   customElements.define("tapsi-chat-bubble-in", ChatBubbleIn);
 };

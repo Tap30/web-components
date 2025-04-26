@@ -5,6 +5,7 @@ export { Stepper };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-stepper")) return;
 
   customElements.define("tapsi-stepper", Stepper);
 };

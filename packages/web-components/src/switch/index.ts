@@ -5,6 +5,7 @@ export { Switch };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-switch")) return;
 
   customElements.define("tapsi-switch", Switch);
 };

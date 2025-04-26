@@ -27,7 +27,7 @@ const getSidebarItems = (): DefaultTheme.Sidebar => {
   const componentsSidebar = [
     {
       text: "Introduction",
-      link: "/",
+      link: "/components",
       items: components,
     },
   ];

@@ -7,6 +7,7 @@ export { ChipGroup };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-chip-group")) return;
 
   customElements.define("tapsi-chip-group", ChipGroup);
 };

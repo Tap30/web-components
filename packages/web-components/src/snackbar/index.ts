@@ -7,6 +7,7 @@ export { Snackbar };
 
 export const register = () => {
   if (isSsr()) return;
+  if (customElements.get("tapsi-snackbar")) return;
 
   customElements.define("tapsi-snackbar", Snackbar);
 };

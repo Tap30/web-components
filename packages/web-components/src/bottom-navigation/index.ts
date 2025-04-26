@@ -10,8 +10,13 @@ export { BottomNavigation, BottomNavigationItem };
 export const register = () => {
   if (isSsr()) return;
 
-  customElements.define("tapsi-bottom-navigation", BottomNavigation);
-  customElements.define("tapsi-bottom-navigation-item", BottomNavigationItem);
+  if (!customElements.get("tapsi-bottom-navigation")) {
+    customElements.define("tapsi-bottom-navigation", BottomNavigation);
+  }
+
+  if (!customElements.get("tapsi-bottom-navigation-item")) {
+    customElements.define("tapsi-bottom-navigation-item", BottomNavigationItem);
+  }
 };
 
 declare global {
