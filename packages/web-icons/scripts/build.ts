@@ -27,20 +27,18 @@ const generateComponents = async () => {
   await execCmd(["shx", "rm", "-rf", distDir].join(" "));
   await ensureDirExists(distDir);
 
-  const iconTemplateStr = await fs.readFile(iconTemplate, {
-    encoding: "utf-8",
-  });
-
-  const elementTemplateStr = await fs.readFile(elementTemplate, {
-    encoding: "utf-8",
-  });
-
-  const componentBarrelTemplateStr = await fs.readFile(
-    componentBarrelTemplate,
-    {
-      encoding: "utf-8",
-    },
-  );
+  const [iconTemplateStr, elementTemplateStr, componentBarrelTemplateStr] =
+    await Promise.all([
+      fs.readFile(iconTemplate, {
+        encoding: "utf-8",
+      }),
+      fs.readFile(elementTemplate, {
+        encoding: "utf-8",
+      }),
+      fs.readFile(componentBarrelTemplate, {
+        encoding: "utf-8",
+      }),
+    ]);
 
   const webComponentPromises = Object.keys(icons).map(async key => {
     const iconInfo = icons[key]!;
@@ -122,9 +120,10 @@ const generateComponents = async () => {
   await Promise.all([
     await execCmd(["shx", "cp", baseIconFile, distDir].join(" ")),
     await execCmd(["tsc", "--project", tsconfigFile].join(" ")),
+    await execCmd(
+      `shx ls ${distDir}/**/*.ts ${distDir}/*.ts | grep -v '\\.d\\.ts$' | xargs rm`,
+    ),
   ]);
-
-  await execCmd(`shx ls ${distDir}/*.ts | grep -v '\\.d\\.ts$' | xargs rm`);
 
   console.log("✅ web icons generated.");
 };
