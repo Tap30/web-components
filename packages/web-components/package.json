@@ -13,6 +13,8 @@
     "url": "https://github.com/Tap30/web-components.git",
     "directory": "packages/web-components"
   },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     "./*": {
       "types": "./dist/*/index.d.ts",
