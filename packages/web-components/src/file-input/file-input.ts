@@ -55,6 +55,13 @@ const BaseClass = withOnReportValidity(
  * @slot [placeholder-icon] - The slot for icon placeholder.
  *
  * @fires {RetryEvent} retry - Fires when the retry button is clicked. (bubbles)
+ * @fires {Event} change -
+ * Fires when the user modifies the element's value.
+ * Unlike the `input` event, the change event is not necessarily fired for each
+ * alteration to an element's `value`. (bubbles)
+ * @fires {Event} input -
+ * Fires when the value of an input element has been changed as a direct result
+ * of a user action. (bubbles)
  */
 export class FileInput extends BaseClass {
   /** @internal */
@@ -626,9 +633,9 @@ export class FileInput extends BaseClass {
     if (this.files.length === 1) {
       const file = this.files[0]!;
 
-      if (isFileImage(file.name)) {
+      if (isFileImage(file.name) && this._previewSrc) {
         return html`<img
-          src=${this._previewSrc ?? nothing}
+          src=${this._previewSrc}
           alt="preview"
           class="preview"
         />`;

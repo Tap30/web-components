@@ -15,6 +15,8 @@ export const PinInput = LitReact.createComponent({
   react: React,
   events: {
     onComplete: "complete" as LitReact.EventName<PinInputCompleteEvent>,
+    onChange: "input",
+    onInput: "input",
   },
 });
 

@@ -13,7 +13,7 @@ export const TextField = LitReact.createComponent({
   tagName: "tapsi-text-field",
   elementClass: TextFieldElementClass,
   react: React,
-  events: {},
+  events: { onChange: "input", onInput: "input" },
 });
 
 export { TextFieldSlots };

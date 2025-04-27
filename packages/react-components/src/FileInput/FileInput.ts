@@ -14,7 +14,11 @@ export const FileInput = LitReact.createComponent({
   tagName: "tapsi-file-input",
   elementClass: FileInputElementClass,
   react: React,
-  events: { onRetry: "retry" as LitReact.EventName<FileInputRetryEvent> },
+  events: {
+    onRetry: "retry" as LitReact.EventName<FileInputRetryEvent>,
+    onChange: "input",
+    onInput: "input",
+  },
 });
 
 export { FileInputRetryEvent, FileInputSlots };

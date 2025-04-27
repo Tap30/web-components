@@ -14,7 +14,7 @@ export const Pinwheel = LitReact.createComponent({
   tagName: "tapsi-pinwheel",
   elementClass: PinwheelElementClass,
   react: React,
-  events: {},
+  events: { onChange: "change", onInput: "change" },
 });
 
 export { PinwheelItemSlots, PinwheelSlots };

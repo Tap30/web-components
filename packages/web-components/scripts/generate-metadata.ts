@@ -199,7 +199,8 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
 
     // Handle Events
     if (isEventsModule(pathInfo.name)) {
-      eventFileExportsMap[moduleDirPath] = [];
+      if (!eventFileExportsMap[moduleDirPath])
+        eventFileExportsMap[moduleDirPath] = [];
 
       module.declarations!.forEach((d: Declaration) => {
         if (d.kind !== "class") return;
@@ -228,7 +229,6 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
           class: d.name,
         });
       });
-
       continue;
     }
 
@@ -273,23 +273,31 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
       const eventsMap: ComponentMetadata["events"] = events.reduce(
         (result, event) => {
           const match = eventFileExportsMap[moduleDirPath]?.some(
-            e => (e.name = event.name),
+            e => e.name === event.name,
           );
+
+          console.log({
+            match,
+            array: eventFileExportsMap[moduleDirPath],
+            evesnt: event.name,
+          });
 
           if (!match) {
             console.warn(`Events mismatch: ${moduleDirPath}`, {
               name: event.name,
             });
 
-            return result;
+            if (!event.name) {
+              return result;
+            }
           }
 
           let description = event.description ?? "";
 
           const eventDescriptionKeywords = ["cancelable", "bubbles"] as const;
           const eventFlags = {
-            cancelable: false,
             bubbles: false,
+            cancelable: false,
           };
 
           eventDescriptionKeywords.forEach(keyword => {
@@ -437,21 +445,19 @@ const generateMetadataFromCem = async (cem: Package): Promise<Metadata> => {
 
       if (exportPathInfo.name === "events") {
         if (exp.name === "*") {
-          Object.values(eventsMap)
-            .filter(event => event.eventClassName !== "Event")
-            .forEach(event => {
-              if (typeof barrelIndexEndpoint === "string") {
-                endpointExports[barrelIndexEndpoint]!.push(
-                  `${component.elementClassName ?? ""}${event.eventClassName}`,
-                );
-              }
+          Object.values(eventsMap).forEach(event => {
+            if (typeof barrelIndexEndpoint === "string") {
+              endpointExports[barrelIndexEndpoint]!.push(
+                `${component.elementClassName ?? ""}${event.eventClassName}`,
+              );
+            }
 
-              if (typeof relativeIndexEndpoint === "string") {
-                endpointExports[relativeIndexEndpoint]!.push(
-                  event.eventClassName,
-                );
-              }
-            });
+            if (typeof relativeIndexEndpoint === "string") {
+              endpointExports[relativeIndexEndpoint]!.push(
+                event.eventClassName,
+              );
+            }
+          });
         } else {
           if (typeof barrelIndexEndpoint === "string") {
             endpointExports[barrelIndexEndpoint]!.push(

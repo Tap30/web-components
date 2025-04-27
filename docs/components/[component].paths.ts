@@ -394,12 +394,24 @@ const getEventsMarkdown = (
 
     const componentEventImports =
       component.endpointExports["*"]?.filter(
-        e => e.endsWith("Event") && !["Event", "InputEvent"].includes(e),
+        e =>
+          e.endsWith("Event") &&
+          ![
+            "Event",
+            "InputEvent",
+            `${component.elementClassName}Event`,
+          ].includes(e),
       ) || [];
 
     const barrelEventImports =
       component.endpointExports[""]?.filter(
-        e => e.endsWith("Event") && !["Event", "InputEvent"].includes(e),
+        e =>
+          e.endsWith("Event") &&
+          ![
+            "Event",
+            "InputEvent",
+            `${component.elementClassName}Event`,
+          ].includes(e),
       ) || [];
 
     if (barrelEventImports.length > 0) {

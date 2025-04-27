@@ -27,6 +27,15 @@ const BaseClass = withOnReportValidity(
   ),
 );
 
+/**
+ * @fires {Event} change -
+ * Fires when the user modifies the element's value.
+ * Unlike the `input` event, the change event is not necessarily fired for each
+ * alteration to an element's `value`. (bubbles)
+ * @fires {Event} input -
+ * Fires when the value of an input element has been changed as a direct result
+ * of a user action. (bubbles)
+ */
 export abstract class BaseInput extends BaseClass {
   /** @internal */
   public static override shadowRootOptions: ShadowRootInit = {

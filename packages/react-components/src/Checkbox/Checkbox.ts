@@ -12,5 +12,7 @@ export const Checkbox = LitReact.createComponent({
   tagName: "tapsi-checkbox",
   elementClass: CheckboxElementClass,
   react: React,
-  events: {},
+  events: { onChange: "input", onInput: "input" },
 });
+
+export {};

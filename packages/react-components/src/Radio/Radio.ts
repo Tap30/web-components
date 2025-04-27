@@ -12,5 +12,7 @@ export const Radio = LitReact.createComponent({
   tagName: "tapsi-radio",
   elementClass: RadioElementClass,
   react: React,
-  events: {},
+  events: { onChange: "input", onInput: "input" },
 });
+
+export {};
