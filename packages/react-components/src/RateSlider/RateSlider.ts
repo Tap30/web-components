@@ -12,5 +12,7 @@ export const RateSlider = LitReact.createComponent({
   tagName: "tapsi-rate-slider",
   elementClass: RateSliderElementClass,
   react: React,
-  events: {},
+  events: { onChange: "change", onInput: "change" },
 });
+
+export {};

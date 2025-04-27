@@ -12,5 +12,7 @@ export const Switch = LitReact.createComponent({
   tagName: "tapsi-switch",
   elementClass: SwitchElementClass,
   react: React,
-  events: {},
+  events: { onChange: "input", onInput: "input" },
 });
+
+export {};

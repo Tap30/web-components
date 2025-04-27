@@ -12,5 +12,7 @@ export const Stepper = LitReact.createComponent({
   tagName: "tapsi-stepper",
   elementClass: StepperElementClass,
   react: React,
-  events: {},
+  events: { onChange: "change", onInput: "change" },
 });
+
+export {};

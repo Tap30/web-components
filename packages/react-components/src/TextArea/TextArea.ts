@@ -13,7 +13,7 @@ export const TextArea = LitReact.createComponent({
   tagName: "tapsi-text-area",
   elementClass: TextAreaElementClass,
   react: React,
-  events: {},
+  events: { onChange: "input", onInput: "input" },
 });
 
 export { TextAreaSlots };

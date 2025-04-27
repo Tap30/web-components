@@ -22,7 +22,7 @@ import {
 type ReactEventMetadata = {
   key: `on${string}`;
   name: string;
-  class: string;
+  class?: string;
 };
 
 type ParentInfo = Pick<ComponentMetadata, "tagName" | "elementClassName">;
@@ -96,6 +96,25 @@ const createReactMetadata = (
       };
     });
 
+  const hasInputEvent = Object.values(elementEvents).find(
+    e => e.name === "input",
+  );
+
+  const hasChangeEvent = Object.values(elementEvents).find(
+    e => e.name === "change",
+  );
+
+  if (hasInputEvent || hasChangeEvent) {
+    let name = "change";
+
+    if (hasInputEvent && hasChangeEvent) {
+      name = "input";
+    }
+
+    events.push({ key: "onChange", name });
+    events.push({ key: "onInput", name });
+  }
+
   const registerFunction = endpointExports[""]?.find(e =>
     e.startsWith("register"),
   );
@@ -160,8 +179,8 @@ const getReactComponentCode = async (
         const eventClass = event.class;
         const eventNameInReact = event.key;
 
-        if (eventClass === "Event") {
-          return null;
+        if (!eventClass) {
+          return `${eventNameInReact}: '${eventName}'`;
         }
 
         return `${eventNameInReact}: '${eventName}' as ${LIT_REACT_NAMESPACE}.EventName<${eventClass}>`;
@@ -176,13 +195,15 @@ const getReactComponentCode = async (
   ];
 
   const exports =
-    exportsList.length > 0 ? `export { ${exportsList.join(", ")} };` : "";
+    exportsList.length > 0
+      ? `export { ${exportsList.filter(Boolean).join(", ")} };`
+      : "";
 
   const elementClass = `${componentName}ElementClass`;
   const importsList = [
     `${rawElementClass} as ${elementClass}`,
     registerFunction,
-    ..._events.map(e => e.class),
+    ..._events.map(e => e.class).filter(Boolean),
     ...slotVariableNames,
   ];
 
