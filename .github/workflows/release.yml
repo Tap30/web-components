@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
-
 jobs:
   changesets:
     name: 📋 Check Changesets
@@ -58,58 +55,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
 
-  prepare-docs:
-    name: ⚙️ Prepare Documentation
-    runs-on: ubuntu-latest
+  deploy-docs:
+    name: Prepare and Deploy Documentation
     needs: changesets
     if: needs.changesets.outputs.published == 'true'
-    steps:
-      - name: ☁️ checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: 🔧 setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-
-      - name: 🔧 setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-          registry-url: https://registry.npmjs.org/
-
-      - name: 🔧 setup pages
-        uses: actions/configure-pages@v4
-
-      - name: 📦 install dependencies
-        run: pnpm install
-
-      # Set up GitHub Actions caching for Wireit.
-      - name: 🔌 setup wireit cache
-        uses: google/wireit@setup-github-actions-caching/v2
-
-      - name: 🧱 build docs
-        run: pnpm build:docs
-
-      - name: 🗄️ upload pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs/.vitepress/dist
-
-  deploy-docs:
-    needs: prepare-docs
-    name: 🚀 Deploy Docs
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      pages: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: 🚀 deploy to github pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+    uses: ./.github/workflows/gh-pages.yml

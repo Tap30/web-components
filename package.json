@@ -150,7 +150,7 @@
       "command": "pnpm --filter @tapsioss/icons run build",
       "clean": "if-file-deleted",
       "files": [
-        "./packages/icons/templates/entry.txt",
+        "./packages/icons/templates/*",
         "./packages/icons/**/*.{ts,svg}",
         "./packages/icons/tsconfig.build.json",
         "!./packages/icons/dist/**/*"
@@ -163,7 +163,7 @@
       "command": "pnpm --filter @tapsioss/web-icons run build",
       "clean": "if-file-deleted",
       "files": [
-        "./packages/web-icons/templates/web-icon.txt",
+        "./packages/web-icons/templates/*",
         "./packages/web-icons/**/*.ts",
         "./packages/web-icons/tsconfig.build.json",
         "!./packages/web-icons/dist/**/*"
@@ -179,7 +179,7 @@
       "command": "pnpm --filter @tapsioss/react-icons run build",
       "clean": "if-file-deleted",
       "files": [
-        "./packages/react-icons/templates/react-icon.txt",
+        "./packages/react-icons/templates/*",
         "./packages/react-icons/**/*.{ts,tsx}",
         "./packages/react-icons/tsconfig.build.json",
         "!./packages/react-icons/dist/**/*"
