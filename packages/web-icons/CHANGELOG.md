@@ -1,5 +1,12 @@
 # @tapsioss/web-icons
 
+## 0.4.3
+### Patch Changes
+
+
+
+- [#454](https://github.com/Tap30/web-components/pull/454) [`391a96e`](https://github.com/Tap30/web-components/commit/391a96eea9f84f9276769f92c932f8a97001bc19) Thanks [@amir78729](https://github.com/amir78729)! - Feature: add auto-register using `import "@tapsioss/web-icons/[component-name]/element"`
+
 ## 0.4.2
 
 ### Patch Changes
