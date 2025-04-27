@@ -1,5 +1,16 @@
 # @tapsioss/web-components
 
+## 0.12.3
+### Patch Changes
+
+
+
+- [#457](https://github.com/Tap30/web-components/pull/457) [`4f56395`](https://github.com/Tap30/web-components/commit/4f56395039478b65ed9d551ef1eaa71ce352fb5c) Thanks [@mimshins](https://github.com/mimshins)! - Fix: expose `main` and `types` endpoints
+
+
+
+- [#456](https://github.com/Tap30/web-components/pull/456) [`20e9bdb`](https://github.com/Tap30/web-components/commit/20e9bdbeb45a22ca904cd4e1748f2c951a9cf207) Thanks [@amir78729](https://github.com/amir78729)! - Fix: expose implicit events
+
 ## 0.12.2
 
 ### Patch Changes
