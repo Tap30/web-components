@@ -15,7 +15,7 @@
   "access": "public",
   "baseBranch": "main",
   "bumpVersionsWithWorkspaceProtocolOnly": true,
-  "prettier": true,
+  "prettier": false,
   "updateInternalDependencies": "patch",
   "ignore": ["@internals/*", "@tapsioss/{docs,playground}"]
 }

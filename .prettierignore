@@ -1,0 +1,3 @@
+.changeset/**/*.md
+!.changeset/**/README.md
+**/CHANGELOG.md

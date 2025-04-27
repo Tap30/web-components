@@ -181,7 +181,7 @@ const getImportsMarkdown = (
       res += "\n\n";
       res += [
         "::: info",
-        `By registering the ${componentHumanReadableName} component, its compound tags will also be registered:`,
+        `By registering the ${componentHumanReadableName} component, its compound parts will also be registered:`,
         compoundParts.map(c => `- ${codify(c.tagName)}`).join("\n"),
         ":::",
       ].join("\n");
@@ -275,7 +275,7 @@ const getSlotsMarkdown = (
         `import { ${barrelSlotImports?.join(", ")} } from "${REACT_PACKAGE_NAME}";`,
         "",
         "// Option 2",
-        `import { ${componentSlotImports?.join(", ")} } from "${REACT_PACKAGE_NAME}/${component.relativePath}";`,
+        `import { ${componentSlotImports?.join(", ")} } from "${REACT_PACKAGE_NAME}/${component.elementClassName}";`,
         "```",
         ":::",
       ].join("\n");

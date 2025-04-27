@@ -1,0 +1,59 @@
+name: 🚀 Build and Deploy GitHub Pages
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build:
+    name: 🧱 Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: ☁️ checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: 🔧 setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: 🔧 setup pages
+        uses: actions/configure-pages@v4
+
+      - name: 📦 install dependencies
+        run: pnpm install
+
+      # Set up GitHub Actions caching for Wireit.
+      - name: 🔌 setup wireit cache
+        uses: google/wireit@setup-github-actions-caching/v2
+
+      - name: 🧱 build docs
+        run: pnpm build:docs
+
+      - name: 🗄️ upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+  deploy:
+    name: 🚀 Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      pages: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 🚀 deploy to github pages
+        id: deployment
+        uses: actions/deploy-pages@v4

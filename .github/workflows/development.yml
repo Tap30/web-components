@@ -7,7 +7,6 @@ on:
       - edited
       - synchronize
       - reopened
-  workflow_call:
 
 permissions:
   contents: read
@@ -20,7 +19,6 @@ jobs:
   changeset-status-check:
     name: 🔍 Changeset Status Check
     runs-on: ubuntu-latest
-    # TODO: Skip if it's a release PR that doesn't need this check.
     steps:
       - name: ☁️ checkout repository
         uses: actions/checkout@v4
@@ -75,6 +73,9 @@ jobs:
 
       - name: 🔍 lint code
         run: pnpm check:lint
+
+      - name: 🔍 check code style
+        run: pnpm check:format
 
   test:
     needs: lint
