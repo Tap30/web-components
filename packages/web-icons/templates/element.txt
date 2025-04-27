@@ -1,0 +1,3 @@
+import { register{{name}} } from "./{{elementTag}}.ts";
+
+register{{name}}();

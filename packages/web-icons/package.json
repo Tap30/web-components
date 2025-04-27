@@ -23,7 +23,8 @@
     "./*": {
       "types": "./dist/*.d.ts",
       "default": "./dist/*.js"
-    }
+    },
+    "./*/element": "./dist/*/element.js"
   },
   "scripts": {
     "build": "tsx ./scripts/build.ts",
