@@ -1,5 +1,18 @@
 # @tapsioss/web-icons
 
+## 0.5.0
+### Minor Changes
+
+
+
+- [`eeec57f`](https://github.com/Tap30/web-components/commit/eeec57fcd4a10113b84eb8cda693e35529763e8d) Thanks [@mimshins](https://github.com/mimshins)! - Update build target (es8) and environments (cjs, esm)
+
+
+### Patch Changes
+
+- Updated dependencies [[`a52a198`](https://github.com/Tap30/web-components/commit/a52a1980d81de1cb0e837caa148bc66b058b9aad), [`eeec57f`](https://github.com/Tap30/web-components/commit/eeec57fcd4a10113b84eb8cda693e35529763e8d)]:
+  - @tapsioss/icons@0.5.0
+
 ## 0.4.3
 ### Patch Changes
 

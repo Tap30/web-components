@@ -1,5 +1,19 @@
 # @tapsioss/icons
 
+## 0.5.0
+### Minor Changes
+
+
+
+- [`eeec57f`](https://github.com/Tap30/web-components/commit/eeec57fcd4a10113b84eb8cda693e35529763e8d) Thanks [@mimshins](https://github.com/mimshins)! - Update build target (es8) and environments (cjs, esm)
+
+
+### Patch Changes
+
+
+
+- [#459](https://github.com/Tap30/web-components/pull/459) [`a52a198`](https://github.com/Tap30/web-components/commit/a52a1980d81de1cb0e837caa148bc66b058b9aad) Thanks [@amir78729](https://github.com/amir78729)! - Fix the misspelled icon (call-right) name
+
 ## 0.4.1
 
 ### Patch Changes

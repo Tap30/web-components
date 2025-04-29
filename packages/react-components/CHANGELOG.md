@@ -1,5 +1,18 @@
 # @tapsioss/react-components
 
+## 0.13.0
+### Minor Changes
+
+
+
+- [`eeec57f`](https://github.com/Tap30/web-components/commit/eeec57fcd4a10113b84eb8cda693e35529763e8d) Thanks [@mimshins](https://github.com/mimshins)! - Update build target (es8) and environments (cjs, esm)
+
+
+### Patch Changes
+
+- Updated dependencies [[`eeec57f`](https://github.com/Tap30/web-components/commit/eeec57fcd4a10113b84eb8cda693e35529763e8d)]:
+  - @tapsioss/web-components@0.13.0
+
 ## 0.12.3
 ### Patch Changes
 
