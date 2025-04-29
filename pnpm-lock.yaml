@@ -185,7 +185,11 @@ importers:
 
   internals/test-helpers: {}
 
-  packages/icons: {}
+  packages/icons:
+    dependencies:
+      tslib:
+        specifier: ^2.8.0
+        version: 2.8.1
 
   packages/react-components:
     dependencies:
@@ -198,6 +202,9 @@ importers:
       react:
         specifier: '>=16.8'
         version: 18.3.1
+      tslib:
+        specifier: ^2.8.0
+        version: 2.8.1
 
   packages/react-icons:
     dependencies:
@@ -207,8 +214,15 @@ importers:
       react:
         specifier: '>=16.8'
         version: 18.3.1
+      tslib:
+        specifier: ^2.8.0
+        version: 2.8.1
 
-  packages/theme: {}
+  packages/theme:
+    dependencies:
+      tslib:
+        specifier: ^2.8.0
+        version: 2.8.1
 
   packages/web-components:
     dependencies:
@@ -234,6 +248,9 @@ importers:
       '@tapsioss/icons':
         specifier: workspace:*
         version: link:../icons
+      tslib:
+        specifier: ^2.8.0
+        version: 2.8.1
 
   playground:
     dependencies:
