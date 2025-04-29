@@ -1,5 +1,12 @@
 # @tapsioss/web-components
 
+## 0.13.1
+### Patch Changes
+
+
+
+- [`e7cdebf`](https://github.com/Tap30/web-components/commit/e7cdebf48f26dfecef97c180b97f65362a7336e3) Thanks [@mimshins](https://github.com/mimshins)! - Fix endpoints of the 'esm' exports
+
 ## 0.13.0
 ### Minor Changes
 
