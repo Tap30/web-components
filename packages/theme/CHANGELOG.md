@@ -1,5 +1,12 @@
 # @tapsioss/theme
 
+## 0.7.0
+### Minor Changes
+
+
+
+- [`eeec57f`](https://github.com/Tap30/web-components/commit/eeec57fcd4a10113b84eb8cda693e35529763e8d) Thanks [@mimshins](https://github.com/mimshins)! - Update build target (es8) and environments (cjs, esm)
+
 ## 0.6.1
 
 ### Patch Changes
