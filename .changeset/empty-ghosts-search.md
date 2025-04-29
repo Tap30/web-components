@@ -2,5 +2,5 @@
 "@tapsioss/icons": patch
 ---
 
-Fix: rename the call-right icon
+Fix the misspelled icon (call-right) name
   
