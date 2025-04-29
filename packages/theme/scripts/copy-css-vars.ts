@@ -12,7 +12,7 @@ const varsGlobPath = path.join(srcDir, "**/tokens.css");
 
 const copyCssVars = async () => {
   const varsFiles = await globAsync(varsGlobPath);
-  const promises: Promise<void>[] = [];
+  const promises: Promise<void[]>[] = [];
 
   for (const varsFile of varsFiles) {
     const varsPath = path.normalize(varsFile);
@@ -20,7 +20,10 @@ const copyCssVars = async () => {
     const theme = path.basename(themeDir);
 
     promises.push(
-      fs.copyFile(varsPath, path.join(distDir, theme, "tokens.css")),
+      Promise.all([
+        fs.copyFile(varsPath, path.join(distDir, "cjs", theme, "tokens.css")),
+        fs.copyFile(varsPath, path.join(distDir, "esm", theme, "tokens.css")),
+      ]),
     );
   }
 

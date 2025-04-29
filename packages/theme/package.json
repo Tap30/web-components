@@ -13,28 +13,44 @@
     "url": "https://github.com/Tap30/web-components.git",
     "directory": "packages/theme"
   },
-  "main": "./dist/default-theme/tokens.css",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/default-theme/tokens.css",
+  "types": "./dist/cjs/index.d.ts",
+  "module": "./dist/esm/default-theme/tokens.css",
   "exports": {
-    ".": "./dist/default-theme/tokens.css",
-    "./css-variables": "./dist/default-theme/tokens.css",
-    "./*/css-variables": "./dist/*/tokens.css",
+    ".": {
+      "import": "./dist/esm/default-theme/tokens.css",
+      "require": "./dist/cjs/default-theme/tokens.css"
+    },
+    "./css-variables": {
+      "import": "./dist/esm/default-theme/tokens.css",
+      "require": "./dist/cjs/default-theme/tokens.css"
+    },
+    "./*/css-variables": {
+      "import": "./dist/esm/*/tokens.css",
+      "require": "./dist/cjs/*/tokens.css"
+    },
     "./tokens": {
-      "default": "./dist/default-theme/tokens.js",
-      "types": "./dist/default-theme/tokens.d.ts"
+      "types": "./dist/cjs/default-theme/tokens.d.ts",
+      "import": "./dist/esm/default-theme/tokens.js",
+      "require": "./dist/cjs/default-theme/tokens.js"
     },
     "./*/tokens": {
-      "default": "./dist/*/tokens.js",
-      "types": "./dist/*/tokens.d.ts"
+      "types": "./dist/cjs/*/tokens.d.ts",
+      "import": "./dist/esm/*/tokens.js",
+      "require": "./dist/cjs/*/tokens.js"
     }
   },
   "scripts": {
     "clear": "shx rm -rf dist",
     "prebuild": "run-s clear generate",
-    "build:transpile": "tsc --project tsconfig.build.json",
+    "build:cjs": "tsc --project tsconfig.cjs.json",
+    "build:esm": "tsc --project tsconfig.esm.json",
+    "build:transpile": "run-p build:cjs build:esm",
     "build:copy-css": "tsx ./scripts/copy-css-vars.ts",
-    "build": "run-s build:*",
-    "generate": "tsx ./scripts/generate.ts",
-    "release": "pnpm publish . --tag latest --access public --no-git-checks"
+    "build": "run-s build:transpile build:copy-css",
+    "generate": "tsx ./scripts/generate.ts"
+  },
+  "dependencies": {
+    "tslib": "^2.8.0"
   }
 }

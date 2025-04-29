@@ -13,24 +13,31 @@
     "./dist",
     "./README.md"
   ],
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "module": "./dist/esm/index.js",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./dist/cjs/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
     },
     "./*": {
-      "types": "./dist/*.d.ts",
-      "default": "./dist/*.js"
+      "types": "./dist/cjs/*/index.d.ts",
+      "import": "./dist/esm/*/index.js",
+      "require": "./dist/cjs/*/index.js"
     },
-    "./*/element": "./dist/*/element.js"
+    "./*/element": {
+      "import": "./dist/esm/*/element.js",
+      "require": "./dist/cjs/*/element.js"
+    }
   },
   "scripts": {
-    "build": "tsx ./scripts/build.ts",
-    "release": "pnpm publish . --tag latest --access public --no-git-checks"
+    "prebuild": "shx rm -rf dist",
+    "build": "tsx ./scripts/build.ts"
   },
   "dependencies": {
-    "@tapsioss/icons": "workspace:*"
+    "@tapsioss/icons": "workspace:*",
+    "tslib": "^2.8.0"
   }
 }

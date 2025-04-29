@@ -105,7 +105,7 @@
       "clean": "if-file-deleted",
       "files": [
         "./packages/theme/**/*.ts",
-        "./packages/theme/tsconfig.build.json",
+        "./packages/theme/tsconfig.{build,cjs,esm}.json",
         "!./packages/theme/dist/**/*"
       ],
       "output": [
@@ -117,7 +117,7 @@
       "clean": "if-file-deleted",
       "files": [
         "./packages/web-components/**/*.ts",
-        "./packages/web-components/tsconfig.build.json",
+        "./packages/web-components/tsconfig.{build,cjs,esm}.json",
         "!./packages/web-components/**/*.test.ts",
         "!./packages/web-components/playwright.config.ts",
         "!./packages/web-components/dist/**/*"
@@ -133,10 +133,9 @@
       "command": "pnpm --filter @tapsioss/react-components run build",
       "clean": "if-file-deleted",
       "files": [
-        "./packages/web-components/dist/**/*",
-        "./packages/react-components/templates/component.txt",
         "./packages/react-components/**/*.ts",
-        "./packages/react-components/tsconfig.build.json",
+        "./packages/react-components/tsconfig.{build,cjs,esm}.json",
+        "./packages/react-components/templates/*",
         "!./packages/react-components/dist/**/*"
       ],
       "output": [
@@ -151,8 +150,9 @@
       "clean": "if-file-deleted",
       "files": [
         "./packages/icons/templates/*",
+        "./packages/icons/scripts/build.ts",
         "./packages/icons/**/*.{ts,svg}",
-        "./packages/icons/tsconfig.build.json",
+        "./packages/icons/tsconfig.{build,cjs,esm}.json",
         "!./packages/icons/dist/**/*"
       ],
       "output": [
@@ -164,8 +164,9 @@
       "clean": "if-file-deleted",
       "files": [
         "./packages/web-icons/templates/*",
+        "./packages/web-icons/scripts/build.ts",
         "./packages/web-icons/**/*.ts",
-        "./packages/web-icons/tsconfig.build.json",
+        "./packages/web-icons/tsconfig.{build,cjs,esm}.json",
         "!./packages/web-icons/dist/**/*"
       ],
       "output": [
@@ -180,8 +181,9 @@
       "clean": "if-file-deleted",
       "files": [
         "./packages/react-icons/templates/*",
+        "./packages/react-icons/scripts/build.ts",
         "./packages/react-icons/**/*.{ts,tsx}",
-        "./packages/react-icons/tsconfig.build.json",
+        "./packages/react-icons/tsconfig.{build,cjs,esm}.json",
         "!./packages/react-icons/dist/**/*"
       ],
       "output": [
@@ -214,7 +216,8 @@
       "files": [
         "./packages/web-components/src/**/*.ts",
         "./packages/web-components/scripts/generate-metadata.ts",
-        "!./packages/web-components/src/**/*.test.ts"
+        "!./packages/web-components/src/**/*.test.ts",
+        "!./packages/web-components/src/**/__test__/**/*"
       ],
       "output": [
         "./packages/web-components/custom-elements.json",

@@ -33,32 +33,48 @@
     "paths": {
       // Icons metadata
       "@tapsioss/icons": [
-        "./packages/icons/dist",
+        "./packages/icons/dist/esm",
+        "./packages/icons/dist/cjs",
         "./types/@tapsioss/icons.ts"
       ],
-      "@tapsioss/icons/*": ["./packages/icons/dist/*"],
       // Web Component Icons
-      "@tapsioss/web-icons": ["./packages/web-icons/dist"],
-      "@tapsioss/web-icons/*": ["./packages/web-icons/dist/*"],
+      "@tapsioss/web-icons": [
+        "./packages/web-icons/dist/esm",
+        "./packages/web-icons/dist/cjs"
+      ],
+      "@tapsioss/web-icons/*": [
+        "./packages/web-icons/dist/esm/*",
+        "./packages/web-icons/dist/cjs/*"
+      ],
       // React Icons
-      "@tapsioss/react-icons": ["./packages/react-icons/dist"],
-      "@tapsioss/react-icons/*": ["./packages/react-icons/dist/*"],
+      "@tapsioss/react-icons": [
+        "./packages/react-icons/dist/esm",
+        "./packages/react-icons/dist/cjs"
+      ],
+      "@tapsioss/react-icons/*": [
+        "./packages/react-icons/dist/esm/*",
+        "./packages/react-icons/dist/cjs/*"
+      ],
       // Web Components
       "@tapsioss/web-components": [
-        "./packages/web-components/dist",
+        "./packages/web-components/dist/esm",
+        "./packages/web-components/dist/cjs",
         "./packages/web-components/src"
       ],
       "@tapsioss/web-components/*": [
-        "./packages/web-components/dist/*",
+        "./packages/web-components/dist/esm/*",
+        "./packages/web-components/dist/cjs/*",
         "./packages/web-components/src/*"
       ],
       // React Components
       "@tapsioss/react-components": [
-        "./packages/react-components/dist",
+        "./packages/react-components/dist/esm",
+        "./packages/react-components/dist/cjs",
         "./packages/react-components/src"
       ],
       "@tapsioss/react-components/*": [
-        "./packages/react-components/dist/*",
+        "./packages/react-components/dist/esm/*",
+        "./packages/react-components/dist/cjs/*",
         "./packages/react-components/src/*"
       ],
       // Tokens

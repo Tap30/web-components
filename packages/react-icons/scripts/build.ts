@@ -15,13 +15,13 @@ const distDir = path.join(packageDir, "dist");
 const templatesDir = path.join(packageDir, "templates");
 
 const iconTemplate = path.join(templatesDir, "react-icon.txt");
-const tsconfigFile = path.join(packageDir, "tsconfig.build.json");
+const tsconfigCjsFile = path.join(packageDir, "tsconfig.cjs.json");
+const tsconfigEsmFile = path.join(packageDir, "tsconfig.esm.json");
 const baseIconFile = path.join(packageDir, "src/base-icon.tsx");
 
 const generateComponents = async () => {
   console.log("🧩 generating react icons...");
 
-  await execCmd(["shx", "rm", "-rf", distDir].join(" "));
   await ensureDirExists(distDir);
 
   const iconTemplateStr = await fs.readFile(iconTemplate, {
@@ -72,13 +72,14 @@ const generateComponents = async () => {
   });
 
   await Promise.all(reactComponentPromises);
+  await execCmd(["shx", "cp", baseIconFile, distDir].join(" "));
 
   await Promise.all([
-    await execCmd(["shx", "cp", baseIconFile, distDir].join(" ")),
-    await execCmd(["tsc", "--project", tsconfigFile].join(" ")),
+    execCmd(["tsc", "--project", tsconfigCjsFile].join(" ")),
+    execCmd(["tsc", "--project", tsconfigEsmFile].join(" ")),
   ]);
 
-  await execCmd(`shx ls ${distDir}/*.tsx | xargs rm`);
+  await execCmd(`shx ls ${distDir}/*.{tsx,ts} | xargs rm`);
 
   console.log("✅ react icons generated.");
 };

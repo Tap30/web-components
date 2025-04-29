@@ -1,4 +1,3 @@
-// declare module "@tapsioss/icons" {
 type SVGPathInfo = {
   clipRule?: string;
   fillRule?: string;
@@ -14,4 +13,3 @@ type SVGIconInfo = {
 
 declare const _default: Record<string, SVGIconInfo>;
 export default _default;
-// }

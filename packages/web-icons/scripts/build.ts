@@ -18,13 +18,29 @@ const iconTemplate = path.join(templatesDir, "web-icon.txt");
 const elementTemplate = path.join(templatesDir, "element.txt");
 const componentBarrelTemplate = path.join(templatesDir, "componentBarrel.txt");
 
-const tsconfigFile = path.join(packageDir, "tsconfig.build.json");
+const tsconfigCjsFile = path.join(packageDir, "tsconfig.cjs.json");
+const tsconfigEsmFile = path.join(packageDir, "tsconfig.esm.json");
 const baseIconFile = path.join(packageDir, "src/base-icon.ts");
+
+const removeDirsExcept = async (dirPath: string, excluded: string[]) => {
+  const items = await fs.readdir(dirPath);
+
+  const rmPromises: Array<Promise<void>> = [];
+
+  for (const item of items) {
+    const itemPath = path.join(dirPath, item);
+
+    if (!excluded.includes(item)) {
+      rmPromises.push(fs.rm(itemPath, { recursive: true, force: true }));
+    }
+  }
+
+  return Promise.all(rmPromises);
+};
 
 const generateComponents = async () => {
   console.log("🧩 generating web icons...");
 
-  await execCmd(["shx", "rm", "-rf", distDir].join(" "));
   await ensureDirExists(distDir);
 
   const [iconTemplateStr, elementTemplateStr, componentBarrelTemplateStr] =
@@ -116,14 +132,14 @@ const generateComponents = async () => {
   });
 
   await Promise.all(webComponentPromises);
+  await execCmd(["shx", "cp", baseIconFile, distDir].join(" "));
 
   await Promise.all([
-    await execCmd(["shx", "cp", baseIconFile, distDir].join(" ")),
-    await execCmd(["tsc", "--project", tsconfigFile].join(" ")),
-    await execCmd(
-      `shx ls ${distDir}/**/*.ts ${distDir}/*.ts | grep -v '\\.d\\.ts$' | xargs rm`,
-    ),
+    execCmd(["tsc", "--project", tsconfigCjsFile].join(" ")),
+    execCmd(["tsc", "--project", tsconfigEsmFile].join(" ")),
   ]);
+
+  await removeDirsExcept(distDir, ["cjs", "esm"]);
 
   console.log("✅ web icons generated.");
 };

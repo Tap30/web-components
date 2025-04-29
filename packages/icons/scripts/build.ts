@@ -20,9 +20,9 @@ const distDir = path.join(packageDir, "dist");
 const templatesDir = path.join(packageDir, "templates");
 
 const pathsJSONFile = path.join(distDir, "paths.json");
-const entryFile = path.join(distDir, "index.ts");
 const entryTemplate = path.join(templatesDir, "entry.txt");
-const tsconfigFile = path.join(packageDir, "tsconfig.build.json");
+const tsconfigCjsFile = path.join(packageDir, "tsconfig.cjs.json");
+const tsconfigEsmFile = path.join(packageDir, "tsconfig.esm.json");
 
 type SVGPathInfo = {
   clipRule?: string;
@@ -84,7 +84,6 @@ const extractPathsInfo = (svgData: string) => {
 const generatePaths = async () => {
   console.log("🧩 generating paths...");
 
-  await execCmd(["shx", "rm", "-rf", distDir].join(" "));
   await ensureDirExists(distDir);
 
   await fs.writeFile(pathsJSONFile, "{", { encoding: "utf-8" });
@@ -127,9 +126,20 @@ const generatePaths = async () => {
 
   const entryCode = Mustache.render(entryTemplateStr, {});
 
-  await fs.writeFile(entryFile, entryCode, { encoding: "utf-8", flag: "w" });
-  await execCmd(["tsc", "--project", tsconfigFile].join(" "));
-  await execCmd(["shx", "rm", entryFile].join(" "));
+  const entryFilePath = path.join(distDir, "index.ts");
+
+  await fs.writeFile(entryFilePath, entryCode, {
+    encoding: "utf-8",
+    flag: "w",
+  });
+  await Promise.all([
+    execCmd(["tsc", "--project", tsconfigCjsFile].join(" ")),
+    execCmd(["tsc", "--project", tsconfigEsmFile].join(" ")),
+  ]);
+  await Promise.all([
+    execCmd(["shx", "rm", entryFilePath].join(" ")),
+    execCmd(["shx", "rm", pathsJSONFile].join(" ")),
+  ]);
 
   console.log("✅ paths generated.");
 };
