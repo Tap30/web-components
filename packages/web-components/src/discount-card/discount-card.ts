@@ -13,7 +13,7 @@ import styles from "./discount-card.style.ts";
  *
  * @slot [action] - The slot for actions associated with the component, typically a collection of `tapsi-button` components.
  * @slot [thumbnail] - The slot for custom image.
- * @slot [header-icon] - The slot for header icon
+ * @slot [header-icon] - The slot for header icon.
  */
 export class DiscountCard extends LitElement {
   /** @internal */
