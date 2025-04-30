@@ -46,8 +46,8 @@ export class DiscountCard extends LitElement {
     | "none" = "none";
 
   /**
-   * The title to use for the discount-card.
-   * Represents the title of the discount-card.
+   * The title to use for the discount card.
+   * Represents the title of the discount card.
    *
    * @prop {string} title
    * @attr {string} title
