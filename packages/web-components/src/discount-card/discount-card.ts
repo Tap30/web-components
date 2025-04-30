@@ -87,7 +87,7 @@ export class DiscountCard extends LitElement {
   public expiryDateLabel = "";
 
   /**
-   * Check if discount is expiring and if expiring is true then turn expiryDateLabel into red color
+   * Check if discount is expiring and if expiring is true then turn expiry date label into red color
    *
    * @prop {boolean} expiring
    * @attr {string} expiring
