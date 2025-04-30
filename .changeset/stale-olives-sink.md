@@ -3,5 +3,5 @@
 "@tapsioss/web-components": minor
 ---
 
-Feat: add discount card component
+Add discount card component
   
