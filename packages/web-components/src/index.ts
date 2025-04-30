@@ -77,6 +77,11 @@ import {
   Slots as ChipSlots,
   register as registerChip,
 } from "./chip/index.ts";
+import {
+  DiscountCard,
+  Slots as DiscountCardSlots,
+  register as registerDiscountCard,
+} from "./discount-card/index.ts";
 import { Divider, register as registerDivider } from "./divider/index.ts";
 import {
   EmptyState,
@@ -208,6 +213,8 @@ export {
   ChipGroupSlots,
   ChipSelectEvent,
   ChipSlots,
+  DiscountCard,
+  DiscountCardSlots,
   Divider,
   EmptyState,
   EmptyStateSlots,
@@ -269,6 +276,7 @@ export {
   registerCheckbox,
   registerChip,
   registerChipGroup,
+  registerDiscountCard,
   registerDivider,
   registerEmptyState,
   registerFileInput,
@@ -327,4 +335,5 @@ export const registerAll = () => {
   registerTextArea();
   registerTextField();
   registerTooltip();
+  registerDiscountCard();
 };

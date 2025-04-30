@@ -12,6 +12,7 @@ export * from "./ChatBubbleOut/index.ts";
 export * from "./Checkbox/index.ts";
 export * from "./Chip/index.ts";
 export * from "./ChipGroup/index.ts";
+export * from "./DiscountCard/index.ts";
 export * from "./Divider/index.ts";
 export * from "./EmptyState/index.ts";
 export * from "./FileInput/index.ts";
