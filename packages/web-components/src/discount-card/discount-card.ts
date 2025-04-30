@@ -7,7 +7,7 @@ import { ErrorMessages, Slots } from "./constants.ts";
 import styles from "./discount-card.style.ts";
 
 /**
- * @summary A component for displaying discount cards with various appearances
+ * @summary A component for displaying discount cards with various appearances.
  *
  * @tag tapsi-discount-card
  *
