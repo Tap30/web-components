@@ -13,6 +13,10 @@
     "node": ">=20"
   },
   "scripts": {
+    "clear:dist": "tsx scripts/clear dist **/**/dist !node_modules/**/dist !.wireit/**/dist",
+    "clear:node-modules": "tsx scripts/clear node_modules **/**/node_modules !node_modules/**/node_modules !.wireit/**/node_modules",
+    "clear:cache": "tsx scripts/clear .wireit",
+    "clear:all": "run-p clear:cache clear:node-modules clear:dist",
     "changesets:empty": "changeset add --empty",
     "changesets:create": "changeset add",
     "changesets:apply": "changeset version",
@@ -104,12 +108,15 @@
       "command": "pnpm --filter @tapsioss/theme run build",
       "clean": "if-file-deleted",
       "files": [
-        "./packages/theme/**/*.ts",
+        "./packages/theme/**/*.{ts,css}",
+        "./packages/theme/scripts/copy-css-vars.ts",
+        "./packages/theme/scripts/generate.ts",
         "./packages/theme/tsconfig.{build,cjs,esm}.json",
         "!./packages/theme/dist/**/*"
       ],
       "output": [
-        "./packages/theme/dist/**/*"
+        "./packages/theme/dist/**/*",
+        "./packages/theme/src/**/*.css"
       ]
     },
     "build:web-components": {
@@ -265,6 +272,7 @@
     "@vitejs/plugin-react": "^4.4.1",
     "custom-elements-manifest": "^2.1.0",
     "danger": "^12.3.4",
+    "del": "^8.0.0",
     "eslint": "^9.25.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.10.1",
@@ -274,7 +282,7 @@
     "eslint-plugin-playwright": "^2.2.0",
     "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-wc": "^2.2.1",
-    "fast-glob": "^3.3.3",
+    "globby": "^14.1.0",
     "lit": "^3.3.0",
     "mustache": "^4.2.0",
     "npm-run-all": "^4.1.5",
