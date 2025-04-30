@@ -129,7 +129,7 @@ export class DiscountCard extends LitElement {
     if (isSsr()) return;
     this._hasHeaderIconSlot = this._headerIconSlotNodes.length > 0;
   }
-  
+
   private _checkRequiredProps() {
     const isTransparent = this.variant === "none";
 
@@ -157,7 +157,7 @@ export class DiscountCard extends LitElement {
       );
     }
 
-    if (isTransparent && hasHeaderIcon) {
+    if (isTransparent && this._hasHeaderIconSlot) {
       logger(
         ErrorMessages.HEADER_ICON_IS_NOT_REQUIRED_WHEN_VARIANT_IS_NONE,
         "discount-card",
@@ -168,7 +168,7 @@ export class DiscountCard extends LitElement {
 
   protected override willUpdate(changed: PropertyValues<this>): void {
     super.willUpdate(changed);
-    
+
     this._handleActionSlotChange();
     this._handleHeaderIconSlotChange();
     this._handleThumbnailSlotChange();
@@ -176,7 +176,7 @@ export class DiscountCard extends LitElement {
 
   protected override updated(changed: PropertyValues<this>) {
     super.update(changed);
-    
+
     this._checkRequiredProps();
   }
 
@@ -184,7 +184,7 @@ export class DiscountCard extends LitElement {
     const isTransparent = this.variant === "none";
 
     if (isTransparent) return null;
-    
+
     return html`
       <div
         part="header"
