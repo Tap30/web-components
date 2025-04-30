@@ -148,22 +148,6 @@ export class DiscountCard extends LitElement {
         "warning",
       );
     }
-
-    if (isTransparent && this.headerTitle) {
-      logger(
-        ErrorMessages.HEADER_TITLE_IS_NOT_REQUIRED_WHEN_VARIANT_IS_NONE,
-        "discount-card",
-        "warning",
-      );
-    }
-
-    if (isTransparent && this._hasHeaderIconSlot) {
-      logger(
-        ErrorMessages.HEADER_ICON_IS_NOT_REQUIRED_WHEN_VARIANT_IS_NONE,
-        "discount-card",
-        "warning",
-      );
-    }
   }
 
   protected override willUpdate(changed: PropertyValues<this>): void {
