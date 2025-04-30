@@ -16,4 +16,4 @@ export const TextField = LitReact.createComponent({
   events: { onChange: "input", onInput: "input" },
 });
 
-export { TextFieldSlots };
+export { TextFieldElementClass, TextFieldSlots };

@@ -16,4 +16,4 @@ export const ChatBubbleOut = LitReact.createComponent({
   events: {},
 });
 
-export { ChatBubbleOutSlots };
+export { ChatBubbleOutElementClass, ChatBubbleOutSlots };

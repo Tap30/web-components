@@ -23,6 +23,7 @@ export const SegmentedView = LitReact.createComponent({
 
 export {
   SegmentedViewActiveChangeEvent,
+  SegmentedViewElementClass,
   SegmentedViewItemSlots,
   SegmentedViewSlots,
 };

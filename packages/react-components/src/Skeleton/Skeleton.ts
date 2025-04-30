@@ -16,4 +16,4 @@ export const Skeleton = LitReact.createComponent({
   events: {},
 });
 
-export { SkeletonSlots };
+export { SkeletonElementClass, SkeletonSlots };

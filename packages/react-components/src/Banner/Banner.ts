@@ -16,4 +16,4 @@ export const Banner = LitReact.createComponent({
   events: {},
 });
 
-export { BannerSlots };
+export { BannerElementClass, BannerSlots };

@@ -20,4 +20,4 @@ export const ChipGroup = LitReact.createComponent({
   },
 });
 
-export { ChipGroupSelectChangeEvent, ChipGroupSlots };
+export { ChipGroupElementClass, ChipGroupSelectChangeEvent, ChipGroupSlots };

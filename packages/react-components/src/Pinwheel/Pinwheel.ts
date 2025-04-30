@@ -17,4 +17,4 @@ export const Pinwheel = LitReact.createComponent({
   events: { onChange: "change", onInput: "change" },
 });
 
-export { PinwheelItemSlots, PinwheelSlots };
+export { PinwheelElementClass, PinwheelItemSlots, PinwheelSlots };

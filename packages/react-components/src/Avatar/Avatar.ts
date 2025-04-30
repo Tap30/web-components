@@ -16,4 +16,4 @@ export const Avatar = LitReact.createComponent({
   events: {},
 });
 
-export { AvatarSlots };
+export { AvatarElementClass, AvatarSlots };

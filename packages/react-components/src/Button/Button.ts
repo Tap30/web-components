@@ -16,4 +16,4 @@ export const Button = LitReact.createComponent({
   events: {},
 });
 
-export { ButtonSlots };
+export { ButtonElementClass, ButtonSlots };

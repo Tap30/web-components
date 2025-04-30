@@ -20,4 +20,4 @@ export const Tooltip = LitReact.createComponent({
   },
 });
 
-export { TooltipHideEvent, TooltipShowEvent };
+export { TooltipElementClass, TooltipHideEvent, TooltipShowEvent };

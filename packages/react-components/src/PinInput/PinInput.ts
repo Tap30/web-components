@@ -20,4 +20,4 @@ export const PinInput = LitReact.createComponent({
   },
 });
 
-export { PinInputCompleteEvent };
+export { PinInputCompleteEvent, PinInputElementClass };

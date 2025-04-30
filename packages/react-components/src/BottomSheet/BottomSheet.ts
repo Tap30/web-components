@@ -34,6 +34,7 @@ export const BottomSheet = LitReact.createComponent({
 export {
   BottomSheetClosedEvent,
   BottomSheetClosingEvent,
+  BottomSheetElementClass,
   BottomSheetHideEvent,
   BottomSheetOpenedEvent,
   BottomSheetOpeningEvent,

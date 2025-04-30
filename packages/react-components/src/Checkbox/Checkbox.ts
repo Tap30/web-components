@@ -15,4 +15,4 @@ export const Checkbox = LitReact.createComponent({
   events: { onChange: "input", onInput: "input" },
 });
 
-export {};
+export { CheckboxElementClass };

@@ -15,4 +15,4 @@ export const Switch = LitReact.createComponent({
   events: { onChange: "input", onInput: "input" },
 });
 
-export {};
+export { SwitchElementClass };

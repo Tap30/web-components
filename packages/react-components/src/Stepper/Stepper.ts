@@ -15,4 +15,4 @@ export const Stepper = LitReact.createComponent({
   events: { onChange: "change", onInput: "change" },
 });
 
-export {};
+export { StepperElementClass };

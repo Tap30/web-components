@@ -16,4 +16,4 @@ export const EmptyState = LitReact.createComponent({
   events: {},
 });
 
-export { EmptyStateSlots };
+export { EmptyStateElementClass, EmptyStateSlots };

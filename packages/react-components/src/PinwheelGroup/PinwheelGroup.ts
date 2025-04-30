@@ -16,4 +16,4 @@ export const PinwheelGroup = LitReact.createComponent({
   events: {},
 });
 
-export { PinwheelGroupSlots };
+export { PinwheelGroupElementClass, PinwheelGroupSlots };

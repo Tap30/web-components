@@ -16,4 +16,4 @@ export const BadgeWrapper = LitReact.createComponent({
   events: {},
 });
 
-export { BadgeWrapperSlots };
+export { BadgeWrapperElementClass, BadgeWrapperSlots };

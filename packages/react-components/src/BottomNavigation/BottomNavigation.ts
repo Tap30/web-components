@@ -23,6 +23,7 @@ export const BottomNavigation = LitReact.createComponent({
 
 export {
   BottomNavigationActiveChangeEvent,
+  BottomNavigationElementClass,
   BottomNavigationItemSlots,
   BottomNavigationSlots,
 };

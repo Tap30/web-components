@@ -16,4 +16,4 @@ export const TextArea = LitReact.createComponent({
   events: { onChange: "input", onInput: "input" },
 });
 
-export { TextAreaSlots };
+export { TextAreaElementClass, TextAreaSlots };

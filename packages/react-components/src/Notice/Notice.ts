@@ -21,4 +21,4 @@ export const Notice = LitReact.createComponent({
   },
 });
 
-export { NoticeHideEvent, NoticeShowEvent, NoticeSlots };
+export { NoticeElementClass, NoticeHideEvent, NoticeShowEvent, NoticeSlots };

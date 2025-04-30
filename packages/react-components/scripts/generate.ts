@@ -196,7 +196,7 @@ const getReactComponentCode = async (
 
   const exports =
     exportsList.length > 0
-      ? `export { ${exportsList.filter(Boolean).join(", ")} };`
+      ? `export { ${[`${componentName}ElementClass`, ...exportsList.filter(Boolean)].join(", ")} };`
       : "";
 
   const elementClass = `${componentName}ElementClass`;

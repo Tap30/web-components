@@ -16,4 +16,4 @@ export const Badge = LitReact.createComponent({
   events: {},
 });
 
-export { BadgeSlots };
+export { BadgeElementClass, BadgeSlots };

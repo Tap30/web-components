@@ -16,4 +16,4 @@ export const ButtonGroup = LitReact.createComponent({
   events: {},
 });
 
-export { ButtonGroupSlots };
+export { ButtonGroupElementClass, ButtonGroupSlots };

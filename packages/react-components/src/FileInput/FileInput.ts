@@ -21,4 +21,4 @@ export const FileInput = LitReact.createComponent({
   },
 });
 
-export { FileInputRetryEvent, FileInputSlots };
+export { FileInputElementClass, FileInputRetryEvent, FileInputSlots };

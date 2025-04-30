@@ -15,4 +15,4 @@ export const Radio = LitReact.createComponent({
   events: { onChange: "input", onInput: "input" },
 });
 
-export {};
+export { RadioElementClass };

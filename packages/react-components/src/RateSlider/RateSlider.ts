@@ -15,4 +15,4 @@ export const RateSlider = LitReact.createComponent({
   events: { onChange: "change", onInput: "change" },
 });
 
-export {};
+export { RateSliderElementClass };

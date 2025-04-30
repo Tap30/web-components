@@ -21,4 +21,4 @@ export const Modal = LitReact.createComponent({
   },
 });
 
-export { ModalHideEvent, ModalShowEvent, ModalSlots };
+export { ModalElementClass, ModalHideEvent, ModalShowEvent, ModalSlots };

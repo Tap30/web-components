@@ -16,4 +16,4 @@ export const IconButton = LitReact.createComponent({
   events: {},
 });
 
-export { IconButtonSlots };
+export { IconButtonElementClass, IconButtonSlots };

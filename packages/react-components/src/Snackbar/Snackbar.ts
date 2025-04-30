@@ -21,4 +21,9 @@ export const Snackbar = LitReact.createComponent({
   },
 });
 
-export { SnackbarHideEvent, SnackbarShowEvent, SnackbarSlots };
+export {
+  SnackbarElementClass,
+  SnackbarHideEvent,
+  SnackbarShowEvent,
+  SnackbarSlots,
+};

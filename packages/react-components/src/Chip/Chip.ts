@@ -21,4 +21,4 @@ export const Chip = LitReact.createComponent({
   },
 });
 
-export { ChipDeselectEvent, ChipSelectEvent, ChipSlots };
+export { ChipDeselectEvent, ChipElementClass, ChipSelectEvent, ChipSlots };
