@@ -1,4 +1,4 @@
-import globAsync from "fast-glob";
+import { globby } from "globby";
 import Mustache from "mustache";
 import { exec } from "node:child_process";
 import * as fs from "node:fs/promises";
@@ -88,7 +88,7 @@ const generatePaths = async () => {
 
   await fs.writeFile(pathsJSONFile, "{", { encoding: "utf-8" });
 
-  const svgs = await globAsync(path.join(iconsDir, "**/*.svg"));
+  const svgs = await globby(path.join(iconsDir, "**/*.svg"));
 
   for (let i = 0; i < svgs.length; i++) {
     const svg = svgs[i]!;

@@ -1,4 +1,4 @@
-import globAsync from "fast-glob";
+import { globby } from "globby";
 import { exec } from "node:child_process";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
@@ -70,7 +70,7 @@ const generateVars = async (tokensPath: string, varsPath: string) => {
 };
 
 const generate = async () => {
-  const tokensFiles = await globAsync(tokensGlobPath);
+  const tokensFiles = await globby(tokensGlobPath);
   const promises: Promise<void>[] = [];
 
   for (const tokensFile of tokensFiles) {
