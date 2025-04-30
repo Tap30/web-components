@@ -87,11 +87,12 @@ export class DiscountCard extends LitElement {
   public expiryDateLabel = "";
 
   /**
-   * Check if discount is expiring and if expiring is true then turn expiry date label into red color
+   * Check if discount is expiring and if expiring is
+   * true then turn expiry date label into red color.
    *
    * @prop {boolean} expiring
    * @attr {string} expiring
-    @default false
+   * @default false
    */
   @property({ type: Boolean })
   public expiring: boolean = false;
@@ -128,14 +129,9 @@ export class DiscountCard extends LitElement {
     if (isSsr()) return;
     this._hasHeaderIconSlot = this._headerIconSlotNodes.length > 0;
   }
-  /**
-   * Check for required props and emit warnings
-   */
-  private checkRequiredProps() {
+  
+  private _checkRequiredProps() {
     const isTransparent = this.variant === "none";
-
-    // Check if header icon slot is filled
-    const hasHeaderIcon = !!this.querySelector(`[slot="${Slots.HEADER_ICON}"]`);
 
     if (!isTransparent && !this.headerTitle) {
       logger(
@@ -145,7 +141,7 @@ export class DiscountCard extends LitElement {
       );
     }
 
-    if (!isTransparent && !hasHeaderIcon) {
+    if (!isTransparent && !this._hasHeaderIconSlot) {
       logger(
         ErrorMessages.HEADER_ICON_IS_REQUIRED_WHEN_VARIANT_IS_NOT_NONE,
         "discount-card",
@@ -172,6 +168,7 @@ export class DiscountCard extends LitElement {
 
   protected override willUpdate(changed: PropertyValues<this>): void {
     super.willUpdate(changed);
+    
     this._handleActionSlotChange();
     this._handleHeaderIconSlotChange();
     this._handleThumbnailSlotChange();
@@ -179,36 +176,39 @@ export class DiscountCard extends LitElement {
 
   protected override updated(changed: PropertyValues<this>) {
     super.update(changed);
-    this.checkRequiredProps();
+    
+    this._checkRequiredProps();
   }
 
-  private _renderHeadSection(isTransparent: boolean) {
-    return !isTransparent
-      ? html`
-          <div
-            part="header"
-            class="header"
-          >
-            <div
-              part="header-title"
-              class="header-title"
-            >
-              ${this.headerTitle}
-            </div>
+  private _renderHeadSection() {
+    const isTransparent = this.variant === "none";
 
-            <div
-              ?hidden=${!this._hasHeaderIconSlot}
-              part="header-icon"
-              class="header-icon"
-            >
-              <slot
-                @slotchange=${this._handleHeaderIconSlotChange}
-                name=${Slots.HEADER_ICON}
-              ></slot>
-            </div>
-          </div>
-        `
-      : null;
+    if (isTransparent) return null;
+    
+    return html`
+      <div
+        part="header"
+        class="header"
+      >
+        <div
+          part="header-title"
+          class="header-title"
+        >
+          ${this.headerTitle}
+        </div>
+
+        <div
+          ?hidden=${!this._hasHeaderIconSlot}
+          part="header-icon"
+          class="header-icon"
+        >
+          <slot
+            @slotchange=${this._handleHeaderIconSlotChange}
+            name=${Slots.HEADER_ICON}
+          ></slot>
+        </div>
+      </div>
+    `;
   }
 
   private _renderSideSection = () => {
@@ -293,7 +293,6 @@ export class DiscountCard extends LitElement {
   }
 
   protected override render() {
-    const isTransparent = this.variant === "none";
     const rootClasses = classMap({
       root: true,
       [`variant-${this.variant}`]: true,
@@ -308,7 +307,7 @@ export class DiscountCard extends LitElement {
         part="root"
         class=${rootClasses}
       >
-        ${this._renderHeadSection(isTransparent)}
+        ${this._renderHeadSection()}
         <div class=${wrapperClasses}>
           ${this._renderSideSection()} ${this._renderBodySection()}
         </div>
