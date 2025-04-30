@@ -77,6 +77,11 @@ import {
   Slots as ChipSlots,
   register as registerChip,
 } from "./chip/index.ts";
+import {
+  DiscountCard,
+  Slots as DiscountCardSlots,
+  register as registerDiscountCard,
+} from "./discount-card/index.ts";
 import { Divider, register as registerDivider } from "./divider/index.ts";
 import {
   EmptyState,
@@ -168,12 +173,6 @@ import {
   ShowEvent as TooltipShowEvent,
   register as registerTooltip,
 } from "./tooltip/index.ts";
-
-import {
-  DiscountCard,
-  Slots as DiscountCardSlots,
-  register as registerDiscountCard,
-} from "./discount-card/index.ts";
 
 export {
   Avatar,

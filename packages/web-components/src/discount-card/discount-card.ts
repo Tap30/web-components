@@ -145,10 +145,6 @@ export class DiscountCard extends LitElement {
       );
     }
 
-    console.log({
-      hasHeaderIcon,
-      isTransparent,
-    });
     if (!isTransparent && !hasHeaderIcon) {
       logger(
         ErrorMessages.HEADER_ICON_IS_REQUIRED_WHEN_VARIANT_IS_NOT_NONE,
@@ -181,9 +177,6 @@ export class DiscountCard extends LitElement {
     this._handleThumbnailSlotChange();
   }
 
-  /**
-   * Lifecycle method that runs when the component is updated
-   */
   protected override updated(changed: PropertyValues<this>) {
     super.update(changed);
     this.checkRequiredProps();
