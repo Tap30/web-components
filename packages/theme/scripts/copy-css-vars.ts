@@ -1,4 +1,4 @@
-import globAsync from "fast-glob";
+import { globby } from "globby";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { getFileMeta } from "../../../scripts/utils.ts";
@@ -11,7 +11,7 @@ const distDir = path.join(packageDir, "dist");
 const varsGlobPath = path.join(srcDir, "**/tokens.css");
 
 const copyCssVars = async () => {
-  const varsFiles = await globAsync(varsGlobPath);
+  const varsFiles = await globby(varsGlobPath);
   const promises: Promise<void[]>[] = [];
 
   for (const varsFile of varsFiles) {
