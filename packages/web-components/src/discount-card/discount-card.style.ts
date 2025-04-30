@@ -2,18 +2,16 @@ import { css } from "lit";
 
 export default css`
   :host {
-    --discount-card-outer-radius: var(--tapsi-radius-4, 16px);
-    --discount-card-inner-radius: var(--tapsi-radius-3, 12px);
-    --discount-card-outer-padding: 0 var(--tapsi-spacing-3, 4px)
-      var(--tapsi-spacing-3, 4px);
-    --discount-card-header-padding: var(--tapsi-spacing-4, 8px);
-    --discount-card-header-title-padding: var(--tapsi-spacing-1, 8px) 0;
+    --discount-card-outer-radius: var(--tapsi-radius-4);
+    --discount-card-inner-radius: var(--tapsi-radius-3);
+    --discount-card-outer-padding: 0 var(--tapsi-spacing-3)
+      var(--tapsi-spacing-3);
+    --discount-card-header-padding: var(--tapsi-spacing-4);
+    --discount-card-header-title-padding: var(--tapsi-spacing-1)
+      var(--tapsi-spacing-0);
     --discount-card-badge-bg-color: transparent;
     --discount-card-badge-color: transparent;
-    --discount-card-wrapper-border: var(
-      --tapsi-color-border-primary,
-      transparent
-    );
+    --discount-card-wrapper-border-color: var(--tapsi-color-border-primary);
 
     /* Variant color mappings */
     --discount-card-clay-bg: linear-gradient(
@@ -73,78 +71,71 @@ export default css`
   }
 
   .root {
+    --discount-card-root-color: transparent;
+    --discount-card-root-bg-color: transparent;
+    --discount-card-root-padding: var(--discount-card-outer-padding);
     border-radius: var(--discount-card-outer-radius);
-    padding: var(--discount-card-outer-padding);
+    color: var(--discount-card-root-color);
+    background: var(--discount-card-root-bg-color);
+    padding: var(--discount-card-root-padding);
+  }
+  .root header {
+    color: var(--discount-card-root-color);
   }
 
   .root.variant-none {
     --discount-card-badge-bg-color: var(--discount-card-none-badge-bg);
     --discount-card-badge-color: var(--tapsi-color-content-accent);
-    background-color: var(--discount-card-none-bg);
-    padding: var(--tapsi-spacing-0, 0px);
-
-    .header {
-      display: none;
-    }
+    --discount-card-root-bg-color: var(--discount-card-none-bg);
+    --discount-card-root-padding: var(--tapsi-spacing-0, 0px);
   }
 
   .root.variant-clay {
     --discount-card-badge-bg-color: var(--discount-card-clay-badge-bg);
     --discount-card-badge-color: var(--discount-card-clay-badge-color);
-    background: var(--discount-card-clay-bg);
-
-    .header {
-      color: var(--discount-card-clay-color);
-    }
+    --discount-card-root-color: var(--discount-card-clay-color);
+    --discount-card-root-bg-color: var(--discount-card-clay-bg);
   }
 
   .root.variant-whisper {
     --discount-card-badge-bg-color: var(--discount-card-whisper-badge-bg);
     --discount-card-badge-color: var(--tapsi-palette-black);
-    background: var(--discount-card-whisper-bg);
-
-    .header {
-      color: var(--discount-card-whisper-color);
-    }
+    --discount-card-root-color: var(--discount-card-whisper-color);
+    --discount-card-root-bg-color: var(--discount-card-whisper-bg);
   }
 
   .root.variant-azure {
     --discount-card-badge-bg-color: var(--discount-card-azure-badge-bg);
     --discount-card-badge-color: var(--tapsi-palette-black);
-    background: var(--discount-card-azure-bg);
-
-    .header {
-      color: var(--discount-card-azure-color);
-    }
+    --discount-card-root-color: var(--discount-card-azure-color);
+    --discount-card-root-bg-color: var(--discount-card-azure-bg);
   }
 
   .root.variant-flame {
     --discount-card-badge-bg-color: var(--discount-card-flame-badge-bg);
     --discount-card-badge-color: var(--discount-card-flame-badge-color);
-    background: var(--discount-card-flame-bg);
-
-    .header {
-      color: var(--discount-card-flame-color);
-    }
+    --discount-card-root-color: var(--discount-card-flame-color);
+    --discount-card-root-bg-color: var(--discount-card-flame-bg);
   }
 
   .root.variant-grayscale {
     --discount-card-badge-bg-color: var(--discount-card-grayscale-badge-bg);
     --discount-card-badge-color: var(--discount-card-grayscale-badge-color);
-    background-color: var(--discount-card-grayscale-bg);
-
-    .header {
-      color: var(--discount-card-grayscale-color);
-    }
+    --discount-card-root-color: var(--discount-card-grayscale-color);
+    --discount-card-root-bg-color: var(--discount-card-grayscale-bg);
   }
 
   .header {
     padding: var(--discount-card-header-padding);
     display: flex;
   }
+
   .header-title {
     padding: var(--discount-card-header-title-padding);
     flex: 1 0 auto;
+    font-size: var(--tapsi-typography-label-sm-font);
+    font-weight: var(--tapsi-typography-label-sm-weight);
+    line-height: var(--tapsi-typography-label-sm-height);
   }
 
   .header-icon {
@@ -154,14 +145,16 @@ export default css`
   }
 
   .wrapper {
-    border: none;
+    --discount-card-wrapper-border: none;
     border-radius: var(--discount-card-inner-radius);
     background-color: var(--tapsi-palette-white);
     display: flex;
+    border: var(--discount-card-wrapper-border);
   }
 
   .wrapper.wrapper-border {
-    border: 1px solid var(--discount-card-wrapper-border);
+    --discount-card-wrapper-border: 1px solid
+      var(--discount-card-wrapper-border-color);
   }
 
   .side {
@@ -170,99 +163,101 @@ export default css`
     display: flex;
     flex-direction: column;
     flex: 0 0 82px;
+  }
+  .side .badge-wrapper {
+    position: relative;
+    margin: 0 calc(var(--tapsi-spacing-3) * -1) 0 0;
 
-    .badge-wrapper {
-      position: relative;
-      margin: 0 calc(var(--tapsi-spacing-3) * -1) 0 0;
+    display: flex;
+  }
 
-      display: flex;
-    }
+  .side .badge-box {
+    margin-right: -1px;
+    background-color: var(--discount-card-badge-bg-color);
+    border-radius: var(--tapsi-spacing-3) 0 0 var(--tapsi-spacing-3);
+    padding: var(--tapsi-spacing-2) var(--tapsi-spacing-4)
+      var(--tapsi-spacing-2) var(--tapsi-spacing-5);
+    color: var(--discount-card-badge-color);
+    font-weight: var(--tapsi-typography-label-xxs-weight);
+    font-size: var(--tapsi-typography-label-xxs-size);
+    line-height: var(--tapsi-typography-label-xxs-height);
+  }
 
-    .badge-box {
-      background-color: var(--discount-card-badge-bg-color);
-      border-radius: var(--tapsi-spacing-3) 0 0 var(--tapsi-spacing-3);
-      padding: var(--tapsi-spacing-2) var(--tapsi-spacing-4)
-        var(--tapsi-spacing-2) var(--tapsi-spacing-5);
-      color: var(--discount-card-badge-color);
-      font-weight: var(--tapsi-typography-label-xxs-weight);
-      font-size: var(--tapsi-typography-label-xxs-size);
-      line-height: var(--tapsi-typography-label-xxs-height);
-    }
+  .side .badge-shape {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    color: var(--discount-card-badge-bg-color);
+  }
 
-    .badge-shape {
-      position: absolute;
-      left: 100%;
-      top: 0;
-      color: var(--discount-card-badge-bg-color);
-    }
+  .side .thumbnail-box {
+    margin: var(--tapsi-spacing-9) auto 0;
+    color: var(--tapsi-color-content-primary);
+    width: 60px;
+    height: 60px;
+  }
 
-    /* border-left: 2px dashed var(--tapsi-color-border-primary); */
-    .thumbnail-box {
-      margin: var(--tapsi-spacing-9) auto 0;
-      width: 60px;
-      height: 60px;
-    }
+  .side .dashed-line {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    left: -1px;
+    width: 2px;
+    overflow: hidden;
+  }
 
-    .dashed-line {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      left: -1;
-      width: 2px;
-      overflow: hidden;
-      &::after {
-        content: "";
-        --b: 1px; /* border thickness */
-        --s: 16px; /* size of the dashes */
-        --c1: var(--tapsi-color-border-primary);
-        --c2: var(--tapsi-palette-white);
-        top: 0;
-        height: 100%;
-        left: -1px;
-        padding: var(--b);
-        position: absolute;
-        background: repeating-conic-gradient(var(--c1) 0 25%, var(--c2) 0 50%) 0
-          0 / var(--s) var(--s) round;
-        mask:
-          linear-gradient(#000 0 0) content-box,
-          linear-gradient(#000 0 0);
-        mask-composite: exclude;
-      }
-    }
+  .side .dashed-line::after {
+    content: "";
+    --b: 2px; /* border thickness */
+    --s: 14px; /* size of the dashes */
+    --c1: var(--tapsi-color-border-primary);
+    --c2: transparent;
+    top: 0;
+    height: 100%;
+    left: -3px;
+    padding: var(--b);
+    position: absolute;
+    background: repeating-conic-gradient(var(--c1) 0 25%, var(--c2) 0 50%) 0 0 /
+      var(--s) var(--s) round;
   }
 
   .body {
     padding: var(--tapsi-spacing-6, 16px);
     flex: 1 0 auto;
+  }
 
-    .title {
-      font-weight: var(--tapsi-typography-label-sm-weight);
-      font-size: var(--tapsi-typography-label-sm-size);
-      line-height: var(--tapsi-typography-label-sm-height);
-      color: var(--tapsi-palette-black);
-    }
+  .body .title {
+    font-weight: var(--tapsi-typography-label-sm-weight);
+    font-size: var(--tapsi-typography-label-sm-size);
+    line-height: var(--tapsi-typography-label-sm-height);
+    color: var(--tapsi-palette-black);
+  }
 
-    .description {
-      font-weight: var(--tapsi-typography-label-xs-weight);
-      font-size: var(--tapsi-typography-label-xs-size);
-      line-height: var(--tapsi-typography-label-xs-height);
-      color: var(--tapsi-color-content-tertiary);
-      margin-top: var(--tapsi-spacing-2);
-    }
+  .body .description {
+    font-weight: var(--tapsi-typography-label-xs-weight);
+    font-size: var(--tapsi-typography-label-xs-size);
+    line-height: var(--tapsi-typography-label-xs-height);
+    color: var(--tapsi-color-content-tertiary);
+    margin-top: var(--tapsi-spacing-2);
+  }
 
-    .expiry-date-label {
-      font-weight: var(--tapsi-typography-label-xs-weight);
-      font-size: var(--tapsi-typography-label-xs-size);
-      line-height: var(--tapsi-typography-label-xs-height);
-      color: var(--tapsi-color-content-tertiary); /* Default color */
-    }
+  .body .expiry-date-label {
+    --discount-card-expiring-date-label-color: var(
+      --tapsi-color-content-tertiary
+    ); /* Default color */
+    font-weight: var(--tapsi-typography-label-xs-weight);
+    font-size: var(--tapsi-typography-label-xs-size);
+    line-height: var(--tapsi-typography-label-xs-height);
+    color: var(--discount-card-expiring-date-label-color);
+  }
 
-    .expiry-date-label.expiring {
-      color: var(--tapsi-color-content-negative); /* Warn color */
-    }
+  .body .expiry-date-label.expiring {
+    --discount-card-expiring-date-label-color: var(
+      --tapsi-color-content-negative
+    );
+  }
 
-    .action {
-      margin-top: var(--tapsi-spacing-4);
-    }
+  .body .action {
+    margin-top: var(--tapsi-spacing-4);
   }
 `;

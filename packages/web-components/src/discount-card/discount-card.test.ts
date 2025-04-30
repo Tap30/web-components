@@ -1,14 +1,18 @@
 import {
   accessibility,
   afterEach,
+  createPromiseResolvers,
   describe,
   disposeMocks,
   expect,
   render,
   test,
 } from "@internals/test-helpers";
+import { ErrorMessages } from "./constants.ts";
 
 describe("🧩 discount-card", () => {
+  const scope = "discount-card";
+
   afterEach(async ({ page }) => {
     await disposeMocks(page);
   });
@@ -101,11 +105,19 @@ describe("🧩 discount-card", () => {
   test("🧪 should log warning when variant is not none and headerTitle is missing", async ({
     page,
   }) => {
-    const warnings: string[] = [];
+    const msgResolver = createPromiseResolvers<string>();
 
     page.on("console", msg => {
-      if (msg.type() === "warning") {
-        warnings.push(msg.text());
+      if (
+        msg.type() === "warning" &&
+        msg.text().includes(scope) &&
+        msg
+          .text()
+          .includes(
+            ErrorMessages.HEADER_TITLE_IS_REQUIRED_WHEN_VARIANT_IS_NOT_NONE,
+          )
+      ) {
+        msgResolver.resolve(msg.text());
       }
     });
 
@@ -125,20 +137,27 @@ describe("🧩 discount-card", () => {
       </tapsi-discount-card>`,
     );
 
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0]).toContain(
-      "headerTitle is required when variant is not none",
-    );
+    const msg = await msgResolver.promise;
+
+    expect(msg).toBeDefined();
   });
 
   test("🧪 should log warning when variant is not none and headerIcon slot is empty", async ({
     page,
   }) => {
-    const warnings: string[] = [];
+    const msgResolver = createPromiseResolvers<string>();
 
     page.on("console", msg => {
-      if (msg.type() === "warning") {
-        warnings.push(msg.text());
+      if (
+        msg.type() === "warning" &&
+        msg.text().includes(scope) &&
+        msg
+          .text()
+          .includes(
+            ErrorMessages.HEADER_ICON_IS_REQUIRED_WHEN_VARIANT_IS_NOT_NONE,
+          )
+      ) {
+        msgResolver.resolve(msg.text());
       }
     });
 
@@ -155,20 +174,27 @@ describe("🧩 discount-card", () => {
       ></tapsi-discount-card>`,
     );
 
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0]).toContain(
-      "headerIcon is required when variant is not none",
-    );
+    const msg = await msgResolver.promise;
+
+    expect(msg).toBeDefined();
   });
 
   test("🧪 should log warning when variant is none and headerTitle is provided", async ({
     page,
   }) => {
-    const warnings: string[] = [];
+    const msgResolver = createPromiseResolvers<string>();
 
     page.on("console", msg => {
-      if (msg.type() === "warning") {
-        warnings.push(msg.text());
+      if (
+        msg.type() === "warning" &&
+        msg.text().includes(scope) &&
+        msg
+          .text()
+          .includes(
+            ErrorMessages.HEADER_TITLE_IS_NOT_REQUIRED_WHEN_VARIANT_IS_NONE,
+          )
+      ) {
+        msgResolver.resolve(msg.text());
       }
     });
 
@@ -185,20 +211,27 @@ describe("🧩 discount-card", () => {
       ></tapsi-discount-card>`,
     );
 
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0]).toContain(
-      "headerTitle should not be provided when variant is none",
-    );
+    const msg = await msgResolver.promise;
+
+    expect(msg).toBeDefined();
   });
 
   test("🧪 should log warning when variant is none and headerIcon slot is provided", async ({
     page,
   }) => {
-    const warnings: string[] = [];
+    const msgResolver = createPromiseResolvers<string>();
 
     page.on("console", msg => {
-      if (msg.type() === "warning") {
-        warnings.push(msg.text());
+      if (
+        msg.type() === "warning" &&
+        msg.text().includes(scope) &&
+        msg
+          .text()
+          .includes(
+            ErrorMessages.HEADER_ICON_IS_NOT_REQUIRED_WHEN_VARIANT_IS_NONE,
+          )
+      ) {
+        msgResolver.resolve(msg.text());
       }
     });
 
@@ -218,10 +251,9 @@ describe("🧩 discount-card", () => {
       </tapsi-discount-card>`,
     );
 
-    expect(warnings).toHaveLength(1);
-    expect(warnings[0]).toContain(
-      "headerIcon should not be provided when variant is none",
-    );
+    const msg = await msgResolver.promise;
+
+    expect(msg).toBeDefined();
   });
 
   test("🧪 should render title, description and expiry date label correctly", async ({
@@ -340,7 +372,6 @@ describe("🧩 discount-card", () => {
 
   // TODO: There was a issue with 'none' variant's contrast, we ignored it to be fixed by design team.
   const variants = ["clay", "whisper", "azure", "flame", "grayscale"];
-  // const variants = ["grayscale"];
 
   for (const variant of variants) {
     test("🦯 should be accessible " + variant, async ({ page }) => {

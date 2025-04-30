@@ -7,6 +7,8 @@ export { DiscountCard };
 export const register = () => {
   if (isSsr()) return;
 
+  if (customElements.get("tapsi-discount-card")) return;
+
   customElements.define("tapsi-discount-card", DiscountCard);
 };
 

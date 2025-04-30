@@ -1,8 +1,9 @@
-import { LitElement, html } from "lit";
-import { property } from "lit/decorators.js";
+import { LitElement, type PropertyValues, html } from "lit";
+import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
+import isSsr from "../utils/is-ssr.ts";
 import logger from "../utils/logger.ts";
-import { Slots } from "./constants.ts";
+import { ErrorMessages, Slots } from "./constants.ts";
 import styles from "./discount-card.style.ts";
 
 /**
@@ -95,6 +96,38 @@ export class DiscountCard extends LitElement {
   @property({ type: Boolean })
   public expiring: boolean = false;
 
+  @state()
+  private _hasHeaderIconSlot: boolean = false;
+
+  @state()
+  private _hasThumbnailSlot: boolean = false;
+
+  @state()
+  private _hasActionSlot: boolean = false;
+
+  @queryAssignedNodes({ slot: Slots.ACTION })
+  private _actionSlotNodes!: Node[];
+
+  @queryAssignedNodes({ slot: Slots.THUMBNAIL })
+  private _thumbnailSlotNodes!: Node[];
+
+  @queryAssignedNodes({ slot: Slots.HEADER_ICON })
+  private _headerIconSlotNodes!: Node[];
+
+  private _handleActionSlotChange() {
+    if (isSsr()) return;
+    this._hasActionSlot = this._actionSlotNodes.length > 0;
+  }
+
+  private _handleThumbnailSlotChange() {
+    if (isSsr()) return;
+    this._hasThumbnailSlot = this._thumbnailSlotNodes.length > 0;
+  }
+
+  private _handleHeaderIconSlotChange() {
+    if (isSsr()) return;
+    this._hasHeaderIconSlot = this._headerIconSlotNodes.length > 0;
+  }
   /**
    * Check for required props and emit warnings
    */
@@ -106,15 +139,19 @@ export class DiscountCard extends LitElement {
 
     if (!isTransparent && !this.headerTitle) {
       logger(
-        "headerTitle is required when variant is not none",
+        ErrorMessages.HEADER_TITLE_IS_REQUIRED_WHEN_VARIANT_IS_NOT_NONE,
         "discount-card",
         "warning",
       );
     }
 
+    console.log({
+      hasHeaderIcon,
+      isTransparent,
+    });
     if (!isTransparent && !hasHeaderIcon) {
       logger(
-        "headerIcon is required when variant is not none",
+        ErrorMessages.HEADER_ICON_IS_REQUIRED_WHEN_VARIANT_IS_NOT_NONE,
         "discount-card",
         "warning",
       );
@@ -122,7 +159,7 @@ export class DiscountCard extends LitElement {
 
     if (isTransparent && this.headerTitle) {
       logger(
-        "headerTitle should not be provided when variant is none",
+        ErrorMessages.HEADER_TITLE_IS_NOT_REQUIRED_WHEN_VARIANT_IS_NONE,
         "discount-card",
         "warning",
       );
@@ -130,18 +167,132 @@ export class DiscountCard extends LitElement {
 
     if (isTransparent && hasHeaderIcon) {
       logger(
-        "headerIcon should not be provided when variant is none",
+        ErrorMessages.HEADER_ICON_IS_NOT_REQUIRED_WHEN_VARIANT_IS_NONE,
         "discount-card",
         "warning",
       );
     }
   }
 
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    super.willUpdate(changed);
+    this._handleActionSlotChange();
+    this._handleHeaderIconSlotChange();
+    this._handleThumbnailSlotChange();
+  }
+
   /**
    * Lifecycle method that runs when the component is updated
    */
-  protected override updated() {
+  protected override updated(changed: PropertyValues<this>) {
+    super.update(changed);
     this.checkRequiredProps();
+  }
+
+  private _renderHeadSection(isTransparent: boolean) {
+    return !isTransparent
+      ? html`
+          <div
+            part="header"
+            class="header"
+          >
+            <div
+              part="header-title"
+              class="header-title"
+            >
+              ${this.headerTitle}
+            </div>
+
+            <div
+              ?hidden=${!this._hasHeaderIconSlot}
+              part="header-icon"
+              class="header-icon"
+            >
+              <slot
+                @slotchange=${this._handleHeaderIconSlotChange}
+                name=${Slots.HEADER_ICON}
+              ></slot>
+            </div>
+          </div>
+        `
+      : null;
+  }
+
+  private _renderSideSection = () => {
+    return html`
+      <div class="side">
+        <div class="badge-wrapper">
+          <div class="badge-box">${this.badgeName}</div>
+          <div class="badge-shape">
+            <svg
+              viewBox="0 0 4 24"
+              xmlns="http://www.w3.org/2000/svg"
+              width="4"
+              height="24"
+              fill="none"
+            >
+              <path
+                fill="currentColor"
+                d="m2 0 .204.01A2 2 0 0 1 4 2v19a3 3 0 0 1-3 3H0V0h2Z"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div
+          class="thumbnail-box"
+          ?hidden=${!this._hasThumbnailSlot}
+        >
+          <slot
+            @slotchange=${this._handleThumbnailSlotChange}
+            name=${Slots.THUMBNAIL}
+          ></slot>
+        </div>
+
+        <div class="dashed-line"></div>
+      </div>
+    `;
+  };
+
+  private _renderBodySection() {
+    const expiryDateLabelClasses = classMap({
+      "expiry-date-label": true,
+      expiring: this.expiring,
+    });
+
+    return html`
+      <div class="body">
+        <div
+          class="title"
+          part="title"
+        >
+          ${this.title}
+        </div>
+        <div
+          class="description"
+          part="description"
+        >
+          ${this.description}
+        </div>
+        <div
+          class=${expiryDateLabelClasses}
+          part="expiry-date-label"
+        >
+          ${this.expiryDateLabel}
+        </div>
+
+        <div
+          ?hidden=${!this._hasActionSlot}
+          part="action"
+          class="action"
+        >
+          <slot
+            @slotchange=${this._handleActionSlotChange}
+            name=${Slots.ACTION}
+          ></slot>
+        </div>
+      </div>
+    `;
   }
 
   protected override render() {
@@ -156,90 +307,14 @@ export class DiscountCard extends LitElement {
       "wrapper-border": isTransparent,
     });
 
-    const expiryDateLabelClasses = classMap({
-      "expiry-date-label": true,
-      expiring: this.expiring,
-    });
-
     return html`
       <div
         part="root"
         class=${rootClasses}
       >
-        ${!isTransparent
-          ? html`
-              <div
-                part="header"
-                class="header"
-              >
-                <div
-                  part="header-title"
-                  class="header-title"
-                >
-                  ${this.headerTitle}
-                </div>
-
-                <div
-                  part="header-icon"
-                  class="header-icon"
-                >
-                  <slot name=${Slots.HEADER_ICON}> </slot>
-                </div>
-              </div>
-            `
-          : null}
+        ${this._renderHeadSection(isTransparent)}
         <div class=${wrapperClasses}>
-          <div class="side">
-            <div class="badge-wrapper">
-              <div class="badge-box">${this.badgeName}</div>
-              <div class="badge-shape">
-                <svg
-                  viewBox="0 0 4 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="4"
-                  height="24"
-                  fill="none"
-                >
-                  <path
-                    fill="currentColor"
-                    d="m2 0 .204.01A2 2 0 0 1 4 2v19a3 3 0 0 1-3 3H0V0h2Z"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            <div class="thumbnail-box">
-              <slot name=${Slots.THUMBNAIL}></slot>
-            </div>
-
-            <div class="dashed-line"></div>
-          </div>
-          <div class="body">
-            <div
-              class="title"
-              part="title"
-            >
-              ${this.title}
-            </div>
-            <div
-              class="description"
-              part="description"
-            >
-              ${this.description}
-            </div>
-            <div
-              class=${expiryDateLabelClasses}
-              part="expiry-date-label"
-            >
-              ${this.expiryDateLabel}
-            </div>
-            <div
-              part="action"
-              class="action"
-            >
-              <slot name=${Slots.ACTION}></slot>
-            </div>
-          </div>
+          ${this._renderSideSection()} ${this._renderBodySection()}
         </div>
       </div>
     `;
