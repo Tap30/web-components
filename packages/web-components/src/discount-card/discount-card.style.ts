@@ -78,9 +78,6 @@ export default css`
     background: var(--discount-card-root-bg-color);
     padding: var(--discount-card-root-padding);
   }
-  .root header {
-    color: var(--discount-card-root-color);
-  }
 
   .root.variant-none {
     --discount-card-badge-bg-color: var(--discount-card-none-badge-bg);
@@ -128,6 +125,7 @@ export default css`
 
   .header {
     padding: var(--discount-card-header-padding);
+    color: var(--discount-card-root-color);
     display: flex;
   }
 
