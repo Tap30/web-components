@@ -61,9 +61,7 @@ export default css`
   *,
   *::before,
   *::after {
-    font-family: var(--tapsi-typography-font-family);
     box-sizing: border-box;
-    direction: rtl;
   }
 
   [hidden] {
@@ -71,6 +69,7 @@ export default css`
   }
 
   .root {
+    --discount-card-wrapper-border: none;
     --discount-card-root-color: transparent;
     --discount-card-root-bg-color: transparent;
     --discount-card-root-padding: var(--discount-card-outer-padding);
@@ -87,7 +86,9 @@ export default css`
     --discount-card-badge-bg-color: var(--discount-card-none-badge-bg);
     --discount-card-badge-color: var(--tapsi-color-content-accent);
     --discount-card-root-bg-color: var(--discount-card-none-bg);
-    --discount-card-root-padding: var(--tapsi-spacing-0, 0px);
+    --discount-card-root-padding: var(--tapsi-spacing-0);
+    --discount-card-wrapper-border: var(--tapsi-stroke-1) solid
+      var(--discount-card-wrapper-border-color);
   }
 
   .root.variant-clay {
@@ -139,40 +140,34 @@ export default css`
   }
 
   .header-icon {
-    height: 24px;
-    width: 24px;
-    flex: 0 0 24;
+    height: 1.5rem;
+    width: 1.5rem;
+    flex: 0 0 1.5rem;
   }
 
   .wrapper {
-    --discount-card-wrapper-border: none;
     border-radius: var(--discount-card-inner-radius);
     background-color: var(--tapsi-palette-white);
     display: flex;
     border: var(--discount-card-wrapper-border);
   }
 
-  .wrapper.wrapper-border {
-    --discount-card-wrapper-border: 1px solid
-      var(--discount-card-wrapper-border-color);
-  }
-
   .side {
-    padding: var(--tapsi-spacing-6, 16px) var(--tapsi-spacing-3);
+    padding: var(--tapsi-spacing-6) var(--tapsi-spacing-3);
     position: relative;
     display: flex;
     flex-direction: column;
-    flex: 0 0 82px;
+    flex: 0 0 5.125rem;
   }
-  .side .badge-wrapper {
+  .badge-wrapper {
     position: relative;
     margin: 0 calc(var(--tapsi-spacing-3) * -1) 0 0;
 
     display: flex;
   }
 
-  .side .badge-box {
-    margin-right: -1px;
+  .badge-box {
+    margin-right: calc(var(--tapsi-stroke-1) * -1);
     background-color: var(--discount-card-badge-bg-color);
     border-radius: var(--tapsi-spacing-3) 0 0 var(--tapsi-spacing-3);
     padding: var(--tapsi-spacing-2) var(--tapsi-spacing-4)
@@ -183,57 +178,60 @@ export default css`
     line-height: var(--tapsi-typography-label-xxs-height);
   }
 
-  .side .badge-shape {
+  .badge-shape {
     position: absolute;
     left: 100%;
     top: 0;
     color: var(--discount-card-badge-bg-color);
   }
 
-  .side .thumbnail-box {
+  .thumbnail-box {
     margin: var(--tapsi-spacing-9) auto 0;
     color: var(--tapsi-color-content-primary);
-    width: 60px;
-    height: 60px;
+    width: 3.75rem;
+    height: 3.75rem;
   }
 
-  .side .dashed-line {
+  .dashed-line {
     position: absolute;
     top: 0;
     height: 100%;
-    left: -1px;
-    width: 2px;
+    left: calc(var(--tapsi-stroke-1) * -1);
+    width: var(--tapsi-stroke-2);
     overflow: hidden;
   }
 
-  .side .dashed-line::after {
+  .dashed-line::after {
     content: "";
-    --b: 2px; /* border thickness */
-    --s: 14px; /* size of the dashes */
-    --c1: var(--tapsi-color-border-primary);
-    --c2: transparent;
+    --border: var(--tapsi-stroke-2);
+    --size: 0.875rem;
+    --color1: var(--tapsi-color-border-primary);
+    --color2: transparent;
     top: 0;
     height: 100%;
-    left: -3px;
-    padding: var(--b);
+    left: -0.1875rem;
+    padding: var(--border);
     position: absolute;
-    background: repeating-conic-gradient(var(--c1) 0 25%, var(--c2) 0 50%) 0 0 /
-      var(--s) var(--s) round;
+    background: repeating-conic-gradient(
+        var(--color1) 0 25%,
+        var(--color2) 0 50%
+      )
+      0 0 / var(--size) var(--size) round;
   }
 
   .body {
-    padding: var(--tapsi-spacing-6, 16px);
+    padding: var(--tapsi-spacing-6);
     flex: 1 0 auto;
   }
 
-  .body .title {
+  .title {
     font-weight: var(--tapsi-typography-label-sm-weight);
     font-size: var(--tapsi-typography-label-sm-size);
     line-height: var(--tapsi-typography-label-sm-height);
     color: var(--tapsi-palette-black);
   }
 
-  .body .description {
+  .description {
     font-weight: var(--tapsi-typography-label-xs-weight);
     font-size: var(--tapsi-typography-label-xs-size);
     line-height: var(--tapsi-typography-label-xs-height);
@@ -241,23 +239,23 @@ export default css`
     margin-top: var(--tapsi-spacing-2);
   }
 
-  .body .expiry-date-label {
+  .expiry-date-label {
     --discount-card-expiring-date-label-color: var(
       --tapsi-color-content-tertiary
-    ); /* Default color */
+    );
     font-weight: var(--tapsi-typography-label-xs-weight);
     font-size: var(--tapsi-typography-label-xs-size);
     line-height: var(--tapsi-typography-label-xs-height);
     color: var(--discount-card-expiring-date-label-color);
   }
 
-  .body .expiry-date-label.expiring {
+  .expiry-date-label.expiring {
     --discount-card-expiring-date-label-color: var(
       --tapsi-color-content-negative
     );
   }
 
-  .body .action {
+  .action {
     margin-top: var(--tapsi-spacing-4);
   }
 `;

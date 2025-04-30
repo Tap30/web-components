@@ -1,1 +1,3 @@
-export const Slots = {} as const;
+export const Slots = {
+  DEFAULT: "",
+} as const;

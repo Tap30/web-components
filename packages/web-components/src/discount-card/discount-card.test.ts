@@ -24,7 +24,7 @@ describe("🧩 discount-card", () => {
         data-testid="test-discount-card"
         title="Test Discount"
         description="This is a test discount"
-        badge-name="10%"
+        badge-text="10%"
         expiry-date-label="Expires in 2 days"
       ></tapsi-discount-card>`,
     );
@@ -44,7 +44,7 @@ describe("🧩 discount-card", () => {
         header-title="Special Offer"
         title="Test Discount"
         description="This is a test discount"
-        badge-name="10%"
+        badge-text="10%"
         expiry-date-label="Expires in 2 days"
       >
         <svg slot="header-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -81,13 +81,13 @@ describe("🧩 discount-card", () => {
         header-title="Special Offer"
         title="Test Discount"
         description="This is a test discount"
-        badge-name="10%"
+        badge-text="10%"
         expiry-date-label="Expires in 2 days"
       >
         <svg data-testid="header-icon" slot="header-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
         </svg>
-        <img data-testid="thumbnail" slot="thumbnail" src="https://example.com/image.jpg" alt="Thumbnail" />
+        <img data-testid="thumbnail" slot="thumbnail" src="https://picsum.photos/60/60" alt="Thumbnail" />
         <tapsi-button data-testid="action-button" slot="action">Use Discount</tapsi-button>
       </tapsi-discount-card>`,
     );
@@ -128,7 +128,7 @@ describe("🧩 discount-card", () => {
         variant="clay"
         title="Test Discount"
         description="This is a test discount"
-        badge-name="10%"
+        badge-text="10%"
         expiry-date-label="Expires in 2 days"
       >
         <svg slot="header-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -169,7 +169,7 @@ describe("🧩 discount-card", () => {
         header-title="Special Offer"
         title="Test Discount"
         description="This is a test discount"
-        badge-name="10%"
+        badge-text="10%"
         expiry-date-label="Expires in 2 days"
       ></tapsi-discount-card>`,
     );
@@ -206,7 +206,7 @@ describe("🧩 discount-card", () => {
         header-title="Special Offer"
         title="Test Discount"
         description="This is a test discount"
-        badge-name="10%"
+        badge-text="10%"
         expiry-date-label="Expires in 2 days"
       ></tapsi-discount-card>`,
     );
@@ -242,7 +242,7 @@ describe("🧩 discount-card", () => {
         variant="none"
         title="Test Discount"
         description="This is a test discount"
-        badge-name="10%"
+        badge-text="10%"
         expiry-date-label="Expires in 2 days"
       >
         <svg slot="header-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -265,7 +265,7 @@ describe("🧩 discount-card", () => {
         data-testid="test-discount-card"
         title="Test Discount"
         description="This is a test discount"
-        badge-name="10%"
+        badge-text="10%"
         expiry-date-label="Expires in 2 days"
       ></tapsi-discount-card>`,
     );
@@ -306,7 +306,7 @@ describe("🧩 discount-card", () => {
           ${variant !== "none" ? 'header-title="Special Offer"' : ""}
           title="Test Discount"
           description="This is a test discount"
-          badge-name="10%"
+          badge-text="10%"
           expiry-date-label="Expires in 2 days"
         >
           ${
@@ -383,7 +383,7 @@ describe("🧩 discount-card", () => {
         data-testid="test-discount-card"
         title="Test Discount"
         description="This is a test discount"
-        badge-name="10%"
+        badge-text="10%"
         expiry-date-label="Expires in 2 days"
       >
         ${

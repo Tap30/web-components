@@ -36,7 +36,7 @@ export class DiscountCard extends LitElement {
    * @attr {"clay" | "whisper" | "azure" | "flame" | "grayscale" | "none"} variant
    * @default "none"
    */
-  @property({ reflect: true })
+  @property()
   public variant:
     | "clay"
     | "whisper"
@@ -69,12 +69,12 @@ export class DiscountCard extends LitElement {
   /**
    * The name/text to display in the badge.
    *
-   * @prop {string} badgeName
-   * @attr {string} badge-name
+   * @prop {string} badgeText
+   * @attr {string} badge-text
    * @default ""
    */
-  @property({ attribute: "badge-name" })
-  public badgeName = "";
+  @property({ attribute: "badge-text" })
+  public badgeText = "";
 
   /**
    * The label for the expiry date of the discount.
@@ -214,8 +214,11 @@ export class DiscountCard extends LitElement {
   private _renderSideSection = () => {
     return html`
       <div class="side">
-        <div class="badge-wrapper">
-          <div class="badge-box">${this.badgeName}</div>
+        <div
+          class="badge-wrapper"
+          part="badge-wrapper"
+        >
+          <div class="badge-box">${this.badgeText}</div>
           <div class="badge-shape">
             <svg
               viewBox="0 0 4 24"
@@ -234,6 +237,7 @@ export class DiscountCard extends LitElement {
 
         <div
           class="thumbnail-box"
+          part="thumbnail-box"
           ?hidden=${!this._hasThumbnailSlot}
         >
           <slot
@@ -297,7 +301,6 @@ export class DiscountCard extends LitElement {
 
     const wrapperClasses = classMap({
       wrapper: true,
-      "wrapper-border": isTransparent,
     });
 
     return html`
