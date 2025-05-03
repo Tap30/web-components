@@ -55,7 +55,7 @@ importers:
         version: 1.7.8
       '@vitejs/plugin-react':
         specifier: ^4.4.1
-        version: 4.4.1(vite@5.4.19(@types/node@20.17.32))
+        version: 4.4.1(vite@6.3.4(@types/node@20.17.32)(tsx@4.19.4)(yaml@2.7.1))
       custom-elements-manifest:
         specifier: ^2.1.0
         version: 2.1.0
@@ -150,11 +150,11 @@ importers:
         specifier: ^8.31.1
         version: 8.31.1(eslint@9.26.0)(typescript@5.8.3)
       vite:
-        specifier: ^5.4.19
-        version: 5.4.19(@types/node@20.17.32)
+        specifier: ^6.3.4
+        version: 6.3.4(@types/node@20.17.32)(tsx@4.19.4)(yaml@2.7.1)
       vite-tsconfig-paths:
         specifier: ^5.1.4
-        version: 5.1.4(typescript@5.8.3)(vite@5.4.19(@types/node@20.17.32))
+        version: 5.1.4(typescript@5.8.3)(vite@6.3.4(@types/node@20.17.32)(tsx@4.19.4)(yaml@2.7.1))
       vitepress:
         specifier: ^1.6.3
         version: 1.6.3(@algolia/client-search@5.24.0)(@types/node@20.17.32)(@types/react@18.3.20)(postcss@8.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.8.3)
@@ -3787,6 +3787,46 @@ packages:
       terser:
         optional: true
 
+  vite@6.3.4:
+    resolution: {integrity: sha512-BiReIiMS2fyFqbqNT/Qqt4CVITDU9M9vE+DKcVAsB+ZV0wvTKd+3hMbkpxz1b+NmEDMegpVbisKiAZOnvO92Sw==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || ^20.0.0 || >=22.0.0
+      jiti: '>=1.21.0'
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      sass-embedded: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.16.0
+      tsx: ^4.8.1
+      yaml: ^2.4.2
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      jiti:
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      sass-embedded:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+      tsx:
+        optional: true
+      yaml:
+        optional: true
+
   vitepress@1.6.3:
     resolution: {integrity: sha512-fCkfdOk8yRZT8GD9BFqusW3+GggWYZ/rYncOfmgcDtP3ualNHCAg+Robxp2/6xfH1WwPHtGpPwv7mbA3qomtBw==}
     hasBin: true
@@ -5082,14 +5122,14 @@ snapshots:
     dependencies:
       '@use-gesture/core': 10.3.1
 
-  '@vitejs/plugin-react@4.4.1(vite@5.4.19(@types/node@20.17.32))':
+  '@vitejs/plugin-react@4.4.1(vite@6.3.4(@types/node@20.17.32)(tsx@4.19.4)(yaml@2.7.1))':
     dependencies:
       '@babel/core': 7.27.1
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.27.1)
       '@babel/plugin-transform-react-jsx-source': 7.27.1(@babel/core@7.27.1)
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 5.4.19(@types/node@20.17.32)
+      vite: 6.3.4(@types/node@20.17.32)(tsx@4.19.4)(yaml@2.7.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -7720,13 +7760,13 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite-tsconfig-paths@5.1.4(typescript@5.8.3)(vite@5.4.19(@types/node@20.17.32)):
+  vite-tsconfig-paths@5.1.4(typescript@5.8.3)(vite@6.3.4(@types/node@20.17.32)(tsx@4.19.4)(yaml@2.7.1)):
     dependencies:
       debug: 4.4.0
       globrex: 0.1.2
       tsconfck: 3.1.5(typescript@5.8.3)
     optionalDependencies:
-      vite: 5.4.19(@types/node@20.17.32)
+      vite: 6.3.4(@types/node@20.17.32)(tsx@4.19.4)(yaml@2.7.1)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -7739,6 +7779,20 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.17.32
       fsevents: 2.3.3
+
+  vite@6.3.4(@types/node@20.17.32)(tsx@4.19.4)(yaml@2.7.1):
+    dependencies:
+      esbuild: 0.25.3
+      fdir: 6.4.4(picomatch@4.0.2)
+      picomatch: 4.0.2
+      postcss: 8.5.3
+      rollup: 4.40.1
+      tinyglobby: 0.2.13
+    optionalDependencies:
+      '@types/node': 20.17.32
+      fsevents: 2.3.3
+      tsx: 4.19.4
+      yaml: 2.7.1
 
   vitepress@1.6.3(@algolia/client-search@5.24.0)(@types/node@20.17.32)(@types/react@18.3.20)(postcss@8.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.3)(typescript@5.8.3):
     dependencies:
