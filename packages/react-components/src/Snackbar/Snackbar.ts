@@ -3,8 +3,8 @@ import * as React from "react";
 
 import {
   registerSnackbar,
-  Snackbar as SnackbarElementClass,
   SnackbarHideEvent,
+  Snackbar as SnackbarInput,
   SnackbarShowEvent,
   SnackbarSlots,
 } from "@tapsioss/web-components";
@@ -13,7 +13,7 @@ registerSnackbar();
 
 export const Snackbar = LitReact.createComponent({
   tagName: "tapsi-snackbar",
-  elementClass: SnackbarElementClass,
+  elementClass: SnackbarInput,
   react: React,
   events: {
     onShow: "show" as LitReact.EventName<SnackbarShowEvent>,
@@ -21,9 +21,4 @@ export const Snackbar = LitReact.createComponent({
   },
 });
 
-export {
-  SnackbarElementClass,
-  SnackbarHideEvent,
-  SnackbarShowEvent,
-  SnackbarSlots,
-};
+export { SnackbarHideEvent, SnackbarInput, SnackbarShowEvent, SnackbarSlots };

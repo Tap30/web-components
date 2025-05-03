@@ -3,7 +3,7 @@ import * as React from "react";
 
 import {
   registerSkeleton,
-  Skeleton as SkeletonElementClass,
+  Skeleton as SkeletonInput,
   SkeletonSlots,
 } from "@tapsioss/web-components";
 
@@ -11,9 +11,9 @@ registerSkeleton();
 
 export const Skeleton = LitReact.createComponent({
   tagName: "tapsi-skeleton",
-  elementClass: SkeletonElementClass,
+  elementClass: SkeletonInput,
   react: React,
   events: {},
 });
 
-export { SkeletonElementClass, SkeletonSlots };
+export { SkeletonInput, SkeletonSlots };

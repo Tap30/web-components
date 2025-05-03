@@ -4,7 +4,7 @@ import * as React from "react";
 import {
   registerSegmentedView,
   SegmentedViewActiveChangeEvent,
-  SegmentedView as SegmentedViewElementClass,
+  SegmentedView as SegmentedViewInput,
   SegmentedViewItemSlots,
   SegmentedViewSlots,
 } from "@tapsioss/web-components";
@@ -13,7 +13,7 @@ registerSegmentedView();
 
 export const SegmentedView = LitReact.createComponent({
   tagName: "tapsi-segmented-view",
-  elementClass: SegmentedViewElementClass,
+  elementClass: SegmentedViewInput,
   react: React,
   events: {
     onActiveChange:
@@ -23,7 +23,7 @@ export const SegmentedView = LitReact.createComponent({
 
 export {
   SegmentedViewActiveChangeEvent,
-  SegmentedViewElementClass,
+  SegmentedViewInput,
   SegmentedViewItemSlots,
   SegmentedViewSlots,
 };

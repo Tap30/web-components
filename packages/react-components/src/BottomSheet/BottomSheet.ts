@@ -4,8 +4,8 @@ import * as React from "react";
 import {
   BottomSheetClosedEvent,
   BottomSheetClosingEvent,
-  BottomSheet as BottomSheetElementClass,
   BottomSheetHideEvent,
+  BottomSheet as BottomSheetInput,
   BottomSheetOpenedEvent,
   BottomSheetOpeningEvent,
   BottomSheetShowEvent,
@@ -18,7 +18,7 @@ registerBottomSheet();
 
 export const BottomSheet = LitReact.createComponent({
   tagName: "tapsi-bottom-sheet",
-  elementClass: BottomSheetElementClass,
+  elementClass: BottomSheetInput,
   react: React,
   events: {
     onSnapped: "snapped" as LitReact.EventName<BottomSheetSnappedEvent>,
@@ -34,8 +34,8 @@ export const BottomSheet = LitReact.createComponent({
 export {
   BottomSheetClosedEvent,
   BottomSheetClosingEvent,
-  BottomSheetElementClass,
   BottomSheetHideEvent,
+  BottomSheetInput,
   BottomSheetOpenedEvent,
   BottomSheetOpeningEvent,
   BottomSheetShowEvent,

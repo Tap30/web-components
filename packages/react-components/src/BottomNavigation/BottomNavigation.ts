@@ -3,7 +3,7 @@ import * as React from "react";
 
 import {
   BottomNavigationActiveChangeEvent,
-  BottomNavigation as BottomNavigationElementClass,
+  BottomNavigation as BottomNavigationInput,
   BottomNavigationItemSlots,
   BottomNavigationSlots,
   registerBottomNavigation,
@@ -13,7 +13,7 @@ registerBottomNavigation();
 
 export const BottomNavigation = LitReact.createComponent({
   tagName: "tapsi-bottom-navigation",
-  elementClass: BottomNavigationElementClass,
+  elementClass: BottomNavigationInput,
   react: React,
   events: {
     onActiveChange:
@@ -23,7 +23,7 @@ export const BottomNavigation = LitReact.createComponent({
 
 export {
   BottomNavigationActiveChangeEvent,
-  BottomNavigationElementClass,
+  BottomNavigationInput,
   BottomNavigationItemSlots,
   BottomNavigationSlots,
 };

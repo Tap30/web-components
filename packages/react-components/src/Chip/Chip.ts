@@ -3,7 +3,7 @@ import * as React from "react";
 
 import {
   ChipDeselectEvent,
-  Chip as ChipElementClass,
+  Chip as ChipInput,
   ChipSelectEvent,
   ChipSlots,
   registerChip,
@@ -13,7 +13,7 @@ registerChip();
 
 export const Chip = LitReact.createComponent({
   tagName: "tapsi-chip",
-  elementClass: ChipElementClass,
+  elementClass: ChipInput,
   react: React,
   events: {
     onSelect: "select" as LitReact.EventName<ChipSelectEvent>,
@@ -21,4 +21,4 @@ export const Chip = LitReact.createComponent({
   },
 });
 
-export { ChipDeselectEvent, ChipElementClass, ChipSelectEvent, ChipSlots };
+export { ChipDeselectEvent, ChipInput, ChipSelectEvent, ChipSlots };

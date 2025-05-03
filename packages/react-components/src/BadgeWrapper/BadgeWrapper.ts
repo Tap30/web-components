@@ -2,7 +2,7 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  BadgeWrapper as BadgeWrapperElementClass,
+  BadgeWrapper as BadgeWrapperInput,
   BadgeWrapperSlots,
   registerBadgeWrapper,
 } from "@tapsioss/web-components";
@@ -11,9 +11,9 @@ registerBadgeWrapper();
 
 export const BadgeWrapper = LitReact.createComponent({
   tagName: "tapsi-badge-wrapper",
-  elementClass: BadgeWrapperElementClass,
+  elementClass: BadgeWrapperInput,
   react: React,
   events: {},
 });
 
-export { BadgeWrapperElementClass, BadgeWrapperSlots };
+export { BadgeWrapperInput, BadgeWrapperSlots };

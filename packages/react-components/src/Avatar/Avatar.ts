@@ -2,7 +2,7 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  Avatar as AvatarElementClass,
+  Avatar as AvatarInput,
   AvatarSlots,
   registerAvatar,
 } from "@tapsioss/web-components";
@@ -11,9 +11,9 @@ registerAvatar();
 
 export const Avatar = LitReact.createComponent({
   tagName: "tapsi-avatar",
-  elementClass: AvatarElementClass,
+  elementClass: AvatarInput,
   react: React,
   events: {},
 });
 
-export { AvatarElementClass, AvatarSlots };
+export { AvatarInput, AvatarSlots };

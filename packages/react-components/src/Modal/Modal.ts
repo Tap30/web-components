@@ -2,8 +2,8 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  Modal as ModalElementClass,
   ModalHideEvent,
+  Modal as ModalInput,
   ModalShowEvent,
   ModalSlots,
   registerModal,
@@ -13,7 +13,7 @@ registerModal();
 
 export const Modal = LitReact.createComponent({
   tagName: "tapsi-modal",
-  elementClass: ModalElementClass,
+  elementClass: ModalInput,
   react: React,
   events: {
     onShow: "show" as LitReact.EventName<ModalShowEvent>,
@@ -21,4 +21,4 @@ export const Modal = LitReact.createComponent({
   },
 });
 
-export { ModalElementClass, ModalHideEvent, ModalShowEvent, ModalSlots };
+export { ModalHideEvent, ModalInput, ModalShowEvent, ModalSlots };

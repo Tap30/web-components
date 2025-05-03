@@ -3,7 +3,7 @@ import * as React from "react";
 
 import {
   PinInputCompleteEvent,
-  PinInput as PinInputElementClass,
+  PinInput as PinInputInput,
   registerPinInput,
 } from "@tapsioss/web-components";
 
@@ -11,7 +11,7 @@ registerPinInput();
 
 export const PinInput = LitReact.createComponent({
   tagName: "tapsi-pin-input",
-  elementClass: PinInputElementClass,
+  elementClass: PinInputInput,
   react: React,
   events: {
     onComplete: "complete" as LitReact.EventName<PinInputCompleteEvent>,
@@ -20,4 +20,4 @@ export const PinInput = LitReact.createComponent({
   },
 });
 
-export { PinInputCompleteEvent, PinInputElementClass };
+export { PinInputCompleteEvent, PinInputInput };

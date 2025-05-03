@@ -1,7 +1,7 @@
 import * as LitReact from "@lit/react";
 import * as React from "react";
 
-import { BottomNavigationItem as BottomNavigationItemElementClass } from "@tapsioss/web-components";
+import { BottomNavigationItem as BottomNavigationItemInput } from "@tapsioss/web-components";
 
 if (
   typeof window !== "undefined" &&
@@ -16,7 +16,7 @@ if (
 
 export const BottomNavigationItem = LitReact.createComponent({
   tagName: "tapsi-bottom-navigation-item",
-  elementClass: BottomNavigationItemElementClass,
+  elementClass: BottomNavigationItemInput,
   react: React,
   events: {},
 });

@@ -2,7 +2,7 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  Switch as SwitchElementClass,
+  Switch as SwitchInput,
   registerSwitch,
 } from "@tapsioss/web-components";
 
@@ -10,9 +10,9 @@ registerSwitch();
 
 export const Switch = LitReact.createComponent({
   tagName: "tapsi-switch",
-  elementClass: SwitchElementClass,
+  elementClass: SwitchInput,
   react: React,
   events: { onChange: "input", onInput: "input" },
 });
 
-export { SwitchElementClass };
+export { SwitchInput };

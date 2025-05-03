@@ -134,8 +134,10 @@ const createReactMetadata = (
     e.endsWith("Slots"),
   );
 
+  const inputClassName = elementClassName.replace("ElementClass", "Input");
+
   return {
-    elementClass: elementClassName,
+    elementClass: inputClassName,
     componentName,
     elementTag,
     events,
@@ -196,10 +198,10 @@ const getReactComponentCode = async (
 
   const exports =
     exportsList.length > 0
-      ? `export { ${[`${componentName}ElementClass`, ...exportsList.filter(Boolean)].join(", ")} };`
+      ? `export { ${[`${componentName}Input`, ...exportsList.filter(Boolean)].join(", ")} };`
       : "";
 
-  const elementClass = `${componentName}ElementClass`;
+  const elementClass = `${componentName}Input`;
   const importsList = [
     `${rawElementClass} as ${elementClass}`,
     registerFunction,

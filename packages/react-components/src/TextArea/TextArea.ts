@@ -3,7 +3,7 @@ import * as React from "react";
 
 import {
   registerTextArea,
-  TextArea as TextAreaElementClass,
+  TextArea as TextAreaInput,
   TextAreaSlots,
 } from "@tapsioss/web-components";
 
@@ -11,9 +11,9 @@ registerTextArea();
 
 export const TextArea = LitReact.createComponent({
   tagName: "tapsi-text-area",
-  elementClass: TextAreaElementClass,
+  elementClass: TextAreaInput,
   react: React,
   events: { onChange: "input", onInput: "input" },
 });
 
-export { TextAreaElementClass, TextAreaSlots };
+export { TextAreaInput, TextAreaSlots };

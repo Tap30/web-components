@@ -3,8 +3,8 @@ import * as React from "react";
 
 import {
   registerTooltip,
-  Tooltip as TooltipElementClass,
   TooltipHideEvent,
+  Tooltip as TooltipInput,
   TooltipShowEvent,
 } from "@tapsioss/web-components";
 
@@ -12,7 +12,7 @@ registerTooltip();
 
 export const Tooltip = LitReact.createComponent({
   tagName: "tapsi-tooltip",
-  elementClass: TooltipElementClass,
+  elementClass: TooltipInput,
   react: React,
   events: {
     onShow: "show" as LitReact.EventName<TooltipShowEvent>,
@@ -20,4 +20,4 @@ export const Tooltip = LitReact.createComponent({
   },
 });
 
-export { TooltipElementClass, TooltipHideEvent, TooltipShowEvent };
+export { TooltipHideEvent, TooltipInput, TooltipShowEvent };

@@ -2,7 +2,7 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  FileInput as FileInputElementClass,
+  FileInput as FileInputInput,
   FileInputRetryEvent,
   FileInputSlots,
   registerFileInput,
@@ -12,7 +12,7 @@ registerFileInput();
 
 export const FileInput = LitReact.createComponent({
   tagName: "tapsi-file-input",
-  elementClass: FileInputElementClass,
+  elementClass: FileInputInput,
   react: React,
   events: {
     onRetry: "retry" as LitReact.EventName<FileInputRetryEvent>,
@@ -21,4 +21,4 @@ export const FileInput = LitReact.createComponent({
   },
 });
 
-export { FileInputElementClass, FileInputRetryEvent, FileInputSlots };
+export { FileInputInput, FileInputRetryEvent, FileInputSlots };

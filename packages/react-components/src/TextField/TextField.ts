@@ -3,7 +3,7 @@ import * as React from "react";
 
 import {
   registerTextField,
-  TextField as TextFieldElementClass,
+  TextField as TextFieldInput,
   TextFieldSlots,
 } from "@tapsioss/web-components";
 
@@ -11,9 +11,9 @@ registerTextField();
 
 export const TextField = LitReact.createComponent({
   tagName: "tapsi-text-field",
-  elementClass: TextFieldElementClass,
+  elementClass: TextFieldInput,
   react: React,
   events: { onChange: "input", onInput: "input" },
 });
 
-export { TextFieldElementClass, TextFieldSlots };
+export { TextFieldInput, TextFieldSlots };

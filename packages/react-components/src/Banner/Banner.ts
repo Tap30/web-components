@@ -2,7 +2,7 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  Banner as BannerElementClass,
+  Banner as BannerInput,
   BannerSlots,
   registerBanner,
 } from "@tapsioss/web-components";
@@ -11,9 +11,9 @@ registerBanner();
 
 export const Banner = LitReact.createComponent({
   tagName: "tapsi-banner",
-  elementClass: BannerElementClass,
+  elementClass: BannerInput,
   react: React,
   events: {},
 });
 
-export { BannerElementClass, BannerSlots };
+export { BannerInput, BannerSlots };

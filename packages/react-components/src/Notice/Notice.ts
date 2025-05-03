@@ -2,8 +2,8 @@ import * as LitReact from "@lit/react";
 import * as React from "react";
 
 import {
-  Notice as NoticeElementClass,
   NoticeHideEvent,
+  Notice as NoticeInput,
   NoticeShowEvent,
   NoticeSlots,
   registerNotice,
@@ -13,7 +13,7 @@ registerNotice();
 
 export const Notice = LitReact.createComponent({
   tagName: "tapsi-notice",
-  elementClass: NoticeElementClass,
+  elementClass: NoticeInput,
   react: React,
   events: {
     onShow: "show" as LitReact.EventName<NoticeShowEvent>,
@@ -21,4 +21,4 @@ export const Notice = LitReact.createComponent({
   },
 });
 
-export { NoticeElementClass, NoticeHideEvent, NoticeShowEvent, NoticeSlots };
+export { NoticeHideEvent, NoticeInput, NoticeShowEvent, NoticeSlots };
