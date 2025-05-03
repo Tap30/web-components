@@ -81,25 +81,29 @@ git checkout main
 git pull upstream main
 ```
 
-4. Install the dependencies with `pnpm` (`npm` and `yarn` aren't supported):
+4. Sync and install the engines using
+   [Corepack](https://pnpm.io/installation#using-corepack) or
+   [Volta](https://volta.sh/)
+
+5. Install the dependencies with `pnpm` (`npm` and `yarn` aren't supported):
 
 ```sh
 pnpm install
 ```
 
-5. Create a new topic branch:
+6. Create a new topic branch:
 
 ```sh
 git switch -c my-topic-branch
 ```
 
-6. Make changes, commit and push to your fork:
+7. Make changes, commit and push to your fork:
 
 ```sh
 git push -u origin HEAD
 ```
 
-7. Go to [the repository](https://github.com/Tap30/web-components) and make a
+8. Go to [the repository](https://github.com/Tap30/web-components) and make a
    Pull Request.
 
 The core team is monitoring for Pull Requests. We will review your Pull Request
@@ -123,7 +127,7 @@ The local dev server is a Vite app. You can import codes and make changes to
 You can build the project, including all type definitions, with:
 
 ```sh
-pnpm packages:build
+pnpm build
 ```
 
 ### Testing
