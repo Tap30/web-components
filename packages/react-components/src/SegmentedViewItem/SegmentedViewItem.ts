@@ -1,7 +1,7 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
-import { SegmentedViewItem as SegmentedViewItemInput } from "@tapsioss/web-components";
+import { SegmentedViewItem as SegmentedViewItemElement } from "@tapsioss/web-components";
 
 if (
   typeof window !== "undefined" &&
@@ -14,9 +14,10 @@ if (
   /* eslint-enable no-console */
 }
 
-export const SegmentedViewItem = LitReact.createComponent({
-  tagName: "tapsi-segmented-view-item",
-  elementClass: SegmentedViewItemInput,
-  react: React,
-  events: {},
-});
+export const SegmentedViewItem: ReactWebComponent<SegmentedViewItemElement> =
+  createComponent({
+    tagName: "tapsi-segmented-view-item",
+    elementClass: SegmentedViewItemElement,
+    react: React,
+    events: {},
+  });

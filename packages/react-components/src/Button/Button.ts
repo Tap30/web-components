@@ -1,19 +1,19 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
-  Button as ButtonInput,
+  Button as ButtonElement,
   ButtonSlots,
   registerButton,
 } from "@tapsioss/web-components";
 
 registerButton();
 
-export const Button = LitReact.createComponent({
+export const Button: ReactWebComponent<ButtonElement> = createComponent({
   tagName: "tapsi-button",
-  elementClass: ButtonInput,
+  elementClass: ButtonElement,
   react: React,
   events: {},
 });
 
-export { ButtonInput, ButtonSlots };
+export { ButtonElement, ButtonSlots };

@@ -1,19 +1,19 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
-  Badge as BadgeInput,
+  Badge as BadgeElement,
   BadgeSlots,
   registerBadge,
 } from "@tapsioss/web-components";
 
 registerBadge();
 
-export const Badge = LitReact.createComponent({
+export const Badge: ReactWebComponent<BadgeElement> = createComponent({
   tagName: "tapsi-badge",
-  elementClass: BadgeInput,
+  elementClass: BadgeElement,
   react: React,
   events: {},
 });
 
-export { BadgeInput, BadgeSlots };
+export { BadgeElement, BadgeSlots };

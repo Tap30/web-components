@@ -1,9 +1,13 @@
-import * as LitReact from "@lit/react";
+import {
+  createComponent,
+  type EventName,
+  type ReactWebComponent,
+} from "@lit/react";
 import * as React from "react";
 
 import {
+  Modal as ModalElement,
   ModalHideEvent,
-  Modal as ModalInput,
   ModalShowEvent,
   ModalSlots,
   registerModal,
@@ -11,14 +15,17 @@ import {
 
 registerModal();
 
-export const Modal = LitReact.createComponent({
+export const Modal: ReactWebComponent<
+  ModalElement,
+  { onShow: EventName<ModalShowEvent>; onHide: EventName<ModalHideEvent> }
+> = createComponent({
   tagName: "tapsi-modal",
-  elementClass: ModalInput,
+  elementClass: ModalElement,
   react: React,
   events: {
-    onShow: "show" as LitReact.EventName<ModalShowEvent>,
-    onHide: "hide" as LitReact.EventName<ModalHideEvent>,
+    onShow: "show" as EventName<ModalShowEvent>,
+    onHide: "hide" as EventName<ModalHideEvent>,
   },
 });
 
-export { ModalHideEvent, ModalInput, ModalShowEvent, ModalSlots };
+export { ModalElement, ModalHideEvent, ModalShowEvent, ModalSlots };

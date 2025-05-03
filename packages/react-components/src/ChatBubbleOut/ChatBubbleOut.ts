@@ -1,19 +1,20 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
-  ChatBubbleOut as ChatBubbleOutInput,
+  ChatBubbleOut as ChatBubbleOutElement,
   ChatBubbleOutSlots,
   registerChatBubbleOut,
 } from "@tapsioss/web-components";
 
 registerChatBubbleOut();
 
-export const ChatBubbleOut = LitReact.createComponent({
-  tagName: "tapsi-chat-bubble-out",
-  elementClass: ChatBubbleOutInput,
-  react: React,
-  events: {},
-});
+export const ChatBubbleOut: ReactWebComponent<ChatBubbleOutElement> =
+  createComponent({
+    tagName: "tapsi-chat-bubble-out",
+    elementClass: ChatBubbleOutElement,
+    react: React,
+    events: {},
+  });
 
-export { ChatBubbleOutInput, ChatBubbleOutSlots };
+export { ChatBubbleOutElement, ChatBubbleOutSlots };

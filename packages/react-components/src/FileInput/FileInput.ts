@@ -1,8 +1,12 @@
-import * as LitReact from "@lit/react";
+import {
+  createComponent,
+  type EventName,
+  type ReactWebComponent,
+} from "@lit/react";
 import * as React from "react";
 
 import {
-  FileInput as FileInputInput,
+  FileInput as FileInputElement,
   FileInputRetryEvent,
   FileInputSlots,
   registerFileInput,
@@ -10,15 +14,18 @@ import {
 
 registerFileInput();
 
-export const FileInput = LitReact.createComponent({
+export const FileInput: ReactWebComponent<
+  FileInputElement,
+  { onRetry: EventName<FileInputRetryEvent>; onChange: string; onInput: string }
+> = createComponent({
   tagName: "tapsi-file-input",
-  elementClass: FileInputInput,
+  elementClass: FileInputElement,
   react: React,
   events: {
-    onRetry: "retry" as LitReact.EventName<FileInputRetryEvent>,
+    onRetry: "retry" as EventName<FileInputRetryEvent>,
     onChange: "input",
     onInput: "input",
   },
 });
 
-export { FileInputInput, FileInputRetryEvent, FileInputSlots };
+export { FileInputElement, FileInputRetryEvent, FileInputSlots };

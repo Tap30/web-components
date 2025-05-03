@@ -1,18 +1,21 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
-  Stepper as StepperInput,
+  Stepper as StepperElement,
   registerStepper,
 } from "@tapsioss/web-components";
 
 registerStepper();
 
-export const Stepper = LitReact.createComponent({
+export const Stepper: ReactWebComponent<
+  StepperElement,
+  { onChange: string; onInput: string }
+> = createComponent({
   tagName: "tapsi-stepper",
-  elementClass: StepperInput,
+  elementClass: StepperElement,
   react: React,
   events: { onChange: "change", onInput: "change" },
 });
 
-export { StepperInput };
+export { StepperElement };

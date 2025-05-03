@@ -1,19 +1,21 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
-  EmptyState as EmptyStateInput,
+  EmptyState as EmptyStateElement,
   EmptyStateSlots,
   registerEmptyState,
 } from "@tapsioss/web-components";
 
 registerEmptyState();
 
-export const EmptyState = LitReact.createComponent({
-  tagName: "tapsi-empty-state",
-  elementClass: EmptyStateInput,
-  react: React,
-  events: {},
-});
+export const EmptyState: ReactWebComponent<EmptyStateElement> = createComponent(
+  {
+    tagName: "tapsi-empty-state",
+    elementClass: EmptyStateElement,
+    react: React,
+    events: {},
+  },
+);
 
-export { EmptyStateInput, EmptyStateSlots };
+export { EmptyStateElement, EmptyStateSlots };
