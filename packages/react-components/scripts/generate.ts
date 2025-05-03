@@ -212,28 +212,6 @@ const getReactComponentCode = async (
     ? `${registerFunction}();`
     : `if (typeof window !== "undefined" && !customElements.get("${parentInfo?.tagName}")){\n/* eslint-disable no-console */\nconsole.warn("[TAPSI][${componentName}]: The \`${parentInfo?.tagName}\` tag is not registered. Since \`${componentName}\` is a compound component, it should be wrapped inside \`${parentInfo?.elementClassName}\` component.");\n/* eslint-enable no-console */}`;
 
-  let componentTypeEvents;
-
-  if ((_events ?? [])?.length === 0) {
-    componentTypeEvents = "object";
-  } else {
-    componentTypeEvents = `{ ${
-      _events
-        ?.map(event => {
-          const eventClass = event.class;
-          const eventNameInReact = event.key;
-
-          if (!eventClass) {
-            return `${eventNameInReact}: string`;
-          }
-
-          return `${eventNameInReact}: EventName<${eventClass}>`;
-        })
-        .filter(event => event !== null)
-        .join(",") || ""
-    } }`;
-  }
-
   const componentType = `ReactWebComponent<${elementClass}${
     _events?.length > 0
       ? `, { ${
