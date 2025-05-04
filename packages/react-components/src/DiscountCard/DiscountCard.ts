@@ -1,19 +1,20 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
-  DiscountCard as DiscountCardElementClass,
+  DiscountCard as DiscountCardElement,
   DiscountCardSlots,
   registerDiscountCard,
 } from "@tapsioss/web-components";
 
 registerDiscountCard();
 
-export const DiscountCard = LitReact.createComponent({
-  tagName: "tapsi-discount-card",
-  elementClass: DiscountCardElementClass,
-  react: React,
-  events: {},
-});
+export const DiscountCard: ReactWebComponent<DiscountCardElement> =
+  createComponent({
+    tagName: "tapsi-discount-card",
+    elementClass: DiscountCardElement,
+    react: React,
+    events: {},
+  });
 
-export { DiscountCardSlots };
+export { DiscountCardElement, DiscountCardSlots };
