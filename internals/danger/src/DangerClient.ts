@@ -59,28 +59,28 @@ class DangerClient {
     return `[^${++this.footnoteString}]`;
   }
 
-  public failWithFootnote(content: string, footnote: string) {
+  public failWithFootnote(content: string, footnote: string): void {
     const footnoteString = this.getFootnoteString();
 
     this.fail(`${content} ${footnoteString}`);
     this.markdown(`${footnoteString}: ${footnote}`);
   }
 
-  public warnWithFootnote(content: string, footnote: string) {
+  public warnWithFootnote(content: string, footnote: string): void {
     const footnoteString = this.getFootnoteString();
 
     this.warn(`${content} ${footnoteString}`);
     this.markdown(`${footnoteString}: ${footnote}`);
   }
 
-  public markdownWithFootnote(content: string, footnote: string) {
+  public markdownWithFootnote(content: string, footnote: string): void {
     const footnoteString = this.getFootnoteString();
 
     this.markdown(`${content} ${footnoteString}`);
     this.markdown(`${footnoteString}: ${footnote}`);
   }
 
-  public messageWithFootnote(content: string, footnote: string) {
+  public messageWithFootnote(content: string, footnote: string): void {
     const footnoteString = this.getFootnoteString();
 
     this.message(`${content} ${footnoteString}`);

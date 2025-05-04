@@ -1,4 +1,4 @@
-import { Validator } from "../utils/index.ts";
+import { Validator, type ValidityAndMessage } from "../utils/index.ts";
 
 export type CheckboxState = {
   /**
@@ -15,7 +15,7 @@ export type CheckboxState = {
 class CheckboxValidator extends Validator<CheckboxState> {
   private _checkboxControl?: HTMLInputElement;
 
-  protected override computeValidity(state: CheckboxState) {
+  protected override computeValidity(state: CheckboxState): ValidityAndMessage {
     if (!this._checkboxControl) {
       // Lazily create the platform input
       this._checkboxControl = document.createElement("input");
@@ -31,11 +31,11 @@ class CheckboxValidator extends Validator<CheckboxState> {
     };
   }
 
-  protected override equals(prev: CheckboxState, next: CheckboxState) {
+  protected override equals(prev: CheckboxState, next: CheckboxState): boolean {
     return prev.checked === next.checked && prev.required === next.required;
   }
 
-  protected override copy(state: CheckboxState) {
+  protected override copy(state: CheckboxState): CheckboxState {
     const { checked, required } = state;
 
     return {

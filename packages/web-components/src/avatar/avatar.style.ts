@@ -1,6 +1,6 @@
-import { css } from "lit";
+import { css, type CSSResult } from "lit";
 
-export default css`
+const styles: CSSResult = css`
   :host {
     display: inline-block;
   }
@@ -66,3 +66,5 @@ export default css`
     height: 4.5rem;
   }
 `;
+
+export default styles;

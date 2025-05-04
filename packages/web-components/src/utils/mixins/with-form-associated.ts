@@ -8,14 +8,14 @@
 import type { LitElement, PropertyDeclaration } from "lit";
 import { property } from "lit/decorators.js";
 import SystemError from "../SystemError.ts";
-import type { MixinBase, MixinReturn } from "./types";
+import type { MixinBase, MixinReturn } from "./types.ts";
 import {
   internals,
   type WithElementInternals,
 } from "./with-element-internals.ts";
 
-export const getFormValue = Symbol("getFormValue");
-export const getFormState = Symbol("getFormState");
+export const getFormValue: unique symbol = Symbol("getFormValue");
+export const getFormState: unique symbol = Symbol("getFormState");
 
 export type FormValue = File | string | FormData;
 

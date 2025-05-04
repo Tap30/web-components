@@ -1,6 +1,13 @@
-import "../button/icon-button/index.ts";
+import { register as registerIconButton } from "../button/icon-button/index.ts";
 
-import { html, LitElement, nothing, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { isSsr, logger } from "../utils/index.ts";
@@ -27,7 +34,7 @@ interface TapsiNoticeEventMap extends HTMLElementEventMap {
  */
 export class Notice extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   public static override readonly shadowRootOptions: ShadowRootInit = {
@@ -149,7 +156,13 @@ export class Notice extends LitElement {
   @queryAssignedNodes({ slot: Slots.ACTION })
   private _actionSlotNodes!: Node[];
 
-  protected override willUpdate(changed: PropertyValues<this>) {
+  constructor() {
+    super();
+
+    registerIconButton();
+  }
+
+  protected override willUpdate(changed: PropertyValues<this>): void {
     super.willUpdate(changed);
 
     this._handleArtworkSlotChange();
@@ -187,7 +200,7 @@ export class Notice extends LitElement {
   /**
    * Forces the notice to display.
    */
-  public show() {
+  public show(): void {
     if (this.visible) return;
 
     this.visible = true;
@@ -200,7 +213,7 @@ export class Notice extends LitElement {
   /**
    * Forces the notice to hide.
    */
-  public hide() {
+  public hide(): void {
     if (!this.visible) return;
 
     this.visible = false;
@@ -277,7 +290,7 @@ export class Notice extends LitElement {
     return null;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       dismissible: this.dismissible,

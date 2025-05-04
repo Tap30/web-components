@@ -1,4 +1,9 @@
-import { html, type PropertyValues, type TemplateResult } from "lit";
+import {
+  html,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { logger } from "../../utils/index.ts";
 import { BaseButton, baseButtonStyles } from "../base/index.ts";
 import styles from "./icon-button.style.ts";
@@ -15,9 +20,12 @@ import styles from "./icon-button.style.ts";
  */
 export class IconButton extends BaseButton {
   /** @internal */
-  public static override readonly styles = [baseButtonStyles, styles];
+  public static override readonly styles: CSSResultGroup = [
+    baseButtonStyles,
+    styles,
+  ];
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (!this.label) {

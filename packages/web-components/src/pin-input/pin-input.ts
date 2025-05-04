@@ -1,4 +1,11 @@
-import { html, LitElement, nothing, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { live } from "lit/directives/live.js";
@@ -57,7 +64,7 @@ const BaseClass = withOnReportValidity(
  */
 export class PinInput extends BaseClass {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   declare addEventListener: <K extends keyof TapsiPinInputEventMap>(
@@ -333,7 +340,7 @@ export class PinInput extends BaseClass {
     attribute: string,
     newValue: string | null,
     oldValue: string | null,
-  ) {
+  ): void {
     if (attribute === "value" && this._dirty) {
       // After user input, changing the value attribute no longer updates the
       // text field's value (until reset). This matches native <input> behavior.
@@ -353,7 +360,7 @@ export class PinInput extends BaseClass {
     });
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (this._refreshErrorAlert) {
@@ -442,7 +449,7 @@ export class PinInput extends BaseClass {
   /**
    * Reset the input to its default value.
    */
-  public reset() {
+  public reset(): void {
     this.value = this.getAttribute("value") ?? "";
     this._dirty = false;
     this._nativeError = false;
@@ -640,32 +647,32 @@ export class PinInput extends BaseClass {
   }
 
   /** @internal */
-  public override [getFormValue]() {
+  public override [getFormValue](): string {
     return this.value;
   }
 
   /** @internal */
-  public override formResetCallback() {
+  public override formResetCallback(): void {
     this.reset();
   }
 
   /** @internal */
-  public override formStateRestoreCallback(state: string) {
+  public override formStateRestoreCallback(state: string): void {
     this.value = state;
   }
 
   /** @internal */
-  public override formDisabledCallback(disabled: boolean) {
+  public override formDisabledCallback(disabled: boolean): void {
     this.disabled = disabled;
   }
 
   /** @internal */
-  public override [getValidityAnchor]() {
+  public override [getValidityAnchor](): HTMLElement | null {
     return null;
   }
 
   /** @internal */
-  public override [onReportValidity](invalidEvent: Event | null) {
+  public override [onReportValidity](invalidEvent: Event | null): void {
     // Prevent default pop-up behavior.
     invalidEvent?.preventDefault();
 
@@ -767,7 +774,7 @@ export class PinInput extends BaseClass {
     `;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const hasValidLabel = Boolean(this.label || this.labelledBy);
 
     const rootClasses = classMap({

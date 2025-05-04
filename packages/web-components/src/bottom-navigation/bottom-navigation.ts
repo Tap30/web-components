@@ -1,4 +1,10 @@
-import { LitElement, html, nothing } from "lit";
+import {
+  LitElement,
+  html,
+  nothing,
+  type CSSResultGroup,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { logger } from "../utils/index.ts";
 import styles from "./bottom-navigation.style.ts";
@@ -21,7 +27,7 @@ interface TapsiBottomNavigationEventMap extends HTMLElementEventMap {
  */
 export class BottomNavigation extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /**
    * Defines a string value that can be used to set a label
@@ -63,7 +69,7 @@ export class BottomNavigation extends LitElement {
   ) => void;
 
   /** @internal */
-  public override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener(
       // @ts-expect-error its internal event name.
@@ -90,7 +96,7 @@ export class BottomNavigation extends LitElement {
     this.dispatchEvent(new ActiveChangeEvent({ value }));
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     if (!this.label) {
       logger(
         "Set `label` attribute for better accessibility.",

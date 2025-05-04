@@ -4,7 +4,7 @@ import { EmptyState } from "./empty-state.ts";
 export { Slots } from "./constants.ts";
 export { EmptyState };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-empty-state")) return;
 

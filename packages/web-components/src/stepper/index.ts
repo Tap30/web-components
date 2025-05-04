@@ -3,7 +3,7 @@ import { Stepper } from "./stepper.ts";
 
 export { Stepper };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-stepper")) return;
 

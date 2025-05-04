@@ -4,7 +4,7 @@ import { Avatar } from "./avatar.ts";
 export { Slots } from "./constants.ts";
 export { Avatar };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-avatar")) return;
 

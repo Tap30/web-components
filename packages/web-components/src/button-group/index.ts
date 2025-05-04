@@ -4,7 +4,7 @@ import { ButtonGroup } from "./button-group.ts";
 export { Slots } from "./constants.ts";
 export { ButtonGroup };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-button-group")) return;
 

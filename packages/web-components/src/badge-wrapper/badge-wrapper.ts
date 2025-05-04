@@ -1,4 +1,10 @@
-import { html, LitElement, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { getRenderRootSlot, runAfterRepaint } from "../utils/index.ts";
@@ -15,7 +21,7 @@ import { Slots } from "./constants.ts";
  */
 export class BadgeWrapper extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /**
    * The shape of the anchor.
@@ -47,7 +53,7 @@ export class BadgeWrapper extends LitElement {
   @property({ attribute: "badge-alignment" })
   public badgeAlignment: "top" | "middle" = "top";
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     runAfterRepaint(() => {
@@ -71,7 +77,7 @@ export class BadgeWrapper extends LitElement {
     });
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       [this.anchorShape]: true,

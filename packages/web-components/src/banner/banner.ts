@@ -1,4 +1,10 @@
-import { LitElement, type PropertyValues, html } from "lit";
+import {
+  type CSSResultGroup,
+  LitElement,
+  type PropertyValues,
+  type TemplateResult,
+  html,
+} from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { isSsr } from "../utils/index.ts";
@@ -19,7 +25,7 @@ import {
  */
 export class Banner extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /**
    * The heading text to display in the banner.
@@ -28,7 +34,7 @@ export class Banner extends LitElement {
    * @attr {string} heading
    */
   @property()
-  public heading?: string;
+  public heading = "";
 
   /**
    * The description text to display in the banner.
@@ -37,7 +43,7 @@ export class Banner extends LitElement {
    * @attr {string} description
    */
   @property()
-  public description?: string;
+  public description = "";
 
   /**
    * The URL of the background image to display in the banner.
@@ -46,7 +52,7 @@ export class Banner extends LitElement {
    * @attr {string} image
    */
   @property()
-  public image?: string;
+  public image = "";
 
   /**
    * The variant style of the banner.
@@ -66,7 +72,7 @@ export class Banner extends LitElement {
    * @default "var(--tapsi-color-surface-secondary)"
    */
   @property({ attribute: "background-color" })
-  public backgroundColor = DEFAULT_BACKGROUND_COLOR;
+  public backgroundColor: string = DEFAULT_BACKGROUND_COLOR;
 
   /**
    * The text color of the banner.
@@ -76,7 +82,7 @@ export class Banner extends LitElement {
    * @default "var(--tapsi-color-content-primary)"
    */
   @property({ attribute: "text-color" })
-  public textColor = DEFAULT_TEXT_COLOR;
+  public textColor: string = DEFAULT_TEXT_COLOR;
 
   @state()
   private _hasActionSlot = false;
@@ -116,7 +122,7 @@ export class Banner extends LitElement {
     }
   }
 
-  protected override willUpdate(changed: PropertyValues<this>) {
+  protected override willUpdate(changed: PropertyValues<this>): void {
     super.willUpdate(changed);
     this._handleActionSlotChange();
   }
@@ -153,7 +159,7 @@ export class Banner extends LitElement {
     `;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       [this.variant]: true,

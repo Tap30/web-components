@@ -12,17 +12,19 @@ export const tabulateData = (headers: string[], data: string[][]): string => {
 
 export const codify = (inputString: string) => `\`${inputString}\``;
 
-export const getFormattedTagUsageString = (tagName?: string) => {
+export const getFormattedTagUsageString = (tagName?: string): string => {
   if (!tagName) return "";
   return `<pre>&lt;<span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">${tagName}</span>&gt;&lt;/<span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">${tagName}</span>&gt;</pre>`;
 };
 
-export const getFormattedImportUsageString = (path?: string) => {
+export const getFormattedImportUsageString = (path?: string): string => {
   if (!path) return "";
   return `<pre><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">import</span> <span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">"${path}"</span>;</pre>`;
 };
 
-export const getUsageSectionMarkdown = (sections: [string, string?][]) => {
+export const getUsageSectionMarkdown = (
+  sections: [string, string?][],
+): string => {
   let res = "";
 
   if (sections.length === 0) return res;

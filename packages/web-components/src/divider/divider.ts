@@ -1,4 +1,4 @@
-import { LitElement } from "lit";
+import { LitElement, type CSSResultGroup } from "lit";
 import { property } from "lit/decorators.js";
 import styles from "./divider.style.ts";
 
@@ -9,7 +9,7 @@ import styles from "./divider.style.ts";
  */
 export class Divider extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /**
    * The thickness of the divider.
@@ -22,7 +22,7 @@ export class Divider extends LitElement {
   public variant: "thin" | "medium" | "thick" = "thin";
 
   /** @internal */
-  public override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
 
     this.setAttribute("role", "separator");

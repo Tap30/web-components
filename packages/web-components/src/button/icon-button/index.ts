@@ -4,7 +4,7 @@ import { IconButton } from "./icon-button.ts";
 export { Slots } from "./constants.ts";
 export { IconButton };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-icon-button")) return;
 

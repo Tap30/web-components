@@ -5,7 +5,7 @@ import {
   type TemplateResult,
 } from "lit";
 import { property } from "lit/decorators.js";
-import { type ClassInfo, classMap } from "lit/directives/class-map.js";
+import { classMap, type ClassInfo } from "lit/directives/class-map.js";
 import { KeyboardKeys } from "../internals/index.ts";
 import {
   dispatchActivationClick,
@@ -107,7 +107,7 @@ export abstract class BaseInput extends BaseClass {
     super();
 
     if (!isSsr()) {
-      /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       this.addEventListener("click", async event => {
         if (this.disabled) return;
 
@@ -127,7 +127,7 @@ export abstract class BaseInput extends BaseClass {
     }
   }
 
-  protected hasValidLabel() {
+  protected hasValidLabel(): boolean {
     return Boolean(this.label || this.labelledBy);
   }
 
@@ -140,7 +140,10 @@ export abstract class BaseInput extends BaseClass {
     | null;
 
   /** @internal */
-  public override [getValidityAnchor]() {
+  public override [getValidityAnchor]():
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | null {
     return this.getInputElement();
   }
 
@@ -165,12 +168,14 @@ export abstract class BaseInput extends BaseClass {
   }
 
   /** @internal */
-  public override formDisabledCallback(disabled: boolean) {
+  public override formDisabledCallback(disabled: boolean): void {
     this.disabled = disabled;
   }
 
   /** @internal */
-  protected async handleFormSubmitWithEnter(event: KeyboardEvent) {
+  protected async handleFormSubmitWithEnter(
+    event: KeyboardEvent,
+  ): Promise<void> {
     if (this.disabled) {
       event.preventDefault();
 
@@ -194,7 +199,7 @@ export abstract class BaseInput extends BaseClass {
     };
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap(this.getRootClasses());
 
     return html`

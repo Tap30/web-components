@@ -1,7 +1,13 @@
-import { html, LitElement, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { ifDefined } from "lit/directives/if-defined.js";
 import { isSsr, logger } from "../utils/index.ts";
 import styles from "./chip.style.ts";
 import { Slots } from "./constants.ts";
@@ -27,7 +33,7 @@ interface TapsiChipEventMap extends HTMLElementEventMap {
  */
 export class Chip extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   public static override readonly shadowRootOptions = {
@@ -117,7 +123,7 @@ export class Chip extends LitElement {
 
   private readonly _selectionController = new ChipSelectionController(this);
 
-  protected override willUpdate(changed: PropertyValues<this>) {
+  protected override willUpdate(changed: PropertyValues<this>): void {
     super.willUpdate(changed);
 
     if (changed.has("value") && !this.value) {
@@ -154,7 +160,7 @@ export class Chip extends LitElement {
     this.renderRoot.querySelector<HTMLElement>("#root")?.blur();
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       [this.size]: true,
@@ -171,7 +177,7 @@ export class Chip extends LitElement {
         part="root"
         ?disabled=${this.disabled}
         tabindex="${this.disabled ? "-1" : "0"}"
-        aria-label=${ifDefined(this.ariaLabel ?? undefined)}
+        aria-label=${this.ariaLabel || nothing}
         aria-pressed=${this.selected}
         @click=${this._selectionController.handleClick}
         @keydown=${this._selectionController.handleKeyDown}

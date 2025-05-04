@@ -78,7 +78,7 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
     return rootNode;
   }
 
-  protected get _parentTarget() {
+  protected get _parentTarget(): HTMLElement | null {
     const rootNode = this._rootNode;
 
     if (!rootNode) return null;
@@ -86,11 +86,11 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
     return this._resolveParentTarget(rootNode);
   }
 
-  protected get _siblings() {
+  protected get _siblings(): SelectionElement<T>[] {
     return this._elements.filter(element => element !== this._host);
   }
 
-  protected get _selectionProperties() {
+  protected get _selectionProperties(): SelectionProperties<T> {
     if (typeof this._selectionPropertiesResolver === "function") {
       return this._selectionPropertiesResolver();
     }
@@ -98,21 +98,21 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
     return this._selectionPropertiesResolver;
   }
 
-  public hostConnected() {
+  public hostConnected(): void {
     const { member: selectionMember } = this._selectionProperties;
 
     if (this._host[selectionMember]) this._applySelectionProperties();
   }
 
-  public hostDisconnected() {}
-  public hostUpdate() {}
-  public hostUpdated() {}
+  public hostDisconnected(): void {}
+  public hostUpdate(): void {}
+  public hostUpdated(): void {}
 
   /**
    * Should be called whenever the host's selection property changes
    * synchronously.
    */
-  public handleSelectionChange() {
+  public handleSelectionChange(): void {
     this._applySelectionProperties();
   }
 
@@ -137,7 +137,7 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
     }
   }
 
-  public async handleClick(event: MouseEvent) {
+  public async handleClick(event: MouseEvent): Promise<boolean> {
     if ("disabled" in this._host && this._host.disabled) return false;
 
     // allow event to propagate to user code after a microtask.
@@ -169,7 +169,7 @@ class SelectionController<T extends HTMLElement> implements ReactiveController {
     return true;
   }
 
-  public async handleKeyDown(event: KeyboardEvent) {
+  public async handleKeyDown(event: KeyboardEvent): Promise<boolean> {
     if ("disabled" in this._host && this._host.disabled) return false;
 
     // allow event to propagate to user code after a microtask.

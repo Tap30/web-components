@@ -1,4 +1,10 @@
-import { html, LitElement, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { isSsr, logger } from "../../utils/index.ts";
@@ -16,7 +22,7 @@ import styles from "./item.style.ts";
  */
 export class BottomNavigationItem extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   public static override readonly shadowRootOptions = {
@@ -79,7 +85,7 @@ export class BottomNavigationItem extends LitElement {
     }
   }
 
-  protected override willUpdate(changed: PropertyValues<this>) {
+  protected override willUpdate(changed: PropertyValues<this>): void {
     super.willUpdate(changed);
 
     this._handleIconSlotChange();
@@ -101,7 +107,7 @@ export class BottomNavigationItem extends LitElement {
     this.renderRoot?.querySelector<HTMLElement>("#root")?.blur();
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       active: this.active,

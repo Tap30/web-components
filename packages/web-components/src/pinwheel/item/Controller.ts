@@ -2,8 +2,8 @@ import {
   SelectionController,
   type SelectionElement,
 } from "../../utils/index.ts";
-import type { Pinwheel } from "../pinwheel";
-import type { PinwheelItem } from "./item";
+import type { Pinwheel } from "../pinwheel.ts";
+import type { PinwheelItem } from "./item.ts";
 
 type Host = SelectionElement<PinwheelItem>;
 
@@ -29,7 +29,7 @@ class ItemSelectionController extends SelectionController<PinwheelItem> {
     this._host.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
-  public override handleSelectionChange() {
+  public override handleSelectionChange(): void {
     super.handleSelectionChange();
 
     const parent = this._parentTarget as Pinwheel | null;
@@ -44,7 +44,7 @@ class ItemSelectionController extends SelectionController<PinwheelItem> {
     parent.value = selectedItem.value;
   }
 
-  public override async handleClick(event: MouseEvent) {
+  public override async handleClick(event: MouseEvent): Promise<boolean> {
     const parent = this._parentTarget as Pinwheel | null;
 
     if (!parent) return false;

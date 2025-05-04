@@ -3,7 +3,7 @@ import { RateSlider } from "./rate-slider.ts";
 
 export { RateSlider };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-rate-slider")) return;
 

@@ -4,7 +4,7 @@ import { Banner } from "./banner.ts";
 export { Slots } from "./constants.ts";
 export { Banner };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-banner")) return;
 

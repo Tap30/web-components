@@ -1,4 +1,4 @@
-import { Validator } from "../utils/index.ts";
+import { Validator, type ValidityAndMessage } from "../utils/index.ts";
 
 export type State = {
   /**
@@ -80,7 +80,10 @@ export type TextFieldState = {
 class TextFieldValidator extends Validator<TextFieldState> {
   private _inputControl?: HTMLInputElement;
 
-  protected override computeValidity({ state, control }: TextFieldState) {
+  protected override computeValidity({
+    state,
+    control,
+  }: TextFieldState): ValidityAndMessage {
     let input = control;
 
     if (!input) {
@@ -161,7 +164,7 @@ class TextFieldValidator extends Validator<TextFieldState> {
   protected override equals(
     { state: prev }: TextFieldState,
     { state: next }: TextFieldState,
-  ) {
+  ): boolean {
     return (
       prev.type === next.type &&
       prev.value === next.value &&

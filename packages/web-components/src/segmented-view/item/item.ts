@@ -1,6 +1,12 @@
-import "../../button/standard/index.ts";
+import { register as registerButton } from "../../button/standard/index.ts";
 
-import { html, LitElement, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property, query } from "lit/decorators.js";
 import { logger } from "../../utils/index.ts";
 import ItemSelectionController from "./Controller.ts";
@@ -15,7 +21,7 @@ import styles from "./item.style.ts";
  */
 export class SegmentedViewItem extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   public static override readonly shadowRootOptions = {
@@ -103,6 +109,12 @@ export class SegmentedViewItem extends LitElement {
     } else this.removeAttribute("tabindex");
   }
 
+  constructor() {
+    super();
+
+    registerButton();
+  }
+
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
@@ -125,7 +137,7 @@ export class SegmentedViewItem extends LitElement {
     this._root?.blur();
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     if (!this.controls) {
       logger(
         [

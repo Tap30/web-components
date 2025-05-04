@@ -116,6 +116,8 @@
         "./packages/theme/scripts/copy-css-vars.ts",
         "./packages/theme/scripts/generate.ts",
         "./packages/theme/tsconfig.{build,cjs,esm}.json",
+        "./tsconfig.json",
+        "./tsconfig.build.json",
         "!./packages/theme/dist/**/*"
       ],
       "output": [
@@ -129,6 +131,8 @@
       "files": [
         "./packages/web-components/**/*.ts",
         "./packages/web-components/tsconfig.{build,cjs,esm}.json",
+        "./tsconfig.json",
+        "./tsconfig.build.json",
         "!./packages/web-components/**/*.test.ts",
         "!./packages/web-components/playwright.config.ts",
         "!./packages/web-components/dist/**/*"
@@ -147,6 +151,8 @@
         "./packages/react-components/**/*.ts",
         "./packages/react-components/tsconfig.{build,cjs,esm}.json",
         "./packages/react-components/templates/*",
+        "./tsconfig.json",
+        "./tsconfig.build.json",
         "!./packages/react-components/dist/**/*"
       ],
       "output": [
@@ -164,6 +170,8 @@
         "./packages/icons/scripts/build.ts",
         "./packages/icons/**/*.{ts,svg}",
         "./packages/icons/tsconfig.{build,cjs,esm}.json",
+        "./tsconfig.json",
+        "./tsconfig.build.json",
         "!./packages/icons/dist/**/*"
       ],
       "output": [
@@ -178,6 +186,8 @@
         "./packages/web-icons/scripts/build.ts",
         "./packages/web-icons/**/*.ts",
         "./packages/web-icons/tsconfig.{build,cjs,esm}.json",
+        "./tsconfig.json",
+        "./tsconfig.build.json",
         "!./packages/web-icons/dist/**/*"
       ],
       "output": [
@@ -195,6 +205,8 @@
         "./packages/react-icons/scripts/build.ts",
         "./packages/react-icons/**/*.{ts,tsx}",
         "./packages/react-icons/tsconfig.{build,cjs,esm}.json",
+        "./tsconfig.json",
+        "./tsconfig.build.json",
         "!./packages/react-icons/dist/**/*"
       ],
       "output": [
@@ -209,6 +221,8 @@
       "clean": "if-file-deleted",
       "files": [
         "./docs/**/*",
+        "./tsconfig.json",
+        "./tsconfig.build.json",
         "!./docs/node_modules/**/*",
         "!./docs/.vitepress/cache/**/*",
         "!./docs/.vitepress/dist/**/*"

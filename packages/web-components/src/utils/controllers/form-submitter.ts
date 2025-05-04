@@ -60,7 +60,7 @@ type FormSubmitterConstructor =
  *
  * @param ctor The form submitter element's constructor.
  */
-export const setupFormSubmitter = (ctor: FormSubmitterConstructor) => {
+export const setupFormSubmitter = (ctor: FormSubmitterConstructor): void => {
   if (isSsr()) return;
 
   (ctor as unknown as typeof ReactiveElement).addInitializer(instance => {

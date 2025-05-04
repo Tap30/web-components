@@ -1,4 +1,4 @@
-import { html, nothing } from "lit";
+import { html, nothing, type CSSResultGroup, type TemplateResult } from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import baseInputStyle from "../base-input/base-input.style.ts";
@@ -21,7 +21,10 @@ import CheckboxValidator from "./Validator.ts";
  */
 export class Checkbox extends BaseInput {
   /** @internal */
-  public static override readonly styles = [baseInputStyle, styles];
+  public static override readonly styles: CSSResultGroup = [
+    baseInputStyle,
+    styles,
+  ];
 
   /**
    * Whether or not the checkbox is selected.
@@ -87,7 +90,7 @@ export class Checkbox extends BaseInput {
     redispatchEvent(this, event);
   }
 
-  protected override getInputElement() {
+  protected override getInputElement(): HTMLInputElement | null {
     if (!this.renderRoot) return null;
 
     return this.renderRoot.querySelector<HTMLInputElement>(
@@ -100,33 +103,33 @@ export class Checkbox extends BaseInput {
   }
 
   /** @internal */
-  public override [getFormValue]() {
+  public override [getFormValue](): string | null {
     if (!this.checked || this.indeterminate) return null;
 
     return this.value;
   }
 
   /** @internal */
-  public override [getFormState]() {
+  public override [getFormState](): string {
     return String(this.checked);
   }
 
   /** @internal */
-  public override formResetCallback() {
+  public override formResetCallback(): void {
     // The checked property does not reflect, so the original attribute set by
     // the user is used to determine the default value.
     this.checked = this.hasAttribute("checked");
   }
 
   /** @internal */
-  public override formStateRestoreCallback(state: string) {
+  public override formStateRestoreCallback(state: string): void {
     if (state === "on") return;
 
     this.checked = state === "true";
   }
 
   /** @internal */
-  public override [createValidator]() {
+  public override [createValidator](): CheckboxValidator {
     return new CheckboxValidator(() => ({
       checked: this.checked,
       required: this.required,
@@ -134,7 +137,7 @@ export class Checkbox extends BaseInput {
   }
 
   /** @internal */
-  public override [onReportValidity](invalidEvent: Event | null) {
+  public override [onReportValidity](invalidEvent: Event | null): void {
     this._nativeError = !!invalidEvent;
   }
 
@@ -200,7 +203,7 @@ export class Checkbox extends BaseInput {
     return null;
   }
 
-  protected override renderControl() {
+  protected override renderControl(): TemplateResult {
     if (!this.hasValidLabel()) {
       logger(
         "Expected a valid `label` or `labelledby` attribute, received none.",

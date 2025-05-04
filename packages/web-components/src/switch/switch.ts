@@ -1,4 +1,4 @@
-import { html, nothing } from "lit";
+import { html, nothing, type CSSResultGroup, type TemplateResult } from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import BaseInput, { baseInputStyles } from "../base-input/index.ts";
@@ -18,7 +18,10 @@ import styles from "./switch.style.ts";
 
 export class Switch extends BaseInput {
   /** @internal */
-  public static override readonly styles = [baseInputStyles, styles];
+  public static override readonly styles: CSSResultGroup = [
+    baseInputStyles,
+    styles,
+  ];
   /**
    * Whether or not the switch is selected.
    *
@@ -75,33 +78,33 @@ export class Switch extends BaseInput {
   }
 
   /** @internal */
-  public override [getFormValue]() {
+  public override [getFormValue](): string | null {
     if (!this.selected) return null;
 
     return this.value;
   }
 
   /** @internal */
-  public override [getFormState]() {
+  public override [getFormState](): string {
     return String(this.selected);
   }
 
   /** @internal */
-  public override formResetCallback() {
+  public override formResetCallback(): void {
     // The selected property does not reflect, so the original attribute set by
     // the user is used to determine the default value.
     this.selected = this.hasAttribute("selected");
   }
 
   /** @internal */
-  public override formStateRestoreCallback(state: string) {
+  public override formStateRestoreCallback(state: string): void {
     if (state === "on") return;
 
     this.selected = state === "true";
   }
 
   /** @internal */
-  public override [createValidator]() {
+  public override [createValidator](): CheckboxValidator {
     return new CheckboxValidator(() => ({
       checked: this.selected,
       required: this.required,
@@ -109,11 +112,11 @@ export class Switch extends BaseInput {
   }
 
   /** @internal */
-  public override [onReportValidity]() {
+  public override [onReportValidity](): void {
     // Perform the default behavior (showing pop-up)
   }
 
-  protected override getInputElement() {
+  protected override getInputElement(): HTMLInputElement | null {
     if (!this.renderRoot) return null;
 
     return this.renderRoot.querySelector<HTMLInputElement>(
@@ -150,7 +153,7 @@ export class Switch extends BaseInput {
     return null;
   }
 
-  protected override renderControl() {
+  protected override renderControl(): TemplateResult {
     if (!this.hasValidLabel()) {
       logger(
         ErrorMessages.SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE,

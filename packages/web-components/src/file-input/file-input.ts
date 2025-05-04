@@ -1,10 +1,16 @@
-import "../button/icon-button/index.ts";
-import "../spinner/index.ts";
+import { register as registerIconButton } from "../button/icon-button/index.ts";
+import { register as registerSpinner } from "../spinner/index.ts";
 
-import { html, LitElement, nothing, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property, query, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { ifDefined } from "lit/directives/if-defined.js";
 import { live } from "lit/directives/live.js";
 import {
   createValidator,
@@ -65,7 +71,7 @@ const BaseClass = withOnReportValidity(
  */
 export class FileInput extends BaseClass {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   declare addEventListener: <K extends keyof TapsiFileInputEventMap>(
@@ -336,6 +342,9 @@ export class FileInput extends BaseClass {
   constructor() {
     super();
 
+    registerIconButton();
+    registerSpinner();
+
     this._handleDrop = this._handleDrop.bind(this);
     this._handleActivationClick = this._handleActivationClick.bind(this);
   }
@@ -350,13 +359,13 @@ export class FileInput extends BaseClass {
     });
   }
 
-  protected override willUpdate(changed: PropertyValues<this>) {
+  protected override willUpdate(changed: PropertyValues<this>): void {
     super.willUpdate(changed);
 
     this._handlePlaceholderIconSlotChange();
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (this._refreshErrorAlert) {
@@ -371,7 +380,7 @@ export class FileInput extends BaseClass {
   }
 
   /** @internal */
-  public override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
 
     this.addEventListener("drop", this._handleDrop);
@@ -381,7 +390,7 @@ export class FileInput extends BaseClass {
   }
 
   /** @internal */
-  public override disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     this.removeEventListener("drop", this._handleDrop);
@@ -391,12 +400,12 @@ export class FileInput extends BaseClass {
   }
 
   /** @internal */
-  public override focus(options?: FocusOptions) {
+  public override focus(options?: FocusOptions): void {
     this._root?.focus(options);
   }
 
   /** @internal */
-  public override blur() {
+  public override blur(): void {
     this._root?.blur();
   }
 
@@ -469,27 +478,27 @@ export class FileInput extends BaseClass {
   }
 
   /** @internal */
-  public override [getFormValue]() {
+  public override [getFormValue](): string {
     return this._value;
   }
 
   /** @internal */
-  public override [getFormState]() {
+  public override [getFormState](): string {
     return String(this._value);
   }
 
   /** @internal */
-  public override formResetCallback() {
+  public override formResetCallback(): void {
     this.reset();
   }
 
   /** @internal */
-  public override formStateRestoreCallback(state: string) {
+  public override formStateRestoreCallback(state: string): void {
     this._value = state;
   }
 
   /** @internal */
-  public override [createValidator]() {
+  public override [createValidator](): FileInputValidator {
     return new FileInputValidator(() => ({
       required: this.required ?? false,
       value: this.value ?? "",
@@ -508,17 +517,17 @@ export class FileInput extends BaseClass {
   }
 
   /** @internal */
-  public override formDisabledCallback(disabled: boolean) {
+  public override formDisabledCallback(disabled: boolean): void {
     this.disabled = disabled;
   }
 
   /** @internal */
-  public override [getValidityAnchor]() {
+  public override [getValidityAnchor](): null {
     return null;
   }
 
   /** @internal */
-  public override [onReportValidity](invalidEvent: Event | null) {
+  public override [onReportValidity](invalidEvent: Event | null): void {
     // Prevent default pop-up behavior.
     invalidEvent?.preventDefault();
 
@@ -563,7 +572,7 @@ export class FileInput extends BaseClass {
   /**
    * Reset the text field to its default value.
    */
-  public reset() {
+  public reset(): void {
     this._value = "";
     this._previewSrc = null;
     this._nativeError = false;
@@ -767,7 +776,7 @@ export class FileInput extends BaseClass {
     return null;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       disabled: this.disabled,
@@ -805,8 +814,8 @@ export class FileInput extends BaseClass {
             ?disabled=${this.disabled || this._isLoading()}
             ?multiple=${this.multiple}
             ?readonly=${this.readOnly}
-            capture=${ifDefined(this.capture)}
-            accept=${ifDefined(this.accept)}
+            capture=${this.capture || nothing}
+            accept=${this.accept || nothing}
             ?required=${this.required}
             @input=${this._handleInput}
             @change=${this._handleChange}

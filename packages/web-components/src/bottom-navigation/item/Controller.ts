@@ -4,7 +4,7 @@ import {
   type SelectionElement,
 } from "../../utils/index.ts";
 import { ActivateEvent } from "./events.ts";
-import type { BottomNavigationItem } from "./item";
+import type { BottomNavigationItem } from "./item.ts";
 
 type Host = SelectionElement<BottomNavigationItem>;
 
@@ -26,7 +26,7 @@ class NavItemSelectionController extends SelectionController<BottomNavigationIte
     });
   }
 
-  public override async handleClick(event: MouseEvent) {
+  public override async handleClick(event: MouseEvent): Promise<boolean> {
     if (!(await super.handleClick(event))) return false;
 
     this._host.dispatchEvent(new ActivateEvent());
@@ -34,7 +34,7 @@ class NavItemSelectionController extends SelectionController<BottomNavigationIte
     return true;
   }
 
-  public override async handleKeyDown(event: KeyboardEvent) {
+  public override async handleKeyDown(event: KeyboardEvent): Promise<boolean> {
     if (!(await super.handleKeyDown(event))) return false;
 
     if (!event.currentTarget) return false;

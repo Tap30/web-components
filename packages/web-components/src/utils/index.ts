@@ -21,4 +21,4 @@ export {
 } from "./ResizeSensor.ts";
 export { default as SystemError } from "./SystemError.ts";
 export { default as throttle } from "./throttle.ts";
-export { default as Validator } from "./Validator.ts";
+export { default as Validator, type ValidityAndMessage } from "./Validator.ts";

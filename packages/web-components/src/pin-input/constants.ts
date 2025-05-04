@@ -1,4 +1,4 @@
-export const DEFAULT_DISPLAY_VALUE = (v: string) => v;
+export const DEFAULT_DISPLAY_VALUE = (v: string): string => v;
 
 export const ErrorMessages = {
   SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE: [

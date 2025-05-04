@@ -1,4 +1,4 @@
-import { Validator } from "../utils/index.ts";
+import { Validator, type ValidityAndMessage } from "../utils/index.ts";
 
 export type FileInputState = {
   /**
@@ -15,7 +15,9 @@ export type FileInputState = {
 class FileInputValidator extends Validator<FileInputState> {
   private _control?: HTMLInputElement;
 
-  protected override computeValidity(state: FileInputState) {
+  protected override computeValidity(
+    state: FileInputState,
+  ): ValidityAndMessage {
     if (!this._control) {
       // Lazily create the platform input
       this._control = document.createElement("input");
@@ -31,11 +33,14 @@ class FileInputValidator extends Validator<FileInputState> {
     };
   }
 
-  protected override equals(prev: FileInputState, next: FileInputState) {
+  protected override equals(
+    prev: FileInputState,
+    next: FileInputState,
+  ): boolean {
     return prev.required === next.required && prev.value === next.value;
   }
 
-  protected override copy(state: FileInputState) {
+  protected override copy(state: FileInputState): FileInputState {
     const { required, value } = state;
 
     return {

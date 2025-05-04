@@ -1,11 +1,11 @@
 import type { Page } from "@playwright/test";
 import { expect } from "../index.ts";
-import type { MockFn } from "./types";
+import type { MockFn } from "./types.ts";
 import { evaluateGlobalMock } from "./utils.ts";
 
 const createResultMatcher =
   (page: Page, mockRef: MockFn) =>
-  async (expectedResult: Partial<Omit<MockFn, "__id__">>) => {
+  async (expectedResult: Partial<Omit<MockFn, "__id__">>): Promise<void> => {
     const globalMockRef = await evaluateGlobalMock(page);
     const mock = globalMockRef.mockFns.find(fn => fn.__id__ === mockRef.__id__);
 
@@ -22,13 +22,20 @@ let idCounter = 0;
 
 const genId = () => idCounter++;
 
-export const setup = (page: Page) => () => {
-  const ref: MockFn = {
-    called: false,
-    callCount: 0,
-    calls: [],
-    __id__: genId(),
-  };
+export const setup =
+  (page: Page) =>
+  (): {
+    ref: MockFn;
+    matchResult: (
+      expectedResult: Partial<Omit<MockFn, "__id__">>,
+    ) => Promise<void>;
+  } => {
+    const ref: MockFn = {
+      called: false,
+      callCount: 0,
+      calls: [],
+      __id__: genId(),
+    };
 
-  return { ref, matchResult: createResultMatcher(page, ref) };
-};
+    return { ref, matchResult: createResultMatcher(page, ref) };
+  };

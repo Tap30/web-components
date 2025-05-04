@@ -1,9 +1,9 @@
-import { defineConfig } from "vitepress";
+import { defineConfig, type DefaultTheme, type UserConfig } from "vitepress";
 import nav from "./nav.ts";
 import sidebar from "./sidebar.ts";
 import socialLinks from "./social-links.ts";
 
-export default defineConfig({
+const config: UserConfig<DefaultTheme.Config> = defineConfig({
   title: "Tapsi Design System",
   description: "A set of components based on Tapsi design system.",
   base: "/web-components/",
@@ -41,3 +41,5 @@ export default defineConfig({
     "components/index.md": "components.md",
   },
 });
+
+export default config;

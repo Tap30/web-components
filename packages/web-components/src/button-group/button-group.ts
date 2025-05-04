@@ -1,4 +1,10 @@
-import { html, LitElement, nothing } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  type CSSResultGroup,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { logger } from "../utils/index.ts";
@@ -13,7 +19,7 @@ import styles from "./button-group.style.ts";
  */
 export class ButtonGroup extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /**
    * Defines the orientation of the button group.
@@ -58,7 +64,7 @@ export class ButtonGroup extends LitElement {
   @property()
   public label = "";
 
-  protected override render() {
+  protected override render(): TemplateResult {
     if (!this.label) {
       logger(
         "Set `label` attribute for better accessibility.",

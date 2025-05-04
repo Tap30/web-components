@@ -1,6 +1,6 @@
-import { css } from "lit";
+import { css, type CSSResult } from "lit";
 
-export default css`
+const styles: CSSResult = css`
   :host {
     border-radius: var(--tapsi-radius-full);
   }
@@ -29,3 +29,5 @@ export default css`
     justify-content: center;
   }
 `;
+
+export default styles;

@@ -1,7 +1,7 @@
 import { type LitElement } from "lit";
-import type { MixinBase, MixinReturn } from "./types";
+import type { MixinBase, MixinReturn } from "./types.ts";
 
-export const internals = Symbol("internals");
+export const internals: unique symbol = Symbol("internals");
 
 export interface WithElementInternals {
   [internals]: ElementInternals;

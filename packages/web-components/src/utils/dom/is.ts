@@ -59,17 +59,17 @@ export const isElementFocusable = (element: Element): boolean => {
   switch (nodeName) {
     case "a":
       return (
-        !!(<HTMLAnchorElement>element).href &&
-        (<HTMLAnchorElement>element).rel !== "ignore"
+        !!(element as HTMLAnchorElement).href &&
+        (element as HTMLAnchorElement).rel !== "ignore"
       );
     case "area":
-      return !!(<HTMLAreaElement>element).href;
+      return !!(element as HTMLAreaElement).href;
     case "input":
-      return (<HTMLInputElement>element).type !== "hidden";
+      return (element as HTMLInputElement).type !== "hidden";
     case "button":
     case "select":
     case "textarea":
-      return !((<{ disabled?: boolean }>element).disabled ?? false);
+      return !((element as { disabled?: boolean }).disabled ?? false);
     default: {
       const isCustomElement = element.localName.includes("-");
 
@@ -78,7 +78,7 @@ export const isElementFocusable = (element: Element): boolean => {
       // If a custom element does not have a tabindex, it may still be focusable
       // if it delegates focus with a shadow root. We also need to check again if
       // the custom element is a disabled form control.
-      if ((<{ disabled?: boolean }>element).disabled) return false;
+      if ((element as { disabled?: boolean }).disabled) return false;
 
       return element.shadowRoot?.delegatesFocus ?? false;
     }

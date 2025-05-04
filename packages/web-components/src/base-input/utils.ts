@@ -15,7 +15,7 @@ export const isSubmitAction = (
   );
 };
 
-export const requestFormSubmit = <E extends HTMLElement>(element: E) => {
+export const requestFormSubmit = <E extends HTMLElement>(element: E): void => {
   const form =
     element instanceof HTMLInputElement
       ? element.form

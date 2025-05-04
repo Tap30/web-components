@@ -34,7 +34,7 @@ class AnimationController {
   /**
    * Starts the animation and creates new promise and abort signal.
    */
-  public start() {
+  public start(): void {
     // Abort any ongoing animation
     this._animationAbortController?.abort();
 
@@ -52,22 +52,22 @@ class AnimationController {
   }
 
   // Finish the animation and resolve the promise
-  public finish() {
+  public finish(): void {
     this._promiseResolver?.(true);
     this._cleanup();
   }
 
   // Abort the animation and clean up
-  public abort() {
+  public abort(): void {
     this._animationAbortController?.abort();
     this._cleanup();
   }
 
-  public get promise() {
+  public get promise(): Promise<boolean> | null {
     return this._promise;
   }
 
-  public get signal() {
+  public get signal(): AbortSignal | null {
     return this._signal;
   }
 }

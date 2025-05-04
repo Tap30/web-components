@@ -1,7 +1,7 @@
-import { css } from "lit";
+import { css, type CSSResult } from "lit";
 import { FOCUS_RING_LINE, FOCUS_RING_OFFSET } from "../internals/index.ts";
 
-export default css`
+const styles: CSSResult = css`
   *,
   *::before,
   *::after {
@@ -63,3 +63,5 @@ export default css`
     flex-shrink: 0;
   }
 `;
+
+export default styles;

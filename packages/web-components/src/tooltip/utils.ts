@@ -19,7 +19,7 @@ export const translate = (coordinates: Coords) => {
 /**
  * Rotates arrow based on the placement of the tooltip.
  */
-export const rotateArrow = (placement: Placement) => {
+export const rotateArrow = (placement: Placement): string => {
   if (placement.includes("top")) return "rotate(-90deg)";
   if (placement.includes("bottom")) return "rotate(90deg)";
   if (placement.includes("left")) return "rotate(180deg)";

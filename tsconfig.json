@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
 
-    "resolveJsonModule": true,
+    "incremental": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
@@ -21,6 +22,8 @@
     "forceConsistentCasingInFileNames": true,
     "rewriteRelativeImportExtensions": true,
     "noImplicitReturns": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
     "noImplicitOverride": true,
     "noUnusedLocals": true,
     "noImplicitAny": true,
@@ -33,48 +36,31 @@
     "paths": {
       // Icons metadata
       "@tapsioss/icons": [
-        "./packages/icons/dist/esm",
-        "./packages/icons/dist/cjs",
+        "./packages/icons/dist",
         "./types/@tapsioss/icons.ts"
       ],
       // Web Component Icons
-      "@tapsioss/web-icons": [
-        "./packages/web-icons/dist/esm",
-        "./packages/web-icons/dist/cjs"
-      ],
-      "@tapsioss/web-icons/*": [
-        "./packages/web-icons/dist/esm/*",
-        "./packages/web-icons/dist/cjs/*"
-      ],
+      "@tapsioss/web-icons": ["./packages/web-icons/dist"],
+      "@tapsioss/web-icons/*": ["./packages/web-icons/dist/*"],
       // React Icons
-      "@tapsioss/react-icons": [
-        "./packages/react-icons/dist/esm",
-        "./packages/react-icons/dist/cjs"
-      ],
-      "@tapsioss/react-icons/*": [
-        "./packages/react-icons/dist/esm/*",
-        "./packages/react-icons/dist/cjs/*"
-      ],
+      "@tapsioss/react-icons": ["./packages/react-icons/dist"],
+      "@tapsioss/react-icons/*": ["./packages/react-icons/dist/*"],
       // Web Components
       "@tapsioss/web-components": [
-        "./packages/web-components/dist/esm",
-        "./packages/web-components/dist/cjs",
+        "./packages/web-components/dist",
         "./packages/web-components/src"
       ],
       "@tapsioss/web-components/*": [
-        "./packages/web-components/dist/esm/*",
-        "./packages/web-components/dist/cjs/*",
+        "./packages/web-components/dist/*",
         "./packages/web-components/src/*"
       ],
       // React Components
       "@tapsioss/react-components": [
-        "./packages/react-components/dist/esm",
-        "./packages/react-components/dist/cjs",
+        "./packages/react-components/dist",
         "./packages/react-components/src"
       ],
       "@tapsioss/react-components/*": [
-        "./packages/react-components/dist/esm/*",
-        "./packages/react-components/dist/cjs/*",
+        "./packages/react-components/dist/*",
         "./packages/react-components/src/*"
       ],
       // Tokens

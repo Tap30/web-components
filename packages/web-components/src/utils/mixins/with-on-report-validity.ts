@@ -1,8 +1,8 @@
 import { type LitElement } from "lit";
 import isSsr from "../is-ssr.ts";
 import SystemError from "../SystemError.ts";
-import type { MixinBase, MixinReturn } from "./types";
-import type { ConstraintValidation } from "./with-constraint-validation";
+import type { MixinBase, MixinReturn } from "./types.ts";
+import type { ConstraintValidation } from "./with-constraint-validation.ts";
 import {
   internals,
   type WithElementInternals,
@@ -11,7 +11,7 @@ import {
 /**
  * A symbol property used for a callback when validity has been reported.
  */
-export const onReportValidity = Symbol("onReportValidity");
+export const onReportValidity: unique symbol = Symbol("onReportValidity");
 
 export interface OnReportValidity extends ConstraintValidation {
   /**

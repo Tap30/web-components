@@ -13,12 +13,14 @@ export const clamp = (number: number, min: number, max: number): number =>
 /**
  * Linear interpolate on the scale given by `a` to `b`, using `t` as the point on that scale.
  */
-export const lerp = (a: number, b: number, t: number) => a + t * (b - a);
+export const lerp = (a: number, b: number, t: number): number =>
+  a + t * (b - a);
 
 /**
  * Inverse Linar Interpolation, get the fraction between `a` and `b` on which `v` resides.
  */
-export const inLerp = (a: number, b: number, v: number) => (v - a) / (b - a);
+export const inLerp = (a: number, b: number, v: number): number =>
+  (v - a) / (b - a);
 
 /**
  * Remap values from one linear scale to another.
@@ -32,4 +34,4 @@ export const remap = (
   oMax: number,
   rMin: number,
   rMax: number,
-) => lerp(rMin, rMax, inLerp(oMin, oMax, v));
+): number => lerp(rMin, rMax, inLerp(oMin, oMax, v));

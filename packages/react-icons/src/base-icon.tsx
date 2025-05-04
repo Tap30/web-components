@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { JSX } from "react/jsx-runtime";
 
 type Overwrite<T, U> = Omit<T, keyof U> & U;
 
@@ -40,7 +41,7 @@ type OwnProps = {
 
 export type Props = MergeElementProps<"svg", OwnProps>;
 
-const Icon = (props: Props) => {
+const Icon = (props: Props): JSX.Element => {
   const {
     children,
     title,

@@ -1,4 +1,10 @@
-import { html, LitElement, nothing } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  type CSSResultGroup,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { logger } from "../utils/index.ts";
 import { ActiveChangeEvent } from "./events.ts";
@@ -21,7 +27,7 @@ interface TapsiSegmentedViewEventMap extends HTMLElementEventMap {
  */
 export class SegmentedView extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   declare addEventListener: <K extends keyof TapsiSegmentedViewEventMap>(
@@ -57,7 +63,7 @@ export class SegmentedView extends LitElement {
   }
 
   /** @internal */
-  public override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
 
     this.addEventListener(
@@ -85,7 +91,7 @@ export class SegmentedView extends LitElement {
     this.dispatchEvent(new ActiveChangeEvent({ value }));
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     if (!this.label) {
       logger(
         "Set `label` attribute for better accessibility.",

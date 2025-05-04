@@ -1,4 +1,10 @@
-import { html, nothing, type PropertyValues } from "lit";
+import {
+  html,
+  nothing,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import BaseInput, { baseInputStyles } from "../base-input/index.ts";
@@ -23,7 +29,10 @@ import styles from "./radio.style.ts";
  */
 export class Radio extends withFocusable(BaseInput) {
   /** @internal */
-  public static override readonly styles = [baseInputStyles, styles];
+  public static override readonly styles: CSSResultGroup = [
+    baseInputStyles,
+    styles,
+  ];
 
   private _checked = false;
 
@@ -70,13 +79,13 @@ export class Radio extends withFocusable(BaseInput) {
   }
 
   /** @internal */
-  public override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
 
     this._updateFocusability();
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (changed.has("disabled")) this._updateFocusability();
@@ -89,7 +98,7 @@ export class Radio extends withFocusable(BaseInput) {
     } else this[isFocusable] = true;
   }
 
-  protected override getInputElement() {
+  protected override getInputElement(): HTMLInputElement | null {
     if (!this.renderRoot) return null;
 
     return this.renderRoot.querySelector<HTMLInputElement>(
@@ -114,33 +123,33 @@ export class Radio extends withFocusable(BaseInput) {
   }
 
   /** @internal */
-  public override [getFormValue]() {
+  public override [getFormValue](): string | null {
     if (!this.checked) return null;
 
     return this.value;
   }
 
   /** @internal */
-  public override [getFormState]() {
+  public override [getFormState](): string {
     return String(this.checked);
   }
 
   /** @internal */
-  public override formResetCallback() {
+  public override formResetCallback(): void {
     // The checked property does not reflect, so the original attribute set by
     // the user is used to determine the default value.
     this.checked = this.hasAttribute("checked");
   }
 
   /** @internal */
-  public override formStateRestoreCallback(state: string) {
+  public override formStateRestoreCallback(state: string): void {
     if (state === "on") return;
 
     this.checked = state === "true";
   }
 
   /** @internal */
-  public override [createValidator]() {
+  public override [createValidator](): RadioValidator {
     return new RadioValidator(() => {
       // Validation runs on superclass construction, so selection controller
       // might not actually be ready until this class constructs.
@@ -158,7 +167,7 @@ export class Radio extends withFocusable(BaseInput) {
   }
 
   /** @internal */
-  public override [onReportValidity]() {
+  public override [onReportValidity](): void {
     // Perform the default behavior (showing pop-up)
   }
 
@@ -170,7 +179,7 @@ export class Radio extends withFocusable(BaseInput) {
     return null;
   }
 
-  protected override renderControl() {
+  protected override renderControl(): TemplateResult {
     if (!this.hasValidLabel()) {
       logger(
         "Expected a valid `label` or `labelledby` attribute, received none.",

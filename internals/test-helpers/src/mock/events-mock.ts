@@ -8,7 +8,7 @@ const attachMockedEvent = async (
   locator: Locator,
   eventName: string,
   mockFn: MockFn,
-) => {
+): Promise<void> => {
   await locator.evaluateHandle(
     (element, [gmrk, eventName, mockFn]) => {
       if (!element) {
@@ -63,7 +63,7 @@ const detachMockedEvent = async (
   locator: Locator,
   eventName: string,
   mockFn: MockFn,
-) => {
+): Promise<void> => {
   await locator.evaluateHandle(
     (element, [gmrk, eventName, mockFn]) => {
       if (!element) {
@@ -134,7 +134,7 @@ const detachMockedEvent = async (
   );
 };
 
-export const initNamespace = async (page: Page) => {
+export const initNamespace = async (page: Page): Promise<void> => {
   await page.evaluate(gmrk => {
     const globalMock = window[gmrk as typeof globalMockReferenceKey];
 
@@ -151,7 +151,18 @@ export const initNamespace = async (page: Page) => {
   }, globalMockReferenceKey);
 };
 
-export const setup = () => {
+export const setup = (): {
+  attachMockedEvent: (
+    locator: Locator,
+    eventName: string,
+    mockFn: MockFn,
+  ) => Promise<void>;
+  detachMockedEvent: (
+    locator: Locator,
+    eventName: string,
+    mockFn: MockFn,
+  ) => Promise<void>;
+} => {
   return {
     attachMockedEvent,
     detachMockedEvent,

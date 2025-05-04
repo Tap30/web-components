@@ -1,6 +1,6 @@
-import { html } from "lit";
+import { html, type TemplateResult } from "lit";
 
-export const clear = html`
+export const clear: TemplateResult = html`
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
@@ -13,7 +13,7 @@ export const clear = html`
   </svg>
 `;
 
-export const error = html`
+export const error: TemplateResult = html`
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 40 40"
@@ -29,7 +29,7 @@ export const error = html`
   </svg>
 `;
 
-export const image = html` <svg
+export const image: TemplateResult = html` <svg
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 32 32"
 >

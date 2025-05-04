@@ -1,6 +1,7 @@
 import {
   html,
   LitElement,
+  type CSSResultGroup,
   type PropertyValues,
   type TemplateResult,
 } from "lit";
@@ -37,7 +38,7 @@ interface TapsiModalEventMap extends HTMLElementEventMap {
  */
 export class Modal extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   public static override readonly shadowRootOptions = {
@@ -218,7 +219,7 @@ export class Modal extends LitElement {
     this._scrollLocker.clearLocks();
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (changed.has("open")) {
@@ -233,8 +234,8 @@ export class Modal extends LitElement {
     }
   }
 
-  protected override willUpdate(_changedProperties: PropertyValues<this>) {
-    super.willUpdate(_changedProperties);
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    super.willUpdate(changed);
 
     this._handleImageSlotChange();
   }
@@ -248,7 +249,7 @@ export class Modal extends LitElement {
   /**
    * Show the modal.
    */
-  public show() {
+  public show(): void {
     if (this.open) return;
 
     this.open = true;
@@ -261,7 +262,7 @@ export class Modal extends LitElement {
   /**
    * Hide the modal.
    */
-  public hide() {
+  public hide(): void {
     if (!this.open) return;
 
     this.open = false;
@@ -356,7 +357,7 @@ export class Modal extends LitElement {
     `;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       open: this.open,

@@ -6,7 +6,7 @@ import type {
   Stroke,
   Tokens,
   Typography,
-} from "../types";
+} from "../types.ts";
 
 const palette = {
   black: "#000000",

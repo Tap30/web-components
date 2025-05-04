@@ -1,4 +1,9 @@
-import { html, LitElement } from "lit";
+import {
+  html,
+  LitElement,
+  type CSSResultGroup,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { SystemError } from "../utils/index.ts";
 import styles from "./spinner.style.ts";
@@ -10,7 +15,7 @@ import styles from "./spinner.style.ts";
  */
 export class Spinner extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /**
    * Determines the size of the spinner.
@@ -52,7 +57,7 @@ export class Spinner extends LitElement {
         };
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const { width, height, maxWidth, maxHeight } = this._getSizeStyles(
       this.size,
     );

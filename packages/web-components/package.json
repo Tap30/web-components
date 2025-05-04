@@ -13,31 +13,23 @@
     "url": "https://github.com/Tap30/web-components.git",
     "directory": "packages/web-components"
   },
-  "main": "./dist/cjs/index.js",
-  "types": "./dist/cjs/index.d.ts",
-  "module": "./dist/esm/index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     "./*": {
-      "types": "./dist/cjs/*/index.d.ts",
-      "import": "./dist/esm/*/index.js",
-      "require": "./dist/cjs/*/index.js"
+      "types": "./dist/*/index.d.ts",
+      "default": "./dist/*/index.js"
     },
     ".": {
-      "types": "./dist/cjs/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
-    "./*/element": {
-      "import": "./dist/esm/*/element.js",
-      "require": "./dist/cjs/*/element.js"
-    }
+    "./*/element": "./dist/*/element.js"
   },
   "scripts": {
     "clear": "shx rm -rf dist",
     "prebuild": "pnpm run clear",
-    "build:cjs": "tsc --project ./tsconfig.cjs.json",
-    "build:esm": "tsc --project ./tsconfig.esm.json",
-    "build": "run-p build:*",
+    "build": "tsc --project ./tsconfig.build.json",
     "test": "playwright test",
     "test:update-snapshots": "playwright test --update-snapshots",
     "predev": "pnpm run clear",

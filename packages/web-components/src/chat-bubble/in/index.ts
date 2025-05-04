@@ -4,7 +4,7 @@ import { ChatBubbleIn } from "./in.ts";
 export { Slots } from "../base/constants.ts";
 export { ChatBubbleIn };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-chat-bubble-in")) return;
 

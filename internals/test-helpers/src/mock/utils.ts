@@ -1,7 +1,14 @@
 import type { Page } from "@playwright/test";
 import { globalMockReferenceKey } from "./constants.ts";
+import type { EventsMockState } from "./events-mock.ts";
+import type { MockFn } from "./types.ts";
 
-export const evaluateGlobalMock = async (page: Page) => {
+export const evaluateGlobalMock = async (
+  page: Page,
+): Promise<{
+  events?: EventsMockState;
+  mockFns: MockFn[];
+}> => {
   return page.evaluate(gmrk => {
     const globalMock = window[gmrk as typeof globalMockReferenceKey];
 

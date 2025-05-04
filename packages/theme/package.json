@@ -13,39 +13,34 @@
     "url": "https://github.com/Tap30/web-components.git",
     "directory": "packages/theme"
   },
-  "main": "./dist/cjs/default-theme/tokens.css",
-  "types": "./dist/cjs/index.d.ts",
-  "module": "./dist/esm/default-theme/tokens.css",
+  "main": "./dist/default-theme/tokens.css",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/esm/default-theme/tokens.css",
-      "require": "./dist/cjs/default-theme/tokens.css"
+      "import": "./dist/default-theme/tokens.css",
+      "default": "./dist/default-theme/tokens.css"
     },
     "./css-variables": {
-      "import": "./dist/esm/default-theme/tokens.css",
-      "require": "./dist/cjs/default-theme/tokens.css"
+      "import": "./dist/default-theme/tokens.css",
+      "default": "./dist/default-theme/tokens.css"
     },
     "./*/css-variables": {
-      "import": "./dist/esm/*/tokens.css",
-      "require": "./dist/cjs/*/tokens.css"
+      "import": "./dist/*/tokens.css",
+      "require": "./dist/*/tokens.css"
     },
     "./tokens": {
-      "types": "./dist/cjs/default-theme/tokens.d.ts",
-      "import": "./dist/esm/default-theme/tokens.js",
-      "require": "./dist/cjs/default-theme/tokens.js"
+      "types": "./dist/default-theme/tokens.d.ts",
+      "default": "./dist/default-theme/tokens.js"
     },
     "./*/tokens": {
-      "types": "./dist/cjs/*/tokens.d.ts",
-      "import": "./dist/esm/*/tokens.js",
-      "require": "./dist/cjs/*/tokens.js"
+      "types": "./dist/*/tokens.d.ts",
+      "default": "./dist/*/tokens.js"
     }
   },
   "scripts": {
     "clear": "shx rm -rf dist",
     "prebuild": "run-s clear generate",
-    "build:cjs": "tsc --project tsconfig.cjs.json",
-    "build:esm": "tsc --project tsconfig.esm.json",
-    "build:transpile": "run-p build:cjs build:esm",
+    "build:transpile": "tsc --project tsconfig.build.json",
     "build:copy-css": "tsx ./scripts/copy-css-vars.ts",
     "build": "run-s build:transpile build:copy-css",
     "generate": "tsx ./scripts/generate.ts"

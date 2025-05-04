@@ -1,9 +1,0 @@
-src
-templates
-scripts
-node_modules
-
-tsconfig.*
-
-dist/*.ts
-!dist/*.d.ts

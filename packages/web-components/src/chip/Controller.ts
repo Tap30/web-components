@@ -1,6 +1,6 @@
 import { KeyboardKeys } from "../internals/index.ts";
 import { SelectionController, type SelectionElement } from "../utils/index.ts";
-import type { Chip } from "./chip";
+import type { Chip } from "./chip.ts";
 import { DeselectEvent, SelectEvent } from "./events.ts";
 
 type Host = SelectionElement<Chip>;
@@ -27,7 +27,7 @@ class ChipSelectionController extends SelectionController<Chip> {
     });
   }
 
-  public override async handleClick(event: MouseEvent) {
+  public override async handleClick(event: MouseEvent): Promise<boolean> {
     if (!(await super.handleClick(event))) return false;
 
     let targetEvent: SelectEvent | DeselectEvent;
@@ -44,7 +44,7 @@ class ChipSelectionController extends SelectionController<Chip> {
     return true;
   }
 
-  public override async handleKeyDown(event: KeyboardEvent) {
+  public override async handleKeyDown(event: KeyboardEvent): Promise<boolean> {
     if (!(await super.handleKeyDown(event))) return false;
 
     if (!event.currentTarget) return false;

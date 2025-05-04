@@ -1,4 +1,4 @@
-import { Validator } from "../utils/index.ts";
+import { Validator, type ValidityAndMessage } from "../utils/index.ts";
 
 type State = {
   /**
@@ -49,7 +49,10 @@ export type TextAreaState = {
 class TextAreaValidator extends Validator<TextAreaState> {
   private _inputControl?: HTMLTextAreaElement;
 
-  protected override computeValidity({ state, control }: TextAreaState) {
+  protected override computeValidity({
+    state,
+    control,
+  }: TextAreaState): ValidityAndMessage {
     let input = control;
 
     if (!input) {
@@ -99,7 +102,7 @@ class TextAreaValidator extends Validator<TextAreaState> {
   protected override equals(
     { state: prev }: TextAreaState,
     { state: next }: TextAreaState,
-  ) {
+  ): boolean {
     return (
       prev.value === next.value &&
       prev.required === next.required &&

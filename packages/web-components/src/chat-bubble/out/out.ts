@@ -1,7 +1,7 @@
-import "../../avatar/index.ts";
+import { register as registerAvatar } from "../../avatar/index.ts";
 
-import { html, type TemplateResult } from "lit";
-import type { DirectiveResult } from "lit/async-directive";
+import { html, type CSSResultGroup, type TemplateResult } from "lit";
+import type { DirectiveResult } from "lit/async-directive.js";
 import { property } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
 import { BaseChatBubble, baseStyles } from "../base/index.ts";
@@ -14,7 +14,7 @@ import styles from "./out.style.ts";
  */
 export class ChatBubbleOut extends BaseChatBubble {
   /** @internal */
-  public static override readonly styles = [baseStyles, styles];
+  public static override readonly styles: CSSResultGroup = [baseStyles, styles];
   /**
    * The source of the avatar image.
    *
@@ -27,6 +27,8 @@ export class ChatBubbleOut extends BaseChatBubble {
 
   constructor() {
     super();
+
+    registerAvatar();
 
     this.author = "out";
   }

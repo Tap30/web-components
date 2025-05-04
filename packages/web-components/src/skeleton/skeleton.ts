@@ -1,4 +1,9 @@
-import { html, LitElement } from "lit";
+import {
+  html,
+  LitElement,
+  type CSSResultGroup,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap, type StyleInfo } from "lit/directives/style-map.js";
@@ -15,7 +20,7 @@ import styles from "./skeleton.style.ts";
  */
 export class Skeleton extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /**
    * The type of content that will be rendered.
@@ -58,9 +63,9 @@ export class Skeleton extends LitElement {
    * @default NaN
    */
   @property({ type: Number })
-  public ratio = NaN;
+  public ratio: number = NaN;
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const styleInfo: StyleInfo = {};
 
     if (this.width) styleInfo.width = this.width;

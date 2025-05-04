@@ -300,7 +300,7 @@ export {
   registerTooltip,
 };
 
-export const registerAll = () => {
+export const registerAll = (): void => {
   registerAvatar();
   registerBadge();
   registerBadgeWrapper();

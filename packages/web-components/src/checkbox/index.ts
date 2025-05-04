@@ -3,7 +3,7 @@ import { Checkbox } from "./checkbox.ts";
 
 export { Checkbox };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-checkbox")) return;
 
