@@ -1,6 +1,10 @@
-import { defineConfig, devices } from "@playwright/test";
+import {
+  defineConfig,
+  devices,
+  type PlaywrightTestConfig,
+} from "@playwright/test";
 
-export default defineConfig({
+const config: PlaywrightTestConfig<object, object> = defineConfig({
   testDir: "./src",
   fullyParallel: true,
   retries: process.env.CI ? 2 : undefined,
@@ -36,3 +40,5 @@ export default defineConfig({
     },
   },
 });
+
+export default config;

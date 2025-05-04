@@ -39,7 +39,16 @@ export const getParentNode = (node: Node): Node => {
 export const getBoundingClientRect = (
   element: Element,
   includeScale = false,
-) => {
+): {
+  width: number;
+  height: number;
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+  x: number;
+  y: number;
+} => {
   const clientRect = element.getBoundingClientRect();
 
   let scaleX = 1;
@@ -71,14 +80,14 @@ export const getBoundingClientRect = (
 export const getRenderRootSlot = (
   renderRoot: DocumentFragment | HTMLElement,
   slotName: string,
-) => {
+): HTMLSlotElement | null => {
   const query =
     slotName === "" ? "slot:not([name])" : `slot[name="${slotName}"]`;
 
   return renderRoot.querySelector<HTMLSlotElement>(query);
 };
 
-export const getActualActiveElement = () => {
+export const getActualActiveElement = (): Element | null => {
   const deepCheck = (element: Element | null): Element | null => {
     if (!element) return null;
     if (!element.shadowRoot) return element;

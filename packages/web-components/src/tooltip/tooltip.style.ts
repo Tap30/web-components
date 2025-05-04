@@ -1,7 +1,7 @@
-import { css } from "lit";
+import { css, type CSSResult } from "lit";
 import { Z_INDEXES } from "../internals/index.ts";
 
-export default css`
+const styles: CSSResult = css`
   *,
   *::before,
   *::after {
@@ -119,3 +119,5 @@ export default css`
     transform: rotate(180deg);
   }
 `;
+
+export default styles;

@@ -1,4 +1,9 @@
-const createPromiseResolvers = <T = void>() => {
+const createPromiseResolvers = <T = void>(): {
+  readonly promise: Promise<T>;
+  readonly resolve: (value: T | PromiseLike<T>) => void;
+  readonly reject: (reason?: unknown) => void;
+  renew: () => void;
+} => {
   const noop = () => void 0;
 
   let _resolve: (value: T | PromiseLike<T>) => void = noop;
@@ -12,18 +17,18 @@ const createPromiseResolvers = <T = void>() => {
 
   let _promise = createPromise();
 
-  const renew = () => {
+  const renew = (): void => {
     _promise = createPromise();
   };
 
   return {
-    get promise() {
+    get promise(): Promise<T> {
       return _promise;
     },
-    get resolve() {
+    get resolve(): (value: T | PromiseLike<T>) => void {
       return _resolve;
     },
-    get reject() {
+    get reject(): (reason?: unknown) => void {
       return _reject;
     },
     renew,

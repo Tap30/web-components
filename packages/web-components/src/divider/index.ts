@@ -3,7 +3,7 @@ import { Divider } from "./divider.ts";
 
 export { Divider };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-divider")) return;
 

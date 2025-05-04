@@ -1,4 +1,4 @@
-export const SENTINEL_DEFAULT_SNAP_POINTS = [-Infinity, -Infinity];
+export const SENTINEL_DEFAULT_SNAP_POINTS = [-Infinity, -Infinity] as const;
 
 export const Slots = {
   HEADER: "header",

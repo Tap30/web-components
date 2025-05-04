@@ -41,7 +41,7 @@ class SingleSelectionController implements ReactiveController {
     this._handleFocusOut = this._handleFocusOut.bind(this);
   }
 
-  public hostConnected() {
+  public hostConnected(): void {
     this._root = this._host.getRootNode() as ParentNode;
 
     this._host.addEventListener("keydown", this._handleKeyDown);
@@ -53,7 +53,7 @@ class SingleSelectionController implements ReactiveController {
     this._updateTabIndices();
   }
 
-  hostDisconnected() {
+  hostDisconnected(): void {
     this._host.removeEventListener("keydown", this._handleKeyDown);
     this._host.removeEventListener("focusin", this._handleFocusIn);
     this._host.removeEventListener("focusout", this._handleFocusOut);
@@ -68,7 +68,7 @@ class SingleSelectionController implements ReactiveController {
    * Should be called whenever the host's `checked` property changes
    * synchronously.
    */
-  public handleCheckedChange() {
+  public handleCheckedChange(): void {
     if (!this._host.checked) return;
 
     this._uncheckSiblings();

@@ -1,7 +1,11 @@
 import type { ElementHandle, Locator, Page } from "@playwright/test";
 import { bodyHandle } from "./handles.ts";
 
-export const render = async (page: Page, content: string, root?: Locator) => {
+export const render = async (
+  page: Page,
+  content: string,
+  root?: Locator,
+): Promise<void> => {
   let handle: ElementHandle<HTMLElement | SVGElement | null> | null = null;
 
   if (!root) handle = await bodyHandle(page);

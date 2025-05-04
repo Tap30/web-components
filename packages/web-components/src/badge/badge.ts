@@ -1,4 +1,10 @@
-import { html, LitElement, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import type { DirectiveResult } from "lit/async-directive";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
@@ -17,7 +23,7 @@ type ClassMap = DirectiveResult<typeof ClassMapDirective>;
  */
 export class Badge extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /**
    * The value of the badge.
@@ -119,7 +125,7 @@ export class Badge extends LitElement {
     `;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       [this.variant]: true,

@@ -20,7 +20,7 @@ import { waitAMicrotask } from "../event-loop-execution.ts";
  * }
  *
  */
-export const dispatchActivationClick = (element: HTMLElement) => {
+export const dispatchActivationClick = (element: HTMLElement): MouseEvent => {
   const event = new MouseEvent("click", { bubbles: true });
 
   element.dispatchEvent(event);
@@ -56,7 +56,7 @@ export const dispatchActivationClick = (element: HTMLElement) => {
  * }
  *
  */
-export const isActivationClick = (event: Event) => {
+export const isActivationClick = (event: Event): boolean => {
   if (event.currentTarget !== event.target) return false;
 
   // Event must not be retargeted from shadowRoot.

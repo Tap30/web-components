@@ -209,29 +209,29 @@ export abstract class BaseTextInput extends BaseInput {
    *
    * @internal
    */
-  public select() {
+  public select(): void {
     this.getInputElement()?.select();
   }
 
   /**
    * Reset the text field to its default value.
    */
-  public reset() {
+  public reset(): void {
     this.value = this.getAttribute("value") ?? "";
     this._dirty = false;
     this._nativeError = false;
     this._nativeErrorText = "";
   }
 
-  protected hasError() {
+  protected hasError(): boolean {
     return this.error || this._nativeError;
   }
 
-  protected getErrorText() {
+  protected getErrorText(): string {
     return this.error ? this.errorText : this._nativeErrorText;
   }
 
-  protected getSupportingOrErrorText() {
+  protected getSupportingOrErrorText(): string {
     const errorText = this.getErrorText();
 
     return this.hasError() && errorText ? errorText : this.supportingText;
@@ -253,7 +253,7 @@ export abstract class BaseTextInput extends BaseInput {
     attribute: string,
     newValue: string | null,
     oldValue: string | null,
-  ) {
+  ): void {
     if (attribute === "value" && this._dirty) {
       // After user input, changing the value attribute no longer updates the
       // text field's value (until reset). This matches native <input> behavior.
@@ -263,7 +263,7 @@ export abstract class BaseTextInput extends BaseInput {
     super.attributeChangedCallback(attribute, newValue, oldValue);
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (this._refreshErrorAlert) {
@@ -275,7 +275,7 @@ export abstract class BaseTextInput extends BaseInput {
     }
   }
 
-  protected override willUpdate(changed: PropertyValues<this>) {
+  protected override willUpdate(changed: PropertyValues<this>): void {
     super.willUpdate(changed);
 
     this._handleLeadingIconSlotChange();
@@ -294,7 +294,10 @@ export abstract class BaseTextInput extends BaseInput {
     }
   }
 
-  protected override getInputElement() {
+  protected override getInputElement():
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | null {
     if (!this.renderRoot) return null;
 
     return this.renderRoot.querySelector<
@@ -302,41 +305,44 @@ export abstract class BaseTextInput extends BaseInput {
     >("#input");
   }
 
-  protected handleInput(event: InputEvent) {
+  protected handleInput(event: InputEvent): void {
     this._dirty = true;
     this.value = (event.target as HTMLInputElement).value;
   }
 
-  protected handleSelect(event: Event) {
+  protected handleSelect(event: Event): void {
     redispatchEvent(this, event);
   }
 
-  protected handleChange(event: Event) {
+  protected handleChange(event: Event): void {
     redispatchEvent(this, event);
   }
 
   /** @internal */
-  public override [getFormValue]() {
+  public override [getFormValue](): string {
     return this.value;
   }
 
   /** @internal */
-  public override formResetCallback() {
+  public override formResetCallback(): void {
     this.reset();
   }
 
   /** @internal */
-  public override formStateRestoreCallback(state: string) {
+  public override formStateRestoreCallback(state: string): void {
     this.value = state;
   }
 
   /** @internal */
-  public override [getValidityAnchor]() {
+  public override [getValidityAnchor]():
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | null {
     return this.getInputElement();
   }
 
   /** @internal */
-  public override [onReportValidity](invalidEvent: Event | null) {
+  public override [onReportValidity](invalidEvent: Event | null): void {
     // Prevent default pop-up behavior.
     invalidEvent?.preventDefault();
 
@@ -348,7 +354,7 @@ export abstract class BaseTextInput extends BaseInput {
     if (prevMessage === this.getErrorText()) this._reannounceError();
   }
 
-  protected override renderTrailingContent() {
+  protected override renderTrailingContent(): TemplateResult | null {
     const text = this.getSupportingOrErrorText();
 
     if (!text) return null;
@@ -378,7 +384,7 @@ export abstract class BaseTextInput extends BaseInput {
     `;
   }
 
-  protected override renderLeadingContent() {
+  protected override renderLeadingContent(): TemplateResult | null {
     if (this.hideLabel) return null;
     if (!this.label) return null;
 
@@ -404,7 +410,7 @@ export abstract class BaseTextInput extends BaseInput {
     };
   }
 
-  protected override renderControl() {
+  protected override renderControl(): TemplateResult {
     const controlClasses = classMap({
       control: true,
       error: this.hasError(),

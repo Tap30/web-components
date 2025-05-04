@@ -1,6 +1,6 @@
-import { html } from "lit";
+import { html, type TemplateResult } from "lit";
 
-export const close = html`
+export const close: TemplateResult = html`
   <svg
     width="24"
     height="24"
@@ -19,7 +19,7 @@ export const close = html`
   </svg>
 `;
 
-export const success = html`
+export const success: TemplateResult = html`
   <svg
     width="24"
     height="24"
@@ -38,7 +38,7 @@ export const success = html`
   </svg>
 `;
 
-export const error = html`
+export const error: TemplateResult = html`
   <svg
     width="24"
     height="24"
@@ -57,7 +57,7 @@ export const error = html`
   </svg>
 `;
 
-export const info = html`
+export const info: TemplateResult = html`
   <svg
     width="24"
     height="24"
@@ -76,7 +76,7 @@ export const info = html`
   </svg>
 `;
 
-export const warning = html`
+export const warning: TemplateResult = html`
   <svg
     width="24"
     height="24"

@@ -6,7 +6,7 @@ export { Slots } from "./constants.ts";
 export { Slots as ItemSlots } from "./item/index.ts";
 export { Pinwheel, PinwheelItem };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
 
   if (!customElements.get("tapsi-pinwheel")) {

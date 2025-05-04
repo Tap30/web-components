@@ -3,7 +3,7 @@ import { Switch } from "./switch.ts";
 
 export { Switch };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-switch")) return;
 

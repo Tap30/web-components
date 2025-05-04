@@ -3,7 +3,7 @@ import { Radio } from "./radio.ts";
 
 export { Radio };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-radio")) return;
 

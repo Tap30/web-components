@@ -1,6 +1,6 @@
-import { css } from "lit";
+import { css, type CSSResult } from "lit";
 
-export default css`
+const styles: CSSResult = css`
   .root.sm {
     --button-content-padding: 0 var(--tapsi-spacing-4);
     --button-content-font-size: var(--tapsi-typography-label-sm-size);
@@ -47,3 +47,5 @@ export default css`
     overflow: hidden;
   }
 `;
+
+export default styles;

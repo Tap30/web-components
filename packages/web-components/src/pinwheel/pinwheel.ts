@@ -1,4 +1,11 @@
-import { html, LitElement, nothing, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { requestFormSubmit } from "../base-input/utils.ts";
@@ -35,7 +42,7 @@ const BaseClass = withFormAssociated(withElementInternals(LitElement));
  */
 export class Pinwheel extends BaseClass {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   static override shadowRootOptions: ShadowRootInit = {
@@ -177,7 +184,7 @@ export class Pinwheel extends BaseClass {
     }
   }
 
-  protected override firstUpdated(changed: PropertyValues<this>) {
+  protected override firstUpdated(changed: PropertyValues<this>): void {
     super.firstUpdated(changed);
 
     if (!this.valueMax || !this.valueMin) {
@@ -191,7 +198,7 @@ export class Pinwheel extends BaseClass {
     });
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (changed.has("value")) {
@@ -239,12 +246,12 @@ export class Pinwheel extends BaseClass {
   }
 
   /** @internal */
-  public override focus(options?: FocusOptions) {
+  public override focus(options?: FocusOptions): void {
     this._root?.focus(options);
   }
 
   /** @internal */
-  public override blur() {
+  public override blur(): void {
     this._root?.blur();
   }
 
@@ -445,26 +452,26 @@ export class Pinwheel extends BaseClass {
     return 0;
   }
 
-  public override formDisabledCallback(disabled: boolean) {
+  public override formDisabledCallback(disabled: boolean): void {
     this.disabled = disabled;
   }
 
   /** @internal */
-  public override [getFormValue]() {
+  public override [getFormValue](): string {
     return this.value;
   }
 
   /** @internal */
-  public override formResetCallback() {
+  public override formResetCallback(): void {
     this.value = this.getAttribute("value") ?? "";
   }
 
   /** @internal */
-  public override formStateRestoreCallback(state: string) {
+  public override formStateRestoreCallback(state: string): void {
     this.value = state;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const hasValidLabel = Boolean(this.label || this.labelledBy);
 
     if (!hasValidLabel) {

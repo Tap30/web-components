@@ -2,7 +2,7 @@ const logger = (
   message: string,
   scope: string,
   type: "error" | "default" | "warning" = "default",
-) => {
+): void => {
   const typesMap: Record<typeof type, Console["log"]> = {
     /* eslint-disable no-console */
     error: console.error,

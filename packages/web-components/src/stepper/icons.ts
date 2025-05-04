@@ -1,6 +1,6 @@
-import { html } from "lit";
+import { html, type TemplateResult } from "lit";
 
-export const plus = html`
+export const plus: TemplateResult = html`
   <svg
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +14,7 @@ export const plus = html`
   </svg>
 `;
 
-export const minus = html`
+export const minus: TemplateResult = html`
   <svg
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"

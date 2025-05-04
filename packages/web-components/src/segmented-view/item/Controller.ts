@@ -33,7 +33,7 @@ class ItemSelectionController extends SelectionController<SegmentedViewItem> {
     this._handleFocusOut = this._handleFocusOut.bind(this);
   }
 
-  public override hostConnected() {
+  public override hostConnected(): void {
     super.hostConnected();
 
     this._host.addEventListener("focusin", this._handleFocusIn);
@@ -42,7 +42,7 @@ class ItemSelectionController extends SelectionController<SegmentedViewItem> {
     this._updateTabIndices();
   }
 
-  public override hostDisconnected() {
+  public override hostDisconnected(): void {
     super.hostDisconnected();
 
     this._host.removeEventListener("focusin", this._handleFocusIn);
@@ -51,7 +51,7 @@ class ItemSelectionController extends SelectionController<SegmentedViewItem> {
     this._updateTabIndices();
   }
 
-  public override hostUpdated() {
+  public override hostUpdated(): void {
     super.hostUpdated();
 
     runAfterRepaint(() => {
@@ -109,13 +109,13 @@ class ItemSelectionController extends SelectionController<SegmentedViewItem> {
     });
   }
 
-  public override handleSelectionChange() {
+  public override handleSelectionChange(): void {
     super.handleSelectionChange();
 
     if (this._host.active) this._updateTabIndices();
   }
 
-  public override async handleClick(event: MouseEvent) {
+  public override async handleClick(event: MouseEvent): Promise<boolean> {
     if (!(await super.handleClick(event))) return false;
 
     this._host.dispatchEvent(new ActivateEvent());
@@ -123,7 +123,7 @@ class ItemSelectionController extends SelectionController<SegmentedViewItem> {
     return true;
   }
 
-  public override async handleKeyDown(event: KeyboardEvent) {
+  public override async handleKeyDown(event: KeyboardEvent): Promise<boolean> {
     if (!(await super.handleKeyDown(event))) return false;
 
     const isLeft = event.key === KeyboardKeys.LEFT;

@@ -1,4 +1,4 @@
-import { Validator } from "../utils/index.ts";
+import { Validator, type ValidityAndMessage } from "../utils/index.ts";
 
 export type PinInputState = {
   /**
@@ -25,7 +25,7 @@ export type PinInputState = {
 class PinInputValidator extends Validator<PinInputState> {
   private _control?: HTMLInputElement;
 
-  protected override computeValidity(state: PinInputState) {
+  protected override computeValidity(state: PinInputState): ValidityAndMessage {
     if (!this._control) {
       // Lazily create the platform input
       this._control = document.createElement("input");
@@ -45,7 +45,7 @@ class PinInputValidator extends Validator<PinInputState> {
     };
   }
 
-  protected override equals(prev: PinInputState, next: PinInputState) {
+  protected override equals(prev: PinInputState, next: PinInputState): boolean {
     return (
       prev.value === next.value &&
       prev.required === next.required &&
@@ -54,7 +54,7 @@ class PinInputValidator extends Validator<PinInputState> {
     );
   }
 
-  protected override copy(state: PinInputState) {
+  protected override copy(state: PinInputState): PinInputState {
     const { value, required, pinLength, pins } = state;
 
     return {

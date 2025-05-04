@@ -1,6 +1,6 @@
-import { css } from "lit";
+import { css, type CSSResult } from "lit";
 
-const styles = css`
+const styles: CSSResult = css`
   *,
   *::before,
   *::after {

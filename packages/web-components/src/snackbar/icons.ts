@@ -1,6 +1,6 @@
-import { html } from "lit";
+import { html, type TemplateResult } from "lit";
 
-export const close = html`
+export const close: TemplateResult = html`
   <svg
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,7 @@ export const close = html`
   </svg>
 `;
 
-export const success = html`
+export const success: TemplateResult = html`
   <svg
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ export const success = html`
   </svg>
 `;
 
-export const error = html`
+export const error: TemplateResult = html`
   <svg
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@ export const error = html`
   </svg>
 `;
 
-export const info = html`
+export const info: TemplateResult = html`
   <svg
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +64,7 @@ export const info = html`
   </svg>
 `;
 
-export const warning = html`
+export const warning: TemplateResult = html`
   <svg
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"

@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { type ResolvedRouteConfig } from "vitepress";
 import { getFileMeta } from "../../scripts/utils.ts";
 import {
   type ComponentMetadata,
@@ -26,7 +27,9 @@ const metadata = JSON.parse(
 
 packagesMetadata = metadata.package;
 
-export default {
+const routeConfig: {
+  paths(): Pick<ResolvedRouteConfig, "content" | "params">[];
+} = {
   paths() {
     return Object.values(metadata.components).map(c => {
       let content = "";
@@ -42,6 +45,8 @@ export default {
     });
   },
 };
+
+export default routeConfig;
 
 const getPageMarkdown = (component: ComponentMetadata) => {
   let res = "\n";

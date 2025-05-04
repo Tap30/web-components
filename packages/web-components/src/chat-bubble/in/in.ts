@@ -1,4 +1,4 @@
-import { html, type TemplateResult } from "lit";
+import { html, type CSSResultGroup, type TemplateResult } from "lit";
 import type { DirectiveResult } from "lit/async-directive.js";
 import { property } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
@@ -17,7 +17,7 @@ import styles from "./in.style.ts";
  */
 export class ChatBubbleIn extends BaseChatBubble {
   /** @internal */
-  public static override readonly styles = [baseStyles, styles];
+  public static override readonly styles: CSSResultGroup = [baseStyles, styles];
 
   /**
    * The status of the chat element.

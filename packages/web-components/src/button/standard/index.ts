@@ -4,7 +4,7 @@ import { Button } from "./button.ts";
 export { Slots } from "./constants.ts";
 export { Button };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-button")) return;
 

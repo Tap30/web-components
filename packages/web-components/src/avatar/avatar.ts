@@ -1,4 +1,10 @@
-import { LitElement, type PropertyValues, html } from "lit";
+import {
+  type CSSResultGroup,
+  LitElement,
+  type PropertyValues,
+  type TemplateResult,
+  html,
+} from "lit";
 import { property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import styles from "./avatar.style.ts";
@@ -12,7 +18,7 @@ import styles from "./avatar.style.ts";
  */
 export class Avatar extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   @state()
   private _hasError = false;
@@ -67,7 +73,7 @@ export class Avatar extends LitElement {
   @property()
   public size: "xs" | "sm" | "md" | "lg" | "xlg" | "xxlg" = "md";
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     if (changed.has("image")) {
       this._hasError = false;
     }
@@ -96,7 +102,7 @@ export class Avatar extends LitElement {
     </div>`;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       [this.size]: true,

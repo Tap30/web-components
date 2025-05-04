@@ -1,4 +1,9 @@
-import { html, type PropertyValues, type TemplateResult } from "lit";
+import {
+  html,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { queryAssignedNodes, state } from "lit/decorators.js";
 import { isSsr } from "../../utils/index.ts";
 import { BaseButton, baseButtonStyles } from "../base/index.ts";
@@ -17,7 +22,10 @@ import { Slots } from "./constants.ts";
  */
 export class Button extends BaseButton {
   /** @internal */
-  public static override readonly styles = [baseButtonStyles, styles];
+  public static override readonly styles: CSSResultGroup = [
+    baseButtonStyles,
+    styles,
+  ];
 
   @state()
   private _hasLeadingIconSlot = false;

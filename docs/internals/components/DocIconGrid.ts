@@ -1,7 +1,14 @@
 import icons from "@tapsioss/icons";
 import * as scrollLock from "body-scroll-lock";
 import { createFocusTrap, type FocusTrap } from "focus-trap";
-import { html, LitElement, nothing, svg, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  svg,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { customElement, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -28,7 +35,7 @@ type SVGIconInfo = {
 
 @customElement("doc-icon-grid")
 export class DocIconGrid extends LitElement {
-  protected override createRenderRoot() {
+  protected override createRenderRoot(): HTMLElement | DocumentFragment {
     return this;
   }
 
@@ -54,7 +61,7 @@ export class DocIconGrid extends LitElement {
     return inputString.toLowerCase().replace(/-/g, "").replace(/_/g, "");
   }
 
-  public override disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     scrollLock.enableBodyScroll(this._iconModal);
@@ -65,8 +72,8 @@ export class DocIconGrid extends LitElement {
     window.removeEventListener("keydown", this._handleEscapeKey);
   }
 
-  protected override firstUpdated(_changedProperties: PropertyValues) {
-    super.firstUpdated(_changedProperties);
+  protected override firstUpdated(changed: PropertyValues): void {
+    super.firstUpdated(changed);
 
     this._focusTrapper = createFocusTrap(this._iconModal, {
       clickOutsideDeactivates: true,
@@ -275,7 +282,7 @@ export class DocIconGrid extends LitElement {
     return html`<div>No icon was found for "${this._searchString}"!</div>`;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     return html`
       ${this._renderModal()}${this._renderSearchbar()}
       <div id="icons-grid">${this._renderIcons()}</div>

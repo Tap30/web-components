@@ -1,6 +1,6 @@
-import { css } from "lit";
+import { css, type CSSResult } from "lit";
 
-export default css`
+const styles: CSSResult = css`
   *,
   *::before,
   *::after {
@@ -213,3 +213,5 @@ export default css`
     font-weight: var(--input-label-text-weight);
   }
 `;
+
+export default styles;

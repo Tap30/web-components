@@ -1,4 +1,4 @@
-import "../../spinner/index.ts";
+import { register as registerSpinner } from "../../spinner/index.ts";
 
 import {
   html,
@@ -157,12 +157,14 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   private readonly _root!: HTMLElement | null;
 
   /** @internal */
-  public get form() {
+  public get form(): HTMLFormElement | null {
     return this[internals].form;
   }
 
   constructor() {
     super();
+
+    registerSpinner();
 
     this._handleClick = this._handleClick.bind(this);
   }
@@ -175,7 +177,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   }
 
   /** @internal */
-  public override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
 
     this._updateFocusability();
@@ -184,13 +186,13 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   }
 
   /** @internal */
-  public override disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     this.removeEventListener("click", this._handleClick);
   }
 
-  protected override firstUpdated(changed: PropertyValues<this>) {
+  protected override firstUpdated(changed: PropertyValues<this>): void {
     super.firstUpdated(changed);
 
     runAfterRepaint(() => {
@@ -200,7 +202,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     });
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (changed.has("disabled")) this._updateFocusability();
@@ -219,7 +221,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   /**
    * The method for rendering the spinner for loading state.
    */
-  protected renderSpinner() {
+  protected renderSpinner(): TemplateResult {
     return html`
       <div class="icon spinner">
         <tapsi-spinner></tapsi-spinner>
@@ -249,12 +251,12 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
   }
 
   /** @internal */
-  public override focus(options?: FocusOptions) {
+  public override focus(options?: FocusOptions): void {
     this._root?.focus(options);
   }
 
   /** @internal */
-  public override blur() {
+  public override blur(): void {
     this._root?.blur();
   }
 
@@ -298,7 +300,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     `;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       loading: this.loading,

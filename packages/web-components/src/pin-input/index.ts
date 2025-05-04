@@ -4,7 +4,7 @@ import { PinInput } from "./pin-input.ts";
 export * from "./events.ts";
 export { PinInput };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-pin-input")) return;
 

@@ -5,7 +5,7 @@ export { Slots } from "./constants.ts";
 export * from "./events.ts";
 export { Snackbar };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-snackbar")) return;
 

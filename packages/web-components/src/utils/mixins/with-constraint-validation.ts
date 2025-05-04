@@ -5,8 +5,8 @@ import {
 } from "lit";
 import isSsr from "../is-ssr.ts";
 import SystemError from "../SystemError.ts";
-import type Validator from "../Validator";
-import type { MixinBase, MixinReturn } from "./types";
+import type Validator from "../Validator.ts";
+import type { MixinBase, MixinReturn } from "./types.ts";
 import {
   internals,
   type WithElementInternals,
@@ -17,13 +17,13 @@ import { type FormAssociated } from "./with-form-associated.ts";
  * A symbol property used to create a constraint validation `Validator`.
  * Required for all `withConstraintValidation()` elements.
  */
-export const createValidator = Symbol("createValidator");
+export const createValidator: unique symbol = Symbol("createValidator");
 
 /**
  * A symbol property used to return an anchor for constraint validation popups.
  * Required for all `withConstraintValidation()` elements.
  */
-export const getValidityAnchor = Symbol("getValidityAnchor");
+export const getValidityAnchor: unique symbol = Symbol("getValidityAnchor");
 
 /**
  * A form associated element that provides constraint validation APIs.

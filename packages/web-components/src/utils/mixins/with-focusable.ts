@@ -1,12 +1,12 @@
 import { type LitElement } from "lit";
 import { property } from "lit/decorators.js";
-import type { MixinBase, MixinReturn } from "./types";
+import type { MixinBase, MixinReturn } from "./types.ts";
 
 /**
  * A property symbol that indicates whether or not a `Focusable` element can be
  * focused.
  */
-export const isFocusable = Symbol("isFocusable");
+export const isFocusable: unique symbol = Symbol("isFocusable");
 
 export interface Focusable {
   /**

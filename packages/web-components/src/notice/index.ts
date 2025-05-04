@@ -5,7 +5,7 @@ export { Slots } from "./constants.ts";
 export * from "./events.ts";
 export { Notice };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-notice")) return;
 

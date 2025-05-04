@@ -1,4 +1,4 @@
-import { html, nothing } from "lit";
+import { html, nothing, type CSSResultGroup, type TemplateResult } from "lit";
 import { property } from "lit/decorators.js";
 import { live } from "lit/directives/live.js";
 import BaseTextInput, {
@@ -16,7 +16,10 @@ import styles from "./text-area.style.ts";
  */
 export class TextArea extends BaseTextInput {
   /** @internal */
-  public static override readonly styles = [...baseTextInputStyles, styles];
+  public static override readonly styles: CSSResultGroup = [
+    ...baseTextInputStyles,
+    styles,
+  ];
 
   /**
    * The number of rows to display for the text input.
@@ -64,7 +67,7 @@ export class TextArea extends BaseTextInput {
     }));
   }
 
-  protected override renderInput() {
+  protected override renderInput(): TemplateResult {
     if (!this.hasValidLabel()) {
       logger(
         [

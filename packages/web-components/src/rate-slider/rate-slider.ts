@@ -1,4 +1,11 @@
-import { html, LitElement, nothing, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { map } from "lit/directives/map.js";
@@ -34,7 +41,7 @@ const BaseClass = withFormAssociated(withElementInternals(LitElement));
  */
 export class RateSlider extends BaseClass {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   static override shadowRootOptions: ShadowRootInit = {
@@ -117,7 +124,7 @@ export class RateSlider extends BaseClass {
    * @default "10"
    */
   @property()
-  public max = DEFAULT_MAX;
+  public max: string = DEFAULT_MAX;
 
   /**
    * Defines the minimum value in the range of permitted values.
@@ -129,7 +136,7 @@ export class RateSlider extends BaseClass {
    * @default "0"
    */
   @property()
-  public min = DEFAULT_MIN;
+  public min: string = DEFAULT_MIN;
 
   /**
    * Indicates that the element should be focused on page load.
@@ -186,7 +193,7 @@ export class RateSlider extends BaseClass {
   }
 
   /** @internal */
-  public override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.addEventListener("keydown", this._handleKeyDown);
@@ -202,7 +209,7 @@ export class RateSlider extends BaseClass {
   }
 
   /** @internal */
-  public override disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.removeEventListener("keydown", this._handleKeyDown);
@@ -255,45 +262,45 @@ export class RateSlider extends BaseClass {
   /**
    * Decrements the value of the input.
    */
-  public stepDown() {
+  public stepDown(): void {
     this._handleDecrease();
   }
 
   /**
    * Increments the value of the input.
    */
-  public stepUp() {
+  public stepUp(): void {
     this._handleIncrease();
   }
 
   /** @internal */
-  public override focus(options?: FocusOptions) {
+  public override focus(options?: FocusOptions): void {
     this._root?.focus(options);
   }
 
   /** @internal */
-  public override blur() {
+  public override blur(): void {
     this._root?.blur();
   }
 
   /** @internal */
-  public override formDisabledCallback(disabled: boolean) {
+  public override formDisabledCallback(disabled: boolean): void {
     this.disabled = disabled;
   }
 
   /** @internal */
-  public override [getFormValue]() {
+  public override [getFormValue](): string {
     return this.value;
   }
 
   /** @internal */
-  public override formResetCallback() {
+  public override formResetCallback(): void {
     this.value = this.getAttribute("value") ?? "";
     this.valueText = this.getAttribute("valuetext") ?? "";
   }
 
   /** @internal */
-  public override formStateRestoreCallback(state: string) {
+  public override formStateRestoreCallback(state: string): void {
     this.value = state;
   }
 
@@ -541,7 +548,7 @@ export class RateSlider extends BaseClass {
     `;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const hasValidLabel = Boolean(this.label || this.labelledBy);
 
     if (!hasValidLabel) {

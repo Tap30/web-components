@@ -4,7 +4,7 @@ import { TextField } from "./text-field.ts";
 export { BaseTextInputSlots as Slots } from "../base-text-input/index.ts";
 export { TextField };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-text-field")) return;
 

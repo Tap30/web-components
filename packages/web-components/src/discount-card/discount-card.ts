@@ -1,4 +1,10 @@
-import { LitElement, type PropertyValues, html } from "lit";
+import {
+  type CSSResultGroup,
+  LitElement,
+  type PropertyValues,
+  type TemplateResult,
+  html,
+} from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import isSsr from "../utils/is-ssr.ts";
@@ -17,7 +23,7 @@ import styles from "./discount-card.style.ts";
  */
 export class DiscountCard extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /**
    * The header title of the discount card.
@@ -158,7 +164,7 @@ export class DiscountCard extends LitElement {
     this._handleThumbnailSlotChange();
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.update(changed);
 
     this._checkRequiredProps();
@@ -197,13 +203,24 @@ export class DiscountCard extends LitElement {
 
   private _renderSideSection = () => {
     return html`
-      <div class="side">
+      <div
+        class="side"
+        part="side"
+      >
         <div
           class="badge-wrapper"
           part="badge-wrapper"
         >
-          <div class="badge-box">${this.badgeText}</div>
-          <div class="badge-shape">
+          <div
+            class="badge-box"
+            part="badge-box"
+          >
+            ${this.badgeText}
+          </div>
+          <div
+            class="badge-shape"
+            part="badge-shape"
+          >
             <svg
               viewBox="0 0 4 24"
               xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +235,6 @@ export class DiscountCard extends LitElement {
             </svg>
           </div>
         </div>
-
         <div
           class="thumbnail-box"
           part="thumbnail-box"
@@ -229,7 +245,6 @@ export class DiscountCard extends LitElement {
             name=${Slots.THUMBNAIL}
           ></slot>
         </div>
-
         <div class="dashed-line"></div>
       </div>
     `;
@@ -261,7 +276,6 @@ export class DiscountCard extends LitElement {
         >
           ${this.expiryDateLabel}
         </div>
-
         <div
           ?hidden=${!this._hasActionSlot}
           part="action"
@@ -276,14 +290,10 @@ export class DiscountCard extends LitElement {
     `;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       [`variant-${this.variant}`]: true,
-    });
-
-    const wrapperClasses = classMap({
-      wrapper: true,
     });
 
     return html`
@@ -292,7 +302,10 @@ export class DiscountCard extends LitElement {
         class=${rootClasses}
       >
         ${this._renderHeadSection()}
-        <div class=${wrapperClasses}>
+        <div
+          class="wrapper"
+          part="wrapper"
+        >
           ${this._renderSideSection()} ${this._renderBodySection()}
         </div>
       </div>

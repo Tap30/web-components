@@ -36,7 +36,7 @@ export abstract class BaseChatBubble extends LitElement {
     typeof ClassMapDirective
   >;
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = this.getRootClasses();
 
     return html`

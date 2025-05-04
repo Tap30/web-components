@@ -1,4 +1,9 @@
-import { html, LitElement } from "lit";
+import {
+  html,
+  LitElement,
+  type CSSResultGroup,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { logger } from "../../utils/index.ts";
@@ -14,7 +19,7 @@ import styles from "./item.style.ts";
  */
 export class PinwheelItem extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   private _selected = false;
 
@@ -53,7 +58,7 @@ export class PinwheelItem extends LitElement {
 
   private readonly _selectionController = new ItemSelectionController(this);
 
-  protected override render() {
+  protected override render(): TemplateResult {
     if (!this.value) {
       logger(
         `Expected a valid \`value\` property/attribute. Received \`${this.value}\`.`,

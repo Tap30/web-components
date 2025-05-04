@@ -1,6 +1,6 @@
-import { css } from "lit";
+import { css, type CSSResult } from "lit";
 
-export default css`
+const styles: CSSResult = css`
   :host {
     --discount-card-outer-radius: var(--tapsi-radius-4);
     --discount-card-inner-radius: var(--tapsi-radius-3);
@@ -257,3 +257,5 @@ export default css`
     margin-top: var(--tapsi-spacing-4);
   }
 `;
+
+export default styles;

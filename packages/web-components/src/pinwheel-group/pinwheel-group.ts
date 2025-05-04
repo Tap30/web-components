@@ -1,4 +1,10 @@
-import { html, LitElement, nothing } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  type CSSResultGroup,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { logger } from "../utils/index.ts";
 import styles from "./pinwheel-group.style.ts";
@@ -12,7 +18,7 @@ import styles from "./pinwheel-group.style.ts";
  */
 export class PinwheelGroup extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /**
    * Defines a string value that can be used to set a label
@@ -27,7 +33,7 @@ export class PinwheelGroup extends LitElement {
   @property()
   public label = "";
 
-  protected override render() {
+  protected override render(): TemplateResult {
     if (!this.label) {
       logger(
         "Expected a valid `label` attribute, received none.",

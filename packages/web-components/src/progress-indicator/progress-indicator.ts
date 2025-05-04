@@ -1,4 +1,10 @@
-import { html, LitElement, nothing } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  type CSSResultGroup,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { map } from "lit/directives/map.js";
@@ -14,7 +20,7 @@ import styles from "./progress-indicator.style.ts";
 
 export class ProgressIndicator extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /**
    * The total number of steps.
@@ -81,7 +87,7 @@ export class ProgressIndicator extends LitElement {
     });
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     if (!this.label) {
       logger(
         "Set `label` attribute for better accessibility.",

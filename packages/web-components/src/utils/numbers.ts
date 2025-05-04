@@ -1,4 +1,4 @@
-export const toFaNumber = (enNumber: string) => {
+export const toFaNumber = (enNumber: string): string => {
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
 
   return enNumber.replace(

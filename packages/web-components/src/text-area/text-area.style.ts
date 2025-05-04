@@ -1,6 +1,6 @@
-import { css } from "lit";
+import { css, type CSSResult } from "lit";
 
-export default css`
+const styles: CSSResult = css`
   .control {
     height: 6.5rem;
     padding: var(--tapsi-spacing-5) var(--tapsi-spacing-6);
@@ -12,3 +12,5 @@ export default css`
     resize: none;
   }
 `;
+
+export default styles;

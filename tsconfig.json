@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "skipLibCheck": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
 
+    "incremental": true,
+    "composite": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "moduleDetection": "force",
@@ -21,6 +23,9 @@
     "forceConsistentCasingInFileNames": true,
     "rewriteRelativeImportExtensions": true,
     "noImplicitReturns": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+    "resolvePackageJsonExports": true,
     "noImplicitOverride": true,
     "noUnusedLocals": true,
     "noImplicitAny": true,

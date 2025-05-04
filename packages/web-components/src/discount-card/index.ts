@@ -4,9 +4,8 @@ import { DiscountCard } from "./discount-card.ts";
 export { Slots } from "./constants.ts";
 export { DiscountCard };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
-
   if (customElements.get("tapsi-discount-card")) return;
 
   customElements.define("tapsi-discount-card", DiscountCard);

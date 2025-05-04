@@ -1,4 +1,4 @@
-import { Validator } from "../utils/index.ts";
+import { Validator, type ValidityAndMessage } from "../utils/index.ts";
 
 export type RadioState = {
   /**
@@ -17,7 +17,9 @@ export type RadioGroupState = readonly [RadioState, ...RadioState[]];
 class RadioValidator extends Validator<RadioGroupState> {
   private _radioControl?: HTMLInputElement;
 
-  protected override computeValidity(states: RadioGroupState) {
+  protected override computeValidity(
+    states: RadioGroupState,
+  ): ValidityAndMessage {
     if (!this._radioControl) {
       // Lazily create the platform input
       this._radioControl = document.createElement("input");
@@ -52,7 +54,7 @@ class RadioValidator extends Validator<RadioGroupState> {
   protected override equals(
     prevGroup: RadioGroupState,
     nextGroup: RadioGroupState,
-  ) {
+  ): boolean {
     if (prevGroup.length !== nextGroup.length) return false;
 
     for (let i = 0; i < prevGroup.length; i++) {

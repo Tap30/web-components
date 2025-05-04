@@ -4,7 +4,7 @@ import { Skeleton } from "./skeleton.ts";
 export { Slots } from "./constants.ts";
 export { Skeleton };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-skeleton")) return;
 

@@ -4,7 +4,7 @@ import { TextArea } from "./text-area.ts";
 export { BaseTextInputSlots as Slots } from "../base-text-input/index.ts";
 export { TextArea };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-text-area")) return;
 

@@ -1,7 +1,7 @@
-import { css } from "lit";
+import { css, type CSSResult } from "lit";
 import { Z_INDEXES } from "../internals/index.ts";
 
-const styles = css`
+const styles: CSSResult = css`
   *,
   *::before,
   *::after {

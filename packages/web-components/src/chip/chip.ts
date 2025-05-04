@@ -1,4 +1,10 @@
-import { html, LitElement, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
@@ -27,7 +33,7 @@ interface TapsiChipEventMap extends HTMLElementEventMap {
  */
 export class Chip extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   public static override readonly shadowRootOptions = {
@@ -117,7 +123,7 @@ export class Chip extends LitElement {
 
   private readonly _selectionController = new ChipSelectionController(this);
 
-  protected override willUpdate(changed: PropertyValues<this>) {
+  protected override willUpdate(changed: PropertyValues<this>): void {
     super.willUpdate(changed);
 
     if (changed.has("value") && !this.value) {
@@ -154,7 +160,7 @@ export class Chip extends LitElement {
     this.renderRoot.querySelector<HTMLElement>("#root")?.blur();
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       [this.size]: true,

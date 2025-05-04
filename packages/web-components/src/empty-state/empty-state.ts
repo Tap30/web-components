@@ -1,4 +1,10 @@
-import { html, LitElement, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { isSsr } from "../utils/index.ts";
 import { Slots } from "./constants.ts";
@@ -15,7 +21,7 @@ import styles from "./empty-state.style.ts";
  */
 export class EmptyState extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /**
    * The title of the empty state.
@@ -103,7 +109,7 @@ export class EmptyState extends LitElement {
     `;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     return html`
       <div
         class="root ${this.contentAlignment}"

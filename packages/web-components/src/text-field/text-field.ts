@@ -1,4 +1,4 @@
-import { html, nothing } from "lit";
+import { html, nothing, type CSSResultGroup, type TemplateResult } from "lit";
 import { property } from "lit/decorators.js";
 import { live } from "lit/directives/live.js";
 import { ErrorMessages } from "../base-text-input/constants.ts";
@@ -15,7 +15,9 @@ import TextFieldValidator from "./Validator.ts";
  */
 export class TextField extends BaseTextInput {
   /** @internal */
-  public static override readonly styles = [...baseTextInputStyles];
+  public static override readonly styles: CSSResultGroup = [
+    ...baseTextInputStyles,
+  ];
 
   /**
    * The `<input>` type to use. The type greatly changes how
@@ -175,7 +177,7 @@ export class TextField extends BaseTextInput {
    *
    * @param stepDecrement The number of steps to decrement.
    */
-  public stepDown(stepDecrement?: number) {
+  public stepDown(stepDecrement?: number): void {
     const input = this.getInputElement() as HTMLInputElement | null;
 
     if (!input) return;
@@ -192,7 +194,7 @@ export class TextField extends BaseTextInput {
    *
    * @param stepIncrement The number of steps to increment.
    */
-  public stepUp(stepIncrement?: number) {
+  public stepUp(stepIncrement?: number): void {
     const input = this.getInputElement() as HTMLInputElement | null;
 
     if (!input) return;
@@ -209,7 +211,7 @@ export class TextField extends BaseTextInput {
     }));
   }
 
-  protected override renderInput() {
+  protected override renderInput(): TemplateResult {
     if (!this.hasValidLabel()) {
       logger(
         ErrorMessages.SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE,

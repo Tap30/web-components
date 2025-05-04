@@ -3,7 +3,15 @@ import type { PropertyDeclaration } from "lit";
 export const isStringNumber = (inputString: string): boolean =>
   /^\d+(\.\d+)?$/.test(inputString);
 
-export const getProgressUiParams = (percentage: number) => {
+export const getProgressUiParams = (
+  percentage: number,
+): {
+  offset: number;
+  progressSize: number;
+  progressStroke: number;
+  circumference: number;
+  radius: number;
+} => {
   const progressSize = 24;
   const progressStroke = 4;
   const radius = progressSize - progressStroke;
@@ -19,7 +27,7 @@ export const getProgressUiParams = (percentage: number) => {
   };
 };
 
-export const isFileImage = (fileName: string) => {
+export const isFileImage = (fileName: string): boolean => {
   const imageFileExtensions = [
     ".jpg",
     ".jpeg",

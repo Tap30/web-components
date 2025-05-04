@@ -75,7 +75,7 @@ class ScrollLocker {
   /**
    * Returns true if `element` should be allowed to receive touchmove events.
    */
-  public _allowTouchMove(element: HTMLElement) {
+  public _allowTouchMove(element: HTMLElement): boolean {
     return this._locks.some(
       lock => lock.options?.allowTouchMove?.(element) ?? false,
     );
@@ -221,7 +221,7 @@ class ScrollLocker {
     return true;
   }
 
-  public lock(targetElement: HTMLElement, options?: LockOptions) {
+  public lock(targetElement: HTMLElement, options?: LockOptions): void {
     const alreadyLocked = this._locks.some(
       lock => lock.targetElement === targetElement,
     );
@@ -265,7 +265,7 @@ class ScrollLocker {
     }
   }
 
-  public clearLocks() {
+  public clearLocks(): void {
     if (this._isIosDevice) {
       // Clear all locks ontouchstart/ontouchmove handlers, and the references.
       this._locks.forEach((lock: Lock) => {
@@ -289,7 +289,7 @@ class ScrollLocker {
     this._locks = [];
   }
 
-  public unlock(targetElement: HTMLElement) {
+  public unlock(targetElement: HTMLElement): void {
     this._locks = this._locks.filter(
       lock => lock.targetElement !== targetElement,
     );

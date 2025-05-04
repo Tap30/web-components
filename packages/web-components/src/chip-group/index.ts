@@ -5,7 +5,7 @@ export { Slots } from "./constants.ts";
 export * from "./events.ts";
 export { ChipGroup };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-chip-group")) return;
 

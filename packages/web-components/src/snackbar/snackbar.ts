@@ -1,6 +1,12 @@
-import "../button/icon-button/index.ts";
+import { register as registerIconButton } from "../button/icon-button/index.ts";
 
-import { html, LitElement, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { KeyboardKeys } from "../internals/index.ts";
@@ -32,7 +38,7 @@ interface TapsiSnackbarEventMap extends HTMLElementEventMap {
  */
 export class Snackbar extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   public static override readonly shadowRootOptions = {
@@ -121,6 +127,8 @@ export class Snackbar extends LitElement {
   constructor() {
     super();
 
+    registerIconButton();
+
     this._handleDocumentKeyDown = this._handleDocumentKeyDown.bind(this);
     this._handleDocumentFocus = this._handleDocumentFocus.bind(this);
   }
@@ -158,7 +166,7 @@ export class Snackbar extends LitElement {
     this._focusTarget = null;
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (this.open) {
@@ -181,7 +189,7 @@ export class Snackbar extends LitElement {
     }
   }
 
-  protected override willUpdate(changed: PropertyValues<this>) {
+  protected override willUpdate(changed: PropertyValues<this>): void {
     super.willUpdate(changed);
 
     this._handleIconSlotChange();
@@ -203,7 +211,7 @@ export class Snackbar extends LitElement {
    * Opens the snackbar if it is not already open.
    * Dispatches a cancelable ShowEvent ("show").
    */
-  public show() {
+  public show(): void {
     if (this.open) return;
 
     this.open = true;
@@ -217,7 +225,7 @@ export class Snackbar extends LitElement {
    * Closes the snackbar if it is currently open.
    * Dispatches a cancelable HideEvent ("hide").
    */
-  public hide() {
+  public hide(): void {
     if (!this.open) return;
 
     this.open = false;
@@ -375,7 +383,7 @@ export class Snackbar extends LitElement {
     ></slot>`;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       open: this.open,

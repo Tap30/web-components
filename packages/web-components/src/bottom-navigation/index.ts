@@ -7,7 +7,7 @@ export * from "./events.ts";
 export { Slots as ItemSlots } from "./item/index.ts";
 export { BottomNavigation, BottomNavigationItem };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
 
   if (!customElements.get("tapsi-bottom-navigation")) {

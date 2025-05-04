@@ -1,6 +1,13 @@
-import "../button/icon-button/index.ts";
+import { register as registerIconButton } from "../button/icon-button/index.ts";
 
-import { html, LitElement, nothing, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { requestFormSubmit } from "../base-input/utils.ts";
@@ -33,7 +40,7 @@ const BaseClass = withFormAssociated(withElementInternals(LitElement));
  */
 export class Stepper extends BaseClass {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   static override shadowRootOptions: ShadowRootInit = {
@@ -147,7 +154,7 @@ export class Stepper extends BaseClass {
    * @default "100"
    */
   @property()
-  public max = DEFAULT_MAX;
+  public max: string = DEFAULT_MAX;
 
   /**
    * Defines the minimum value in the range of permitted values.
@@ -159,7 +166,7 @@ export class Stepper extends BaseClass {
    * @default ""
    */
   @property()
-  public min = DEFAULT_MIN;
+  public min: string = DEFAULT_MIN;
 
   /**
    * Returns or sets the element's step attribute, which works with min and max
@@ -188,6 +195,8 @@ export class Stepper extends BaseClass {
 
   constructor() {
     super();
+
+    registerIconButton();
 
     this._handleKeyDown = this._handleKeyDown.bind(this);
 
@@ -235,7 +244,7 @@ export class Stepper extends BaseClass {
     });
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (changed.has("size")) {
@@ -267,7 +276,7 @@ export class Stepper extends BaseClass {
    *
    * @param {number} [stepDecrement] - The number of steps to decrement.
    */
-  public stepDown(stepDecrement?: number) {
+  public stepDown(stepDecrement?: number): void {
     this._handleDecrease(stepDecrement);
   }
 
@@ -278,38 +287,38 @@ export class Stepper extends BaseClass {
    *
    * @param {number} [stepIncrement] - The number of steps to increment.
    */
-  public stepUp(stepIncrement?: number) {
+  public stepUp(stepIncrement?: number): void {
     this._handleIncrease(stepIncrement);
   }
 
   /** @internal */
-  public override focus(options?: FocusOptions) {
+  public override focus(options?: FocusOptions): void {
     this.renderRoot?.querySelector<HTMLElement>("#input")?.focus(options);
   }
 
   /** @internal */
-  public override blur() {
+  public override blur(): void {
     this.renderRoot?.querySelector<HTMLElement>("#input")?.blur();
   }
 
   /** @internal */
-  public override formDisabledCallback(disabled: boolean) {
+  public override formDisabledCallback(disabled: boolean): void {
     this.disabled = disabled;
   }
 
   /** @internal */
-  public override [getFormValue]() {
+  public override [getFormValue](): string {
     return this.value;
   }
 
   /** @internal */
-  public override formResetCallback() {
+  public override formResetCallback(): void {
     this.value = this.getAttribute("value") ?? "";
     this.valueText = this.getAttribute("valuetext") ?? "";
   }
 
   /** @internal */
-  public override formStateRestoreCallback(state: string) {
+  public override formStateRestoreCallback(state: string): void {
     this.value = state;
   }
 
@@ -399,7 +408,7 @@ export class Stepper extends BaseClass {
     `;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const hasValidLabel = Boolean(this.label || this.labelledBy);
 
     if (!hasValidLabel) {

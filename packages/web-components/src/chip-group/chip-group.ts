@@ -1,4 +1,11 @@
-import { html, LitElement, nothing, type PropertyValues } from "lit";
+import {
+  html,
+  LitElement,
+  nothing,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { Chip } from "../chip/chip.ts";
@@ -23,7 +30,7 @@ interface TapsiChipGroupEventMap extends HTMLElementEventMap {
  */
 export class ChipGroup extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   declare addEventListener: <K extends keyof TapsiChipGroupEventMap>(
@@ -113,7 +120,7 @@ export class ChipGroup extends LitElement {
   }
 
   /** @internal */
-  public override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
 
     this.addEventListener(
@@ -144,7 +151,7 @@ export class ChipGroup extends LitElement {
     );
   }
 
-  protected override willUpdate(changed: PropertyValues<this>) {
+  protected override willUpdate(changed: PropertyValues<this>): void {
     super.willUpdate(changed);
 
     if (changed.has("cols")) {
@@ -168,7 +175,7 @@ export class ChipGroup extends LitElement {
     this.dispatchEvent(new SelectChangeEvent({ values: selectedValues }));
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       [this.orientation]: true,

@@ -4,7 +4,7 @@ import { PinwheelGroup } from "./pinwheel-group.ts";
 export { Slots } from "./constants.ts";
 export { PinwheelGroup };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-pinwheel-group")) return;
 

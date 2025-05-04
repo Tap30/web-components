@@ -4,7 +4,7 @@ import { BadgeWrapper } from "./badge-wrapper.ts";
 export { Slots } from "./constants.ts";
 export { BadgeWrapper };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-badge-wrapper")) return;
 

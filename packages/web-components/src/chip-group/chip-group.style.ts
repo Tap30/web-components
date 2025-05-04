@@ -1,6 +1,6 @@
-import { css } from "lit";
+import { css, type CSSResult } from "lit";
 
-export default css`
+const styles: CSSResult = css`
   *,
   *::before,
   *::after {
@@ -52,3 +52,5 @@ export default css`
     display: none;
   }
 `;
+
+export default styles;

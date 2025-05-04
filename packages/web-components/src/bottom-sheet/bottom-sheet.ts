@@ -1,4 +1,4 @@
-import "../button/icon-button/index.ts";
+import { register as registerIconButton } from "../button/icon-button/index.ts";
 
 import {
   DragGesture,
@@ -10,6 +10,7 @@ import {
   html,
   LitElement,
   nothing,
+  type CSSResultGroup,
   type PropertyValues,
   type TemplateResult,
 } from "lit";
@@ -41,7 +42,7 @@ import {
   SnappedEvent,
 } from "./events.ts";
 import { dismiss } from "./icons.ts";
-import type { MetaData, SnapToCallbackArgument, StatusEnum } from "./types";
+import type { MetaData, SnapToCallbackArgument, StatusEnum } from "./types.ts";
 
 interface TapsiBottomSheetEventMap extends HTMLElementEventMap {
   [ClosedEvent.type]: ClosedEvent;
@@ -72,7 +73,7 @@ interface TapsiBottomSheetEventMap extends HTMLElementEventMap {
  */
 export class BottomSheet extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   public static override readonly shadowRootOptions = {
@@ -281,6 +282,8 @@ export class BottomSheet extends LitElement {
   constructor() {
     super();
 
+    registerIconButton();
+
     this._handleDocumentKeyDown = this._handleDocumentKeyDown.bind(this);
     this._handleDrag = this._handleDrag.bind(this);
     this._handleContainerScroll = this._handleContainerScroll.bind(this);
@@ -290,7 +293,7 @@ export class BottomSheet extends LitElement {
       this._handleContainerTouchStart.bind(this);
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (changed.has("expandable")) {
@@ -790,7 +793,7 @@ export class BottomSheet extends LitElement {
    *
    * @param {number | SnapToCallbackArgument} numberOrCallback
    */
-  public strictSnapTo(numberOrCallback: number | SnapToCallbackArgument) {
+  public strictSnapTo(numberOrCallback: number | SnapToCallbackArgument): void {
     if (isSsr()) return;
 
     runImmediatelyBeforeRepaint(() => {
@@ -819,7 +822,7 @@ export class BottomSheet extends LitElement {
    *
    * @param {number | SnapToCallbackArgument} numberOrCallback
    */
-  public snapTo(numberOrCallback: number | SnapToCallbackArgument) {
+  public snapTo(numberOrCallback: number | SnapToCallbackArgument): void {
     if (isSsr()) return;
 
     runImmediatelyBeforeRepaint(() => {
@@ -845,7 +848,7 @@ export class BottomSheet extends LitElement {
    * Opens the bottom sheet if it is not already open.
    * Dispatches a cancelable ShowEvent ("show").
    */
-  public show() {
+  public show(): void {
     if (this.open) return;
 
     this.open = true;
@@ -859,7 +862,7 @@ export class BottomSheet extends LitElement {
    * Closes the bottom sheet if it is currently open.
    * Dispatches a cancelable HideEvent ("hide").
    */
-  public hide() {
+  public hide(): void {
     if (!this.open) return;
 
     this.open = false;
@@ -1129,7 +1132,7 @@ export class BottomSheet extends LitElement {
     `;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       open: this.open,

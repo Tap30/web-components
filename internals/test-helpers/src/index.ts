@@ -1,15 +1,31 @@
 import { AxeBuilder } from "@axe-core/playwright";
-import { type Page, test as base } from "@playwright/test";
+import {
+  type Page,
+  type PlaywrightTestArgs,
+  type PlaywrightTestOptions,
+  type PlaywrightWorkerArgs,
+  type PlaywrightWorkerOptions,
+  type TestType,
+  test as base,
+} from "@playwright/test";
 
-const test = base.extend({
+const test: TestType<
+  PlaywrightTestArgs & PlaywrightTestOptions,
+  PlaywrightWorkerArgs & PlaywrightWorkerOptions
+> = base.extend({
   page: async ({ page }, use) => {
     await page.goto("/test");
     await use(page);
   },
 });
 
-const { afterAll, afterEach, beforeAll, beforeEach, describe, expect, step } =
-  test;
+const afterAll: typeof test.afterAll = test.afterAll;
+const afterEach: typeof test.afterEach = test.afterEach;
+const beforeAll: typeof test.beforeAll = test.beforeAll;
+const beforeEach: typeof test.beforeEach = test.beforeEach;
+const describe: typeof test.describe = test.describe;
+const expect: typeof test.expect = test.expect;
+const step: typeof test.step = test.step;
 
 /**
  * Configures an accessibility check for a given Playwright `page` using AxeBuilder,

@@ -3,7 +3,7 @@ import { Spinner } from "./spinner.ts";
 
 export { Spinner };
 
-export const register = () => {
+export const register = (): void => {
   if (isSsr()) return;
   if (customElements.get("tapsi-spinner")) return;
 

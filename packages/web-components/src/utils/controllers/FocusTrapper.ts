@@ -82,7 +82,7 @@ class FocusTrapper implements ReactiveController {
     this._tryFocus(element);
   }
 
-  public sendFocus() {
+  public sendFocus(): void {
     if (this._sendFocusTarget) {
       const focusTarget = document.getElementById(this._sendFocusTarget);
 
@@ -287,11 +287,11 @@ class FocusTrapper implements ReactiveController {
     } else this._trap(root);
   }
 
-  public isTopMostInstance(host: Host) {
+  public isTopMostInstance(host: Host): boolean {
     return this._topMostInstance === host;
   }
 
-  public wrap(tree: TemplateResult) {
+  public wrap(tree: TemplateResult): TemplateResult {
     const styles = styleMap({
       position: "absolute",
       width: 1,
@@ -325,22 +325,22 @@ class FocusTrapper implements ReactiveController {
     `;
   }
 
-  public hostConnected() {
+  public hostConnected(): void {
     this._host.setAttribute(HOST_INSTANCE_DATA_ATTRIBUTE, "");
     this._host.setAttribute(HOST_ENABLED_DATA_ATTRIBUTE, `${this.enabled}`);
 
     document.addEventListener("focusin", this._handleDocumentFocus);
   }
 
-  public hostDisconnected() {
+  public hostDisconnected(): void {
     this._host.removeAttribute(HOST_INSTANCE_DATA_ATTRIBUTE);
     this._host.removeAttribute(HOST_ENABLED_DATA_ATTRIBUTE);
 
     document.removeEventListener("focusin", this._handleDocumentFocus);
   }
 
-  public hostUpdate() {}
-  public hostUpdated() {}
+  public hostUpdate(): void {}
+  public hostUpdated(): void {}
 }
 
 export default FocusTrapper;

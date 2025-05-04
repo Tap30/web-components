@@ -1,5 +1,11 @@
-import { arrow, computePosition, type Coords, offset } from "@floating-ui/dom";
-import { html, LitElement, type PropertyValues } from "lit";
+import { arrow, computePosition, offset, type Coords } from "@floating-ui/dom";
+import {
+  html,
+  LitElement,
+  type CSSResultGroup,
+  type PropertyValues,
+  type TemplateResult,
+} from "lit";
 import { property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap } from "lit/directives/style-map.js";
@@ -25,7 +31,7 @@ interface TapsiTooltipEventMap extends HTMLElementEventMap {
  */
 export class Tooltip extends LitElement {
   /** @internal */
-  public static override readonly styles = [styles];
+  public static override readonly styles: CSSResultGroup = [styles];
 
   /** @internal */
   declare addEventListener: <K extends keyof TapsiTooltipEventMap>(
@@ -162,7 +168,7 @@ export class Tooltip extends LitElement {
   }
 
   /** @internal */
-  public override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
 
     if (!isSsr()) {
@@ -182,7 +188,7 @@ export class Tooltip extends LitElement {
   }
 
   /** @internal */
-  public override disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     /* eslint-disable @typescript-eslint/no-misused-promises */
@@ -197,7 +203,7 @@ export class Tooltip extends LitElement {
     /* eslint-enable @typescript-eslint/no-misused-promises */
   }
 
-  protected override updated(changed: PropertyValues<this>) {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (changed.has("placement")) void this.updateTooltipPosition();
@@ -206,7 +212,7 @@ export class Tooltip extends LitElement {
   /**
    * Forces the tooltip to display.
    */
-  public show() {
+  public show(): void {
     if (this.visible) return;
 
     const eventAllowed = this.dispatchEvent(new ShowEvent());
@@ -217,7 +223,7 @@ export class Tooltip extends LitElement {
   /**
    * Forces the tooltip to hide.
    */
-  public hide() {
+  public hide(): void {
     if (!this.visible) return;
 
     const eventAllowed = this.dispatchEvent(new HideEvent());
@@ -229,7 +235,7 @@ export class Tooltip extends LitElement {
    * Calculates and updates the position of the tooltip based on
    * Its anchor element.
    */
-  public async updateTooltipPosition() {
+  public async updateTooltipPosition(): Promise<void> {
     const anchorElement = this._getAnchorElement();
 
     if (!anchorElement || !this._arrowElement || !this._tooltipElement) return;
@@ -338,7 +344,7 @@ export class Tooltip extends LitElement {
     `;
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const isVisible = isSsr() ? false : this.visible;
 
     const rootClasses = classMap({

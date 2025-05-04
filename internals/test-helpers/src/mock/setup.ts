@@ -1,4 +1,4 @@
-import type { Page } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 import { globalMockReferenceKey } from "./constants.ts";
 import * as eventsMock from "./events-mock.ts";
 import * as fnMock from "./fn-mock.ts";
@@ -27,9 +27,30 @@ const detachGlobals = (page: Page) => {
   }, globalMockReferenceKey);
 };
 
-export const disposeMocks = (page: Page) => detachGlobals(page);
+export const disposeMocks = (page: Page): Promise<void> => detachGlobals(page);
 
-export const setupMocks = async (page: Page) => {
+export const setupMocks = async (
+  page: Page,
+): Promise<{
+  events: {
+    attachMockedEvent: (
+      locator: Locator,
+      eventName: string,
+      mockFn: MockFn,
+    ) => Promise<void>;
+    detachMockedEvent: (
+      locator: Locator,
+      eventName: string,
+      mockFn: MockFn,
+    ) => Promise<void>;
+  };
+  createFakeFn: () => {
+    ref: MockFn;
+    matchResult: (
+      expectedResult: Partial<Omit<MockFn, "__id__">>,
+    ) => Promise<void>;
+  };
+}> => {
   await attachGlobals(page);
 
   return {

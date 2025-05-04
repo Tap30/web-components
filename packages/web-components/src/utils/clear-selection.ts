@@ -1,7 +1,7 @@
 /**
  * Clears any user selected content.
  */
-const clearSelection = () => {
+const clearSelection = (): void => {
   // Get the current text selection
   const selection = window.getSelection();
 

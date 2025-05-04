@@ -1,5 +1,5 @@
 import { isServer } from "lit";
 
-const isSsr = () => isServer || typeof window === "undefined";
+const isSsr = (): boolean => isServer || typeof window === "undefined";
 
 export default isSsr;
