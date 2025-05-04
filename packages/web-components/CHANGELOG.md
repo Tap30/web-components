@@ -1,5 +1,23 @@
 # @tapsioss/web-components
 
+## 0.14.0
+### Minor Changes
+
+
+
+- [#472](https://github.com/Tap30/web-components/pull/472) [`ba17f66`](https://github.com/Tap30/web-components/commit/ba17f66db91a2cd90191cbde14864fe47463b52c) Thanks [@mimshins](https://github.com/mimshins)! - Remove cjs exports
+
+
+
+- [#462](https://github.com/Tap30/web-components/pull/462) [`e4906fe`](https://github.com/Tap30/web-components/commit/e4906fe2e461be2d0fa525f8e7292a84927bf565) Thanks [@hossein-nas](https://github.com/hossein-nas)! - Add discount card component
+
+
+### Patch Changes
+
+
+
+- [#468](https://github.com/Tap30/web-components/pull/468) [`ecc07f6`](https://github.com/Tap30/web-components/commit/ecc07f6cf773a995dade9b3571e752bab57856f0) Thanks [@amir78729](https://github.com/amir78729)! - Resolve tooltip size issue
+
 ## 0.13.1
 ### Patch Changes
 

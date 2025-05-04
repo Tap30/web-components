@@ -1,5 +1,26 @@
 # @tapsioss/react-components
 
+## 0.14.0
+### Minor Changes
+
+
+
+- [#472](https://github.com/Tap30/web-components/pull/472) [`ba17f66`](https://github.com/Tap30/web-components/commit/ba17f66db91a2cd90191cbde14864fe47463b52c) Thanks [@mimshins](https://github.com/mimshins)! - Remove cjs exports
+
+
+
+- [#466](https://github.com/Tap30/web-components/pull/466) [`756d70e`](https://github.com/Tap30/web-components/commit/756d70ed1f97a17f9c710f65b5e15a4d8aee8426) Thanks [@amir78729](https://github.com/amir78729)! - Expose element class
+
+
+
+- [#462](https://github.com/Tap30/web-components/pull/462) [`e4906fe`](https://github.com/Tap30/web-components/commit/e4906fe2e461be2d0fa525f8e7292a84927bf565) Thanks [@hossein-nas](https://github.com/hossein-nas)! - Add discount card component
+
+
+### Patch Changes
+
+- Updated dependencies [[`ba17f66`](https://github.com/Tap30/web-components/commit/ba17f66db91a2cd90191cbde14864fe47463b52c), [`e4906fe`](https://github.com/Tap30/web-components/commit/e4906fe2e461be2d0fa525f8e7292a84927bf565), [`ecc07f6`](https://github.com/Tap30/web-components/commit/ecc07f6cf773a995dade9b3571e752bab57856f0)]:
+  - @tapsioss/web-components@0.14.0
+
 ## 0.13.1
 ### Patch Changes
 
