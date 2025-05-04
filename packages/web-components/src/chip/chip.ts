@@ -1,13 +1,13 @@
 import {
   html,
   LitElement,
+  nothing,
   type CSSResultGroup,
   type PropertyValues,
   type TemplateResult,
 } from "lit";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { ifDefined } from "lit/directives/if-defined.js";
 import { isSsr, logger } from "../utils/index.ts";
 import styles from "./chip.style.ts";
 import { Slots } from "./constants.ts";
@@ -177,7 +177,7 @@ export class Chip extends LitElement {
         part="root"
         ?disabled=${this.disabled}
         tabindex="${this.disabled ? "-1" : "0"}"
-        aria-label=${ifDefined(this.ariaLabel ?? undefined)}
+        aria-label=${this.ariaLabel || nothing}
         aria-pressed=${this.selected}
         @click=${this._selectionController.handleClick}
         @keydown=${this._selectionController.handleKeyDown}

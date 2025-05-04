@@ -11,7 +11,6 @@ import {
 } from "lit";
 import { property, query, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { ifDefined } from "lit/directives/if-defined.js";
 import { live } from "lit/directives/live.js";
 import {
   createValidator,
@@ -815,8 +814,8 @@ export class FileInput extends BaseClass {
             ?disabled=${this.disabled || this._isLoading()}
             ?multiple=${this.multiple}
             ?readonly=${this.readOnly}
-            capture=${ifDefined(this.capture)}
-            accept=${ifDefined(this.accept)}
+            capture=${this.capture || nothing}
+            accept=${this.accept || nothing}
             ?required=${this.required}
             @input=${this._handleInput}
             @change=${this._handleChange}
