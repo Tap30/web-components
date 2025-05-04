@@ -22,14 +22,12 @@ import SingleSelectionController from "./Controller.ts";
 import RadioValidator from "./Validator.ts";
 import styles from "./radio.style.ts";
 
-const BaseClass = withFocusable(BaseInput);
-
 /**
  * @summary Used to select a single state from multiple options.
  *
  * @tag tapsi-radio
  */
-export class Radio extends BaseClass {
+export class Radio extends withFocusable(BaseInput) {
   /** @internal */
   public static override readonly styles: CSSResultGroup = [
     baseInputStyles,

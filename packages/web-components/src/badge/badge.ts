@@ -5,7 +5,7 @@ import {
   type PropertyValues,
   type TemplateResult,
 } from "lit";
-import type { DirectiveResult } from "lit/async-directive";
+import type { DirectiveResult } from "lit/async-directive.js";
 import { property, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap, type ClassMapDirective } from "lit/directives/class-map.js";
 import { isSsr } from "../utils/index.ts";

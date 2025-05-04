@@ -21,8 +21,9 @@ const copyCssVars = async () => {
 
     promises.push(
       Promise.all([
-        fs.copyFile(varsPath, path.join(distDir, "cjs", theme, "tokens.css")),
-        fs.copyFile(varsPath, path.join(distDir, "esm", theme, "tokens.css")),
+        // fs.copyFile(varsPath, path.join(distDir, "cjs", theme, "tokens.css")),
+        // fs.copyFile(varsPath, path.join(distDir, "esm", theme, "tokens.css")),
+        fs.copyFile(varsPath, path.join(distDir, theme, "tokens.css")),
       ]),
     );
   }

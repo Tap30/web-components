@@ -15,14 +15,13 @@ const execCmd = promisify(exec);
 const { dirname } = getFileMeta(import.meta.url);
 
 const packageDir = path.resolve(dirname, "..");
-const iconsDir = path.join(packageDir, "src");
+const srcDir = path.join(packageDir, "src");
 const distDir = path.join(packageDir, "dist");
 const templatesDir = path.join(packageDir, "templates");
 
-const pathsJSONFile = path.join(distDir, "paths.json");
+const pathsJSONFile = path.join(srcDir, "paths.json");
 const entryTemplate = path.join(templatesDir, "entry.txt");
-const tsconfigCjsFile = path.join(packageDir, "tsconfig.cjs.json");
-const tsconfigEsmFile = path.join(packageDir, "tsconfig.esm.json");
+const tsconfigFile = path.join(packageDir, "tsconfig.build.json");
 
 type SVGPathInfo = {
   clipRule?: string;
@@ -88,7 +87,7 @@ const generatePaths = async () => {
 
   await fs.writeFile(pathsJSONFile, "{", { encoding: "utf-8" });
 
-  const svgs = await globby(path.join(iconsDir, "**/*.svg"));
+  const svgs = await globby(path.join(srcDir, "**/*.svg"));
 
   for (let i = 0; i < svgs.length; i++) {
     const svg = svgs[i]!;
@@ -125,17 +124,14 @@ const generatePaths = async () => {
   });
 
   const entryCode = Mustache.render(entryTemplateStr, {});
-
-  const entryFilePath = path.join(distDir, "index.ts");
+  const entryFilePath = path.join(srcDir, "index.ts");
 
   await fs.writeFile(entryFilePath, entryCode, {
     encoding: "utf-8",
     flag: "w",
   });
-  await Promise.all([
-    execCmd(["tsc", "--project", tsconfigCjsFile].join(" ")),
-    execCmd(["tsc", "--project", tsconfigEsmFile].join(" ")),
-  ]);
+
+  await execCmd(["tsc", "--project", tsconfigFile].join(" "));
   await Promise.all([
     execCmd(["shx", "rm", entryFilePath].join(" ")),
     execCmd(["shx", "rm", pathsJSONFile].join(" ")),

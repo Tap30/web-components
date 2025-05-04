@@ -13,29 +13,25 @@
     "url": "https://github.com/Tap30/web-components.git",
     "directory": "packages/react-components"
   },
-  "main": "./dist/cjs/index.js",
-  "types": "./dist/cjs/index.d.ts",
-  "module": "./dist/esm/index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     "./*": {
-      "types": "./dist/cjs/*/index.d.ts",
-      "import": "./dist/esm/*/index.js",
-      "require": "./dist/cjs/*/index.js"
+      "types": "./dist/*/index.d.ts",
+      "default": "./dist/*/index.js"
     },
     ".": {
-      "types": "./dist/cjs/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
     "clear": "shx rm -rf dist",
     "dev": "tsc --watch --project ./tsconfig.dev.json",
+    "dev:profile": "tsc --watch --project ./tsconfig.dev.json --generateCpuProfile tsc-output.cpuprofile",
     "generate": "tsx ./scripts/generate.ts",
     "prebuild": "run-p clear generate",
-    "build:cjs": "tsc --project ./tsconfig.cjs.json",
-    "build:esm": "tsc --project ./tsconfig.esm.json",
-    "build": "run-p build:*"
+    "build": "tsc --project ./tsconfig.build.json"
   },
   "peerDependencies": {
     "react": ">=16.8"

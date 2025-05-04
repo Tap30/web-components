@@ -1,5 +1,7 @@
 {
   "extends": "../../tsconfig.build.json",
-  "include": ["dist"],
-  "exclude": ["node_modules", "cjs", "esm"]
+  "compilerOptions": {
+    "outDir": "./dist"
+  },
+  "include": ["src/index.ts", "src/paths.json"]
 }

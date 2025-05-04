@@ -520,7 +520,7 @@ export class BottomSheet extends LitElement {
   public get snapPoints(): number[] {
     if (
       !this._snapPoints ||
-      this._snapPoints === SENTINEL_DEFAULT_SNAP_POINTS
+      this._snapPoints === (SENTINEL_DEFAULT_SNAP_POINTS as unknown as number[])
     ) {
       return this.defaultSnapPoints;
     }

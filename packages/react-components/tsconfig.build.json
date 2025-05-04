@@ -1,5 +1,7 @@
 {
   "extends": "../../tsconfig.build.json",
-  "include": ["src"],
-  "exclude": ["**/*.test.{ts,tsx}", "__tests__", "dist", "node_modules"]
+  "compilerOptions": {
+    "outDir": "./dist"
+  },
+  "include": ["src"]
 }

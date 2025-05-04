@@ -26,7 +26,7 @@ export const getParentNode = (node: Node): Node => {
 
   return (
     // Step into the shadow DOM of the parent of a slotted node
-    (<HTMLElement>node).assignedSlot ||
+    (node as HTMLElement).assignedSlot ||
     // DOM Element detected
     node.parentNode ||
     // ShadowRoot detected
