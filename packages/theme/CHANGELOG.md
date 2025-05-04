@@ -1,5 +1,12 @@
 # @tapsioss/theme
 
+## 0.8.0
+### Minor Changes
+
+
+
+- [#472](https://github.com/Tap30/web-components/pull/472) [`ba17f66`](https://github.com/Tap30/web-components/commit/ba17f66db91a2cd90191cbde14864fe47463b52c) Thanks [@mimshins](https://github.com/mimshins)! - Remove cjs exports
+
 ## 0.7.0
 ### Minor Changes
 

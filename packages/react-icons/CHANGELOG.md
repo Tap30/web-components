@@ -1,5 +1,18 @@
 # @tapsioss/react-icons
 
+## 0.6.0
+### Minor Changes
+
+
+
+- [#472](https://github.com/Tap30/web-components/pull/472) [`ba17f66`](https://github.com/Tap30/web-components/commit/ba17f66db91a2cd90191cbde14864fe47463b52c) Thanks [@mimshins](https://github.com/mimshins)! - Remove cjs exports
+
+
+### Patch Changes
+
+- Updated dependencies [[`ba17f66`](https://github.com/Tap30/web-components/commit/ba17f66db91a2cd90191cbde14864fe47463b52c)]:
+  - @tapsioss/icons@0.6.0
+
 ## 0.5.0
 ### Minor Changes
 

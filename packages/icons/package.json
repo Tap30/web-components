@@ -1,7 +1,7 @@
 {
   "name": "@tapsioss/icons",
   "description": "SVG path metadata and definitions for Tapsi Design System icons.",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "homepage": "https://tap30.github.io/web-components",
   "repository": {
