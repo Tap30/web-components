@@ -1,18 +1,21 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
-  Checkbox as CheckboxElementClass,
+  Checkbox as CheckboxElement,
   registerCheckbox,
 } from "@tapsioss/web-components";
 
 registerCheckbox();
 
-export const Checkbox = LitReact.createComponent({
+export const Checkbox: ReactWebComponent<
+  CheckboxElement,
+  { onChange: string; onInput: string }
+> = createComponent({
   tagName: "tapsi-checkbox",
-  elementClass: CheckboxElementClass,
+  elementClass: CheckboxElement,
   react: React,
   events: { onChange: "input", onInput: "input" },
 });
 
-export {};
+export { CheckboxElement };

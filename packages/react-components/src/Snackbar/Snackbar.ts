@@ -1,9 +1,13 @@
-import * as LitReact from "@lit/react";
+import {
+  createComponent,
+  type EventName,
+  type ReactWebComponent,
+} from "@lit/react";
 import * as React from "react";
 
 import {
   registerSnackbar,
-  Snackbar as SnackbarElementClass,
+  Snackbar as SnackbarElement,
   SnackbarHideEvent,
   SnackbarShowEvent,
   SnackbarSlots,
@@ -11,14 +15,17 @@ import {
 
 registerSnackbar();
 
-export const Snackbar = LitReact.createComponent({
+export const Snackbar: ReactWebComponent<
+  SnackbarElement,
+  { onShow: EventName<SnackbarShowEvent>; onHide: EventName<SnackbarHideEvent> }
+> = createComponent({
   tagName: "tapsi-snackbar",
-  elementClass: SnackbarElementClass,
+  elementClass: SnackbarElement,
   react: React,
   events: {
-    onShow: "show" as LitReact.EventName<SnackbarShowEvent>,
-    onHide: "hide" as LitReact.EventName<SnackbarHideEvent>,
+    onShow: "show" as EventName<SnackbarShowEvent>,
+    onHide: "hide" as EventName<SnackbarHideEvent>,
   },
 });
 
-export { SnackbarHideEvent, SnackbarShowEvent, SnackbarSlots };
+export { SnackbarElement, SnackbarHideEvent, SnackbarShowEvent, SnackbarSlots };

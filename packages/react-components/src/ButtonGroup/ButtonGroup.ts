@@ -1,19 +1,20 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
-  ButtonGroup as ButtonGroupElementClass,
+  ButtonGroup as ButtonGroupElement,
   ButtonGroupSlots,
   registerButtonGroup,
 } from "@tapsioss/web-components";
 
 registerButtonGroup();
 
-export const ButtonGroup = LitReact.createComponent({
-  tagName: "tapsi-button-group",
-  elementClass: ButtonGroupElementClass,
-  react: React,
-  events: {},
-});
+export const ButtonGroup: ReactWebComponent<ButtonGroupElement> =
+  createComponent({
+    tagName: "tapsi-button-group",
+    elementClass: ButtonGroupElement,
+    react: React,
+    events: {},
+  });
 
-export { ButtonGroupSlots };
+export { ButtonGroupElement, ButtonGroupSlots };

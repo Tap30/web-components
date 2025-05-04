@@ -40,8 +40,6 @@ type ReactMetadata = {
 
 const asyncExec = promisify(exec);
 
-const LIT_REACT_NAMESPACE = "LitReact";
-
 const { dirname } = getFileMeta(import.meta.url);
 
 const packageDir = path.resolve(dirname, "..");
@@ -134,8 +132,10 @@ const createReactMetadata = (
     e.endsWith("Slots"),
   );
 
+  const inputClassName = elementClassName.replace("ElementClass", "Element");
+
   return {
-    elementClass: elementClassName,
+    elementClass: inputClassName,
     componentName,
     elementTag,
     events,
@@ -148,9 +148,8 @@ const createReactMetadata = (
 
 const getReactComponentImports = () => {
   return [
-    `import * as ${LIT_REACT_NAMESPACE} from "@lit/react";`,
+    `import { createComponent, type ReactWebComponent, type EventName } from "@lit/react";`,
     `import * as React from "react";`,
-    'import { type ReactWebComponent } from "@lit/react";',
   ].join("\n");
 };
 
@@ -183,7 +182,7 @@ const getReactComponentCode = async (
           return `${eventNameInReact}: '${eventName}'`;
         }
 
-        return `${eventNameInReact}: '${eventName}' as ${LIT_REACT_NAMESPACE}.EventName<${eventClass}>`;
+        return `${eventNameInReact}: '${eventName}' as EventName<${eventClass}>`;
       })
       .filter(event => event !== null)
       .join(",") || ""
@@ -196,10 +195,10 @@ const getReactComponentCode = async (
 
   const exports =
     exportsList.length > 0
-      ? `export { ${exportsList.filter(Boolean).join(", ")} };`
+      ? `export { ${[`${componentName}Element`, ...exportsList.filter(Boolean)].join(", ")} };`
       : "";
 
-  const elementClass = `${componentName}ElementClass`;
+  const elementClass = `${componentName}Element`;
   const importsList = [
     `${rawElementClass} as ${elementClass}`,
     registerFunction,
@@ -213,12 +212,33 @@ const getReactComponentCode = async (
     ? `${registerFunction}();`
     : `if (typeof window !== "undefined" && !customElements.get("${parentInfo?.tagName}")){\n/* eslint-disable no-console */\nconsole.warn("[TAPSI][${componentName}]: The \`${parentInfo?.tagName}\` tag is not registered. Since \`${componentName}\` is a compound component, it should be wrapped inside \`${parentInfo?.elementClassName}\` component.");\n/* eslint-enable no-console */}`;
 
+  const componentType = `ReactWebComponent<${elementClass}${
+    _events?.length > 0
+      ? `, { ${
+          _events
+            ?.map(event => {
+              const eventClass = event.class;
+              const eventNameInReact = event.key;
+
+              if (!eventClass) {
+                return `${eventNameInReact}: string`;
+              }
+
+              return `${eventNameInReact}: EventName<${eventClass}>`;
+            })
+            .filter(event => event !== null)
+            .join(",") || ""
+        } }`
+      : ""
+  }>`;
+
   return Mustache.render(
     componentTemplateStr,
     {
       imports,
       register: registerSection,
       componentName,
+      componentType,
       elementTag,
       elementClass,
       events,

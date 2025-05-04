@@ -1,19 +1,22 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
   registerTextArea,
-  TextArea as TextAreaElementClass,
+  TextArea as TextAreaElement,
   TextAreaSlots,
 } from "@tapsioss/web-components";
 
 registerTextArea();
 
-export const TextArea = LitReact.createComponent({
+export const TextArea: ReactWebComponent<
+  TextAreaElement,
+  { onChange: string; onInput: string }
+> = createComponent({
   tagName: "tapsi-text-area",
-  elementClass: TextAreaElementClass,
+  elementClass: TextAreaElement,
   react: React,
   events: { onChange: "input", onInput: "input" },
 });
 
-export { TextAreaSlots };
+export { TextAreaElement, TextAreaSlots };

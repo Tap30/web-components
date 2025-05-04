@@ -1,7 +1,7 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
-import { PinwheelItem as PinwheelItemElementClass } from "@tapsioss/web-components";
+import { PinwheelItem as PinwheelItemElement } from "@tapsioss/web-components";
 
 if (typeof window !== "undefined" && !customElements.get("tapsi-pinwheel")) {
   /* eslint-disable no-console */
@@ -11,9 +11,10 @@ if (typeof window !== "undefined" && !customElements.get("tapsi-pinwheel")) {
   /* eslint-enable no-console */
 }
 
-export const PinwheelItem = LitReact.createComponent({
-  tagName: "tapsi-pinwheel-item",
-  elementClass: PinwheelItemElementClass,
-  react: React,
-  events: {},
-});
+export const PinwheelItem: ReactWebComponent<PinwheelItemElement> =
+  createComponent({
+    tagName: "tapsi-pinwheel-item",
+    elementClass: PinwheelItemElement,
+    react: React,
+    events: {},
+  });

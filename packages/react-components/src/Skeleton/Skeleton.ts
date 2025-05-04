@@ -1,19 +1,19 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
   registerSkeleton,
-  Skeleton as SkeletonElementClass,
+  Skeleton as SkeletonElement,
   SkeletonSlots,
 } from "@tapsioss/web-components";
 
 registerSkeleton();
 
-export const Skeleton = LitReact.createComponent({
+export const Skeleton: ReactWebComponent<SkeletonElement> = createComponent({
   tagName: "tapsi-skeleton",
-  elementClass: SkeletonElementClass,
+  elementClass: SkeletonElement,
   react: React,
   events: {},
 });
 
-export { SkeletonSlots };
+export { SkeletonElement, SkeletonSlots };

@@ -1,16 +1,16 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
-  Spinner as SpinnerElementClass,
+  Spinner as SpinnerElement,
   registerSpinner,
 } from "@tapsioss/web-components";
 
 registerSpinner();
 
-export const Spinner = LitReact.createComponent({
+export const Spinner: ReactWebComponent<SpinnerElement> = createComponent({
   tagName: "tapsi-spinner",
-  elementClass: SpinnerElementClass,
+  elementClass: SpinnerElement,
   react: React,
   events: {},
 });

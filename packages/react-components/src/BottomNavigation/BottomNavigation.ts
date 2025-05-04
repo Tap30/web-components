@@ -1,9 +1,13 @@
-import * as LitReact from "@lit/react";
+import {
+  createComponent,
+  type EventName,
+  type ReactWebComponent,
+} from "@lit/react";
 import * as React from "react";
 
 import {
   BottomNavigationActiveChangeEvent,
-  BottomNavigation as BottomNavigationElementClass,
+  BottomNavigation as BottomNavigationElement,
   BottomNavigationItemSlots,
   BottomNavigationSlots,
   registerBottomNavigation,
@@ -11,18 +15,22 @@ import {
 
 registerBottomNavigation();
 
-export const BottomNavigation = LitReact.createComponent({
+export const BottomNavigation: ReactWebComponent<
+  BottomNavigationElement,
+  { onActiveChange: EventName<BottomNavigationActiveChangeEvent> }
+> = createComponent({
   tagName: "tapsi-bottom-navigation",
-  elementClass: BottomNavigationElementClass,
+  elementClass: BottomNavigationElement,
   react: React,
   events: {
     onActiveChange:
-      "activechange" as LitReact.EventName<BottomNavigationActiveChangeEvent>,
+      "activechange" as EventName<BottomNavigationActiveChangeEvent>,
   },
 });
 
 export {
   BottomNavigationActiveChangeEvent,
+  BottomNavigationElement,
   BottomNavigationItemSlots,
   BottomNavigationSlots,
 };

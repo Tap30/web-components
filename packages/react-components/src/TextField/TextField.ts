@@ -1,19 +1,22 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
   registerTextField,
-  TextField as TextFieldElementClass,
+  TextField as TextFieldElement,
   TextFieldSlots,
 } from "@tapsioss/web-components";
 
 registerTextField();
 
-export const TextField = LitReact.createComponent({
+export const TextField: ReactWebComponent<
+  TextFieldElement,
+  { onChange: string; onInput: string }
+> = createComponent({
   tagName: "tapsi-text-field",
-  elementClass: TextFieldElementClass,
+  elementClass: TextFieldElement,
   react: React,
   events: { onChange: "input", onInput: "input" },
 });
 
-export { TextFieldSlots };
+export { TextFieldElement, TextFieldSlots };

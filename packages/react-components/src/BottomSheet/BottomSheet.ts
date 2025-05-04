@@ -1,10 +1,14 @@
-import * as LitReact from "@lit/react";
+import {
+  createComponent,
+  type EventName,
+  type ReactWebComponent,
+} from "@lit/react";
 import * as React from "react";
 
 import {
   BottomSheetClosedEvent,
   BottomSheetClosingEvent,
-  BottomSheet as BottomSheetElementClass,
+  BottomSheet as BottomSheetElement,
   BottomSheetHideEvent,
   BottomSheetOpenedEvent,
   BottomSheetOpeningEvent,
@@ -16,24 +20,36 @@ import {
 
 registerBottomSheet();
 
-export const BottomSheet = LitReact.createComponent({
+export const BottomSheet: ReactWebComponent<
+  BottomSheetElement,
+  {
+    onSnapped: EventName<BottomSheetSnappedEvent>;
+    onOpening: EventName<BottomSheetOpeningEvent>;
+    onClosing: EventName<BottomSheetClosingEvent>;
+    onOpened: EventName<BottomSheetOpenedEvent>;
+    onClosed: EventName<BottomSheetClosedEvent>;
+    onHide: EventName<BottomSheetHideEvent>;
+    onShow: EventName<BottomSheetShowEvent>;
+  }
+> = createComponent({
   tagName: "tapsi-bottom-sheet",
-  elementClass: BottomSheetElementClass,
+  elementClass: BottomSheetElement,
   react: React,
   events: {
-    onSnapped: "snapped" as LitReact.EventName<BottomSheetSnappedEvent>,
-    onOpening: "opening" as LitReact.EventName<BottomSheetOpeningEvent>,
-    onClosing: "closing" as LitReact.EventName<BottomSheetClosingEvent>,
-    onOpened: "opened" as LitReact.EventName<BottomSheetOpenedEvent>,
-    onClosed: "closed" as LitReact.EventName<BottomSheetClosedEvent>,
-    onHide: "hide" as LitReact.EventName<BottomSheetHideEvent>,
-    onShow: "show" as LitReact.EventName<BottomSheetShowEvent>,
+    onSnapped: "snapped" as EventName<BottomSheetSnappedEvent>,
+    onOpening: "opening" as EventName<BottomSheetOpeningEvent>,
+    onClosing: "closing" as EventName<BottomSheetClosingEvent>,
+    onOpened: "opened" as EventName<BottomSheetOpenedEvent>,
+    onClosed: "closed" as EventName<BottomSheetClosedEvent>,
+    onHide: "hide" as EventName<BottomSheetHideEvent>,
+    onShow: "show" as EventName<BottomSheetShowEvent>,
   },
 });
 
 export {
   BottomSheetClosedEvent,
   BottomSheetClosingEvent,
+  BottomSheetElement,
   BottomSheetHideEvent,
   BottomSheetOpenedEvent,
   BottomSheetOpeningEvent,

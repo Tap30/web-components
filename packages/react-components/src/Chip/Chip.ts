@@ -1,9 +1,13 @@
-import * as LitReact from "@lit/react";
+import {
+  createComponent,
+  type EventName,
+  type ReactWebComponent,
+} from "@lit/react";
 import * as React from "react";
 
 import {
   ChipDeselectEvent,
-  Chip as ChipElementClass,
+  Chip as ChipElement,
   ChipSelectEvent,
   ChipSlots,
   registerChip,
@@ -11,14 +15,20 @@ import {
 
 registerChip();
 
-export const Chip = LitReact.createComponent({
+export const Chip: ReactWebComponent<
+  ChipElement,
+  {
+    onSelect: EventName<ChipSelectEvent>;
+    onDeselect: EventName<ChipDeselectEvent>;
+  }
+> = createComponent({
   tagName: "tapsi-chip",
-  elementClass: ChipElementClass,
+  elementClass: ChipElement,
   react: React,
   events: {
-    onSelect: "select" as LitReact.EventName<ChipSelectEvent>,
-    onDeselect: "deselect" as LitReact.EventName<ChipDeselectEvent>,
+    onSelect: "select" as EventName<ChipSelectEvent>,
+    onDeselect: "deselect" as EventName<ChipDeselectEvent>,
   },
 });
 
-export { ChipDeselectEvent, ChipSelectEvent, ChipSlots };
+export { ChipDeselectEvent, ChipElement, ChipSelectEvent, ChipSlots };

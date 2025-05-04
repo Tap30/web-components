@@ -1,19 +1,20 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
-  PinwheelGroup as PinwheelGroupElementClass,
+  PinwheelGroup as PinwheelGroupElement,
   PinwheelGroupSlots,
   registerPinwheelGroup,
 } from "@tapsioss/web-components";
 
 registerPinwheelGroup();
 
-export const PinwheelGroup = LitReact.createComponent({
-  tagName: "tapsi-pinwheel-group",
-  elementClass: PinwheelGroupElementClass,
-  react: React,
-  events: {},
-});
+export const PinwheelGroup: ReactWebComponent<PinwheelGroupElement> =
+  createComponent({
+    tagName: "tapsi-pinwheel-group",
+    elementClass: PinwheelGroupElement,
+    react: React,
+    events: {},
+  });
 
-export { PinwheelGroupSlots };
+export { PinwheelGroupElement, PinwheelGroupSlots };

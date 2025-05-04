@@ -1,8 +1,8 @@
-import * as LitReact from "@lit/react";
+import { createComponent, type ReactWebComponent } from "@lit/react";
 import * as React from "react";
 
 import {
-  Pinwheel as PinwheelElementClass,
+  Pinwheel as PinwheelElement,
   PinwheelItemSlots,
   PinwheelSlots,
   registerPinwheel,
@@ -10,11 +10,14 @@ import {
 
 registerPinwheel();
 
-export const Pinwheel = LitReact.createComponent({
+export const Pinwheel: ReactWebComponent<
+  PinwheelElement,
+  { onChange: string; onInput: string }
+> = createComponent({
   tagName: "tapsi-pinwheel",
-  elementClass: PinwheelElementClass,
+  elementClass: PinwheelElement,
   react: React,
   events: { onChange: "change", onInput: "change" },
 });
 
-export { PinwheelItemSlots, PinwheelSlots };
+export { PinwheelElement, PinwheelItemSlots, PinwheelSlots };
