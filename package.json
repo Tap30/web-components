@@ -39,7 +39,7 @@
     "dev:playground": "pnpm --filter @tapsioss/playground run start:dev",
     "dev:docs:vitepress": "pnpm --filter @tapsioss/docs run dev",
     "dev:docs": "run-s gen:metadata dev:docs:vitepress",
-    "dev": "run-p dev:packages dev:playground",
+    "dev": "run-p --race dev:packages dev:playground",
     "preview:docs": "pnpm --filter @tapsioss/docs run preview",
     "gen:metadata": "wireit"
   },
