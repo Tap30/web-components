@@ -305,7 +305,7 @@ export abstract class BaseTextInput extends BaseInput {
     >("#input");
   }
 
-  protected handleInput(event: InputEvent): void {
+  protected handleInput(event: Event): void {
     this._dirty = true;
     this.value = (event.target as HTMLInputElement).value;
   }
