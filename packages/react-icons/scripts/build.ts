@@ -1,4 +1,5 @@
 import icons from "@tapsioss/icons";
+import { deleteAsync } from "del";
 import Mustache from "mustache";
 import { exec } from "node:child_process";
 import * as fs from "node:fs/promises";
@@ -73,7 +74,7 @@ const generateComponents = async () => {
   await Promise.all(reactComponentPromises);
   await execCmd(["shx", "cp", baseIconFile, distDir].join(" "));
   await execCmd(["tsc", "--project", tsconfigFile].join(" "));
-  await execCmd(`shx ls ${distDir}/*.{tsx,ts} | grep -v ".d.ts$" | xargs rm`);
+  await deleteAsync([`${distDir}/**/*.{tsx,ts}`, `!${distDir}/**/*.d.ts`]);
 
   console.log("✅ react icons generated.");
 };
