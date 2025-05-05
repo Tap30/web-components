@@ -1,14 +1,18 @@
 import {
   afterEach,
+  createPromiseResolvers,
   describe,
   disposeMocks,
   expect,
   render,
   test,
 } from "@internals/test-helpers";
-import { ErrorMessages } from "../base-text-input/constants.ts";
+import { ErrorMessages as BaseErrorMessages } from "../base-text-input/constants.ts";
+import { ErrorMessages } from "./constants.ts";
 
 describe("🧩 text-area", () => {
+  const scope = "text-area";
+
   afterEach(async ({ page }) => {
     await disposeMocks(page);
   });
@@ -49,11 +53,17 @@ describe("🧩 text-area", () => {
   test("🧪 should throw error if no valid label was set for the input", async ({
     page,
   }) => {
-    const errors: string[] = [];
+    const msgResolver = createPromiseResolvers<string>();
 
     page.on("console", msg => {
-      if (msg.type() === "error") {
-        errors.push(msg.text());
+      if (
+        msg.type() === "error" &&
+        msg.text().includes(scope) &&
+        msg
+          .text()
+          .includes(BaseErrorMessages.SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE)
+      ) {
+        msgResolver.resolve(msg.text());
       }
     });
 
@@ -62,9 +72,9 @@ describe("🧩 text-area", () => {
       `<tapsi-text-area data-testid="test-text-area"></tapsi-text-area>`,
     );
 
-    expect(errors[0]).toContain(
-      ErrorMessages.SET_VALID_LABEL_OR_LABELLEDBY_ATTRIBUTE,
-    );
+    const msg = await msgResolver.promise;
+
+    expect(msg).toBeDefined();
   });
 
   test("🧪 should render slots", async ({ page }) => {
@@ -146,5 +156,62 @@ describe("🧩 text-area", () => {
     await expect(input).not.toBeFocused();
     await label.click();
     await expect(input).toBeFocused();
+  });
+
+  test("🧪 should be auto-resizable when `min-rows` exists", async ({
+    page,
+  }) => {
+    const maxRows = 5;
+
+    await render(
+      page,
+      `
+        <tapsi-text-area label="label" id="test-text-area" min-rows="1" rows="${maxRows}" data-testid="test-text-area">
+      `,
+    );
+
+    const input = page.locator('#test-text-area [part="input"]');
+
+    const getHeight = () =>
+      input.evaluate((el: HTMLTextAreaElement) => el.offsetHeight);
+
+    const singleRowHeight = await getHeight();
+
+    expect(singleRowHeight).toBeTruthy();
+
+    await input.focus();
+
+    for (let rows = 1; rows < maxRows; rows++) {
+      await page.keyboard.press("Enter");
+
+      expect(await getHeight()).toBe(singleRowHeight * (rows + 1));
+    }
+
+    await page.keyboard.press("Enter");
+
+    expect(await getHeight()).toBe(singleRowHeight * 5);
+
+    const msgResolver = createPromiseResolvers<string>();
+
+    page.on("console", msg => {
+      if (
+        msg.type() === "warning" &&
+        msg.text().includes(scope) &&
+        msg.text().includes(ErrorMessages.SET_VALID_MIN_ROWS)
+      ) {
+        msgResolver.resolve(msg.text());
+      }
+    });
+
+    await render(
+      page,
+      `
+        <tapsi-text-area label="label" id="test-text-area" min-rows="${maxRows}" rows="${maxRows}" data-testid="test-text-area">
+      `,
+    );
+
+    const msg = await msgResolver.promise;
+
+    expect(msg).toBeDefined();
   });
 });
