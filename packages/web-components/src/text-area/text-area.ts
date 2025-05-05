@@ -241,8 +241,6 @@ export class TextArea extends BaseTextInput {
 
     if (!this._isAutoResizable()) return null;
 
-    const shadowStyles = styleMap({});
-
     return html`
       <textarea
         ${ref(this._shadowRef)}
@@ -250,7 +248,6 @@ export class TextArea extends BaseTextInput {
         readonly
         class="input shadow"
         tabindex="-1"
-        style=${shadowStyles}
       ></textarea>
     `;
   }
