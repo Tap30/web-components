@@ -11,3 +11,15 @@ export class RetryEvent extends BaseEvent<null> {
     });
   }
 }
+
+export class ClearEvent extends BaseEvent<null> {
+  public static readonly type = "clear";
+
+  constructor() {
+    super(ClearEvent.type, {
+      bubbles: true,
+      composed: true,
+      details: null,
+    });
+  }
+}
