@@ -647,13 +647,20 @@ export class FileInput extends BaseClass {
           src=${this._previewSrc}
           alt="preview"
           class="preview"
+          part="preview"
         />`;
       }
 
-      return html`<span class="text">${file.name}</span>`;
+      return html`<span
+        class="text"
+        part="text"
+        >${file.name}</span
+      >`;
     }
 
-    return html`<span class="text"
+    return html`<span
+      class="text"
+      part="text"
       >${toFaNumber(this.files.length.toString())} فایل انتخاب شده</span
     >`;
   }
@@ -664,20 +671,28 @@ export class FileInput extends BaseClass {
     let icon;
 
     if (!isNumber) {
-      icon = html`<div class="spinner">
+      icon = html`<div
+        class="spinner"
+        part="spinner"
+      >
         <tapsi-spinner></tapsi-spinner>
       </div>`;
     } else {
       const { offset, progressSize, progressStroke, circumference, radius } =
         getProgressUiParams(parseInt(this.loading.toString()));
 
-      icon = html`<div class="progress-wrapper">
+      icon = html`<div
+        class="progress-wrapper"
+        part="progress-wrapper"
+      >
         <svg
           class="progress"
+          part="progress"
           viewBox="0 0 48 48"
         >
           <circle
             class="background-circle"
+            part="background-circle"
             cx=${progressSize}
             cy=${progressSize}
             r=${radius}
@@ -686,6 +701,7 @@ export class FileInput extends BaseClass {
           />
           <circle
             class="foreground-circle"
+            part="foreground-circle"
             cx=${progressSize}
             cy=${progressSize}
             r=${radius}
@@ -696,13 +712,24 @@ export class FileInput extends BaseClass {
             stroke-dashoffset="${offset}"
           />
         </svg>
-        <span class="percentage">${toFaNumber(this.loading.toString())}٪</span>
+        <span
+          class="percentage"
+          part="percentage"
+          >${toFaNumber(this.loading.toString())}٪</span
+        >
       </div>`;
     }
 
-    return html`<div class="loading-state">
+    return html`<div
+      class="loading-state"
+      part="loading-state"
+    >
       ${icon}
-      <span class="text">${this.loadingText}</span>
+      <span
+        class="text"
+        part="text"
+        >${this.loadingText}</span
+      >
     </div>`;
   }
 
@@ -713,6 +740,7 @@ export class FileInput extends BaseClass {
       size="sm"
       variant="ghost"
       class="error-action"
+      part="error-action"
       @click=${() => this.dispatchEvent(new RetryEvent())}
     >
       تلاش مجدد
@@ -720,17 +748,29 @@ export class FileInput extends BaseClass {
   }
 
   private _renderErrorState() {
-    return html` <div class="error-state">
-      <div class="icon">${error}</div>
+    return html` <div
+      class="error-state"
+      part="error-state"
+    >
+      <div
+        class="icon"
+        part="icon"
+      >
+        ${error}
+      </div>
       ${this._renderRetry()}
     </div>`;
   }
 
   private _renderEmptyState() {
     return html`
-      <div class="empty-state">
+      <div
+        class="empty-state"
+        part="empty-state"
+      >
         <div
           class="icon"
+          part="icon"
           ?hidden=${!this._hasPlaceholderIconSlot}
         >
           <slot
@@ -741,11 +781,16 @@ export class FileInput extends BaseClass {
 
         <div
           class="icon"
+          part="icon"
           ?hidden=${this._hasPlaceholderIconSlot}
         >
           ${image}
         </div>
-        <span class="placeholder">${this.placeholder}</span>
+        <span
+          class="placeholder"
+          part="placeholder"
+          >${this.placeholder}</span
+        >
       </div>
     `;
   }
@@ -762,16 +807,16 @@ export class FileInput extends BaseClass {
 
   private _renderClearIcon() {
     if (this._value)
-      return html` <div class="clear-button">
-        <tapsi-icon-button
-          @click=${this.reset}
-          label="clear"
-          variant="elevated"
-          size="sm"
-        >
-          ${clear}
-        </tapsi-icon-button>
-      </div>`;
+      return html`<tapsi-icon-button
+        class="clear-button"
+        part="clear-button"
+        @click=${this.reset}
+        label="clear"
+        variant="elevated"
+        size="sm"
+      >
+        ${clear}
+      </tapsi-icon-button>`;
 
     return null;
   }
@@ -803,10 +848,10 @@ export class FileInput extends BaseClass {
           part="control"
         >
           <input
+            class="input"
             part="input"
             type="file"
             id="input"
-            class="input"
             aria-invalid=${this._hasError()}
             aria-label=${ariaLabel}
             aria-labelledby=${ariaLabelledBy}
@@ -822,8 +867,8 @@ export class FileInput extends BaseClass {
             .value=${live(this._value)}
           />
           <div
-            part="file-input"
             class="file-input"
+            part="file-input"
           >
             ${this._renderFileInputContent()}${this._renderClearIcon()}
           </div>
