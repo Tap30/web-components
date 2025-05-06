@@ -90,6 +90,7 @@ import {
 } from "./empty-state/index.ts";
 import {
   FileInput,
+  ClearEvent as FileInputClearEvent,
   RetryEvent as FileInputRetryEvent,
   Slots as FileInputSlots,
   register as registerFileInput,
@@ -219,6 +220,7 @@ export {
   EmptyState,
   EmptyStateSlots,
   FileInput,
+  FileInputClearEvent,
   FileInputRetryEvent,
   FileInputSlots,
   IconButton,

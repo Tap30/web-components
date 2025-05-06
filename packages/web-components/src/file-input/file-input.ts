@@ -32,7 +32,7 @@ import {
   withOnReportValidity,
 } from "../utils/index.ts";
 import { ErrorMessages, scope, Slots } from "./constants.ts";
-import { RetryEvent } from "./events.ts";
+import { ClearEvent, RetryEvent } from "./events.ts";
 import styles from "./file-input.style.ts";
 import { clear, error, image } from "./icons.ts";
 import {
@@ -61,6 +61,7 @@ const BaseClass = withOnReportValidity(
  * @slot [placeholder-icon] - The slot for icon placeholder.
  *
  * @fires {RetryEvent} retry - Fires when the retry button is clicked. (bubbles)
+ * @fires {ClearEvent} clear - Fires when user clicks on the clear button for reseting the input value (bubbles)
  * @fires {Event} change -
  * Fires when the user modifies the element's value.
  * Unlike the `input` event, the change event is not necessarily fired for each
@@ -593,6 +594,21 @@ export class FileInput extends BaseClass {
     return this.loading.toString() !== "false";
   }
 
+  private _handleClear() {
+    this.reset();
+    const event = new ClearEvent();
+
+    this.dispatchEvent(event);
+    event.stopPropagation();
+  }
+
+  private _handleRetry() {
+    const event = new RetryEvent();
+
+    this.dispatchEvent(event);
+    event.stopPropagation();
+  }
+
   private _renderHelperText() {
     const text = this._getSupportingOrErrorText();
 
@@ -741,7 +757,7 @@ export class FileInput extends BaseClass {
       variant="ghost"
       class="error-action"
       part="error-action"
-      @click=${() => this.dispatchEvent(new RetryEvent())}
+      @click=${this._handleRetry}
     >
       تلاش مجدد
     </tapsi-button>`;
@@ -810,7 +826,7 @@ export class FileInput extends BaseClass {
       return html`<tapsi-icon-button
         class="clear-button"
         part="clear-button"
-        @click=${this.reset}
+        @click=${this._handleClear}
         label="clear"
         variant="elevated"
         size="sm"
