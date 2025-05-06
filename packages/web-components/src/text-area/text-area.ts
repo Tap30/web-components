@@ -133,10 +133,10 @@ export class TextArea extends BaseTextInput {
     this._resizeSensor?.disconnect();
   }
 
-  protected override firstUpdated(changed: PropertyValues<this>): void {
-    super.firstUpdated(changed);
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
 
-    if (this.value) this._syncHeights();
+    if (changed.has("value")) this._syncHeights();
   }
 
   /** @internal */
@@ -225,12 +225,10 @@ export class TextArea extends BaseTextInput {
   }
 
   private _handleInput(event: Event) {
-    this._syncHeights();
     this.handleInput(event);
   }
 
   private _handleChange(event: Event) {
-    this._syncHeights();
     this.handleChange(event);
   }
 
