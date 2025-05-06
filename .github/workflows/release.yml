@@ -56,7 +56,88 @@ jobs:
           NPM_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
 
   deploy-docs:
-    name: Prepare and Deploy Documentation
+    name: 🚀 Prepare and Deploy Documentation
     needs: changesets
     if: needs.changesets.outputs.published == 'true'
     uses: ./.github/workflows/gh-pages.yml
+
+  announcement:
+    name: 📣 Announce Release
+    needs: changesets
+    if: needs.changesets.outputs.published == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔍 Fetch latest merged PR via GitHub API
+        id: fetch_pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          curl -s -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/$REPO/pulls?state=closed&base=main&sort=updated&direction=desc&per_page=1" \
+            -o pr.json
+
+          PR_NUMBER=$(grep '"number":' pr.json | head -n 1 | awk '{print $2}' | tr -d ',')
+          PR_TITLE=$(grep '"title":' pr.json | head -n 1 | cut -d ':' -f2- | sed 's/^ "//;s/",$//')
+          PR_URL=$(grep '"html_url":' pr.json | head -n 1 | cut -d '"' -f4)
+          PR_BODY=$(awk -F'"body": "' '{print $2}' pr.json | sed 's/",$//')
+
+          echo "$PR_BODY" > pr_body.md
+
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+          echo "PR_TITLE=$PR_TITLE" >> $GITHUB_ENV
+          echo "PR_URL=$PR_URL" >> $GITHUB_ENV
+
+      - name: 📦 Extract released packages
+        id: extract
+        run: |
+          REPO="https://github.com/${{ github.repository }}"
+          sed 's/\\r\\n/\n/g; s/\\n/\n/g' pr_body.md > pr_body_cleaned.md
+          grep -E '^\s*##\s+@' pr_body_cleaned.md | sed -E 's/^\s*##\s+//' > packages.txt
+
+          if [ -s packages.txt ]; then
+            while read -r line; do
+              ENCODED_TAG=$(printf "%s" "$line" | jq -sRr @uri)
+              echo "  • <a href=\"$REPO/releases/tag/$ENCODED_TAG\">$line</a>"
+            done < packages.txt > release_links.html
+          else
+            echo "  • No packages found." > release_links.html
+          fi
+
+          {
+            echo "RELEASE_LINKS<<EOF"
+            cat release_links.html
+            echo "EOF"
+          } >> "$GITHUB_ENV"
+
+      - name: 💬 Send Telegram Message
+        continue-on-error: true
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: html
+          message: |
+            🚀 <b><a href="https://github.com/${{ github.repository }}">${{ github.repository }}</a></b> released:
+            ${{ env.RELEASE_LINKS }}
+
+            🔗 PR: <a href="${{ env.PR_URL }}"><b>${{ env.PR_TITLE }}</b> #${{ env.PR_NUMBER }}</a>
+
+      - name: 💬 Send Slack Message
+        continue-on-error: true
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            text: "🚀 ${GITHUB_REPOSITORY} released"
+            blocks:
+              - type: section
+                text:
+                  type: mrkdwn
+                  text: |
+                    *🚀 <https://github.com/${{ github.repository }}|${{ github.repository }}>* released:
+                    ${{ env.RELEASE_LINKS }}
+
+                    🔗 PR: <${{ env.PR_URL }}|${{ env.PR_TITLE }}> (#${{ env.PR_NUMBER }})
