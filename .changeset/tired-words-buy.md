@@ -3,5 +3,5 @@
 "@tapsioss/web-components": minor
 ---
 
-Expose File Input's Clear Event
+Expose file input's clear event
   
