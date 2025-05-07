@@ -1,5 +1,18 @@
 # @tapsioss/react-components
 
+## 0.16.0
+### Minor Changes
+
+
+
+- [#476](https://github.com/Tap30/web-components/pull/476) [`420924b`](https://github.com/Tap30/web-components/commit/420924bed71a6e4efa55a4f3a21dfdd445f0f262) Thanks [@amir78729](https://github.com/amir78729)! - Expose file input's clear event
+
+
+### Patch Changes
+
+- Updated dependencies [[`4b62a11`](https://github.com/Tap30/web-components/commit/4b62a1145f65e081cc332497edb9689c44baf120), [`420924b`](https://github.com/Tap30/web-components/commit/420924bed71a6e4efa55a4f3a21dfdd445f0f262)]:
+  - @tapsioss/web-components@0.16.0
+
 ## 0.15.0
 ### Patch Changes
 
