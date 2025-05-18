@@ -112,32 +112,6 @@ export class Pinwheel extends BaseClass {
   @property({ type: Boolean })
   public override autofocus = false;
 
-  /**
-   * The value of the currently selected item.
-   *
-   * @prop {string} value
-   * @attr {string} value
-   * @default ""
-   */
-  @property({ attribute: false })
-  public get value(): string {
-    return this._value;
-  }
-
-  public set value(newValue: string) {
-    if (newValue === this._value) return;
-
-    this._value = newValue;
-
-    if (isSsr() || !this.isConnected) return;
-
-    if (!this.hasUpdated && newValue !== "") {
-      void this.updateComplete.then(() => {
-        this._setSelectedItem(newValue);
-      });
-    } else this._setSelectedItem(newValue);
-  }
-
   @state()
   private _spinArias: {
     valueNow: string;
@@ -158,8 +132,6 @@ export class Pinwheel extends BaseClass {
 
   @query("#container")
   private _container!: HTMLElement | null;
-
-  private _value: string = "";
 
   private _isProgrammaticallyScrolling = false;
 
@@ -184,6 +156,12 @@ export class Pinwheel extends BaseClass {
     }
   }
 
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+
+    if (!this.value) this._selectFirstItem();
+  }
+
   protected override firstUpdated(changed: PropertyValues<this>): void {
     super.firstUpdated(changed);
 
@@ -191,26 +169,17 @@ export class Pinwheel extends BaseClass {
       logger(ErrorMessages.USE_VALUE_MIN_AND_VALUE_MAX, scope, "warning");
     }
 
-    runAfterRepaint(() => {
-      if (!this.autofocus) return;
+    const selectedItem = this.selectedItem;
 
-      this.focus();
+    runAfterRepaint(() => {
+      if (this.value && selectedItem) this.setViewOnItem(selectedItem);
+      if (this.autofocus) this.focus();
+
+      this._noTransition = false;
     });
   }
 
-  protected override updated(changed: PropertyValues<this>): void {
-    super.updated(changed);
-
-    if (changed.has("value")) {
-      if (!this.value) this._selectFirstItem();
-
-      runAfterRepaint(() => {
-        this.setViewOnItem(this.value);
-      });
-    }
-  }
-
-  private _getScrollDistance(value = this.value): number {
+  private _getScrollDistance(value: string): number {
     // Invalidate cache since this function will only be called programmatically
     // and we need to get the latest items every time.
     this._cachedItems = null;
@@ -234,10 +203,29 @@ export class Pinwheel extends BaseClass {
     return dy;
   }
 
-  public setViewOnItem(itemValue: string): void {
+  /**
+   * The selected pinwheel item.
+   */
+  public get selectedItem(): PinwheelItem | null {
+    return this._items.find(item => item.selected) ?? null;
+  }
+
+  /**
+   * The value of the pinwheel.
+   */
+  public get value(): string {
+    return this.selectedItem?.value ?? "";
+  }
+
+  /**
+   * Sets the scroll view on the provided item.
+   *
+   * @param item The item to set the view on.
+   */
+  public setViewOnItem(item: PinwheelItem): void {
     if (!this._container || !this._root) return;
 
-    const dy = this._getScrollDistance(itemValue);
+    const dy = this._getScrollDistance(item.value);
 
     if (this._root.scrollTop !== dy) {
       this._isProgrammaticallyScrolling = true;
@@ -256,6 +244,7 @@ export class Pinwheel extends BaseClass {
   }
 
   private get _items() {
+    if (!this.renderRoot) return [];
     if (this._cachedItems) return this._cachedItems;
 
     const itemsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
@@ -276,46 +265,27 @@ export class Pinwheel extends BaseClass {
     // programatically and we need to get the latest items every time.
     this._cachedItems = null;
 
-    const firstItem = this._items[0];
+    const items = this._items;
+    const firstItem = items[0];
 
     if (!firstItem) return;
     if (firstItem.selected) return;
 
-    this._setSelectedItem(firstItem.value);
-  }
-
-  private _setSelectedItem(itemValue: string) {
-    // Invalidate cache since this function will only be called
-    // programatically and we need to get the latest items every time.
-    this._cachedItems = null;
-
-    const items = this._items;
-
-    const targetItem = items.find(item => {
-      return item.value === itemValue;
-    });
-
-    if (!targetItem) return;
-    if (targetItem.selected) return;
-
     items.forEach(item => {
-      if (item !== targetItem) item.selected = false;
+      if (item !== firstItem) item.selected = false;
     });
 
-    targetItem.selected = true;
+    firstItem.selected = true;
+    this.setViewOnItem(firstItem);
 
     this._spinArias = {
-      valueNow: targetItem.value,
-      valueText: targetItem.textContent?.trim() ?? "",
+      valueNow: firstItem.value,
+      valueText: firstItem.textContent?.trim() ?? "",
     };
   }
 
-  private _emitValueChange(newValue: string) {
+  private _emitValueChange() {
     if (this.disabled) return;
-
-    this.setViewOnItem(newValue);
-
-    this.value = newValue;
 
     this.dispatchEvent(new Event("change", { bubbles: true }));
   }
@@ -353,7 +323,8 @@ export class Pinwheel extends BaseClass {
 
         nextItem.selected = true;
 
-        this._emitValueChange(nextItem.value);
+        this.setViewOnItem(nextItem);
+        this._emitValueChange();
 
         return true;
       }
@@ -371,7 +342,8 @@ export class Pinwheel extends BaseClass {
 
         nextItem.selected = true;
 
-        this._emitValueChange(nextItem.value);
+        this.setViewOnItem(nextItem);
+        this._emitValueChange();
 
         return true;
       }
@@ -386,7 +358,8 @@ export class Pinwheel extends BaseClass {
 
         nextItem.selected = true;
 
-        this._emitValueChange(nextItem.value);
+        this.setViewOnItem(nextItem);
+        this._emitValueChange();
 
         return true;
       }
@@ -401,7 +374,8 @@ export class Pinwheel extends BaseClass {
 
         nextItem.selected = true;
 
-        this._emitValueChange(nextItem.value);
+        this.setViewOnItem(nextItem);
+        this._emitValueChange();
 
         return true;
       }
@@ -417,10 +391,6 @@ export class Pinwheel extends BaseClass {
     if (this._isProgrammaticallyScrolling) {
       this._isProgrammaticallyScrolling = false;
 
-      const dy = this._getScrollDistance();
-
-      if (dy === this._root.scrollTop) this._noTransition = false;
-
       return;
     }
 
@@ -429,7 +399,10 @@ export class Pinwheel extends BaseClass {
 
     if (!item) return;
 
-    this._emitValueChange(item.value);
+    item.selected = true;
+
+    this.setViewOnItem(item);
+    this._emitValueChange();
   }, 120);
 
   private _getClosestFrameNumber() {
@@ -452,6 +425,7 @@ export class Pinwheel extends BaseClass {
     return 0;
   }
 
+  /** @internal */
   public override formDisabledCallback(disabled: boolean): void {
     this.disabled = disabled;
   }
@@ -463,12 +437,21 @@ export class Pinwheel extends BaseClass {
 
   /** @internal */
   public override formResetCallback(): void {
-    this.value = this.getAttribute("value") ?? "";
+    this._items.forEach(item => {
+      item.selected = item.hasAttribute("selected");
+
+      if (item.selected) this.setViewOnItem(item);
+    });
   }
 
   /** @internal */
   public override formStateRestoreCallback(state: string): void {
-    this.value = state;
+    this._items.forEach(item => {
+      if (item.value === state) {
+        item.selected = true;
+        this.setViewOnItem(item);
+      } else item.selected = false;
+    });
   }
 
   protected override render(): TemplateResult {
