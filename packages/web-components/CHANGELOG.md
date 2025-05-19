@@ -1,5 +1,27 @@
 # @tapsioss/web-components
 
+## 0.17.0
+### Minor Changes
+
+
+
+- [#488](https://github.com/Tap30/web-components/pull/488) [`fa0ea8c`](https://github.com/Tap30/web-components/commit/fa0ea8cc4b5f49a0181bcaba61ce2ad873b78898) Thanks [@mimshins](https://github.com/mimshins)! - Remove unnecessary `reflect` behaviors
+
+
+
+- [#485](https://github.com/Tap30/web-components/pull/485) [`ccf32c4`](https://github.com/Tap30/web-components/commit/ccf32c462726b4a70b604d3008bd5078bc212fd3) Thanks [@mimshins](https://github.com/mimshins)! - Update `value` property to be readonly in pinwheel
+
+
+### Patch Changes
+
+
+
+- [#486](https://github.com/Tap30/web-components/pull/486) [`76bb65f`](https://github.com/Tap30/web-components/commit/76bb65f9354f7877863d916bbca99b055a58b448) Thanks [@mimshins](https://github.com/mimshins)! - Remove iOS-specific behaviors for scroll locker
+
+
+
+- [#489](https://github.com/Tap30/web-components/pull/489) [`43ee3d2`](https://github.com/Tap30/web-components/commit/43ee3d25c173209b716c525cfb4f917af36907c7) Thanks [@mimshins](https://github.com/mimshins)! - Forward necessary host click events to root elements
+
 ## 0.16.0
 ### Minor Changes
 
