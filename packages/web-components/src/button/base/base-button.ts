@@ -77,7 +77,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
    * @attr {string} loading
    * @default false
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public loading = false;
 
   /**

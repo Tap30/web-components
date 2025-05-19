@@ -204,7 +204,7 @@ export class PinInput extends BaseClass {
    * @attr {string} error
    * @default false
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public error = false;
 
   /**

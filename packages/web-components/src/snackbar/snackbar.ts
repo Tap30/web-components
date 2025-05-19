@@ -77,7 +77,7 @@ export class Snackbar extends LitElement {
    * @attr {string} open
    * @default false
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public open = false;
 
   /**

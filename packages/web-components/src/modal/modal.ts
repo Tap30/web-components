@@ -127,7 +127,7 @@ export class Modal extends LitElement {
    *
    * @default false
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public set open(openState: boolean) {
     if (openState === this._open) return;
 

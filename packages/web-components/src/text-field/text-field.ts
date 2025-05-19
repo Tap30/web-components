@@ -41,7 +41,7 @@ export class TextField extends BaseTextInput {
    * @attr {string} type
    * @default "text"
    */
-  @property({ reflect: true })
+  @property()
   public type:
     | "email"
     | "number"
@@ -97,7 +97,7 @@ export class TextField extends BaseTextInput {
    * @attr {string} multiple
    * @default false
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public multiple = false;
 
   /**

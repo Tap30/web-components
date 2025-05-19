@@ -72,30 +72,30 @@ describe("🧩 chip-group", () => {
 
     await item1.click();
     await handleSelectChange.matchResult({ callCount: 1 });
-    await expect(item1).toHaveAttribute("selected");
+    await expect(item1).toHaveJSProperty("selected", true);
     await forEachLocator([item2, item3, item4], async chip => {
-      await expect(chip).not.toHaveAttribute("selected");
+      await expect(chip).toHaveJSProperty("selected", false);
     });
 
     await item2.click();
     await handleSelectChange.matchResult({ callCount: 2 });
-    await expect(item2).toHaveAttribute("selected");
+    await expect(item2).toHaveJSProperty("selected", true);
     await forEachLocator([item1, item3, item4], async chip => {
-      await expect(chip).not.toHaveAttribute("selected");
+      await expect(chip).toHaveJSProperty("selected", false);
     });
 
     await item3.click();
     await handleSelectChange.matchResult({ callCount: 3 });
-    await expect(item3).toHaveAttribute("selected");
+    await expect(item3).toHaveJSProperty("selected", true);
     await forEachLocator([item1, item2, item4], async chip => {
-      await expect(chip).not.toHaveAttribute("selected");
+      await expect(chip).toHaveJSProperty("selected", false);
     });
 
     await item4.click();
     await handleSelectChange.matchResult({ callCount: 4 });
-    await expect(item4).toHaveAttribute("selected");
+    await expect(item4).toHaveJSProperty("selected", true);
     await forEachLocator([item1, item2, item3], async chip => {
-      await expect(chip).not.toHaveAttribute("selected");
+      await expect(chip).toHaveJSProperty("selected", false);
     });
   });
 
@@ -118,32 +118,32 @@ describe("🧩 chip-group", () => {
     const item4 = page.getByTestId("test-chip-4");
 
     await forEachLocator([item1, item2, item3, item4], async chip => {
-      await expect(chip).not.toHaveAttribute("selected");
+      await expect(chip).toHaveJSProperty("selected", false);
     });
 
     await item1.click();
-    await expect(item1).toHaveAttribute("selected");
+    await expect(item1).toHaveJSProperty("selected", true);
     await forEachLocator([item2, item3, item4], async chip => {
-      await expect(chip).not.toHaveAttribute("selected");
+      await expect(chip).toHaveJSProperty("selected", false);
     });
 
     await item2.click();
     await forEachLocator([item1, item2], async chip => {
-      await expect(chip).toHaveAttribute("selected");
+      await expect(chip).toHaveJSProperty("selected", true);
     });
     await forEachLocator([item3, item4], async chip => {
-      await expect(chip).not.toHaveAttribute("selected");
+      await expect(chip).toHaveJSProperty("selected", false);
     });
 
     await item3.click();
     await forEachLocator([item1, item2, item3], async chip => {
-      await expect(chip).toHaveAttribute("selected");
+      await expect(chip).toHaveJSProperty("selected", true);
     });
-    await expect(item4).not.toHaveAttribute("selected");
+    await expect(item4).toHaveJSProperty("selected", false);
 
     await item4.click();
     await forEachLocator([item1, item2, item3, item4], async chip => {
-      await expect(chip).toHaveAttribute("selected");
+      await expect(chip).toHaveJSProperty("selected", true);
     });
   });
 
@@ -160,16 +160,15 @@ describe("🧩 chip-group", () => {
 
     const item1 = page.getByTestId("test-chip-1");
 
-    await expect(item1).toHaveAttribute("selected");
+    await expect(item1).toHaveJSProperty("selected", true);
 
     await item1.click();
-    await expect(item1).not.toHaveAttribute("selected");
+    await expect(item1).toHaveJSProperty("selected", false);
   });
 
   test("🧪 should work with multiple `cols` in `vertical` orientation", async ({
     page,
   }) => {
-    // we have 6 chips (c1-c6) inside out chip group.
     await render(
       page,
       `

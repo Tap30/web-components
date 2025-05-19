@@ -33,7 +33,7 @@ export class Checkbox extends BaseInput {
    * @attr {string} checked
    * @default false
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public checked = false;
 
   /**
@@ -67,7 +67,7 @@ export class Checkbox extends BaseInput {
    * @attr {string} error
    * @default false
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public error = false;
 
   @state()
