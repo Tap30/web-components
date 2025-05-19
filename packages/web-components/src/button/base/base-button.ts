@@ -153,7 +153,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     | "destructive"
     | "brand" = "primary";
 
-  @query("#root")
+  @query("#root", true)
   private readonly _root!: HTMLElement | null;
 
   /** @internal */
@@ -238,6 +238,7 @@ export abstract class BaseButton extends BaseClass implements FormSubmitter {
     if (this.loading || this.disabled) {
       event.preventDefault();
       event.stopImmediatePropagation();
+
       return;
     }
 

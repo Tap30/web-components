@@ -89,7 +89,7 @@ export class SegmentedViewItem extends LitElement {
   @property()
   public value: string = "";
 
-  @query("#root")
+  @query("#root", true)
   private _root!: HTMLElement | null;
 
   private readonly _selectionController = new ItemSelectionController(this);
@@ -125,6 +125,11 @@ export class SegmentedViewItem extends LitElement {
         "error",
       );
     }
+  }
+
+  /** @internal */
+  public override click(): void {
+    this._root?.click();
   }
 
   /** @internal */

@@ -5,7 +5,7 @@ import {
   type PropertyValues,
   type TemplateResult,
 } from "lit";
-import { property, queryAssignedNodes, state } from "lit/decorators.js";
+import { property, query, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { isSsr, logger } from "../../utils/index.ts";
 import { Slots } from "./constants.ts";
@@ -71,6 +71,9 @@ export class BottomNavigationItem extends LitElement {
   @queryAssignedNodes({ slot: Slots.ICON })
   private _iconSlotNodes!: Node[];
 
+  @query("#root", true)
+  private _root!: HTMLElement | null;
+
   private readonly _selectionController = new NavItemSelectionController(this);
 
   protected override updated(changed: PropertyValues<this>): void {
@@ -98,13 +101,18 @@ export class BottomNavigationItem extends LitElement {
   }
 
   /** @internal */
+  public override click(): void {
+    this._root?.click();
+  }
+
+  /** @internal */
   public override focus(options?: FocusOptions): void {
-    this.renderRoot?.querySelector<HTMLElement>("#root")?.focus(options);
+    this._root?.focus(options);
   }
 
   /** @internal */
   public override blur(): void {
-    this.renderRoot?.querySelector<HTMLElement>("#root")?.blur();
+    this._root?.blur();
   }
 
   protected override render(): TemplateResult {

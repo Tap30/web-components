@@ -6,7 +6,7 @@ import {
   type PropertyValues,
   type TemplateResult,
 } from "lit";
-import { property, queryAssignedNodes, state } from "lit/decorators.js";
+import { property, query, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { isSsr, logger } from "../utils/index.ts";
 import styles from "./chip.style.ts";
@@ -121,6 +121,9 @@ export class Chip extends LitElement {
   @queryAssignedNodes({ slot: Slots.TRAILING_ICON })
   private _trailingIconSlotNodes!: Node[];
 
+  @query("#root", true)
+  private _root!: HTMLElement | null;
+
   private readonly _selectionController = new ChipSelectionController(this);
 
   protected override willUpdate(changed: PropertyValues<this>): void {
@@ -151,13 +154,18 @@ export class Chip extends LitElement {
   }
 
   /** @internal */
+  public override click(): void {
+    this._root?.click();
+  }
+
+  /** @internal */
   public override focus(options?: FocusOptions): void {
-    this.renderRoot.querySelector<HTMLElement>("#root")?.focus(options);
+    this._root?.focus(options);
   }
 
   /** @internal */
   public override blur(): void {
-    this.renderRoot.querySelector<HTMLElement>("#root")?.blur();
+    this._root?.blur();
   }
 
   protected override render(): TemplateResult {
