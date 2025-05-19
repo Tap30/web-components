@@ -5,6 +5,7 @@ import {
   disposeMocks,
   expect,
   render,
+  setupMocks,
   test,
 } from "@internals/test-helpers";
 import { ErrorMessages, scope } from "./constants.ts";
@@ -39,7 +40,7 @@ describe("🧩 pinwheel", () => {
     await expect(component).toBeFocused();
   });
 
-  test("🧪 should change active item and trigger events (`activate` and `activechange`) using click", async ({
+  test("🧪 should update selected item and trigger events using keyboard", async ({
     page,
   }) => {
     await render(
@@ -53,9 +54,29 @@ describe("🧩 pinwheel", () => {
     `,
     );
 
+    const mocks = await setupMocks(page);
+    const handleChange = mocks.createFakeFn();
+
     const container = page.getByTestId("test-pinwheel");
 
+    await mocks.events.attachMockedEvent(container, "change", handleChange.ref);
+
+    await page.waitForFunction(
+      expected => {
+        const container = document.querySelector("tapsi-pinwheel");
+
+        if (!container) return false;
+
+        return container.value === expected;
+      },
+      "value-1",
+      {
+        timeout: 5000,
+      },
+    );
+
     await expect(container).toHaveJSProperty("value", "value-1");
+    await handleChange.matchResult({ callCount: 0 });
 
     // Focus on pinwheel for keyboard interaction
     await page.keyboard.press("Tab");
@@ -64,22 +85,27 @@ describe("🧩 pinwheel", () => {
     // Test arrow keys
     await page.keyboard.press("ArrowDown");
     await expect(container).toHaveJSProperty("value", "value-2");
+    await handleChange.matchResult({ callCount: 1 });
 
     await page.keyboard.press("ArrowDown");
     await expect(container).toHaveJSProperty("value", "value-3");
+    await handleChange.matchResult({ callCount: 2 });
 
     await page.keyboard.press("ArrowUp");
     await expect(container).toHaveJSProperty("value", "value-2");
+    await handleChange.matchResult({ callCount: 3 });
 
     // Test Home and End keys
     await page.keyboard.press("Home");
     await expect(container).toHaveJSProperty("value", "value-1");
+    await handleChange.matchResult({ callCount: 4 });
 
     await page.keyboard.press("End");
     await expect(container).toHaveJSProperty("value", "value-3");
+    await handleChange.matchResult({ callCount: 5 });
   });
 
-  test("🧪 should change active item and trigger events (`activate` and `activechange`) using keyboard navigation", async ({
+  test("🧪 should update selected item and trigger events using click", async ({
     page,
   }) => {
     await render(
@@ -94,27 +120,35 @@ describe("🧩 pinwheel", () => {
     );
 
     const container = page.getByTestId("test-pinwheel");
-    const item1 = page.getByTestId("test-pinwheel-item-1");
-    const item2 = page.getByTestId("test-pinwheel-item-2");
-    const item3 = page.getByTestId("test-pinwheel-item-3");
+    const mocks = await setupMocks(page);
+    const handleChange = mocks.createFakeFn();
 
-    await item1.click();
+    const click = (itemId: string) => {
+      return page.getByTestId(itemId).click();
+    };
+
+    await mocks.events.attachMockedEvent(container, "change", handleChange.ref);
+    await handleChange.matchResult({ callCount: 0 });
+
+    await click("test-pinwheel-item-1");
     await expect(container).toHaveJSProperty("value", "value-1");
+    await handleChange.matchResult({ callCount: 0 });
 
-    await item2.click();
+    await click("test-pinwheel-item-2");
     await expect(container).toHaveJSProperty("value", "value-2");
+    await handleChange.matchResult({ callCount: 1 });
 
-    await item3.click();
+    await click("test-pinwheel-item-3");
     await expect(container).toHaveJSProperty("value", "value-3");
+    await handleChange.matchResult({ callCount: 2 });
 
-    await item1.click();
+    await click("test-pinwheel-item-2");
+    await expect(container).toHaveJSProperty("value", "value-2");
+    await handleChange.matchResult({ callCount: 3 });
+
+    await click("test-pinwheel-item-1");
     await expect(container).toHaveJSProperty("value", "value-1");
-
-    await item3.click();
-    await expect(container).toHaveJSProperty("value", "value-3");
-
-    await item2.click();
-    await expect(container).toHaveJSProperty("value", "value-2");
+    await handleChange.matchResult({ callCount: 4 });
   });
 
   test("🧪 should throw error if no valid label was set for the input", async ({
