@@ -4,7 +4,7 @@ import {
   type CSSResultGroup,
   type TemplateResult,
 } from "lit";
-import { property } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { logger } from "../../utils/index.ts";
 import ItemSelectionController from "./Controller.ts";
@@ -56,7 +56,26 @@ export class PinwheelItem extends LitElement {
   @property()
   public value = "";
 
+  @query("#root", true)
+  private _root!: HTMLElement | null;
+
   private readonly _selectionController = new ItemSelectionController(this);
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+
+    this.addEventListener("click", this._handleClick);
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.removeEventListener("click", this._handleClick);
+  }
+
+  private _handleClick() {
+    this._root?.click();
+  }
 
   protected override render(): TemplateResult {
     if (!this.value) {

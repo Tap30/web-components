@@ -122,15 +122,12 @@ export class Pinwheel extends BaseClass {
   };
 
   @state()
-  private _cachedItems: PinwheelItem[] | null = null;
-
-  @state()
   private _noTransition = true;
 
-  @query("#root")
+  @query("#root", true)
   private _root!: HTMLElement | null;
 
-  @query("#container")
+  @query("#container", true)
   private _container!: HTMLElement | null;
 
   private _isProgrammaticallyScrolling = false;
@@ -159,7 +156,9 @@ export class Pinwheel extends BaseClass {
   protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
-    if (!this.value) this._selectFirstItem();
+    if (!this.value) {
+      this._selectFirstItem();
+    }
   }
 
   protected override firstUpdated(changed: PropertyValues<this>): void {
@@ -180,10 +179,6 @@ export class Pinwheel extends BaseClass {
   }
 
   private _getScrollDistance(value: string): number {
-    // Invalidate cache since this function will only be called programmatically
-    // and we need to get the latest items every time.
-    this._cachedItems = null;
-
     const items = this._items;
 
     if (items.length <= 1) return 0;
@@ -245,7 +240,6 @@ export class Pinwheel extends BaseClass {
 
   private get _items() {
     if (!this.renderRoot) return [];
-    if (this._cachedItems) return this._cachedItems;
 
     const itemsSlot = getRenderRootSlot(this.renderRoot, Slots.DEFAULT);
 
@@ -255,16 +249,10 @@ export class Pinwheel extends BaseClass {
       .assignedNodes()
       .filter(node => node instanceof PinwheelItem);
 
-    this._cachedItems = items;
-
     return items;
   }
 
   private _selectFirstItem() {
-    // Invalidate cache since this function will only be called
-    // programatically and we need to get the latest items every time.
-    this._cachedItems = null;
-
     const items = this._items;
     const firstItem = items[0];
 
