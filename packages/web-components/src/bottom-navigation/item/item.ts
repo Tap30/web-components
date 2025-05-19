@@ -39,7 +39,7 @@ export class BottomNavigationItem extends LitElement {
    * @attr {string} active
    * @default false
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public get active(): boolean {
     return this._active;
   }

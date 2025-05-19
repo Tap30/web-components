@@ -8,16 +8,16 @@ describe("🧩 chip", () => {
     );
     const chip = page.getByTestId("test-chip");
 
-    await expect(chip).not.toHaveAttribute("selected");
+    await expect(chip).toHaveJSProperty("selected", false);
 
     await page.keyboard.press("Tab");
     await expect(chip).toBeFocused();
 
     await page.keyboard.press("Space");
-    await expect(chip).toHaveAttribute("selected");
+    await expect(chip).toHaveJSProperty("selected", true);
 
     await page.keyboard.press("Space");
-    await expect(chip).not.toHaveAttribute("selected");
+    await expect(chip).toHaveJSProperty("selected", false);
   });
 
   test("🧪 should toggle on click", async ({ page }) => {
@@ -27,13 +27,13 @@ describe("🧩 chip", () => {
     );
     const chip = page.getByTestId("test-chip");
 
-    await expect(chip).not.toHaveAttribute("selected");
+    await expect(chip).toHaveJSProperty("selected", false);
 
     await chip.click();
-    await expect(chip).toHaveAttribute("selected");
+    await expect(chip).toHaveJSProperty("selected", true);
 
     await chip.click();
-    await expect(chip).not.toHaveAttribute("selected");
+    await expect(chip).toHaveJSProperty("selected", false);
   });
 
   test("🧪 should render leading and trailing icons", async ({ page }) => {

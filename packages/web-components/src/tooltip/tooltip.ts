@@ -106,7 +106,7 @@ export class Tooltip extends LitElement {
    * @attr {string} visible
    * @default false
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public visible = false;
 
   /**
