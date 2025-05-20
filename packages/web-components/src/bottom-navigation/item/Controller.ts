@@ -3,6 +3,7 @@ import {
   SelectionController,
   type SelectionElement,
 } from "../../utils/index.ts";
+import type { BottomNavigation } from "../bottom-navigation.ts";
 import { ActivateEvent } from "./events.ts";
 import type { BottomNavigationItem } from "./item.ts";
 
@@ -27,6 +28,9 @@ class NavItemSelectionController extends SelectionController<BottomNavigationIte
   }
 
   public override async handleClick(event: MouseEvent): Promise<boolean> {
+    const parent = this._parentTarget as BottomNavigation | null;
+
+    if (!parent) return false;
     if (!(await super.handleClick(event))) return false;
 
     this._host.dispatchEvent(new ActivateEvent());
@@ -35,6 +39,9 @@ class NavItemSelectionController extends SelectionController<BottomNavigationIte
   }
 
   public override async handleKeyDown(event: KeyboardEvent): Promise<boolean> {
+    const parent = this._parentTarget as BottomNavigation | null;
+
+    if (!parent) return false;
     if (!(await super.handleKeyDown(event))) return false;
 
     if (!event.currentTarget) return false;
