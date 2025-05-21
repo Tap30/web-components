@@ -25,19 +25,18 @@ class ItemSelectionController extends SelectionController<PinwheelItem> {
     });
   }
 
-  private _emitValueChange() {
-    this._host.dispatchEvent(new Event("change", { bubbles: true }));
+  private _emitValueChange(element: HTMLElement) {
+    element.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   public override async handleClick(event: MouseEvent): Promise<boolean> {
     const parent = this._parentTarget as Pinwheel | null;
 
     if (!parent) return false;
-    if (parent.disabled) return false;
-
+    if ("disabled" in parent && parent.disabled) return false;
     if (!(await super.handleClick(event))) return false;
 
-    this._emitValueChange();
+    this._emitValueChange(parent);
     parent.setViewOnItem(this._host);
 
     return true;
