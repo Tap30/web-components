@@ -63,10 +63,8 @@ const generateComponents = async () => {
       ),
       fs.appendFile(
         path.join(distDir, "index.ts"),
-        `export { default as ${iconInfo.pascalName} } from "./${iconInfo.pascalName}.ts";\n`,
-        {
-          encoding: "utf-8",
-        },
+        `export { default as ${iconInfo.pascalName} } from "./${iconInfo.pascalName}.tsx";\n`,
+        { encoding: "utf-8" },
       ),
     ]);
   });
@@ -74,6 +72,7 @@ const generateComponents = async () => {
   await Promise.all(reactComponentPromises);
   await execCmd(["shx", "cp", baseIconFile, distDir].join(" "));
   await execCmd(["tsc", "--project", tsconfigFile].join(" "));
+
   await deleteAsync([`${distDir}/**/*.{tsx,ts}`, `!${distDir}/**/*.d.ts`]);
 
   console.log("✅ react icons generated.");
