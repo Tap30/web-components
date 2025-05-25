@@ -3,6 +3,6 @@
 ---
 
 Resolve build issues:
-- add extension to import paths in the barrel
-- fix the `exports` inside the `package.json`
+- Add extension to import paths in the barrel
+- Fix the `exports` inside the `package.json`
   
