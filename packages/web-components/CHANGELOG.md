@@ -1,5 +1,12 @@
 # @tapsioss/web-components
 
+## 0.17.1
+### Patch Changes
+
+
+
+- [#491](https://github.com/Tap30/web-components/pull/491) [`61c768d`](https://github.com/Tap30/web-components/commit/61c768d65b222d98544aaf6a7784f4b65c5adea0) Thanks [@mimshins](https://github.com/mimshins)! - Improve selection controllers to take their parents into account
+
 ## 0.17.0
 ### Minor Changes
 

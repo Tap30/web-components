@@ -1,5 +1,14 @@
 # @tapsioss/react-icons
 
+## 0.7.0
+### Minor Changes
+
+
+
+- [#492](https://github.com/Tap30/web-components/pull/492) [`1adeccd`](https://github.com/Tap30/web-components/commit/1adeccdff18628cf5973499e540d2020450555f4) Thanks [@amir78729](https://github.com/amir78729)! - Resolve build issues:
+  - Add extension to import paths in the barrel
+  - Fix the `exports` inside the `package.json`
+
 ## 0.6.0
 ### Minor Changes
 
