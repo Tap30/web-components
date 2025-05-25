@@ -113,8 +113,7 @@
       "clean": "if-file-deleted",
       "files": [
         "./packages/theme/**/*.{ts,css}",
-        "./packages/theme/scripts/copy-css-vars.ts",
-        "./packages/theme/scripts/generate.ts",
+        "./packages/theme/scripts/**/*",
         "./packages/theme/tsconfig.{build,cjs,esm}.json",
         "./tsconfig.json",
         "./tsconfig.build.json",
@@ -130,6 +129,7 @@
       "clean": "if-file-deleted",
       "files": [
         "./packages/web-components/**/*.ts",
+        "./packages/web-components/scripts/**/*",
         "./packages/web-components/tsconfig.{build,cjs,esm}.json",
         "./tsconfig.json",
         "./tsconfig.build.json",
@@ -151,6 +151,7 @@
         "./packages/react-components/**/*.ts",
         "./packages/react-components/tsconfig.{build,cjs,esm}.json",
         "./packages/react-components/templates/*",
+        "./packages/react-components/scripts/**/*",
         "./tsconfig.json",
         "./tsconfig.build.json",
         "!./packages/react-components/dist/**/*"
@@ -167,7 +168,7 @@
       "clean": "if-file-deleted",
       "files": [
         "./packages/icons/templates/*",
-        "./packages/icons/scripts/build.ts",
+        "./packages/icons/scripts/**/*",
         "./packages/icons/**/*.{ts,svg}",
         "./packages/icons/tsconfig.{build,cjs,esm}.json",
         "./tsconfig.json",
@@ -183,7 +184,7 @@
       "clean": "if-file-deleted",
       "files": [
         "./packages/web-icons/templates/*",
-        "./packages/web-icons/scripts/build.ts",
+        "./packages/web-icons/scripts/**/*",
         "./packages/web-icons/**/*.ts",
         "./packages/web-icons/tsconfig.{build,cjs,esm}.json",
         "./tsconfig.json",
@@ -202,7 +203,7 @@
       "clean": "if-file-deleted",
       "files": [
         "./packages/react-icons/templates/*",
-        "./packages/react-icons/scripts/build.ts",
+        "./packages/react-icons/scripts/**/*",
         "./packages/react-icons/**/*.{ts,tsx}",
         "./packages/react-icons/tsconfig.{build,cjs,esm}.json",
         "./tsconfig.json",
