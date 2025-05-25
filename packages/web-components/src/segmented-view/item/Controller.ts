@@ -5,6 +5,7 @@ import {
   SelectionController,
   type SelectionElement,
 } from "../../utils/index.ts";
+import type { SegmentedView } from "../segmented-view.ts";
 import { ActivateEvent } from "./events.ts";
 import { SegmentedViewItem } from "./item.ts";
 
@@ -116,6 +117,9 @@ class ItemSelectionController extends SelectionController<SegmentedViewItem> {
   }
 
   public override async handleClick(event: MouseEvent): Promise<boolean> {
+    const parent = this._parentTarget as SegmentedView | null;
+
+    if (!parent) return false;
     if (!(await super.handleClick(event))) return false;
 
     this._host.dispatchEvent(new ActivateEvent());
@@ -124,6 +128,9 @@ class ItemSelectionController extends SelectionController<SegmentedViewItem> {
   }
 
   public override async handleKeyDown(event: KeyboardEvent): Promise<boolean> {
+    const parent = this._parentTarget as SegmentedView | null;
+
+    if (!parent) return false;
     if (!(await super.handleKeyDown(event))) return false;
 
     const isLeft = event.key === KeyboardKeys.LEFT;

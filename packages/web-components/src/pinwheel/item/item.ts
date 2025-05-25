@@ -61,19 +61,7 @@ export class PinwheelItem extends LitElement {
 
   private readonly _selectionController = new ItemSelectionController(this);
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-
-    this.addEventListener("click", this._handleClick);
-  }
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-
-    this.removeEventListener("click", this._handleClick);
-  }
-
-  private _handleClick() {
+  public override click(): void {
     this._root?.click();
   }
 
