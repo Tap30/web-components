@@ -140,6 +140,9 @@ export function generateKotlinBlock(
   for (const [key, value] of Object.entries(obj)) {
     const safeKey = toKotlinKey(key);
 
+    // TODO: fix this
+    if (safeKey === 'fontFamily') continue;
+
     if (isObject(value)) {
       if (isTextStyleObject(value)) {
         lines.push(
