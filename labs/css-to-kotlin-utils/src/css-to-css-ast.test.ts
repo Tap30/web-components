@@ -1,3 +1,4 @@
+/* eslint-disable playwright/no-conditional-in-test, playwright/no-conditional-expect */
 import { describe, test,expect } from "vitest";
 import { cssToCssAst, hasChildren } from "./css-to-css-ast.ts";
 
@@ -13,12 +14,12 @@ describe("cssToCssAst", () => {
     const ast = cssToCssAst(css);
 
     expect(ast.type).toBe("root");
-
+    
     if (hasChildren(ast)) {
       expect(ast.children.length).toBe(1);
       const rule = ast.children[0];
 
-      expect(rule.type).toBe("rule");
+      expect(rule?.type).toBe("rule");
       if (rule?.type === "rule") {
         expect(rule.selector).toBe(".btn");
         expect(rule.declarations).toEqual([
@@ -49,7 +50,7 @@ describe("cssToCssAst", () => {
 
       const media = ast.children[0];
 
-      expect(media.type).toBe("atrule");
+      expect(media?.type).toBe("atrule");
       if (media?.type === "atrule") {
         expect(media.name).toBe("media");
         expect(media.params).toBe("(max-width: 600px)");
@@ -58,7 +59,7 @@ describe("cssToCssAst", () => {
           expect(media.children).toHaveLength(1);
           const nestedRule = media.children[0];
 
-          expect(nestedRule.type).toBe("rule");
+          expect(nestedRule?.type).toBe("rule");
           if (nestedRule?.type === "rule") {
             expect(nestedRule.selector).toBe(".card");
             expect(nestedRule.declarations).toEqual([
@@ -90,7 +91,7 @@ describe("cssToCssAst", () => {
       expect(ast.children).toHaveLength(1);
       const rule = ast.children[0];
 
-      expect(rule.type).toBe("rule");
+      expect(rule?.type).toBe("rule");
       if (rule?.type === "rule") {
         expect(rule.selector).toBe(".box");
       }
@@ -108,7 +109,7 @@ describe("cssToCssAst", () => {
     if (hasChildren(ast)) {
       const media = ast.children[0];
 
-      expect(media.type).toBe("atrule");
+      expect(media?.type).toBe("atrule");
       if (media?.type === "atrule" && hasChildren(media)) {
         expect(media.name).toBe("media");
         expect(media.children[0]?.type).toBe("rule");
@@ -137,7 +138,7 @@ describe("cssToCssAst", () => {
     if (hasChildren(ast)) {
       const media = ast.children[0];
 
-      expect(media.type).toBe("atrule");
+      expect(media?.type).toBe("atrule");
       if (media?.type === "atrule" && hasChildren(media)) {
         expect(media.children).toHaveLength(2);
         const selectors = media.children.map(
@@ -153,3 +154,5 @@ describe("cssToCssAst", () => {
     }
   });
 });
+
+/* eslint-enable playwright/no-conditional-in-test, playwright/no-conditional-expect */

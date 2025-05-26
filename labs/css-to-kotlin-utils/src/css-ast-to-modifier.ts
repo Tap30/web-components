@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type { VNode } from "./types";
 import { parseDp, parseBorder, parseBackground } from "./parsers.ts";
 
@@ -115,3 +116,4 @@ export const sanitizeSelector = (selector: string): string => {
     .replace(/^_+|_+$/g, "") // trim leading/trailing _
     .replace(/_+/g, "_"); // collapse multiple _ into one
 };
+/* eslint-enable no-console */

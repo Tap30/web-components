@@ -132,7 +132,6 @@ function detectImports(kotlinCode: string): string[] {
  */
 export function generateKotlinBlock(
   obj: object,
-  name: string,
   level = 0,
 ): string {
   const lines: string[] = [];
@@ -152,7 +151,7 @@ export function generateKotlinBlock(
         lines.push(
           `${indent(level + 1)}object ${capitalize(
             safeKey,
-          )} {\n${generateKotlinBlock(value, safeKey, level + 1)}\n${indent(
+          )} {\n${generateKotlinBlock(value, level + 1)}\n${indent(
             level + 1,
           )}}`,
         );
@@ -177,7 +176,7 @@ export async function generateKotlinFiles(tokens: Record<string, unknown>) {
       continue;
     }
 
-    const block = `object ${capitalize(section)} {\n${generateKotlinBlock(value, section, 1)}\n}`;
+    const block = `object ${capitalize(section)} {\n${generateKotlinBlock(value, 1)}\n}`;
     const imports = detectImports(block);
 
     logger(`👾 generating Kotlin contents for theme's ${section}...`);
