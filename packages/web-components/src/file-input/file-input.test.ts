@@ -8,10 +8,19 @@ import {
   setupMocks,
   test,
 } from "@internals/test-helpers";
+import type { Locator } from "@playwright/test";
 import * as path from "path";
 import { ErrorMessages, scope } from "./constants.ts";
 
 describe("🧩 file-input", () => {
+  const getSelectedFiles = async (fileInput: Locator): Promise<number> => {
+    return await fileInput
+      .evaluateHandle((el: HTMLInputElement) => {
+        return el.files?.length ?? 0;
+      })
+      .then(handle => handle.jsonValue());
+  };
+
   afterEach(async ({ page }) => {
     await disposeMocks(page);
   });
@@ -186,7 +195,7 @@ describe("🧩 file-input", () => {
     const fileInput = page.getByTestId("test-file-input");
 
     // At first, no files are selected.
-    await expect(fileInput).toHaveJSProperty("files", null);
+    expect(await getSelectedFiles(fileInput)).toBe(0);
 
     const fileChooserPromise = page.waitForEvent("filechooser");
 
@@ -195,7 +204,7 @@ describe("🧩 file-input", () => {
 
     // if we reach here, it means the file input has been opened!
     await fileChooser.setFiles(path.resolve("src", "file-input", "index.ts"));
-    await expect(fileInput).not.toHaveJSProperty("files", null);
+    expect(await getSelectedFiles(fileInput)).toBe(1);
 
     // We should show to user the file name when it's not an image.
     const previewSection = page.locator("tapsi-file-input .text");
@@ -214,7 +223,7 @@ describe("🧩 file-input", () => {
     const fileInput = page.getByTestId("test-file-input");
 
     // At first, no files are selected.
-    await expect(fileInput).toHaveJSProperty("files", null);
+    expect(await getSelectedFiles(fileInput)).toBe(0);
 
     const fileChooserPromise = page.waitForEvent("filechooser");
 

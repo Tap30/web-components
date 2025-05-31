@@ -93,9 +93,14 @@ const styles: CSSResult = css`
     cursor: pointer;
 
     position: absolute;
-
-    inset: 0;
-    z-index: 1;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
   }
 
   .input:focus-visible + .file-input {
