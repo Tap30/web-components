@@ -1,5 +1,11 @@
 # @tapsioss/react-components
 
+## 0.17.2
+### Patch Changes
+
+- Updated dependencies [[`3da567f`](https://github.com/Tap30/web-components/commit/3da567f8d5f7fb5a305c1820e349d5bc2c45c347), [`ec68346`](https://github.com/Tap30/web-components/commit/ec68346ab16d15c04fdc2213b2fd8776cbfcc0f6)]:
+  - @tapsioss/web-components@0.17.2
+
 ## 0.17.1
 ### Patch Changes
 

@@ -1,5 +1,16 @@
 # @tapsioss/web-components
 
+## 0.17.2
+### Patch Changes
+
+
+
+- [#501](https://github.com/Tap30/web-components/pull/501) [`3da567f`](https://github.com/Tap30/web-components/commit/3da567f8d5f7fb5a305c1820e349d5bc2c45c347) Thanks [@amir78729](https://github.com/amir78729)! - Resolve issues related to setting files and value in file-input.
+
+
+
+- [#495](https://github.com/Tap30/web-components/pull/495) [`ec68346`](https://github.com/Tap30/web-components/commit/ec68346ab16d15c04fdc2213b2fd8776cbfcc0f6) Thanks [@mimshins](https://github.com/mimshins)! - Resolve issues with stacking context layers in button
+
 ## 0.17.1
 ### Patch Changes
 
