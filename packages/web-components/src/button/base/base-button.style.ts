@@ -132,8 +132,8 @@ const styles: CSSResult = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
     width: 100%;
+    position: relative;
   }
 
   .overlay {
@@ -145,7 +145,6 @@ const styles: CSSResult = css`
       --button-custom-overlay-color,
       var(--button-overlay-color)
     );
-    z-index: 1;
     transition: opacity 0.1s;
   }
 
