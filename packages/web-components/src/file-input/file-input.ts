@@ -11,7 +11,6 @@ import {
 } from "lit";
 import { property, query, queryAssignedNodes, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
-import { live } from "lit/directives/live.js";
 import {
   createValidator,
   dispatchActivationClick,
@@ -73,6 +72,12 @@ const BaseClass = withOnReportValidity(
 export class FileInput extends BaseClass {
   /** @internal */
   public static override readonly styles: CSSResultGroup = [styles];
+
+  /** @internal */
+  static override shadowRootOptions: ShadowRootInit = {
+    ...LitElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
 
   /** @internal */
   declare addEventListener: <K extends keyof TapsiFileInputEventMap>(
@@ -206,15 +211,6 @@ export class FileInput extends BaseClass {
   public capture = "";
 
   /**
-   * The list of selected files.
-   *
-   * @prop {FileList | null} files
-   * @default null
-   */
-  @property({ attribute: false })
-  public files: FileList | null = null;
-
-  /**
    * Specifying what file format does the file input accepts.
    *
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept
@@ -289,24 +285,19 @@ export class FileInput extends BaseClass {
 
   /**
    * The current value of the input. It is always a string.
-   *
-   * @prop {string} value
-   * @attr {string} value
-   * @default ""
    */
-  @property()
-  public set value(newValue: string) {
-    if (newValue) {
-      logger(ErrorMessages.INVALID_VALUE, scope, "error");
+  public get value(): string {
+    if (!this.renderRoot) return "";
+    if (!this._input) return "";
 
-      return;
-    }
-
-    this._value = newValue;
+    return this._input.value;
   }
 
-  public get value(): string {
-    return this._value;
+  /**
+   * The list of selected files.
+   */
+  public get files(): FileList | null {
+    return this._input?.files ?? null;
   }
 
   @state()
@@ -338,15 +329,12 @@ export class FileInput extends BaseClass {
   @query("#input", true)
   private _input!: HTMLInputElement | null;
 
-  private _value: string = "";
-
   constructor() {
     super();
 
     registerIconButton();
     registerSpinner();
 
-    this._handleDrop = this._handleDrop.bind(this);
     this._handleActivationClick = this._handleActivationClick.bind(this);
   }
 
@@ -384,8 +372,6 @@ export class FileInput extends BaseClass {
   public override connectedCallback(): void {
     super.connectedCallback();
 
-    this.addEventListener("drop", this._handleDrop);
-
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.addEventListener("click", this._handleActivationClick);
   }
@@ -393,8 +379,6 @@ export class FileInput extends BaseClass {
   /** @internal */
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-
-    this.removeEventListener("drop", this._handleDrop);
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.removeEventListener("click", this._handleActivationClick);
@@ -410,23 +394,25 @@ export class FileInput extends BaseClass {
     this._root?.blur();
   }
 
-  private _handleInput(event: Event) {
-    if (this.disabled) return;
+  /** @internal */
+  public override click(): void {
+    if (!this._isInteractable) return;
 
-    const target = event.target as HTMLInputElement;
+    this._input?.click();
+  }
 
-    this.files = target.files;
+  private _handleInput() {
+    if (!this._isInteractable) return;
 
     const file = this.files?.[0];
 
     if (file) {
-      this._value = target.value;
       this._previewSrc = URL.createObjectURL(file);
-    }
+    } else this._previewSrc = null;
   }
 
   private _handleChange(event: Event) {
-    if (this.disabled) return;
+    if (!this._isInteractable) return;
 
     // <input> 'change' event is not composed, re-dispatch it.
     redispatchEvent(this, event);
@@ -440,12 +426,14 @@ export class FileInput extends BaseClass {
 
   private _handleDrop(event: DragEvent) {
     event.preventDefault();
+    event.stopPropagation();
 
     if (!event.dataTransfer) return;
 
     const files = event.dataTransfer.files;
 
     if (!files || files.length === 0) return;
+    if (!this.multiple && files.length > 1) return;
 
     const input = this._input;
 
@@ -453,8 +441,6 @@ export class FileInput extends BaseClass {
 
     input.files = files;
 
-    this.files = files;
-    this._value = input.value;
     this._previewSrc = URL.createObjectURL(files[0]!);
 
     this.dispatchEvent(new Event("change", { bubbles: true }));
@@ -462,7 +448,7 @@ export class FileInput extends BaseClass {
   }
 
   private async _handleActivationClick(event: MouseEvent) {
-    if (this.disabled) return;
+    if (!this._isInteractable) return;
 
     // allow event to propagate to user code after a microtask.
     await waitAMicrotask();
@@ -480,12 +466,12 @@ export class FileInput extends BaseClass {
 
   /** @internal */
   public override [getFormValue](): string {
-    return this._value;
+    return this.value;
   }
 
   /** @internal */
   public override [getFormState](): string {
-    return String(this._value);
+    return String(this.value);
   }
 
   /** @internal */
@@ -494,15 +480,11 @@ export class FileInput extends BaseClass {
   }
 
   /** @internal */
-  public override formStateRestoreCallback(state: string): void {
-    this._value = state;
-  }
-
-  /** @internal */
   public override [createValidator](): FileInputValidator {
     return new FileInputValidator(() => ({
       required: this.required ?? false,
       value: this.value ?? "",
+      multiple: this.multiple ?? false,
     }));
   }
 
@@ -545,7 +527,7 @@ export class FileInput extends BaseClass {
   }
 
   private _logErrors() {
-    if (this._isLoading() && this.error) {
+    if (this._isLoading && this.error) {
       logger(
         ErrorMessages.ERROR_AND_LOADING_ATTRIBUTES_AT_THE_SAME_TIME,
         scope,
@@ -574,7 +556,10 @@ export class FileInput extends BaseClass {
    * Reset the text field to its default value.
    */
   public reset(): void {
-    this._value = "";
+    if (this._input) {
+      this._input.value = "";
+    }
+
     this._previewSrc = null;
     this._nativeError = false;
     this._nativeErrorText = "";
@@ -590,16 +575,27 @@ export class FileInput extends BaseClass {
     return this._hasError() && errorText ? errorText : this.supportingText;
   }
 
-  private _isLoading() {
+  private get _isLoading() {
     return this.loading.toString() !== "false";
   }
+  private get _isInteractable() {
+    return !this.disabled && !this._isLoading;
+  }
 
-  private _handleClear() {
-    this.reset();
-    const event = new ClearEvent();
+  private _handleClick() {
+    if (!this._isInteractable) return;
 
-    this.dispatchEvent(event);
+    this.click();
+  }
+
+  private _handleClear(event: MouseEvent) {
+    if (!this._isInteractable) return;
+
     event.stopPropagation();
+    event.preventDefault();
+
+    this.reset();
+    this.dispatchEvent(new ClearEvent());
   }
 
   private _handleRetry() {
@@ -811,10 +807,15 @@ export class FileInput extends BaseClass {
     `;
   }
 
+  private _preventDragMove(e: DragEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
   private _renderFileInputContent() {
     if (this._hasError()) return this._renderErrorState();
 
-    if (this._isLoading()) return this._renderLoadingState();
+    if (this._isLoading) return this._renderLoadingState();
 
     if (this.value) return this._renderPreview();
 
@@ -822,26 +823,26 @@ export class FileInput extends BaseClass {
   }
 
   private _renderClearIcon() {
-    if (this._value)
-      return html`<tapsi-icon-button
-        class="clear-button"
-        part="clear-button"
-        @click=${this._handleClear}
-        label="clear"
-        variant="elevated"
-        size="sm"
-      >
-        ${clear}
-      </tapsi-icon-button>`;
+    if (!this.value) return null;
 
-    return null;
+    return html`<tapsi-icon-button
+      class="clear-button"
+      part="clear-button"
+      @click=${this._handleClear}
+      label="clear"
+      variant="elevated"
+      size="sm"
+      id="clear"
+    >
+      ${clear}
+    </tapsi-icon-button>`;
   }
 
   protected override render(): TemplateResult {
     const rootClasses = classMap({
       root: true,
       disabled: this.disabled,
-      loading: this._isLoading(),
+      loading: this._isLoading,
       readonly: this.readOnly,
       error: this._hasError(),
     });
@@ -856,12 +857,15 @@ export class FileInput extends BaseClass {
         part="root"
         class=${rootClasses}
         ?inert=${this.disabled}
-        tabindex=${this.disabled ? "-1" : "0"}
       >
         ${this._renderLabel()}
         <div
           class="control"
           part="control"
+          @click=${this._handleClick}
+          @dragover=${this._preventDragMove}
+          @dragend=${this._preventDragMove}
+          @drop=${this._handleDrop}
         >
           <input
             class="input"
@@ -872,7 +876,8 @@ export class FileInput extends BaseClass {
             aria-label=${ariaLabel}
             aria-labelledby=${ariaLabelledBy}
             aria-describedby=${ariaDescribedBy}
-            ?disabled=${this.disabled || this._isLoading()}
+            ?disabled=${!this._isInteractable}
+            tabindex=${this.disabled ? "-1" : "0"}
             ?multiple=${this.multiple}
             ?readonly=${this.readOnly}
             capture=${this.capture || nothing}
@@ -880,7 +885,6 @@ export class FileInput extends BaseClass {
             ?required=${this.required}
             @input=${this._handleInput}
             @change=${this._handleChange}
-            .value=${live(this._value)}
           />
           <div
             class="file-input"
