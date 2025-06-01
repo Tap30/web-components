@@ -1,5 +1,16 @@
 # @tapsioss/web-components
 
+## 0.17.3
+### Patch Changes
+
+
+
+- [`34ef521`](https://github.com/Tap30/web-components/commit/34ef521f2cf88d7280eaf0c72e779e2eee1f8677) Thanks [@mimshins](https://github.com/mimshins)! - Add support for public click api in base input.
+
+
+
+- [`3f19daa`](https://github.com/Tap30/web-components/commit/3f19daa3dea085c1aa5d160e9f3d118f506f1fc5) Thanks [@mimshins](https://github.com/mimshins)! - Remove tap highlight in mobile devices in base input.
+
 ## 0.17.2
 ### Patch Changes
 
