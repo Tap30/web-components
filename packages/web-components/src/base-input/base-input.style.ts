@@ -19,6 +19,7 @@ const styles: CSSResult = css`
     flex-direction: column;
 
     gap: var(--tapsi-spacing-4);
+    -webkit-tap-highlight-color: transparent;
   }
 `;
 
