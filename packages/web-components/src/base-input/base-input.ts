@@ -157,6 +157,11 @@ export abstract class BaseInput extends BaseClass {
     this.getInputElement()?.blur();
   }
 
+  /** @internal */
+  public override click(): void {
+    this.getInputElement()?.click();
+  }
+
   protected override firstUpdated(changed: PropertyValues<this>): void {
     super.firstUpdated(changed);
 
