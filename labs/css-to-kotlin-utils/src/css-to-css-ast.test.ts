@@ -1,5 +1,5 @@
 /* eslint-disable playwright/no-conditional-in-test, playwright/no-conditional-expect */
-import { describe, test,expect } from "vitest";
+import { describe, expect, test } from "vitest";
 import { cssToCssAst, hasChildren } from "./css-to-css-ast.ts";
 
 describe("cssToCssAst", () => {
@@ -14,7 +14,7 @@ describe("cssToCssAst", () => {
     const ast = cssToCssAst(css);
 
     expect(ast.type).toBe("root");
-    
+
     if (hasChildren(ast)) {
       expect(ast.children.length).toBe(1);
       const rule = ast.children[0];
@@ -142,7 +142,7 @@ describe("cssToCssAst", () => {
       if (media?.type === "atrule" && hasChildren(media)) {
         expect(media.children).toHaveLength(2);
         const selectors = media.children.map(
-          (c) => c.type === "rule" && c.selector
+          c => c.type === "rule" && c.selector,
         );
 
         expect(selectors).toEqual([".nav", ".nav-item"]);

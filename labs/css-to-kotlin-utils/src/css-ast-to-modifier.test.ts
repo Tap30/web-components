@@ -1,4 +1,4 @@
-import { describe, test, expect } from "vitest";
+import { describe, expect, test } from "vitest";
 import { cssAstToModifier, sanitizeSelector } from "./css-ast-to-modifier.ts";
 import type { VNode } from "./types";
 
@@ -68,7 +68,7 @@ describe("cssAstToModifier", () => {
     const result = cssAstToModifier(vnode);
 
     expect(result).toContain(
-      "val box = Modifier.border(1.dp, Color(0xFF000000)).clip(RoundedCornerShape(4.dp))"
+      "val box = Modifier.border(1.dp, Color(0xFF000000)).clip(RoundedCornerShape(4.dp))",
     );
   });
 });

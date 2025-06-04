@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
+import { parseBackground, parseBorder, parseDp } from "./parsers.ts";
 import type { VNode } from "./types";
-import { parseDp, parseBorder, parseBackground } from "./parsers.ts";
 
 /**
  * Converts a CSS AST (VNode) into a string of Jetpack Compose Modifier chains.
@@ -69,7 +69,7 @@ const generateModifierChain = (declarations: VNode[]): string => {
  * @returns A Modifier segment string or undefined if unsupported.
  */
 const cssPropertyToModifier = (
-  decl: Extract<VNode, { type: "declaration" }>
+  decl: Extract<VNode, { type: "declaration" }>,
 ): string | undefined => {
   const { prop, value } = decl;
 
@@ -119,7 +119,7 @@ export const sanitizeSelector = (selector: string): string => {
       chars.push(c);
       lastWasUnderscore = false;
     } else if (!lastWasUnderscore) {
-      chars.push('_');
+      chars.push("_");
       lastWasUnderscore = true;
     }
   }
@@ -128,9 +128,9 @@ export const sanitizeSelector = (selector: string): string => {
   let start = 0;
   let end = chars.length;
 
-  while (start < end && chars[start] === '_') start++;
-  while (end > start && chars[end - 1] === '_') end--;
+  while (start < end && chars[start] === "_") start++;
+  while (end > start && chars[end - 1] === "_") end--;
 
-  return chars.slice(start, end).join('');
+  return chars.slice(start, end).join("");
 };
 /* eslint-enable no-console */

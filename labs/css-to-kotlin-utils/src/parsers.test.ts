@@ -1,11 +1,11 @@
+import { describe, expect, test } from "vitest";
 import {
-  parseDp,
-  parseColor,
-  parseGradient,
   parseBackground,
   parseBorder,
+  parseColor,
+  parseDp,
+  parseGradient,
 } from "./parsers.ts";
-import { describe,expect,test } from "vitest";
 
 describe("parseDp", () => {
   test("converts px to dp", () => {
@@ -46,7 +46,7 @@ describe("parseGradient", () => {
 
   test("throws if no colors are found", () => {
     expect(() =>
-      parseGradient("linear-gradient(90deg, transparent, red)")
+      parseGradient("linear-gradient(90deg, transparent, red)"),
     ).toThrow();
   });
 });
@@ -60,7 +60,7 @@ describe("parseBackground", () => {
     const input = "linear-gradient(90deg, #fff, #000)";
 
     expect(parseBackground(input)).toBe(
-      "Brush.horizontalGradient(listOf(Color(0xFFFFFFFF), Color(0xFF000000)))"
+      "Brush.horizontalGradient(listOf(Color(0xFFFFFFFF), Color(0xFF000000)))",
     );
   });
 });

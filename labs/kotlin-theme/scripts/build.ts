@@ -130,17 +130,14 @@ function detectImports(kotlinCode: string): string[] {
 /**
  * Recursively generates Kotlin object blocks from a nested token structure.
  */
-export function generateKotlinBlock(
-  obj: object,
-  level = 0,
-): string {
+export function generateKotlinBlock(obj: object, level = 0): string {
   const lines: string[] = [];
 
   for (const [key, value] of Object.entries(obj)) {
     const safeKey = toKotlinKey(key);
 
     // TODO: fix this
-    if (safeKey === 'fontFamily') continue;
+    if (safeKey === "fontFamily") continue;
 
     if (isObject(value)) {
       if (isTextStyleObject(value)) {
