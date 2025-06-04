@@ -111,10 +111,26 @@ const cssPropertyToModifier = (
  * @returns A sanitized string safe to use as a Kotlin identifier.
  */
 export const sanitizeSelector = (selector: string): string => {
-  return selector
-    .replace(/[^a-zA-Z0-9]/g, "_") // replace invalid chars
-    .replace(/^_+/, "") // trim leading _
-    .replace(/_+$/, "") // trim trailing _
-    .replace(/_+/g, "_"); // collapse multiple _ into one
+  const chars: string[] = [];
+  let lastWasUnderscore = false;
+
+  for (const c of selector) {
+    if (/[a-zA-Z0-9]/.test(c)) {
+      chars.push(c);
+      lastWasUnderscore = false;
+    } else if (!lastWasUnderscore) {
+      chars.push('_');
+      lastWasUnderscore = true;
+    }
+  }
+
+  // Trim leading/trailing underscores
+  let start = 0;
+  let end = chars.length;
+
+  while (start < end && chars[start] === '_') start++;
+  while (end > start && chars[end - 1] === '_') end--;
+
+  return chars.slice(start, end).join('');
 };
 /* eslint-enable no-console */
