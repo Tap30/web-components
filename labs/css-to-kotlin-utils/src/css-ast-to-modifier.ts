@@ -113,7 +113,8 @@ const cssPropertyToModifier = (
 export const sanitizeSelector = (selector: string): string => {
   return selector
     .replace(/[^a-zA-Z0-9]/g, "_") // replace invalid chars
-    .replace(/^_+|_+$/g, "") // trim leading/trailing _
+    .replace(/^_+/, "") // trim leading _
+    .replace(/_+$/, "") // trim trailing _
     .replace(/_+/g, "_"); // collapse multiple _ into one
 };
 /* eslint-enable no-console */
