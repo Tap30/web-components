@@ -29,7 +29,7 @@ class FocusTrapper implements ReactiveController {
   private _lastFocused: HTMLElement | null = null;
   private _ignoreFocusChanges = false;
 
-  private _sendFocusTarget: string = "";
+  private _resolveFocusTarget: (() => HTMLElement | null) | null = null;
 
   constructor(host: Host, resolveTreeRoot: () => HTMLElement | null) {
     host.addController(this);
@@ -54,12 +54,8 @@ class FocusTrapper implements ReactiveController {
     return this._isEnabled;
   }
 
-  public set sendFocusTarget(focusTarget: string) {
-    this._sendFocusTarget = focusTarget;
-  }
-
-  public get sendFocusTarget() {
-    return this._sendFocusTarget;
+  public set focusTargetResolver(resolver: (() => HTMLElement | null) | null) {
+    this._resolveFocusTarget = resolver;
   }
 
   private _sendFocusToFirstFocusableChild() {
@@ -83,13 +79,12 @@ class FocusTrapper implements ReactiveController {
   }
 
   public sendFocus(): void {
-    if (this._sendFocusTarget) {
-      const focusTarget = document.getElementById(this._sendFocusTarget);
+    const focusTarget = this._resolveFocusTarget
+      ? this._resolveFocusTarget()
+      : null;
 
-      this._tryFocus(focusTarget);
-    } else {
-      this._sendFocusToFirstFocusableChild();
-    }
+    if (focusTarget) this._tryFocus(focusTarget);
+    else this._sendFocusToFirstFocusableChild();
   }
 
   // TODO: Add good caching mechanism for top most instance
@@ -294,10 +289,10 @@ class FocusTrapper implements ReactiveController {
   public wrap(tree: TemplateResult): TemplateResult {
     const styles = styleMap({
       position: "absolute",
-      width: 1,
-      height: 1,
+      width: "1px",
+      height: "1px",
       padding: 0,
-      margin: -1,
+      margin: "-1px",
       border: 0,
       overflow: "hidden",
       clip: "rect(0, 0, 0, 0)",
