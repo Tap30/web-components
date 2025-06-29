@@ -13,7 +13,6 @@ const styles: CSSResult = css`
   }
 
   :host {
-    --bottom-sheet-action-bar-position: relative;
     --bottom-sheet-header-position: relative;
     --bottom-sheet-header-top: 0;
     --bottom-sheet-grabber-height: 0.75rem;
@@ -49,10 +48,6 @@ const styles: CSSResult = css`
     visibility: visible;
   }
 
-  .root.sticky-action-bar {
-    --bottom-sheet-action-bar-position: sticky;
-  }
-
   .root.sticky-header {
     --bottom-sheet-header-position: sticky;
   }
@@ -80,7 +75,7 @@ const styles: CSSResult = css`
   }
 
   .container {
-    height: 0;
+    height: 100vh;
 
     overflow: auto;
     z-index: 1;
@@ -98,12 +93,11 @@ const styles: CSSResult = css`
 
     background-color: var(--tapsi-color-surface-primary);
     box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.2);
+    transform: translate3d(0, 100%, 0);
 
     touch-action: pan-y;
 
-    transition:
-      transform 240ms ease,
-      height 240ms ease;
+    transition: transform 240ms ease;
   }
 
   .container.prevent-scroll {
@@ -223,10 +217,9 @@ const styles: CSSResult = css`
   }
 
   .action-bar {
-    margin-top: auto;
-
-    position: var(--bottom-sheet-action-bar-position);
+    position: sticky;
     bottom: 0;
+    width: 100%;
 
     z-index: 2;
     padding: var(--tapsi-spacing-6);

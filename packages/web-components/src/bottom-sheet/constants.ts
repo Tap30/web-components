@@ -1,3 +1,5 @@
+import type { DragConfig } from "@use-gesture/vanilla";
+
 export const SENTINEL_DEFAULT_SNAP_POINTS = [-Infinity, -Infinity] as const;
 
 export const Slots = {
@@ -12,3 +14,7 @@ export const Status = {
   OPENING: "opening",
   CLOSING: "closing",
 } as const;
+
+export const _DRAG_GESTURE_DEFAULT_CONFIG: DragConfig = {
+  filterTaps: true,
+};

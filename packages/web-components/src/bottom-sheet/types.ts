@@ -1,6 +1,6 @@
 import type { Status } from "./constants.ts";
 
-export type MetaData = {
+export type Metadata = {
   /**
    * The snap points currently in use.
    */
@@ -27,6 +27,6 @@ export type MetaData = {
   height: number;
 };
 
-export type SnapToCallbackArgument = (data: MetaData) => number;
+export type SnapToCallbackArgument = (data: Metadata) => number;
 
 export type StatusEnum = (typeof Status)[keyof typeof Status];

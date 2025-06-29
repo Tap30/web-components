@@ -3,7 +3,6 @@ import { register as registerIconButton } from "../button/icon-button/index.ts";
 import {
   DragGesture,
   rubberbandIfOutOfBounds,
-  type DragConfig,
   type Handler,
 } from "@use-gesture/vanilla";
 import {
@@ -25,13 +24,18 @@ import {
   isSsr,
   logger,
   redispatchEvent,
-  runAfterRepaint,
   runImmediatelyBeforeRepaint,
   ScrollLocker,
   waitAMicrotask,
+  waitForNextRepaint,
 } from "../utils/index.ts";
 import styles from "./bottom-sheet.style.ts";
-import { SENTINEL_DEFAULT_SNAP_POINTS, Slots, Status } from "./constants.ts";
+import {
+  _DRAG_GESTURE_DEFAULT_CONFIG,
+  SENTINEL_DEFAULT_SNAP_POINTS,
+  Slots,
+  Status,
+} from "./constants.ts";
 import {
   ClosedEvent,
   ClosingEvent,
@@ -42,7 +46,7 @@ import {
   SnappedEvent,
 } from "./events.ts";
 import { dismiss } from "./icons.ts";
-import type { MetaData, SnapToCallbackArgument, StatusEnum } from "./types.ts";
+import type { Metadata, SnapToCallbackArgument, StatusEnum } from "./types.ts";
 
 interface TapsiBottomSheetEventMap extends HTMLElementEventMap {
   [ClosedEvent.type]: ClosedEvent;
@@ -136,16 +140,6 @@ export class BottomSheet extends LitElement {
   public hasDismissButton = false;
 
   /**
-   * Determines whether the action bar should be sticky or not.
-   *
-   * @prop {boolean} hasStickyActionBar
-   * @attr {string} sticky-action-bar
-   * @default false
-   */
-  @property({ type: Boolean, attribute: "sticky-action-bar" })
-  public hasStickyActionBar = false;
-
-  /**
    * Determines whether the header should be sticky or not.
    *
    * @prop {boolean} hasStickyHeader
@@ -202,14 +196,13 @@ export class BottomSheet extends LitElement {
   public labelledBy = "";
 
   /**
-   * Identifies the element that should get focused when bottom sheet opens.
+   * Resolves the element that should get focused when bottom sheet opens.
+   * If `null`, the first focusable element gets focused.
    *
-   * @props {string} focusTarget
-   * @attr {string} focus-target
-   * @default ""
+   * @default null
    */
-  @property({ attribute: "focus-target" })
-  public focusTarget = "";
+  @property({ attribute: false })
+  public resolveFocusTarget: (() => HTMLElement | null) | null = null;
 
   @state()
   private _status: StatusEnum = Status.CLOSED;
@@ -244,11 +237,23 @@ export class BottomSheet extends LitElement {
   @state()
   private _hasActionBarSlot = false;
 
-  @query("#root")
+  @query("#root", true)
   private _root!: HTMLElement | null;
 
-  @query("#container")
+  @query("#container", true)
   private _container!: HTMLElement | null;
+
+  @query("#header", true)
+  private _header!: HTMLElement | null;
+
+  @query("#body", true)
+  private _body!: HTMLElement | null;
+
+  @query("#action-bar", true)
+  private _actionBar!: HTMLElement | null;
+
+  @query("#grabber")
+  private _grabber!: HTMLElement | null;
 
   @queryAssignedNodes({ slot: Slots.HEADER })
   private _headerSlotNodes!: Node[];
@@ -263,10 +268,6 @@ export class BottomSheet extends LitElement {
   private _snapPoints: null | number[] = null;
 
   private _previouslyFocusedElement: HTMLElement | null = null;
-
-  private readonly _DRAG_GESTURE_DEFAULT_CONFIG: DragConfig = {
-    filterTaps: true,
-  };
 
   private readonly _animationController = new AnimationController();
   private readonly _scrollLocker = new ScrollLocker();
@@ -298,7 +299,7 @@ export class BottomSheet extends LitElement {
 
     if (changed.has("expandable")) {
       this._dragGesture?.setConfig({
-        ...this._DRAG_GESTURE_DEFAULT_CONFIG,
+        ..._DRAG_GESTURE_DEFAULT_CONFIG,
         enabled: this.expandable,
       });
     }
@@ -390,7 +391,7 @@ export class BottomSheet extends LitElement {
       );
 
       this._dragGesture = new DragGesture(this._container, this._handleDrag, {
-        ...this._DRAG_GESTURE_DEFAULT_CONFIG,
+        ..._DRAG_GESTURE_DEFAULT_CONFIG,
         enabled: this.expandable,
       });
     }
@@ -425,14 +426,11 @@ export class BottomSheet extends LitElement {
   }
 
   private get _headerHeight() {
-    return (
-      this.renderRoot.querySelector<HTMLElement>("#header")?.offsetHeight ?? 0
-    );
+    return this._header?.offsetHeight ?? 0;
   }
 
   private get _bodyHeight() {
-    const h =
-      this.renderRoot.querySelector<HTMLElement>("#body")?.offsetHeight ?? 0;
+    const h = this._body?.offsetHeight ?? 0;
 
     if (this.hasGrabber) return h + this._grabberHeight;
 
@@ -440,95 +438,77 @@ export class BottomSheet extends LitElement {
   }
 
   private get _actionBarHeight() {
-    return (
-      this.renderRoot.querySelector<HTMLElement>("#action-bar")?.offsetHeight ??
-      0
-    );
+    return this._actionBar?.offsetHeight ?? 0;
   }
 
   private get _grabberHeight() {
-    return (
-      this.renderRoot.querySelector<HTMLElement>("#grabber")?.offsetHeight ?? 0
-    );
+    return this._grabber?.offsetHeight ?? 0;
   }
 
   private get _maxSnapPoint() {
-    const maxSnap = this.snapPoints[this.snapPoints.length - 1];
+    const snapPoints = this._getSnapPoints();
 
-    if (typeof maxSnap === "undefined") {
-      return this.defaultSnapPoints[this.defaultSnapPoints.length - 1]!;
-    }
-
-    return maxSnap;
+    return snapPoints[snapPoints.length - 1] ?? 0;
   }
 
   private get _minSnapPoint() {
-    const minSnap = this.snapPoints[0];
+    const snapPoints = this._getSnapPoints();
 
-    if (typeof minSnap === "undefined") return this.defaultSnapPoints[0];
-
-    return minSnap;
+    return snapPoints[0] ?? 0;
   }
 
-  /**
-   * The metadata of the bottom sheet.
-   *
-   * @prop {MetaData} metaData
-   */
-  public get metaData(): MetaData {
+  private get _metadata(): Metadata {
+    const actionBarHeight = this._actionBarHeight;
+    const bodyHeight = this._bodyHeight;
+    const headerHeight = this._headerHeight;
+
+    const snapPoints = this._getSnapPoints();
+
     return {
-      actionBarHeight: this._actionBarHeight,
-      bodyHeight: this._bodyHeight,
-      headerHeight: this._headerHeight,
+      actionBarHeight,
+      bodyHeight,
+      headerHeight,
+      snapPoints,
       height: this._height,
-      snapPoints: this.snapPoints,
-      totalHeight:
-        this._actionBarHeight + this._bodyHeight + this._headerHeight,
+      totalHeight: actionBarHeight + bodyHeight + headerHeight,
     };
   }
 
-  /**
-   * An array containing two snap points.
-   * - The first snap point is either the container's scroll height
-   * or half the window's inner height, whichever is smaller.
-   * - The second snap point is 90% of the window's inner height.
-   *
-   * @prop {[number, number]} defaultSnapPoints
-   */
-  public get defaultSnapPoints(): [number, number] {
+  private get _defaultSnapPoints(): [number, number] {
     if (isSsr() || !this.isConnected || !this._container) {
       return SENTINEL_DEFAULT_SNAP_POINTS as [number, number];
     }
 
-    const totalHeight =
-      this._bodyHeight + this._headerHeight + this._actionBarHeight;
-
-    return [
-      Math.min(totalHeight, window.innerHeight / 2),
-      0.9 * window.innerHeight,
-    ] as [number, number];
+    return [window.innerHeight / 2, 0.9 * window.innerHeight] as [
+      number,
+      number,
+    ];
   }
 
-  /**
-   * The snap points for bottom sheet to snap to.
-   * Note that snap points will be sorted, no matter
-   * how to set it.
-   *
-   * @prop {number[]} snapPoints
-   */
-  @property({ attribute: false })
-  public get snapPoints(): number[] {
+  private _getSnapPoints(): number[] {
     if (
       !this._snapPoints ||
       this._snapPoints === (SENTINEL_DEFAULT_SNAP_POINTS as unknown as number[])
     ) {
-      return this.defaultSnapPoints;
+      return this._defaultSnapPoints;
     }
 
     return this._snapPoints;
   }
 
-  public set snapPoints(newSnapPoints: number[]) {
+  /**
+   * Overrides the snap points for bottom sheet to snap to.
+   * Note that snap points will be sorted, no matter
+   * how to set it.
+   */
+  public async overrideSnapPoints(
+    setter: (metadata: Metadata) => number[],
+  ): Promise<void> {
+    // Wait for Lit's update and browser's repaint
+    await Promise.all([waitForNextRepaint(), this.updateComplete]);
+
+    const newSnapPoints = setter(this._metadata);
+
     this._snapPoints = [...newSnapPoints].sort((a, b) => a - b);
   }
 
@@ -539,26 +519,28 @@ export class BottomSheet extends LitElement {
    * @attr {string} open
    * @default false
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public set open(openState: boolean) {
     if (openState === this._open) return;
 
     const initialOpenState = !this.hasUpdated && openState && !this._open;
 
-    const toggle = (shouldRender = false) => {
+    const toggle = async (shouldRender = false) => {
       this._open = openState;
 
-      void this._toggleOpenState(openState);
+      await this._toggleOpenState(openState);
 
       if (shouldRender) this.requestUpdate("open");
     };
 
     if (initialOpenState && !this._init) {
       this._init = true;
-      void this.updateComplete.then(() => {
-        runAfterRepaint(() => toggle(true));
-      });
-    } else toggle();
+
+      // Wait for Lit's update and browser's repaint
+      void Promise.all([waitForNextRepaint(), this.updateComplete]).then(() =>
+        toggle(true),
+      );
+    } else void toggle();
   }
 
   public get open(): boolean {
@@ -569,6 +551,7 @@ export class BottomSheet extends LitElement {
     if (this.variant === "inline") return;
     if (!this.open) return;
     if (event.key !== KeyboardKeys.ESCAPE) return;
+
     // If not the active element (doesn't have focus), bail!
     // This is necessary to avoid weirdness in stacked modals
     // (BottomSheets, Modals, etc.).
@@ -697,11 +680,10 @@ export class BottomSheet extends LitElement {
     }
 
     if (last) {
-      void this._snapTo(newY, false);
+      void this._snapTo(newY, false).then(async () => {
+        await waitForNextRepaint();
 
-      this._isGrabbing = false;
-
-      runAfterRepaint(() => {
+        this._isGrabbing = false;
         if (this.variant === "modal") this._isDismissClicksAllowed = true;
       });
 
@@ -714,12 +696,14 @@ export class BottomSheet extends LitElement {
   }
 
   private async _snapTo(snapPoint: number, strict: boolean) {
-    if (!this._root) return Promise.resolve();
+    if (!this._root) return;
 
     let closestPoint: number;
 
     if (!strict) {
-      const closest = [0, ...this.snapPoints].reduce(
+      const snapPoints = this._getSnapPoints();
+
+      const closest = [0, ...snapPoints].reduce(
         (result, currentPoint) => {
           const distance = Math.abs(snapPoint - currentPoint);
 
@@ -742,16 +726,16 @@ export class BottomSheet extends LitElement {
       closestPoint = closest.closestPoint;
     } else closestPoint = snapPoint;
 
-    if (Number.isNaN(closestPoint)) return Promise.resolve();
+    if (Number.isNaN(closestPoint)) return;
 
     if (this._status === Status.OPENING) {
       this._height = closestPoint;
 
-      runAfterRepaint(() => {
-        this._isDismissClicksAllowed = true;
-      });
+      await waitForNextRepaint();
 
-      return Promise.resolve();
+      this._isDismissClicksAllowed = true;
+
+      return;
     }
 
     const handleTransitionEnd = (event: TransitionEvent) => {
@@ -773,19 +757,21 @@ export class BottomSheet extends LitElement {
     this._animationController.start();
     this._height = closestPoint;
 
-    runAfterRepaint(() => {
-      this._isDismissClicksAllowed = true;
-    });
+    await waitForNextRepaint();
+
+    this._isDismissClicksAllowed = true;
 
     // Wait for the animation to complete
     const animationComplete = await this._animationController.promise;
 
     // If the animation is aborted, perform cleanup
-    if (!animationComplete) return Promise.resolve(cleanup());
+    if (!animationComplete) {
+      cleanup();
+
+      return;
+    }
 
     this.dispatchEvent(new SnappedEvent({ snapPoint: closestPoint }));
-
-    return Promise.resolve(cleanup());
   }
 
   /**
@@ -793,26 +779,33 @@ export class BottomSheet extends LitElement {
    *
    * @param {number | SnapToCallbackArgument} numberOrCallback
    */
-  public strictSnapTo(numberOrCallback: number | SnapToCallbackArgument): void {
+  public async strictSnapTo(
+    numberOrCallback: number | SnapToCallbackArgument,
+  ): Promise<void> {
     if (isSsr()) return;
 
-    runImmediatelyBeforeRepaint(() => {
-      const snapPoint =
-        typeof numberOrCallback === "number"
-          ? numberOrCallback
-          : numberOrCallback(this.metaData);
+    // Wait for Lit's update and browser's repaint
+    await Promise.all([waitForNextRepaint(), this.updateComplete]);
 
-      if (!this.open) {
-        this._open = true;
+    const snapPoint =
+      typeof numberOrCallback === "number"
+        ? numberOrCallback
+        : numberOrCallback(this._metadata);
 
-        this.requestUpdate("open", false);
+    if (!this.open) {
+      this._open = true;
 
-        void this._toggleOpenState(true, {
-          point: snapPoint,
-          strict: true,
-        });
-      } else void this._snapTo(snapPoint, true);
-    });
+      this.requestUpdate("open", false);
+
+      void this._toggleOpenState(true, {
+        point: snapPoint,
+        strict: true,
+      });
+
+      const eventAllowed = this.dispatchEvent(new ShowEvent());
+
+      if (!eventAllowed) this.open = false;
+    } else return this._snapTo(snapPoint, true);
   }
 
   /**
@@ -822,26 +815,33 @@ export class BottomSheet extends LitElement {
    *
    * @param {number | SnapToCallbackArgument} numberOrCallback
    */
-  public snapTo(numberOrCallback: number | SnapToCallbackArgument): void {
+  public async snapTo(
+    numberOrCallback: number | SnapToCallbackArgument,
+  ): Promise<void> {
     if (isSsr()) return;
 
-    runImmediatelyBeforeRepaint(() => {
-      const snapPoint =
-        typeof numberOrCallback === "number"
-          ? numberOrCallback
-          : numberOrCallback(this.metaData);
+    // Wait for Lit's update and browser's repaint
+    await Promise.all([waitForNextRepaint(), this.updateComplete]);
 
-      if (!this.open) {
-        this._open = true;
+    const snapPoint =
+      typeof numberOrCallback === "number"
+        ? numberOrCallback
+        : numberOrCallback(this._metadata);
 
-        this.requestUpdate("open", false);
+    if (!this.open) {
+      this._open = true;
 
-        void this._toggleOpenState(true, {
-          point: snapPoint,
-          strict: false,
-        });
-      } else void this._snapTo(snapPoint, false);
-    });
+      this.requestUpdate("open", false);
+
+      void this._toggleOpenState(true, {
+        point: snapPoint,
+        strict: false,
+      });
+
+      const eventAllowed = this.dispatchEvent(new ShowEvent());
+
+      if (!eventAllowed) this.open = false;
+    } else return this._snapTo(snapPoint, false);
   }
 
   /**
@@ -919,8 +919,7 @@ export class BottomSheet extends LitElement {
 
     this._status = openState ? Status.OPENING : Status.CLOSING;
 
-    const openToSnapPoint =
-      point ?? this.snapPoints[0] ?? this.defaultSnapPoints[0];
+    const openToSnapPoint = point ?? this._minSnapPoint;
 
     if (openState) {
       // It's opening, so we have to snap
@@ -1055,14 +1054,18 @@ export class BottomSheet extends LitElement {
   }
 
   private _renderContainer() {
+    const isScrollPrevented = this._preventContainerScrolling;
+    const metadata = this._metadata;
+
     const containerStyles = styleMap({
-      height: `${this._height}px`,
-      transition: this._isGrabbing ? "none" : undefined,
+      "max-height": isScrollPrevented ? undefined : `${this._height}px`,
+      transform: `translate3d(0, calc(100% - ${this._height}px), 0)`,
+      "transition-duration": this._isGrabbing ? "0s" : undefined,
     });
 
     const containerClasses = classMap({
       container: true,
-      "prevent-scroll": this._preventContainerScrolling,
+      "prevent-scroll": isScrollPrevented,
     });
 
     const ariaLabelledBy = this.headingTitle
@@ -1070,6 +1073,12 @@ export class BottomSheet extends LitElement {
       : !this.label && this.labelledBy
         ? this.labelledBy
         : nothing;
+
+    const margin = this._height - metadata.totalHeight;
+
+    const actionBarStyles = styleMap({
+      transform: `translateY(${margin > 0 ? margin : 0}px)`,
+    });
 
     const ariaLabel = this.headingTitle ? nothing : this.label;
 
@@ -1086,6 +1095,7 @@ export class BottomSheet extends LitElement {
       <div
         id="container"
         part="container"
+        tabindex="-1"
         class=${containerClasses}
         role=${this.variant === "modal" ? "dialog" : "region"}
         aria-modal=${this.variant === "modal"}
@@ -1121,6 +1131,7 @@ export class BottomSheet extends LitElement {
           id="action-bar"
           part=${Slots.ACTION_BAR}
           class=${Slots.ACTION_BAR}
+          style=${actionBarStyles}
           ?hidden=${!this._hasActionBarSlot}
         >
           <slot
@@ -1138,7 +1149,6 @@ export class BottomSheet extends LitElement {
       open: this.open,
       "expanded-grabber": this._expandGrabber,
       "sticky-header": this.hasStickyHeader,
-      "sticky-action-bar": this.hasStickyActionBar,
       "has-grabber": this.hasGrabber,
       "has-dismiss-btn": this.variant === "modal" && this.hasDismissButton,
       "has-body": this._hasBodySlot,
@@ -1148,7 +1158,7 @@ export class BottomSheet extends LitElement {
     const containerTemplate = this._renderContainer();
 
     this._focusTrapper.enabled = this.variant === "modal" && this.open;
-    this._focusTrapper.sendFocusTarget = this.focusTarget;
+    this._focusTrapper.focusTargetResolver = this.resolveFocusTarget;
 
     const container: TemplateResult =
       this.variant === "modal"
@@ -1160,7 +1170,6 @@ export class BottomSheet extends LitElement {
         id="root"
         class=${rootClasses}
         part="root"
-        tabindex="-1"
         aria-hidden=${!this.open}
         ?inert=${!this.open}
       >
