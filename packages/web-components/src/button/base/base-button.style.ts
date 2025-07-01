@@ -157,7 +157,6 @@ const styles: CSSResult = css`
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2;
     height: var(--button-icon-size);
     max-height: var(--button-icon-size);
     width: var(--button-icon-size);
