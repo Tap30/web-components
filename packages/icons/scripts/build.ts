@@ -30,6 +30,7 @@ type SVGPathInfo = {
   d: string;
 };
 
+// NOTE: In case of any changes, update this file too: `types/@tapsioss/icons.ts`
 type SVGIconInfo = {
   kebabName: string;
   pascalName: string;
