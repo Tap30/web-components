@@ -60,6 +60,7 @@ const generateComponents = async () => {
         name: iconInfo.pascalName,
         paths: paths.join(""),
         elementTag: iconInfo.kebabName,
+        dataUrl: iconInfo.dataUrl,
       },
       {},
       { escape: v => v as string },

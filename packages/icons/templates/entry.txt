@@ -10,6 +10,7 @@ type SVGPathInfo = {
 type SVGIconInfo = {
   kebabName: string;
   pascalName: string;
+  dataUrl: string;
   paths: SVGPathInfo[];
 };
 

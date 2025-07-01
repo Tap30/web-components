@@ -1,5 +1,16 @@
 import BaseIcon, { type Props } from "./base-icon.ts";
 
+/**
+* "{{name}}" Icon Component
+*
+* ---
+*
+* Preview:
+*
+* ![icon preview]({{dataUrl}})
+*
+* @see https://tap30.github.io/web-components/icons
+*/
 const {{name}} = (props: Omit<Props, "children">) => {
   const paths = <>{{paths}}</>;
 

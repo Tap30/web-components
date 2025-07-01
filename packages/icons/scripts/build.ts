@@ -33,6 +33,7 @@ type SVGPathInfo = {
 type SVGIconInfo = {
   kebabName: string;
   pascalName: string;
+  dataUrl: string;
   paths: SVGPathInfo[];
 };
 
@@ -100,10 +101,17 @@ const generatePaths = async () => {
     const name = toPascalCase(pathInfo.name, "-");
     const shouldAttachComma = i !== 0;
 
+    const base64 = Buffer.from(
+      data.replace("<svg", '<svg style="background: #ffffff;"'),
+    ).toString("base64");
+
+    const dataUrl = `data:image/svg+xml;base64,${base64}`;
+
     const iconInfo: SVGIconInfo = {
       pascalName: name,
       kebabName: pathInfo.name,
       paths: pathsInfo,
+      dataUrl,
     };
 
     await fs.appendFile(

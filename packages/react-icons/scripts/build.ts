@@ -47,6 +47,7 @@ const generateComponents = async () => {
       {
         name: iconInfo.pascalName,
         paths: paths.join(""),
+        dataUrl: iconInfo.dataUrl,
       },
       {},
       { escape: v => v as string },
