@@ -1,5 +1,15 @@
 # @tapsioss/react-icons
 
+## 0.7.1
+### Patch Changes
+
+
+
+- [#504](https://github.com/Tap30/web-components/pull/504) [`2550e06`](https://github.com/Tap30/web-components/commit/2550e06d0c06ef9c1dd85a31cfebc3b3c9d8e96c) Thanks [@amir78729](https://github.com/amir78729)! - Add preview of icons in JSDocs.
+
+- Updated dependencies [[`2550e06`](https://github.com/Tap30/web-components/commit/2550e06d0c06ef9c1dd85a31cfebc3b3c9d8e96c)]:
+  - @tapsioss/icons@0.7.1
+
 ## 0.7.0
 ### Minor Changes
 
