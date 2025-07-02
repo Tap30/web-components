@@ -1,5 +1,16 @@
 import BaseIcon from "../base-icon.ts";
 
+/**
+* "{{name}}" Icon Component
+*
+* ---
+*
+* Preview:
+*
+* ![icon preview]({{dataUrl}})
+*
+* @see https://tap30.github.io/web-components/icons
+*/
 export class {{name}} extends BaseIcon {
   constructor() {
     super();
