@@ -2,7 +2,7 @@ import { css, type CSSResult } from "lit";
 
 const styles: CSSResult = css`
   .root.sm {
-    --button-content-padding: 0 var(--tapsi-spacing-4);
+    --button-content-padding: 0 var(--tapsi-spacing-3-1);
     --button-content-font-size: var(--tapsi-typography-label-sm-size);
     --button-content-line-height: var(--tapsi-typography-label-sm-height);
     --button-content-font-weight: var(--tapsi-typography-label-sm-weight);
@@ -10,7 +10,7 @@ const styles: CSSResult = css`
   }
 
   .root.md {
-    --button-content-padding: 0 var(--tapsi-spacing-5);
+    --button-content-padding: 0 var(--tapsi-spacing-4);
     --button-content-font-size: var(--tapsi-typography-label-sm-size);
     --button-content-line-height: var(--tapsi-typography-label-sm-height);
     --button-content-font-weight: var(--tapsi-typography-label-sm-weight);
@@ -18,7 +18,7 @@ const styles: CSSResult = css`
   }
 
   .root.lg {
-    --button-content-padding: 0 var(--tapsi-spacing-7);
+    --button-content-padding: 0 var(--tapsi-spacing-5);
     --button-content-font-size: var(--tapsi-typography-label-lg-size);
     --button-content-line-height: var(--tapsi-typography-label-lg-height);
     --button-content-font-weight: var(--tapsi-typography-label-lg-weight);

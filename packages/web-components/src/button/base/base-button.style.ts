@@ -111,7 +111,6 @@ const styles: CSSResult = css`
     background: transparent;
     text-decoration: none;
 
-    gap: 1rem;
     width: 100%;
     height: var(--button-height);
     padding: var(--button-root-padding);
@@ -162,13 +161,6 @@ const styles: CSSResult = css`
     width: var(--button-icon-size);
     max-width: var(--button-icon-size);
     font-size: var(--button-icon-size);
-  }
-
-  .icon ::slotted(*) {
-    height: var(--button-icon-size);
-    max-height: var(--button-icon-size);
-    width: var(--button-icon-size);
-    max-width: var(--button-icon-size);
   }
 
   .spinner {
