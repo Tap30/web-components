@@ -1,5 +1,16 @@
 # @tapsioss/web-components
 
+## 0.17.4
+### Patch Changes
+
+
+
+- [`1d78185`](https://github.com/Tap30/web-components/commit/1d781852c2ab35cf9de8cc49b40a64d6141b7d74) Thanks [@mimshins](https://github.com/mimshins)! - Update button styles
+
+
+
+- [`33d0dfa`](https://github.com/Tap30/web-components/commit/33d0dfa7aeb157cfb7478fd4e0c6d2723ac6a2d8) Thanks [@mimshins](https://github.com/mimshins)! - Update discount card styles
+
 ## 0.17.3
 ### Patch Changes
 

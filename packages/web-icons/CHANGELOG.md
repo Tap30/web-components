@@ -1,5 +1,12 @@
 # @tapsioss/web-icons
 
+## 0.7.2
+### Patch Changes
+
+
+
+- [`42e3f36`](https://github.com/Tap30/web-components/commit/42e3f362142e18c13d27e41a5e8774656331a3aa) Thanks [@mimshins](https://github.com/mimshins)! - Update icon styles
+
 ## 0.7.1
 ### Patch Changes
 
