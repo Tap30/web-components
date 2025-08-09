@@ -118,7 +118,9 @@ class BaseIcon extends HTMLElement {
         :host {
           color: currentColor;
 
-          display: inline-block;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
           width: ${width};
           height: ${height};
