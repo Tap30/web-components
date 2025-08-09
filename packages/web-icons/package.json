@@ -1,7 +1,7 @@
 {
   "name": "@tapsioss/web-icons",
   "description": "Tapsi Design System icons implemented as standard Web Components.",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "type": "module",
   "homepage": "https://tap30.github.io/web-components",
   "repository": {
