@@ -1,0 +1,32 @@
+{
+  "name": "@lab/kotlin-theme",
+  "description": "Tapsi Design System icons implemented as standard Web Components.",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "./dist",
+    "./README.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "require": "./dist/*/index.js"
+    },
+    "./*/element": "./dist/*/element.js"
+  },
+  "scripts": {
+    "prebuild": "shx rm -rf dist",
+    "build": "tsx ./scripts/build.ts"
+  },
+  "dependencies": {
+    "@tapsioss/theme": "workspace:*",
+    "@lab-internals/css-to-kotlin-helpers": "workspace:*"
+  }
+}
