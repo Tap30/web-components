@@ -315,9 +315,6 @@ export class FileInput extends BaseClass {
   private _nativeError = false;
 
   @state()
-  private _previewSrc: null | string = null;
-
-  @state()
   private _nativeErrorText = "";
 
   @queryAssignedNodes({ slot: Slots.PLACEHOLDER_ICON })
@@ -404,11 +401,7 @@ export class FileInput extends BaseClass {
   private _handleInput() {
     if (!this._isInteractable) return;
 
-    const file = this.files?.[0];
-
-    if (file) {
-      this._previewSrc = URL.createObjectURL(file);
-    } else this._previewSrc = null;
+    this.requestUpdate();
   }
 
   private _handleChange(event: Event) {
@@ -440,8 +433,6 @@ export class FileInput extends BaseClass {
     if (!input) return;
 
     input.files = files;
-
-    this._previewSrc = URL.createObjectURL(files[0]!);
 
     this.dispatchEvent(new Event("change", { bubbles: true }));
     this.dispatchEvent(new Event("input", { bubbles: true, composed: true }));
@@ -558,11 +549,13 @@ export class FileInput extends BaseClass {
   public reset(): void {
     if (this._input) {
       this._input.value = "";
+      this._input.files = null;
     }
 
-    this._previewSrc = null;
     this._nativeError = false;
     this._nativeErrorText = "";
+
+    this.requestUpdate();
   }
 
   private _getErrorText() {
@@ -649,14 +642,18 @@ export class FileInput extends BaseClass {
   }
 
   private _renderPreview() {
-    if (!this.files) return null;
+    const files = this.files;
 
-    if (this.files.length === 1) {
-      const file = this.files[0]!;
+    if (!files) return null;
 
-      if (isFileImage(file.name) && this._previewSrc) {
+    if (files.length === 1) {
+      const file = files[0]!;
+
+      if (isFileImage(file.name)) {
+        const previewSrc = URL.createObjectURL(file);
+
         return html`<img
-          src=${this._previewSrc}
+          src=${previewSrc}
           alt="preview"
           class="preview"
           part="preview"
@@ -673,7 +670,7 @@ export class FileInput extends BaseClass {
     return html`<span
       class="text"
       part="text"
-      >${toFaNumber(this.files.length.toString())} فایل انتخاب شده</span
+      >${toFaNumber(files.length.toString())} فایل انتخاب شده</span
     >`;
   }
 

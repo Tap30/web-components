@@ -5,11 +5,11 @@
 
 
 
-- [`1d78185`](https://github.com/Tap30/web-components/commit/1d781852c2ab35cf9de8cc49b40a64d6141b7d74) Thanks [@mimshins](https://github.com/mimshins)! - Update button styles
+- [`1d78185`](https://github.com/Tap30/web-components/commit/1d781852c2ab35cf9de8cc49b40a64d6141b7d74) Thanks [@mimshins](https://github.com/mimshins)! - Update button styles.
 
 
 
-- [`33d0dfa`](https://github.com/Tap30/web-components/commit/33d0dfa7aeb157cfb7478fd4e0c6d2723ac6a2d8) Thanks [@mimshins](https://github.com/mimshins)! - Update discount card styles
+- [`33d0dfa`](https://github.com/Tap30/web-components/commit/33d0dfa7aeb157cfb7478fd4e0c6d2723ac6a2d8) Thanks [@mimshins](https://github.com/mimshins)! - Update discount card styles.
 
 ## 0.17.3
 ### Patch Changes
@@ -35,96 +35,96 @@
 
 
 
-- [#495](https://github.com/Tap30/web-components/pull/495) [`ec68346`](https://github.com/Tap30/web-components/commit/ec68346ab16d15c04fdc2213b2fd8776cbfcc0f6) Thanks [@mimshins](https://github.com/mimshins)! - Resolve issues with stacking context layers in button
+- [#495](https://github.com/Tap30/web-components/pull/495) [`ec68346`](https://github.com/Tap30/web-components/commit/ec68346ab16d15c04fdc2213b2fd8776cbfcc0f6) Thanks [@mimshins](https://github.com/mimshins)! - Resolve issues with stacking context layers in button.
 
 ## 0.17.1
 ### Patch Changes
 
 
 
-- [#491](https://github.com/Tap30/web-components/pull/491) [`61c768d`](https://github.com/Tap30/web-components/commit/61c768d65b222d98544aaf6a7784f4b65c5adea0) Thanks [@mimshins](https://github.com/mimshins)! - Improve selection controllers to take their parents into account
+- [#491](https://github.com/Tap30/web-components/pull/491) [`61c768d`](https://github.com/Tap30/web-components/commit/61c768d65b222d98544aaf6a7784f4b65c5adea0) Thanks [@mimshins](https://github.com/mimshins)! - Improve selection controllers to take their parents into account.
 
 ## 0.17.0
 ### Minor Changes
 
 
 
-- [#488](https://github.com/Tap30/web-components/pull/488) [`fa0ea8c`](https://github.com/Tap30/web-components/commit/fa0ea8cc4b5f49a0181bcaba61ce2ad873b78898) Thanks [@mimshins](https://github.com/mimshins)! - Remove unnecessary `reflect` behaviors
+- [#488](https://github.com/Tap30/web-components/pull/488) [`fa0ea8c`](https://github.com/Tap30/web-components/commit/fa0ea8cc4b5f49a0181bcaba61ce2ad873b78898) Thanks [@mimshins](https://github.com/mimshins)! - Remove unnecessary `reflect` behaviors.
 
 
 
-- [#485](https://github.com/Tap30/web-components/pull/485) [`ccf32c4`](https://github.com/Tap30/web-components/commit/ccf32c462726b4a70b604d3008bd5078bc212fd3) Thanks [@mimshins](https://github.com/mimshins)! - Update `value` property to be readonly in pinwheel
+- [#485](https://github.com/Tap30/web-components/pull/485) [`ccf32c4`](https://github.com/Tap30/web-components/commit/ccf32c462726b4a70b604d3008bd5078bc212fd3) Thanks [@mimshins](https://github.com/mimshins)! - Update `value` property to be readonly in pinwheel.
 
 
 ### Patch Changes
 
 
 
-- [#486](https://github.com/Tap30/web-components/pull/486) [`76bb65f`](https://github.com/Tap30/web-components/commit/76bb65f9354f7877863d916bbca99b055a58b448) Thanks [@mimshins](https://github.com/mimshins)! - Remove iOS-specific behaviors for scroll locker
+- [#486](https://github.com/Tap30/web-components/pull/486) [`76bb65f`](https://github.com/Tap30/web-components/commit/76bb65f9354f7877863d916bbca99b055a58b448) Thanks [@mimshins](https://github.com/mimshins)! - Remove iOS-specific behaviors for scroll locker.
 
 
 
-- [#489](https://github.com/Tap30/web-components/pull/489) [`43ee3d2`](https://github.com/Tap30/web-components/commit/43ee3d25c173209b716c525cfb4f917af36907c7) Thanks [@mimshins](https://github.com/mimshins)! - Forward necessary host click events to root elements
+- [#489](https://github.com/Tap30/web-components/pull/489) [`43ee3d2`](https://github.com/Tap30/web-components/commit/43ee3d25c173209b716c525cfb4f917af36907c7) Thanks [@mimshins](https://github.com/mimshins)! - Forward necessary host click events to root elements.
 
 ## 0.16.0
 ### Minor Changes
 
 
 
-- [#476](https://github.com/Tap30/web-components/pull/476) [`420924b`](https://github.com/Tap30/web-components/commit/420924bed71a6e4efa55a4f3a21dfdd445f0f262) Thanks [@amir78729](https://github.com/amir78729)! - Expose file input's clear event
+- [#476](https://github.com/Tap30/web-components/pull/476) [`420924b`](https://github.com/Tap30/web-components/commit/420924bed71a6e4efa55a4f3a21dfdd445f0f262) Thanks [@amir78729](https://github.com/amir78729)! - Expose file input's clear event.
 
 
 ### Patch Changes
 
 
 
-- [#478](https://github.com/Tap30/web-components/pull/478) [`4b62a11`](https://github.com/Tap30/web-components/commit/4b62a1145f65e081cc332497edb9689c44baf120) Thanks [@mimshins](https://github.com/mimshins)! - Fix issues with syncing height in auto-resizable mode in text-area
+- [#478](https://github.com/Tap30/web-components/pull/478) [`4b62a11`](https://github.com/Tap30/web-components/commit/4b62a1145f65e081cc332497edb9689c44baf120) Thanks [@mimshins](https://github.com/mimshins)! - Fix issues with syncing height in auto-resizable mode in text-area.
 
 ## 0.15.0
 ### Minor Changes
 
 
 
-- [#474](https://github.com/Tap30/web-components/pull/474) [`1f4b1e3`](https://github.com/Tap30/web-components/commit/1f4b1e3c8d3d4a4c21f934dc4f6f5a06d00d6e67) Thanks [@mimshins](https://github.com/mimshins)! - Add auto-resize feature to text-area component
+- [#474](https://github.com/Tap30/web-components/pull/474) [`1f4b1e3`](https://github.com/Tap30/web-components/commit/1f4b1e3c8d3d4a4c21f934dc4f6f5a06d00d6e67) Thanks [@mimshins](https://github.com/mimshins)! - Add auto-resize feature to text-area component.
 
 ## 0.14.0
 ### Minor Changes
 
 
 
-- [#472](https://github.com/Tap30/web-components/pull/472) [`ba17f66`](https://github.com/Tap30/web-components/commit/ba17f66db91a2cd90191cbde14864fe47463b52c) Thanks [@mimshins](https://github.com/mimshins)! - Remove cjs exports
+- [#472](https://github.com/Tap30/web-components/pull/472) [`ba17f66`](https://github.com/Tap30/web-components/commit/ba17f66db91a2cd90191cbde14864fe47463b52c) Thanks [@mimshins](https://github.com/mimshins)! - Remove cjs exports.
 
 
 
-- [#462](https://github.com/Tap30/web-components/pull/462) [`e4906fe`](https://github.com/Tap30/web-components/commit/e4906fe2e461be2d0fa525f8e7292a84927bf565) Thanks [@hossein-nas](https://github.com/hossein-nas)! - Add discount card component
+- [#462](https://github.com/Tap30/web-components/pull/462) [`e4906fe`](https://github.com/Tap30/web-components/commit/e4906fe2e461be2d0fa525f8e7292a84927bf565) Thanks [@hossein-nas](https://github.com/hossein-nas)! - Add discount card component.
 
 
 ### Patch Changes
 
 
 
-- [#468](https://github.com/Tap30/web-components/pull/468) [`ecc07f6`](https://github.com/Tap30/web-components/commit/ecc07f6cf773a995dade9b3571e752bab57856f0) Thanks [@amir78729](https://github.com/amir78729)! - Resolve tooltip size issue
+- [#468](https://github.com/Tap30/web-components/pull/468) [`ecc07f6`](https://github.com/Tap30/web-components/commit/ecc07f6cf773a995dade9b3571e752bab57856f0) Thanks [@amir78729](https://github.com/amir78729)! - Resolve tooltip size issue.
 
 ## 0.13.1
 ### Patch Changes
 
 
 
-- [`e7cdebf`](https://github.com/Tap30/web-components/commit/e7cdebf48f26dfecef97c180b97f65362a7336e3) Thanks [@mimshins](https://github.com/mimshins)! - Fix endpoints of the 'esm' exports
+- [`e7cdebf`](https://github.com/Tap30/web-components/commit/e7cdebf48f26dfecef97c180b97f65362a7336e3) Thanks [@mimshins](https://github.com/mimshins)! - Fix endpoints of the 'esm' exports.
 
 ## 0.13.0
 ### Minor Changes
 
 
 
-- [`eeec57f`](https://github.com/Tap30/web-components/commit/eeec57fcd4a10113b84eb8cda693e35529763e8d) Thanks [@mimshins](https://github.com/mimshins)! - Update build target (es8) and environments (cjs, esm)
+- [`eeec57f`](https://github.com/Tap30/web-components/commit/eeec57fcd4a10113b84eb8cda693e35529763e8d) Thanks [@mimshins](https://github.com/mimshins)! - Update build target (es8) and environments (cjs, esm).
 
 ## 0.12.3
 ### Patch Changes
 
 
 
-- [#457](https://github.com/Tap30/web-components/pull/457) [`4f56395`](https://github.com/Tap30/web-components/commit/4f56395039478b65ed9d551ef1eaa71ce352fb5c) Thanks [@mimshins](https://github.com/mimshins)! - Fix: expose `main` and `types` endpoints
+- [#457](https://github.com/Tap30/web-components/pull/457) [`4f56395`](https://github.com/Tap30/web-components/commit/4f56395039478b65ed9d551ef1eaa71ce352fb5c) Thanks [@mimshins](https://github.com/mimshins)! - Fix: expose `main` and `types` endpoints.
 
 
 
