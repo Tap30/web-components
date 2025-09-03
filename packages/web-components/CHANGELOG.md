@@ -1,5 +1,12 @@
 # @tapsioss/web-components
 
+## 0.17.5
+### Patch Changes
+
+
+
+- [#507](https://github.com/Tap30/web-components/pull/507) [`dcf6f3e`](https://github.com/Tap30/web-components/commit/dcf6f3e9401859063dea8707ac511f8af4860db6) Thanks [@amir78729](https://github.com/amir78729)! - Resolve file input's preview section re-render issues.
+
 ## 0.17.4
 ### Patch Changes
 
