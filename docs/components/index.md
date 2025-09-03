@@ -63,3 +63,26 @@ Both `@tapsioss/web-components` and `@tapsioss/react-components` rely on the
 include this package in your project to ensure the components render correctly.
 
 :::
+
+::: danger Using Polyfills
+
+To ensure compatibility with earlier browser versions, you might need to include specific polyfills.
+
+### For Chrome 64 and Newer (excluding Chrome 66)
+
+* `core-js@3`:
+  * `stable/array/flat`
+  * `stable/symbol`
+  * `stable/global-this`
+  * `stable/promise/all-settled`
+* `element-internals-polyfill`
+* `@webcomponents/webcomponentsjs/webcomponents-bundle.js`
+
+### For Chrome 55 to Chrome 63
+
+* The entire `core-js@3` library
+* `@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js`
+* `@webcomponents/webcomponentsjs/webcomponents-bundle.js`
+* `element-internals-polyfill`
+
+:::
