@@ -297,7 +297,7 @@ export class FileInput extends BaseClass {
    * The list of selected files.
    */
   public get files(): FileList | null {
-    return this._input?.files ?? null;
+    return this._files;
   }
 
   @state()
@@ -316,6 +316,9 @@ export class FileInput extends BaseClass {
 
   @state()
   private _nativeErrorText = "";
+
+  @state()
+  private _files: FileList | null = null;
 
   @queryAssignedNodes({ slot: Slots.PLACEHOLDER_ICON })
   private _placeholderIconSlotNodes!: Node[];
@@ -401,7 +404,8 @@ export class FileInput extends BaseClass {
   private _handleInput() {
     if (!this._isInteractable) return;
 
-    this.requestUpdate();
+    // this.requestUpdate();
+    this._files = this._input?.files ?? null;
   }
 
   private _handleChange(event: Event) {
@@ -433,6 +437,7 @@ export class FileInput extends BaseClass {
     if (!input) return;
 
     input.files = files;
+    this._files = files;
 
     this.dispatchEvent(new Event("change", { bubbles: true }));
     this.dispatchEvent(new Event("input", { bubbles: true, composed: true }));
