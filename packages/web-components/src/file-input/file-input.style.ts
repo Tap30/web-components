@@ -18,6 +18,13 @@ const styles: CSSResult = css`
     --input-support-color: var(--tapsi-color-content-secondary);
     --input-control-color: var(--tapsi-color-content-on-inverse);
     --input-label-color: var(--tapsi-color-content-primary);
+    --input-loading-state-text-color: var(--tapsi-color-content-secondary);
+    --input-loading-state-progress-foreground-color: var(
+      --tapsi-color-content-accent
+    );
+    --input-loading-state-progress-background-color: var(
+      --tapsi-color-surface-tertiary
+    );
 
     display: inline-block;
     vertical-align: middle;
@@ -140,13 +147,40 @@ const styles: CSSResult = css`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--tapsi-color-content-accent);
+
+    color: var(--input-loading-state-progress-foreground-color);
+
+    position: absolute;
+  }
+
+  .loading-state.on-overlay {
+    --input-loading-state-text-color: var(--tapsi-color-content-on-inverse);
+    --input-loading-state-progress-foreground-color: var(
+      --tapsi-color-content-on-inverse
+    );
+    --input-loading-state-progress-background-color: transparent;
   }
 
   .preview {
+    position: absolute;
+
     width: calc(100% - var(--tapsi-spacing-6));
     height: calc(100% - var(--tapsi-spacing-6));
     object-fit: contain;
+  }
+
+  .overlay {
+    position: absolute;
+    bottom: var(--tapsi-spacing-4);
+    left: var(--tapsi-spacing-4);
+    top: var(--tapsi-spacing-4);
+    right: var(--tapsi-spacing-4);
+
+    border-radius: var(--tapsi-spacing-3);
+
+    background-color: var(--tapsi-color-surface-overlay-dark);
+
+    backdrop-filter: blur(2px);
   }
 
   .clear-button {
@@ -160,6 +194,8 @@ const styles: CSSResult = css`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
+    position: absolute;
   }
 
   .error-state .icon {
@@ -199,10 +235,10 @@ const styles: CSSResult = css`
     transform-origin: center;
   }
   .background-circle {
-    stroke: var(--tapsi-color-surface-tertiary);
+    stroke: var(--input-loading-state-progress-background-color);
   }
   .foreground-circle {
-    stroke: var(--tapsi-color-content-accent);
+    stroke: var(--input-loading-state-progress-foreground-color);
     transition: stroke-dashoffset 0.3s ease;
   }
 
@@ -231,7 +267,7 @@ const styles: CSSResult = css`
   }
 
   .loading-state .text {
-    color: var(--tapsi-color-content-secondary);
+    color: var(--input-loading-state-text-color);
 
     margin-top: var(--tapsi-spacing-4);
 
@@ -244,6 +280,8 @@ const styles: CSSResult = css`
   .loading-state .spinner {
     height: 2rem;
     width: 2rem;
+
+    color: inherit;
   }
 
   .sr-only {

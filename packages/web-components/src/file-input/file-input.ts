@@ -575,6 +575,10 @@ export class FileInput extends BaseClass {
     return !this.disabled && !this._isLoading;
   }
 
+  private get _shouldShowOverlay(): boolean {
+    return !!this.value && (this._hasError() || this._isLoading);
+  }
+
   private _handleClick() {
     if (!this._isInteractable) return;
 
@@ -644,7 +648,10 @@ export class FileInput extends BaseClass {
   private _renderPreview() {
     const files = this.files;
 
-    if (!files) return null;
+    if (!files || files.length === 0 || !this.value) {
+      if (this._hasError() || this._isLoading) return null;
+      else return this._renderEmptyState();
+    }
 
     if (files.length === 1) {
       const file = files[0]!;
@@ -729,8 +736,13 @@ export class FileInput extends BaseClass {
       </div>`;
     }
 
+    const loadingClasses = classMap({
+      ["loading-state"]: true,
+      ["on-overlay"]: this._shouldShowOverlay,
+    });
+
     return html`<div
-      class="loading-state"
+      class=${loadingClasses}
       part="loading-state"
     >
       ${icon}
@@ -809,18 +821,25 @@ export class FileInput extends BaseClass {
     e.stopPropagation();
   }
 
-  private _renderFileInputContent() {
+  private _renderOverlay() {
+    if (!this._shouldShowOverlay) return null;
+
+    return html`<div
+      class="overlay"
+      part="overlay"
+    ></div>`;
+  }
+
+  private _renderOverlayContent() {
     if (this._hasError()) return this._renderErrorState();
 
     if (this._isLoading) return this._renderLoadingState();
 
-    if (this.value) return this._renderPreview();
-
-    return this._renderEmptyState();
+    return null;
   }
 
   private _renderClearIcon() {
-    if (!this.value) return null;
+    if (!this.value || this._shouldShowOverlay) return null;
 
     return html`<tapsi-icon-button
       class="clear-button"
@@ -887,7 +906,7 @@ export class FileInput extends BaseClass {
             class="file-input"
             part="file-input"
           >
-            ${this._renderFileInputContent()}${this._renderClearIcon()}
+            ${this._renderPreview()}${this._renderOverlay()}${this._renderOverlayContent()}${this._renderClearIcon()}
           </div>
         </div>
         ${this._renderHelperText()}
