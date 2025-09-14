@@ -844,7 +844,7 @@ export class FileInput extends BaseClass {
   }
 
   private _renderClearIcon() {
-    if (!this.value || this._shouldShowOverlay) return null;
+    if (this._shouldShowOverlay || !this.value) return null;
 
     return html`<tapsi-icon-button
       class="clear-button"

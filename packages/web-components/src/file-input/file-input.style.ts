@@ -230,10 +230,6 @@ const styles: CSSResult = css`
     font-weight: var(--tapsi-typography-body-sm-weight);
   }
 
-  .progress-circle {
-    transform: rotate(-90deg);
-    transform-origin: center;
-  }
   .background-circle {
     stroke: var(--input-loading-state-progress-background-color);
   }
@@ -255,6 +251,8 @@ const styles: CSSResult = css`
   .progress-wrapper .progress {
     width: 100%;
     height: 100%;
+
+    transform: rotate(-90deg);
   }
 
   .progress-wrapper .percentage {
