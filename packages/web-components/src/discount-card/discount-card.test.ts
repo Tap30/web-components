@@ -8,7 +8,7 @@ import {
   render,
   test,
 } from "@internals/test-helpers";
-import { ErrorMessages } from "./constants.ts";
+import { ErrorMessages, Slots } from "./constants.ts";
 
 describe("🧩 discount-card", () => {
   const scope = "discount-card";
@@ -47,7 +47,7 @@ describe("🧩 discount-card", () => {
         badge-text="10%"
         expiry-date-label="Expires in 2 days"
       >
-        <svg slot="header-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg slot=${Slots.HEADER_ICON} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
         </svg>
       </tapsi-discount-card>`,
@@ -84,11 +84,11 @@ describe("🧩 discount-card", () => {
         badge-text="10%"
         expiry-date-label="Expires in 2 days"
       >
-        <svg data-testid="header-icon" slot="header-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg data-testid="header-icon" slot=${Slots.HEADER_ICON} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
         </svg>
-        <img data-testid="thumbnail" slot="thumbnail" src="https://picsum.photos/60/60" alt="Thumbnail" />
-        <tapsi-button data-testid="action-button" slot="action">Use Discount</tapsi-button>
+        <img data-testid="thumbnail" slot=${Slots.THUMBNAIL} src="https://picsum.photos/60/60" alt="Thumbnail" />
+        <tapsi-button data-testid="action-button" slot=${Slots.ACTION}>Use Discount</tapsi-button>
       </tapsi-discount-card>`,
     );
 
@@ -131,7 +131,7 @@ describe("🧩 discount-card", () => {
         badge-text="10%"
         expiry-date-label="Expires in 2 days"
       >
-        <svg slot="header-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg slot=${Slots.HEADER_ICON} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
         </svg>
       </tapsi-discount-card>`,
@@ -235,7 +235,7 @@ describe("🧩 discount-card", () => {
           ${
             variant !== "none"
               ? `
-          <svg slot="header-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg slot=${Slots.HEADER_ICON} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
           </svg>
           `
@@ -312,13 +312,13 @@ describe("🧩 discount-card", () => {
         ${
           variant !== "none"
             ? `
-        <svg slot="header-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg slot=${Slots.HEADER_ICON} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
         </svg>
         `
             : ""
         }
-        <tapsi-button slot="action">Use Discount</tapsi-button>
+        <tapsi-button slot=${Slots.ACTION}>Use Discount</tapsi-button>
       </tapsi-discount-card>`,
       );
 

@@ -1,4 +1,5 @@
 import { describe, expect, render, test } from "@internals/test-helpers";
+import { Slots } from "./constants.ts";
 
 describe("🧩 modal", () => {
   test("🧪 should show elements based on props and slots", async ({ page }) => {
@@ -11,8 +12,8 @@ describe("🧩 modal", () => {
       description="دسکریپشن"
       open
     >
-      <img style="width: 100%" src="https://picsum.photos/200/50" data-testid="test-modal-image-slot" alt="image" slot="image">
-      <tapsi-button-group data-testid="test-modal-actions-slot" label="modal action bar" slot="action-bar">
+      <img style="width: 100%" src="https://picsum.photos/200/50" data-testid="test-modal-image-slot" alt="image" slot=${Slots.IMAGE}>
+      <tapsi-button-group data-testid="test-modal-actions-slot" label="modal action bar" slot=${Slots.ACTION_BAR}>
         <tapsi-button>click</tapsi-button>
         <tapsi-button>click</tapsi-button>
       </tapsi-button-group>
@@ -44,7 +45,7 @@ describe("🧩 modal", () => {
       description="دسکریپشن"
       open
     >
-      <tapsi-button-group data-testid="test-modal-actions-slot" label="modal action bar" slot="action-bar">
+      <tapsi-button-group data-testid="test-modal-actions-slot" label="modal action bar" slot=${Slots.ACTION_BAR}>
         <tapsi-button data-testid="test-modal-action-1">click</tapsi-button>
         <tapsi-button data-testid="test-modal-action-2">click</tapsi-button>
       </tapsi-button-group>
@@ -77,7 +78,7 @@ describe("🧩 modal", () => {
       description="دسکریپشن"
       open
     >
-      <tapsi-button-group data-testid="test-modal-actions-slot" label="modal action bar" slot="action-bar">
+      <tapsi-button-group data-testid="test-modal-actions-slot" label="modal action bar" slot=${Slots.ACTION_BAR}>
         <tapsi-button data-testid="test-modal-action-1">click</tapsi-button>
         <tapsi-button data-testid="test-modal-action-2">click</tapsi-button>
       </tapsi-button-group>
@@ -114,7 +115,7 @@ describe("🧩 modal", () => {
       description="دسکریپشن"
       open
     >
-      <tapsi-button-group data-testid="test-modal-actions-slot" label="modal action bar" slot="action-bar">
+      <tapsi-button-group data-testid="test-modal-actions-slot" label="modal action bar" slot=${Slots.ACTION_BAR}>
         <tapsi-button data-testid="test-modal-action-1">click</tapsi-button>
         <tapsi-button data-testid="test-modal-action-2">click</tapsi-button>
       </tapsi-button-group>
@@ -140,7 +141,7 @@ describe("🧩 modal", () => {
       description="دسکریپشن"
       open
     >
-      <tapsi-button-group data-testid="test-modal-actions-slot" label="modal action bar" slot="action-bar">
+      <tapsi-button-group data-testid="test-modal-actions-slot" label="modal action bar" slot=${Slots.ACTION_BAR}>
         <tapsi-button data-testid="test-modal-action-1">click</tapsi-button>
         <tapsi-button data-testid="test-modal-action-2">click</tapsi-button>
       </tapsi-button-group>
@@ -167,7 +168,7 @@ describe("🧩 modal", () => {
       description="دسکریپشن"
       open
     >
-      <tapsi-button-group data-testid="test-modal-1-actions-slot" label="modal action bar" slot="action-bar">
+      <tapsi-button-group data-testid="test-modal-1-actions-slot" label="modal action bar" slot=${Slots.ACTION_BAR}>
         <tapsi-button data-testid="test-modal-1-action-1">click</tapsi-button>
         <tapsi-button data-testid="test-modal-1-action-2">click</tapsi-button>
       </tapsi-button-group>
@@ -178,7 +179,7 @@ describe("🧩 modal", () => {
       description="دسکریپشن"
       open
     >
-      <tapsi-button-group data-testid="test-modal-2-actions-slot" label="modal action bar" slot="action-bar">
+      <tapsi-button-group data-testid="test-modal-2-actions-slot" label="modal action bar" slot=${Slots.ACTION_BAR}>
         <tapsi-button data-testid="test-modal-2-action-1">click</tapsi-button>
         <tapsi-button data-testid="test-modal-2-action-2">click</tapsi-button>
       </tapsi-button-group>
@@ -189,7 +190,7 @@ describe("🧩 modal", () => {
       description="دسکریپشن"
       open
     >
-      <tapsi-button-group data-testid="test-modal-3-actions-slot" label="modal action bar" slot="action-bar">
+      <tapsi-button-group data-testid="test-modal-3-actions-slot" label="modal action bar" slot=${Slots.ACTION_BAR}>
         <tapsi-button data-testid="test-modal-3-action-1">click</tapsi-button>
         <tapsi-button data-testid="test-modal-3-action-2">click</tapsi-button>
       </tapsi-button-group>
