@@ -1,4 +1,5 @@
 import { describe, expect, render, test } from "@internals/test-helpers";
+import { Slots } from "./constants.ts";
 
 describe("🧩 badge-wrapper", () => {
   test("🧪 should show anchor and badge slots in all anchor shapes", async ({
@@ -11,7 +12,7 @@ describe("🧩 badge-wrapper", () => {
         page,
         `
         <tapsi-badge-wrapper data-testid="test-badge-wrapper" anchor-shape="${anchorShape}">
-          <tapsi-badge slot="badge" data-testid="test-badge-wrapper-badge-slot" value="1" color="success"></tapsi-badge>
+          <tapsi-badge slot=${Slots.BADGE} data-testid="test-badge-wrapper-badge-slot" value="1" color="success"></tapsi-badge>
           <tapsi-button data-testid="test-badge-wrapper-anchor-slot">click</tapsi-button>
         </tapsi-badge-wrapper>`,
       );
@@ -31,7 +32,7 @@ describe("🧩 badge-wrapper", () => {
       page,
       `
         <tapsi-badge-wrapper badge-side="left" data-testid="test-badge-wrapper" anchor-shape="circle">
-          <tapsi-badge slot="badge" data-testid="test-badge-wrapper-badge-slot" value="1" color="success"></tapsi-badge>
+          <tapsi-badge slot=${Slots.BADGE} data-testid="test-badge-wrapper-badge-slot" value="1" color="success"></tapsi-badge>
           <div data-testid="test-badge-wrapper-anchor-slot" style="border-radius: 50%; height: 400px; width: 600px; background: red;"></div>
         </tapsi-badge-wrapper>`,
     );
@@ -83,7 +84,7 @@ describe("🧩 badge-wrapper", () => {
       page,
       `
         <tapsi-badge-wrapper badge-side="left" data-testid="test-badge-wrapper" anchor-shape="pill">
-          <tapsi-badge slot="badge" data-testid="test-badge-wrapper-badge-slot" value="1" color="success"></tapsi-badge>
+          <tapsi-badge slot=${Slots.BADGE} data-testid="test-badge-wrapper-badge-slot" value="1" color="success"></tapsi-badge>
           <div data-testid="test-badge-wrapper-anchor-slot" style="border-radius: 99999px; height: 400px; width: 600px; background: red;"></div>
         </tapsi-badge-wrapper>`,
     );
@@ -135,7 +136,7 @@ describe("🧩 badge-wrapper", () => {
       page,
       `
         <tapsi-badge-wrapper badge-side="left" data-testid="test-badge-wrapper" anchor-shape="rectangle">
-          <tapsi-badge slot="badge" data-testid="test-badge-wrapper-badge-slot" value="1" color="success"></tapsi-badge>
+          <tapsi-badge slot=${Slots.BADGE} data-testid="test-badge-wrapper-badge-slot" value="1" color="success"></tapsi-badge>
           <div data-testid="test-badge-wrapper-anchor-slot" style="height: 400px; width: 600px; background: red;"></div>
         </tapsi-badge-wrapper>`,
     );

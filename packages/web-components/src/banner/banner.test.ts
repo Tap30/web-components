@@ -1,4 +1,5 @@
 import { describe, expect, render, test } from "@internals/test-helpers";
+import { Slots } from "./constants.ts";
 
 describe("🧩 banner", () => {
   test("🧪 should render banner elements", async ({ page }) => {
@@ -11,7 +12,7 @@ describe("🧩 banner", () => {
       description="description"
       image="https://picsum.photos/200"
   >
-    <tapsi-button slot="action">click</tapsi-button>
+    <tapsi-button slot=${Slots.ACTION}>click</tapsi-button>
   </tapsi-banner>`,
     );
 
