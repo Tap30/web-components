@@ -1,5 +1,16 @@
 # @tapsioss/web-components
 
+## 0.17.6
+### Patch Changes
+
+
+
+- [#516](https://github.com/Tap30/web-components/pull/516) [`6e7ef41`](https://github.com/Tap30/web-components/commit/6e7ef41e9f1770217abe8fe6ab64ecd51243fd04) Thanks [@hossein-nas](https://github.com/hossein-nas)! - Resolve issue of excessive growing body within discount-card wrapper.
+
+
+
+- [#513](https://github.com/Tap30/web-components/pull/513) [`e3946b7`](https://github.com/Tap30/web-components/commit/e3946b7236c9c32d2147e669c88e6a3c91a99389) Thanks [@mrp-78](https://github.com/mrp-78)! - Use slot variables in test renderings.
+
 ## 0.17.5
 ### Patch Changes
 
