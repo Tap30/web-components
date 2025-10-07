@@ -131,7 +131,8 @@ const styles: CSSResult = css`
 
   .header-title {
     padding: var(--discount-card-header-title-padding);
-    flex: 1 0 auto;
+    flex: 1 1 auto;
+    min-width: 0;
     font-size: var(--tapsi-typography-label-sm-size);
     font-weight: var(--tapsi-typography-label-sm-weight);
     line-height: var(--tapsi-typography-label-sm-height);
@@ -219,7 +220,8 @@ const styles: CSSResult = css`
 
   .body {
     padding: var(--tapsi-spacing-6);
-    flex: 1 0 auto;
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
   .title {

@@ -257,7 +257,10 @@ export class DiscountCard extends LitElement {
     });
 
     return html`
-      <div class="body">
+      <div
+        class="body"
+        part="body"
+      >
         <div
           class="title"
           part="title"
