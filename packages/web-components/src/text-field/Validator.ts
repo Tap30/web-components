@@ -1,3 +1,7 @@
+import {
+  getTooLongValidationMessage,
+  getTooShortValidationMessage,
+} from "../internals/index.ts";
 import { Validator, type ValidityAndMessage } from "../utils/index.ts";
 
 export type State = {
@@ -132,32 +136,37 @@ class TextFieldValidator extends Validator<TextFieldState> {
       input.removeAttribute("step");
     }
 
-    // Use -1 to represent no minlength and maxlength, which is what the
-    // platform input returns. However, it will throw an error if you try to
-    // manually set it to -1.
-    //
-    // While the type is `number`, it may actually be `null` at runtime.
-    // `null > -1` is true since `null` coerces to `0`, so we default null and
-    // undefined to -1.
-    //
-    // We set attributes instead of properties since setting a property may
-    // throw an out of bounds error in relation to the other property.
-    // Attributes will not throw errors while the state is updating.
-    if ((state.minLength ?? -1) > -1) {
-      input.setAttribute("minlength", String(state.minLength));
-    } else {
-      input.removeAttribute("minlength");
+    let tooShort = false,
+      tooLong = false,
+      validationMessage;
+
+    const currentLength = input.value.length;
+    const minLength = state.minLength ?? -1;
+    const maxLength = state.maxLength ?? -1;
+
+    // Custom minlength validation: the browser's native minlength check may not trigger
+    // correctly in all scenarios, so we enforce it manually here.
+    if (currentLength < minLength && minLength > -1) {
+      tooShort = true;
+      validationMessage = getTooShortValidationMessage({
+        currentLength,
+        minLength,
+      });
     }
 
-    if ((state.maxLength ?? -1) > -1) {
-      input.setAttribute("maxlength", String(state.maxLength));
-    } else {
-      input.removeAttribute("maxlength");
+    // Custom maxlength validation: the browser's native maxlength check may not trigger
+    // correctly in all scenarios, so we enforce it manually here.
+    if (currentLength > maxLength && maxLength > -1) {
+      tooLong = true;
+      validationMessage = getTooLongValidationMessage({
+        currentLength,
+        maxLength,
+      });
     }
 
     return {
-      validity: input.validity,
-      validationMessage: input.validationMessage,
+      validity: { ...input.validity, tooLong, tooShort },
+      validationMessage: validationMessage ?? input.validationMessage,
     };
   }
 
