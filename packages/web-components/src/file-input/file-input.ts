@@ -297,7 +297,7 @@ export class FileInput extends BaseClass {
    * The list of selected files.
    */
   public get files(): FileList | null {
-    return this._input?.files ?? null;
+    return this._files;
   }
 
   @state()
@@ -316,6 +316,9 @@ export class FileInput extends BaseClass {
 
   @state()
   private _nativeErrorText = "";
+
+  @state()
+  private _files: FileList | null = null;
 
   @queryAssignedNodes({ slot: Slots.PLACEHOLDER_ICON })
   private _placeholderIconSlotNodes!: Node[];
@@ -401,7 +404,8 @@ export class FileInput extends BaseClass {
   private _handleInput() {
     if (!this._isInteractable) return;
 
-    this.requestUpdate();
+    // this.requestUpdate();
+    this._files = this._input?.files ?? null;
   }
 
   private _handleChange(event: Event) {
@@ -433,6 +437,7 @@ export class FileInput extends BaseClass {
     if (!input) return;
 
     input.files = files;
+    this._files = files;
 
     this.dispatchEvent(new Event("change", { bubbles: true }));
     this.dispatchEvent(new Event("input", { bubbles: true, composed: true }));
@@ -575,6 +580,10 @@ export class FileInput extends BaseClass {
     return !this.disabled && !this._isLoading;
   }
 
+  private get _shouldShowOverlay(): boolean {
+    return !!this.value && (this._hasError() || this._isLoading);
+  }
+
   private _handleClick() {
     if (!this._isInteractable) return;
 
@@ -644,7 +653,10 @@ export class FileInput extends BaseClass {
   private _renderPreview() {
     const files = this.files;
 
-    if (!files) return null;
+    if (!files || files.length === 0 || !this.value) {
+      if (this._hasError() || this._isLoading) return null;
+      else return this._renderEmptyState();
+    }
 
     if (files.length === 1) {
       const file = files[0]!;
@@ -729,8 +741,13 @@ export class FileInput extends BaseClass {
       </div>`;
     }
 
+    const loadingClasses = classMap({
+      ["loading-state"]: true,
+      ["on-overlay"]: this._shouldShowOverlay,
+    });
+
     return html`<div
-      class="loading-state"
+      class=${loadingClasses}
       part="loading-state"
     >
       ${icon}
@@ -809,18 +826,25 @@ export class FileInput extends BaseClass {
     e.stopPropagation();
   }
 
-  private _renderFileInputContent() {
+  private _renderOverlay() {
+    if (!this._shouldShowOverlay) return null;
+
+    return html`<div
+      class="overlay"
+      part="overlay"
+    ></div>`;
+  }
+
+  private _renderOverlayContent() {
     if (this._hasError()) return this._renderErrorState();
 
     if (this._isLoading) return this._renderLoadingState();
 
-    if (this.value) return this._renderPreview();
-
-    return this._renderEmptyState();
+    return null;
   }
 
   private _renderClearIcon() {
-    if (!this.value) return null;
+    if (this._shouldShowOverlay || !this.value) return null;
 
     return html`<tapsi-icon-button
       class="clear-button"
@@ -887,7 +911,7 @@ export class FileInput extends BaseClass {
             class="file-input"
             part="file-input"
           >
-            ${this._renderFileInputContent()}${this._renderClearIcon()}
+            ${this._renderPreview()}${this._renderOverlay()}${this._renderOverlayContent()}${this._renderClearIcon()}
           </div>
         </div>
         ${this._renderHelperText()}
