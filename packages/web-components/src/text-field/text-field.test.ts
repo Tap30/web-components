@@ -9,6 +9,10 @@ import {
   test,
 } from "@internals/test-helpers";
 import { ErrorMessages, Slots } from "../base-text-input/constants.ts";
+import {
+  getTooLongValidationMessage,
+  getTooShortValidationMessage,
+} from "../internals/index.ts";
 import { type TextField } from "./index.ts";
 
 describe("🧩 text-field", () => {
@@ -241,6 +245,95 @@ describe("🧩 text-field", () => {
     await expect(input).not.toBeFocused();
     await label.click();
     await expect(input).toBeFocused();
+  });
+
+  test("🧪 should show correct validation error when input is too long", async ({
+    page,
+  }) => {
+    await render(
+      page,
+      `
+      <form data-testid="form">
+        <tapsi-text-field
+          name="username"
+          label="Username"
+          data-testid="field"
+          minlength="2"
+          maxlength="5"
+        ></tapsi-text-field>
+      </form>
+    `,
+    );
+
+    const formState = await page.evaluate(() => {
+      const form = document.querySelector(
+        '[data-testid="form"]',
+      ) as HTMLFormElement;
+
+      const el = form.elements.namedItem("username") as HTMLInputElement;
+
+      el.value = "1234567";
+
+      return {
+        valid: el.checkValidity(),
+        message: el.validationMessage,
+        currentLength: el.value.length,
+      };
+    });
+
+    const expectedMessage = getTooLongValidationMessage({
+      currentLength: formState.currentLength,
+      maxLength: 5,
+    });
+
+    expect(formState.valid).toBe(false);
+    expect(formState.message).toBe(expectedMessage);
+  });
+
+  test("🧪 should show form validation error when input is too short", async ({
+    page,
+  }) => {
+    await render(
+      page,
+      `
+      <form data-testid="form">
+        <tapsi-text-field
+          name="username"
+          label="Username"
+          data-testid="field"
+          minlength="5"
+          maxlength="50"
+        ></tapsi-text-field>
+      </form>
+    `,
+    );
+
+    const field = page.getByTestId("field");
+
+    await field.click();
+    await page.keyboard.type("hi");
+
+    const formState = await page.evaluate(() => {
+      const form = document.querySelector(
+        '[data-testid="form"]',
+      ) as HTMLFormElement;
+
+      const el = form.elements.namedItem("username") as HTMLInputElement;
+
+      return {
+        message: el.validationMessage,
+        valid: el.checkValidity(),
+        currentLength: el.value.length,
+      };
+    });
+
+    const expectedMessage = getTooShortValidationMessage({
+      currentLength: formState.currentLength,
+      minLength: 5,
+    });
+
+    expect(formState.valid).toBe(false);
+    expect(formState.message).toBe(expectedMessage);
   });
 
   test("🦯 should be accessible inside a form with a valid label", async ({
