@@ -74,9 +74,9 @@ class TextAreaValidator extends Validator<TextAreaState> {
 
     input.required = state.required;
 
-    let tooShort = false,
-      tooLong = false,
-      validationMessage;
+    let tooShort = false;
+    let tooLong = false;
+    let validationMessage;
 
     const currentLength = input.value.length;
     const minLength = state.minLength ?? -1;

@@ -136,9 +136,9 @@ class TextFieldValidator extends Validator<TextFieldState> {
       input.removeAttribute("step");
     }
 
-    let tooShort = false,
-      tooLong = false,
-      validationMessage;
+    let tooShort = false;
+    let tooLong = false;
+    let validationMessage;
 
     const currentLength = input.value.length;
     const minLength = state.minLength ?? -1;
