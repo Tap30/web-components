@@ -1,5 +1,16 @@
 # @tapsioss/web-components
 
+## 0.17.7
+### Patch Changes
+
+
+
+- [#510](https://github.com/Tap30/web-components/pull/510) [`4a36c6b`](https://github.com/Tap30/web-components/commit/4a36c6bba2f98b5bdfba659b1f9c6ab23f8ea96f) Thanks [@amir78729](https://github.com/amir78729)! - Make the file input's preview remain visible on loading and error state.
+
+
+
+- [#518](https://github.com/Tap30/web-components/pull/518) [`b66e684`](https://github.com/Tap30/web-components/commit/b66e684a892ce4fc6604dc8e965702e9b3ffd655) Thanks [@amir78729](https://github.com/amir78729)! - Resolve issues with enforcing minimum and maximum input length in text input components.
+
 ## 0.17.6
 ### Patch Changes
 
