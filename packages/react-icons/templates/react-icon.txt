@@ -1,4 +1,5 @@
 import BaseIcon, { type Props } from "./base-icon.ts";
+import * as React from "react";
 
 /**
 * "{{name}}" Icon Component
@@ -11,7 +12,7 @@ import BaseIcon, { type Props } from "./base-icon.ts";
 *
 * @see https://tap30.github.io/web-components/icons
 */
-const {{name}} = (props: Omit<Props, "children">) => {
+const {{name}}: React.FC<Omit<Props, "children">> = (props) => {
   const paths = <>{{paths}}</>;
 
   return <BaseIcon {...props}>{paths}</BaseIcon>;

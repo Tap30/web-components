@@ -4,6 +4,7 @@
     "target": "ES2017",
     "noEmit": false,
     "declaration": true,
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "jsx": "react"
   }
 }
