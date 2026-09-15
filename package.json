@@ -107,7 +107,8 @@
         "build:web-icons",
         "build:react-icons",
         "build:web-components",
-        "build:react-components"
+        "build:react-components",
+        "build:react-ui"
       ]
     },
     "build:theme": {
@@ -217,6 +218,24 @@
       ],
       "dependencies": [
         "build:icons"
+      ]
+    },
+    "build:react-ui": {
+      "command": "pnpm --filter @tapsioss/react-ui run build",
+      "clean": "if-file-deleted",
+      "files": [
+        "./packages/react-ui/scripts/**/*",
+        "./packages/react-ui/**/*.{ts,tsx,css}",
+        "./packages/react-ui/tsconfig.{build,cjs,esm}.json",
+        "./tsconfig.json",
+        "./tsconfig.build.json",
+        "!./packages/react-ui/**/*.test.{ts,tsx}",
+        "!./packages/react-ui/**/*.stories.{ts,tsx}",
+        "!./packages/react-ui/playwright.config.ts",
+        "!./packages/react-ui/dist/**/*"
+      ],
+      "output": [
+        "./packages/react-ui/dist/**/*"
       ]
     },
     "build:docs": {

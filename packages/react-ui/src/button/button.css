@@ -1,0 +1,97 @@
+/*
+ * Every value here comes from `@tapsioss/theme` as a CSS custom property.
+ *
+ * This file deliberately does NOT import the theme. Tokens are consumed via
+ * `var(--tapsi-*)`, which resolves against whatever `:root` the consuming app
+ * provides. `@tapsioss/theme` is a peer concern: the consumer installs it and
+ * imports `@tapsioss/theme/css-variables` once, and every component here picks
+ * those values up automatically.
+ *
+ * The fallbacks in `var(--token, <fallback>)` are not styling decisions — they
+ * are a diagnostic. If the theme is missing, buttons render in an obviously
+ * wrong magenta rather than silently collapsing to a transparent, unreadable
+ * default.
+ */
+
+.tapsi-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  font-family: var(--tapsi-typography-font-family, sans-serif);
+  border-radius: var(--tapsi-radius-full, 999px);
+
+  background: var(--tapsi-button-background, magenta);
+  color: var(--tapsi-button-color, magenta);
+
+  height: var(--tapsi-button-height);
+  padding: var(--tapsi-button-padding);
+  font-size: var(--tapsi-button-font-size);
+  line-height: var(--tapsi-button-line-height);
+  font-weight: var(--tapsi-button-font-weight);
+}
+
+/* Variants — each sets only the two colour channels. */
+
+.tapsi-button--primary {
+  --tapsi-button-background: var(--tapsi-color-surface-inverse-primary);
+  --tapsi-button-color: var(--tapsi-color-content-on-inverse);
+}
+
+.tapsi-button--ghost {
+  --tapsi-button-background: var(--tapsi-color-surface-tertiary);
+  --tapsi-button-color: var(--tapsi-color-content-primary);
+}
+
+.tapsi-button--destructive {
+  --tapsi-button-background: var(--tapsi-color-surface-negative-light);
+  --tapsi-button-color: var(--tapsi-color-content-negative);
+}
+
+/* Sizes — each sets only the metrics. */
+
+.tapsi-button--sm {
+  --tapsi-button-height: 2rem;
+  --tapsi-button-padding: 0 var(--tapsi-spacing-5);
+  --tapsi-button-font-size: var(--tapsi-typography-label-sm-size);
+  --tapsi-button-line-height: var(--tapsi-typography-label-sm-height);
+  --tapsi-button-font-weight: var(--tapsi-typography-label-sm-weight);
+}
+
+.tapsi-button--md {
+  --tapsi-button-height: 2.5rem;
+  --tapsi-button-padding: 0 var(--tapsi-spacing-6);
+  --tapsi-button-font-size: var(--tapsi-typography-label-sm-size);
+  --tapsi-button-line-height: var(--tapsi-typography-label-sm-height);
+  --tapsi-button-font-weight: var(--tapsi-typography-label-sm-weight);
+}
+
+.tapsi-button--lg {
+  --tapsi-button-height: 3rem;
+  --tapsi-button-padding: 0 var(--tapsi-spacing-7);
+  --tapsi-button-font-size: var(--tapsi-typography-label-lg-size);
+  --tapsi-button-line-height: var(--tapsi-typography-label-lg-height);
+  --tapsi-button-font-weight: var(--tapsi-typography-label-lg-weight);
+}
+
+.tapsi-button:focus-visible {
+  outline: var(--tapsi-stroke-2, 2px) solid
+    var(--tapsi-color-content-accent, magenta);
+  outline-offset: var(--tapsi-spacing-2, 2px);
+}
+
+/* Base UI sets `data-disabled` on the rendered element. */
+.tapsi-button[data-disabled] {
+  cursor: not-allowed;
+  --tapsi-button-background: var(--tapsi-color-surface-disabled);
+  --tapsi-button-color: var(--tapsi-color-content-disabled);
+}

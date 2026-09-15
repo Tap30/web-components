@@ -20,6 +20,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
+    "./styles.css": "./dist/styles.css",
     "./*": {
       "types": "./dist/*/index.d.ts",
       "default": "./dist/*/index.js"
@@ -32,7 +33,7 @@
   "scripts": {
     "clear": "shx rm -rf dist",
     "prebuild": "pnpm run clear",
-    "build": "tsc --project ./tsconfig.build.json",
+    "build": "tsc --project ./tsconfig.build.json && tsx ./scripts/copy-css.ts",
     "predev": "pnpm run clear",
     "dev": "tsc --watch --project ./tsconfig.dev.json"
   },

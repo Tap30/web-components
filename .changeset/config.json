@@ -19,7 +19,8 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "@internals/*",
-    "@tapsioss/{docs,playground}",
+    "@tapsioss/docs",
+    "@tapsioss/playground",
     "@tapsioss/react-storybook",
     "@tapsioss/react-ui"
   ]

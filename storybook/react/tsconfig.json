@@ -1,5 +1,40 @@
 {
+  // `moduleResolution: "bundler"` overrides the root's Node10 setting so stories
+  // can resolve Storybook's exports-map-only types.
+  //
+  // The explicit `exclude` is load-bearing: `extends` inherits the root's
+  // exclude, which lists `**/*.stories.tsx`. Without re-declaring it here, every
+  // story would be silently checked by no project at all.
+  //
+  // `paths` REPLACES the root map rather than merging with it, so anything a
+  // story imports has to be listed. That is the price of the override below.
+  // Adding a new `@tapsioss/*` import to a story means adding its alias here;
+  // otherwise it still resolves, but through node_modules to `dist` (which then
+  // requires that package to have been built first).
   "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "paths": {
+      // THE OVERRIDE: `src` only, where the root deliberately prefers `dist`.
+      // This is what keeps Storybook hot-reloading from source with no build,
+      // while the playground and real consumers still exercise the built output.
+      "@tapsioss/react-ui": ["../../packages/react-ui/src"],
+      "@tapsioss/react-ui/*": ["../../packages/react-ui/src/*"],
+      // Re-declared verbatim from the root, since `paths` does not merge.
+      "@tapsioss/theme/*/css-variables": [
+        "../../packages/theme/src/*/tokens.css"
+      ],
+      "@tapsioss/theme/css-variables": [
+        "../../packages/theme/src/default-theme/tokens.css"
+      ],
+      "@tapsioss/theme/*/tokens": ["../../packages/theme/src/*/tokens.ts"],
+      "@tapsioss/theme/tokens": [
+        "../../packages/theme/src/default-theme/tokens.ts"
+      ],
+      "@tapsioss/theme/types": ["../../packages/theme/src/types.ts"]
+    }
+  },
   "include": ["src"],
   "exclude": ["node_modules", "storybook-static"]
 }

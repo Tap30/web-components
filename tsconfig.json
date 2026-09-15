@@ -63,7 +63,10 @@
         "./packages/react-components/dist/*",
         "./packages/react-components/src/*"
       ],
-      // React UI (built on Base UI)
+      // React UI (built on Base UI). `dist` first, matching every other package
+      // here — so the playground and any consumer exercise the built artifact.
+      // Storybook deliberately overrides this to `src` in its own tsconfig, to
+      // keep its dev loop on source with no rebuild.
       "@tapsioss/react-ui": [
         "./packages/react-ui/dist",
         "./packages/react-ui/src"
@@ -85,5 +88,9 @@
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "docs/.vitepress/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  // Stories import Storybook's types, which are exports-map-only ESM and so are
+  // unresolvable under this config's `moduleResolution: "node"` (Node10). They
+  // are type-checked instead by their own package's tsconfig, which overrides
+  // the resolver — see packages/react-ui/tsconfig.json.
+  "exclude": ["node_modules", "dist", "**/*.stories.ts", "**/*.stories.tsx"]
 }

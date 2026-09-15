@@ -14,26 +14,31 @@ const config: StorybookConfig = {
     options: {},
   },
 
-  // Stories are collected from this package and from every React-rendered
-  // workspace package. Sidebar grouping comes from each story's `title`
-  // (e.g. "Theme/Colors", "React UI/Button"), not from file location.
-  stories: [
-    "../src/**/*.mdx",
-    "../src/**/*.stories.@(ts|tsx)",
-    "../../../packages/react-ui/src/**/*.mdx",
-    "../../../packages/react-ui/src/**/*.stories.@(ts|tsx)",
-  ],
+  // All stories live in this package, one folder per documented workspace
+  // package (`src/react-ui/`, `src/theme/`). They import their subjects by
+  // package name, so component packages stay free of Storybook tooling.
+  // Sidebar grouping comes from each story's `title`, not from file location.
+  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(ts|tsx)"],
 
   addons: ["@storybook/addon-docs", "@storybook/addon-a11y"],
 
   viteFinal: config => {
-    // Resolve `@tapsioss/*` through the root tsconfig `paths`, which point at
-    // package sources rather than `dist`. This is what makes edits anywhere in
-    // the workspace hot-reload without a build or a publish.
+    // Two projects, and the order matters. `vite-tsconfig-paths` matches each
+    // importing file against a project's include/exclude, so:
+    //
+    //   - files under storybook/react/src  -> this package's tsconfig, whose
+    //     `paths` point `@tapsioss/react-ui` at `src` (the override)
+    //   - everything else                  -> the root tsconfig
+    //
+    // That is what lets Storybook hot-reload react-ui from source while the
+    // root config keeps `dist` first for the playground and real consumers.
     config.plugins ??= [];
     config.plugins.push(
       tsconfigPaths({
-        projects: [resolve(repoRoot, "tsconfig.json")],
+        projects: [
+          resolve(configDir, "../tsconfig.json"),
+          resolve(repoRoot, "tsconfig.json"),
+        ],
       }),
     );
 

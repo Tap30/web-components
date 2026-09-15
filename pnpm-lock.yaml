@@ -291,6 +291,9 @@ importers:
       '@tapsioss/react-icons':
         specifier: workspace:*
         version: link:../packages/react-icons
+      '@tapsioss/react-ui':
+        specifier: workspace:*
+        version: link:../packages/react-ui
       '@tapsioss/theme':
         specifier: workspace:*
         version: link:../packages/theme

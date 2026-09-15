@@ -19,20 +19,31 @@ instance composed in through `refs`.
 
 ## Conventions
 
+**One story per component.** Every prop is exposed through the **Controls**
+panel rather than frozen into separate stories, so variants, sizes and states
+are explored by changing controls — not by clicking between sidebar entries. Add
+a second story only when a component has something controls genuinely cannot
+express: a multi-step flow, or a composition of several sub-components.
+
+Give each prop an `argTypes` entry with a `description` and a `table.category`.
+That is what turns the Controls panel into usable documentation instead of a
+bare list, and `tags: ["autodocs"]` turns the same information into a generated
+props table on the Docs tab.
+
 **Sidebar grouping comes from a story's `title`, not its file location.**
 Nothing enforces this, so it matters:
 
 ```ts
-// packages/react-ui/src/button/button.stories.tsx
 const meta = { title: "React UI/Button", component: Button };
 ```
 
 One top-level segment per package: `Theme/…`, `React UI/…`.
 
-Stories live next to the code they document, except the theme galleries. Those
-live here in `storybook/react/src/theme/` so that `@tapsioss/theme` — a
-published package with a single runtime dependency — does not have to grow
-React, Storybook and MDX devDependencies just to be documented.
+**All stories live in this package**, one folder per workspace package it
+documents (`src/react-ui/`, `src/theme/`). They import their subjects **by
+package name** — `@tapsioss/react-ui`, not a relative path — so a story is a
+real consumer, and a component missing from the package barrel breaks its story
+straight away. It also keeps Storybook tooling out of the published packages.
 
 ## How this resolves the workspace
 

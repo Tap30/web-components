@@ -72,6 +72,21 @@ export default config(
       },
     },
   },
+  // MUST come after the block above, which otherwise re-enables the project
+  // service for every file. Stories are excluded from the ROOT tsconfig
+  // (Storybook's types need `moduleResolution: "bundler"`), so the default
+  // project cannot see them. They are type-checked properly by
+  // `pnpm --filter @tapsioss/react-storybook run check:types`.
+  {
+    files: ["**/*.stories.{ts,tsx}"],
+    extends: [tsLintConfigs.disableTypeChecked],
+    languageOptions: {
+      parserOptions: {
+        project: false,
+        projectService: false,
+      },
+    },
+  },
   {
     plugins: {
       "eslint-comments": commentsPlugin,
