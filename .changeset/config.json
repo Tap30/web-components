@@ -17,5 +17,10 @@
   "bumpVersionsWithWorkspaceProtocolOnly": true,
   "prettier": false,
   "updateInternalDependencies": "patch",
-  "ignore": ["@internals/*", "@tapsioss/{docs,playground}"]
+  "ignore": [
+    "@internals/*",
+    "@tapsioss/{docs,playground}",
+    "@tapsioss/react-storybook",
+    "@tapsioss/react-ui"
+  ]
 }

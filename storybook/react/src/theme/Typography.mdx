@@ -1,0 +1,45 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import tokens from "@tapsioss/theme/tokens";
+import { TypeScale } from "./TokenTable.tsx";
+
+<Meta title="Theme/Typography" />
+
+# Typography
+
+Each variant expands to four CSS custom properties — `-font`, `-size`,
+`-height`, `-weight`. The samples below are styled from those variables, not
+from the JS values.
+
+Note that `-height` is a **unitless ratio** and `-weight` a raw number, so both
+can be used directly in CSS without conversion.
+
+Every variant resolves its font through `var(--tapsi-typography-font-family)`,
+currently set to <code>{tokens.typography["font-family"]}</code>.
+
+## Display
+
+<TypeScale
+  variants={tokens.typography.display}
+  prefix="typography-display"
+/>
+
+## Headline
+
+<TypeScale
+  variants={tokens.typography.headline}
+  prefix="typography-headline"
+/>
+
+## Label
+
+<TypeScale
+  variants={tokens.typography.label}
+  prefix="typography-label"
+/>
+
+## Body
+
+<TypeScale
+  variants={tokens.typography.body}
+  prefix="typography-body"
+/>

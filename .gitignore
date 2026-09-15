@@ -82,3 +82,9 @@ packages/web-components/custom-elements.json
 
 # wireit
 .wireit
+
+# Storybook
+storybook-static
+storybook.log
+
+.onboarding/*

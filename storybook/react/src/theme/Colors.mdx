@@ -1,0 +1,95 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import tokens from "@tapsioss/theme/tokens";
+import { ColorGrid } from "./TokenTable.tsx";
+
+<Meta title="Theme/Colors" />
+
+# Colors
+
+Read live from `packages/theme/src/default-theme/tokens.ts`. Every swatch is
+painted with its CSS custom property, so what you see is what the browser
+resolves.
+
+Semantic tokens are the ones to use in components. The raw palette exists to
+back them and should rarely be referenced directly.
+
+## Surface
+
+<ColorGrid
+  tokens={tokens.color.surface}
+  prefix="color-surface"
+/>
+
+## Content
+
+<ColorGrid
+  tokens={tokens.color.content}
+  prefix="color-content"
+/>
+
+## Border
+
+<ColorGrid
+  tokens={tokens.color.border}
+  prefix="color-border"
+/>
+
+## Gradient
+
+<ColorGrid
+  tokens={tokens.color.gradient.surface}
+  prefix="color-gradient-surface"
+/>
+
+## Palette
+
+The underlying scale. Prefer a semantic token above unless you are defining one.
+
+### Gray
+
+<ColorGrid
+  tokens={tokens.palette.gray}
+  prefix="palette-gray"
+/>
+
+### Orange
+
+<ColorGrid
+  tokens={tokens.palette.orange}
+  prefix="palette-orange"
+/>
+
+### Blue
+
+<ColorGrid
+  tokens={tokens.palette.blue}
+  prefix="palette-blue"
+/>
+
+### Green
+
+<ColorGrid
+  tokens={tokens.palette.green}
+  prefix="palette-green"
+/>
+
+### Red
+
+<ColorGrid
+  tokens={tokens.palette.red}
+  prefix="palette-red"
+/>
+
+### Yellow
+
+<ColorGrid
+  tokens={tokens.palette.yellow}
+  prefix="palette-yellow"
+/>
+
+### Indigo
+
+<ColorGrid
+  tokens={tokens.palette.indigo}
+  prefix="palette-indigo"
+/>

@@ -1,0 +1,50 @@
+{
+  "name": "@tapsioss/react-ui",
+  "description": "Collection of React components for the Tapsi Design System UI",
+  "version": "0.0.0-alpha",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "./dist",
+    "./README.md"
+  ],
+  "homepage": "https://tap30.github.io/web-components",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tap30/web-components.git",
+    "directory": "packages/react-ui"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./*": {
+      "types": "./dist/*/index.d.ts",
+      "default": "./dist/*/index.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "clear": "shx rm -rf dist",
+    "prebuild": "pnpm run clear",
+    "build": "tsc --project ./tsconfig.build.json",
+    "predev": "pnpm run clear",
+    "dev": "tsc --watch --project ./tsconfig.dev.json"
+  },
+  "peerDependencies": {
+    "react": "^17 || ^18 || ^19",
+    "react-dom": "^17 || ^18 || ^19"
+  },
+  "dependencies": {
+    "@base-ui/react": "1.7.0",
+    "tslib": "^2.8.0"
+  },
+  "devDependencies": {
+    "@internals/test-helpers": "workspace:*"
+  }
+}

@@ -1,0 +1,58 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introduction" />
+
+# Tapsi Design System — React
+
+This Storybook covers the **React-rendered** packages of the workspace:
+
+- **Theme** — `@tapsioss/theme`. Colour, typography and layout token galleries.
+- **React UI** — `@tapsioss/react-ui`. React components built on
+  [Base UI](https://base-ui.com).
+
+`@tapsioss/web-components` and `@tapsioss/web-icons` are Lit-based and are
+**not** here — Storybook supports exactly one renderer per instance, and those
+packages have their own documentation at
+[tap30.github.io/web-components](https://tap30.github.io/web-components). If
+they ever need a sidebar, they arrive as a sibling `storybook/web-components/`
+instance composed in through `refs`.
+
+## Conventions
+
+**Sidebar grouping comes from a story's `title`, not its file location.**
+Nothing enforces this, so it matters:
+
+```ts
+// packages/react-ui/src/button/button.stories.tsx
+const meta = { title: "React UI/Button", component: Button };
+```
+
+One top-level segment per package: `Theme/…`, `React UI/…`.
+
+Stories live next to the code they document, except the theme galleries. Those
+live here in `storybook/react/src/theme/` so that `@tapsioss/theme` — a
+published package with a single runtime dependency — does not have to grow
+React, Storybook and MDX devDependencies just to be documented.
+
+## How this resolves the workspace
+
+The root `tsconfig.json` maps `@tapsioss/*` to package **sources**, not `dist`:
+
+```jsonc
+"@tapsioss/theme/tokens": ["./packages/theme/src/default-theme/tokens.ts"]
+```
+
+`.storybook/main.ts` registers `vite-tsconfig-paths` against that config, so
+editing any package hot-reloads here. No build step, and nothing needs to be
+published.
+
+One caveat: `tokens.css` is **generated** from `tokens.ts` by
+`pnpm --filter @tapsioss/theme generate`. It is committed, so things work out of
+the box — but editing `tokens.ts` alone will not move the CSS variables until
+generate re-runs.
+
+## Source of truth
+
+**Figma** is authoritative for styles and token names.
+**`@tapsioss/web-components`** is the reference for implementation decisions —
+props, behaviour, accessibility and edge cases — as components are ported.

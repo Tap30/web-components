@@ -1,0 +1,37 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import tokens from "@tapsioss/theme/tokens";
+import { ScaleTable } from "./TokenTable.tsx";
+
+<Meta title="Theme/Layout" />
+
+# Layout
+
+Spacing, radius and stroke scales.
+
+## Spacing
+
+The numbering is an **ordinal index, not a multiplier** — `--tapsi-spacing-4` is
+`0.5rem`, not `4` of anything. Note also the half-step `3-1` sitting between `3`
+and `4`.
+
+<ScaleTable
+  tokens={tokens.spacing}
+  prefix="spacing"
+  preview="bar"
+/>
+
+## Radius
+
+<ScaleTable
+  tokens={tokens.radius}
+  prefix="radius"
+  preview="corner"
+/>
+
+## Stroke
+
+<ScaleTable
+  tokens={tokens.stroke}
+  prefix="stroke"
+  preview="box"
+/>

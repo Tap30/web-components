@@ -1,0 +1,27 @@
+{
+  "name": "@tapsioss/react-storybook",
+  "description": "Storybook for the React-rendered packages of the Tapsi Design System.",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build"
+  },
+  "dependencies": {
+    "@tapsioss/react-ui": "workspace:*",
+    "@tapsioss/theme": "workspace:*"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^10.5.10",
+    "@storybook/addon-docs": "^10.5.10",
+    "@storybook/react-vite": "^10.5.10",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "storybook": "^10.5.10",
+    "vite": "^5.4.21",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}

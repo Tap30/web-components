@@ -63,6 +63,15 @@
         "./packages/react-components/dist/*",
         "./packages/react-components/src/*"
       ],
+      // React UI (built on Base UI)
+      "@tapsioss/react-ui": [
+        "./packages/react-ui/dist",
+        "./packages/react-ui/src"
+      ],
+      "@tapsioss/react-ui/*": [
+        "./packages/react-ui/dist/*",
+        "./packages/react-ui/src/*"
+      ],
       // Tokens
       "@tapsioss/theme/*/css-variables": ["./packages/theme/src/*/tokens.css"],
       "@tapsioss/theme/css-variables": [

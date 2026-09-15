@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "noEmitOnError": false,
+    "sourceMap": true,
+    "inlineSources": true,
+    "declaration": true
+  }
+}

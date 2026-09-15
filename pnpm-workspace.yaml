@@ -4,3 +4,4 @@ packages:
   - "internals/danger"
   - "playground"
   - "docs"
+  - "storybook/*"
