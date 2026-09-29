@@ -9,7 +9,7 @@
     "preview": "vitepress preview"
   },
   "dependencies": {
-    "@tapsioss/theme": "workspace:*",
+    "@tapsioss/theme": "0.8.0",
     "@tapsioss/web-components": "workspace:*",
     "@tapsioss/icons": "workspace:*",
     "body-scroll-lock": "4.0.0-beta.0",

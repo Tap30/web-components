@@ -50,17 +50,18 @@ straight away. It also keeps Storybook tooling out of the published packages.
 The root `tsconfig.json` maps `@tapsioss/*` to package **sources**, not `dist`:
 
 ```jsonc
-"@tapsioss/theme/tokens": ["./packages/theme/src/default-theme/tokens.ts"]
+"@tapsioss/theme/*": ["./packages/theme/src/*.ts"]
 ```
 
 `.storybook/main.ts` registers `vite-tsconfig-paths` against that config, so
 editing any package hot-reloads here. No build step, and nothing needs to be
 published.
 
-One caveat: `tokens.css` is **generated** from `tokens.ts` by
-`pnpm --filter @tapsioss/theme generate`. It is committed, so things work out of
-the box — but editing `tokens.ts` alone will not move the CSS variables until
-generate re-runs.
+One caveat: for each token set, `tokens.css` and `tokens.ts` are **independent
+artifacts** of the same Figma export, and neither is derived from the other.
+Editing one will not move the other, so a token change means editing both — see
+`packages/theme/AGENTS.md`. `packages/theme/scripts/check.ts` fails the build if
+they disagree.
 
 ## Source of truth
 

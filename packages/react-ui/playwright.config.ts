@@ -27,13 +27,13 @@ const config: PlaywrightTestConfig<object, object> = defineConfig({
     },
   ],
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: "http://localhost:3001",
     permissions: ["clipboard-write", "clipboard-read"],
   },
   webServer: {
-    command: "pnpm --filter @tapsioss/playground run start:test",
+    command: "pnpm --filter @tapsioss/react-playground run start:test",
     reuseExistingServer: !process.env.CI,
-    url: "http://localhost:3000/test",
+    url: "http://localhost:3001/test",
     gracefulShutdown: {
       signal: "SIGTERM",
       timeout: 1000,

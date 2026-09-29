@@ -1,132 +1,88 @@
-export type ColorSetSteps =
-  | "50"
-  | "100"
-  | "200"
-  | "300"
-  | "400"
-  | "500"
-  | "600"
-  | "700"
-  | "800"
-  | "900";
+/**
+ * Value-shape guards for the token sets.
+ *
+ * These exist to enforce the conventions in AGENTS.md at compile time rather
+ * than by review. Every generated set ends with `as const satisfies …`, so a
+ * length emitted in px, a colour emitted in an unsupported notation, or a font
+ * weight left as a Figma label ("Regular") fails the build instead of shipping.
+ */
 
-export type Palette = {
-  black: string;
-  white: string;
-  gray: Record<ColorSetSteps, string>;
-  orange: Record<ColorSetSteps, string>;
-  blue: Record<ColorSetSteps, string>;
-  green: Record<ColorSetSteps, string>;
-  yellow: Record<ColorSetSteps, string>;
-  red: Record<ColorSetSteps, string>;
-  indigo: Record<ColorSetSteps, string>;
-};
+/**
+ * Lengths are rem so that a user's browser font-size setting is respected.
+ * `"0"` is unitless by convention — `0rem` is legal but noisy.
+ */
+export type RemValue = "0" | `${number}rem`;
 
-export type Color = {
-  brand: string;
-  gradient: {
-    surface: Record<"brand" | "brand-light", string>;
-  };
-  surface: Record<
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "disabled"
-    | "black"
-    | "white"
-    | "accent"
-    | "accent-light"
-    | "negative"
-    | "negative-light"
-    | "warning"
-    | "warning-light"
-    | "positive"
-    | "positive-light"
-    | "background-primary"
-    | "background-secondary"
-    | "inverse-primary"
-    | "inverse-secondary"
-    | "overlay-light"
-    | "overlay-dark",
-    string
-  >;
-  content: Record<
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "disabled"
-    | "accent"
-    | "negative"
-    | "warning"
-    | "positive"
-    | "on-inverse"
-    | "on-brand"
-    | "on-accent"
-    | "on-negative"
-    | "on-warning"
-    | "on-positive",
-    string
-  >;
-  border: Record<
-    | "primary"
-    | "selected"
-    | "focus"
-    | "accent"
-    | "negative"
-    | "warning"
-    | "positive"
-    | "inverse-primary",
-    string
-  >;
-};
+/**
+ * Opaque colours are lowercase hex; anything with alpha is `rgba()`.
+ *
+ * `rgba()` rather than 8-digit hex or `rgb(r g b / a)` is deliberate: it is the
+ * only one of the three that degrades safely on the older Android WebViews this
+ * design system targets. The other two render as fully transparent there.
+ */
+export type ColorValue = `#${string}` | `rgba(${string})`;
 
-export type Radius = Record<
-  "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "full",
-  string
+/** CSS numeric weights. Figma stores the *name* ("Regular"); the key is the value. */
+export type FontWeightValue =
+  | 100
+  | 200
+  | 300
+  | 400
+  | 500
+  | 600
+  | 700
+  | 800
+  | 900;
+
+/* -------------------------------------------------------------------------- */
+/* Primitive layer                                                            */
+/* -------------------------------------------------------------------------- */
+
+/** `Palette/<Hue>/<Step>` — exactly two levels deep. */
+export type PaletteTokens = Readonly<
+  Record<string, Readonly<Record<string, ColorValue>>>
 >;
 
-export type Spacing = Record<
-  | "0"
-  | "1"
-  | "2"
-  | "3"
-  | "3-1"
-  | "4"
-  | "5"
-  | "6"
-  | "7"
-  | "8"
-  | "9"
-  | "10"
-  | "11"
-  | "12"
-  | "13"
-  | "14",
-  string
->;
+export type FontTokens = Readonly<{
+  /** Includes a generic fallback, e.g. `'"Vazirmatn", sans-serif'`. */
+  family: Readonly<Record<string, string>>;
+  weight: Readonly<Record<string, FontWeightValue>>;
+  size: Readonly<Record<string, RemValue>>;
+}>;
 
-export type Stroke = Record<"0" | "1" | "2", string>;
+/** The raw numeric scale every length in every theme resolves to. */
+export type NumberTokens = Readonly<Record<string, RemValue>>;
 
-export type TypographyVariant = {
-  font: string;
-  size: string;
-  height: number;
-  weight: number;
-};
+export type PrimitiveTokens = Readonly<{
+  palette: PaletteTokens;
+  font: FontTokens;
+  number: NumberTokens;
+}>;
 
-export type Typography = {
-  "font-family": string;
-  body: Record<"xs" | "sm" | "md" | "lg", TypographyVariant>;
-  label: Record<"xxs" | "xs" | "sm" | "md" | "lg", TypographyVariant>;
-  headline: Record<"xs" | "sm" | "md" | "lg", TypographyVariant>;
-  display: Record<"sm" | "md" | "lg", TypographyVariant>;
-};
+/* -------------------------------------------------------------------------- */
+/* Theme layer                                                                */
+/* -------------------------------------------------------------------------- */
 
-export type Tokens = {
-  palette: Palette;
-  color: Color;
-  radius: Radius;
-  spacing: Spacing;
-  stroke: Stroke;
-  typography: Typography;
-};
+type ColorNode = ColorValue | Readonly<{ [key: string]: ColorNode }>;
+
+/** Arbitrarily nested, but every leaf is a colour. */
+export type ColorTokens = Readonly<Record<string, ColorNode>>;
+
+export type TypographyTokens = Readonly<{
+  fontFamily: Readonly<Record<string, string>>;
+  fontWeight: Readonly<Record<string, FontWeightValue>>;
+  fontSize: Readonly<Record<string, RemValue>>;
+  /** Absolute lengths, not the unitless ratios CSS also allows. */
+  lineHeight: Readonly<Record<string, RemValue>>;
+}>;
+
+type DimensionNode = RemValue | Readonly<{ [key: string]: DimensionNode }>;
+
+/** Arbitrarily nested, but every leaf is a rem length. */
+export type DimensionTokens = Readonly<Record<string, DimensionNode>>;
+
+export type ThemeTokens = Readonly<{
+  color: ColorTokens;
+  typography: TypographyTokens;
+  dimension: DimensionTokens;
+}>;

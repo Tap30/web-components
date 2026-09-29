@@ -1,11 +1,28 @@
 {
-  "extends": "../tsconfig.json",
+  // `paths: {}` deliberately RESETS the root map rather than extending it.
+  //
+  // The root `tsconfig.json` aliases `@tapsioss/*` to each package's source in
+  // this repo, including `@tapsioss/theme` → `packages/theme/src`. That is wrong
+  // here: this playground pins `@tapsioss/theme` to the published `0.8.0`, the
+  // flat pre-1.0 token set the Lit components are styled against. Without the
+  // reset, the alias would win and silently substitute the workspace 1.x tokens,
+  // whose names do not match.
+  //
+  // With the map empty, every `@tapsioss/*` specifier resolves through this
+  // package's own `node_modules` and its `exports` map — so `package.json` is the
+  // single source of truth for which version this playground gets, and imports
+  // land on each package's built output, exactly as a real consumer's would.
+  //
+  // `moduleResolution: bundler` is what makes that work: it honours `exports`,
+  // which the root's Node10 setting ignores.
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "ES2020",
     "module": "ES2020",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "paths": {}
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

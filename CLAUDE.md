@@ -13,8 +13,19 @@ Use `pnpm` exclusively. `npm` and `yarn` are not supported. Requires Node >=20.
 # Install dependencies
 pnpm install
 
-# Start dev server (packages + playground at localhost:5173)
+# Everything: every package in watch mode + both playgrounds
 pnpm dev
+
+# One track end to end — only that track's packages watch, only its playground starts
+pnpm dev:lit      # web-components + react-components, playground on :5173
+pnpm dev:react    # react-ui, playground on :5174
+
+# Or a single piece
+pnpm dev:playground:lit      # :5173
+pnpm dev:playground:react    # :5174
+pnpm dev:packages:lit        # watchers for the lit track only
+pnpm dev:packages:react      # watchers for the react track only
+pnpm storybook:react         # :6006
 
 # Build all packages
 pnpm build:packages
@@ -101,9 +112,36 @@ adding or changing web component events/slots. Do not hand-edit files under
 ### Testing
 
 Tests use Playwright with a custom test harness from `internals/test-helpers`.
-Tests run against the **playground** app (`playground/`) which serves components
-at `http://localhost:3000/test`. The `render` helper from
+Tests run against the **Lit playground** (`playground/lit`), which serves
+components at `http://localhost:3000/test`. The `render` helper from
 `@internals/test-helpers` injects HTML into the test page.
+
+There are two playgrounds, split because the two generations of the design
+system are styled by different, incompatible token sets:
+
+| Playground         | Package                      | Consumes                             | `@tapsioss/theme`   |
+| ------------------ | ---------------------------- | ------------------------------------ | ------------------- |
+| `playground/lit`   | `@tapsioss/lit-playground`   | `web-components`, `react-components` | `0.8.0` (from npm)  |
+| `playground/react` | `@tapsioss/react-playground` | `react-ui`                           | `workspace:*` (1.x) |
+
+Both depend on the **same package name** at different versions, which works
+because pnpm gives each workspace package its own `node_modules`. Each
+playground's `package.json` is therefore the single source of truth for what it
+resolves.
+
+Each theme stylesheet declares its tokens twice — on `:root` and on
+`[data-tapsi-theme="<product>-<mode>"]` — so importing one theme needs no setup,
+while importing several lets a subtree pick its own. Storybook and the React
+playground each import all four and ship their own small `ThemeProvider`;
+`@tapsioss/theme` stays framework-agnostic and provides none.
+
+For that to hold, each playground's `tsconfig.json` sets **`"paths": {}`**,
+resetting the root map — the root aliases `@tapsioss/*` to package sources,
+including `@tapsioss/theme` → `packages/theme/src`, which would otherwise
+override the lit playground's pin and silently substitute 1.x tokens. With the
+map empty, resolution goes through each package's `exports`, so a playground
+also exercises **built output** (Storybook is the run-from-source environment;
+run `pnpm build:packages` after changing a package).
 
 Tests run on Desktop Chrome and Android (Galaxy S9+). On CI, tests retry up to 2
 times.

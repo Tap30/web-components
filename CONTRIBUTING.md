@@ -117,10 +117,52 @@ Start developing server and watch for code changes:
 pnpm dev
 ```
 
-The local dev server is a Vite app. You can import codes and make changes to
-`playground/src/index.ts` (for native stuffs) or `playground/src/react-root.tsx`
-(for React stuffs). Additionally, you might need to change
-`playground/index.html` to use your registered web components.
+There are two playgrounds, one per generation of the design system, because they
+are styled by different token sets and cannot share a page:
+
+- **`playground/lit`** (`pnpm dev:lit`, port 5173) — `@tapsioss/web-components`
+  and `@tapsioss/react-components`. Edit `playground/lit/src/index.ts` (for
+  native stuffs) or `playground/lit/src/react-root.tsx` (for React stuffs), and
+  `playground/lit/index.html` to use your registered web components. It pins
+  `@tapsioss/theme` to the published **`0.8.0`**, the pre-1.0 token set these
+  components are styled against.
+- **`playground/react`** (`pnpm dev:react`, port 5174) — `@tapsioss/react-ui`.
+  Edit `playground/react/src/index.tsx`. It uses the workspace `@tapsioss/theme`
+  (1.x).
+
+Both name the _same_ package at different versions; pnpm gives each its own
+`node_modules`, and each playground's `tsconfig.json` sets `"paths": {}` so the
+root's source aliases cannot override the pin. Add or change a dependency in a
+playground's `package.json` and that is what it gets — nothing else to update.
+
+Because `paths` is empty, a playground resolves packages through their `exports`
+map, i.e. their **built output**. Run `pnpm build:packages` (or leave a watcher
+running) after changing a package. Storybook is the run-from-source environment.
+
+### Dev scripts
+
+| Command                     | Runs                                           |
+| --------------------------- | ---------------------------------------------- |
+| `pnpm dev`                  | every package in watch mode + both playgrounds |
+| `pnpm dev:lit`              | the lit track's packages + its playground      |
+| `pnpm dev:react`            | the react track's packages + its playground    |
+| `pnpm dev:packages`         | watchers for every package                     |
+| `pnpm dev:packages:lit`     | watchers for the lit track only                |
+| `pnpm dev:packages:react`   | watchers for the react track only              |
+| `pnpm dev:playground:lit`   | the lit playground alone                       |
+| `pnpm dev:playground:react` | the react playground alone                     |
+| `pnpm storybook:react`      | Storybook, port 6006                           |
+
+A "track" is not a hand-maintained list: `dev:packages:<track>` selects
+`--filter "@tapsioss/<track>-playground^..."`, which is pnpm for _the workspace
+dependencies of that playground, excluding it_. So the lit track watches
+web-components and react-components but not `theme` (it comes from npm there),
+and the react track watches react-ui and theme but not web-components. Add a
+dependency to a playground and its track picks it up automatically.
+
+Note that `packages/theme` has **no** `dev` script — there is nothing to watch —
+so a token change needs `pnpm --filter @tapsioss/theme run build` before a
+playground sees it. Storybook reads the theme from source and does not.
 
 ### Building
 

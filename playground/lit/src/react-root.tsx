@@ -6,16 +6,18 @@ const reactRootElement = document.getElementById("react-root");
 if (!reactRootElement) throw new Error("There is no `#react-root` element.");
 
 /**
- * NOTE: imports from `@tapsioss/react-ui` are by package name, which the root
- * tsconfig `paths` resolve to `packages/react-ui/dist` (listed before `src`).
- * So the playground exercises the BUILT output — including the CSS that
- * `dist/button/button.js` side-effect-imports. Run
- * `pnpm --filter @tapsioss/react-ui run build` to refresh it.
+ * React host for `@tapsioss/react-components` — the `@lit/react` wrappers around
+ * the Lit elements. They belong to this playground rather than the React one
+ * because they render the same web components and need the same legacy tokens.
  *
- * Theme tokens come from `src/index.ts`, which imports
- * `@tapsioss/theme/css-variables`. Without that, buttons render magenta.
+ * `@tapsioss/react-ui` is NOT for this playground. It is the new, Base UI-based
+ * package built on the 1.x tokens, and lives in `playground/react`.
  *
- * @example import { Button } from "@tapsioss/react-ui";
+ * NOTE: imports are by package name, which the root tsconfig `paths` resolve to
+ * each package's `dist` (listed before `src`), so this playground exercises the
+ * BUILT output. Run `pnpm build:packages` to refresh it.
+ *
+ * @example import { Button } from "@tapsioss/react-components";
  */
 
 const App = () => {

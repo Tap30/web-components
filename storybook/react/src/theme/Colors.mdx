@@ -1,95 +1,137 @@
 import { Meta } from "@storybook/addon-docs/blocks";
-import tokens from "@tapsioss/theme/tokens";
-import { ColorGrid } from "./TokenTable.tsx";
+import { ColorGrid, ThemeControls } from "./TokenTable.tsx";
 
 <Meta title="Theme/Colors" />
 
 # Colors
 
-Read live from `packages/theme/src/default-theme/tokens.ts`. Every swatch is
-painted with its CSS custom property, so what you see is what the browser
-resolves.
+Two layers. The **palette** holds the raw literals and is the same whatever you
+render; the **theme** gives each palette entry a job and is what varies by
+product and mode.
 
-Semantic tokens are the ones to use in components. The raw palette exists to
-back them and should rarely be referenced directly.
+Components reference the theme layer only — never the palette. That is what lets
+the same component render as ride-light or drive-dark with no code change.
+
+Swatches below are painted from the CSS custom property and read their printed
+value from the TypeScript set, which is generated separately. A swatch whose
+colour disagrees with its printed value means the two have drifted.
+
+Pick a theme below to switch which set is shown; every block on this page
+follows it. (Docs pages cannot read the toolbar, so they carry their own control
+— the toolbar drives the component stories.)
+
+<ThemeControls />
 
 ## Surface
 
+Backgrounds — the colour a thing _is_.
+
 <ColorGrid
-  tokens={tokens.color.surface}
+  select={t => t.color.surface}
   prefix="color-surface"
 />
 
 ## Content
 
+Foregrounds — text and icons. An `on-*` token is the content colour to use _on
+top of_ the matching surface.
+
 <ColorGrid
-  tokens={tokens.color.content}
+  select={t => t.color.content}
   prefix="color-content"
 />
 
 ## Border
 
 <ColorGrid
-  tokens={tokens.color.border}
+  select={t => t.color.border}
   prefix="color-border"
 />
 
-## Gradient
+## Overlay
+
+Translucent scrims and interaction states. These are the only theme colours with
+an alpha channel.
 
 <ColorGrid
-  tokens={tokens.color.gradient.surface}
-  prefix="color-gradient-surface"
+  select={t => t.color.overlay}
+  prefix="color-overlay"
+/>
+
+## Component
+
+Where the design team maintains a value for one specific component, it lives
+here. Prefer these over the semantic tokens above when building that component.
+
+<ColorGrid
+  select={t => t.color.component}
+  prefix="color-component"
 />
 
 ## Palette
 
-The underlying scale. Prefer a semantic token above unless you are defining one.
+The underlying scale, from `@tapsioss/theme/tokens.css`. Reach for a theme token
+above unless you are defining one.
 
 ### Gray
 
 <ColorGrid
-  tokens={tokens.palette.gray}
+  select={(_, p) => p.palette.gray}
   prefix="palette-gray"
 />
 
 ### Orange
 
 <ColorGrid
-  tokens={tokens.palette.orange}
+  select={(_, p) => p.palette.orange}
   prefix="palette-orange"
 />
 
 ### Blue
 
 <ColorGrid
-  tokens={tokens.palette.blue}
+  select={(_, p) => p.palette.blue}
   prefix="palette-blue"
 />
 
 ### Green
 
 <ColorGrid
-  tokens={tokens.palette.green}
+  select={(_, p) => p.palette.green}
   prefix="palette-green"
 />
 
 ### Red
 
 <ColorGrid
-  tokens={tokens.palette.red}
+  select={(_, p) => p.palette.red}
   prefix="palette-red"
 />
 
 ### Yellow
 
 <ColorGrid
-  tokens={tokens.palette.yellow}
+  select={(_, p) => p.palette.yellow}
   prefix="palette-yellow"
 />
 
 ### Indigo
 
 <ColorGrid
-  tokens={tokens.palette.indigo}
+  select={(_, p) => p.palette.indigo}
   prefix="palette-indigo"
+/>
+
+### Purple
+
+<ColorGrid
+  select={(_, p) => p.palette.purple}
+  prefix="palette-purple"
+/>
+
+### Alpha
+
+<ColorGrid
+  select={(_, p) => p.palette.alpha}
+  prefix="palette-alpha"
 />

@@ -1,0 +1,25 @@
+{
+  // `paths: {}` deliberately RESETS the root map rather than extending it — the
+  // same reason as `playground/lit`, from the other side.
+  //
+  // Every `@tapsioss/*` specifier then resolves through this package's own
+  // `node_modules` and its `exports` map, so `package.json` is the single source
+  // of truth for which version this playground gets, and it cannot pick up the
+  // Lit playground's pinned `@tapsioss/theme@0.8.0`.
+  //
+  // It also means imports land on each package's built output rather than its
+  // source. That is the point of a playground: Storybook is the hot-reload-from-
+  // source environment, this is the production-shaped one. Run `pnpm
+  // build:packages` after changing a package.
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ES2020",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "paths": {}
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

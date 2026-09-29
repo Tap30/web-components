@@ -22,17 +22,12 @@
       "@tapsioss/react-ui": ["../../packages/react-ui/src"],
       "@tapsioss/react-ui/*": ["../../packages/react-ui/src/*"],
       // Re-declared verbatim from the root, since `paths` does not merge.
-      "@tapsioss/theme/*/css-variables": [
-        "../../packages/theme/src/*/tokens.css"
-      ],
-      "@tapsioss/theme/css-variables": [
-        "../../packages/theme/src/default-theme/tokens.css"
-      ],
-      "@tapsioss/theme/*/tokens": ["../../packages/theme/src/*/tokens.ts"],
-      "@tapsioss/theme/tokens": [
-        "../../packages/theme/src/default-theme/tokens.ts"
-      ],
-      "@tapsioss/theme/types": ["../../packages/theme/src/types.ts"]
+      // Two layers: `tokens` is the primitive set, `<product>/<theme>` is a
+      // theme built on it. The wildcards cover both, so adding a product or a
+      // theme needs no change here.
+      "@tapsioss/theme/types": ["../../packages/theme/src/types.ts"],
+      "@tapsioss/theme/*.css": ["../../packages/theme/src/*.css"],
+      "@tapsioss/theme/*": ["../../packages/theme/src/*.ts"]
     }
   },
   "include": ["src"],

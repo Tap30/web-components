@@ -20,7 +20,8 @@
   "ignore": [
     "@internals/*",
     "@tapsioss/docs",
-    "@tapsioss/playground",
+    "@tapsioss/lit-playground",
+    "@tapsioss/react-playground",
     "@tapsioss/react-storybook",
     "@tapsioss/react-ui"
   ]

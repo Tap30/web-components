@@ -174,8 +174,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/icons
       '@tapsioss/theme':
-        specifier: workspace:*
-        version: link:../packages/theme
+        specifier: 0.8.0
+        version: 0.8.0
       '@tapsioss/web-components':
         specifier: workspace:*
         version: link:../packages/web-components
@@ -257,6 +257,9 @@ importers:
       '@floating-ui/dom':
         specifier: ^1.6.11
         version: 1.6.13
+      '@tapsioss/theme':
+        specifier: ^0.8.0
+        version: 0.8.0
       '@use-gesture/vanilla':
         specifier: ^10.3.1
         version: 10.3.1
@@ -280,29 +283,38 @@ importers:
         specifier: ^2.8.0
         version: 2.8.1
 
-  playground:
+  playground/lit:
     dependencies:
       '@tapsioss/icons':
         specifier: workspace:*
-        version: link:../packages/icons
+        version: link:../../packages/icons
       '@tapsioss/react-components':
         specifier: workspace:*
-        version: link:../packages/react-components
+        version: link:../../packages/react-components
       '@tapsioss/react-icons':
         specifier: workspace:*
-        version: link:../packages/react-icons
-      '@tapsioss/react-ui':
-        specifier: workspace:*
-        version: link:../packages/react-ui
+        version: link:../../packages/react-icons
       '@tapsioss/theme':
-        specifier: workspace:*
-        version: link:../packages/theme
+        specifier: 0.8.0
+        version: 0.8.0
       '@tapsioss/web-components':
         specifier: workspace:*
-        version: link:../packages/web-components
+        version: link:../../packages/web-components
       '@tapsioss/web-icons':
         specifier: workspace:*
-        version: link:../packages/web-icons
+        version: link:../../packages/web-icons
+
+  playground/react:
+    dependencies:
+      '@tapsioss/react-icons':
+        specifier: workspace:*
+        version: link:../../packages/react-icons
+      '@tapsioss/react-ui':
+        specifier: workspace:*
+        version: link:../../packages/react-ui
+      '@tapsioss/theme':
+        specifier: workspace:*
+        version: link:../../packages/theme
 
   storybook/react:
     dependencies:
@@ -1700,6 +1712,9 @@ packages:
         optional: true
       typescript:
         optional: true
+
+  '@tapsioss/theme@0.8.0':
+    resolution: {integrity: sha512-mKdkwb0kgVFpu/bdVerLILxPXPMiJq7DK4EgF5skw++NQm3rIBxLQ8qbdMS/JUoaHYcy4wuf56W9ytPhmJKnxA==}
 
   '@testing-library/dom@10.4.2':
     resolution: {integrity: sha512-yzr2S9HyAIdhz2/6qHgbs665Q7PKVcDF05vsOlHPxG1mo36gKVesdYVeDLnXgfjJ03CrKRk08knc6+E/9m8v2Q==}
@@ -6198,6 +6213,10 @@ snapshots:
       typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
+
+  '@tapsioss/theme@0.8.0':
+    dependencies:
+      tslib: 2.8.1
 
   '@testing-library/dom@10.4.2':
     dependencies:

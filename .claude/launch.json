@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "storybook-react",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "storybook:react"],
+      "port": 6006
+    },
+    {
+      "name": "playground-lit",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "dev:playground:lit"],
+      "port": 5173
+    },
+    {
+      "name": "playground-react",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "dev:playground:react"],
+      "port": 5174
+    }
+  ]
+}

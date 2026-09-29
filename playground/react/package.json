@@ -1,0 +1,16 @@
+{
+  "sideEffects": true,
+  "name": "@tapsioss/react-playground",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start:dev": "vite --port 5174",
+    "start:test": "tsc && vite build && vite --port 3001 preview"
+  },
+  "dependencies": {
+    "@tapsioss/react-icons": "workspace:*",
+    "@tapsioss/react-ui": "workspace:*",
+    "@tapsioss/theme": "workspace:*"
+  }
+}

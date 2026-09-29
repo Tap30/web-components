@@ -1,45 +1,54 @@
 import { Meta } from "@storybook/addon-docs/blocks";
-import tokens from "@tapsioss/theme/tokens";
-import { TypeScale } from "./TokenTable.tsx";
+import { ScaleTable, ThemeControls, TypeScale } from "./TokenTable.tsx";
 
 <Meta title="Theme/Typography" />
 
 # Typography
 
-Each variant expands to four CSS custom properties — `-font`, `-size`,
-`-height`, `-weight`. The samples below are styled from those variables, not
-from the JS values.
+Figma models type as **four independent scales**, not as composite styles:
 
-Note that `-height` is a **unitless ratio** and `-weight` a raw number, so both
-can be used directly in CSS without conversion.
+- **`fontFamily`** and **`fontWeight`** are keyed by **category** — `body`,
+  `label`, `headline`, `display` — e.g. `--tapsi-typography-font-family-body`.
+- **`fontSize`** and **`lineHeight`** are keyed by **variant**, the category
+  plus a step — e.g. `--tapsi-typography-font-size-body-large`.
 
-Every variant resolves its font through `var(--tapsi-typography-font-family)`,
-currently set to <code>{tokens.typography["font-family"]}</code>.
+So a full text style is four variables, and family and weight are shared across
+every size in a category. The specimens below join them by prefix.
+
+`lineHeight` is an **absolute rem length**, not the unitless ratio CSS also
+accepts — set it on `line-height` directly. `fontWeight` is a raw number: Figma
+stores the name (`"Regular"`), and the token carries the `400` that CSS needs.
+
+<ThemeControls />
 
 ## Display
 
 <TypeScale
-  variants={tokens.typography.display}
-  prefix="typography-display"
+  category="display"
+  sample="تپسی"
 />
 
 ## Headline
 
-<TypeScale
-  variants={tokens.typography.headline}
-  prefix="typography-headline"
-/>
+<TypeScale category="headline" />
 
 ## Label
 
-<TypeScale
-  variants={tokens.typography.label}
-  prefix="typography-label"
-/>
+<TypeScale category="label" />
 
 ## Body
 
-<TypeScale
-  variants={tokens.typography.body}
-  prefix="typography-body"
+<TypeScale category="body" />
+
+## Font size scale
+
+The primitive scale the sizes above resolve to, from
+`@tapsioss/theme/tokens.css`. The key is the **pixel value in Figma**, so
+`--tapsi-font-size-18` is `1.125rem`. Reach for a `font-size-*` token above
+unless you are defining one.
+
+<ScaleTable
+  select={(_, p) => p.font.size}
+  prefix="font-size"
+  preview="bar"
 />

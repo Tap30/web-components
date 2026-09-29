@@ -75,16 +75,14 @@
         "./packages/react-ui/dist/*",
         "./packages/react-ui/src/*"
       ],
-      // Tokens
-      "@tapsioss/theme/*/css-variables": ["./packages/theme/src/*/tokens.css"],
-      "@tapsioss/theme/css-variables": [
-        "./packages/theme/src/default-theme/tokens.css"
-      ],
-      "@tapsioss/theme/*/tokens": ["./packages/theme/src/*/tokens.ts"],
-      "@tapsioss/theme/tokens": [
-        "./packages/theme/src/default-theme/tokens.ts"
-      ],
-      "@tapsioss/theme/types": ["./packages/theme/src/types.ts"]
+      // Tokens. Two layers: `tokens` is the primitive set, `<product>/<theme>`
+      // is a theme built on top of it. The wildcard covers both the `.css`
+      // side-effect imports and the `.ts` value imports, so adding a product or
+      // a theme needs no change here.
+      "@tapsioss/theme": ["./packages/theme/src/index.ts"],
+      "@tapsioss/theme/types": ["./packages/theme/src/types.ts"],
+      "@tapsioss/theme/*.css": ["./packages/theme/src/*.css"],
+      "@tapsioss/theme/*": ["./packages/theme/src/*.ts"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "docs/.vitepress/**/*.ts"],

@@ -38,7 +38,14 @@ pnpm gen:metadata
 
 > Tests start a playground server automatically via `webServer` in
 > `playwright.config.ts`. The playground must be built first
-> (`pnpm --filter @tapsioss/playground run start:test` is used internally).
+> (`pnpm --filter @tapsioss/lit-playground run start:test` is used internally).
+>
+> That is `playground/lit`, which pins `@tapsioss/theme` to the published
+> **`0.8.0`** — these components reference the pre-1.0 token names, so the
+> workspace 1.x cannot style them. The pin holds because that playground's
+> `tsconfig.json` sets `"paths": {}`, resetting the root aliases that would
+> otherwise redirect `@tapsioss/theme` to `packages/theme/src`. The separate
+> `playground/react` is for `@tapsioss/react-ui` and the current tokens.
 
 ## Architecture
 

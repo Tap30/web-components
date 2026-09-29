@@ -34,7 +34,8 @@
     "build": "tsc --project ./tsconfig.build.json"
   },
   "peerDependencies": {
-    "react": ">=16.8"
+    "react": ">=16.8",
+    "@tapsioss/theme": "<=0.8.0"
   },
   "dependencies": {
     "@lit/react": "^1.0.6",

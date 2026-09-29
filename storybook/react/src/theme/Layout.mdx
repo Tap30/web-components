@@ -1,37 +1,56 @@
 import { Meta } from "@storybook/addon-docs/blocks";
-import tokens from "@tapsioss/theme/tokens";
-import { ScaleTable } from "./TokenTable.tsx";
+import { ScaleTable, ThemeControls } from "./TokenTable.tsx";
 
 <Meta title="Theme/Layout" />
 
 # Layout
 
-Spacing, radius and stroke scales.
+Every length in the system is **rem**, converted once at the Figma boundary, so
+a user who raises their browser font size scales the whole interface rather than
+just the text.
 
-## Spacing
-
-The numbering is an **ordinal index, not a multiplier** — `--tapsi-spacing-4` is
-`0.5rem`, not `4` of anything. Note also the half-step `3-1` sitting between `3`
-and `4`.
-
-<ScaleTable
-  tokens={tokens.spacing}
-  prefix="spacing"
-  preview="bar"
-/>
+<ThemeControls />
 
 ## Radius
 
 <ScaleTable
-  tokens={tokens.radius}
-  prefix="radius"
+  select={t => t.dimension.radius}
+  prefix="dimension-radius"
   preview="corner"
 />
 
-## Stroke
+`full` is `62.4375rem` — the `Number/999` step, large enough to render as a pill
+on any real element.
+
+## Grid
 
 <ScaleTable
-  tokens={tokens.stroke}
-  prefix="stroke"
-  preview="box"
+  select={t => t.dimension.layout}
+  prefix="dimension-layout"
+  preview="bar"
+/>
+
+## Component
+
+Per-component metrics maintained by the design team. Prefer these over the raw
+number scale when building the component they name.
+
+<ScaleTable
+  select={t => t.dimension.component}
+  prefix="dimension-component"
+  preview="bar"
+/>
+
+## Number
+
+The raw scale every length above resolves to, from `@tapsioss/theme/tokens.css`.
+The key is the **pixel value in Figma**, so `--tapsi-number-16` is `1rem`.
+
+Border widths come from here too — `--tapsi-number-1` and `--tapsi-number-2`
+replace the retired `--tapsi-stroke-1` and `--tapsi-stroke-2`.
+
+<ScaleTable
+  select={(_, p) => p.number}
+  prefix="number"
+  preview="bar"
 />
