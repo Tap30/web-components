@@ -35,13 +35,18 @@
     "check:lint": "wireit",
     "check:format": "wireit",
     "format": "wireit",
-    "storybook:react": "pnpm --filter @tapsioss/react-storybook run dev",
-    "build:storybook:react": "pnpm --filter @tapsioss/react-storybook run build",
+    "build:react-icons": "wireit",
+    "storybook:react": "run-s build:react-icons storybook:react:start",
+    "storybook:react:start": "pnpm --filter @tapsioss/react-storybook run dev",
+    "build:storybook:react": "run-s build:react-icons storybook:react:build",
+    "storybook:react:build": "pnpm --filter @tapsioss/react-storybook run build",
     "dev:packages": "pnpm run -r --parallel --filter=!@tapsioss/docs --filter=!@tapsioss/react-storybook --filter=!@tapsioss/lit-playground --filter=!@tapsioss/react-playground dev",
     "dev:packages:lit": "pnpm run --parallel --filter \"@tapsioss/lit-playground^...\" dev",
     "dev:packages:react": "pnpm run --parallel --filter \"@tapsioss/react-playground^...\" dev",
-    "dev:playground:lit": "pnpm --filter @tapsioss/lit-playground run start:dev",
-    "dev:playground:react": "pnpm --filter @tapsioss/react-playground run start:dev",
+    "dev:playground:lit": "run-s build:react-icons playground:lit:start",
+    "playground:lit:start": "pnpm --filter @tapsioss/lit-playground run start:dev",
+    "dev:playground:react": "run-s build:react-icons playground:react:start",
+    "playground:react:start": "pnpm --filter @tapsioss/react-playground run start:dev",
     "dev:playground": "run-p dev:playground:react dev:playground:lit",
     "dev:docs:vitepress": "pnpm --filter @tapsioss/docs run dev",
     "dev:docs": "run-s gen:metadata dev:docs:vitepress",
@@ -77,7 +82,8 @@
     "check:lint": {
       "dependencies": [
         "lint:ts",
-        "lint:ecma"
+        "lint:ecma",
+        "lint:ts:storybook"
       ]
     },
     "lint:ts": {
@@ -279,7 +285,8 @@
     },
     "test": {
       "dependencies": [
-        "test:web-components"
+        "test:web-components",
+        "test:react-ui"
       ]
     },
     "test:web-components": {
@@ -296,6 +303,38 @@
       "dependencies": [
         "build:theme",
         "build:web-components"
+      ]
+    },
+    "test:react-ui": {
+      "command": "pnpm --filter @tapsioss/react-ui run test",
+      "clean": "if-file-deleted",
+      "files": [
+        "./packages/react-ui/src/**/*",
+        "./packages/react-ui/playwright.config.ts",
+        "./playground/react/src/**/*"
+      ],
+      "output": [
+        "./packages/react-ui/test-results/**/*",
+        "./packages/react-ui/playwright-report/**/*"
+      ],
+      "dependencies": [
+        "build:theme",
+        "build:react-ui"
+      ]
+    },
+    "lint:ts:storybook": {
+      "command": "pnpm --filter @tapsioss/react-storybook run check:types",
+      "files": [
+        "./storybook/react/src/**/*.{ts,tsx}",
+        "./storybook/react/.storybook/**/*.{ts,tsx}",
+        "./storybook/react/tsconfig.json",
+        "./tsconfig.json",
+        "./packages/react-ui/src/**/*.{ts,tsx}",
+        "./packages/theme/src/**/*.ts"
+      ],
+      "output": [],
+      "dependencies": [
+        "build:react-icons"
       ]
     }
   },
@@ -338,6 +377,7 @@
     "postcss-cli": "^11.0.1",
     "postcss-combine-duplicated-selectors": "^10.0.3",
     "postcss-import": "^16.1.0",
+    "postcss-modules": "^9.0.1",
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "react": "^18.3.1",

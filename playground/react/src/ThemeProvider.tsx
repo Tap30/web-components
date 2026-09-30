@@ -43,23 +43,50 @@ export type ThemeProviderProps = {
    * which is a light grey).
    */
   surface?: boolean;
+  /**
+   * Render text the way the Tapsi PWA does.
+   *
+   * The PWA's CSS reset sets `-webkit-font-smoothing: antialiased` and
+   * `text-rendering: optimizeLegibility`, which makes the same font look
+   * slightly different — thinner strokes, and kerning/ligatures applied. Both
+   * properties inherit, so setting them here reaches every component inside.
+   *
+   * NOTE: `-webkit-font-smoothing` only does anything on macOS WebKit/Blink. On
+   * Windows and Linux this toggle will look like a no-op, which is a property of
+   * the CSS, not of this switch.
+   *
+   * @default false
+   */
+  fontSmoothing?: boolean;
 } & ComponentPropsWithRef<"div">;
 
 export const ThemeProvider = (props: ThemeProviderProps) => {
-  const { theme = "ride-light", surface = false, style, ...otherProps } = props;
+  const {
+    theme = "ride-light",
+    surface = false,
+    fontSmoothing = false,
+    style,
+    ...otherProps
+  } = props;
 
   return (
     <div
       data-tapsi-theme={theme}
-      style={
-        surface
-          ? {
-              background: "var(--tapsi-color-surface-primary)",
-              color: "var(--tapsi-color-content-primary)",
-              ...style,
-            }
-          : style
-      }
+      data-tapsi-font-smoothing={fontSmoothing ? "pwa" : undefined}
+      style={{
+        ...(surface && {
+          background: "var(--tapsi-color-surface-primary)",
+          color: "var(--tapsi-color-content-primary)",
+        }),
+        // Set in BOTH states, not only when on. Storybook's docs chrome already
+        // applies `-webkit-font-smoothing: antialiased` to its wrapper, so
+        // leaving the off state unset would inherit that and make "off" look
+        // like "on" — the comparison this switch exists for would be a no-op.
+        WebkitFontSmoothing: fontSmoothing ? "antialiased" : "auto",
+        MozOsxFontSmoothing: fontSmoothing ? "grayscale" : "auto",
+        textRendering: fontSmoothing ? "optimizeLegibility" : "auto",
+        ...style,
+      }}
       {...otherProps}
     />
   );

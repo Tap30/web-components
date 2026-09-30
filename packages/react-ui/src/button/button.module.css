@@ -1,0 +1,336 @@
+/*
+ * Button — see the Rasti DS "Button" page in Figma (node 135:2594).
+ *
+ * This is a CSS MODULE. Every class name here is scoped by the build into
+ * `<local>_<hash>`, so nothing in this file is a public API — a consumer cannot
+ * target `.tapsi-button` from their own stylesheet, and should not try. The
+ * component exposes `data-part` attributes for anything that genuinely needs to
+ * be selected from outside, and `--tapsi-*` custom properties are untouched by
+ * the scoping, so they remain the supported way to influence appearance.
+ *
+ * Every value here comes from `@tapsioss/theme` as a CSS custom property, and
+ * each one is the token Figma actually binds to that property. This file
+ * deliberately does NOT import the theme: tokens are consumed via `var(…)`,
+ * which resolves against whatever the consuming app provides.
+ *
+ *   import "@tapsioss/theme/tokens.css";      // primitives
+ *   import "@tapsioss/theme/ride/light.css";  // the theme to render in
+ *
+ * Figma's axes map to props as: Variant → `variant`, Hierarchy → `hierarchy`,
+ * Size → `size`, State → `disabled` / `loading` / CSS `:active`. Only the 8
+ * variant × hierarchy pairs that exist in Figma are styled here; the type
+ * prevents the other four.
+ *
+ * The fallbacks in `var(--token, <fallback>)` are a diagnostic, not a styling
+ * decision: without the theme the button renders obviously wrong rather than
+ * collapsing to something plausible.
+ */
+
+.tapsi-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  font-family: var(--tapsi-typography-font-family-label, sans-serif);
+  font-weight: var(--tapsi-typography-font-weight-label);
+  /* Figma binds Typography/Letter-Spacing/Label, which is 0 at every size. */
+
+  background: var(--tapsi-button-surface, magenta);
+  color: var(--tapsi-button-content, magenta);
+
+  block-size: var(--tapsi-button-size);
+  min-inline-size: var(--tapsi-button-min-inline-size);
+  /*
+   * Figma nests the content: the button's own padding sits on a Container, and
+   * the label lives in a Text Frame with `gap/<size>-horizontal` as its OWN
+   * horizontal padding — it is not a flex gap. So a label-only button has
+   * padding + gap on each side (8 + 8 = 16px at medium), and the gap is what
+   * separates an adornment from the label. Applying it as `gap` would collapse
+   * to nothing on a button with no adornments.
+   */
+  padding-inline: var(--tapsi-button-padding-horizontal);
+  border-radius: var(--tapsi-button-radius, 999px);
+  /*
+   * Figma sets `overflow-clip` on the button and `whitespace-nowrap` on the
+   * label: content that does not fit is clipped, never wrapped. A wrapped label
+   * would break the fixed `block-size` the design gives every size.
+   */
+  overflow: hidden;
+  font-size: var(--tapsi-button-font-size);
+  line-height: var(--tapsi-button-line-height);
+}
+
+.tapsi-button--full-width {
+  inline-size: 100%;
+  /* The design's minimum must not stop the button filling a narrower parent. */
+  min-inline-size: 0;
+}
+
+/*
+ * The pressed state is an overlay tinting whatever surface is underneath,
+ * rather than a per-variant colour — which is why `tertiary` (no background)
+ * still shows feedback.
+ *
+ * DISCREPANCY: the Figma button page binds `Ride/Color/State/Overlay-Pressed`
+ * (#0000001a, i.e. 10% black). The current token export has no such collection;
+ * its equivalent is `Color/Overlay/Pressed`, which is 20% black — 10% is its
+ * `Color/Overlay/Hovered`. The current export wins here, since it is the source
+ * of truth, but the two disagree and the design team should reconcile them.
+ */
+.tapsi-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: transparent;
+  pointer-events: none;
+}
+
+.tapsi-button:active:not(
+    [disabled],
+    [aria-disabled="true"],
+    .tapsi-button--loading
+  )::before {
+  background: var(--tapsi-color-overlay-pressed);
+}
+
+.tapsi-button:focus-visible {
+  /* `Number/2` is the successor to the retired `--tapsi-stroke-2`. */
+  outline: var(--tapsi-number-2, 2px) solid
+    var(--tapsi-color-content-accent, magenta);
+  outline-offset: var(--tapsi-number-2, 2px);
+}
+
+/* Sizes — metrics only, all from Dimension/Component/Button/*. */
+
+.tapsi-button--small {
+  --tapsi-button-size: var(--tapsi-dimension-component-button-size-small);
+  --tapsi-button-padding-horizontal: var(
+    --tapsi-dimension-component-button-padding-small-horizontal
+  );
+  --tapsi-button-content-padding-horizontal: var(
+    --tapsi-dimension-component-button-gap-small-horizontal
+  );
+  --tapsi-button-adornment-size: var(--tapsi-number-20);
+  --tapsi-button-radius: var(--tapsi-dimension-component-button-radius-small);
+  --tapsi-button-font-size: var(--tapsi-typography-font-size-label-small);
+  --tapsi-button-line-height: var(--tapsi-typography-line-height-label-small);
+}
+
+.tapsi-button--medium {
+  --tapsi-button-size: var(--tapsi-dimension-component-button-size-medium);
+  --tapsi-button-padding-horizontal: var(
+    --tapsi-dimension-component-button-padding-medium-horizontal
+  );
+  --tapsi-button-content-padding-horizontal: var(
+    --tapsi-dimension-component-button-gap-medium-horizontal
+  );
+  --tapsi-button-adornment-size: var(--tapsi-number-24);
+  --tapsi-button-radius: var(--tapsi-dimension-component-button-radius-medium);
+  --tapsi-button-font-size: var(--tapsi-typography-font-size-label-medium);
+  --tapsi-button-line-height: var(--tapsi-typography-line-height-label-medium);
+}
+
+.tapsi-button--large {
+  --tapsi-button-size: var(--tapsi-dimension-component-button-size-large);
+  --tapsi-button-padding-horizontal: var(
+    --tapsi-dimension-component-button-padding-large-horizontal
+  );
+  --tapsi-button-content-padding-horizontal: var(
+    --tapsi-dimension-component-button-gap-large-horizontal
+  );
+  --tapsi-button-adornment-size: var(--tapsi-number-24);
+  /*
+   * Figma sets `min-w-[96px]` on the Large button. Medium and Small were not
+   * inspected before the Figma connection dropped, so they deliberately have no
+   * minimum rather than a guessed one.
+   */
+  --tapsi-button-min-inline-size: 96px;
+  --tapsi-button-radius: var(--tapsi-dimension-component-button-radius-large);
+  --tapsi-button-font-size: var(--tapsi-typography-font-size-label-large);
+  --tapsi-button-line-height: var(--tapsi-typography-line-height-label-large);
+}
+
+/* Variant × hierarchy — colour channels only. */
+
+.tapsi-button--default-primary {
+  --tapsi-button-surface: var(--tapsi-color-component-button-surface-default);
+  --tapsi-button-content: var(--tapsi-color-component-button-content-default);
+}
+
+.tapsi-button--default-secondary {
+  --tapsi-button-surface: var(--tapsi-color-surface-tertiary);
+  --tapsi-button-content: var(--tapsi-color-content-primary);
+}
+
+.tapsi-button--default-tertiary {
+  --tapsi-button-surface: transparent;
+  --tapsi-button-content: var(--tapsi-color-content-primary);
+}
+
+.tapsi-button--destructive-primary {
+  --tapsi-button-surface: var(--tapsi-color-surface-negative);
+  --tapsi-button-content: var(--tapsi-color-content-on-negative);
+}
+
+.tapsi-button--destructive-secondary {
+  --tapsi-button-surface: var(--tapsi-color-surface-negative-light);
+  --tapsi-button-content: var(--tapsi-color-content-negative);
+}
+
+.tapsi-button--destructive-tertiary {
+  --tapsi-button-surface: transparent;
+  --tapsi-button-content: var(--tapsi-color-content-negative);
+}
+
+.tapsi-button--elevated-primary {
+  --tapsi-button-surface: var(--tapsi-color-surface-primary);
+  --tapsi-button-content: var(--tapsi-color-content-primary);
+
+  /*
+   * GAP: Figma binds the `Fab` effect here —
+   * DROP_SHADOW #0000001A, offset (0, 4), radius 16, spread 0 — but the token
+   * export has no Shadow group, so there is no `--tapsi-shadow-fab` to
+   * reference. The value is inlined to keep the variant meaningful; replace the
+   * whole declaration once shadows are exported. See packages/theme/PARKED
+   * notes and AGENTS.md §8.
+   */
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
+}
+
+.tapsi-button--cta-primary {
+  /*
+   * GAP: Figma fills this with the `Surface-Gradient/Brand` gradient, which the
+   * token export does not carry (it has no gradient tokens). This falls back to
+   * the flat brand surface the export does define for the same component slot,
+   * so the variant is usable and on-brand but not yet gradient.
+   */
+  --tapsi-button-surface: var(--tapsi-color-component-button-surface-cta);
+  --tapsi-button-content: var(--tapsi-color-component-button-content-cta);
+}
+
+/*
+ * Disabled overrides every variant, matching Figma's State=Disabled, which is
+ * one appearance rather than a per-variant treatment.
+ *
+ * `[aria-disabled]` covers the link form: an anchor cannot be natively
+ * disabled, so it is marked rather than blocked, and still looks inert.
+ */
+.tapsi-button[disabled],
+.tapsi-button[aria-disabled="true"] {
+  --tapsi-button-surface: var(--tapsi-color-surface-disabled);
+  --tapsi-button-content: var(--tapsi-color-content-disabled);
+
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Loading */
+
+.tapsi-button--loading {
+  cursor: progress;
+  /*
+   * A loading button must not be activatable. Blocking the pointer here rather
+   * than only in the click handler is what actually prevents it: a React
+   * `onClick` runs on a delegated synthetic event, so any native listener
+   * already attached to this element has fired by then and cannot be stopped.
+   * Keyboard activation is handled in the component.
+   */
+  pointer-events: none;
+}
+
+.tapsi-button--loading .tapsi-button__content,
+.tapsi-button--loading .tapsi-button__adornment {
+  /*
+   * Kept in the layout so the button does not resize when loading starts —
+   * a button that shrinks under the pointer is easy to mis-click.
+   */
+  visibility: hidden;
+}
+
+.tapsi-button__spinner {
+  position: absolute;
+  /*
+   * `inset: 0` + `margin: auto` on a fixed-size absolutely positioned box
+   * centres it on both axes, and does so independently of writing direction.
+   *
+   * The previous `inset-inline-start: 50%` + `translate: 50%` only centred in
+   * one direction: `inset-inline-start` flips to the right edge under RTL while
+   * the translate percentage does not, so the spinner sat at the start edge.
+   */
+  inset: 0;
+  margin: auto;
+
+  inline-size: 1em;
+  block-size: 1em;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-block-start-color: transparent;
+  animation: tapsi-button-spin 0.7s linear infinite;
+}
+
+@keyframes tapsi-button-spin {
+  to {
+    rotate: 1turn;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tapsi-button__spinner {
+    animation-duration: 2.4s;
+  }
+}
+
+/* Adornments */
+
+/*
+ * The adornment is an arbitrary `ReactNode`, so the BOX is what binds it to the
+ * button's size — `@tapsioss/react-icons` defaults to `size="auto"`, which
+ * renders `width: 100%; height: 100%`, so a Tapsi icon fills this exactly.
+ *
+ * Colour needs nothing: `BaseIcon` sets `color: currentcolor; fill:
+ * currentcolor`, and this box inherits the button's content colour, so an
+ * adornment already follows the variant and hierarchy.
+ *
+ * GAP: Figma hardcodes `size-[24px]` / `20px` on the icon frames — there is no
+ * `Dimension/Component/Button/Icon/*` token to bind to. These use the primitive
+ * scale, which carries the exact steps, rather than a literal.
+ */
+.tapsi-button__adornment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  inline-size: var(--tapsi-button-adornment-size);
+  block-size: var(--tapsi-button-adornment-size);
+}
+
+/*
+ * Any SVG passed in conforms to the box. A Tapsi icon given an explicit `size`
+ * prop sets an inline style, which wins over this — so a consumer who really
+ * wants a different size still can.
+ */
+.tapsi-button__adornment > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.tapsi-button__content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 0;
+  white-space: nowrap;
+  /* Figma's "Text Frame" padding — see the note on `.tapsi-button`. */
+  padding-inline: var(--tapsi-button-content-padding-horizontal);
+}

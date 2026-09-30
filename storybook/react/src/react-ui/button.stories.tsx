@@ -1,4 +1,5 @@
 import { type Meta, type StoryObj } from "@storybook/react-vite";
+import { CircleCross } from "@tapsioss/react-icons";
 import { Button } from "@tapsioss/react-ui";
 
 // Imported by PACKAGE NAME, not by relative path. Stories therefore consume the
@@ -27,41 +28,93 @@ const meta = {
       description: "Button content.",
       table: { category: "Content" },
     },
+    leadingAdornment: {
+      control: "boolean",
+      mapping: { true: <CircleCross />, false: undefined },
+      description:
+        "Rendered before the content — an icon, a counter, a badge. Any `ReactNode`; the control here just toggles a sample icon.",
+      table: { category: "Content" },
+    },
+    trailingAdornment: {
+      control: "boolean",
+      mapping: { true: <CircleCross />, false: undefined },
+      description: "Rendered after the content.",
+      table: { category: "Content" },
+    },
     variant: {
       control: "inline-radio",
-      options: ["primary", "ghost", "destructive"],
+      options: ["default", "elevated", "destructive", "cta"],
       description:
-        "Visual style. Each variant sets only the background and content colour, both from `@tapsioss/theme` tokens.",
+        "Colour scheme — Figma's `Variant`. `elevated` and `cta` exist only as `primary`; the type rejects the other pairings.",
       table: {
         category: "Appearance",
-        type: { summary: '"primary" | "ghost" | "destructive"' },
+        type: { summary: '"default" | "elevated" | "destructive" | "cta"' },
+        defaultValue: { summary: "default" },
+      },
+    },
+    hierarchy: {
+      control: "inline-radio",
+      options: ["primary", "secondary", "tertiary"],
+      description:
+        "How much visual weight the button carries — Figma's `Hierarchy`. `secondary` and `tertiary` apply to `default` and `destructive` only.",
+      table: {
+        category: "Appearance",
+        type: { summary: '"primary" | "secondary" | "tertiary"' },
         defaultValue: { summary: "primary" },
       },
     },
     size: {
       control: "inline-radio",
       options: ["sm", "md", "lg"],
-      description: "Control height, padding and label typography.",
+      description:
+        "Control height, padding, gap and label typography — all from `Dimension/Component/Button/*`.",
       table: {
         category: "Appearance",
         type: { summary: '"sm" | "md" | "lg"' },
         defaultValue: { summary: "md" },
       },
     },
+    fullWidth: {
+      control: "boolean",
+      description:
+        "Stretch to fill the available inline space. Drops the design's minimum width so the button can also go narrower than it.",
+      table: { category: "Appearance", defaultValue: { summary: "false" } },
+    },
     disabled: {
       control: "boolean",
       description:
-        "Base UI reflects this as `data-disabled`, which the stylesheet targets.",
+        "Native disabled: removed from the tab order and not activatable. Overrides the variant's colours.",
       table: { category: "State", defaultValue: { summary: "false" } },
+    },
+    loading: {
+      control: "boolean",
+      description:
+        "Shows a spinner and sets `aria-busy`. Stays focusable and keeps its accessible name — it is busy, not unavailable — but cannot be activated.",
+      table: { category: "State", defaultValue: { summary: "false" } },
+    },
+    label: {
+      control: "text",
+      description:
+        "Accessible name, for when the visible content is not descriptive enough.",
+      table: { category: "Accessibility" },
+    },
+    href: {
+      control: "text",
+      description:
+        'Renders an anchor instead of a button. With `target="_blank"`, `rel="noopener noreferrer"` is set automatically.',
+      table: { category: "Behaviour" },
+    },
+    target: {
+      control: "inline-radio",
+      options: [undefined, "_blank", "_self", "_parent", "_top"],
+      description: "Only meaningful alongside `href`.",
+      table: { category: "Behaviour" },
     },
     type: {
       control: "inline-radio",
       options: ["button", "submit", "reset"],
-      description: "Native button type. Matches the HTML default of `submit`.",
-      table: {
-        category: "Behaviour",
-        defaultValue: { summary: "submit" },
-      },
+      description: "Native button type.",
+      table: { category: "Behaviour" },
     },
     onClick: {
       action: "clicked",
@@ -70,9 +123,12 @@ const meta = {
   },
   args: {
     children: "دکمه تپسی",
-    variant: "primary",
+    variant: "default",
+    hierarchy: "primary",
     size: "md",
     disabled: false,
+    loading: false,
+    fullWidth: false,
   },
 } satisfies Meta<typeof Button>;
 
@@ -81,7 +137,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /**
- * Use the **Controls** panel to switch variant, size and state. The RTL/LTR
- * toggle lives in the toolbar above the canvas.
+ * Use the **Controls** panel to switch variant, hierarchy, size and state. The
+ * theme, direction and all-four-themes toggles live in the toolbar above the
+ * canvas.
+ *
+ * Only 8 of the 12 variant × hierarchy pairings exist in Figma, and the props
+ * type enforces that — picking `elevated` or `cta` with a non-`primary`
+ * hierarchy is a type error in real code, even though the controls here let you
+ * try it.
  */
 export const Playground: Story = {};

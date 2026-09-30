@@ -66,6 +66,7 @@ export { default as createPromiseResolvers } from "./create-promise-resolvers.ts
 export * from "./forEachLocator.ts";
 export * from "./handles.ts";
 export * from "./mock/index.ts";
+export * from "./render-react.ts";
 export * from "./render.ts";
 
 export {

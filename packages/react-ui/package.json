@@ -33,7 +33,9 @@
   "scripts": {
     "clear": "shx rm -rf dist",
     "prebuild": "pnpm run clear",
-    "build": "tsc --project ./tsconfig.build.json && tsx ./scripts/copy-css.ts",
+    "build": "tsc --project ./tsconfig.build.json && tsx ./scripts/build-css.ts",
+    "test": "playwright test",
+    "test:update-snapshots": "playwright test --update-snapshots",
     "predev": "pnpm run clear",
     "dev": "tsc --watch --project ./tsconfig.dev.json"
   },
@@ -43,6 +45,7 @@
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
+    "clsx": "^2.1.1",
     "tslib": "^2.8.0"
   },
   "devDependencies": {

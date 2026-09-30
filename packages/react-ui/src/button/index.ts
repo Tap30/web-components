@@ -1,5 +1,6 @@
 export {
   Button,
+  type ButtonHierarchy,
   type ButtonProps,
   type ButtonSize,
   type ButtonVariant,

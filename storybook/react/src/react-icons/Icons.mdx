@@ -1,0 +1,37 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { IconGallery } from "./IconGallery.tsx";
+
+<Meta title="React Icons/Gallery" />
+
+# Icons
+
+Every icon in `@tapsioss/react-icons`. Search by name — `CircleCrossFill` also
+matches “circle”, “cross” and “fill” — and click any icon to copy its import.
+
+```tsx
+import { CircleCross } from "@tapsioss/react-icons";
+
+<CircleCross size={24} />;
+```
+
+Each icon is a thin wrapper around `BaseIcon`, which means two things worth
+knowing:
+
+- **`size` defaults to `"auto"`**, rendering `width: 100%; height: 100%` so the
+  icon fills its container. That is how `@tapsioss/react-ui` binds adornment
+  size to button size — the button sizes a box, the icon fills it. Pass a number
+  only when you want to override that.
+- **Colour comes from `currentColor`.** `BaseIcon` sets both `color` and `fill`
+  to it, so an icon inherits whatever text colour surrounds it. Do not pass a
+  fill; set `color` on the parent.
+
+The list below is read from the package barrel, so it is never out of date with
+what ships.
+
+<IconGallery />
+
+---
+
+These components are **generated at build time** into `dist` —
+`packages/react-icons/src` contains only `base-icon.tsx`. `pnpm storybook:react`
+builds them first; if this page is ever empty, that build did not run.

@@ -79,7 +79,9 @@ const flatten = (node: TokenNode, trail: string[]): Entry[] => {
  * React context, because MDX renders each block as a sibling — there is no
  * single element to wrap them all in.
  */
-let active: Theme = "ride-light";
+type GalleryState = { theme: Theme; fontSmoothing: boolean };
+
+let active: GalleryState = { theme: "ride-light", fontSmoothing: false };
 
 const listeners = new Set<() => void>();
 
@@ -89,24 +91,24 @@ const subscribe = (onChange: () => void) => {
   return () => listeners.delete(onChange);
 };
 
-const setActive = (next: Theme) => {
-  active = next;
+const setActive = (patch: Partial<GalleryState>) => {
+  active = { ...active, ...patch };
   listeners.forEach(listener => listener());
 };
 
 const useActiveTheme = () => {
-  const theme = useSyncExternalStore(
+  const state = useSyncExternalStore(
     subscribe,
     () => active,
     () => active,
   );
 
-  return { theme, tokens: tokensFor(theme) };
+  return { ...state, tokens: tokensFor(state.theme) };
 };
 
 /** The picker. Put one near the top of each gallery page. */
 export const ThemeControls = () => {
-  const { theme: activeTheme } = useActiveTheme();
+  const { theme: activeTheme, fontSmoothing } = useActiveTheme();
 
   return (
     <div
@@ -129,7 +131,7 @@ export const ThemeControls = () => {
           <button
             key={theme}
             type="button"
-            onClick={() => setActive(theme)}
+            onClick={() => setActive({ theme })}
             aria-pressed={isActive}
             style={{
               font: "inherit",
@@ -147,6 +149,23 @@ export const ThemeControls = () => {
           </button>
         );
       })}
+
+      <label
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "0.375rem",
+          cursor: "pointer",
+        }}
+        title="The Tapsi PWA's CSS reset applies -webkit-font-smoothing: antialiased and text-rendering: optimizeLegibility. macOS only."
+      >
+        <input
+          type="checkbox"
+          checked={fontSmoothing}
+          onChange={event => setActive({ fontSmoothing: event.target.checked })}
+        />
+        smooth font rendering (PWA style)
+      </label>
     </div>
   );
 };
@@ -184,11 +203,12 @@ const rowStyle: CSSProperties = {
 
 /** Wraps a gallery block in the active theme and paints its own surface. */
 const Themed = (props: { children: ReactNode; style?: CSSProperties }) => {
-  const { theme } = useActiveTheme();
+  const { theme, fontSmoothing } = useActiveTheme();
 
   return (
     <ThemeProvider
       theme={theme}
+      fontSmoothing={fontSmoothing}
       surface
       style={{
         padding: "var(--tapsi-number-16)",

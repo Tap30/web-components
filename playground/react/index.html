@@ -29,6 +29,20 @@
       src="/src/index.tsx"
     ></script>
     <title>React Playground</title>
+    <style>
+      /*
+        The document has no reset, so `body` keeps the UA's 8px margin. That is
+        enough to push a full-height page past the viewport and give it a
+        scrollbar with nothing to scroll to, which also throws the contents
+        page's vertical centring off by the same 8px.
+
+        Only `index.html` has this; `test.html` is the Playwright harness and is
+        deliberately left exactly as the tests expect it.
+      */
+      body {
+        margin: 0;
+      }
+    </style>
   </head>
   <body dir="rtl">
     <div id="root"></div>

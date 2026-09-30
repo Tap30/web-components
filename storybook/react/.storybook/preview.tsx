@@ -27,6 +27,7 @@ type Globals = {
   direction?: string;
   theme?: Theme;
   layout?: "single" | "matrix";
+  smoothing?: "default" | "pwa";
 };
 
 const preview: Preview = {
@@ -39,7 +40,7 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ["Introduction", "Theme", "React UI"],
+        order: ["Introduction", "Theme", "React Icons", "React UI"],
       },
     },
     a11y: {
@@ -55,6 +56,19 @@ const preview: Preview = {
         title: "Theme",
         icon: "paintbrush",
         items: THEMES.map(value => ({ value, title: value })),
+        dynamicTitle: true,
+      },
+    },
+    smoothing: {
+      description: "Match the Tapsi PWA's font rendering",
+      defaultValue: "pwa",
+      toolbar: {
+        title: "Text",
+        icon: "bold",
+        items: [
+          { value: "default", title: "Browser default" },
+          { value: "pwa", title: "Smooth (PWA style)" },
+        ],
         dynamicTitle: true,
       },
     },
@@ -74,7 +88,7 @@ const preview: Preview = {
     // The design system is RTL-first, matching the playground.
     direction: {
       description: "Text direction",
-      defaultValue: "rtl",
+      defaultValue: "ltr",
       toolbar: {
         title: "Direction",
         icon: "transfer",
@@ -102,7 +116,7 @@ const preview: Preview = {
         return (
           <ThemeProvider
             theme={globals.theme ?? "ride-light"}
-            surface
+            fontSmoothing={globals.smoothing === "pwa"}
             style={{ padding: "1rem" }}
           >
             <Story />
@@ -124,7 +138,7 @@ const preview: Preview = {
             <ThemeProvider
               key={theme}
               theme={theme}
-              surface
+              fontSmoothing={globals.smoothing === "pwa"}
               style={{ padding: "1rem", display: "grid", gap: "0.75rem" }}
             >
               <div
