@@ -2,6 +2,7 @@
   "name": "@tapsioss/react-components",
   "description": "Collection of React components for the Tapsi Design System UI.",
   "version": "0.17.7",
+  "private": true,
   "type": "module",
   "files": [
     "./dist",
@@ -27,14 +28,13 @@
   },
   "scripts": {
     "clear": "shx rm -rf dist",
-    "dev": "tsc --watch --project ./tsconfig.dev.json",
-    "dev:profile": "tsc --watch --project ./tsconfig.dev.json --generateCpuProfile tsc-output.cpuprofile",
     "generate": "tsx ./scripts/generate.ts",
     "prebuild": "run-p clear generate",
     "build": "tsc --project ./tsconfig.build.json"
   },
   "peerDependencies": {
-    "react": ">=16.8"
+    "react": ">=16.8",
+    "@tapsioss/theme": "<=0.8.0"
   },
   "dependencies": {
     "@lit/react": "^1.0.6",

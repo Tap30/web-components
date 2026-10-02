@@ -8,14 +8,42 @@ import {
   type TestType,
   test as base,
 } from "@playwright/test";
+import { CoverageReport } from "monocart-coverage-reports";
+
+type CoverageOptions = {
+  /**
+   * Where to collect V8 JS coverage, or `undefined` (the default) to collect
+   * none. A suite opts in from its `playwright.config.ts` (`use.coverageDir`)
+   * and turns the collected data into a report in its global teardown.
+   *
+   * Collected only in Chromium, the one engine that exposes V8 coverage —
+   * every project in this repo runs on it.
+   */
+  coverageDir: string | undefined;
+};
 
 const test: TestType<
-  PlaywrightTestArgs & PlaywrightTestOptions,
+  PlaywrightTestArgs & PlaywrightTestOptions & CoverageOptions,
   PlaywrightWorkerArgs & PlaywrightWorkerOptions
-> = base.extend({
-  page: async ({ page }, use) => {
+> = base.extend<CoverageOptions>({
+  coverageDir: [undefined, { option: true }],
+  page: async ({ page, browserName, coverageDir }, use) => {
+    const collect = coverageDir !== undefined && browserName === "chromium";
+
+    // Started before the first navigation, so the page's own scripts are
+    // measured from their first line.
+    if (collect) {
+      await page.coverage.startJSCoverage({ resetOnNavigation: false });
+    }
+
     await page.goto("/test");
     await use(page);
+
+    if (collect) {
+      const coverage = await page.coverage.stopJSCoverage();
+
+      await new CoverageReport({ outputDir: coverageDir }).add(coverage);
+    }
   },
 });
 
@@ -66,6 +94,7 @@ export { default as createPromiseResolvers } from "./create-promise-resolvers.ts
 export * from "./forEachLocator.ts";
 export * from "./handles.ts";
 export * from "./mock/index.ts";
+export * from "./render-react.ts";
 export * from "./render.ts";
 
 export {

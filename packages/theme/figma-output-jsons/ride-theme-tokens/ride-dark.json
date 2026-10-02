@@ -1,0 +1,186 @@
+{
+  "Color": {
+    "Surface": {
+      "Primary": "Palette.Gray.800",
+      "Secondary": "Palette.Gray.700",
+      "Tertiary": "Palette.Gray.600",
+      "Background": "Palette.Gray.Black",
+      "Accent": "Palette.Blue.500",
+      "Accent-Light": "Palette.Blue.900",
+      "Negative": "Palette.Red.500",
+      "Negative-Light": "Palette.Red.900",
+      "Positive": "Palette.Green.500",
+      "Positive-Light": "Palette.Green.900",
+      "Warning": "Palette.Yellow.500",
+      "Warning-Light": "Palette.Yellow.900",
+      "Brand": "Palette.Orange.400",
+      "Inverse-Primary": "Palette.Gray.White",
+      "Inverse-Secondary": "Palette.Gray.100",
+      "Disabled": "Palette.Gray.700",
+      "Selected": "Palette.Gray.700"
+    },
+    "Content": {
+      "Primary": "Palette.Gray.White",
+      "Secondary": "Palette.Gray.300",
+      "Tertiary": "Palette.Gray.500",
+      "Accent": "Palette.Blue.300",
+      "Accent-Bolder": "Palette.Blue.700",
+      "On-Accent": "Palette.Gray.White",
+      "Negative": "Palette.Red.300",
+      "Negative-Bolder": "Palette.Red.700",
+      "On-Negative": "Palette.Gray.White",
+      "Positive": "Palette.Green.300",
+      "Positive-Bolder": "Palette.Green.700",
+      "On-Positive": "Palette.Gray.White",
+      "Warning": "Palette.Yellow.300",
+      "Warning-Bolder": "Palette.Yellow.700",
+      "On-Warning": "Palette.Gray.Black",
+      "Brand": "Palette.Orange.400",
+      "On-Brand": "Palette.Gray.White",
+      "On-Inverse": "Palette.Gray.Black",
+      "Disabled": "Palette.Gray.600",
+      "Selected": "Palette.Gray.600"
+    },
+    "Border": {
+      "Primary": "Palette.Gray.700",
+      "Secondary": "Palette.Gray.700",
+      "Accent": "Palette.Blue.300",
+      "Negative": "Palette.Red.300",
+      "Positive": "Palette.Green.300",
+      "Warning": "Palette.Yellow.300",
+      "Brand": "Palette.Orange.300",
+      "Inverse": "Palette.Gray.200",
+      "Disabled": "Palette.Gray.200",
+      "Selected": "Palette.Gray.200"
+    },
+    "Overlay": {
+      "Backdrop": "Palette.Alpha.Dark30",
+      "Hovered": "Palette.Alpha.Dark10",
+      "Pressed": "Palette.Alpha.Dark20"
+    },
+    "Component": {
+      "Button": {
+        "Surface": {
+          "CTA": "Color.Surface.Brand",
+          "Default": "Color.Surface.Inverse-Primary"
+        },
+        "Content": {
+          "CTA": "Color.Content.On-Brand",
+          "Default": "Color.Content.On-Inverse"
+        }
+      }
+    }
+  },
+  "Typography": {
+    "Font-Family": {
+      "Body": "Font.Family.Base",
+      "Label": "Font.Family.Base",
+      "Headline": "Font.Family.Base",
+      "Display": "Font.Family.Base"
+    },
+    "Font-weight": {
+      "Body": "Font.Weight.400",
+      "Label": "Font.Weight.500",
+      "Headline": "Font.Weight.600",
+      "Display": "Font.Weight.600"
+    },
+    "Font-Size": {
+      "Body-2xSmall": "Font.Size.10",
+      "Body-xSmall": "Font.Size.12",
+      "Body-Small": "Font.Size.14",
+      "Body-Medium": "Font.Size.16",
+      "Body-Large": "Font.Size.18",
+      "Label-2xSmall": "Font.Size.10",
+      "Label-xSmall": "Font.Size.12",
+      "Label-Small": "Font.Size.14",
+      "Label-Medium": "Font.Size.16",
+      "Label-Large": "Font.Size.18",
+      "Headline-xSmall": "Font.Size.16",
+      "Headline-Small": "Font.Size.20",
+      "Headline-Medium": "Font.Size.24",
+      "Headline-Large": "Font.Size.28",
+      "Display-Small": "Font.Size.32",
+      "Display-Medium": "Font.Size.40",
+      "Display-Large": "Font.Size.48"
+    },
+    "Line-Height": {
+      "Body-2xSmall": 16,
+      "Body-xSmall": 20,
+      "Body-Small": 24,
+      "Body-Medium": 28,
+      "Body-Large": 32,
+      "Label-2xSmall": 16,
+      "Label-xSmall": 20,
+      "Label-Small": 24,
+      "Label-Medium": 28,
+      "Label-Large": 32,
+      "Headline-xSmall": 24,
+      "Headline-Small": 30,
+      "Headline-Medium": 36,
+      "Headline-Large": 42,
+      "Display-Small": 48,
+      "Display-Medium": 60,
+      "Display-Large": 72
+    }
+  },
+  "Dimension": {
+    "Radius": {
+      "None": "Number.0",
+      "2xSmall": "Number.2",
+      "xSmall": "Number.4",
+      "Small": "Number.8",
+      "Medium": "Number.12",
+      "Large": "Number.16",
+      "xLarge": "Number.20",
+      "2xLarge": "Number.24",
+      "Full": "Number.999"
+    },
+    "Layout": {
+      "Grid": {
+        "Margin": {
+          "Horizontal": "Number.12"
+        },
+        "Gap": {
+          "Horizontal": "Number.16",
+          "Vertical": "Number.16"
+        }
+      }
+    },
+    "Component": {
+      "Button": {
+        "Size": {
+          "Small": "Number.32",
+          "Medium": "Number.40",
+          "Large": "Number.52"
+        },
+        "Padding": {
+          "Small-Horizontal": "Number.6",
+          "Medium-Horizontal": "Number.8",
+          "Large-Horizontal": "Number.14"
+        },
+        "Gap": {
+          "Small-Horizontal": "Number.6",
+          "Medium-Horizontal": "Number.8",
+          "Large-Horizontal": "Number.10"
+        },
+        "Radius": {
+          "Small": "Dimension.Radius.Full",
+          "Medium": "Dimension.Radius.Full",
+          "Large": "Dimension.Radius.Full"
+        }
+      },
+      "Row": {
+        "Padding": {
+          "Horizontal": "Number.16",
+          "Vertical": "Number.12"
+        },
+        "Gap": {
+          "Horizontal": "Number.12"
+        },
+        "Size": {
+          "Default": "Number.56"
+        }
+      }
+    }
+  }
+}

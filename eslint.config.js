@@ -1,9 +1,11 @@
 import jsLint from "@eslint/js";
 import commentsPlugin from "eslint-plugin-eslint-comments";
 import importPlugin from "eslint-plugin-import";
+import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
 import litPlugin from "eslint-plugin-lit";
 import playwrightPlugin from "eslint-plugin-playwright";
 import prettierRecommendedConfig from "eslint-plugin-prettier/recommended";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
 import wcPlugin from "eslint-plugin-wc";
 import { config, configs as tsLintConfigs } from "typescript-eslint";
 
@@ -14,9 +16,28 @@ export default config(
   importPlugin.flatConfigs.recommended,
   importPlugin.flatConfigs.typescript,
   /* eslint-enable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access */
-  litPlugin.configs["flat/recommended"],
-  wcPlugin.configs["flat/recommended"],
   prettierRecommendedConfig,
+  // Lit/Web Component rules apply only to the Lit packages. They produce false
+  // positives on React `.tsx`, and root lint runs with `--max-warnings 1`.
+  {
+    files: ["packages/web-components/**/*.ts", "packages/web-icons/**/*.ts"],
+    extends: [
+      litPlugin.configs["flat/recommended"],
+      wcPlugin.configs["flat/recommended"],
+    ],
+  },
+  // React rules apply only to the React sources.
+  {
+    files: ["packages/react-ui/**/*.{ts,tsx}", "storybook/*/src/**/*.{ts,tsx}"],
+    // NOTE: `configs.flat.recommended` — not `configs["recommended-latest"]`,
+    // which is still eslintrc-style and crashes flat config.
+    /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+    extends: [
+      reactHooksPlugin.configs.flat.recommended,
+      jsxA11yPlugin.flatConfigs.recommended,
+    ],
+    /* eslint-enable @typescript-eslint/no-unsafe-member-access */
+  },
   {
     files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
     extends: [playwrightPlugin.configs["flat/recommended"]],
@@ -29,8 +50,14 @@ export default config(
       "**/dist",
       "**/coverage",
       "**/playwright-report",
+      "**/test-results",
       "**/node_modules",
       "docs/.vitepress/cache",
+      // Storybook config is tooling, not shipped code. It also imports
+      // exports-map-only ESM that the root tsconfig's Node10 resolution
+      // cannot see, which would break type-aware linting.
+      "storybook/*/.storybook/**",
+      "**/storybook-static",
     ],
   },
   {
@@ -43,6 +70,21 @@ export default config(
           defaultProject: "./tsconfig.json",
         },
         sourceType: "module",
+      },
+    },
+  },
+  // MUST come after the block above, which otherwise re-enables the project
+  // service for every file. Stories are excluded from the ROOT tsconfig
+  // (Storybook's types need `moduleResolution: "bundler"`), so the default
+  // project cannot see them. They are type-checked properly by
+  // `pnpm --filter @tapsioss/react-storybook run check:types`.
+  {
+    files: ["**/*.stories.{ts,tsx}"],
+    extends: [tsLintConfigs.disableTypeChecked],
+    languageOptions: {
+      parserOptions: {
+        project: false,
+        projectService: false,
       },
     },
   },

@@ -17,31 +17,35 @@
     "pnpm": "9.15.9"
   },
   "scripts": {
-    "clear:dist": "tsx scripts/clear dist **/**/dist !node_modules/**/dist !.wireit/**/dist",
-    "clear:node-modules": "tsx scripts/clear node_modules **/**/node_modules !node_modules/**/node_modules !.wireit/**/node_modules",
+    "clear:dist": "tsx scripts/clear \"**/dist\" \"**/storybook-static\" \"!**/node_modules/**\" \"!.wireit/**\"",
+    "clear:node-modules": "tsx scripts/clear \"**/node_modules\" \"!**/node_modules/**/node_modules\" \"!.wireit/**\"",
     "clear:cache": "tsx scripts/clear .wireit",
     "clear:all": "run-p clear:cache clear:node-modules clear:dist",
     "changesets:empty": "changeset add --empty",
     "changesets:create": "changeset add",
     "changesets:apply": "changeset version",
     "changesets:status": "changeset status --since=main",
-    "release": "pnpm build:packages && changeset publish --tag latest",
-    "build": "wireit",
+    "release": "pnpm build:packages && pnpm check:publish && changeset publish",
     "build:packages": "wireit",
+    "build:archived": "wireit",
+    "check:archived": "wireit",
+    "lint:archived": "wireit",
+    "test:archived": "wireit",
     "build:docs": "wireit",
     "test": "wireit",
-    "test:update-snapshots": "pnpm --filter @tapsioss/web-components run test:update-snapshots",
     "check:danger": "danger ci --verbose --failOnErrors",
     "check:lint": "wireit",
     "check:format": "wireit",
     "format": "wireit",
-    "dev:packages": "pnpm run -r --parallel --filter=!@tapsioss/docs dev",
-    "dev:playground": "pnpm --filter @tapsioss/playground run start:dev",
-    "dev:docs:vitepress": "pnpm --filter @tapsioss/docs run dev",
-    "dev:docs": "run-s gen:metadata dev:docs:vitepress",
-    "dev": "run-p --race dev:packages dev:playground",
+    "build:react-icons": "wireit",
+    "storybook:react": "pnpm build:react-icons && pnpm --filter @tapsioss/react-storybook run dev",
+    "build:storybook:react": "pnpm build:react-icons && pnpm --filter @tapsioss/react-storybook run build",
+    "dev:playground:react": "pnpm --filter @tapsioss/react-playground run start:dev",
+    "dev": "pnpm dev:react",
+    "dev:react": "run-p --race dev:playground:react storybook:react",
     "preview:docs": "pnpm --filter @tapsioss/docs run preview",
-    "gen:metadata": "wireit"
+    "gen:metadata": "wireit",
+    "check:publish": "pnpm --filter @tapsioss/theme --filter @tapsioss/react-ui run check:publish"
   },
   "wireit": {
     "check:format": {
@@ -53,7 +57,10 @@
         "!**/dist/**/*",
         "!pnpm-lock.yaml"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "format": {
       "command": "prettier . --write --cache",
@@ -64,12 +71,16 @@
         "!**/dist/**/*",
         "!pnpm-lock.yaml"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "check:lint": {
       "dependencies": [
         "lint:ts",
-        "lint:ecma"
+        "lint:ecma",
+        "lint:ts:storybook"
       ]
     },
     "lint:ts": {
@@ -77,35 +88,156 @@
       "files": [
         "./tsconfig.json",
         "**/*.{ts,tsx}",
-        "!**/dist/**/*"
+        "!**/dist/**/*",
+        "!./packages/web-components/**/*",
+        "!./packages/react-components/**/*",
+        "!./packages/web-icons/**/*",
+        "!./playground/lit/**/*",
+        "!./docs/**/*"
       ],
-      "output": []
+      "output": [],
+      "dependencies": [
+        "build:icons",
+        "build:react-icons"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "lint:ecma": {
-      "command": "eslint --color --cache --cache-location .eslintcache --max-warnings 1",
+      "command": "eslint --color --cache --cache-location .eslintcache --max-warnings 1 --ignore-pattern \"packages/web-components/**\" --ignore-pattern \"packages/react-components/**\" --ignore-pattern \"packages/web-icons/**\" --ignore-pattern \"playground/lit/**\" --ignore-pattern \"docs/**\"",
       "files": [
         "./tsconfig.json",
         "./.prettierrc",
         "./eslint.config.js",
         "**/*.{ts,tsx}",
-        "!**/dist/**/*"
+        "!**/dist/**/*",
+        "!./packages/web-components/**/*",
+        "!./packages/react-components/**/*",
+        "!./packages/web-icons/**/*",
+        "!./playground/lit/**/*",
+        "!./docs/**/*"
       ],
-      "output": []
-    },
-    "build": {
+      "output": [],
       "dependencies": [
-        "build:packages",
-        "build:docs"
+        "build:icons",
+        "build:react-icons"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:packages": {
       "dependencies": [
         "build:theme",
         "build:icons",
-        "build:web-icons",
         "build:react-icons",
+        "build:react-ui"
+      ]
+    },
+    "build:archived": {
+      "dependencies": [
+        "test:archived",
+        "build:web-icons",
         "build:web-components",
         "build:react-components"
+      ]
+    },
+    "check:archived": {
+      "dependencies": [
+        "lint:archived",
+        "build:archived",
+        "build:docs"
+      ]
+    },
+    "lint:archived": {
+      "dependencies": [
+        "lint:ts:archived",
+        "lint:ecma:archived"
+      ]
+    },
+    "lint:ts:archived": {
+      "command": "tsc --project packages/web-components && tsc --project packages/react-components && tsc --project packages/web-icons && tsc --project playground/lit && tsc --project docs",
+      "files": [
+        "./tsconfig.json",
+        "./packages/web-components/tsconfig.json",
+        "./packages/react-components/tsconfig.json",
+        "./packages/web-icons/tsconfig.json",
+        "./playground/lit/tsconfig.json",
+        "./docs/tsconfig.json",
+        "./packages/web-components/**/*.{ts,tsx}",
+        "./packages/react-components/**/*.{ts,tsx}",
+        "./packages/web-icons/**/*.{ts,tsx}",
+        "./playground/lit/**/*.{ts,tsx}",
+        "./docs/**/*.{ts,tsx}",
+        "!**/dist/**/*",
+        "!**/node_modules/**/*"
+      ],
+      "output": [],
+      "dependencies": [
+        "build:icons",
+        "build:react-icons",
+        "build:web-icons",
+        "build:web-components",
+        "build:react-components"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "lint:ecma:archived": {
+      "command": "eslint --color --cache --cache-location .eslintcache-archived --max-warnings 1 packages/web-components packages/react-components packages/web-icons playground/lit docs",
+      "files": [
+        "./tsconfig.json",
+        "./docs/tsconfig.json",
+        "./playground/lit/tsconfig.json",
+        "./packages/web-icons/tsconfig.json",
+        "./packages/react-components/tsconfig.json",
+        "./packages/web-components/tsconfig.json",
+        "./.prettierrc",
+        "./eslint.config.js",
+        "./packages/web-components/**/*.{ts,tsx}",
+        "./packages/react-components/**/*.{ts,tsx}",
+        "./packages/web-icons/**/*.{ts,tsx}",
+        "./playground/lit/**/*.{ts,tsx}",
+        "./docs/**/*.{ts,tsx}",
+        "!**/dist/**/*",
+        "!**/node_modules/**/*"
+      ],
+      "output": [],
+      "dependencies": [
+        "build:icons",
+        "build:react-icons",
+        "build:web-icons",
+        "build:web-components",
+        "build:react-components"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "test:archived": {
+      "command": "pnpm --filter @tapsioss/web-components run test",
+      "clean": "if-file-deleted",
+      "files": [
+        "./packages/web-components/src/**/*",
+        "./packages/web-components/playwright.config.ts",
+        "./playground/lit/src/**/*",
+        "./playground/lit/*.html",
+        "./playground/lit/vite.config.ts",
+        "./playground/lit/package.json",
+        "./playground/lit/tsconfig.json"
+      ],
+      "output": [
+        "./packages/web-components/test-results/**/*",
+        "./packages/web-components/playwright-report/**/*"
+      ],
+      "dependencies": [
+        "build:theme",
+        "build:web-components"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:theme": {
@@ -113,15 +245,19 @@
       "clean": "if-file-deleted",
       "files": [
         "./packages/theme/**/*.{ts,css}",
+        "./packages/theme/figma-output-jsons/**/*.json",
         "./packages/theme/scripts/**/*",
         "./packages/theme/tsconfig.{build,cjs,esm}.json",
         "./tsconfig.json",
         "./tsconfig.build.json",
-        "!./packages/theme/dist/**/*"
+        "!./packages/theme/dist/**/*",
+        "!./packages/theme/node_modules/**/*"
       ],
       "output": [
-        "./packages/theme/dist/**/*",
-        "./packages/theme/src/**/*.css"
+        "./packages/theme/dist/**/*"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:web-components": {
@@ -135,13 +271,17 @@
         "./tsconfig.build.json",
         "!./packages/web-components/**/*.test.ts",
         "!./packages/web-components/playwright.config.ts",
-        "!./packages/web-components/dist/**/*"
+        "!./packages/web-components/dist/**/*",
+        "!./packages/web-components/node_modules/**/*"
       ],
       "output": [
         "./packages/web-components/dist/**/*"
       ],
       "dependencies": [
         "gen:metadata"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:react-components": {
@@ -154,13 +294,17 @@
         "./packages/react-components/scripts/**/*",
         "./tsconfig.json",
         "./tsconfig.build.json",
-        "!./packages/react-components/dist/**/*"
+        "!./packages/react-components/dist/**/*",
+        "!./packages/react-components/node_modules/**/*"
       ],
       "output": [
         "./packages/react-components/dist/**/*"
       ],
       "dependencies": [
         "build:web-components"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:icons": {
@@ -173,10 +317,14 @@
         "./packages/icons/tsconfig.{build,cjs,esm}.json",
         "./tsconfig.json",
         "./tsconfig.build.json",
-        "!./packages/icons/dist/**/*"
+        "!./packages/icons/dist/**/*",
+        "!./packages/icons/node_modules/**/*"
       ],
       "output": [
         "./packages/icons/dist/**/*"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:web-icons": {
@@ -189,13 +337,17 @@
         "./packages/web-icons/tsconfig.{build,cjs,esm}.json",
         "./tsconfig.json",
         "./tsconfig.build.json",
-        "!./packages/web-icons/dist/**/*"
+        "!./packages/web-icons/dist/**/*",
+        "!./packages/web-icons/node_modules/**/*"
       ],
       "output": [
         "./packages/web-icons/dist/**/*"
       ],
       "dependencies": [
         "build:icons"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:react-icons": {
@@ -208,13 +360,39 @@
         "./packages/react-icons/tsconfig.{build,cjs,esm}.json",
         "./tsconfig.json",
         "./tsconfig.build.json",
-        "!./packages/react-icons/dist/**/*"
+        "!./packages/react-icons/dist/**/*",
+        "!./packages/react-icons/node_modules/**/*"
       ],
       "output": [
         "./packages/react-icons/dist/**/*"
       ],
       "dependencies": [
         "build:icons"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "build:react-ui": {
+      "command": "pnpm --filter @tapsioss/react-ui run build",
+      "clean": "if-file-deleted",
+      "files": [
+        "./packages/react-ui/scripts/**/*",
+        "./packages/react-ui/**/*.{ts,tsx,css}",
+        "./packages/react-ui/tsconfig.{build,cjs,esm}.json",
+        "./tsconfig.json",
+        "./tsconfig.build.json",
+        "!./packages/react-ui/**/*.test.{ts,tsx}",
+        "!./packages/react-ui/**/*.stories.{ts,tsx}",
+        "!./packages/react-ui/playwright.config.ts",
+        "!./packages/react-ui/dist/**/*",
+        "!./packages/react-ui/node_modules/**/*"
+      ],
+      "output": [
+        "./packages/react-ui/dist/**/*"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:docs": {
@@ -232,8 +410,11 @@
         "./docs/.vitepress/dist/**/*"
       ],
       "dependencies": [
-        "build:packages",
+        "build:web-components",
         "gen:metadata"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "gen:metadata": {
@@ -248,31 +429,64 @@
       "output": [
         "./packages/web-components/custom-elements.json",
         "./packages/web-components/metadata.json"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "test": {
       "dependencies": [
-        "test:web-components"
+        "test:react-ui"
       ]
     },
-    "test:web-components": {
-      "command": "pnpm --filter @tapsioss/web-components run test",
+    "test:react-ui": {
+      "command": "pnpm --filter @tapsioss/react-ui run test",
       "clean": "if-file-deleted",
       "files": [
-        "./packages/web-components/src/**/*",
-        "./packages/web-components/playwright.config.ts"
+        "./packages/react-ui/src/**/*",
+        "./packages/react-ui/playwright.config.ts",
+        "./internals/test-helpers/src/**/*",
+        "./packages/react-ui/playwright/**/*",
+        "./playground/react/src/**/*",
+        "./playground/react/*.html",
+        "./playground/react/vite.config.ts",
+        "./playground/react/package.json",
+        "./playground/react/tsconfig.json"
       ],
       "output": [
-        "./packages/web-components/test-results/**/*",
-        "./packages/web-components/playwright-report/**/*"
+        "./packages/react-ui/test-results/**/*",
+        "./packages/react-ui/playwright-report/**/*",
+        "./packages/react-ui/coverage/**/*"
       ],
       "dependencies": [
         "build:theme",
-        "build:web-components"
+        "build:react-ui"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "lint:ts:storybook": {
+      "command": "pnpm --filter @tapsioss/react-storybook run check:types",
+      "files": [
+        "./storybook/react/src/**/*.{ts,tsx}",
+        "./storybook/react/.storybook/**/*.{ts,tsx}",
+        "./storybook/react/tsconfig.json",
+        "./tsconfig.json",
+        "./packages/react-ui/src/**/*.{ts,tsx}",
+        "./packages/theme/src/**/*.ts"
+      ],
+      "output": [],
+      "dependencies": [
+        "build:react-icons"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     }
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
     "@axe-core/playwright": "^4.10.1",
     "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.29.2",
@@ -297,20 +511,25 @@
     "eslint-import-resolver-typescript": "^3.10.1",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-lit": "^1.15.0",
     "eslint-plugin-playwright": "^2.2.0",
     "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-wc": "^2.2.1",
     "globby": "^14.1.0",
     "lit": "^3.3.0",
+    "monocart-coverage-reports": "^2.13.0",
     "mustache": "^4.2.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.5.3",
     "postcss-cli": "^11.0.1",
     "postcss-combine-duplicated-selectors": "^10.0.3",
     "postcss-import": "^16.1.0",
+    "postcss-modules": "^9.0.1",
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
+    "publint": "^0.3.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "shx": "^0.3.4",

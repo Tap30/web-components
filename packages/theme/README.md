@@ -13,6 +13,33 @@ Design System.
 
 <hr />
 
+## Usage
+
+Tokens come in two layers. Import the primitives once, then **one** theme on top
+of them:
+
+```css
+@import "@tapsioss/theme/tokens.css";
+@import "@tapsioss/theme/ride/light.css";
+```
+
+Swapping the second import is how you switch product or theme — `ride/light`,
+`ride/dark`, `drive/light`, `drive/dark`. Nothing else changes, because
+components reference only theme tokens (`--tapsi-color-surface-primary`), never
+the palette underneath.
+
+The same values are available to JavaScript, already resolved:
+
+```ts
+import { tokens } from "@tapsioss/theme/ride/light";
+
+tokens.color.surface.primary; // "#ffffff"
+tokens.dimension.radius.full; // "62.4375rem"
+```
+
+Token names are the Figma path, kebab-cased and prefixed `--tapsi-`, so a name
+you find in Figma is the name you use in CSS.
+
 ## Public Documentation
 
 You can find the complete documentation for the Tapsi Design System at

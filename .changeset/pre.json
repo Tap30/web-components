@@ -1,0 +1,20 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "@tapsioss/docs": "0.0.0",
+    "@internals/danger": "0.0.0",
+    "@internals/test-helpers": "0.0.0",
+    "@tapsioss/icons": "0.7.1",
+    "@tapsioss/react-components": "0.17.7",
+    "@tapsioss/react-icons": "0.7.1",
+    "@tapsioss/react-ui": "0.0.0",
+    "@tapsioss/theme": "0.8.0",
+    "@tapsioss/web-components": "0.17.7",
+    "@tapsioss/web-icons": "0.7.2",
+    "@tapsioss/lit-playground": "0.0.0",
+    "@tapsioss/react-playground": "0.0.0",
+    "@tapsioss/react-storybook": "0.0.0"
+  },
+  "changesets": []
+}

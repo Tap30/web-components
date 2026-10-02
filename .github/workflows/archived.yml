@@ -1,0 +1,76 @@
+name: "🗄️ Archived packages"
+
+# The archived Lit track (`web-components`, `react-components`, `web-icons`) is
+# out of the release cycle and out of the main pipeline, but still maintained.
+# This workflow runs every check for it — and for its consumers, `playground/lit`
+# and `docs` — only when something it depends on changes.
+on:
+  pull_request:
+    paths: &archived-paths
+      - "packages/web-components/**"
+      - "packages/react-components/**"
+      - "packages/web-icons/**"
+      # Shared with the live track: a change here can break the archive.
+      - "packages/icons/**"
+      - "packages/react-icons/**"
+      - "internals/test-helpers/**"
+      - "playground/lit/**"
+      - "docs/**"
+      - "scripts/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "tsconfig.json"
+      - "tsconfig.build.json"
+      - "eslint.config.js"
+      - ".github/workflows/archived.yml"
+  push:
+    branches:
+      - main
+    paths: *archived-paths
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: 🗄️ Lint, test and build archived packages
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: ☁️ checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: 🔧 setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: 📦 install dependencies
+        run: pnpm install
+
+      - name: 🎭 install playwright
+        run: pnpm playwright install --with-deps --only-shell
+
+      # Set up GitHub Actions caching for Wireit.
+      - name: 🔌 setup wireit cache
+        uses: google/wireit@setup-github-actions-caching/v2
+
+      # lint:archived + build:archived (which runs test:archived first) +
+      # build:docs.
+      - name: 🧪 check archived packages
+        run: pnpm check:archived
+
+      - name: 🗄️ archive artifacts
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-archived
+          path: packages/web-components/playwright-report/
+          retention-days: 30

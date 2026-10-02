@@ -2,6 +2,7 @@
   "name": "@tapsioss/web-components",
   "description": "Collection of framework-agnostic Web Components for the Tapsi Design System.",
   "version": "0.17.7",
+  "private": true,
   "type": "module",
   "files": [
     "./dist",
@@ -31,9 +32,6 @@
     "prebuild": "pnpm run clear",
     "build": "tsc --project ./tsconfig.build.json",
     "test": "playwright test",
-    "test:update-snapshots": "playwright test --update-snapshots",
-    "predev": "pnpm run clear",
-    "dev": "tsc --watch --project ./tsconfig.dev.json",
     "gen:metadata": "tsx scripts/generate-metadata.ts"
   },
   "dependencies": {
@@ -41,6 +39,9 @@
     "@use-gesture/vanilla": "^10.3.1",
     "lit": "^3.2.1",
     "tslib": "^2.8.0"
+  },
+  "peerDependencies": {
+    "@tapsioss/theme": "<=0.8.0"
   },
   "devDependencies": {
     "@internals/test-helpers": "workspace:*"

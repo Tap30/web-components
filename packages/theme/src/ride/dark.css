@@ -1,0 +1,202 @@
+/**
+ * Tokens for the ride product, dark theme.
+ *
+ * Generated from figma-output-jsons/ride-theme-tokens/ride-dark.json. Do not hand-edit; see AGENTS.md
+ * for the rules that produce this file.
+ *
+ * Every value here references a primitive, so this file is meaningless on its
+ * own. The consumer imports both:
+ *
+ *   @import "@tapsioss/theme/tokens.css";
+ *   @import "@tapsioss/theme/ride/dark.css";
+ *
+ * Declared twice, on purpose:
+ *
+ *   :root  applies globally, so importing one theme needs no setup at all
+ *   [data-tapsi-theme="ride-dark"]
+ *          applies to a subtree, so several themes can coexist on one page
+ *
+ * Each subtree gets whichever theme its nearest ancestor declares, because
+ * custom properties resolve by inheritance rather than by specificity. When
+ * several themes are imported, the bare `:root` of whichever loaded last wins
+ * for unwrapped content, so an app in that situation sets the attribute on
+ * <html>.
+ *
+ * The one exception is Typography/Line-Height: those 17 values are literals in
+ * the Figma export because 30, 42 and 60 are off the Number scale.
+ */
+
+:root,
+[data-tapsi-theme="ride-dark"] {
+  /* Color / Surface */
+  --tapsi-color-surface-primary: var(--tapsi-palette-gray-800);
+  --tapsi-color-surface-secondary: var(--tapsi-palette-gray-700);
+  --tapsi-color-surface-tertiary: var(--tapsi-palette-gray-600);
+  --tapsi-color-surface-background: var(--tapsi-palette-gray-black);
+  --tapsi-color-surface-accent: var(--tapsi-palette-blue-500);
+  --tapsi-color-surface-accent-light: var(--tapsi-palette-blue-900);
+  --tapsi-color-surface-negative: var(--tapsi-palette-red-500);
+  --tapsi-color-surface-negative-light: var(--tapsi-palette-red-900);
+  --tapsi-color-surface-positive: var(--tapsi-palette-green-500);
+  --tapsi-color-surface-positive-light: var(--tapsi-palette-green-900);
+  --tapsi-color-surface-warning: var(--tapsi-palette-yellow-500);
+  --tapsi-color-surface-warning-light: var(--tapsi-palette-yellow-900);
+  --tapsi-color-surface-brand: var(--tapsi-palette-orange-400);
+  --tapsi-color-surface-inverse-primary: var(--tapsi-palette-gray-white);
+  --tapsi-color-surface-inverse-secondary: var(--tapsi-palette-gray-100);
+  --tapsi-color-surface-disabled: var(--tapsi-palette-gray-700);
+  --tapsi-color-surface-selected: var(--tapsi-palette-gray-700);
+
+  /* Color / Content */
+  --tapsi-color-content-primary: var(--tapsi-palette-gray-white);
+  --tapsi-color-content-secondary: var(--tapsi-palette-gray-300);
+  --tapsi-color-content-tertiary: var(--tapsi-palette-gray-500);
+  --tapsi-color-content-accent: var(--tapsi-palette-blue-300);
+  --tapsi-color-content-accent-bolder: var(--tapsi-palette-blue-700);
+  --tapsi-color-content-on-accent: var(--tapsi-palette-gray-white);
+  --tapsi-color-content-negative: var(--tapsi-palette-red-300);
+  --tapsi-color-content-negative-bolder: var(--tapsi-palette-red-700);
+  --tapsi-color-content-on-negative: var(--tapsi-palette-gray-white);
+  --tapsi-color-content-positive: var(--tapsi-palette-green-300);
+  --tapsi-color-content-positive-bolder: var(--tapsi-palette-green-700);
+  --tapsi-color-content-on-positive: var(--tapsi-palette-gray-white);
+  --tapsi-color-content-warning: var(--tapsi-palette-yellow-300);
+  --tapsi-color-content-warning-bolder: var(--tapsi-palette-yellow-700);
+  --tapsi-color-content-on-warning: var(--tapsi-palette-gray-black);
+  --tapsi-color-content-brand: var(--tapsi-palette-orange-400);
+  --tapsi-color-content-on-brand: var(--tapsi-palette-gray-white);
+  --tapsi-color-content-on-inverse: var(--tapsi-palette-gray-black);
+  --tapsi-color-content-disabled: var(--tapsi-palette-gray-600);
+  --tapsi-color-content-selected: var(--tapsi-palette-gray-600);
+
+  /* Color / Border */
+  --tapsi-color-border-primary: var(--tapsi-palette-gray-700);
+  --tapsi-color-border-secondary: var(--tapsi-palette-gray-700);
+  --tapsi-color-border-accent: var(--tapsi-palette-blue-300);
+  --tapsi-color-border-negative: var(--tapsi-palette-red-300);
+  --tapsi-color-border-positive: var(--tapsi-palette-green-300);
+  --tapsi-color-border-warning: var(--tapsi-palette-yellow-300);
+  --tapsi-color-border-brand: var(--tapsi-palette-orange-300);
+  --tapsi-color-border-inverse: var(--tapsi-palette-gray-200);
+  --tapsi-color-border-disabled: var(--tapsi-palette-gray-200);
+  --tapsi-color-border-selected: var(--tapsi-palette-gray-200);
+
+  /* Color / Overlay */
+  --tapsi-color-overlay-backdrop: var(--tapsi-palette-alpha-dark30);
+  --tapsi-color-overlay-hovered: var(--tapsi-palette-alpha-dark10);
+  --tapsi-color-overlay-pressed: var(--tapsi-palette-alpha-dark20);
+
+  /* Color / Component */
+  --tapsi-color-component-button-surface-cta: var(--tapsi-color-surface-brand);
+  --tapsi-color-component-button-surface-default: var(
+    --tapsi-color-surface-inverse-primary
+  );
+  --tapsi-color-component-button-content-cta: var(
+    --tapsi-color-content-on-brand
+  );
+  --tapsi-color-component-button-content-default: var(
+    --tapsi-color-content-on-inverse
+  );
+
+  /* Typography / Font-Family */
+  --tapsi-typography-font-family-body: var(--tapsi-font-family-base);
+  --tapsi-typography-font-family-label: var(--tapsi-font-family-base);
+  --tapsi-typography-font-family-headline: var(--tapsi-font-family-base);
+  --tapsi-typography-font-family-display: var(--tapsi-font-family-base);
+
+  /* Typography / Font-weight */
+  --tapsi-typography-font-weight-body: var(--tapsi-font-weight-400);
+  --tapsi-typography-font-weight-label: var(--tapsi-font-weight-500);
+  --tapsi-typography-font-weight-headline: var(--tapsi-font-weight-600);
+  --tapsi-typography-font-weight-display: var(--tapsi-font-weight-600);
+
+  /* Typography / Font-Size */
+  --tapsi-typography-font-size-body-2x-small: var(--tapsi-font-size-10);
+  --tapsi-typography-font-size-body-x-small: var(--tapsi-font-size-12);
+  --tapsi-typography-font-size-body-small: var(--tapsi-font-size-14);
+  --tapsi-typography-font-size-body-medium: var(--tapsi-font-size-16);
+  --tapsi-typography-font-size-body-large: var(--tapsi-font-size-18);
+  --tapsi-typography-font-size-label-2x-small: var(--tapsi-font-size-10);
+  --tapsi-typography-font-size-label-x-small: var(--tapsi-font-size-12);
+  --tapsi-typography-font-size-label-small: var(--tapsi-font-size-14);
+  --tapsi-typography-font-size-label-medium: var(--tapsi-font-size-16);
+  --tapsi-typography-font-size-label-large: var(--tapsi-font-size-18);
+  --tapsi-typography-font-size-headline-x-small: var(--tapsi-font-size-16);
+  --tapsi-typography-font-size-headline-small: var(--tapsi-font-size-20);
+  --tapsi-typography-font-size-headline-medium: var(--tapsi-font-size-24);
+  --tapsi-typography-font-size-headline-large: var(--tapsi-font-size-28);
+  --tapsi-typography-font-size-display-small: var(--tapsi-font-size-32);
+  --tapsi-typography-font-size-display-medium: var(--tapsi-font-size-40);
+  --tapsi-typography-font-size-display-large: var(--tapsi-font-size-48);
+
+  /* Typography / Line-Height */
+  --tapsi-typography-line-height-body-2x-small: 1rem;
+  --tapsi-typography-line-height-body-x-small: 1.25rem;
+  --tapsi-typography-line-height-body-small: 1.5rem;
+  --tapsi-typography-line-height-body-medium: 1.75rem;
+  --tapsi-typography-line-height-body-large: 2rem;
+  --tapsi-typography-line-height-label-2x-small: 1rem;
+  --tapsi-typography-line-height-label-x-small: 1.25rem;
+  --tapsi-typography-line-height-label-small: 1.5rem;
+  --tapsi-typography-line-height-label-medium: 1.75rem;
+  --tapsi-typography-line-height-label-large: 2rem;
+  --tapsi-typography-line-height-headline-x-small: 1.5rem;
+  --tapsi-typography-line-height-headline-small: 1.875rem;
+  --tapsi-typography-line-height-headline-medium: 2.25rem;
+  --tapsi-typography-line-height-headline-large: 2.625rem;
+  --tapsi-typography-line-height-display-small: 3rem;
+  --tapsi-typography-line-height-display-medium: 3.75rem;
+  --tapsi-typography-line-height-display-large: 4.5rem;
+
+  /* Dimension / Radius */
+  --tapsi-dimension-radius-none: var(--tapsi-number-0);
+  --tapsi-dimension-radius-2x-small: var(--tapsi-number-2);
+  --tapsi-dimension-radius-x-small: var(--tapsi-number-4);
+  --tapsi-dimension-radius-small: var(--tapsi-number-8);
+  --tapsi-dimension-radius-medium: var(--tapsi-number-12);
+  --tapsi-dimension-radius-large: var(--tapsi-number-16);
+  --tapsi-dimension-radius-x-large: var(--tapsi-number-20);
+  --tapsi-dimension-radius-2x-large: var(--tapsi-number-24);
+  --tapsi-dimension-radius-full: var(--tapsi-number-999);
+
+  /* Dimension / Layout */
+  --tapsi-dimension-layout-grid-margin-horizontal: var(--tapsi-number-12);
+  --tapsi-dimension-layout-grid-gap-horizontal: var(--tapsi-number-16);
+  --tapsi-dimension-layout-grid-gap-vertical: var(--tapsi-number-16);
+
+  /* Dimension / Component */
+  --tapsi-dimension-component-button-size-small: var(--tapsi-number-32);
+  --tapsi-dimension-component-button-size-medium: var(--tapsi-number-40);
+  --tapsi-dimension-component-button-size-large: var(--tapsi-number-52);
+  --tapsi-dimension-component-button-padding-small-horizontal: var(
+    --tapsi-number-6
+  );
+  --tapsi-dimension-component-button-padding-medium-horizontal: var(
+    --tapsi-number-8
+  );
+  --tapsi-dimension-component-button-padding-large-horizontal: var(
+    --tapsi-number-14
+  );
+  --tapsi-dimension-component-button-gap-small-horizontal: var(
+    --tapsi-number-6
+  );
+  --tapsi-dimension-component-button-gap-medium-horizontal: var(
+    --tapsi-number-8
+  );
+  --tapsi-dimension-component-button-gap-large-horizontal: var(
+    --tapsi-number-10
+  );
+  --tapsi-dimension-component-button-radius-small: var(
+    --tapsi-dimension-radius-full
+  );
+  --tapsi-dimension-component-button-radius-medium: var(
+    --tapsi-dimension-radius-full
+  );
+  --tapsi-dimension-component-button-radius-large: var(
+    --tapsi-dimension-radius-full
+  );
+  --tapsi-dimension-component-row-padding-horizontal: var(--tapsi-number-16);
+  --tapsi-dimension-component-row-padding-vertical: var(--tapsi-number-12);
+  --tapsi-dimension-component-row-gap-horizontal: var(--tapsi-number-12);
+  --tapsi-dimension-component-row-size-default: var(--tapsi-number-56);
+}

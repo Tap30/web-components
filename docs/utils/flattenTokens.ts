@@ -1,12 +1,21 @@
-import type { Tokens } from "@tapsioss/theme/types";
-
 type FlattenedPaletteEntry = {
   path: string;
   token: string;
   value: string;
 };
 
-type TokensUnion = Tokens[keyof Tokens];
+/**
+ * Any token group. This used to be `Tokens[keyof Tokens]` from
+ * `@tapsioss/theme/types`, but the token model no longer exposes a single flat
+ * `Tokens` shape — see `packages/theme/AGENTS.md`.
+ *
+ * The pages under `docs/theme/` read the pre-1.0 token shape (`tokens.spacing`,
+ * `tokens.stroke`, a default export from `@tapsioss/theme/tokens`). This package
+ * therefore pins `@tapsioss/theme` to the published `0.8.0` rather than the
+ * workspace 1.x, so those pages keep working unchanged. Migrating them to the
+ * two-layer model is a separate piece of work.
+ */
+type TokensUnion = Record<string, unknown>;
 
 const flattenTokens = (
   tokens: TokensUnion,

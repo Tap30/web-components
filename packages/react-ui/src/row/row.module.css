@@ -1,0 +1,261 @@
+/*
+ * Row — see the Rasti DS "Row" page in Figma (node 33094:18205, component set
+ * ".General Row": `Content=Standard` 33094:18222 and `Content=Reversed`
+ * 33094:18234).
+ *
+ * A CSS MODULE: class names are scoped by the build and are not public API.
+ * Select internals from outside through their `data-part` attributes, and
+ * influence appearance through `--tapsi-*` custom properties.
+ *
+ * Figma's axes and toggles map to props as: Content → `reversed`,
+ * Divider → `divider`, Description → `description`, Leading/Trailing →
+ * `leading`/`trailing` (slots), Leading Badge → `badge`. Figma's
+ * `trailingNavigate` chevron is not built in: pass the icon in `trailing`.
+ *
+ * Figma draws the row for RTL with physical left/right; everything here is
+ * logical, so leading sits at the inline start in either direction.
+ *
+ * Fallbacks in `var(--token, <fallback>)` are diagnostic, not styling: without
+ * the theme the row renders obviously wrong rather than plausibly.
+ */
+
+.tapsi-row {
+  display: flex;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+
+  /*
+   * Always fills its parent. Set explicitly because the row can be a `<div>`,
+   * `<a>` or `<button>`, whose own default widths differ (a `<button>` hugs
+   * its content) — this keeps all three identical.
+   */
+  inline-size: 100%;
+
+  /*
+   * Lets a flex or grid parent shrink the row below its text's width. Without
+   * it, `textOverflow="ellipsis"` would make the unwrapped text the row's
+   * minimum width, and the row would push its parent wider instead of
+   * truncating.
+   */
+  min-inline-size: 0;
+
+  /* Figma's frame is `min-h`, not `h`: a wrapped label grows the row. */
+  min-block-size: var(--tapsi-dimension-component-row-size-default);
+  padding-inline: var(--tapsi-dimension-component-row-padding-horizontal);
+  gap: var(--tapsi-dimension-component-row-gap-horizontal);
+
+  /*
+   * Figma fills the row with a literal white rather than a variable; the
+   * nearest bound surface in the same component (the badge ring) is
+   * `Color/Surface/Primary`, which is white in the light themes and follows
+   * the theme in the dark ones.
+   */
+  background: var(--tapsi-color-surface-primary, magenta);
+  color: var(--tapsi-color-content-primary, magenta);
+  text-align: start;
+  /* For when the row is rendered as an anchor. */
+  text-decoration: none;
+}
+
+/*
+ * A row with `href` or `onClick` renders as an `<a>` or `<button>`. Undo what
+ * the user agent gives those elements, so the row looks identical whichever
+ * element it is.
+ *
+ * Figma defines no hover or pressed state for the row, so none is drawn here.
+ */
+.tapsi-row--interactive {
+  margin: 0;
+  border: none;
+  padding-block: 0;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The same focus ring as the Button. */
+.tapsi-row--interactive:focus-visible {
+  outline: var(--tapsi-number-2, 2px) solid
+    var(--tapsi-color-content-accent, magenta);
+  outline-offset: var(--tapsi-number-2, 2px);
+}
+
+/*
+ * The icon box. A leading adornment is an arbitrary `ReactNode`, so the BOX
+ * binds its size: `@tapsioss/react-icons`' default `size="auto"` fills it, and
+ * any other SVG is made to conform below.
+ *
+ * GAP: Figma hardcodes `size-[24px]` on the icon frame — there is no
+ * `Dimension/Component/Row/Icon` token — so this uses the primitive scale.
+ */
+.tapsi-row__leading {
+  display: flex;
+  flex: none;
+  align-items: center;
+  position: relative;
+  padding-block: var(--tapsi-dimension-component-row-padding-vertical);
+}
+
+.tapsi-row__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--tapsi-number-24);
+  block-size: var(--tapsi-number-24);
+}
+
+.tapsi-row__icon > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/*
+ * The leading badge: a 6px negative dot inside a 12px ring of the row's own
+ * surface, which is what separates it from the icon beneath.
+ *
+ * GAP: Figma hardcodes the 12px/6px boxes and the `-2px` offset (no
+ * `Dimension/Component/Badge/*` tokens), so these use the primitive scale.
+ * Figma's `top-[10px]` is the leading padding (12) less those 2px; it is
+ * written that way so the badge stays on the icon's corner if the padding
+ * token moves. Figma's `right` is the inline START here, since the frame is an
+ * RTL row drawn left to right.
+ */
+.tapsi-row__badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset-block-start: calc(
+    var(--tapsi-dimension-component-row-padding-vertical) -
+      var(--tapsi-number-2)
+  );
+  inset-inline-start: calc(-1 * var(--tapsi-number-2));
+
+  inline-size: var(--tapsi-number-12);
+  block-size: var(--tapsi-number-12);
+  border-radius: var(--tapsi-dimension-radius-full);
+  background: var(--tapsi-color-surface-primary, magenta);
+  overflow: hidden;
+}
+
+.tapsi-row__badge::after {
+  content: "";
+  inline-size: var(--tapsi-number-6);
+  block-size: var(--tapsi-number-6);
+  border-radius: var(--tapsi-dimension-radius-full);
+  background: var(--tapsi-color-surface-negative, magenta);
+}
+
+/*
+ * Figma nests the label and trailing in a Container that carries its own
+ * vertical padding and gap — and the divider, which is why the separator
+ * spans the content and trailing but stops short of the leading icon.
+ */
+.tapsi-row__container {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  align-self: stretch;
+  position: relative;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  gap: var(--tapsi-dimension-component-row-gap-horizontal);
+  padding-block: var(--tapsi-dimension-component-row-padding-vertical);
+}
+
+/*
+ * Figma's Divider is an absolute `inset-0` frame with `border-b`: a 1px line
+ * drawn OVER the Container's bottom edge, taking no space. A border on the
+ * Container itself would add that pixel to the row's height (77px instead of
+ * Figma's 76px), so it is an overlay here too. `Number/1` is the successor to
+ * the retired `--tapsi-stroke-1`.
+ */
+.tapsi-row--divider .tapsi-row__container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-block-end: var(--tapsi-number-1, 1px) solid
+    var(--tapsi-color-border-secondary, magenta);
+  pointer-events: none;
+}
+
+.tapsi-row__content {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: center;
+  min-inline-size: 0;
+  /*
+   * Figma: `overflow-clip` and `word-break: break-word` — wrap, never spill.
+   * This is the default `textOverflow="wrap"`; `ellipsis` is below.
+   */
+  overflow: clip;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/*
+ * Figma: Trailing is an auto-layout of 24px icons with `gap-[4px]` (the
+ * optional Navigation chevron, then the icon).
+ *
+ * A grid with a fixed 24px row and at-least-24px columns gives every child a
+ * definite area, so an auto-sized icon (`width/height: 100%` inline) fills a
+ * 24px square, while wider content such as text still gets its own width.
+ *
+ * GAP: the 24px icon size and the 4px gap are hardcoded in Figma, so these use
+ * the primitive scale.
+ */
+.tapsi-row__trailing {
+  display: grid;
+  flex: none;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(var(--tapsi-number-24), auto);
+  grid-template-rows: var(--tapsi-number-24);
+  align-items: center;
+  justify-items: center;
+  gap: var(--tapsi-number-4);
+}
+
+.tapsi-row__label,
+.tapsi-row__description {
+  display: block;
+  /* Figma binds Typography/Letter-Spacing/*, which is 0 and not exported. */
+}
+
+/*
+ * Standard: the label is `Label/Medium` in Content/Primary, the description
+ * `Body/Small` in Content/Tertiary. Reversed swaps the two styles, so the
+ * label reads as an overline above a prominent value.
+ */
+.tapsi-row__label,
+.tapsi-row--reversed .tapsi-row__description {
+  font-family: var(--tapsi-typography-font-family-label, sans-serif);
+  font-weight: var(--tapsi-typography-font-weight-label);
+  font-size: var(--tapsi-typography-font-size-label-medium);
+  line-height: var(--tapsi-typography-line-height-label-medium);
+  color: var(--tapsi-color-content-primary, magenta);
+}
+
+.tapsi-row__description,
+.tapsi-row--reversed .tapsi-row__label {
+  font-family: var(--tapsi-typography-font-family-body, sans-serif);
+  font-weight: var(--tapsi-typography-font-weight-body);
+  font-size: var(--tapsi-typography-font-size-body-small);
+  line-height: var(--tapsi-typography-line-height-body-small);
+  color: var(--tapsi-color-content-tertiary, magenta);
+}
+
+/*
+ * `textOverflow="ellipsis"`: each line stays on one line and is truncated. Figma
+ * also sets `overflow-hidden` + `text-ellipsis` on both text frames, so this is
+ * the same treatment with wrapping turned off. Each line truncates on its own,
+ * which works because the content column has `min-inline-size: 0` and so can
+ * shrink below its text's width.
+ */
+.tapsi-row--ellipsis .tapsi-row__label,
+.tapsi-row--ellipsis .tapsi-row__description {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

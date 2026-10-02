@@ -1,0 +1,182 @@
+/**
+ * Primitive tokens — the raw scales every theme is built from.
+ *
+ * Generated from figma-output-jsons/primitive.json. Do not hand-edit; see
+ * AGENTS.md for the rules that produce this file.
+ *
+ * These are the only tokens in the package that hold literal values. Import
+ * this file once, then one theme file on top of it:
+ *
+ *   @import "@tapsioss/theme/tokens.css";
+ *   @import "@tapsioss/theme/ride/light.css";
+ */
+
+:root {
+  /* Palette / Gray */
+  --tapsi-palette-gray-50: #f5f7f7;
+  --tapsi-palette-gray-100: #eaeded;
+  --tapsi-palette-gray-200: #e1e3e3;
+  --tapsi-palette-gray-300: #cacccc;
+  --tapsi-palette-gray-400: #b1b2b2;
+  --tapsi-palette-gray-500: #747575;
+  --tapsi-palette-gray-600: #535454;
+  --tapsi-palette-gray-700: #323333;
+  --tapsi-palette-gray-800: #1f1f1f;
+  --tapsi-palette-gray-900: #141414;
+  --tapsi-palette-gray-black: #000000;
+  --tapsi-palette-gray-white: #ffffff;
+
+  /* Palette / Orange */
+  --tapsi-palette-orange-50: #fff0e9;
+  --tapsi-palette-orange-100: #ffd5c2;
+  --tapsi-palette-orange-200: #ffac8a;
+  --tapsi-palette-orange-300: #ff8c61;
+  --tapsi-palette-orange-400: #ff7140;
+  --tapsi-palette-orange-500: #e55c2e;
+  --tapsi-palette-orange-600: #a64221;
+  --tapsi-palette-orange-700: #662a14;
+  --tapsi-palette-orange-900: #422e28;
+
+  /* Palette / Blue */
+  --tapsi-palette-blue-50: #eff3fe;
+  --tapsi-palette-blue-100: #d4e2fc;
+  --tapsi-palette-blue-200: #a0bff8;
+  --tapsi-palette-blue-300: #5b91f5;
+  --tapsi-palette-blue-400: #276ef1;
+  --tapsi-palette-blue-500: #1e54b7;
+  --tapsi-palette-blue-600: #174291;
+  --tapsi-palette-blue-700: #143166;
+  --tapsi-palette-blue-900: #262f40;
+
+  /* Palette / Green */
+  --tapsi-palette-green-50: #e6f2ed;
+  --tapsi-palette-green-100: #addec9;
+  --tapsi-palette-green-200: #66d19e;
+  --tapsi-palette-green-300: #06c167;
+  --tapsi-palette-green-400: #048848;
+  --tapsi-palette-green-500: #03703c;
+  --tapsi-palette-green-600: #03582f;
+  --tapsi-palette-green-700: #10462d;
+  --tapsi-palette-green-900: #24332c;
+
+  /* Palette / Red */
+  --tapsi-palette-red-50: #ffefed;
+  --tapsi-palette-red-100: #fed7d2;
+  --tapsi-palette-red-200: #f1998e;
+  --tapsi-palette-red-300: #e85c4a;
+  --tapsi-palette-red-400: #e11900;
+  --tapsi-palette-red-500: #ab1300;
+  --tapsi-palette-red-600: #870f00;
+  --tapsi-palette-red-700: #5a0a00;
+  --tapsi-palette-red-900: #402926;
+
+  /* Palette / Yellow */
+  --tapsi-palette-yellow-50: #fffaf0;
+  --tapsi-palette-yellow-100: #fff2d9;
+  --tapsi-palette-yellow-200: #ffe3ac;
+  --tapsi-palette-yellow-300: #ffcf70;
+  --tapsi-palette-yellow-400: #ffc043;
+  --tapsi-palette-yellow-500: #e49e15;
+  --tapsi-palette-yellow-600: #996f00;
+  --tapsi-palette-yellow-700: #674d1b;
+  --tapsi-palette-yellow-900: #332e24;
+
+  /* Palette / Indigo */
+  --tapsi-palette-indigo-50: #f3f2fe;
+  --tapsi-palette-indigo-100: #c6c0f9;
+  --tapsi-palette-indigo-200: #9b90f2;
+  --tapsi-palette-indigo-300: #7163e8;
+  --tapsi-palette-indigo-400: #4a38db;
+  --tapsi-palette-indigo-500: #483ab8;
+  --tapsi-palette-indigo-600: #443997;
+  --tapsi-palette-indigo-700: #3d3678;
+  --tapsi-palette-indigo-900: #2c2942;
+
+  /* Palette / Purple */
+  --tapsi-palette-purple-50: #f1eef8;
+  --tapsi-palette-purple-100: #c9c0e2;
+  --tapsi-palette-purple-200: #a293c9;
+  --tapsi-palette-purple-300: #7c69ae;
+  --tapsi-palette-purple-400: #574191;
+  --tapsi-palette-purple-500: #503e7d;
+  --tapsi-palette-purple-600: #483b6a;
+  --tapsi-palette-purple-700: #3f3658;
+  --tapsi-palette-purple-900: #2d2938;
+
+  /* Palette / Alpha */
+  --tapsi-palette-alpha-dark50: rgba(0, 0, 0, 0.5);
+  --tapsi-palette-alpha-dark40: rgba(0, 0, 0, 0.4);
+  --tapsi-palette-alpha-dark30: rgba(0, 0, 0, 0.3);
+  --tapsi-palette-alpha-dark20: rgba(0, 0, 0, 0.2);
+  --tapsi-palette-alpha-dark10: rgba(0, 0, 0, 0.1);
+  --tapsi-palette-alpha-light50: rgba(255, 255, 255, 0.5);
+  --tapsi-palette-alpha-light40: rgba(255, 255, 255, 0.4);
+  --tapsi-palette-alpha-light30: rgba(255, 255, 255, 0.3);
+  --tapsi-palette-alpha-light20: rgba(255, 255, 255, 0.2);
+  --tapsi-palette-alpha-light10: rgba(255, 255, 255, 0.1);
+
+  /* Font / Family */
+  --tapsi-font-family-base: "Vazirmatn", sans-serif;
+  --tapsi-font-family-mono: "Vazirmatn", monospace;
+
+  /* Font / Weight */
+  --tapsi-font-weight-100: 100;
+  --tapsi-font-weight-200: 200;
+  --tapsi-font-weight-300: 300;
+  --tapsi-font-weight-400: 400;
+  --tapsi-font-weight-500: 500;
+  --tapsi-font-weight-600: 600;
+  --tapsi-font-weight-700: 700;
+  --tapsi-font-weight-800: 800;
+  --tapsi-font-weight-900: 900;
+
+  /* Font / Size */
+  --tapsi-font-size-8: 0.5rem;
+  --tapsi-font-size-9: 0.5625rem;
+  --tapsi-font-size-10: 0.625rem;
+  --tapsi-font-size-11: 0.6875rem;
+  --tapsi-font-size-12: 0.75rem;
+  --tapsi-font-size-13: 0.8125rem;
+  --tapsi-font-size-14: 0.875rem;
+  --tapsi-font-size-15: 0.9375rem;
+  --tapsi-font-size-16: 1rem;
+  --tapsi-font-size-18: 1.125rem;
+  --tapsi-font-size-20: 1.25rem;
+  --tapsi-font-size-22: 1.375rem;
+  --tapsi-font-size-24: 1.5rem;
+  --tapsi-font-size-28: 1.75rem;
+  --tapsi-font-size-32: 2rem;
+  --tapsi-font-size-40: 2.5rem;
+  --tapsi-font-size-48: 3rem;
+  --tapsi-font-size-56: 3.5rem;
+  --tapsi-font-size-64: 4rem;
+
+  /* Number */
+  --tapsi-number-0: 0;
+  --tapsi-number-1: 0.0625rem;
+  --tapsi-number-2: 0.125rem;
+  --tapsi-number-4: 0.25rem;
+  --tapsi-number-6: 0.375rem;
+  --tapsi-number-8: 0.5rem;
+  --tapsi-number-10: 0.625rem;
+  --tapsi-number-12: 0.75rem;
+  --tapsi-number-14: 0.875rem;
+  --tapsi-number-16: 1rem;
+  --tapsi-number-20: 1.25rem;
+  --tapsi-number-24: 1.5rem;
+  --tapsi-number-28: 1.75rem;
+  --tapsi-number-32: 2rem;
+  --tapsi-number-36: 2.25rem;
+  --tapsi-number-40: 2.5rem;
+  --tapsi-number-44: 2.75rem;
+  --tapsi-number-48: 3rem;
+  --tapsi-number-52: 3.25rem;
+  --tapsi-number-56: 3.5rem;
+  --tapsi-number-64: 4rem;
+  --tapsi-number-72: 4.5rem;
+  --tapsi-number-80: 5rem;
+  --tapsi-number-96: 6rem;
+  --tapsi-number-128: 8rem;
+  --tapsi-number-256: 16rem;
+  --tapsi-number-999: 62.4375rem;
+}

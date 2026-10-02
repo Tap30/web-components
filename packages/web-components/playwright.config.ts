@@ -31,7 +31,7 @@ const config: PlaywrightTestConfig<object, object> = defineConfig({
     permissions: ["clipboard-write", "clipboard-read"],
   },
   webServer: {
-    command: "pnpm --filter @tapsioss/playground run start:test",
+    command: "pnpm --filter @tapsioss/lit-playground run start:test",
     reuseExistingServer: !process.env.CI,
     url: "http://localhost:3000/test",
     gracefulShutdown: {
