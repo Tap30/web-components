@@ -182,6 +182,25 @@ exception.
 Small's `20` was taken from the review rather than read from Figma — the
 `get_design_context` call for the Small variant timed out. Worth confirming.
 
+## Missing component tokens for the Row
+
+The Row (Rasti DS, node 33094:18205) binds `Dimension/Component/Row/*` for its
+size, padding and gap, but Figma hardcodes the rest — so, like the Button's
+icons, these use the primitive scale in
+`packages/react-ui/src/row/row.module.css`:
+
+- **Icon box** `size-[24px]` → `--tapsi-number-24`.
+- **Trailing gap** `gap-[4px]` (between the chevron and the icon) →
+  `--tapsi-number-4`.
+- **Leading badge** `12px` ring, `6px` dot and `-2px` offset →
+  `--tapsi-number-12`, `-6`, `-2`. A `Dimension/Component/Badge/*` set would
+  cover this and the future Badge component.
+- **Row background** is a literal white in Figma, not a variable. The code uses
+  `Color/Surface/Primary` so dark themes work; worth binding in Figma.
+
+Figma's `trailingNavigate` chevron is not built in (react-ui must not depend on
+`@tapsioss/react-icons`); consumers pass it in the `trailing` slot.
+
 ## Test coverage gate
 
 Add `vitest` with a **100% coverage threshold**, enforced on commit.

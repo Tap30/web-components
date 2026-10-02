@@ -43,6 +43,16 @@ start without it.
    match is not obvious, ask.
 4. **Every token the design binds exists in `packages/theme`** under its exact
    name (§1). Check each one before writing CSS.
+5. **Which layout shortcut props it takes** — `fullWidth` and the like. Ask the
+   developer whether the component needs each one, and what its default is;
+   Figma does not decide this, and neither does another component. The Button
+   has `fullWidth` (off by default); the Row has none, because it always fills
+   its parent.
+6. **How it handles overflowing content** — text or slots that do not fit. Ask
+   the developer which it is: clip, wrap and grow, truncate with an ellipsis, or
+   a prop that lets the consumer choose. Figma usually shows only content that
+   fits, so it cannot settle this. The Button clips (§6); the Row has a
+   `textOverflow` prop (`"wrap"` by default, or `"ellipsis"`).
 
 ### What to deliver
 
@@ -264,9 +274,11 @@ Whatever the mechanism, these hold:
 - **Colour needs no plumbing.** `BaseIcon` sets `color`/`fill: currentcolor`,
   and every wrapper inherits the button's content colour, so adornments follow
   variant and hierarchy for free. Do not pass colours down.
-- **Clip, never wrap.** Every size has a fixed `block-size`, so a wrapped label
-  breaks the control's height. Figma sets `overflow-clip` on the root and
-  `whitespace-nowrap` on the label; mirror both.
+- **Overflow is a decision, not a default** (§0, item 6). The Button clips and
+  never wraps: every size has a fixed `block-size`, so a wrapped label would
+  break the control's height, and Figma sets `overflow-clip` on the root and
+  `whitespace-nowrap` on the label. Another component may need the opposite —
+  ask rather than copy the Button.
 - **Read Figma's nesting, not just its token names.** Button's
   `gap/<size>-horizontal` is _horizontal padding on the label frame_, not a flex
   `gap`; implementing it as `gap` silently collapsed to nothing on a button with

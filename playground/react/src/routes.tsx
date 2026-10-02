@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { ButtonPage } from "./pages/button.tsx";
 import { PlaygroundPage } from "./pages/playground.tsx";
+import { RowPage } from "./pages/row.tsx";
 
 /**
  * Every example page, in one place.
@@ -24,6 +25,13 @@ export const PAGES: ExamplePage[] = [
     description:
       "Every variant × hierarchy pair, the three sizes, adornments, full width, overflow, and the disabled and loading states.",
     element: <ButtonPage />,
+  },
+  {
+    path: "row",
+    title: "Row",
+    description:
+      "Standard and reversed, each slot on and off, the leading badge, the divider, wrapping and ellipsis text, and the row rendered as a list item, a link and a button.",
+    element: <RowPage />,
   },
   {
     path: "playground",

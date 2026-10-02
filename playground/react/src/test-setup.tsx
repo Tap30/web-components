@@ -88,11 +88,15 @@ const build = (spec: Spec, key?: number): ReactNode => {
   // Index keys are fine here: these trees are static for the life of a test.
   if (key !== undefined) props["key"] = key;
 
-  return createElement(
-    component as Parameters<typeof createElement>[0],
-    props,
-    spec.children === undefined ? undefined : build(spec.children),
-  );
+  const type = component as Parameters<typeof createElement>[0];
+
+  // No third argument at all when there are no children: passing `undefined`
+  // still sets `props.children`, unlike JSX `<li />`. That matters for an
+  // element handed to Base UI's `render` prop, whose props are merged OVER the
+  // component's own — an explicit `children: undefined` would erase them.
+  return spec.children === undefined
+    ? createElement(type, props)
+    : createElement(type, props, build(spec.children));
 };
 
 const rootElement = document.getElementById("root");
