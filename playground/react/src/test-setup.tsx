@@ -1,4 +1,3 @@
-import * as ReactIcons from "@tapsioss/react-icons";
 import * as ReactUI from "@tapsioss/react-ui";
 import { createElement, type ReactNode } from "react";
 import { createRoot, type Root } from "react-dom/client";
@@ -27,16 +26,15 @@ declare global {
   interface Window {
     /** The page half of the render bridge in `@internals/test-helpers`. */
     __renderReact?: (spec: Spec) => void;
+    /** Calls to each `callback(name)` prop since the last render. */
+    __callbackCalls?: Record<string, number>;
   }
 }
 
-// Both public barrels, so a test can name a component (`"Button"`) or a real
-// icon (`"CircleCross"`). react-ui wins any name collision, since a test naming
-// a component means the component.
-const registry: Record<string, unknown> = {
-  ...(ReactIcons as unknown as Record<string, unknown>),
-  ...(ReactUI as unknown as Record<string, unknown>),
-};
+// The public barrel, so a test can name a component (`"Button"`). Icons are
+// deliberately absent: react-ui's tests must not depend on
+// `@tapsioss/react-icons`, so an adornment is always a raw DOM subtree.
+const registry = ReactUI as unknown as Record<string, unknown>;
 
 /**
  * Turn the serialised description a test sent into real React elements.
@@ -49,6 +47,19 @@ const isSpecLike = (value: unknown): boolean =>
   Array.isArray(value)
     ? value.some(isSpecLike)
     : typeof value === "object" && value !== null && "type" in value;
+
+/** `callback(name)` from `@internals/test-helpers`, as it arrives here. */
+const isCallback = (value: unknown): value is { $callback: string } =>
+  typeof value === "object" &&
+  value !== null &&
+  typeof (value as { $callback?: unknown }).$callback === "string";
+
+/** The real function a `callback(name)` prop becomes: it only counts calls. */
+const recordCalls = (name: string) => () => {
+  const calls = (window.__callbackCalls ??= {});
+
+  calls[name] = (calls[name] ?? 0) + 1;
+};
 
 const build = (spec: Spec, key?: number): ReactNode => {
   if (Array.isArray(spec)) {
@@ -67,7 +78,11 @@ const build = (spec: Spec, key?: number): ReactNode => {
   const props: Record<string, unknown> = {};
 
   for (const [name, value] of Object.entries(spec.props ?? {})) {
-    props[name] = isSpecLike(value) ? build(value as Spec) : value;
+    props[name] = isCallback(value)
+      ? recordCalls(value.$callback)
+      : isSpecLike(value)
+        ? build(value as Spec)
+        : value;
   }
 
   // Index keys are fine here: these trees are static for the life of a test.
@@ -98,6 +113,7 @@ let generation = 0;
  * component tests rely on.
  */
 window.__renderReact = (spec: Spec) => {
+  window.__callbackCalls = {};
   root ??= createRoot(rootElement);
   generation += 1;
   root.render(

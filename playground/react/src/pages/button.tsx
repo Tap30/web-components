@@ -1,4 +1,3 @@
-import { CircleCross } from "@tapsioss/react-icons";
 import { Button } from "@tapsioss/react-ui";
 import type * as React from "react";
 
@@ -8,6 +7,25 @@ const row: React.CSSProperties = {
   alignItems: "center",
   flexWrap: "wrap",
 };
+
+// Sized like a `@tapsioss/react-icons` icon at its default `size="auto"`: it
+// fills whatever box the button gives it. The playground deliberately does not
+// depend on the icon package, so the react-ui track never waits on its build.
+const Glyph = () => (
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <circle
+      cx="12"
+      cy="12"
+      r="10"
+      fill="currentColor"
+    />
+  </svg>
+);
 
 const dot = (
   <svg
@@ -86,14 +104,12 @@ export const ButtonPage = () => (
     </div>
 
     <div style={row}>
-      <Button leadingAdornment={<CircleCross />}>با آیکون ابتدایی متوسط</Button>
-      <Button trailingAdornment={<CircleCross />}>
-        با آیکون انتهایی متوسط
-      </Button>
+      <Button leadingAdornment={<Glyph />}>با آیکون ابتدایی متوسط</Button>
+      <Button trailingAdornment={<Glyph />}>با آیکون انتهایی متوسط</Button>
       <Button
         size="sm"
-        leadingAdornment={<CircleCross />}
-        trailingAdornment={<CircleCross />}
+        leadingAdornment={<Glyph />}
+        trailingAdornment={<Glyph />}
       >
         با آیکون - کوچک
       </Button>
@@ -101,8 +117,8 @@ export const ButtonPage = () => (
         size="lg"
         variant="destructive"
         hierarchy="secondary"
-        leadingAdornment={<CircleCross />}
-        trailingAdornment={<CircleCross />}
+        leadingAdornment={<Glyph />}
+        trailingAdornment={<Glyph />}
       >
         با آیکون - بزرگ
       </Button>

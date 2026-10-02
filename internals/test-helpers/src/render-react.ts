@@ -84,3 +84,31 @@ export const cleanupReact = async (page: Page): Promise<void> => {
     ).__renderReact?.(null);
   });
 };
+
+/**
+ * A function-valued prop, described as data: the page replaces it with a real
+ * function that counts its calls. Functions cannot cross `page.evaluate`, so
+ * this is how a test passes `onClick` and friends.
+ *
+ * ```ts
+ * await renderReact(page, { type: "Button", props: { onClick: callback("onClick") } });
+ * await page.keyboard.press("Enter");
+ * expect(await callbackCalls(page, "onClick")).toBe(1);
+ * ```
+ */
+export const callback = (name: string) => ({ $callback: name });
+
+/** How many times the `callback(name)` prop has been called since the last render. */
+export const callbackCalls = async (
+  page: Page,
+  name: string,
+): Promise<number> =>
+  page.evaluate(
+    callbackName =>
+      (
+        window as unknown as {
+          __callbackCalls?: Record<string, number | undefined>;
+        }
+      ).__callbackCalls?.[callbackName] ?? 0,
+    name,
+  );

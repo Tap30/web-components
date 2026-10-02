@@ -6,32 +6,13 @@
   // exclude, which lists `**/*.stories.tsx`. Without re-declaring it here, every
   // story would be silently checked by no project at all.
   //
-  // `paths` REPLACES the root map rather than merging with it, so anything a
-  // story imports has to be listed. That is the price of the override below.
-  // Adding a new `@tapsioss/*` import to a story means adding its alias here;
-  // otherwise it still resolves, but through node_modules to `dist` (which then
-  // requires that package to have been built first).
+  // `paths` is inherited from the root unchanged: the root already resolves
+  // every hand-written package to SOURCE, which is what keeps Storybook
+  // hot-reloading with no build (and lets `storybook build` run without one).
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "module": "ESNext",
-    "moduleResolution": "bundler",
-    "paths": {
-      // THE OVERRIDE: `src` only, where the root deliberately prefers `dist`.
-      // This is what keeps Storybook hot-reloading from source with no build,
-      // while the playground and real consumers still exercise the built output.
-      "@tapsioss/react-ui": ["../../packages/react-ui/src"],
-      "@tapsioss/react-ui/*": ["../../packages/react-ui/src/*"],
-      // Re-declared verbatim from the root, since `paths` does not merge.
-      // Two layers: `tokens` is the primitive set, `<product>/<theme>` is a
-      // theme built on it. The wildcards cover both, so adding a product or a
-      // theme needs no change here.
-      "@tapsioss/theme/types": ["../../packages/theme/src/types.ts"],
-      "@tapsioss/theme/*.css": ["../../packages/theme/src/*.css"],
-      "@tapsioss/theme/*": ["../../packages/theme/src/*.ts"],
-      // React Icons
-      "@tapsioss/react-icons": ["../../packages/react-icons/dist"],
-      "@tapsioss/react-icons/*": ["../../packages/react-icons/dist/*"]
-    }
+    "moduleResolution": "bundler"
   },
   // `.storybook` must be listed explicitly: TypeScript's wildcard `include`
   // skips directories whose name starts with a dot, so the root config never
@@ -40,7 +21,7 @@
   // which cannot read Storybook's exports-map-only packages
   // (`TS2307: Cannot find module "@storybook/react-vite"`).
   //
-  // `@tapsioss/react-ui` is aliased to its SOURCE above, so its components are
+  // `@tapsioss/react-ui` resolves to its SOURCE (root `paths`), so its components are
   // part of this program — but its ambient declarations are not, because an
   // ambient `.d.ts` is only picked up when a program includes it directly.
   // Without the last entry, `import styles from "./button.module.css"` inside

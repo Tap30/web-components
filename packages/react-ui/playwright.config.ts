@@ -3,9 +3,17 @@ import {
   devices,
   type PlaywrightTestConfig,
 } from "@playwright/test";
+import { COVERAGE_DIR } from "./playwright/coverage.ts";
 
-const config: PlaywrightTestConfig<object, object> = defineConfig({
+const config: PlaywrightTestConfig<
+  { coverageDir: string | undefined },
+  object
+> = defineConfig({
   testDir: "./src",
+  // Coverage: collected per test (`use.coverageDir`), reported and checked
+  // against a 100% threshold after the run — see ./playwright/coverage.ts.
+  globalSetup: "./playwright/global-setup.ts",
+  globalTeardown: "./playwright/global-teardown.ts",
   fullyParallel: true,
   retries: process.env.CI ? 2 : undefined,
   forbidOnly: !!process.env.CI,
@@ -27,6 +35,7 @@ const config: PlaywrightTestConfig<object, object> = defineConfig({
     },
   ],
   use: {
+    coverageDir: COVERAGE_DIR,
     baseURL: "http://localhost:3001",
     permissions: ["clipboard-write", "clipboard-read"],
   },

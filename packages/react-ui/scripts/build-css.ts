@@ -54,6 +54,9 @@ const HASH_LENGTH = 5;
  * first thing on it. Without the anchor this also matches the specifier inside
  * a JSDoc `@example` block, whose lines begin with ` * `.
  */
+/** The trailing comment `tsc` adds to a file it emitted a source map for. */
+const SOURCE_MAP_COMMENT = /\n\/\/# sourceMappingURL=\S+\s*$/;
+
 const DEFAULT_IMPORT =
   /^import\s+(\w+)\s+from\s*["'](\.{1,2}\/[^"']*?)\.module\.css["'];?[ \t]*$/gm;
 
@@ -194,9 +197,12 @@ const inlineClassNames = async (stylesheets: ScopedStylesheet[]) => {
           return whole;
         }
 
+        // ONE line, replacing one line: `tsc`'s source map for this file
+        // was computed before this rewrite, and every line after the import
+        // must stay where the map says it is.
         return (
-          `import "${specifier}.css";\n` +
-          `const ${binding} = ${JSON.stringify(sheet.exports, null, 2)};`
+          `import "${specifier}.css"; ` +
+          `const ${binding} = ${JSON.stringify(sheet.exports)};`
         );
       },
     );
@@ -223,6 +229,28 @@ const inlineClassNames = async (stylesheets: ScopedStylesheet[]) => {
   return inlined;
 };
 
+/**
+ * Removes the `//# sourceMappingURL` comment from every emitted file, keeping
+ * the `.js.map` files themselves.
+ *
+ * The maps exist for `@tapsioss/react-ui`'s coverage report: the test
+ * playground bundles `dist`, and maps it back to `src` through them. They are
+ * NOT shipped (`files` excludes them — what ships is only CSS and JS), so a
+ * published file pointing at its map would point at nothing and make every
+ * consumer's bundler warn. The playground finds a map by its `<file>.map` name
+ * instead.
+ */
+const detachSourceMaps = async () => {
+  const jsFiles = await globby(path.join(distDir, "**/*.js"));
+
+  for (const jsFile of jsFiles) {
+    const source = await fs.readFile(jsFile, "utf8");
+    const next = source.replace(SOURCE_MAP_COMMENT, "");
+
+    if (next !== source) await fs.writeFile(jsFile, next, "utf8");
+  }
+};
+
 void (async () => {
   console.time("build-css");
 
@@ -231,6 +259,8 @@ void (async () => {
   await writeStylesheets(stylesheets);
 
   const inlined = await inlineClassNames(stylesheets);
+
+  await detachSourceMaps();
 
   console.log(
     `✅ scoped ${String(stylesheets.length)} CSS module(s), wrote ` +

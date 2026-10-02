@@ -9,7 +9,6 @@
     "start:test": "tsc && vite build && vite --port 3001 preview"
   },
   "dependencies": {
-    "@tapsioss/react-icons": "workspace:*",
     "@tapsioss/react-ui": "workspace:*",
     "@tapsioss/theme": "workspace:*",
     "react-router": "^7.18.4"

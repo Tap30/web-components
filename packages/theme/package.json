@@ -1,7 +1,7 @@
 {
   "name": "@tapsioss/theme",
   "description": "Design tokens for the Tapsi Design System, as composable CSS and TypeScript layers.",
-  "version": "1.0.0",
+  "version": "0.8.0",
   "type": "module",
   "files": [
     "./dist",
@@ -37,7 +37,8 @@
     "prebuild": "run-s clear check",
     "build:transpile": "tsc --project tsconfig.build.json",
     "build:copy-css": "tsx ./scripts/copy-css-vars.ts",
-    "build": "run-s build:transpile build:copy-css"
+    "build": "run-s build:transpile build:copy-css",
+    "check:publish": "publint && attw --pack . --profile esm-only --exclude-entrypoints ./tokens.css"
   },
   "dependencies": {
     "tslib": "^2.8.0"

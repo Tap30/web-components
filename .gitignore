@@ -22,6 +22,7 @@ jspm_packages/
 
 # Optional eslint cache
 .eslintcache
+.eslintcache-archived
 
 # Optional stylelint cache
 .stylelintcache

@@ -1,26 +1,94 @@
 # AGENTS.md — `@tapsioss/react-ui`
 
-Guidance for AI agents and humans writing components in this package.
+Guidance for AI agents and humans writing components in this package — both
+**new** components and **changes to existing ones**; every rule here applies to
+both.
 
 These are review outcomes, not preferences. Each one was asked for explicitly
-after a real review of the Button, which is the reference implementation — read
-`src/button/` alongside this file.
+after a real review of the Button, which is the reference implementation.
+
+**The Button is the answer to anything this file leaves open.** Read
+`src/button/`, its story and its playground page alongside this file, and follow
+their pattern. **If the Button does not settle a question either, stop and ask —
+never assume.** A wrong guess here becomes a wrong component that passes its own
+tests.
 
 ---
+
+## 0. Workflow
+
+### Before writing anything
+
+All of these must be in hand. If one is missing or ambiguous, ask for it; do not
+start without it.
+
+1. **A Figma reference** — a link to the component's frame or node. No Figma, no
+   component. Read it with the Figma tools: `get_design_context` for structure,
+   `get_variable_defs` for the exact variables bound to each property, and
+   `get_screenshot` to compare against at the end.
+2. **The Base UI component** it is built on — Base UI's component for the same
+   role (Button → `@base-ui/react/button`), imported directly from its own entry
+   point and aliased with a `Base` prefix, exactly as the Button does:
+
+   ```tsx
+   import { Button as BaseButton } from "@base-ui/react/button";
+   ```
+
+   Never from the `@base-ui/react` root, and never re-implemented by hand. If
+   Base UI has no matching component, or more than one could fit, ask.
+
+3. **The Lit equivalent** under `packages/web-components/src/` — the behaviour
+   and test source (§1). It is not always one folder per component name: the
+   Button's lives in `button/standard/`, next to `button/icon-button/`. If the
+   match is not obvious, ask.
+4. **Every token the design binds exists in `packages/theme`** under its exact
+   name (§1). Check each one before writing CSS.
+
+### What to deliver
+
+For a component `<name>` (kebab-case, e.g. `text-field`) exported as `<Name>`:
+
+| Where                                             | What                                                                                                                                                                    |
+| ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `packages/react-ui/src/<name>/<name>.tsx`         | The component, on its Base UI component (§2–§5).                                                                                                                        |
+| `packages/react-ui/src/<name>/<name>.module.css`  | Its styles — tokens only (§6).                                                                                                                                          |
+| `packages/react-ui/src/<name>/index.ts`           | Re-exports the component and its public types, as `src/button/index.ts` does.                                                                                           |
+| `packages/react-ui/src/index.ts`                  | `export * from "./<name>/index.ts";` — the story, the playground and the tests all import from the package barrel, so a component missing here is missing everywhere.   |
+| `packages/react-ui/src/<name>/<name>.test.tsx`    | Every scenario of the Lit component's tests, plus whatever else 100% coverage needs (§7).                                                                               |
+| `storybook/react/src/react-ui/<name>.stories.tsx` | One story, `title: "React UI/<Name>"`, every prop exposed as a control — follow `button.stories.tsx`.                                                                   |
+| `playground/react/src/pages/<name>.tsx`           | A `<Name>Page` showing the component's variants, sizes and states — follow `pages/button.tsx`.                                                                          |
+| `playground/react/src/routes.tsx`                 | An entry in `PAGES` for that page. This is what links it from the contents page (`pages/contents.tsx` renders `PAGES`) and adds the route — do not edit `contents.tsx`. |
+| `.changeset/*.md`                                 | `pnpm changesets:create` for `@tapsioss/react-ui`.                                                                                                                      |
+
+Updating an existing component touches the same files: re-read the Figma
+reference, keep the tests mirroring the Lit suite, keep coverage at 100%, and
+bring the story and playground page in line with the change.
+
+Then verify (§8).
 
 ## 1. Source of truth
 
 **Figma is authoritative for appearance**, and the token bindings are read from
 the design with `get_variable_defs`, never inferred from a screenshot or guessed
-from a token's name.
+from a token's name. Read Figma's structure too (`get_design_context`): which
+frame a value is bound to decides which CSS property it becomes (§6).
 
 **`@tapsioss/web-components` is authoritative for behaviour** — props, focus
 management, ARIA, keyboard handling, edge cases — as components are ported. A
 ported component's tests mirror the Lit component's test scenarios one for one.
 
-Never invent a token. If Figma binds something the theme export does not carry,
+**Tokens are used by their exact Figma name.** A Figma variable path maps to a
+CSS custom property by the theme's naming rule — kebab-cased, prefixed
+`--tapsi-`: `Color/Component/Button/Surface/CTA` is
+`--tapsi-color-component-button-surface-cta` (the full rule is in
+`packages/theme/AGENTS.md` §3). Confirm the property exists in
+`packages/theme/src/tokens.css` or a theme's `<product>/<mode>.css` before using
+it.
+
+**Never invent a token, and never substitute a similar one.** If Figma binds a
+variable the theme does not export, stop and report it. The known way through —
 work around it at the point of use, comment the gap with the Figma value, and
-record it in the root `PARKED.md`. Do not silently substitute a similar token.
+record it in the root `PARKED.md` — is applied only once it has been confirmed.
 
 ## 2. Props
 
@@ -207,6 +275,14 @@ Whatever the mechanism, these hold:
 
 ## 7. Tests
 
+**Two layers, both required:**
+
+1. **Every scenario of the Lit component's tests**, one for one, under the same
+   names. Open the file header with which Lit test it mirrors, as
+   `button.test.tsx` does.
+2. **Then whatever 100% coverage still needs** — each extra test asserting a
+   real behaviour of the component (see "Coverage" below).
+
 Playwright, against the React playground's `/test` route. A test describes its
 tree as **data**, because React elements cannot cross `page.evaluate`:
 
@@ -222,6 +298,23 @@ await renderReact(page, {
 to a DOM tag, so raw `<svg>` can be nested. Each call mounts a **fresh** tree —
 a keyed wrapper forces a real remount, without which mount-only behaviour like
 `autoFocus` silently does not re-fire.
+
+**Do not import `@tapsioss/react-icons` in tests**, and do not register it in
+the playground's test page. An adornment is a raw `<svg>` subtree; to reproduce
+the icons' default `size="auto"`, give it `width`/`height` of `"100%"`. This
+keeps the suite — and `pnpm test` — independent of the icon package's build.
+
+**No network.** A test never reaches the internet: a link target or an image is
+served by the test itself with `context.route` (see the link-button test, which
+serves a blank page on the reserved `.test` TLD).
+
+**Coverage must stay at 100%** — statements, branches, functions and lines.
+`pnpm test` fails below that, even when every test passes; the table it prints
+names the uncovered lines, and `coverage/index.html` shows them. A source file
+no test reaches counts as 0%. Cover a branch with a test of real behaviour, not
+by deleting the branch or excluding the file. Function props (`onClick`) cross
+the bridge as `callback("name")`, and `callbackCalls(page, "name")` reads how
+often they were called. The setup lives in `playwright/coverage.ts`.
 
 Two things that will waste your time otherwise:
 
@@ -240,6 +333,15 @@ pnpm --filter @tapsioss/react-ui run test
 pnpm check:lint
 ```
 
+`pnpm test` includes the 100% coverage check.
+
 A component is not done until it has been looked at in the browser. Type-checks
 and passing tests did not catch the Button's padding being half what Figma
 specifies — comparing computed styles against the design's token bindings did.
+
+- `pnpm dev` starts the playground (port 5174) and Storybook (port 6006), both
+  reading react-ui from source.
+- Check every variant, size and state on the playground page against Figma's
+  screenshot, in each theme, and compare computed styles with the variables
+  `get_variable_defs` reported.
+- Check the story's controls cover every prop.

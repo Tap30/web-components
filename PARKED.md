@@ -3,33 +3,29 @@
 Known, deliberately deferred work. Each item says what it is, why it was parked,
 and what it would take — so it can be picked up without re-deriving the context.
 
-Last reviewed: 2026-09-29.
+Last reviewed: 2026-10-02.
 
 ---
 
 ## Release tooling
 
-### changesets setup
+### Leaving alpha
 
-Parked during the `@tapsioss/theme` 1.0 overhaul. No changeset has been created
-for any of that work yet.
+`@tapsioss/theme` and `@tapsioss/react-ui` are in changesets **pre mode**
+(`.changeset/pre.json`, tag `alpha`), so `changeset publish` puts every release
+on the `alpha` dist-tag. Going stable is `pnpm exec changeset pre exit`, then
+the normal version PR; the next publish lands on `latest`.
 
-`pnpm changesets:status` also now reports three advisory lines:
+### Archived Lit packages
 
-```
-Package "@tapsioss/docs"           must depend on the current version of "@tapsioss/theme": "1.0.0" vs "0.8.0"
-Package "@tapsioss/web-components" must depend on the current version of "@tapsioss/theme": "1.0.0" vs "^0.8.0"
-Package "@tapsioss/lit-playground" must depend on the current version of "@tapsioss/theme": "1.0.0" vs "0.8.0"
-```
+`@tapsioss/web-components`, `@tapsioss/react-components` and
+`@tapsioss/web-icons` are `private` and changesets-ignored, and run only in
+`.github/workflows/archived.yml`. One follow-up is outward-facing and was left
+to a human: `npm deprecate` the published versions, pointing at
+`@tapsioss/react-ui` / `@tapsioss/react-icons`.
 
-These are correct: those three deliberately pin the **published** `0.8.0` rather
-than the workspace 1.x, because they hold the Lit generation of the system.
-Changesets objects to any workspace package depending on a non-current version
-of another workspace package. Whether this blocks `changeset version` was not
-determined — the only conclusive test mutates every package version.
-
-**To resolve:** decide whether to silence it (drop the `web-components` peer
-range, alias the other two) or accept it. Tied to the docs decision below.
+The docs site (VitePress, `docs/`) documents the archived track but is still
+deployed to Pages by `gh-pages.yml`, alongside Storybook at `/storybook/`.
 
 ### wireit setup
 
@@ -196,44 +192,22 @@ or replace part of it, and is "on commit" a pre-commit hook or CI?
 
 ## Testing
 
-### `@tapsioss/react-ui` has no tests
+### Archived tests still depend on the network
 
-`packages/react-ui/playwright.config.ts` exists and points at `playground/react`
-on port 3001, and `playground/react/src/test-setup.tsx` serves that URL — but
-both are **scaffolding**.
+`@tapsioss/react-ui`'s link-button test serves its target with `context.route`
+(a blank page on the reserved `.test` TLD). The archived Lit suite still goes
+online, which makes it slow or flaky without a network:
 
-The Lit suite injects raw HTML into `<body>` because web components register
-themselves globally; React components cannot work that way. A render bridge is
-needed (most likely a `window.__render(element)` helper driven through
-`page.evaluate`). That shape should be decided alongside the first real test
-rather than guessed in advance.
+- `button/standard/button.test.ts` and `button/icon-button/icon-button.test.ts`
+  open `https://google.com` and wait for it to load — same fix as react-ui.
+- `avatar`, `banner`, `chat-bubble`, `discount-card` and `modal` tests load
+  images from `https://picsum.photos` — route them to a local fixture image.
 
 ---
 
 ## Docs hygiene
 
-- `docs/package-connections.md` still describes the single `playground` package
-  and the pre-1.0 theme wiring. Stale since the playground split.
 - `storybook:react` is the only root script outside the `dev:` prefix. Kept
   because it was explicitly requested under that name.
 - `packages/theme/CONTRIBUTION.md` is named differently from the repo-root
   `CONTRIBUTING.md`. Also as requested.
-
----
-
-## `pnpm check:lint` is red on `lint:ts`
-
-37 `TS2717` errors, all of the form:
-
-```
-Subsequent property declarations must have the same type.
-Property '"tapsi-avatar"' must be of type 'Avatar', but here has type 'Avatar'.
-```
-
-Every one is in `packages/web-components/src/*/index.ts`, where each component
-augments `HTMLElementTagNameMap`. The two types with the same name come from the
-package's `src` and its `dist`, both of which end up in the root program.
-
-**Pre-existing and unrelated to the React work** — confirmed by stashing all
-local changes and re-running, which gives the same 37. Noted here so it is not
-mistaken for a regression, and so nobody concludes the repo's type-check passes.

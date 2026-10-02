@@ -13,36 +13,38 @@ Use `pnpm` exclusively. `npm` and `yarn` are not supported. Requires Node >=20.
 # Install dependencies
 pnpm install
 
-# Everything: every package in watch mode + both playgrounds
-pnpm dev
-
-# One track end to end — only that track's packages watch, only its playground starts
-pnpm dev:lit      # web-components + react-components, playground on :5173
-pnpm dev:react    # react-ui, playground on :5174
+# Live track: the React playground on :5174 and Storybook on :6006, both
+# reading react-ui from SOURCE (hot reload, nothing to build or watch first)
+pnpm dev                     # same as dev:react
 
 # Or a single piece
-pnpm dev:playground:lit      # :5173
 pnpm dev:playground:react    # :5174
-pnpm dev:packages:lit        # watchers for the lit track only
-pnpm dev:packages:react      # watchers for the react track only
 pnpm storybook:react         # :6006
+pnpm preview:docs            # the built (archived) docs site
 
-# Build all packages
+# Build the live packages (theme, icons, react-icons, react-ui)
 pnpm build:packages
 
-# Run all tests (Playwright, requires packages to be built first)
-pnpm test
+# Run tests (Playwright; wireit builds what the suite needs first)
+pnpm test                    # react-ui suite, 100% coverage
 
-# Run tests for a single file
+# Archived track — everything is under these; the main commands never touch it
+pnpm check:archived          # lint:archived + build:archived + build:docs
+pnpm lint:archived           # tsc per archived tsconfig + ESLint on archived dirs
+pnpm test:archived           # web-components Playwright suite
+pnpm build:archived          # runs test:archived, then builds the three packages
+
+# Run tests for a single file (build the package first — tests hit built output)
 pnpm --filter @tapsioss/web-components exec playwright test src/button/standard/button.test.ts
+pnpm --filter @tapsioss/react-ui exec playwright test src/button/button.test.tsx
 
-# Update snapshots
-pnpm test:update-snapshots
-
-# TypeScript type-check
+# Full lint of the live track: tsc (root tsconfig) + ESLint + Storybook types
 pnpm check:lint
 
-# Lint (ESLint)
+# publint + are-the-types-wrong on theme and react-ui (also run by `release`)
+pnpm check:publish
+
+# Lint (ESLint) only
 pnpm --filter . exec eslint --color src/
 
 # Format
@@ -50,6 +52,11 @@ pnpm format
 
 # Generate component metadata (custom-elements.json, metadata.json)
 pnpm gen:metadata
+
+# Delete every dist (and storybook-static) / every node_modules in the repo
+# (add --dry-run to only list what would go)
+pnpm clear:dist
+pnpm clear:node-modules
 ```
 
 ## Architecture
@@ -60,18 +67,54 @@ for versioning.
 
 ### Packages
 
-| Package                     | Description                                                                                       |
-| --------------------------- | ------------------------------------------------------------------------------------------------- |
-| `packages/theme`            | CSS design tokens and JS token exports (`@tapsioss/theme`)                                        |
-| `packages/web-components`   | Core Lit-based Web Components (`@tapsioss/web-components`)                                        |
-| `packages/react-components` | React wrappers auto-generated from web-components via `@lit/react` (`@tapsioss/react-components`) |
-| `packages/icons`            | Raw SVG paths and icon metadata (`@tapsioss/icons`)                                               |
-| `packages/web-icons`        | Web Component wrappers for icons (`@tapsioss/web-icons`)                                          |
-| `packages/react-icons`      | React wrappers for icons (`@tapsioss/react-icons`)                                                |
-| `internals/test-helpers`    | Shared Playwright test utilities (private)                                                        |
+| Package                     | Description                                                                                      |
+| --------------------------- | ------------------------------------------------------------------------------------------------ |
+| `packages/theme`            | CSS design tokens and JS token exports (`@tapsioss/theme`)                                       |
+| `packages/web-components`   | **Archived.** Lit-based Web Components (`@tapsioss/web-components`)                              |
+| `packages/react-components` | **Archived.** `@lit/react` wrappers generated from web-components (`@tapsioss/react-components`) |
+| `packages/icons`            | Raw SVG paths and icon metadata (`@tapsioss/icons`)                                              |
+| `packages/web-icons`        | **Archived.** Web Component wrappers for icons (`@tapsioss/web-icons`)                           |
+| `packages/react-icons`      | React wrappers for icons (`@tapsioss/react-icons`)                                               |
+| `packages/react-ui`         | React rewrite of the design system on `@base-ui/react` + theme 1.x (`@tapsioss/react-ui`, alpha) |
+| `internals/test-helpers`    | Shared Playwright test utilities (private)                                                       |
+| `storybook/react`           | Storybook for `react-ui` (`@tapsioss/react-storybook`), runs from source                         |
+| `docs`                      | VitePress docs site for the Lit components; Storybook is deployed alongside it at `/storybook/`  |
+
+There are two generations side by side: the **Lit track** (`web-components`,
+`react-components`, pinned to theme `0.8.0`) and the **React track**
+(`react-ui`, on theme 1.x from the workspace). See Testing below for how the pin
+is kept apart.
+
+**Archived:** `web-components`, `react-components` and `web-icons` — plus their
+consumers `playground/lit` and `docs`. They are `private`, ignored by
+changesets, and absent from every main script (`build:packages`, `test`,
+`check:lint`, `dev`) and from the main CI workflow. They are still maintained:
+`.github/workflows/archived.yml` runs `pnpm check:archived` whenever an archived
+directory, a shared dependency (`icons`, `react-icons`,
+`internals/test-helpers`) or root config changes. `check:format` is the one
+repo-wide check that still covers them. The root `tsconfig.json` excludes the
+archived directories; each is type-checked by its own `tsconfig.json`, which
+re-declares `exclude` (an inherited one would match its own inputs).
 
 **Build dependency order:** `theme` → `icons` → `web-icons`/`react-icons` →
-`web-components` → `react-components`
+`web-components` → `react-components`; `react-ui` builds independently.
+`react-ui`'s build and tests must not depend on `react-icons` — tests use raw
+`<svg>` stand-ins. Only Storybook (icon gallery) waits on `build:react-icons`.
+
+**Read before editing these packages:** `packages/react-ui/AGENTS.md` and
+`packages/theme/AGENTS.md` hold binding review rules (Figma is authoritative for
+appearance, web-components for behaviour; never invent a token; props/styling/
+test conventions). Known deferred work and token gaps are tracked in the root
+`PARKED.md` — record new gaps there.
+
+### React UI (`packages/react-ui`)
+
+Components live in `src/<name>/` as `<name>.tsx` + `<name>.module.css` +
+`<name>.test.tsx`, with `src/button/` as the reference implementation. The build
+is `tsc` followed by `scripts/build-css.ts`, which scopes the CSS modules once
+at build time, inlines the resolved class names into the emitted JS, and writes
+per-component `.css` plus an aggregate `dist/styles.css` — consumers never
+process CSS modules themselves.
 
 ### Web Components (`packages/web-components`)
 
@@ -111,10 +154,21 @@ adding or changing web component events/slots. Do not hand-edit files under
 
 ### Testing
 
-Tests use Playwright with a custom test harness from `internals/test-helpers`.
-Tests run against the **Lit playground** (`playground/lit`), which serves
-components at `http://localhost:3000/test`. The `render` helper from
-`@internals/test-helpers` injects HTML into the test page.
+Tests use Playwright with a custom test harness from `internals/test-helpers`,
+and each suite runs against a production build of its playground:
+
+- `web-components` → `playground/lit` at `http://localhost:3000/test`; the
+  `render` helper injects HTML into the page.
+- `react-ui` → `playground/react` at `http://localhost:3001/test`; tests pass a
+  serializable element spec that `playground/react/src/test-setup.tsx` renders
+  via a `window.__renderReact` bridge. react-ui tests mirror the corresponding
+  Lit component's test scenarios one for one. The react-ui run also collects V8
+  coverage and **fails below 100%**
+  (`packages/react-ui/playwright/coverage.ts`). That works because react-ui's
+  build emits `.js.map` files (kept out of the package by `files`, and their
+  `sourceMappingURL` comments stripped by `build-css.ts`), and the playground's
+  Vite config loads them so the bundle maps back to `src`. `build-css.ts` must
+  keep its CSS-import replacement on ONE line, or those maps go stale.
 
 There are two playgrounds, split because the two generations of the design
 system are styled by different, incompatible token sets:
@@ -146,6 +200,24 @@ run `pnpm build:packages` after changing a package).
 Tests run on Desktop Chrome and Android (Galaxy S9+). On CI, tests retry up to 2
 times.
 
+### Module resolution: source vs dist
+
+The root `tsconfig.json` maps every hand-written `@tapsioss/*` package to its
+**`src` only**, and excludes `**/dist`, so type-checking never sees a stale
+build. Storybook inherits that map, which is why it runs (and `storybook build`
+works) without building `react-ui`. The icon packages are the exception: their
+sources are generated into `dist`, so they map there, and lint depends on their
+builds.
+
+Anything acting as a **consumer** sets `"paths": {}` and resolves through each
+package's `exports` to `dist`: both playgrounds (except that the React
+playground's dev server aliases react-ui to source — its `vite build`, which the
+tests use, still reads `dist`), and
+`packages/react-components/tsconfig.build.json` (building against
+web-components' source would emit it into react-components' `dist`). `web-icons`
+and `react-icons` compile _from_ `dist`, so their build configs re-declare
+`exclude` to avoid inheriting the root's `**/dist`.
+
 ### Changesets
 
 When making user-visible changes, create a changeset:
@@ -154,9 +226,15 @@ When making user-visible changes, create a changeset:
 pnpm changesets:create
 ```
 
-`@tapsioss/web-components` and `@tapsioss/react-components` are versioned
-together (linked). Icons packages are similarly linked. Internal packages
-(`@internals/*`) and docs/playground are ignored for releases.
+Released packages: `@tapsioss/theme`, `@tapsioss/react-ui`, and
+`@tapsioss/icons` + `@tapsioss/react-icons` (linked). Everything else — the
+archived Lit packages, `@internals/*`, docs, playgrounds, Storybook — is
+ignored.
+
+The repo is in changesets **pre mode** (`.changeset/pre.json`, tag `alpha`):
+releases publish as `x.y.z-alpha.n` on the `alpha` dist-tag. Never add
+`--tag latest` to `release`. Leave alpha with `pnpm exec changeset pre exit`.
+`@tapsioss/theme`'s version is managed by changesets — do not hand-edit it.
 
 ## Commit Conventions
 

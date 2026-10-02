@@ -50,6 +50,7 @@ export default config(
       "**/dist",
       "**/coverage",
       "**/playwright-report",
+      "**/test-results",
       "**/node_modules",
       "docs/.vitepress/cache",
       // Storybook config is tooling, not shipped code. It also imports

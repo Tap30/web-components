@@ -1,5 +1,7 @@
 import {
   afterEach,
+  callback,
+  callbackCalls,
   cleanupReact,
   describe,
   disposeMocks,
@@ -18,13 +20,16 @@ import {
  * elements cannot cross `page.evaluate`.
  */
 
-/** A stand-in for an icon, as a plain DOM subtree. */
-const icon = (testId: string) => ({
+/**
+ * A stand-in for an icon, as a plain DOM subtree. `"100%"` reproduces
+ * `@tapsioss/react-icons`' default `size="auto"`, which fills its parent.
+ */
+const icon = (testId: string, size: number | "100%" = 24) => ({
   type: "svg",
   props: {
     "data-testid": testId,
-    width: 24,
-    height: 24,
+    width: size,
+    height: size,
     viewBox: "0 0 24 24",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg",
@@ -69,10 +74,23 @@ describe("🧩 button", () => {
     page,
     context,
   }) => {
+    // The link target is served by the test itself, as a blank page, so the
+    // test never touches the network. `.test` is a reserved TLD: if the route
+    // ever stops matching, the navigation fails fast instead of going online.
+    // Routed on the context, not the page, so it also covers the new tab.
+    const target = "https://link-target.test/";
+
+    await context.route(`${target}**`, route =>
+      route.fulfill({
+        contentType: "text/html",
+        body: "<!doctype html><title>blank</title>",
+      }),
+    );
+
     await renderReact(page, {
       type: "Button",
       props: {
-        href: "https://google.com",
+        href: target,
         target: "_blank",
         label: "test-button",
         "data-testid": "test-button",
@@ -99,7 +117,7 @@ describe("🧩 button", () => {
     // Wait for the new tab to load completely
     await newPage.waitForLoadState("load");
 
-    expect(newPage.url()).toContain("google.com");
+    expect(newPage.url()).toBe(target);
   });
 
   test("🧪 should trigger `click` event on click", async ({ page }) => {
@@ -318,18 +336,19 @@ describe("🧩 button", () => {
     }
   });
 
-  test("🧪 should size a real `@tapsioss/react-icons` adornment to the button", async ({
+  test("🧪 should size an auto-sized adornment to the button", async ({
     page,
   }) => {
-    // The icon package defaults to `size="auto"` (100% of its parent), so the
-    // container is the mechanism. This covers the real integration, not just a
-    // raw <svg> that the stylesheet happens to stretch.
+    // `@tapsioss/react-icons` defaults to `size="auto"`, which renders the svg
+    // at 100% of its parent — so the container is the mechanism. The stand-in
+    // reproduces exactly that, without making this suite depend on the icon
+    // package's build.
     await renderReact(page, {
       type: "Button",
       props: {
         size: "sm",
         "data-testid": "test-button",
-        leadingAdornment: { type: "CircleCross", props: {} },
+        leadingAdornment: icon("adornment", "100%"),
       },
       children: "کلیک کنید",
     });
@@ -620,5 +639,109 @@ describe("🧩 button", () => {
     await page.evaluate(() => {
       document.body.setAttribute("dir", "rtl");
     });
+  });
+
+  test("🧪 should call `onClick` on click and on keyboard activation", async ({
+    page,
+  }) => {
+    await renderReact(page, {
+      type: "Button",
+      props: { "data-testid": "test-button", onClick: callback("onClick") },
+      children: "کلیک کنید",
+    });
+
+    const btn = page.getByTestId("test-button");
+
+    await btn.click();
+    expect(await callbackCalls(page, "onClick")).toBe(1);
+
+    await btn.focus();
+    await page.keyboard.press("Enter");
+    expect(await callbackCalls(page, "onClick")).toBe(2);
+  });
+
+  test("🧪 should not act on keyboard activation while loading", async ({
+    page,
+  }) => {
+    // Inside a form, so the default action that must be prevented — submitting
+    // it — is observable too.
+    await renderReact(page, {
+      type: "form",
+      props: { "data-testid": "test-form" },
+      children: {
+        type: "Button",
+        props: {
+          type: "submit",
+          "data-testid": "test-button",
+          loading: true,
+          onClick: callback("onClick"),
+        },
+        children: "کلیک کنید",
+      },
+    });
+
+    const btn = page.getByTestId("test-button");
+
+    // Busy, not unavailable: it stays in the tab order.
+    await page.keyboard.press("Tab");
+    await expect(btn).toBeFocused();
+
+    const mocks = await setupMocks(page);
+    const handleSubmit = mocks.createFakeFn();
+
+    await mocks.events.attachMockedEvent(
+      page.getByTestId("test-form"),
+      "submit",
+      handleSubmit.ref,
+    );
+
+    await page.keyboard.press("Enter");
+    await page.keyboard.press("Space");
+
+    expect(await callbackCalls(page, "onClick")).toBe(0);
+    await handleSubmit.matchResult({ called: false });
+  });
+
+  test("🧪 should take its accessible name from `label` when the children are not text", async ({
+    page,
+  }) => {
+    await renderReact(page, {
+      type: "Button",
+      props: { "data-testid": "test-button", label: "بستن" },
+      children: icon("icon"),
+    });
+
+    await expect(page.getByRole("button", { name: "بستن" })).toBeVisible();
+  });
+
+  test("🧪 should render no content part without children", async ({
+    page,
+  }) => {
+    await renderReact(page, {
+      type: "Button",
+      props: {
+        "data-testid": "test-button",
+        label: "بستن",
+        leadingAdornment: icon("adornment"),
+      },
+    });
+
+    await expect(page.getByTestId("adornment")).toBeVisible();
+    await expect(page.locator('[data-part="content"]')).toHaveCount(0);
+  });
+
+  test("🧪 should not set `rel` on a link that opens in the same tab", async ({
+    page,
+  }) => {
+    await renderReact(page, {
+      type: "Button",
+      props: { href: "#same-tab", "data-testid": "test-button" },
+      children: "لینک",
+    });
+
+    const link = page.getByRole("link");
+
+    await expect(link).toHaveAttribute("href", "#same-tab");
+    await expect(link).not.toHaveAttribute("rel");
   });
 });

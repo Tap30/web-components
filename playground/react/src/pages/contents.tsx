@@ -37,10 +37,8 @@ export const ContentsPage = () => (
       <header style={{ display: "grid", gap: "0.25rem" }}>
         <h1 style={{ margin: 0, fontSize: "1.5rem" }}>React Playground</h1>
         <p style={{ margin: 0, color: "#666" }}>
-          Examples rendered against the <strong>built</strong> output of{" "}
-          <code>@tapsioss/react-ui</code>. Run{" "}
-          <code>pnpm --filter @tapsioss/react-ui run build</code> after changing
-          a component.
+          Examples of <code>@tapsioss/react-ui</code>, rendered from its source:
+          a change to a component shows up here immediately.
         </p>
       </header>
 

@@ -8,10 +8,7 @@
   ],
   "commit": false,
   "fixed": [],
-  "linked": [
-    ["@tapsioss/web-components", "@tapsioss/react-components"],
-    ["@tapsioss/icons", "@tapsioss/web-icons", "@tapsioss/react-icons"]
-  ],
+  "linked": [["@tapsioss/icons", "@tapsioss/react-icons"]],
   "access": "public",
   "baseBranch": "main",
   "bumpVersionsWithWorkspaceProtocolOnly": true,
@@ -23,6 +20,8 @@
     "@tapsioss/lit-playground",
     "@tapsioss/react-playground",
     "@tapsioss/react-storybook",
-    "@tapsioss/react-ui"
+    "@tapsioss/web-components",
+    "@tapsioss/react-components",
+    "@tapsioss/web-icons"
   ]
 }

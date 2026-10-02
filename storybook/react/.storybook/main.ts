@@ -23,15 +23,11 @@ const config: StorybookConfig = {
   addons: ["@storybook/addon-docs", "@storybook/addon-a11y"],
 
   viteFinal: config => {
-    // Two projects, and the order matters. `vite-tsconfig-paths` matches each
-    // importing file against a project's include/exclude, so:
-    //
-    //   - files under storybook/react/src  -> this package's tsconfig, whose
-    //     `paths` point `@tapsioss/react-ui` at `src` (the override)
-    //   - everything else                  -> the root tsconfig
-    //
-    // That is what lets Storybook hot-reload react-ui from source while the
-    // root config keeps `dist` first for the playground and real consumers.
+    // Two projects: files under storybook/react/src use this package's
+    // tsconfig (bundler resolution for Storybook's own types); everything else
+    // uses the root's. Both carry the root `paths`, which resolve every
+    // hand-written package to source — so Storybook hot-reloads from source
+    // and `storybook build` needs no package build first.
     config.plugins ??= [];
     config.plugins.push(
       tsconfigPaths({

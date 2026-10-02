@@ -1,7 +1,12 @@
 {
   "extends": "../../tsconfig.build.json",
   "compilerOptions": {
-    "outDir": "./dist"
+    "outDir": "./dist",
+    // For the coverage report only: the test playground bundles `dist` and maps
+    // it back to `src` through these. Not shipped — see `files` in
+    // package.json and `detachSourceMaps` in scripts/build-css.ts.
+    "sourceMap": true,
+    "inlineSources": true
   },
   "include": ["src"],
   "exclude": [
