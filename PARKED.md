@@ -109,7 +109,7 @@ HTML).
 What is still open:
 
 - **Per-component stylesheets** (Mantine's `styles/Button.css`), for apps that
-  use a few components and want less CSS. Today there is only the aggregate: 9.2
+  use a few components and want less CSS. Today there is only the aggregate: 9.0
   kB minified / 1.9 kB gzipped with two components. Revisit when it grows.
 - **Not yet tried in a real consumer app.** Verified in this repo only — the
   test suite runs against a build that imports `styles.css` as a consumer does,
