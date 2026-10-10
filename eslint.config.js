@@ -201,4 +201,18 @@ export default config(
       },
     },
   },
+  {
+    rules: {
+      // `@tapsioss/react-ui/styles.css` is BUILD OUTPUT: it is written by
+      // react-ui's `build-css.ts` and has no source file to resolve to, unlike
+      // the theme's stylesheets. Lint runs without building react-ui (CI
+      // included), so the import a consumer needs — which the React playground
+      // makes — cannot be resolved at lint time. Its existence is covered by
+      // the test suite, which runs against a build that imports it.
+      "import/no-unresolved": [
+        "error",
+        { ignore: ["^@tapsioss/react-ui/styles\\.css$"] },
+      ],
+    },
+  },
 );
