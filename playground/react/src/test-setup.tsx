@@ -13,6 +13,11 @@ import "@tapsioss/theme/ride/dark.css";
 import "@tapsioss/theme/ride/light.css";
 import "@tapsioss/theme/tokens.css";
 
+// The components' styles, imported the way a consumer does. Without this line
+// every component in the suite renders unstyled — the package's JS imports no
+// CSS — so the design-fidelity tests double as the check that it works.
+import "@tapsioss/react-ui/styles.css";
+
 type Spec =
   | string
   | number

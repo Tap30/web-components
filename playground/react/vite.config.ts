@@ -47,6 +47,15 @@ export default defineConfig(({ command }) => ({
     command === "serve"
       ? {
           alias: [
+            // From source, each component's CSS module is loaded by Vite
+            // through the component itself, so the built stylesheet a consumer
+            // imports must resolve to nothing here — otherwise the dev server
+            // would need a build first, and every rule would apply twice.
+            // Listed first: the first matching alias wins.
+            {
+              find: /^@tapsioss\/react-ui\/styles\.css$/,
+              replacement: path.resolve(__dirname, "src/source-styles.css"),
+            },
             {
               find: /^@tapsioss\/react-ui$/,
               replacement: `${reactUiSrc}/index.ts`,

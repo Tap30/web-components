@@ -17,11 +17,15 @@ import "@tapsioss/theme/ride/dark.css";
 import "@tapsioss/theme/ride/light.css";
 import "@tapsioss/theme/tokens.css";
 
+// The components' styles — what every consumer of `@tapsioss/react-ui` adds
+// once, at the root of the app. The package's JS imports no CSS itself.
+import "@tapsioss/react-ui/styles.css";
+
 /**
  * NOTE: imports from `@tapsioss/react-ui` are by package name. This package's
  * `tsconfig.json` sets `"paths": {}`, so they resolve through `node_modules`
- * and each package's `exports` map — i.e. the BUILT output, including the CSS
- * that `dist/button/button.js` side-effect-imports. That is the point: it is
+ * and each package's `exports` map — i.e. the BUILT output, styled by the
+ * `styles.css` import above, exactly as in a consumer's app. That is the point: it is
  * the production-shaped check that Storybook, which runs from source, cannot
  * give you. Run `pnpm --filter @tapsioss/react-ui run build` to refresh it.
  *
