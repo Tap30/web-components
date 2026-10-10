@@ -138,8 +138,8 @@ type Story = StoryObj<typeof meta>;
 
 /**
  * Use the **Controls** panel to switch variant, hierarchy, size and state. The
- * theme, direction and all-four-themes toggles live in the toolbar above the
- * canvas.
+ * direction, theme (including all four at once) and font-rendering settings
+ * are in the bar on top of the story.
  *
  * Only 8 of the 12 variant × hierarchy pairings exist in Figma, and the props
  * type enforces that — picking `elevated` or `cta` with a non-`primary`

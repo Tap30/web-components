@@ -24,7 +24,7 @@ import {
  * disagree means the two artifacts have drifted.
  *
  * Both follow this page's own theme picker. Docs pages are not wrapped by story
- * decorators and cannot read Storybook's toolbar globals, so
+ * decorators (so they get no `StoryFrame` settings bar), so
  * each block wraps *itself* in a `ThemeProvider` and reads the matching token
  * set — otherwise the swatches would paint from whichever theme's `:root` was
  * imported last while the printed values came from a hard-coded one.
@@ -70,10 +70,9 @@ const flatten = (node: TokenNode, trail: string[]): Entry[] => {
 /**
  * Which theme the galleries are showing.
  *
- * Deliberately NOT Storybook's toolbar globals: `useGlobals` throws with
- * "preview hooks can only be called inside decorators and story functions", and
- * a docs page's MDX body is neither. The toolbar still drives every *story*; it
- * just cannot reach these blocks.
+ * Stories get their theme from the settings bar `StoryFrame` puts on top of
+ * each one, but that is a story decorator, and a docs page's MDX body is not a
+ * story — it cannot reach these blocks.
  *
  * So the galleries carry their own control. A module-level store rather than
  * React context, because MDX renders each block as a sibling — there is no

@@ -17,6 +17,78 @@ packages have their own documentation at
 they ever need a sidebar, they arrive as a sibling `storybook/web-components/`
 instance composed in through `refs`.
 
+## Using the packages in an app
+
+Three stylesheet imports, once, at the root of the app (`main.tsx`, `_app.tsx`
+or the root `layout.tsx`). After that, components are used with no further
+setup.
+
+### 1. Tokens and a theme
+
+`@tapsioss/theme` comes in two layers, and an app needs both: the **primitives**
+(palette, font and number scales — the same for everyone), and **one theme** on
+top of them, which is a product × mode pair.
+
+```ts
+import "@tapsioss/theme/tokens.css"; // primitives — always
+import "@tapsioss/theme/ride/light.css"; // the theme to render in
+```
+
+The available themes are `ride/light`, `ride/dark`, `drive/light` and
+`drive/dark`. The order of the two imports does not matter.
+
+Importing a single theme needs nothing else: it applies to the whole page. To
+switch themes at runtime, or to show more than one on a page, import each one
+you need and pick with the `data-tapsi-theme` attribute — a subtree takes the
+theme of its nearest ancestor that sets it:
+
+```tsx
+import "@tapsioss/theme/ride/light.css";
+import "@tapsioss/theme/ride/dark.css";
+
+<html data-tapsi-theme="ride-dark">
+```
+
+The same values are available to JavaScript, already resolved (`"0.5rem"`, not a
+`var()`), for the cases CSS cannot reach:
+
+```ts
+import { tokens } from "@tapsioss/theme/ride/light";
+```
+
+### 2. Component styles
+
+`@tapsioss/react-ui` ships all of its components' styles as one minified
+stylesheet. Import it once, next to the theme:
+
+```ts
+import "@tapsioss/react-ui/styles.css";
+```
+
+The components do **not** import their own CSS — which is what lets the package
+load in Node, in test runners and under server rendering without any CSS
+configuration. So this line is required: without it, components render unstyled.
+(And if they render in **magenta**, it is the theme that is missing — that is
+the components' deliberate fallback for an undefined token.)
+
+Put together, an app's entry file starts with:
+
+```ts
+import "@tapsioss/theme/tokens.css";
+import "@tapsioss/theme/ride/light.css";
+import "@tapsioss/react-ui/styles.css";
+```
+
+```tsx
+import { Button } from "@tapsioss/react-ui";
+
+<Button>دکمه تپسی</Button>;
+```
+
+This Storybook itself does not import `styles.css`: it runs the components from
+source, where each one loads its own CSS module. See "How this resolves the
+workspace" below.
+
 ## Conventions
 
 **One story per component.** Every prop is exposed through the **Controls**
