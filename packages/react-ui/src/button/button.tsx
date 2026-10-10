@@ -2,10 +2,10 @@ import { Button as BaseButton } from "@base-ui/react/button";
 import clsx from "clsx";
 import { type ComponentPropsWithRef, type ReactNode } from "react";
 
-// A CSS module, so this is no longer only a side-effect import: `styles` maps
-// each class name written in the stylesheet to the scoped name the build
-// generates for it. The consumer still never has to remember a stylesheet —
-// importing the map pulls the CSS in with it.
+// A CSS module: `styles` maps each class name written in the stylesheet to the
+// scoped name the build generates for it. The build inlines that map here and
+// ships the CSS itself in `@tapsioss/react-ui/styles.css`, which the consumer
+// imports once — the published JS imports no CSS.
 import styles from "./button.module.css";
 
 /**

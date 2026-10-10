@@ -1,3 +1,4 @@
+import cssnano from "cssnano";
 import { globby } from "globby";
 import { createHash } from "node:crypto";
 import * as fs from "node:fs/promises";
@@ -20,14 +21,21 @@ import { getFileMeta } from "../../../scripts/utils.ts";
  * aggregate would match none of them. Scoping once, here, is what keeps the
  * aggregate and the components in agreement.
  *
- * What ships is only CSS and JS:
+ * What ships is JS plus ONE stylesheet:
  *
- * - `dist/<dir>/<name>.css` — the scoped stylesheet. Deliberately NOT named
- *   `.module.css`: a consumer's bundler applies CSS modules to anything with
- *   that suffix, and would scope our already-scoped names a second time,
- *   leaving the component's class names pointing at nothing.
- * - `dist/styles.css` — every scoped stylesheet concatenated, for consumers
- *   whose bundler is configured to ignore CSS inside `node_modules`.
+ * - `dist/styles.css` — every scoped stylesheet concatenated. A consumer
+ *   imports it once, at the root of their app:
+ *
+ *       import "@tapsioss/react-ui/styles.css";
+ *
+ * THE EMITTED JS IMPORTS NO CSS. This is deliberate (the same model as
+ * Mantine): a `.css` import inside a published `.js` file breaks plain Node
+ * (`ERR_UNKNOWN_FILE_EXTENSION`), test runners without a CSS transform, and
+ * Next.js's Pages Router, which refuses global CSS imported from
+ * `node_modules`. With the stylesheet as a separate, explicit import, the JS is
+ * plain JS everywhere, and the styles are in the first server-rendered
+ * response with no runtime injection. Do not add a stylesheet import back to
+ * the emitted JS.
  *
  * The name map is a BUILD-TIME artifact and is NOT shipped: it is inlined into
  * the JS that uses it, which is what a bundler would do.
@@ -60,7 +68,10 @@ const SOURCE_MAP_COMMENT = /\n\/\/# sourceMappingURL=\S+\s*$/;
 const DEFAULT_IMPORT =
   /^import\s+(\w+)\s+from\s*["'](\.{1,2}\/[^"']*?)\.module\.css["'];?[ \t]*$/gm;
 
-/** The same, for a stylesheet imported only for its side effect. */
+/**
+ * The same, for a stylesheet imported only for its side effect. The emitted JS
+ * imports no CSS, so this statement is removed outright.
+ */
 const BARE_IMPORT =
   /^import\s*["'](\.{1,2}\/[^"']*?)\.module\.css["'];?[ \t]*$/gm;
 
@@ -152,21 +163,38 @@ const scopeAll = async (): Promise<ScopedStylesheet[]> => {
   );
 };
 
-const writeStylesheets = async (stylesheets: ScopedStylesheet[]) => {
-  const chunks: string[] = [];
+/**
+ * Writes the one stylesheet that ships: every component's, concatenated and
+ * minified.
+ *
+ * Every consumer downloads this file whole, whichever components they use, so
+ * its size is a cost the package imposes — hence the minification. It runs on
+ * the CONCATENATED sheet, not per component, so identical rules can be merged
+ * across components.
+ *
+ * `cssnano`'s default preset only: it is the set of transforms that are safe
+ * without knowing the markup. It does not rename class names, keyframes or
+ * custom properties, so the scoped names inlined into the JS still match and
+ * `--tapsi-*` stays the public surface it is.
+ */
+const writeStylesheet = async (stylesheets: ScopedStylesheet[]) => {
+  const source = stylesheets.map(({ css }) => css.trim()).join("\n\n");
 
-  for (const { stem, css } of stylesheets) {
-    await writeFile(path.join(distDir, `${stem}.css`), css);
-    chunks.push(css.trim());
-  }
+  const { css } = await postcss([cssnano({ preset: "default" })]).process(
+    source,
+    // There is no single source file, and no map is shipped.
+    { from: undefined, map: false },
+  );
 
-  await writeFile(path.join(distDir, "styles.css"), `${chunks.join("\n\n")}\n`);
+  await writeFile(path.join(distDir, "styles.css"), `${css}\n`);
+
+  return { before: source.length, after: css.length };
 };
 
 /**
  * Replaces each CSS module import in the emitted JS with the scoped names it
- * resolves to, plus a plain import of the stylesheet so that using a component
- * still pulls its styles in.
+ * resolves to — and nothing else. No stylesheet import is left behind; see the
+ * header for why.
  */
 const inlineClassNames = async (stylesheets: ScopedStylesheet[]) => {
   const byStem = new Map(stylesheets.map(sheet => [sheet.stem, sheet]));
@@ -200,17 +228,13 @@ const inlineClassNames = async (stylesheets: ScopedStylesheet[]) => {
         // ONE line, replacing one line: `tsc`'s source map for this file
         // was computed before this rewrite, and every line after the import
         // must stay where the map says it is.
-        return (
-          `import "${specifier}.css"; ` +
-          `const ${binding} = ${JSON.stringify(sheet.exports)};`
-        );
+        return `const ${binding} = ${JSON.stringify(sheet.exports)};`;
       },
     );
 
-    next = next.replace(
-      BARE_IMPORT,
-      (_, specifier: string) => `import "${specifier}.css";`,
-    );
+    // Replaced with nothing but the line itself kept, for the same source-map
+    // reason as above.
+    next = next.replace(BARE_IMPORT, "");
 
     if (missing.length > 0) {
       throw new Error(
@@ -256,7 +280,7 @@ void (async () => {
 
   const stylesheets = await scopeAll();
 
-  await writeStylesheets(stylesheets);
+  const size = await writeStylesheet(stylesheets);
 
   const inlined = await inlineClassNames(stylesheets);
 
@@ -264,7 +288,9 @@ void (async () => {
 
   console.log(
     `✅ scoped ${String(stylesheets.length)} CSS module(s), wrote ` +
-      `dist/styles.css, inlined class names into ${String(inlined)} file(s)`,
+      `dist/styles.css (${String(size.after)} bytes, minified from ` +
+      `${String(size.before)}), inlined class names into ` +
+      `${String(inlined)} file(s)`,
   );
   console.timeEnd("build-css");
 })();

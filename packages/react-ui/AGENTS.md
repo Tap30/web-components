@@ -76,6 +76,47 @@ bring the story and playground page in line with the change.
 
 Then verify (§8).
 
+### Versioning and local testing
+
+**`@tapsioss/react-ui` and `@tapsioss/theme` share a major version.** The
+components are written against one generation of tokens, so the two move
+together: react-ui 1.x needs theme 1.x, and a breaking change to either is
+released as a **major of both** — add a `major` changeset for each package in
+the same PR, even if only one of them changed. Minor and patch versions are
+independent.
+
+**Changesets decide versions; nothing else does.** Describe the change with
+`pnpm changesets:create` and leave it there:
+
+- Do not hand-edit a `version` field.
+- Do not enter pre-release mode (`changeset pre enter`, a `.changeset/pre.json`)
+  or publish an alpha/beta to try something out.
+- Do not add, bump or rewrite a `major` changeset just to get a build you can
+  install. A major is a decision about consumers, made once, in review.
+
+Merging to `main` opens a "chore: bump versions" PR; merging that PR publishes
+to `latest`.
+
+**To test unreleased work in a real app, install tarballs.** They are exactly
+what npm would publish, and they touch no version and no changeset:
+
+```bash
+pnpm build:packages
+mkdir -p ~/tapsi-tarballs
+for p in theme react-ui; do (cd packages/$p && pnpm pack --pack-destination ~/tapsi-tarballs); done
+```
+
+Then, in the app (install the pair — react-ui needs the matching theme):
+
+```bash
+npm install ~/tapsi-tarballs/tapsioss-theme-*.tgz ~/tapsi-tarballs/tapsioss-react-ui-*.tgz
+```
+
+The tarball carries whatever version is in `package.json` today, which may be
+lower than what the next release will be — that is expected, and not a reason to
+change it. After rebuilding, re-run both steps; if the app still shows the old
+build, delete its `node_modules/@tapsioss` and install again.
+
 ## 1. Source of truth
 
 **Figma is authoritative for appearance**, and the token bindings are read from
@@ -246,13 +287,25 @@ ambient declaration, which types the import as `any`, and when both patterns
 exist it is the one that matches `./button.module.css` — every class-name lookup
 then goes unchecked. This was caught by lint, not by the build.
 
-**Nothing but CSS and JS ships.** `scripts/build-css.ts` scopes the stylesheet,
-strips its comments, and inlines the name map into the emitted JS; no map module
-is published. The scoping has to happen in our build rather than the consumer's,
-because the package ships an aggregate `dist/styles.css` — if each consumer
-scoped the stylesheet themselves, the aggregate would match none of them. Read
-that file's header before changing the output layout; the `.module.css` → `.css`
-rename in `dist` exists for a stated reason.
+**What ships is JS plus one stylesheet, and the JS imports no CSS.**
+`scripts/build-css.ts` scopes each stylesheet, inlines the name map into the
+emitted JS in place of the `.module.css` import, and writes every component's
+CSS — concatenated and minified — to `dist/styles.css`. A consumer imports that
+once, at the root of their app (the same model as Mantine):
+
+```ts
+import "@tapsioss/react-ui/styles.css";
+```
+
+Do **not** put a stylesheet import back into the emitted JS. A `.css` import
+inside a published `.js` file breaks plain Node, test runners without a CSS
+transform, and Next.js's Pages Router. The source is unaffected: components
+still `import styles from "./<name>.module.css"`, which is what Storybook and
+the playground's dev server read (with HMR). Only the build removes it.
+
+The scoping has to happen in our build rather than the consumer's, because the
+stylesheet is shared — if each consumer scoped it themselves, it would match
+none of them. Read that file's header before changing the output.
 
 Because comments are stripped on the way out, the stylesheet is the right place
 for long notes about what Figma binds and where the token export falls short.
