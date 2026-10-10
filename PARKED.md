@@ -3,18 +3,11 @@
 Known, deliberately deferred work. Each item says what it is, why it was parked,
 and what it would take — so it can be picked up without re-deriving the context.
 
-Last reviewed: 2026-10-02.
+Last reviewed: 2026-10-10.
 
 ---
 
 ## Release tooling
-
-### Leaving alpha
-
-`@tapsioss/theme` and `@tapsioss/react-ui` are in changesets **pre mode**
-(`.changeset/pre.json`, tag `alpha`), so `changeset publish` puts every release
-on the `alpha` dist-tag. Going stable is `pnpm exec changeset pre exit`, then
-the normal version PR; the next publish lands on `latest`.
 
 ### Archived Lit packages
 
@@ -30,35 +23,6 @@ deployed to Pages by `gh-pages.yml`, alongside Storybook at `/storybook/`.
 ### wireit setup
 
 Parked alongside changesets. Not revisited.
-
-### `.tsbuildinfo` ships inside every package
-
-Root `tsconfig.json` sets `"incremental": true`, and each package's
-`tsconfig.build.json` sets `"outDir": "./dist"` without `tsBuildInfoFile`. When
-`incremental` is on and `outDir` is set, TypeScript writes the cache to
-`<outDir>/<config>.tsbuildinfo` — so it lands in `dist`, and `files: ["./dist"]`
-is a directory allowlist, so it ships.
-
-Invisible locally because `.gitignore` has `dist`; only visible in a tarball.
-Pre-existing and already in published releases (the `@tapsioss/theme@0.8.0`
-tarball on npm contains a 40K copy).
-
-| Package          | Size  |
-| ---------------- | ----- |
-| web-icons        | 242K  |
-| web-components   | 113K  |
-| react-icons      | 110K  |
-| react-components | 80K   |
-| react-ui         | 42K   |
-| theme            | 41.8K |
-| icons            | 40K   |
-
-Contents are relative paths only — no build-machine paths leak.
-
-**To resolve:** either `"incremental": false` in the root `tsconfig.build.json`
-(one line, fixes all seven, costs cross-run `tsc` caching that wireit largely
-duplicates), or add `"!dist/*.tsbuildinfo"` to `files` in each `package.json`
-(keeps incremental, seven edits, must be remembered for each new package).
 
 ---
 
@@ -88,8 +52,9 @@ This is why `playground/lit` pins `0.8.0`.
 ### Figma export gaps
 
 The Button (Rasti DS, node 135:2594) binds three things the token export does
-not carry. Each is worked around in `packages/react-ui/src/button/button.css`
-with a comment at the point of use:
+not carry. Each is worked around in
+`packages/react-ui/src/button/button.module.css` with a comment at the point of
+use:
 
 - **`Surface-Gradient/Brand`** — the `cta` variant is a gradient in Figma. The
   export has no gradient tokens, so it falls back to the flat
@@ -125,46 +90,46 @@ Storybook reads the theme from source and is unaffected.
 
 ---
 
-## Isomorphism for `@tapsioss/react-ui`
+## Styles for `@tapsioss/react-ui`
 
-**Still open. No longer blocks styling work** — components use CSS modules,
-which is decided and implemented. What remains open is the part CSS modules does
-not address.
+How styles reach a consumer is **decided**: the published JS imports no CSS, and
+consumers import one minified stylesheet, `@tapsioss/react-ui/styles.css` — the
+model Mantine uses (see `packages/react-ui/AGENTS.md` §6 and the header of
+`scripts/build-css.ts`). That closed the old "isomorphism" item: importing the
+package in plain Node works.
 
-Review asked for CSS-in-JS so components are isomorphic. The problem is real and
-still confirmed after the CSS modules change: importing the package in plain
-Node fails today.
+Considered and not chosen: Emotion (a runtime, and a provider for SSR),
+vanilla-extract / StyleX (still emit a stylesheet someone must load, plus a
+bundler plugin everywhere), and injecting the CSS from JS at runtime as the Lit
+components do (no import for the consumer, but no styles in server-rendered
+HTML).
 
-```
-ERR_UNKNOWN_FILE_EXTENSION
-Unknown file extension ".css" for .../react-ui/dist/button/button.css
-```
+What is still open:
 
-That comes from the `import "./button.css"` the build leaves in
-`dist/button/button.js`, which exists so a consumer never has to remember a
-stylesheet — it is what `sideEffects` in `package.json` protects.
+- **Per-component stylesheets** (Mantine's `styles/Button.css`), for apps that
+  use a few components and want less CSS. Today there is only the aggregate: 9.2
+  kB minified / 1.9 kB gzipped with two components. Revisit when it grows.
+- **Not yet tried in a real consumer app.** Verified in this repo only — the
+  test suite runs against a build that imports `styles.css` as a consumer does,
+  and a plain-Node import. Installing the tarballs in a web app (Next.js in
+  particular) is the outstanding check.
+- **The theme tarball is versioned `0.8.0`** until changesets bumps it, the same
+  number as the pre-1.0 theme on npm, though it holds the 1.x tokens. Installing
+  it into an app that still renders the Lit components replaces the tokens they
+  need. An app can only hold one `@tapsioss/theme`.
 
-CSS modules neither fixed nor worsened this. The class names are inlined into
-the JS at build time rather than imported, so the only thing standing between
-the package and plain Node is still that one stylesheet import. Only the last
-row of the table below actually fixes it.
+### `clsx` object form for CSS-module classes
 
-Nothing CSS-in-JS is installed. The options, with what each actually costs:
+Preferred style is `{ [styles["tapsi-row--ellipsis"]]: condition }`, but it does
+not compile: with `noUncheckedIndexedAccess`, a CSS-module lookup is
+`string | undefined`, and TypeScript rejects that as a computed key (TS2464).
+The components therefore use the positional form, `condition && styles["…"]`
+(`AGENTS.md` §6).
 
-| Option                      | Fixes the Node failure | Cost                                                                                                                                                                  |
-| --------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@emotion/css`              | yes                    | ~8kB runtime; composes with `clsx` directly; no babel plugin or provider; SSR needs `@emotion/server` extraction to avoid unstyled flash                              |
-| `@emotion/react` + `styled` | yes                    | better SSR story via `CacheProvider`, but the `css` prop needs a babel/swc plugin or jsx pragma, and pushes a provider onto consumers                                 |
-| vanilla-extract / StyleX    | **no**                 | zero runtime, but still emits a `.css` file, so a stylesheet import remains; needs a bundler plugin wired into both playgrounds and Storybook                         |
-| Drop the side-effect import | yes                    | no new dependency and no runtime — consumers import `@tapsioss/react-ui/styles.css` once (that export already exists). Loses the "just use the component" ergonomics. |
-
-All of them keep `var(--tapsi-*)` working, so the token architecture is
-unaffected whichever is chosen. The first two would also replace CSS modules
-rather than sit alongside it, so they are now a bigger change than they were.
-
-**Until this is decided**, new components follow the Button's CSS modules
-pattern — see `packages/react-ui/AGENTS.md` §6. Styling work is no longer
-blocked on it.
+**To resolve**, pick one: a small checked helper that returns `string` and
+throws on a class missing from the stylesheet (no cast, and a typo fails
+loudly); a non-null assertion on each lookup (an assertion, which `AGENTS.md` §3
+treats like a cast); or leave the positional form as the house style.
 
 ## Missing component tokens for the Button
 
@@ -179,8 +144,12 @@ otherwise meant to consume the theme layer only. A proper
 `Dimension/Component/Button/Icon/{Small,Medium,Large}` in Figma would remove the
 exception.
 
-Small's `20` was taken from the review rather than read from Figma — the
-`get_design_context` call for the Small variant timed out. Worth confirming.
+Two values were not read from Figma, because the connection dropped, and are
+worth confirming:
+
+- Small's `20` adornment size was taken from the review.
+- `min-w-[96px]` was read on the Large button only. Medium and Small have no
+  minimum width in the code rather than a guessed one.
 
 ## Missing component tokens for the Row
 
@@ -201,13 +170,21 @@ icons, these use the primitive scale in
 Figma's `trailingNavigate` chevron is not built in (react-ui must not depend on
 `@tapsioss/react-icons`); consumers pass it in the `trailing` slot.
 
-## Test coverage gate
+**No interactive states in Figma.** A Row with `href` or `onClick` renders as a
+link or a button, but the design defines no hover, pressed or focus appearance
+for it. The code draws no hover or pressed state, and borrows the Button's focus
+ring (`Number/2` in `Color/Content/Accent`) so keyboard focus is visible. The
+design team should specify all three.
 
-Add `vitest` with a **100% coverage threshold**, enforced on commit.
+## Unit-level test suite
 
-Not started. All tests today are Playwright against a real browser; vitest would
-be a second, unit-level suite. Open questions: does it sit alongside Playwright
-or replace part of it, and is "on commit" a pre-commit hook or CI?
+`@tapsioss/react-ui` already has a **100% coverage gate**: its Playwright run
+collects V8 coverage and fails below 100% (`playwright/coverage.ts`).
+
+What was asked for and is not started is a second, unit-level suite on `vitest`,
+with the same threshold, enforced on commit. Open questions: does it sit
+alongside Playwright or replace part of it, and is "on commit" a pre-commit hook
+or CI?
 
 ## Testing
 
@@ -221,6 +198,19 @@ online, which makes it slow or flaky without a network:
   open `https://google.com` and wait for it to load — same fix as react-ui.
 - `avatar`, `banner`, `chat-bubble`, `discount-card` and `modal` tests load
   images from `https://picsum.photos` — route them to a local fixture image.
+
+---
+
+## Reading Figma from an agent
+
+Only the **Figma desktop app's** connection can read the Rasti DS file, and only
+while the app is open with the file loaded. The remote Figma connection answers
+"no edit access to this file", and the Figma plugin's connection is refused from
+this location. When the desktop app is closed, an agent cannot read the design
+at all — the Button's unconfirmed values above are from such a drop.
+
+**To resolve:** give the account behind the remote connection edit access to the
+file, so reading the design does not depend on the desktop app.
 
 ---
 

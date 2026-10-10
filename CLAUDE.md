@@ -75,7 +75,7 @@ for versioning.
 | `packages/icons`            | Raw SVG paths and icon metadata (`@tapsioss/icons`)                                              |
 | `packages/web-icons`        | **Archived.** Web Component wrappers for icons (`@tapsioss/web-icons`)                           |
 | `packages/react-icons`      | React wrappers for icons (`@tapsioss/react-icons`)                                               |
-| `packages/react-ui`         | React rewrite of the design system on `@base-ui/react` + theme 1.x (`@tapsioss/react-ui`, alpha) |
+| `packages/react-ui`         | React rewrite of the design system on `@base-ui/react` + theme 1.x (`@tapsioss/react-ui`)        |
 | `internals/test-helpers`    | Shared Playwright test utilities (private)                                                       |
 | `storybook/react`           | Storybook for `react-ui` (`@tapsioss/react-storybook`), runs from source                         |
 | `docs`                      | VitePress docs site for the Lit components; Storybook is deployed alongside it at `/storybook/`  |
@@ -113,8 +113,10 @@ Components live in `src/<name>/` as `<name>.tsx` + `<name>.module.css` +
 `<name>.test.tsx`, with `src/button/` as the reference implementation. The build
 is `tsc` followed by `scripts/build-css.ts`, which scopes the CSS modules once
 at build time, inlines the resolved class names into the emitted JS, and writes
-per-component `.css` plus an aggregate `dist/styles.css` — consumers never
-process CSS modules themselves.
+one minified `dist/styles.css`. The emitted JS imports **no CSS**: consumers add
+`import "@tapsioss/react-ui/styles.css"` once (the React playground does, in
+both entry points; its dev server aliases that import to an empty file because
+it reads react-ui from source). Storybook reads source and needs no import.
 
 ### Web Components (`packages/web-components`)
 
@@ -231,10 +233,15 @@ Released packages: `@tapsioss/theme`, `@tapsioss/react-ui`, and
 archived Lit packages, `@internals/*`, docs, playgrounds, Storybook — is
 ignored.
 
-The repo is in changesets **pre mode** (`.changeset/pre.json`, tag `alpha`):
-releases publish as `x.y.z-alpha.n` on the `alpha` dist-tag. Never add
-`--tag latest` to `release`. Leave alpha with `pnpm exec changeset pre exit`.
-`@tapsioss/theme`'s version is managed by changesets — do not hand-edit it.
+There is **no pre-release mode**: releases go straight to `latest`. Merging to
+`main` makes the release workflow open a "chore: bump versions" PR; merging that
+PR publishes. Versions are managed by changesets — never hand-edit a `version`,
+and never add `.changeset/pre.json` (`changeset pre enter`).
+
+`@tapsioss/theme` and `@tapsioss/react-ui` keep the **same major version** — a
+breaking change to one is released as a major of both. To try unreleased work in
+an app, install **tarballs** (`pnpm pack`), not a pre-release; see "Versioning
+and local testing" in `packages/react-ui/AGENTS.md`.
 
 ## Commit Conventions
 

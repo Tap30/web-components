@@ -328,6 +328,19 @@ and a checker that validates committed source is more trustworthy than a
 generator that produces it unobserved. If you generate the files with a
 throwaway script, do not commit the script.
 
+## 7b. Versioning and local testing
+
+**`@tapsioss/theme` and `@tapsioss/react-ui` share a major version.** The
+components are written against one generation of tokens. Renaming or removing a
+token is a breaking change, and is released as a **major of both packages** — a
+`major` changeset for each, in the same PR. Adding a token is a minor.
+
+The version is managed by changesets: do not hand-edit it, do not enter
+pre-release mode, and do not add or rewrite a `major` changeset just to get an
+installable build. To try unreleased tokens in an app, install **tarballs**
+(`pnpm pack`) — the exact commands are under "Versioning and local testing" in
+`packages/react-ui/AGENTS.md`.
+
 ## 8. Known gaps
 
 - Three line heights are off the `Number` scale (§5): `Headline-Small` 30,
