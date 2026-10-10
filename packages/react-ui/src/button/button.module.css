@@ -5,7 +5,7 @@
  * `<local>_<hash>`, so nothing in this file is a public API — a consumer cannot
  * target `.tapsi-button` from their own stylesheet, and should not try. The
  * component exposes `data-part` attributes for anything that genuinely needs to
- * be selected from outside, and `--tapsi-*` custom properties are untouched by
+ * be selected from outside, and `--tds-*` custom properties are untouched by
  * the scoping, so they remain the supported way to influence appearance.
  *
  * Every value here comes from `@tapsioss/theme` as a CSS custom property, and
@@ -41,15 +41,15 @@
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 
-  font-family: var(--tapsi-typography-font-family-label, sans-serif);
-  font-weight: var(--tapsi-typography-font-weight-label);
+  font-family: var(--tds-typography-font-family-label, sans-serif);
+  font-weight: var(--tds-typography-font-weight-label);
   /* Figma binds Typography/Letter-Spacing/Label, which is 0 at every size. */
 
-  background: var(--tapsi-button-surface, magenta);
-  color: var(--tapsi-button-content, magenta);
+  background: var(--tds-button-surface, magenta);
+  color: var(--tds-button-content, magenta);
 
-  block-size: var(--tapsi-button-size);
-  min-inline-size: var(--tapsi-button-min-inline-size);
+  block-size: var(--tds-button-size);
+  min-inline-size: var(--tds-button-min-inline-size);
   /*
    * Figma nests the content: the button's own padding sits on a Container, and
    * the label lives in a Text Frame with `gap/<size>-horizontal` as its OWN
@@ -58,16 +58,16 @@
    * separates an adornment from the label. Applying it as `gap` would collapse
    * to nothing on a button with no adornments.
    */
-  padding-inline: var(--tapsi-button-padding-horizontal);
-  border-radius: var(--tapsi-button-radius, 999px);
+  padding-inline: var(--tds-button-padding-horizontal);
+  border-radius: var(--tds-button-radius, 999px);
   /*
    * Figma sets `overflow-clip` on the button and `whitespace-nowrap` on the
    * label: content that does not fit is clipped, never wrapped. A wrapped label
    * would break the fixed `block-size` the design gives every size.
    */
   overflow: hidden;
-  font-size: var(--tapsi-button-font-size);
-  line-height: var(--tapsi-button-line-height);
+  font-size: var(--tds-button-font-size);
+  line-height: var(--tds-button-line-height);
 }
 
 .tapsi-button--full-width {
@@ -101,106 +101,106 @@
     [aria-disabled="true"],
     .tapsi-button--loading
   )::before {
-  background: var(--tapsi-color-overlay-pressed);
+  background: var(--tds-color-overlay-pressed);
 }
 
 .tapsi-button:focus-visible {
-  /* `Number/2` is the successor to the retired `--tapsi-stroke-2`. */
-  outline: var(--tapsi-number-2, 2px) solid
-    var(--tapsi-color-content-accent, magenta);
-  outline-offset: var(--tapsi-number-2, 2px);
+  /* `Number/2` is the successor to the retired `--tds-stroke-2`. */
+  outline: var(--tds-number-2, 2px) solid
+    var(--tds-color-content-accent, magenta);
+  outline-offset: var(--tds-number-2, 2px);
 }
 
 /* Sizes — metrics only, all from Dimension/Component/Button/*. */
 
 .tapsi-button--small {
-  --tapsi-button-size: var(--tapsi-dimension-component-button-size-small);
-  --tapsi-button-padding-horizontal: var(
-    --tapsi-dimension-component-button-padding-small-horizontal
+  --tds-button-size: var(--tds-dimension-component-button-size-small);
+  --tds-button-padding-horizontal: var(
+    --tds-dimension-component-button-padding-small-horizontal
   );
-  --tapsi-button-content-padding-horizontal: var(
-    --tapsi-dimension-component-button-gap-small-horizontal
+  --tds-button-content-padding-horizontal: var(
+    --tds-dimension-component-button-gap-small-horizontal
   );
-  --tapsi-button-adornment-size: var(--tapsi-number-20);
-  --tapsi-button-radius: var(--tapsi-dimension-component-button-radius-small);
-  --tapsi-button-font-size: var(--tapsi-typography-font-size-label-small);
-  --tapsi-button-line-height: var(--tapsi-typography-line-height-label-small);
+  --tds-button-adornment-size: var(--tds-number-20);
+  --tds-button-radius: var(--tds-dimension-component-button-radius-small);
+  --tds-button-font-size: var(--tds-typography-font-size-label-small);
+  --tds-button-line-height: var(--tds-typography-line-height-label-small);
 }
 
 .tapsi-button--medium {
-  --tapsi-button-size: var(--tapsi-dimension-component-button-size-medium);
-  --tapsi-button-padding-horizontal: var(
-    --tapsi-dimension-component-button-padding-medium-horizontal
+  --tds-button-size: var(--tds-dimension-component-button-size-medium);
+  --tds-button-padding-horizontal: var(
+    --tds-dimension-component-button-padding-medium-horizontal
   );
-  --tapsi-button-content-padding-horizontal: var(
-    --tapsi-dimension-component-button-gap-medium-horizontal
+  --tds-button-content-padding-horizontal: var(
+    --tds-dimension-component-button-gap-medium-horizontal
   );
-  --tapsi-button-adornment-size: var(--tapsi-number-24);
-  --tapsi-button-radius: var(--tapsi-dimension-component-button-radius-medium);
-  --tapsi-button-font-size: var(--tapsi-typography-font-size-label-medium);
-  --tapsi-button-line-height: var(--tapsi-typography-line-height-label-medium);
+  --tds-button-adornment-size: var(--tds-number-24);
+  --tds-button-radius: var(--tds-dimension-component-button-radius-medium);
+  --tds-button-font-size: var(--tds-typography-font-size-label-medium);
+  --tds-button-line-height: var(--tds-typography-line-height-label-medium);
 }
 
 .tapsi-button--large {
-  --tapsi-button-size: var(--tapsi-dimension-component-button-size-large);
-  --tapsi-button-padding-horizontal: var(
-    --tapsi-dimension-component-button-padding-large-horizontal
+  --tds-button-size: var(--tds-dimension-component-button-size-large);
+  --tds-button-padding-horizontal: var(
+    --tds-dimension-component-button-padding-large-horizontal
   );
-  --tapsi-button-content-padding-horizontal: var(
-    --tapsi-dimension-component-button-gap-large-horizontal
+  --tds-button-content-padding-horizontal: var(
+    --tds-dimension-component-button-gap-large-horizontal
   );
-  --tapsi-button-adornment-size: var(--tapsi-number-24);
+  --tds-button-adornment-size: var(--tds-number-24);
   /*
    * Figma sets `min-w-[96px]` on the Large button. Medium and Small were not
    * inspected before the Figma connection dropped, so they deliberately have no
    * minimum rather than a guessed one.
    */
-  --tapsi-button-min-inline-size: 96px;
-  --tapsi-button-radius: var(--tapsi-dimension-component-button-radius-large);
-  --tapsi-button-font-size: var(--tapsi-typography-font-size-label-large);
-  --tapsi-button-line-height: var(--tapsi-typography-line-height-label-large);
+  --tds-button-min-inline-size: 96px;
+  --tds-button-radius: var(--tds-dimension-component-button-radius-large);
+  --tds-button-font-size: var(--tds-typography-font-size-label-large);
+  --tds-button-line-height: var(--tds-typography-line-height-label-large);
 }
 
 /* Variant × hierarchy — colour channels only. */
 
 .tapsi-button--default-primary {
-  --tapsi-button-surface: var(--tapsi-color-component-button-surface-default);
-  --tapsi-button-content: var(--tapsi-color-component-button-content-default);
+  --tds-button-surface: var(--tds-color-component-button-surface-default);
+  --tds-button-content: var(--tds-color-component-button-content-default);
 }
 
 .tapsi-button--default-secondary {
-  --tapsi-button-surface: var(--tapsi-color-surface-tertiary);
-  --tapsi-button-content: var(--tapsi-color-content-primary);
+  --tds-button-surface: var(--tds-color-surface-tertiary);
+  --tds-button-content: var(--tds-color-content-primary);
 }
 
 .tapsi-button--default-tertiary {
-  --tapsi-button-surface: transparent;
-  --tapsi-button-content: var(--tapsi-color-content-primary);
+  --tds-button-surface: transparent;
+  --tds-button-content: var(--tds-color-content-primary);
 }
 
 .tapsi-button--destructive-primary {
-  --tapsi-button-surface: var(--tapsi-color-surface-negative);
-  --tapsi-button-content: var(--tapsi-color-content-on-negative);
+  --tds-button-surface: var(--tds-color-surface-negative);
+  --tds-button-content: var(--tds-color-content-on-negative);
 }
 
 .tapsi-button--destructive-secondary {
-  --tapsi-button-surface: var(--tapsi-color-surface-negative-light);
-  --tapsi-button-content: var(--tapsi-color-content-negative);
+  --tds-button-surface: var(--tds-color-surface-negative-light);
+  --tds-button-content: var(--tds-color-content-negative);
 }
 
 .tapsi-button--destructive-tertiary {
-  --tapsi-button-surface: transparent;
-  --tapsi-button-content: var(--tapsi-color-content-negative);
+  --tds-button-surface: transparent;
+  --tds-button-content: var(--tds-color-content-negative);
 }
 
 .tapsi-button--elevated-primary {
-  --tapsi-button-surface: var(--tapsi-color-surface-primary);
-  --tapsi-button-content: var(--tapsi-color-content-primary);
+  --tds-button-surface: var(--tds-color-surface-primary);
+  --tds-button-content: var(--tds-color-content-primary);
 
   /*
    * GAP: Figma binds the `Fab` effect here —
    * DROP_SHADOW #0000001A, offset (0, 4), radius 16, spread 0 — but the token
-   * export has no Shadow group, so there is no `--tapsi-shadow-fab` to
+   * export has no Shadow group, so there is no `--tds-shadow-fab` to
    * reference. The value is inlined to keep the variant meaningful; replace the
    * whole declaration once shadows are exported. See packages/theme/PARKED
    * notes and AGENTS.md §8.
@@ -215,8 +215,8 @@
    * the flat brand surface the export does define for the same component slot,
    * so the variant is usable and on-brand but not yet gradient.
    */
-  --tapsi-button-surface: var(--tapsi-color-component-button-surface-cta);
-  --tapsi-button-content: var(--tapsi-color-component-button-content-cta);
+  --tds-button-surface: var(--tds-color-component-button-surface-cta);
+  --tds-button-content: var(--tds-color-component-button-content-cta);
 }
 
 /*
@@ -228,8 +228,8 @@
  */
 .tapsi-button[disabled],
 .tapsi-button[aria-disabled="true"] {
-  --tapsi-button-surface: var(--tapsi-color-surface-disabled);
-  --tapsi-button-content: var(--tapsi-color-content-disabled);
+  --tds-button-surface: var(--tds-color-surface-disabled);
+  --tds-button-content: var(--tds-color-content-disabled);
 
   box-shadow: none;
   cursor: not-allowed;
@@ -311,8 +311,8 @@
   align-items: center;
   justify-content: center;
   flex: none;
-  inline-size: var(--tapsi-button-adornment-size);
-  block-size: var(--tapsi-button-adornment-size);
+  inline-size: var(--tds-button-adornment-size);
+  block-size: var(--tds-button-adornment-size);
 }
 
 /*
@@ -332,5 +332,5 @@
   min-inline-size: 0;
   white-space: nowrap;
   /* Figma's "Text Frame" padding — see the note on `.tapsi-button`. */
-  padding-inline: var(--tapsi-button-content-padding-horizontal);
+  padding-inline: var(--tds-button-content-padding-horizontal);
 }

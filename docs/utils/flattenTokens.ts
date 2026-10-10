@@ -9,11 +9,11 @@ type FlattenedPaletteEntry = {
  * `@tapsioss/theme/types`, but the token model no longer exposes a single flat
  * `Tokens` shape — see `packages/theme/AGENTS.md`.
  *
- * The pages under `docs/theme/` read the pre-1.0 token shape (`tokens.spacing`,
- * `tokens.stroke`, a default export from `@tapsioss/theme/tokens`). This package
- * therefore pins `@tapsioss/theme` to the published `0.8.0` rather than the
- * workspace 1.x, so those pages keep working unchanged. Migrating them to the
- * two-layer model is a separate piece of work.
+ * The pages under `docs/theme/` document the LEGACY token set (`tokens.spacing`,
+ * `tokens.stroke`, …). The theme package still ships it, unchanged, as CSS
+ * (`@tapsioss/theme/legacy/tokens.css`); the values these pages print come
+ * from `./legacyTokens.ts`. Documenting the current two-layer model here is a
+ * separate piece of work.
  */
 type TokensUnion = Record<string, unknown>;
 

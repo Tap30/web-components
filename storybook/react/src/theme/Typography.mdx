@@ -8,9 +8,9 @@ import { ScaleTable, ThemeControls, TypeScale } from "./TokenTable.tsx";
 Figma models type as **four independent scales**, not as composite styles:
 
 - **`fontFamily`** and **`fontWeight`** are keyed by **category** — `body`,
-  `label`, `headline`, `display` — e.g. `--tapsi-typography-font-family-body`.
+  `label`, `headline`, `display` — e.g. `--tds-typography-font-family-body`.
 - **`fontSize`** and **`lineHeight`** are keyed by **variant**, the category
-  plus a step — e.g. `--tapsi-typography-font-size-body-large`.
+  plus a step — e.g. `--tds-typography-font-size-body-large`.
 
 So a full text style is four variables, and family and weight are shared across
 every size in a category. The specimens below join them by prefix.
@@ -44,8 +44,8 @@ stores the name (`"Regular"`), and the token carries the `400` that CSS needs.
 
 The primitive scale the sizes above resolve to, from
 `@tapsioss/theme/tokens.css`. The key is the **pixel value in Figma**, so
-`--tapsi-font-size-18` is `1.125rem`. Reach for a `font-size-*` token above
-unless you are defining one.
+`--tds-font-size-18` is `1.125rem`. Reach for a `font-size-*` token above unless
+you are defining one.
 
 <ScaleTable
   select={(_, p) => p.font.size}

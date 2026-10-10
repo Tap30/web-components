@@ -189,8 +189,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/icons
       '@tapsioss/theme':
-        specifier: 0.8.0
-        version: 0.8.0
+        specifier: workspace:*
+        version: link:../packages/theme
       '@tapsioss/web-components':
         specifier: workspace:*
         version: link:../packages/web-components
@@ -220,9 +220,6 @@ importers:
       '@lit/react':
         specifier: ^1.0.6
         version: 1.0.7(@types/react@18.3.20)
-      '@tapsioss/theme':
-        specifier: <=0.8.0
-        version: 0.8.0
       '@tapsioss/web-components':
         specifier: workspace:*
         version: link:../web-components
@@ -281,9 +278,6 @@ importers:
       '@floating-ui/dom':
         specifier: ^1.6.11
         version: 1.6.13
-      '@tapsioss/theme':
-        specifier: <=0.8.0
-        version: 0.8.0
       '@use-gesture/vanilla':
         specifier: ^10.3.1
         version: 10.3.1
@@ -319,8 +313,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/react-icons
       '@tapsioss/theme':
-        specifier: 0.8.0
-        version: 0.8.0
+        specifier: workspace:*
+        version: link:../../packages/theme
       '@tapsioss/web-components':
         specifier: workspace:*
         version: link:../../packages/web-components
@@ -1776,9 +1770,6 @@ packages:
         optional: true
       typescript:
         optional: true
-
-  '@tapsioss/theme@0.8.0':
-    resolution: {integrity: sha512-mKdkwb0kgVFpu/bdVerLILxPXPMiJq7DK4EgF5skw++NQm3rIBxLQ8qbdMS/JUoaHYcy4wuf56W9ytPhmJKnxA==}
 
   '@testing-library/dom@10.4.2':
     resolution: {integrity: sha512-yzr2S9HyAIdhz2/6qHgbs665Q7PKVcDF05vsOlHPxG1mo36gKVesdYVeDLnXgfjJ03CrKRk08knc6+E/9m8v2Q==}
@@ -6837,10 +6828,6 @@ snapshots:
       typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
-
-  '@tapsioss/theme@0.8.0':
-    dependencies:
-      tslib: 2.8.1
 
   '@testing-library/dom@10.4.2':
     dependencies:

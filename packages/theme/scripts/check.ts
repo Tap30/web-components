@@ -15,7 +15,7 @@
  *
  *   1. coverage — every exported token exists in both the CSS and the TS set,
  *      and neither contains anything the export does not
- *   2. naming — the CSS name is the kebab-cased Figma path prefixed `--tapsi-`,
+ *   2. naming — the CSS name is the kebab-cased Figma path prefixed `--tds-`,
  *      and the TS path is its camelCase equivalent
  *   3. values — literals match the documented transforms (px→rem, alpha→rgba,
  *      weight name→number, family fallback)
@@ -24,10 +24,17 @@
  *      which the Figma export itself gives as raw numbers
  *   5. agreement — the TS value equals what the CSS `var()` chain resolves to
  *
+ * And, separately from the exports:
+ *
+ *   6. separation — the legacy set (`legacy/tokens.css`, `--tapsi-*`) is byte-for-byte
+ *      what `@tapsioss/theme@0.8.0` shipped, and shares no name with the
+ *      current sets (`--tds-*`), so both can be loaded on one page
+ *
  * Run with `pnpm --filter @tapsioss/theme run check`; `prebuild` runs it too, so
  * a broken set cannot be published.
  */
 
+import { createHash } from "node:crypto";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import { getFileMeta } from "../../../scripts/utils.ts";
@@ -37,6 +44,20 @@ const { dirname } = getFileMeta(import.meta.url);
 const packageDir = path.resolve(dirname, "..");
 const srcDir = path.join(packageDir, "src");
 const jsonDir = path.join(packageDir, "figma-output-jsons");
+
+/**
+ * SHA-256 of `src/legacy/tokens.css` as published in `@tapsioss/theme@0.8.0`.
+ *
+ * The legacy set is frozen: the archived Lit components were built against
+ * exactly these values, and nothing will ever re-test them against a change.
+ * If this fails, restore the file — do not update the hash.
+ */
+const LEGACY_SHA256 =
+  "212b2b0aa84f8c7efd20be8ba45e893e9e28081ef2dc1b32e7e577c12e4710e9";
+
+/** The legacy set's prefix. No current token may use it, and vice versa. */
+const LEGACY_PREFIX = "--tapsi-";
+const CURRENT_PREFIX = "--tds-";
 
 /** Top-level groups of the primitive collection. */
 const PRIMITIVE_ROOTS = ["Palette", "Font", "Number"];
@@ -70,7 +91,7 @@ const segments = (...parts: string[]): string[] =>
     .map(segment => segment.toLowerCase());
 
 const cssName = (...parts: string[]): string =>
-  `--tapsi-${segments(...parts).join("-")}`;
+  `--tds-${segments(...parts).join("-")}`;
 
 const camel = (part: string): string => {
   const [head, ...rest] = segments(part);
@@ -140,8 +161,8 @@ const leafOf = (node: Json, parts: string[]): string | null => {
   return null;
 };
 
-const DECL = /^\s*(--tapsi-[a-z0-9-]+)\s*:\s*([^;]+);/gm;
-const REF = /^var\(\s*(--tapsi-[a-z0-9-]+)\s*\)$/;
+const DECL = /^\s*(--tds-[a-z0-9-]+)\s*:\s*([^;]+);/gm;
+const REF = /^var\(\s*(--tds-[a-z0-9-]+)\s*\)$/;
 
 /** Comment blocks, stripped before selectors are read. */
 const COMMENTS = /\/\*[\s\S]*?\*\//g;
@@ -395,6 +416,42 @@ void (async () => {
     }
   }
 
+  /* ------------------------------------------------------------ separation */
+
+  // What makes the transition from the Lit components possible: the two
+  // generations of tokens live under different prefixes, so no name can mean
+  // two things on one page. Checked on the raw text — a stray name in a
+  // comment is harmless, but there is no reason for one to be there either.
+  const legacyCss = await fs.readFile(
+    path.join(srcDir, "legacy/tokens.css"),
+    "utf8",
+  );
+
+  if (createHash("sha256").update(legacyCss).digest("hex") !== LEGACY_SHA256) {
+    fail(
+      "legacy/tokens.css differs from what @tapsioss/theme@0.8.0 shipped. It is " +
+        "frozen — restore it rather than updating the hash.",
+    );
+  }
+
+  if (legacyCss.includes(CURRENT_PREFIX)) {
+    fail(`legacy/tokens.css uses the current prefix ${CURRENT_PREFIX}`);
+  }
+
+  for (const set of ["tokens", ...Object.keys(THEMES)]) {
+    for (const extension of ["css", "ts"]) {
+      const file = `${set}.${extension}`;
+      const text = await fs.readFile(path.join(srcDir, file), "utf8");
+
+      if (text.includes(LEGACY_PREFIX)) {
+        fail(
+          `${file} uses the legacy prefix ${LEGACY_PREFIX}; current tokens ` +
+            `are ${CURRENT_PREFIX}*`,
+        );
+      }
+    }
+  }
+
   if (problems.length > 0) {
     for (const problem of problems) console.error(`❌ ${problem}`);
 
@@ -405,6 +462,7 @@ void (async () => {
   console.log(
     `✅ ${String(primitiveCss.size)} primitives + ${String(Object.keys(THEMES).length)} theme(s), ` +
       `${String(assertions)} tokens verified against figma-output-jsons/ — names, ` +
-      `values, layering, and CSS/TS agreement.`,
+      `values, layering, and CSS/TS agreement. Legacy set unchanged and ` +
+      `separate.`,
   );
 })();

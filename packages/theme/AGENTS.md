@@ -50,8 +50,8 @@ theme on top.
 import { tokens } from "@tapsioss/theme/ride/light";
 ```
 
-Components reference **theme** tokens only (`--tapsi-color-surface-primary`),
-never primitives (`--tapsi-palette-gray-white`). That is what lets one component
+Components reference **theme** tokens only (`--tds-color-surface-primary`),
+never primitives (`--tds-palette-gray-white`). That is what lets one component
 render as ride-light or drive-dark with no code change, and it is the property
 `check.ts` exists to protect.
 
@@ -77,26 +77,32 @@ Figma export. Do not factor them out into a shared file.
 
 ## 3. Naming
 
-**A token's name is its Figma path, kebab-cased, prefixed `--tapsi-`. Nothing
+**A token's name is its Figma path, kebab-cased, prefixed `--tds-`. Nothing
 else.**
+
+`--tds-` (Tapsi Design System) is the prefix of every current token. It is
+deliberately **not** `--tapsi-`: that prefix belongs to the legacy token set
+(§8b), and keeping the two apart is what lets both be loaded on one page. Never
+declare a `--tapsi-*` name in a current set — `check.ts` fails the build if one
+appears.
 
 The layer, collection, product and theme are **never** part of the name. A
 designer searching for a token must find the same string in Figma and in the
 CSS.
 
-| Figma path                                            | CSS                                                           | TS                                                   |
-| ----------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------- |
-| `Palette/Gray/White`                                  | `--tapsi-palette-gray-white`                                  | `palette.gray.white`                                 |
-| `Palette/Gray/50`                                     | `--tapsi-palette-gray-50`                                     | `palette.gray["50"]`                                 |
-| `Palette/Alpha/Dark50`                                | `--tapsi-palette-alpha-dark50`                                | `palette.alpha.dark50`                               |
-| `Font/Size/16`                                        | `--tapsi-font-size-16`                                        | `font.size["16"]`                                    |
-| `Number/999`                                          | `--tapsi-number-999`                                          | `number["999"]`                                      |
-| `Color/Surface/Accent-Light`                          | `--tapsi-color-surface-accent-light`                          | `color.surface.accentLight`                          |
-| `Color/Content/On-Brand`                              | `--tapsi-color-content-on-brand`                              | `color.content.onBrand`                              |
-| `Color/Component/Button/Surface/CTA`                  | `--tapsi-color-component-button-surface-cta`                  | `color.component.button.surface.cta`                 |
-| `Typography/Font-Size/Body-2xSmall`                   | `--tapsi-typography-font-size-body-2x-small`                  | `typography.fontSize.body2xSmall`                    |
-| `Dimension/Radius/2xLarge`                            | `--tapsi-dimension-radius-2x-large`                           | `dimension.radius["2xLarge"]`                        |
-| `Dimension/Component/Button/Padding/Small-Horizontal` | `--tapsi-dimension-component-button-padding-small-horizontal` | `dimension.component.button.padding.smallHorizontal` |
+| Figma path                                            | CSS                                                         | TS                                                   |
+| ----------------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------- |
+| `Palette/Gray/White`                                  | `--tds-palette-gray-white`                                  | `palette.gray.white`                                 |
+| `Palette/Gray/50`                                     | `--tds-palette-gray-50`                                     | `palette.gray["50"]`                                 |
+| `Palette/Alpha/Dark50`                                | `--tds-palette-alpha-dark50`                                | `palette.alpha.dark50`                               |
+| `Font/Size/16`                                        | `--tds-font-size-16`                                        | `font.size["16"]`                                    |
+| `Number/999`                                          | `--tds-number-999`                                          | `number["999"]`                                      |
+| `Color/Surface/Accent-Light`                          | `--tds-color-surface-accent-light`                          | `color.surface.accentLight`                          |
+| `Color/Content/On-Brand`                              | `--tds-color-content-on-brand`                              | `color.content.onBrand`                              |
+| `Color/Component/Button/Surface/CTA`                  | `--tds-color-component-button-surface-cta`                  | `color.component.button.surface.cta`                 |
+| `Typography/Font-Size/Body-2xSmall`                   | `--tds-typography-font-size-body-2x-small`                  | `typography.fontSize.body2xSmall`                    |
+| `Dimension/Radius/2xLarge`                            | `--tds-dimension-radius-2x-large`                           | `dimension.radius["2xLarge"]`                        |
+| `Dimension/Component/Button/Padding/Small-Horizontal` | `--tds-dimension-component-button-padding-small-horizontal` | `dimension.component.button.padding.smallHorizontal` |
 
 **Segmentation.** Split on `-`, `_`, `/` and whitespace, then on camel/Pascal
 humps. A digit run stays attached to a _following_ lowercase letter, so
@@ -134,7 +140,7 @@ the real value**; the string is a Figma label and is discarded.
 | ---- | ---------- | ----- | ------- | ------ | -------- | ---- | --------- | ----- |
 | 100  | 200        | 300   | 400     | 500    | 600      | 700  | 800       | 900   |
 
-So `--tapsi-font-weight-400: 400`. The tautology is deliberate: the name is the
+So `--tds-font-weight-400: 400`. The tautology is deliberate: the name is the
 Figma path, and the value is what CSS needs.
 
 **Font families get a generic fallback.** `Font/Family/Base` →
@@ -160,15 +166,15 @@ A string value is a **reference** if it resolves as a path in the primitive
 collection or in its own file. Everything else is a literal.
 
 ```jsonc
-"Primary": "Palette.Gray.White"     // → var(--tapsi-palette-gray-white)
-"On-Warning": "Color.Content.Primary" // → var(--tapsi-color-content-primary)
-"Small": "Dimension.Radius.Full"    // → var(--tapsi-dimension-radius-full)
+"Primary": "Palette.Gray.White"     // → var(--tds-palette-gray-white)
+"On-Warning": "Color.Content.Primary" // → var(--tds-color-content-primary)
+"Small": "Dimension.Radius.Full"    // → var(--tds-dimension-radius-full)
 ```
 
 **Emit one hop, never a flattened value.** `Color/Component/Button/Surface/CTA`
-references `Color.Surface.Brand`, so it emits `var(--tapsi-color-surface-brand)`
-— not the orange it happens to resolve to. Preserving the hop is what carries
-the designer's intent and keeps the override point available.
+references `Color.Surface.Brand`, so it emits `var(--tds-color-surface-brand)` —
+not the orange it happens to resolve to. Preserving the hop is what carries the
+designer's intent and keeps the override point available.
 
 **If a reference does not resolve, stop and report it.** Do not inline a literal
 to make it work.
@@ -201,7 +207,7 @@ ways:
 | CSS | at runtime, in the browser | `var()` chains — the consumer imports two files      |
 | TS  | at import time             | real values, resolved by JS reference to `tokens.ts` |
 
-A `var(--tapsi-…)` string must **never** appear in a `.ts` file. Someone reading
+A `var(--tds-…)` string must **never** appear in a `.ts` file. Someone reading
 `number["8"]` wants `"0.5rem"`, not a custom property they cannot compute with.
 
 Editing one does not move the other. `check.ts` fails the build if they
@@ -293,8 +299,8 @@ currently `Color/Surface`, `Color/Content` and `Dimension/Radius`.
 **A reference within the same group resolves transitively**, because a JS object
 literal cannot reference itself. `Color/Content/On-Warning` →
 `Color.Content.Primary` becomes `palette.gray.black` in TS while the CSS keeps
-`var(--tapsi-color-content-primary)`. Both carry the same value, which is all
-that is required — and `check.ts` verifies exactly that.
+`var(--tds-color-content-primary)`. Both carry the same value, which is all that
+is required — and `check.ts` verifies exactly that.
 
 **Everything is a named export.** Project-wide rule: no default exports.
 
@@ -347,10 +353,10 @@ installable build. To try unreleased tokens in an app, install **tarballs**
   `Headline-Large` 42, `Display-Medium` 60. They stay literal and will not
   follow a primitive change. Either add those steps to `Number` in Figma or snap
   the type scale to existing ones.
-- **`--tapsi-stroke-*` no longer exists.** The export has no `Stroke` group;
-  border widths come from `Number` (`--tapsi-number-1`, `--tapsi-number-2`).
-  Figma still has a `Stroke` page, so this may be an export omission — worth
-  confirming with the design team.
+- **There are no stroke tokens** (the legacy set had `--tapsi-stroke-*`). The
+  export has no `Stroke` group; border widths come from `Number`
+  (`--tds-number-1`, `--tds-number-2`). Figma still has a `Stroke` page, so this
+  may be an export omission — worth confirming with the design team.
 - Figma also has a `Shadow` page with no counterpart in the export. There are no
   shadow tokens in this package.
 - `Color/Overlay/*` is identical in light and dark (both `Palette.Alpha.Dark*`).
@@ -358,43 +364,49 @@ installable build. To try unreleased tokens in an app, install **tarballs**
 - `Font/Family/Mono` is `Vazirmatn`, which is not a monospace face. The
   `monospace` fallback only applies if Vazirmatn fails to load.
 
-## 8b. Consumers still on the pre-1.0 tokens
+## 8b. The legacy token set
 
-`@tapsioss/web-components` (109 token names across 41 `.style.ts` files) and the
-VitePress pages under `docs/theme/` have **not** been migrated to the two-layer
-model. Rather than leave them broken, they are pinned to the last published
-pre-1.0 release:
+The archived Lit components (`@tapsioss/web-components`, 109 token names across
+41 `.style.ts` files) and the VitePress pages under `docs/theme/` were built
+against the pre-1.0 tokens and have **not** been migrated. Apps that use them
+move to `@tapsioss/react-ui` one component at a time, so for a while the same
+page renders both generations.
 
-| Package            | Declares `@tapsioss/theme` as | Why                                                                              |
-| ------------------ | ----------------------------- | -------------------------------------------------------------------------------- |
-| `docs`             | `"0.8.0"`                     | its pages import `@tapsioss/theme/css-variables` and the default `tokens` export |
-| `playground/lit`   | `"0.8.0"`                     | hosts the Lit components, which reference the pre-1.0 names                      |
-| `playground/react` | `"workspace:*"`               | hosts `@tapsioss/react-ui`, which is on 1.x                                      |
-| `storybook/react`  | `"workspace:*"`               | 1.x only                                                                         |
-| `web-components`   | `peerDependencies: "^0.8.0"`  | documents the requirement for anyone installing it alongside 1.x                 |
+That is what the legacy set is for. The package ships the
+`@tapsioss/theme@0.8.0` stylesheet, byte for byte, as:
 
-**Both versions coexist under the same package name.** pnpm gives each workspace
-package its own `node_modules`, so `playground/lit` and `playground/react` each
-resolve `@tapsioss/theme` to what their own `package.json` asks for. There is no
-aliasing and no second package name.
+```
+src/legacy/tokens.css   →   @tapsioss/theme/legacy/tokens.css
+```
 
-**The pin only holds because each playground's `tsconfig.json` sets
-`"paths": {}`.** The root `tsconfig.json` aliases `@tapsioss/theme/*` to
-`packages/theme/src`, which would otherwise win and silently feed 1.x tokens to
-the Lit playground — producing components that look broken for no visible
-reason. If you add a playground, copy that reset. If you are debugging a
-playground that is somehow getting the wrong tokens, check it first.
+```css
+@import "@tapsioss/theme/legacy/tokens.css"; /* --tapsi-*  for the Lit components */
+@import "@tapsioss/theme/tokens.css"; /* --tds-*    primitives */
+@import "@tapsioss/theme/ride/light.css"; /* --tds-*    the theme */
+```
 
-Nothing loads both sets into one page any more, so they cannot interfere. (When
-the old single playground did, it was safe: the legacy-only families were all
-renamed in 1.x — `spacing` → `number`, `radius-N` → `dimension-radius-*`,
-`typography-<cat>-<size>-*` → `typography-font-size-*` — and every shared name
-resolved to the same value except `--tapsi-palette-gray-800`, `#323333` in 0.8.0
-versus `#1f1f1f` in 1.x.)
+**The two sets share no name.** Legacy tokens are `--tapsi-*`; current tokens
+are `--tds-*`. So both load on `:root` with no scoping, no import order to get
+right, and no value that means two things — a react-ui component inside a Lit
+one, or the reverse, each reads its own set. (Before the prefixes were split, 98
+names existed in both sets, and one of them, `palette-gray-800`, had two
+different values.)
 
-**Do not "clean up" these pins to the workspace version.** Doing so leaves every
-Lit component with no spacing and square corners. They move to 1.x when
-`web-components` is migrated, not before.
+Rules for the legacy set:
+
+- **Frozen.** `legacy/tokens.css` is not derived from `figma-output-jsons/` and
+  follows none of §2–§6. `check.ts` compares it to a recorded SHA-256 and fails
+  if it changes. If that check fails, restore the file; never update the hash.
+- **CSS only.** There is no JavaScript export of the legacy tokens, and none
+  should be added. (`docs` keeps a private copy of the values, in
+  `docs/utils/legacyTokens.ts`, to print its tables.)
+- **One direction.** It is removed — not updated — when the Lit components are
+  retired, in a major release.
+
+Everything in this repo depends on the workspace theme; nothing is pinned to
+`0.8.0` any more, and the archived packages declare no peer dependency on the
+theme. `playground/lit` and `docs` import `legacy/tokens.css`;
+`playground/react` and Storybook import the current sets.
 
 ## 9. Verification
 

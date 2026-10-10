@@ -36,8 +36,8 @@ every number on the spacing scale. These are just values; they carry no meaning
 about where they are used.
 
 ```
---tapsi-palette-gray-white: #ffffff;
---tapsi-number-16: 1rem;
+--tds-palette-gray-white: #ffffff;
+--tds-number-16: 1rem;
 ```
 
 **Themes** — one file per product per mode (`ride/light`, `ride/dark`,
@@ -45,7 +45,7 @@ about where they are used.
 a value of its own; everything points at a primitive.
 
 ```
---tapsi-color-surface-primary: var(--tapsi-palette-gray-white);
+--tds-color-surface-primary: var(--tds-palette-gray-white);
 ```
 
 An app imports the primitives once and **one** theme on top:
@@ -160,8 +160,8 @@ A pass looks like:
 A failure names the exact token and what is wrong with it:
 
 ```
-❌ ride/light.css is missing --tapsi-color-surface-elevated (Color/Surface/Elevated)
-❌ ride/light.css: --tapsi-color-surface-primary holds the literal "#ffffff";
+❌ ride/light.css is missing --tds-color-surface-elevated (Color/Surface/Elevated)
+❌ ride/light.css: --tds-color-surface-primary holds the literal "#ffffff";
    theme tokens must reference a primitive so the layer stays swappable
 ```
 
@@ -224,7 +224,7 @@ renders nothing. Call it out explicitly and list the old → new mapping.
 ## Conventions worth knowing
 
 **Names come from Figma, unchanged.** `Color/Surface/Accent-Light` becomes
-`--tapsi-color-surface-accent-light`. The layer name never appears in the token
+`--tds-color-surface-accent-light`. The layer name never appears in the token
 name. If you want a token called something else, rename it in Figma — not here.
 
 **Everything is rem, never px.** Figma's `16` becomes `1rem`. This means a user
@@ -252,9 +252,9 @@ it, but it is easier not to hand-edit either.
 Worth knowing before you go looking for them:
 
 - **No `Stroke` tokens.** The old `--tapsi-stroke-1` / `--tapsi-stroke-2` are
-  gone; border widths now come from `--tapsi-number-1` / `--tapsi-number-2`.
-  Figma still has a Stroke page, so this may be an export omission — if you
-  expect stroke tokens, check with whoever maintains the plugin.
+  gone; border widths now come from `--tds-number-1` / `--tds-number-2`. Figma
+  still has a Stroke page, so this may be an export omission — if you expect
+  stroke tokens, check with whoever maintains the plugin.
 - **No `Shadow` tokens**, for the same reason.
 - **Three line heights are off the number scale** (30, 42 and 60). They are
   hard-coded, and will not follow if you change the spacing scale. Adding those
@@ -265,24 +265,27 @@ Worth knowing before you go looking for them:
 ## What is still on the old tokens
 
 `@tapsioss/web-components` (the Lit components) and the VitePress docs site have
-not been moved to the new two-layer tokens. They are pinned to the last pre-1.0
-release, `@tapsioss/theme@0.8.0`, so they keep working:
+not been moved to the new two-layer tokens. So that they keep working, this
+package also ships the **old token set, unchanged**, as one stylesheet:
 
-- **the docs site** installs `@tapsioss/theme` at `0.8.0` from npm instead of
-  the workspace copy — its pages are unchanged and still show the old token
-  tables
-- **`playground/lit`** does the same, so the Lit components render correctly
-  there
-- **`playground/react`** uses the workspace 1.x, for `@tapsioss/react-ui`
+```
+@tapsioss/theme/legacy/tokens.css
+```
 
-The two playgrounds are separate precisely so that each can have its own version
-of the tokens. They ask for the _same_ package name and get different versions,
-which is normal in a pnpm workspace.
+The old tokens are named `--tapsi-…`; the new ones are named `--tds-…`. Because
+no name exists in both, an app can load the two side by side while it moves from
+the Lit components to `@tapsioss/react-ui` one component at a time.
 
-**Do not "fix" those pins to point at the workspace copy.** Without 0.8.0, every
-Lit component loses its spacing and its rounded corners. They move to the new
-tokens when the Lit components are migrated, which is a separate piece of work.
+- **the docs site** and **`playground/lit`** import `legacy/tokens.css`, so the
+  Lit components render correctly there
+- **`playground/react`** and **Storybook** import the new tokens, for
+  `@tapsioss/react-ui`
+
+**Do not edit `src/legacy/tokens.css`.** It is a frozen copy of what
+`@tapsioss/theme@0.8.0` published, and `pnpm check` fails if it changes. It is
+not produced from the Figma export, and a token change in Figma never touches
+it.
 
 If you change a token in Figma today, it flows into `@tapsioss/react-ui` and the
 Storybook galleries — **not** into the Lit components or the docs site, which
-are frozen on 0.8.0 until they are migrated.
+stay on the legacy set until they are migrated or retired.

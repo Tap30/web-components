@@ -176,7 +176,7 @@ export const ThemeLayout = () => {
               font: "600 0.75rem ui-monospace, monospace",
               letterSpacing: "0.04em",
               textTransform: "uppercase",
-              color: "var(--tapsi-color-content-tertiary)",
+              color: "var(--tds-color-content-tertiary)",
             }}
           >
             {value}

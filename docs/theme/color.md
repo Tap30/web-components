@@ -1,6 +1,6 @@
 <script setup>
-import tokens from "@tapsioss/theme/tokens";
-import "@tapsioss/theme/css-variables";
+import { tokens } from "../utils/legacyTokens.ts";
+import "@tapsioss/theme/legacy/tokens.css";
 import flattenTokens from '../utils/flattenTokens';
 
 const colorTokensInfo = flattenTokens(tokens.color, 'color')

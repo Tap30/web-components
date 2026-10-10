@@ -94,8 +94,8 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
       data-tapsi-font-smoothing={fontSmoothing ? "pwa" : undefined}
       style={{
         ...(surface && {
-          background: "var(--tapsi-color-surface-primary)",
-          color: "var(--tapsi-color-content-primary)",
+          background: "var(--tds-color-surface-primary)",
+          color: "var(--tds-color-content-primary)",
         }),
         // Set in BOTH states, not only when on. Storybook's docs chrome already
         // applies `-webkit-font-smoothing: antialiased` to its wrapper, so

@@ -5,7 +5,7 @@
  *
  * A CSS MODULE: class names are scoped by the build and are not public API.
  * Select internals from outside through their `data-part` attributes, and
- * influence appearance through `--tapsi-*` custom properties.
+ * influence appearance through `--tds-*` custom properties.
  *
  * Figma's axes and toggles map to props as: Content → `reversed`,
  * Divider → `divider`, Description → `description`, Leading/Trailing →
@@ -41,9 +41,9 @@
   min-inline-size: 0;
 
   /* Figma's frame is `min-h`, not `h`: a wrapped label grows the row. */
-  min-block-size: var(--tapsi-dimension-component-row-size-default);
-  padding-inline: var(--tapsi-dimension-component-row-padding-horizontal);
-  gap: var(--tapsi-dimension-component-row-gap-horizontal);
+  min-block-size: var(--tds-dimension-component-row-size-default);
+  padding-inline: var(--tds-dimension-component-row-padding-horizontal);
+  gap: var(--tds-dimension-component-row-gap-horizontal);
 
   /*
    * Figma fills the row with a literal white rather than a variable; the
@@ -51,8 +51,8 @@
    * `Color/Surface/Primary`, which is white in the light themes and follows
    * the theme in the dark ones.
    */
-  background: var(--tapsi-color-surface-primary, magenta);
-  color: var(--tapsi-color-content-primary, magenta);
+  background: var(--tds-color-surface-primary, magenta);
+  color: var(--tds-color-content-primary, magenta);
   text-align: start;
   /* For when the row is rendered as an anchor. */
   text-decoration: none;
@@ -76,9 +76,9 @@
 
 /* The same focus ring as the Button. */
 .tapsi-row--interactive:focus-visible {
-  outline: var(--tapsi-number-2, 2px) solid
-    var(--tapsi-color-content-accent, magenta);
-  outline-offset: var(--tapsi-number-2, 2px);
+  outline: var(--tds-number-2, 2px) solid
+    var(--tds-color-content-accent, magenta);
+  outline-offset: var(--tds-number-2, 2px);
 }
 
 /*
@@ -94,15 +94,15 @@
   flex: none;
   align-items: center;
   position: relative;
-  padding-block: var(--tapsi-dimension-component-row-padding-vertical);
+  padding-block: var(--tds-dimension-component-row-padding-vertical);
 }
 
 .tapsi-row__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  inline-size: var(--tapsi-number-24);
-  block-size: var(--tapsi-number-24);
+  inline-size: var(--tds-number-24);
+  block-size: var(--tds-number-24);
 }
 
 .tapsi-row__icon > svg {
@@ -127,24 +127,23 @@
   justify-content: center;
   position: absolute;
   inset-block-start: calc(
-    var(--tapsi-dimension-component-row-padding-vertical) -
-      var(--tapsi-number-2)
+    var(--tds-dimension-component-row-padding-vertical) - var(--tds-number-2)
   );
-  inset-inline-start: calc(-1 * var(--tapsi-number-2));
+  inset-inline-start: calc(-1 * var(--tds-number-2));
 
-  inline-size: var(--tapsi-number-12);
-  block-size: var(--tapsi-number-12);
-  border-radius: var(--tapsi-dimension-radius-full);
-  background: var(--tapsi-color-surface-primary, magenta);
+  inline-size: var(--tds-number-12);
+  block-size: var(--tds-number-12);
+  border-radius: var(--tds-dimension-radius-full);
+  background: var(--tds-color-surface-primary, magenta);
   overflow: hidden;
 }
 
 .tapsi-row__badge::after {
   content: "";
-  inline-size: var(--tapsi-number-6);
-  block-size: var(--tapsi-number-6);
-  border-radius: var(--tapsi-dimension-radius-full);
-  background: var(--tapsi-color-surface-negative, magenta);
+  inline-size: var(--tds-number-6);
+  block-size: var(--tds-number-6);
+  border-radius: var(--tds-dimension-radius-full);
+  background: var(--tds-color-surface-negative, magenta);
 }
 
 /*
@@ -160,8 +159,8 @@
   position: relative;
   box-sizing: border-box;
   min-inline-size: 0;
-  gap: var(--tapsi-dimension-component-row-gap-horizontal);
-  padding-block: var(--tapsi-dimension-component-row-padding-vertical);
+  gap: var(--tds-dimension-component-row-gap-horizontal);
+  padding-block: var(--tds-dimension-component-row-padding-vertical);
 }
 
 /*
@@ -169,14 +168,14 @@
  * drawn OVER the Container's bottom edge, taking no space. A border on the
  * Container itself would add that pixel to the row's height (77px instead of
  * Figma's 76px), so it is an overlay here too. `Number/1` is the successor to
- * the retired `--tapsi-stroke-1`.
+ * the retired `--tds-stroke-1`.
  */
 .tapsi-row--divider .tapsi-row__container::after {
   content: "";
   position: absolute;
   inset: 0;
-  border-block-end: var(--tapsi-number-1, 1px) solid
-    var(--tapsi-color-border-secondary, magenta);
+  border-block-end: var(--tds-number-1, 1px) solid
+    var(--tds-color-border-secondary, magenta);
   pointer-events: none;
 }
 
@@ -210,11 +209,11 @@
   display: grid;
   flex: none;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(var(--tapsi-number-24), auto);
-  grid-template-rows: var(--tapsi-number-24);
+  grid-auto-columns: minmax(var(--tds-number-24), auto);
+  grid-template-rows: var(--tds-number-24);
   align-items: center;
   justify-items: center;
-  gap: var(--tapsi-number-4);
+  gap: var(--tds-number-4);
 }
 
 .tapsi-row__label,
@@ -230,20 +229,20 @@
  */
 .tapsi-row__label,
 .tapsi-row--reversed .tapsi-row__description {
-  font-family: var(--tapsi-typography-font-family-label, sans-serif);
-  font-weight: var(--tapsi-typography-font-weight-label);
-  font-size: var(--tapsi-typography-font-size-label-medium);
-  line-height: var(--tapsi-typography-line-height-label-medium);
-  color: var(--tapsi-color-content-primary, magenta);
+  font-family: var(--tds-typography-font-family-label, sans-serif);
+  font-weight: var(--tds-typography-font-weight-label);
+  font-size: var(--tds-typography-font-size-label-medium);
+  line-height: var(--tds-typography-line-height-label-medium);
+  color: var(--tds-color-content-primary, magenta);
 }
 
 .tapsi-row__description,
 .tapsi-row--reversed .tapsi-row__label {
-  font-family: var(--tapsi-typography-font-family-body, sans-serif);
-  font-weight: var(--tapsi-typography-font-weight-body);
-  font-size: var(--tapsi-typography-font-size-body-small);
-  line-height: var(--tapsi-typography-line-height-body-small);
-  color: var(--tapsi-color-content-tertiary, magenta);
+  font-family: var(--tds-typography-font-family-body, sans-serif);
+  font-weight: var(--tds-typography-font-weight-body);
+  font-size: var(--tds-typography-font-size-body-small);
+  line-height: var(--tds-typography-line-height-body-small);
+  color: var(--tds-color-content-tertiary, magenta);
 }
 
 /*

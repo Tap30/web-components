@@ -28,26 +28,28 @@ Parked alongside changesets. Not revisited.
 
 ## Tokens and theme
 
-### The `docs` package
+### The `docs` site documents the legacy tokens
 
-`docs` pins `@tapsioss/theme` to `0.8.0` so its VitePress pages keep working.
-Those pages read the pre-1.0 shape — `tokens.spacing`, `tokens.stroke`, and a
-**default** export from `@tapsioss/theme/tokens`, none of which exist in 1.x.
-`docs/utils/flattenTokens.ts` was given a local structural type so the repo
-still type-checks.
+The VitePress pages under `docs/theme/` describe the legacy `--tapsi-*` set.
+They import `@tapsioss/theme/legacy/tokens.css` and print values from a private
+copy, `docs/utils/legacyTokens.ts` (the theme package ships the legacy set as
+CSS only). Nothing documents the current `--tds-*` tokens outside Storybook.
 
 **To resolve:** rewrite `docs/theme/*.md` against the two-layer model (the
 Storybook galleries under `storybook/react/src/theme/` are a working reference),
-then move `docs` onto `workspace:*`.
+then delete `legacyTokens.ts`.
 
-### `@tapsioss/web-components` is still on pre-1.0 tokens
+### The legacy token set is still shipped
 
-109 token names across 41 `.style.ts` files. They are CSS-in-TS strings, so
-nothing fails to compile — the components simply render unstyled against 1.x.
-This is why `playground/lit` pins `0.8.0`.
+`@tapsioss/theme` carries `legacy/tokens.css` — the 0.8.0 stylesheet, frozen —
+because `@tapsioss/web-components` still reads the `--tapsi-*` names (109 of
+them, across 41 `.style.ts` files) and apps are migrating to
+`@tapsioss/react-ui` component by component. The current tokens are `--tds-*`,
+so the two never overlap (`packages/theme/AGENTS.md` §8b).
 
-**To resolve:** mechanical rename to the 1.x names. `--tapsi-stroke-1/2` map to
-`--tapsi-number-1/2`; see `packages/theme/AGENTS.md` for the rest.
+**To resolve:** when the Lit components are retired, delete `src/legacy/`, its
+check in `scripts/check.ts`, and the imports in `playground/lit` and `docs`, in
+a major release of the theme (and so of react-ui).
 
 ### Figma export gaps
 
@@ -113,10 +115,11 @@ What is still open:
   test suite runs against a build that imports `styles.css` as a consumer does,
   and a plain-Node import. Installing the tarballs in a web app (Next.js in
   particular) is the outstanding check.
-- **The theme tarball is versioned `0.8.0`** until changesets bumps it, the same
-  number as the pre-1.0 theme on npm, though it holds the 1.x tokens. Installing
-  it into an app that still renders the Lit components replaces the tokens they
-  need. An app can only hold one `@tapsioss/theme`.
+- **The theme tarball is versioned `0.8.0`** until changesets bumps it to 1.0.0,
+  the same number as the pre-1.0 theme on npm. It is nevertheless safe to
+  install into an app that still renders the Lit components: add the
+  `@tapsioss/theme/legacy/tokens.css` import, which replaces the app's old
+  `@tapsioss/theme/css-variables` one.
 
 ### `clsx` object form for CSS-module classes
 
@@ -137,8 +140,8 @@ Figma hardcodes the adornment box as `size-[24px]` / `20px` on the icon frames �
 there is no `Dimension/Component/Button/Icon/*` token to bind to, the way there
 is for size, padding, gap and radius.
 
-The implementation uses the primitive scale (`--tapsi-number-24`,
-`--tapsi-number-20`), which carries those exact steps, rather than a literal. It
+The implementation uses the primitive scale (`--tds-number-24`,
+`--tds-number-20`), which carries those exact steps, rather than a literal. It
 works and stays token-driven, but it reaches across a layer: components are
 otherwise meant to consume the theme layer only. A proper
 `Dimension/Component/Button/Icon/{Small,Medium,Large}` in Figma would remove the
@@ -158,12 +161,12 @@ size, padding and gap, but Figma hardcodes the rest — so, like the Button's
 icons, these use the primitive scale in
 `packages/react-ui/src/row/row.module.css`:
 
-- **Icon box** `size-[24px]` → `--tapsi-number-24`.
+- **Icon box** `size-[24px]` → `--tds-number-24`.
 - **Trailing gap** `gap-[4px]` (between the chevron and the icon) →
-  `--tapsi-number-4`.
+  `--tds-number-4`.
 - **Leading badge** `12px` ring, `6px` dot and `-2px` offset →
-  `--tapsi-number-12`, `-6`, `-2`. A `Dimension/Component/Badge/*` set would
-  cover this and the future Badge component.
+  `--tds-number-12`, `-6`, `-2`. A `Dimension/Component/Badge/*` set would cover
+  this and the future Badge component.
 - **Row background** is a literal white in Figma, not a variable. The code uses
   `Color/Surface/Primary` so dark themes work; worth binding in Figma.
 

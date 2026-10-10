@@ -5,7 +5,7 @@
  * AGENTS.md for the rules that produce this file.
  *
  * This is the TypeScript mirror of tokens.css. The two are independent
- * artifacts of the same rules — a `var(--tapsi-*)` string must never appear
+ * artifacts of the same rules — a `var(--tds-*)` string must never appear
  * here, because a consumer reading `number["8"]` wants "0.5rem", not a custom
  * property they cannot compute with.
  */

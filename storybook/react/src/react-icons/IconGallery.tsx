@@ -43,10 +43,10 @@ const monospace =
 const controlStyle: CSSProperties = {
   font: "inherit",
   padding: "0.5rem 0.75rem",
-  borderRadius: "var(--tapsi-dimension-radius-small)",
-  border: "1px solid var(--tapsi-color-border-primary)",
-  background: "var(--tapsi-color-surface-primary)",
-  color: "var(--tapsi-color-content-primary)",
+  borderRadius: "var(--tds-dimension-radius-small)",
+  border: "1px solid var(--tds-color-border-primary)",
+  background: "var(--tds-color-surface-primary)",
+  color: "var(--tds-color-content-primary)",
   minInlineSize: "16rem",
 };
 
@@ -73,9 +73,9 @@ export const IconGallery = () => {
     <ThemeProvider
       surface
       style={{
-        padding: "var(--tapsi-number-16)",
-        borderRadius: "var(--tapsi-dimension-radius-small)",
-        margin: "var(--tapsi-number-24) 0",
+        padding: "var(--tds-number-16)",
+        borderRadius: "var(--tds-dimension-radius-small)",
+        margin: "var(--tds-number-24) 0",
       }}
     >
       <div
@@ -84,7 +84,7 @@ export const IconGallery = () => {
           gap: "0.75rem",
           alignItems: "center",
           flexWrap: "wrap",
-          marginBlockEnd: "var(--tapsi-number-16)",
+          marginBlockEnd: "var(--tds-number-16)",
         }}
       >
         <input
@@ -118,7 +118,7 @@ export const IconGallery = () => {
           style={{
             fontFamily: monospace,
             fontSize: "0.8125rem",
-            color: "var(--tapsi-color-content-secondary)",
+            color: "var(--tds-color-content-secondary)",
           }}
         >
           {matches.length} shown
@@ -126,7 +126,7 @@ export const IconGallery = () => {
       </div>
 
       {matches.length === 0 ? (
-        <p style={{ color: "var(--tapsi-color-content-secondary)" }}>
+        <p style={{ color: "var(--tds-color-content-secondary)" }}>
           No icon matches “{query}”.
         </p>
       ) : (
@@ -134,7 +134,7 @@ export const IconGallery = () => {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(8.5rem, 1fr))",
-            gap: "var(--tapsi-number-8)",
+            gap: "var(--tds-number-8)",
           }}
         >
           {matches.map(({ name, Icon }) => (
@@ -150,13 +150,13 @@ export const IconGallery = () => {
               title={`Copy import for ${name}`}
               style={{
                 display: "grid",
-                gap: "var(--tapsi-number-8)",
+                gap: "var(--tds-number-8)",
                 justifyItems: "center",
-                padding: "var(--tapsi-number-12) var(--tapsi-number-8)",
-                borderRadius: "var(--tapsi-dimension-radius-small)",
-                border: "1px solid var(--tapsi-color-border-primary)",
-                background: "var(--tapsi-color-surface-primary)",
-                color: "var(--tapsi-color-content-primary)",
+                padding: "var(--tds-number-12) var(--tds-number-8)",
+                borderRadius: "var(--tds-dimension-radius-small)",
+                border: "1px solid var(--tds-color-border-primary)",
+                background: "var(--tds-color-surface-primary)",
+                color: "var(--tds-color-content-primary)",
                 cursor: "pointer",
                 font: "inherit",
               }}
@@ -172,7 +172,7 @@ export const IconGallery = () => {
                   fontFamily: monospace,
                   fontSize: "0.6875rem",
                   lineHeight: 1.4,
-                  color: "var(--tapsi-color-content-secondary)",
+                  color: "var(--tds-color-content-secondary)",
                   wordBreak: "break-word",
                   textAlign: "center",
                 }}

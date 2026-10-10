@@ -89,7 +89,7 @@ const writeSettings = (settings: Settings) => {
 
 /*
  * The bar is Storybook chrome, not part of the design system, so it is styled
- * with fixed neutral values rather than `--tapsi-*` tokens: it must look the
+ * with fixed neutral values rather than `--tds-*` tokens: it must look the
  * same whichever theme the story below it is in, and it sits outside the
  * element that carries the theme.
  */
@@ -212,7 +212,7 @@ const themeLabelStyle: CSSProperties = {
   font: "600 0.75rem ui-monospace, monospace",
   letterSpacing: "0.04em",
   textTransform: "uppercase",
-  color: "var(--tapsi-color-content-tertiary)",
+  color: "var(--tds-color-content-tertiary)",
   // The label is chrome inside a themed surface: always LTR, like the bar.
   direction: "ltr",
 };

@@ -5,7 +5,7 @@
 // src/index.ts. The tests themselves are behavioural (focus, events, a11y) with
 // no visual snapshots, so they pass either way, but loading it keeps the page
 // looking like the real thing when a test is debugged with `--headed`.
-import "@tapsioss/theme/css-variables";
+import "@tapsioss/theme/legacy/tokens.css";
 
 import { registerAll } from "@tapsioss/web-components";
 

@@ -129,12 +129,18 @@ management, ARIA, keyboard handling, edge cases — as components are ported. A
 ported component's tests mirror the Lit component's test scenarios one for one.
 
 **Tokens are used by their exact Figma name.** A Figma variable path maps to a
-CSS custom property by the theme's naming rule — kebab-cased, prefixed
-`--tapsi-`: `Color/Component/Button/Surface/CTA` is
-`--tapsi-color-component-button-surface-cta` (the full rule is in
+CSS custom property by the theme's naming rule — kebab-cased, prefixed `--tds-`:
+`Color/Component/Button/Surface/CTA` is
+`--tds-color-component-button-surface-cta` (the full rule is in
 `packages/theme/AGENTS.md` §3). Confirm the property exists in
 `packages/theme/src/tokens.css` or a theme's `<product>/<mode>.css` before using
 it.
+
+**Tokens are `--tds-*`, never `--tapsi-*`.** `--tapsi-` is the prefix of the
+legacy token set the archived Lit components read; the theme ships both so apps
+can migrate gradually, and they share no name (`packages/theme/AGENTS.md` §8b).
+A component's own private custom properties use the same prefix
+(`--tds-button-surface`).
 
 **Never invent a token, and never substitute a similar one.** If Figma binds a
 variable the theme does not export, stop and report it. The known way through —
@@ -262,7 +268,7 @@ Class names are scoped by the build to `<local>_<hash>`, so **no class name in
 this package is a public API**. A consumer cannot target `.tapsi-button`, and
 must not be told to. What _is_ public:
 
-- **`--tapsi-*` custom properties**, which CSS modules does not scope. These
+- **`--tds-*` custom properties**, which CSS modules does not scope. These
   remain the supported way to influence a component's appearance.
 - **`data-part` attributes** on internal elements (`data-part="spinner"`,
   `"adornment"`, `"content"`). Add one to anything that needs to be selected
@@ -312,7 +318,7 @@ for long notes about what Figma binds and where the token export falls short.
 
 Whatever the mechanism, these hold:
 
-- **Components read tokens and nothing else.** Every value is `var(--tapsi-…)`,
+- **Components read tokens and nothing else.** Every value is `var(--tds-…)`,
   taken from what Figma binds to that property. A component never imports the
   theme — the consumer installs `@tapsioss/theme` and imports the primitives
   plus one theme.

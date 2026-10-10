@@ -56,6 +56,16 @@ The same values are available to JavaScript, already resolved (`"0.5rem"`, not a
 import { tokens } from "@tapsioss/theme/ride/light";
 ```
 
+**Still using the Lit components?** Apps on `@tapsioss/web-components` or
+`@tapsioss/react-components` rely on the older tokens, which are named
+`--tapsi-*`. The theme package still ships them, unchanged, and they share no
+name with the current `--tds-*` tokens — so load both while you migrate one
+component at a time, and drop this line when the last Lit component is gone:
+
+```ts
+import "@tapsioss/theme/legacy/tokens.css"; // replaces "@tapsioss/theme/css-variables"
+```
+
 ### 2. Component styles
 
 `@tapsioss/react-ui` ships all of its components' styles as one minified

@@ -6,7 +6,7 @@
  *
  * The TypeScript mirror of light.css: same values, resolved by JS
  * reference to ../tokens.ts rather than by `var()` at CSS runtime. A
- * `var(--tapsi-*)` string must never appear in this file.
+ * `var(--tds-*)` string must never appear in this file.
  */
 
 import type {

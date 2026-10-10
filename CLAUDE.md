@@ -81,9 +81,11 @@ for versioning.
 | `docs`                      | VitePress docs site for the Lit components; Storybook is deployed alongside it at `/storybook/`  |
 
 There are two generations side by side: the **Lit track** (`web-components`,
-`react-components`, pinned to theme `0.8.0`) and the **React track**
-(`react-ui`, on theme 1.x from the workspace). See Testing below for how the pin
-is kept apart.
+`react-components`) and the **React track** (`react-ui`). Both use the workspace
+theme, which carries two token sets that share no name: the current tokens,
+prefixed **`--tds-`**, and the frozen legacy set the Lit components read,
+prefixed `--tapsi-` and shipped as `@tapsioss/theme/legacy/tokens.css`
+(`packages/theme/AGENTS.md` §8b). New code uses `--tds-*` only.
 
 **Archived:** `web-components`, `react-components` and `web-icons` — plus their
 consumers `playground/lit` and `docs`. They are `private`, ignored by
@@ -172,18 +174,13 @@ and each suite runs against a production build of its playground:
   Vite config loads them so the bundle maps back to `src`. `build-css.ts` must
   keep its CSS-import replacement on ONE line, or those maps go stale.
 
-There are two playgrounds, split because the two generations of the design
-system are styled by different, incompatible token sets:
+There are two playgrounds, one per generation of the design system. Both depend
+on the workspace theme and differ in which token set they import:
 
-| Playground         | Package                      | Consumes                             | `@tapsioss/theme`   |
-| ------------------ | ---------------------------- | ------------------------------------ | ------------------- |
-| `playground/lit`   | `@tapsioss/lit-playground`   | `web-components`, `react-components` | `0.8.0` (from npm)  |
-| `playground/react` | `@tapsioss/react-playground` | `react-ui`                           | `workspace:*` (1.x) |
-
-Both depend on the **same package name** at different versions, which works
-because pnpm gives each workspace package its own `node_modules`. Each
-playground's `package.json` is therefore the single source of truth for what it
-resolves.
+| Playground         | Package                      | Consumes                             | Imports from `@tapsioss/theme`             |
+| ------------------ | ---------------------------- | ------------------------------------ | ------------------------------------------ |
+| `playground/lit`   | `@tapsioss/lit-playground`   | `web-components`, `react-components` | `legacy/tokens.css` (`--tapsi-*`)          |
+| `playground/react` | `@tapsioss/react-playground` | `react-ui`                           | `tokens.css` + the four themes (`--tds-*`) |
 
 Each theme stylesheet declares its tokens twice — on `:root` and on
 `[data-tapsi-theme="<product>-<mode>"]` — so importing one theme needs no setup,
@@ -191,13 +188,11 @@ while importing several lets a subtree pick its own. Storybook and the React
 playground each import all four and ship their own small `ThemeProvider`;
 `@tapsioss/theme` stays framework-agnostic and provides none.
 
-For that to hold, each playground's `tsconfig.json` sets **`"paths": {}`**,
-resetting the root map — the root aliases `@tapsioss/*` to package sources,
-including `@tapsioss/theme` → `packages/theme/src`, which would otherwise
-override the lit playground's pin and silently substitute 1.x tokens. With the
-map empty, resolution goes through each package's `exports`, so a playground
-also exercises **built output** (Storybook is the run-from-source environment;
-run `pnpm build:packages` after changing a package).
+Each playground's `tsconfig.json` sets **`"paths": {}`**, resetting the root
+map, which aliases `@tapsioss/*` to package sources. With the map empty,
+resolution goes through each package's `exports`, so a playground is a real
+consumer and exercises **built output** (Storybook is the run-from-source
+environment; run `pnpm build:packages` after changing a package).
 
 Tests run on Desktop Chrome and Android (Galaxy S9+). On CI, tests retry up to 2
 times.

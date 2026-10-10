@@ -1,18 +1,14 @@
 // Tokens for the Lit generation of the design system.
 //
-// This resolves to the PUBLISHED `@tapsioss/theme@0.8.0`, not the workspace 1.x
-// — see this package's `package.json`, which pins it, and `tsconfig.json`, which
-// resets the root `paths` map so the pin is what actually wins.
+// `legacy/tokens.css` is the `@tapsioss/theme@0.8.0` token set, shipped unchanged
+// inside the current theme package under its original `--tapsi-*` names. It is
+// what the components in `@tapsioss/web-components` reference; without it they
+// render with no spacing and square corners.
 //
-// 0.8.0 is the flat, pre-1.0 token set that the components in
-// `@tapsioss/web-components` reference. Without it they render with no spacing
-// and square corners. The workspace 1.x cannot style them: it renamed almost
-// everything (`spacing` → `number`, `radius-N` → `dimension-radius-*`,
-// `typography-<category>-<size>-*` → `typography-font-size-*`).
-//
-// The current tokens live next door in `playground/react`. See
-// `packages/theme/AGENTS.md`.
-import "@tapsioss/theme/css-variables";
+// The current tokens are `--tds-*` and share no name with these, so an app
+// moving to `@tapsioss/react-ui` loads both side by side. They live next door
+// in `playground/react`. See `packages/theme/AGENTS.md` §8b.
+import "@tapsioss/theme/legacy/tokens.css";
 
 /*
 Import modules using path aliases.

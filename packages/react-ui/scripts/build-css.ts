@@ -175,7 +175,7 @@ const scopeAll = async (): Promise<ScopedStylesheet[]> => {
  * `cssnano`'s default preset only: it is the set of transforms that are safe
  * without knowing the markup. It does not rename class names, keyframes or
  * custom properties, so the scoped names inlined into the JS still match and
- * `--tapsi-*` stays the public surface it is.
+ * `--tds-*` stays the public surface it is.
  */
 const writeStylesheet = async (stylesheets: ScopedStylesheet[]) => {
   const source = stylesheets.map(({ css }) => css.trim()).join("\n\n");

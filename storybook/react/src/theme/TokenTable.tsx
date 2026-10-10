@@ -15,7 +15,7 @@ import {
  * Renderers for the `@tapsioss/theme` token galleries.
  *
  * Every swatch and specimen is painted with the CSS custom property itself
- * (`var(--tapsi-…)`), never with the raw JS value. That way what you see is what
+ * (`var(--tds-…)`), never with the raw JS value. That way what you see is what
  * the browser actually resolves, so a broken or renamed variable shows up as a
  * visibly unstyled cell instead of silently rendering the right colour.
  *
@@ -59,7 +59,7 @@ const kebab = (key: string) =>
 /** Flatten a token group to `{ variable, value }` rows, depth-first. */
 const flatten = (node: TokenNode, trail: string[]): Entry[] => {
   if (typeof node !== "object") {
-    return [{ variable: `--tapsi-${trail.join("-")}`, value: String(node) }];
+    return [{ variable: `--tds-${trail.join("-")}`, value: String(node) }];
   }
 
   return Object.entries(node).flatMap(([key, value]) =>
@@ -116,7 +116,7 @@ export const ThemeControls = () => {
         gap: "0.75rem",
         alignItems: "center",
         flexWrap: "wrap",
-        margin: "var(--tapsi-number-16) 0",
+        margin: "var(--tds-number-16) 0",
         fontFamily: monospace,
         fontSize: "0.8125rem",
       }}
@@ -137,11 +137,11 @@ export const ThemeControls = () => {
               cursor: "pointer",
               padding: "0.25rem 0.625rem",
               borderRadius: "999px",
-              border: "1px solid var(--tapsi-palette-gray-300)",
+              border: "1px solid var(--tds-palette-gray-300)",
               background: isActive
-                ? "var(--tapsi-palette-gray-800)"
+                ? "var(--tds-palette-gray-800)"
                 : "transparent",
-              color: isActive ? "var(--tapsi-palette-gray-white)" : "inherit",
+              color: isActive ? "var(--tds-palette-gray-white)" : "inherit",
             }}
           >
             {theme}
@@ -173,31 +173,31 @@ const monospace =
   "ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace";
 
 const surfaceStyle: CSSProperties = {
-  border: "1px solid var(--tapsi-color-border-primary)",
-  borderRadius: "var(--tapsi-dimension-radius-small)",
-  background: "var(--tapsi-color-surface-primary)",
+  border: "1px solid var(--tds-color-border-primary)",
+  borderRadius: "var(--tds-dimension-radius-small)",
+  background: "var(--tds-color-surface-primary)",
 };
 
 const labelStyle: CSSProperties = {
   fontFamily: monospace,
   fontSize: "0.75rem",
   lineHeight: 1.6,
-  color: "var(--tapsi-color-content-primary)",
+  color: "var(--tds-color-content-primary)",
   wordBreak: "break-all",
 };
 
 const valueStyle: CSSProperties = {
   ...labelStyle,
-  color: "var(--tapsi-color-content-secondary)",
+  color: "var(--tds-color-content-secondary)",
 };
 
 const rowStyle: CSSProperties = {
   display: "grid",
   gridTemplateColumns: "minmax(18rem, auto) 7rem 1fr",
   alignItems: "center",
-  gap: "var(--tapsi-number-16)",
-  padding: "var(--tapsi-number-8) 0",
-  borderBottom: "1px solid var(--tapsi-color-border-primary)",
+  gap: "var(--tds-number-16)",
+  padding: "var(--tds-number-8) 0",
+  borderBottom: "1px solid var(--tds-color-border-primary)",
 };
 
 /** Wraps a gallery block in the active theme and paints its own surface. */
@@ -210,9 +210,9 @@ const Themed = (props: { children: ReactNode; style?: CSSProperties }) => {
       fontSmoothing={fontSmoothing}
       surface
       style={{
-        padding: "var(--tapsi-number-16)",
-        borderRadius: "var(--tapsi-dimension-radius-small)",
-        margin: "var(--tapsi-number-24) 0",
+        padding: "var(--tds-number-16)",
+        borderRadius: "var(--tds-dimension-radius-small)",
+        margin: "var(--tds-number-24) 0",
         ...props.style,
       }}
     >
@@ -226,7 +226,7 @@ const Grid = (props: { children: ReactNode; min?: string }) => (
     style={{
       display: "grid",
       gridTemplateColumns: `repeat(auto-fill, minmax(${props.min ?? "14rem"}, 1fr))`,
-      gap: "var(--tapsi-number-16)",
+      gap: "var(--tds-number-16)",
     }}
   >
     {props.children}
@@ -253,10 +253,10 @@ export const ColorGrid = (props: { select: Select; prefix: string }) => {
                 style={{
                   height: "4.5rem",
                   background: `var(${variable})`,
-                  borderBottom: "1px solid var(--tapsi-color-border-primary)",
+                  borderBottom: "1px solid var(--tds-color-border-primary)",
                 }}
               />
-              <div style={{ padding: "var(--tapsi-number-8)" }}>
+              <div style={{ padding: "var(--tds-number-8)" }}>
                 <div style={labelStyle}>{variable}</div>
                 <div style={valueStyle}>{value}</div>
               </div>
@@ -297,8 +297,8 @@ export const ScaleTable = (props: {
                   width: `var(${variable})`,
                   minWidth: "1px",
                   maxWidth: "100%",
-                  background: "var(--tapsi-color-surface-accent)",
-                  borderRadius: "var(--tapsi-dimension-radius-2x-small)",
+                  background: "var(--tds-color-surface-accent)",
+                  borderRadius: "var(--tds-dimension-radius-2x-small)",
                 }}
               />
             ) : (
@@ -307,8 +307,8 @@ export const ScaleTable = (props: {
                   height: "3rem",
                   width: "5rem",
                   borderRadius: `var(${variable})`,
-                  background: "var(--tapsi-color-surface-tertiary)",
-                  border: "1px solid var(--tapsi-color-border-primary)",
+                  background: "var(--tds-color-surface-tertiary)",
+                  border: "1px solid var(--tds-color-border-primary)",
                 }}
               />
             )}
@@ -347,17 +347,17 @@ export const TypeScale = (props: { category: string; sample?: string }) => {
   return (
     <Themed>
       {variants.map(variant => {
-        const size = `--tapsi-typography-font-size-${kebab(variant)}`;
-        const height = `--tapsi-typography-line-height-${kebab(variant)}`;
-        const family = `--tapsi-typography-font-family-${props.category}`;
-        const weight = `--tapsi-typography-font-weight-${props.category}`;
+        const size = `--tds-typography-font-size-${kebab(variant)}`;
+        const height = `--tds-typography-line-height-${kebab(variant)}`;
+        const family = `--tds-typography-font-family-${props.category}`;
+        const weight = `--tds-typography-font-weight-${props.category}`;
 
         return (
           <div
             key={variant}
             style={{
-              padding: "var(--tapsi-number-16) 0",
-              borderBottom: "1px solid var(--tapsi-color-border-primary)",
+              padding: "var(--tds-number-16) 0",
+              borderBottom: "1px solid var(--tds-color-border-primary)",
             }}
           >
             <div style={labelStyle}>
@@ -365,17 +365,17 @@ export const TypeScale = (props: { category: string; sample?: string }) => {
             </div>
             <div
               style={{
-                marginTop: "var(--tapsi-number-6)",
+                marginTop: "var(--tds-number-6)",
                 fontFamily: `var(${family})`,
                 fontSize: `var(${size})`,
                 lineHeight: `var(${height})`,
                 fontWeight: `var(${weight})`,
-                color: "var(--tapsi-color-content-primary)",
+                color: "var(--tds-color-content-primary)",
               }}
             >
               {props.sample ?? "پیشخوان تپسی — Tapsi Design System"}
             </div>
-            <div style={{ ...valueStyle, marginTop: "var(--tapsi-number-6)" }}>
+            <div style={{ ...valueStyle, marginTop: "var(--tds-number-6)" }}>
               {`size ${fontSize[variant] ?? "—"} · line-height ${
                 lineHeight[variant] ?? "—"
               } · weight ${String(fontWeight[props.category] ?? "—")} · ${
