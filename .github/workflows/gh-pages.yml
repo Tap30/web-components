@@ -38,6 +38,14 @@ jobs:
       - name: 🧱 build docs
         run: pnpm build:docs
 
+      # Storybook ships inside the same Pages artifact, under `/storybook/`.
+      # Its static build uses relative asset paths, so the subpath needs no
+      # configuration.
+      - name: 🧱 build storybook
+        run: |
+          pnpm build:storybook:react
+          cp -r storybook/react/storybook-static docs/.vitepress/dist/storybook
+
       - name: 🗄️ upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

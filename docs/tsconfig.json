@@ -1,0 +1,8 @@
+{
+  // Type-checks the docs site's TypeScript for `lint:ts:archived`. The root
+  // config excludes `docs` (it documents the archived Lit track), so this
+  // re-declares `exclude` rather than inheriting one that matches everything.
+  "extends": "../tsconfig.json",
+  "include": ["**/*.ts", ".vitepress/**/*.ts"],
+  "exclude": ["node_modules", ".vitepress/cache", ".vitepress/dist"]
+}

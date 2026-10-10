@@ -3,5 +3,8 @@
   "compilerOptions": {
     "outDir": "./dist"
   },
-  "include": ["dist"]
+  "include": ["dist"],
+  // Re-declared so the root's `**/dist` exclude is not inherited: this package
+  // compiles its generated sources FROM `dist`.
+  "exclude": ["node_modules"]
 }

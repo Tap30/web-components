@@ -31,23 +31,21 @@ yarn add @tapsioss/theme
 ## Theme Usage
 
 To add Tapsi’s global CSS variables (e.g., color palettes, spacing, stroke,
-radius and typography tokens) to your project, import the `css-variables` module
-at the root of your application:
+radius and typography tokens) to your project, import the `legacy/tokens.css`
+stylesheet at the root of your application. These are the `--tapsi-*` tokens the
+Lit components are styled with; `@tapsioss/theme` 1.x ships them unchanged next
+to the current `--tds-*` tokens, and the two share no name:
 
 ```ts
-import "@tapsioss/theme/css-variables";
+import "@tapsioss/theme/legacy/tokens.css";
 ```
 
 This automatically injects all CSS variables into the global scope, enabling you
 to reference them anywhere in your app.
 
-Also, you can access tokens in javascript:
-
-```ts
-import tokens from "@tapsioss/theme/tokens";
-
-conosle.log(tokens.palette.orange["500"]); // "#e55c2e"
-```
+The legacy tokens are available as CSS only. `@tapsioss/theme` 1.x has no
+JavaScript export of them — the JavaScript paths shown on the pages below are
+those of `@tapsioss/theme@0.8.0`, kept for reference.
 
 The following tokens are currently available, each with its own API reference
 and usage examples for both CSS and JavaScript:

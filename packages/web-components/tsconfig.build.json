@@ -4,5 +4,13 @@
     "outDir": "./dist"
   },
   "include": ["src"],
-  "exclude": ["**/*.test.ts", "**/*.test.tsx", "__tests__"]
+  // Re-declared: replaces the root's `exclude`, which lists this archived
+  // directory and would otherwise match these inputs too.
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "__tests__"
+  ]
 }

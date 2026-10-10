@@ -8,14 +8,20 @@
   ],
   "commit": false,
   "fixed": [],
-  "linked": [
-    ["@tapsioss/web-components", "@tapsioss/react-components"],
-    ["@tapsioss/icons", "@tapsioss/web-icons", "@tapsioss/react-icons"]
-  ],
+  "linked": [["@tapsioss/icons", "@tapsioss/react-icons"]],
   "access": "public",
   "baseBranch": "main",
   "bumpVersionsWithWorkspaceProtocolOnly": true,
   "prettier": false,
   "updateInternalDependencies": "patch",
-  "ignore": ["@internals/*", "@tapsioss/{docs,playground}"]
+  "ignore": [
+    "@internals/*",
+    "@tapsioss/docs",
+    "@tapsioss/lit-playground",
+    "@tapsioss/react-playground",
+    "@tapsioss/react-storybook",
+    "@tapsioss/web-components",
+    "@tapsioss/react-components",
+    "@tapsioss/web-icons"
+  ]
 }

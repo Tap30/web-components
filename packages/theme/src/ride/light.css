@@ -1,0 +1,194 @@
+/**
+ * Tokens for the ride product, light theme.
+ *
+ * Generated from figma-output-jsons/ride-theme-tokens/ride-light.json. Do not hand-edit; see AGENTS.md
+ * for the rules that produce this file.
+ *
+ * Every value here references a primitive, so this file is meaningless on its
+ * own. The consumer imports both:
+ *
+ *   @import "@tapsioss/theme/tokens.css";
+ *   @import "@tapsioss/theme/ride/light.css";
+ *
+ * Declared twice, on purpose:
+ *
+ *   :root  applies globally, so importing one theme needs no setup at all
+ *   [data-tapsi-theme="ride-light"]
+ *          applies to a subtree, so several themes can coexist on one page
+ *
+ * Each subtree gets whichever theme its nearest ancestor declares, because
+ * custom properties resolve by inheritance rather than by specificity. When
+ * several themes are imported, the bare `:root` of whichever loaded last wins
+ * for unwrapped content, so an app in that situation sets the attribute on
+ * <html>.
+ *
+ * The one exception is Typography/Line-Height: those 17 values are literals in
+ * the Figma export because 30, 42 and 60 are off the Number scale.
+ */
+
+:root,
+[data-tapsi-theme="ride-light"] {
+  /* Color / Surface */
+  --tds-color-surface-primary: var(--tds-palette-gray-white);
+  --tds-color-surface-secondary: var(--tds-palette-gray-50);
+  --tds-color-surface-tertiary: var(--tds-palette-gray-100);
+  --tds-color-surface-background: var(--tds-palette-gray-50);
+  --tds-color-surface-accent: var(--tds-palette-blue-400);
+  --tds-color-surface-accent-light: var(--tds-palette-blue-50);
+  --tds-color-surface-negative: var(--tds-palette-red-400);
+  --tds-color-surface-negative-light: var(--tds-palette-red-50);
+  --tds-color-surface-positive: var(--tds-palette-green-400);
+  --tds-color-surface-positive-light: var(--tds-palette-green-50);
+  --tds-color-surface-warning: var(--tds-palette-yellow-400);
+  --tds-color-surface-warning-light: var(--tds-palette-yellow-50);
+  --tds-color-surface-brand: var(--tds-palette-orange-500);
+  --tds-color-surface-inverse-primary: var(--tds-palette-gray-black);
+  --tds-color-surface-inverse-secondary: var(--tds-palette-gray-700);
+  --tds-color-surface-disabled: var(--tds-palette-gray-50);
+  --tds-color-surface-selected: var(--tds-palette-gray-50);
+
+  /* Color / Content */
+  --tds-color-content-primary: var(--tds-palette-gray-black);
+  --tds-color-content-secondary: var(--tds-palette-gray-600);
+  --tds-color-content-tertiary: var(--tds-palette-gray-500);
+  --tds-color-content-accent: var(--tds-palette-blue-400);
+  --tds-color-content-accent-bolder: var(--tds-palette-blue-700);
+  --tds-color-content-on-accent: var(--tds-palette-gray-white);
+  --tds-color-content-negative: var(--tds-palette-red-400);
+  --tds-color-content-negative-bolder: var(--tds-palette-red-700);
+  --tds-color-content-on-negative: var(--tds-palette-gray-white);
+  --tds-color-content-positive: var(--tds-palette-green-400);
+  --tds-color-content-positive-bolder: var(--tds-palette-green-700);
+  --tds-color-content-on-positive: var(--tds-palette-gray-white);
+  --tds-color-content-warning: var(--tds-palette-yellow-500);
+  --tds-color-content-warning-bolder: var(--tds-palette-yellow-700);
+  --tds-color-content-on-warning: var(--tds-color-content-primary);
+  --tds-color-content-brand: var(--tds-palette-orange-500);
+  --tds-color-content-on-brand: var(--tds-palette-gray-white);
+  --tds-color-content-on-inverse: var(--tds-palette-gray-white);
+  --tds-color-content-disabled: var(--tds-palette-gray-400);
+  --tds-color-content-selected: var(--tds-palette-gray-400);
+
+  /* Color / Border */
+  --tds-color-border-primary: var(--tds-palette-gray-200);
+  --tds-color-border-secondary: var(--tds-palette-gray-50);
+  --tds-color-border-accent: var(--tds-palette-blue-200);
+  --tds-color-border-negative: var(--tds-palette-red-200);
+  --tds-color-border-positive: var(--tds-palette-green-200);
+  --tds-color-border-warning: var(--tds-palette-yellow-200);
+  --tds-color-border-brand: var(--tds-palette-orange-200);
+  --tds-color-border-inverse: var(--tds-palette-gray-700);
+  --tds-color-border-disabled: var(--tds-palette-gray-700);
+  --tds-color-border-selected: var(--tds-palette-gray-700);
+
+  /* Color / Overlay */
+  --tds-color-overlay-backdrop: var(--tds-palette-alpha-dark30);
+  --tds-color-overlay-hovered: var(--tds-palette-alpha-dark10);
+  --tds-color-overlay-pressed: var(--tds-palette-alpha-dark20);
+
+  /* Color / Component */
+  --tds-color-component-button-surface-cta: var(--tds-color-surface-brand);
+  --tds-color-component-button-surface-default: var(
+    --tds-color-surface-inverse-primary
+  );
+  --tds-color-component-button-content-cta: var(--tds-color-content-on-brand);
+  --tds-color-component-button-content-default: var(
+    --tds-color-content-on-inverse
+  );
+
+  /* Typography / Font-Family */
+  --tds-typography-font-family-body: var(--tds-font-family-base);
+  --tds-typography-font-family-label: var(--tds-font-family-base);
+  --tds-typography-font-family-headline: var(--tds-font-family-base);
+  --tds-typography-font-family-display: var(--tds-font-family-base);
+
+  /* Typography / Font-weight */
+  --tds-typography-font-weight-body: var(--tds-font-weight-400);
+  --tds-typography-font-weight-label: var(--tds-font-weight-500);
+  --tds-typography-font-weight-headline: var(--tds-font-weight-600);
+  --tds-typography-font-weight-display: var(--tds-font-weight-600);
+
+  /* Typography / Font-Size */
+  --tds-typography-font-size-body-2x-small: var(--tds-font-size-10);
+  --tds-typography-font-size-body-x-small: var(--tds-font-size-12);
+  --tds-typography-font-size-body-small: var(--tds-font-size-14);
+  --tds-typography-font-size-body-medium: var(--tds-font-size-16);
+  --tds-typography-font-size-body-large: var(--tds-font-size-18);
+  --tds-typography-font-size-label-2x-small: var(--tds-font-size-10);
+  --tds-typography-font-size-label-x-small: var(--tds-font-size-12);
+  --tds-typography-font-size-label-small: var(--tds-font-size-14);
+  --tds-typography-font-size-label-medium: var(--tds-font-size-16);
+  --tds-typography-font-size-label-large: var(--tds-font-size-18);
+  --tds-typography-font-size-headline-x-small: var(--tds-font-size-16);
+  --tds-typography-font-size-headline-small: var(--tds-font-size-20);
+  --tds-typography-font-size-headline-medium: var(--tds-font-size-24);
+  --tds-typography-font-size-headline-large: var(--tds-font-size-28);
+  --tds-typography-font-size-display-small: var(--tds-font-size-32);
+  --tds-typography-font-size-display-medium: var(--tds-font-size-40);
+  --tds-typography-font-size-display-large: var(--tds-font-size-48);
+
+  /* Typography / Line-Height */
+  --tds-typography-line-height-body-2x-small: 1rem;
+  --tds-typography-line-height-body-x-small: 1.25rem;
+  --tds-typography-line-height-body-small: 1.5rem;
+  --tds-typography-line-height-body-medium: 1.75rem;
+  --tds-typography-line-height-body-large: 2rem;
+  --tds-typography-line-height-label-2x-small: 1rem;
+  --tds-typography-line-height-label-x-small: 1.25rem;
+  --tds-typography-line-height-label-small: 1.5rem;
+  --tds-typography-line-height-label-medium: 1.75rem;
+  --tds-typography-line-height-label-large: 2rem;
+  --tds-typography-line-height-headline-x-small: 1.5rem;
+  --tds-typography-line-height-headline-small: 1.875rem;
+  --tds-typography-line-height-headline-medium: 2.25rem;
+  --tds-typography-line-height-headline-large: 2.625rem;
+  --tds-typography-line-height-display-small: 3rem;
+  --tds-typography-line-height-display-medium: 3.75rem;
+  --tds-typography-line-height-display-large: 4.5rem;
+
+  /* Dimension / Radius */
+  --tds-dimension-radius-none: var(--tds-number-0);
+  --tds-dimension-radius-2x-small: var(--tds-number-2);
+  --tds-dimension-radius-x-small: var(--tds-number-4);
+  --tds-dimension-radius-small: var(--tds-number-8);
+  --tds-dimension-radius-medium: var(--tds-number-12);
+  --tds-dimension-radius-large: var(--tds-number-16);
+  --tds-dimension-radius-x-large: var(--tds-number-20);
+  --tds-dimension-radius-2x-large: var(--tds-number-24);
+  --tds-dimension-radius-full: var(--tds-number-999);
+
+  /* Dimension / Layout */
+  --tds-dimension-layout-grid-margin-horizontal: var(--tds-number-12);
+  --tds-dimension-layout-grid-gap-horizontal: var(--tds-number-16);
+  --tds-dimension-layout-grid-gap-vertical: var(--tds-number-16);
+
+  /* Dimension / Component */
+  --tds-dimension-component-button-size-small: var(--tds-number-32);
+  --tds-dimension-component-button-size-medium: var(--tds-number-40);
+  --tds-dimension-component-button-size-large: var(--tds-number-52);
+  --tds-dimension-component-button-padding-small-horizontal: var(
+    --tds-number-6
+  );
+  --tds-dimension-component-button-padding-medium-horizontal: var(
+    --tds-number-8
+  );
+  --tds-dimension-component-button-padding-large-horizontal: var(
+    --tds-number-14
+  );
+  --tds-dimension-component-button-gap-small-horizontal: var(--tds-number-6);
+  --tds-dimension-component-button-gap-medium-horizontal: var(--tds-number-8);
+  --tds-dimension-component-button-gap-large-horizontal: var(--tds-number-10);
+  --tds-dimension-component-button-radius-small: var(
+    --tds-dimension-radius-full
+  );
+  --tds-dimension-component-button-radius-medium: var(
+    --tds-dimension-radius-full
+  );
+  --tds-dimension-component-button-radius-large: var(
+    --tds-dimension-radius-full
+  );
+  --tds-dimension-component-row-padding-horizontal: var(--tds-number-16);
+  --tds-dimension-component-row-padding-vertical: var(--tds-number-12);
+  --tds-dimension-component-row-gap-horizontal: var(--tds-number-12);
+  --tds-dimension-component-row-size-default: var(--tds-number-56);
+}

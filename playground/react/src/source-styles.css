@@ -1,0 +1,9 @@
+/*
+ * Deliberately empty.
+ *
+ * `pnpm dev` runs `@tapsioss/react-ui` from source, where each component's CSS
+ * module is loaded through the component. The dev server aliases
+ * `@tapsioss/react-ui/styles.css` to this file (see `vite.config.ts`), so the
+ * import a consumer needs can stay in the entry points without requiring a
+ * build. `vite build`, which the tests use, resolves the real stylesheet.
+ */

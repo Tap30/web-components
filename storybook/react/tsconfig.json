@@ -1,0 +1,37 @@
+{
+  // `moduleResolution: "bundler"` overrides the root's Node10 setting so stories
+  // can resolve Storybook's exports-map-only types.
+  //
+  // The explicit `exclude` is load-bearing: `extends` inherits the root's
+  // exclude, which lists `**/*.stories.tsx`. Without re-declaring it here, every
+  // story would be silently checked by no project at all.
+  //
+  // `paths` is inherited from the root unchanged: the root already resolves
+  // every hand-written package to SOURCE, which is what keeps Storybook
+  // hot-reloading with no build (and lets `storybook build` run without one).
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler"
+  },
+  // `.storybook` must be listed explicitly: TypeScript's wildcard `include`
+  // skips directories whose name starts with a dot, so the root config never
+  // sees `preview.tsx`, and `["src"]` alone does not either. Left out, that file
+  // is type-checked by NOTHING and an editor falls back to Node10 resolution,
+  // which cannot read Storybook's exports-map-only packages
+  // (`TS2307: Cannot find module "@storybook/react-vite"`).
+  //
+  // `@tapsioss/react-ui` resolves to its SOURCE (root `paths`), so its components are
+  // part of this program — but its ambient declarations are not, because an
+  // ambient `.d.ts` is only picked up when a program includes it directly.
+  // Without the last entry, `import styles from "./button.module.css"` inside
+  // `packages/react-ui/src` fails here with TS2307 while the package's own
+  // build passes.
+  "include": [
+    "src",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx",
+    "../../packages/react-ui/src/css.d.ts"
+  ],
+  "exclude": ["node_modules", "storybook-static"]
+}

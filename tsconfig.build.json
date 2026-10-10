@@ -3,6 +3,19 @@
   "compilerOptions": {
     "target": "ES2017",
     "noEmit": false,
+    // Root sets `incremental: true`, which makes tsc write
+    // `<outDir>/<config>.tsbuildinfo` — so every package was shipping one to
+    // npm (`@tapsioss/theme@0.8.0` on the registry contains it today).
+    //
+    // Turning it off here costs nothing: `prebuild` (and, where a package has one, `predev`) runs
+    // `rm -rf dist`, which deletes the buildinfo before every build anyway, so
+    // it never actually accelerated anything. Watch mode keeps its in-memory
+    // incrementality regardless.
+    //
+    // The alternative — relocating `tsBuildInfoFile` outside `dist` — is a trap:
+    // `rm -rf dist` would no longer clear it, and a stale buildinfo next to a
+    // missing `dist` makes tsc believe it is up to date and emit NOTHING.
+    "incremental": false,
     "declaration": true,
     "noEmitOnError": true
   }

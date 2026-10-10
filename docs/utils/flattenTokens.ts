@@ -1,12 +1,21 @@
-import type { Tokens } from "@tapsioss/theme/types";
-
 type FlattenedPaletteEntry = {
   path: string;
   token: string;
   value: string;
 };
 
-type TokensUnion = Tokens[keyof Tokens];
+/**
+ * Any token group. This used to be `Tokens[keyof Tokens]` from
+ * `@tapsioss/theme/types`, but the token model no longer exposes a single flat
+ * `Tokens` shape — see `packages/theme/AGENTS.md`.
+ *
+ * The pages under `docs/theme/` document the LEGACY token set (`tokens.spacing`,
+ * `tokens.stroke`, …). The theme package still ships it, unchanged, as CSS
+ * (`@tapsioss/theme/legacy/tokens.css`); the values these pages print come
+ * from `./legacyTokens.ts`. Documenting the current two-layer model here is a
+ * separate piece of work.
+ */
+type TokensUnion = Record<string, unknown>;
 
 const flattenTokens = (
   tokens: TokensUnion,

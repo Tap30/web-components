@@ -45,36 +45,58 @@
       // React Icons
       "@tapsioss/react-icons": ["./packages/react-icons/dist"],
       "@tapsioss/react-icons/*": ["./packages/react-icons/dist/*"],
-      // Web Components
-      "@tapsioss/web-components": [
-        "./packages/web-components/dist",
-        "./packages/web-components/src"
-      ],
-      "@tapsioss/web-components/*": [
-        "./packages/web-components/dist/*",
-        "./packages/web-components/src/*"
-      ],
-      // React Components
-      "@tapsioss/react-components": [
-        "./packages/react-components/dist",
-        "./packages/react-components/src"
-      ],
-      "@tapsioss/react-components/*": [
-        "./packages/react-components/dist/*",
-        "./packages/react-components/src/*"
-      ],
-      // Tokens
-      "@tapsioss/theme/*/css-variables": ["./packages/theme/src/*/tokens.css"],
-      "@tapsioss/theme/css-variables": [
-        "./packages/theme/src/default-theme/tokens.css"
-      ],
-      "@tapsioss/theme/*/tokens": ["./packages/theme/src/*/tokens.ts"],
-      "@tapsioss/theme/tokens": [
-        "./packages/theme/src/default-theme/tokens.ts"
-      ],
-      "@tapsioss/theme/types": ["./packages/theme/src/types.ts"]
+      // Hand-written packages resolve to SOURCE, and only source. Workspace
+      // type-checking (and Storybook, which inherits this map) should see the
+      // code as it is now, not whatever `dist` a past build left behind —
+      // mapping both put a package's emitted `.d.ts` and its `src` in one
+      // program, duplicating every `HTMLElementTagNameMap` entry (TS2717).
+      //
+      // Anything acting as a CONSUMER (the playgrounds) resets this map with
+      // `"paths": {}` and resolves through each package's `exports` to `dist`.
+      //
+      // Web Components (archived — out of the release cycle, still maintained)
+      "@tapsioss/web-components": ["./packages/web-components/src"],
+      "@tapsioss/web-components/*": ["./packages/web-components/src/*"],
+      // React Components (archived)
+      "@tapsioss/react-components": ["./packages/react-components/src"],
+      "@tapsioss/react-components/*": ["./packages/react-components/src/*"],
+      // React UI
+      "@tapsioss/react-ui": ["./packages/react-ui/src"],
+      "@tapsioss/react-ui/*": ["./packages/react-ui/src/*"],
+      // Tokens. Two layers: `tokens` is the primitive set, `<product>/<theme>`
+      // is a theme built on it. The wildcards cover both, so adding a product or
+      // a theme needs no change here. The `.css` entry must come before the
+      // bare wildcard: a more specific pattern wins, and without it
+      // `ride/light.css` would resolve to `ride/light.css.d.ts`.
+      "@tapsioss/theme": ["./packages/theme/src"],
+      "@tapsioss/theme/types": ["./packages/theme/src/types.ts"],
+      "@tapsioss/theme/*.css": ["./packages/theme/src/*.css"],
+      "@tapsioss/theme/*": ["./packages/theme/src/*.ts"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "docs/.vitepress/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["**/*.ts", "**/*.tsx"],
+  // Stories import Storybook's types, which are exports-map-only ESM and so are
+  // unresolvable under this config's `moduleResolution: "node"` (Node10). They
+  // are type-checked instead by their own package's tsconfig, which overrides
+  // the resolver — see storybook/react/tsconfig.json.
+  //
+  // `**/dist` keeps built output out of the program. Package build configs that
+  // compile FROM `dist` (web-icons, react-icons) re-declare their own `exclude`
+  // so they do not inherit this one.
+  //
+  // The archived track (and its consumers) is out of this program: it is
+  // type-checked by `lint:ts:archived`, through each directory's own tsconfig.
+  // Those configs extend this one, so each re-declares `exclude` — an inherited
+  // exclude is resolved against THIS file and would match their own inputs.
+  "exclude": [
+    "node_modules",
+    "**/dist",
+    "**/*.stories.ts",
+    "**/*.stories.tsx",
+    "packages/web-components",
+    "packages/react-components",
+    "packages/web-icons",
+    "playground/lit",
+    "docs"
+  ]
 }

@@ -1,7 +1,16 @@
 {
   "extends": "../../tsconfig.build.json",
   "compilerOptions": {
-    "outDir": "./dist"
+    "outDir": "./dist",
+    // Resets the root map, which points `@tapsioss/web-components` at its
+    // SOURCE. Building against source pulls those files into this program and
+    // emits them as `dist/web-components/...`. Reset, the import resolves
+    // through `node_modules` to web-components' built `dist`, which wireit's
+    // `build:react-components` already builds first.
+    "paths": {}
   },
-  "include": ["src"]
+  "include": ["src"],
+  // Re-declared: the root's `exclude` lists this archived directory (see the
+  // root tsconfig), and an inherited exclude would match these inputs too.
+  "exclude": ["node_modules", "dist"]
 }

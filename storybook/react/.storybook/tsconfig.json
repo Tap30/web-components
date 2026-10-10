@@ -1,0 +1,14 @@
+{
+  // The root tsconfig uses `moduleResolution: "node"` (Node10), which does not
+  // honour `exports` maps. Storybook ships exports-map-only ESM, so its types
+  // are unresolvable under that setting. This config exists purely so editors
+  // resolve them correctly — these files are excluded from root `tsc` (wildcard
+  // includes skip dot-directories) and from ESLint.
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "noEmit": true
+  },
+  "include": ["./*.ts"]
+}

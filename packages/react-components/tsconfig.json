@@ -1,4 +1,7 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src"]
+  "include": ["src", "scripts"],
+  // Re-declared: the root's `exclude` lists this archived directory (see the
+  // root tsconfig), and an inherited exclude would match these inputs too.
+  "exclude": ["node_modules", "dist"]
 }

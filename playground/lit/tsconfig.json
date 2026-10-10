@@ -1,0 +1,24 @@
+{
+  // `paths: {}` deliberately RESETS the root map rather than extending it.
+  //
+  // The root `tsconfig.json` aliases `@tapsioss/*` to each package's source in
+  // this repo. A playground is a CONSUMER: with the map empty, every
+  // `@tapsioss/*` specifier resolves through this package's own `node_modules`
+  // and each package's `exports` map, so imports land on built output, exactly
+  // as a real app's would — including `@tapsioss/theme/legacy/tokens.css`, the legacy
+  // token set the Lit components are styled against.
+  //
+  // `moduleResolution: bundler` is what makes that work: it honours `exports`,
+  // which the root's Node10 setting ignores.
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ES2020",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "paths": {}
+  },
+  "include": ["src", "vite.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}

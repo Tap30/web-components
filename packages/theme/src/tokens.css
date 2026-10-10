@@ -1,0 +1,182 @@
+/**
+ * Primitive tokens — the raw scales every theme is built from.
+ *
+ * Generated from figma-output-jsons/primitive.json. Do not hand-edit; see
+ * AGENTS.md for the rules that produce this file.
+ *
+ * These are the only tokens in the package that hold literal values. Import
+ * this file once, then one theme file on top of it:
+ *
+ *   @import "@tapsioss/theme/tokens.css";
+ *   @import "@tapsioss/theme/ride/light.css";
+ */
+
+:root {
+  /* Palette / Gray */
+  --tds-palette-gray-50: #f5f7f7;
+  --tds-palette-gray-100: #eaeded;
+  --tds-palette-gray-200: #e1e3e3;
+  --tds-palette-gray-300: #cacccc;
+  --tds-palette-gray-400: #b1b2b2;
+  --tds-palette-gray-500: #747575;
+  --tds-palette-gray-600: #535454;
+  --tds-palette-gray-700: #323333;
+  --tds-palette-gray-800: #1f1f1f;
+  --tds-palette-gray-900: #141414;
+  --tds-palette-gray-black: #000000;
+  --tds-palette-gray-white: #ffffff;
+
+  /* Palette / Orange */
+  --tds-palette-orange-50: #fff0e9;
+  --tds-palette-orange-100: #ffd5c2;
+  --tds-palette-orange-200: #ffac8a;
+  --tds-palette-orange-300: #ff8c61;
+  --tds-palette-orange-400: #ff7140;
+  --tds-palette-orange-500: #e55c2e;
+  --tds-palette-orange-600: #a64221;
+  --tds-palette-orange-700: #662a14;
+  --tds-palette-orange-900: #422e28;
+
+  /* Palette / Blue */
+  --tds-palette-blue-50: #eff3fe;
+  --tds-palette-blue-100: #d4e2fc;
+  --tds-palette-blue-200: #a0bff8;
+  --tds-palette-blue-300: #5b91f5;
+  --tds-palette-blue-400: #276ef1;
+  --tds-palette-blue-500: #1e54b7;
+  --tds-palette-blue-600: #174291;
+  --tds-palette-blue-700: #143166;
+  --tds-palette-blue-900: #262f40;
+
+  /* Palette / Green */
+  --tds-palette-green-50: #e6f2ed;
+  --tds-palette-green-100: #addec9;
+  --tds-palette-green-200: #66d19e;
+  --tds-palette-green-300: #06c167;
+  --tds-palette-green-400: #048848;
+  --tds-palette-green-500: #03703c;
+  --tds-palette-green-600: #03582f;
+  --tds-palette-green-700: #10462d;
+  --tds-palette-green-900: #24332c;
+
+  /* Palette / Red */
+  --tds-palette-red-50: #ffefed;
+  --tds-palette-red-100: #fed7d2;
+  --tds-palette-red-200: #f1998e;
+  --tds-palette-red-300: #e85c4a;
+  --tds-palette-red-400: #e11900;
+  --tds-palette-red-500: #ab1300;
+  --tds-palette-red-600: #870f00;
+  --tds-palette-red-700: #5a0a00;
+  --tds-palette-red-900: #402926;
+
+  /* Palette / Yellow */
+  --tds-palette-yellow-50: #fffaf0;
+  --tds-palette-yellow-100: #fff2d9;
+  --tds-palette-yellow-200: #ffe3ac;
+  --tds-palette-yellow-300: #ffcf70;
+  --tds-palette-yellow-400: #ffc043;
+  --tds-palette-yellow-500: #e49e15;
+  --tds-palette-yellow-600: #996f00;
+  --tds-palette-yellow-700: #674d1b;
+  --tds-palette-yellow-900: #332e24;
+
+  /* Palette / Indigo */
+  --tds-palette-indigo-50: #f3f2fe;
+  --tds-palette-indigo-100: #c6c0f9;
+  --tds-palette-indigo-200: #9b90f2;
+  --tds-palette-indigo-300: #7163e8;
+  --tds-palette-indigo-400: #4a38db;
+  --tds-palette-indigo-500: #483ab8;
+  --tds-palette-indigo-600: #443997;
+  --tds-palette-indigo-700: #3d3678;
+  --tds-palette-indigo-900: #2c2942;
+
+  /* Palette / Purple */
+  --tds-palette-purple-50: #f1eef8;
+  --tds-palette-purple-100: #c9c0e2;
+  --tds-palette-purple-200: #a293c9;
+  --tds-palette-purple-300: #7c69ae;
+  --tds-palette-purple-400: #574191;
+  --tds-palette-purple-500: #503e7d;
+  --tds-palette-purple-600: #483b6a;
+  --tds-palette-purple-700: #3f3658;
+  --tds-palette-purple-900: #2d2938;
+
+  /* Palette / Alpha */
+  --tds-palette-alpha-dark50: rgba(0, 0, 0, 0.5);
+  --tds-palette-alpha-dark40: rgba(0, 0, 0, 0.4);
+  --tds-palette-alpha-dark30: rgba(0, 0, 0, 0.3);
+  --tds-palette-alpha-dark20: rgba(0, 0, 0, 0.2);
+  --tds-palette-alpha-dark10: rgba(0, 0, 0, 0.1);
+  --tds-palette-alpha-light50: rgba(255, 255, 255, 0.5);
+  --tds-palette-alpha-light40: rgba(255, 255, 255, 0.4);
+  --tds-palette-alpha-light30: rgba(255, 255, 255, 0.3);
+  --tds-palette-alpha-light20: rgba(255, 255, 255, 0.2);
+  --tds-palette-alpha-light10: rgba(255, 255, 255, 0.1);
+
+  /* Font / Family */
+  --tds-font-family-base: "Vazirmatn", sans-serif;
+  --tds-font-family-mono: "Vazirmatn", monospace;
+
+  /* Font / Weight */
+  --tds-font-weight-100: 100;
+  --tds-font-weight-200: 200;
+  --tds-font-weight-300: 300;
+  --tds-font-weight-400: 400;
+  --tds-font-weight-500: 500;
+  --tds-font-weight-600: 600;
+  --tds-font-weight-700: 700;
+  --tds-font-weight-800: 800;
+  --tds-font-weight-900: 900;
+
+  /* Font / Size */
+  --tds-font-size-8: 0.5rem;
+  --tds-font-size-9: 0.5625rem;
+  --tds-font-size-10: 0.625rem;
+  --tds-font-size-11: 0.6875rem;
+  --tds-font-size-12: 0.75rem;
+  --tds-font-size-13: 0.8125rem;
+  --tds-font-size-14: 0.875rem;
+  --tds-font-size-15: 0.9375rem;
+  --tds-font-size-16: 1rem;
+  --tds-font-size-18: 1.125rem;
+  --tds-font-size-20: 1.25rem;
+  --tds-font-size-22: 1.375rem;
+  --tds-font-size-24: 1.5rem;
+  --tds-font-size-28: 1.75rem;
+  --tds-font-size-32: 2rem;
+  --tds-font-size-40: 2.5rem;
+  --tds-font-size-48: 3rem;
+  --tds-font-size-56: 3.5rem;
+  --tds-font-size-64: 4rem;
+
+  /* Number */
+  --tds-number-0: 0;
+  --tds-number-1: 0.0625rem;
+  --tds-number-2: 0.125rem;
+  --tds-number-4: 0.25rem;
+  --tds-number-6: 0.375rem;
+  --tds-number-8: 0.5rem;
+  --tds-number-10: 0.625rem;
+  --tds-number-12: 0.75rem;
+  --tds-number-14: 0.875rem;
+  --tds-number-16: 1rem;
+  --tds-number-20: 1.25rem;
+  --tds-number-24: 1.5rem;
+  --tds-number-28: 1.75rem;
+  --tds-number-32: 2rem;
+  --tds-number-36: 2.25rem;
+  --tds-number-40: 2.5rem;
+  --tds-number-44: 2.75rem;
+  --tds-number-48: 3rem;
+  --tds-number-52: 3.25rem;
+  --tds-number-56: 3.5rem;
+  --tds-number-64: 4rem;
+  --tds-number-72: 4.5rem;
+  --tds-number-80: 5rem;
+  --tds-number-96: 6rem;
+  --tds-number-128: 8rem;
+  --tds-number-256: 16rem;
+  --tds-number-999: 62.4375rem;
+}
